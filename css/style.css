@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>직원 체크리스트 대시보드</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f7f6f3;--surface:#fff;--border:#e8e6e1;--text:#1a1a1a;--muted:#888;
+  --green:#1d9e75;--green-bg:#e8f7f2;--amber:#ba7517;--amber-bg:#fdf3e0;
+  --red:#d44;--red-bg:#fef0f0;--blue:#1a6fb3;--blue-bg:#e8f2fb;--accent:#5b4fcf;
+}
+body{font-family:-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-size:16px;font-weight:700;color:var(--accent)}
+.logo-sub{font-size:11px;color:var(--muted)}
+.main{padding:24px;max-width:1100px;margin:0 auto;width:100%}
+#screen-setup{max-width:580px;margin:40px auto}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px}
+.card-title{font-size:18px;font-weight:700;margin-bottom:6px}
+.card-sub{color:var(--muted);font-size:12px;margin-bottom:20px;line-height:1.6}
+.tip{background:var(--blue-bg);border-left:3px solid var(--blue);border-radius:0 6px 6px 0;padding:10px 14px;font-size:12px;color:#0d4b7e;line-height:1.75;margin-bottom:16px}
+.tip a{color:var(--blue)}
+.tip code{background:rgba(26,111,179,0.12);padding:1px 5px;border-radius:3px;font-family:monospace;font-size:11px}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--muted);margin-bottom:5px;letter-spacing:.04em;text-transform:uppercase}
+.field input{width:100%;padding:9px 12px;border:1px solid var(--border);border-radius:7px;font-size:13px;background:var(--bg);outline:none;transition:border-color .15s}
+.field input:focus{border-color:var(--accent);background:#fff}
+.fields-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.section-sep{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin:16px 0 8px;border-top:1px solid var(--border);padding-top:12px}
+.checks-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:18px}
+.cf label{font-size:10px;color:var(--muted);font-weight:500;margin-bottom:3px;display:block}
+.cf input{width:100%;padding:6px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;background:var(--bg);outline:none}
+.cf input:focus{border-color:var(--accent)}
+.btn{padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:opacity .15s,transform .1s}
+.btn:active{transform:scale(.98)}
+.btn-primary{background:var(--accent);color:#fff;flex:1}
+.btn-primary:hover{opacity:.9}
+.btn-ghost{background:transparent;border-color:var(--border);color:var(--muted)}
+.btn-ghost:hover{background:var(--bg)}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-row{display:flex;gap:8px}
+.err{background:var(--red-bg);border:1px solid #f0bbbb;border-radius:7px;padding:10px 14px;font-size:12px;color:#aa2222;margin-top:12px;display:none;white-space:pre-wrap;line-height:1.6}
+#screen-dash{display:none}
+.dash-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+.dash-title{font-size:20px;font-weight:700}
+.dash-title span{color:var(--muted);font-size:13px;font-weight:400;margin-left:8px}
+.tabs{display:flex;gap:2px;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:3px;width:fit-content}
+.tab{padding:7px 18px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--muted);transition:all .15s}
+.tab.active{background:var(--accent);color:#fff}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.mlabel{font-size:11px;color:var(--muted);margin-bottom:4px;font-weight:500}
+.mval{font-size:26px;font-weight:700;line-height:1}
+.mval.g{color:var(--green)}.mval.a{color:var(--amber)}.mval.r{color:var(--red)}
+.filter-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.filter-bar select{padding:7px 10px;border:1px solid var(--border);border-radius:7px;font-size:12px;background:var(--surface);outline:none;cursor:pointer}
+.emp-list{display:flex;flex-direction:column;gap:10px}
+.emp-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
+.emp-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.av-vn{background:#e1f5ee;color:#085041}.av-ph{background:#faeeda;color:#633806}
+.emp-info{flex:1}
+.emp-name{font-weight:700;font-size:14px}
+.emp-meta{font-size:11px;color:var(--muted)}
+.emp-pct{font-size:22px;font-weight:700}
+.bar-bg{background:#f0eeeb;border-radius:4px;height:6px;margin-bottom:10px}
+.bar-fill{height:6px;border-radius:4px}
+.checks-wrap{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:5px}
+.chk{display:flex;align-items:center;gap:7px;background:var(--bg);border-radius:6px;padding:5px 8px;font-size:11px;color:var(--muted)}
+.chk-dot{width:14px;height:14px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;flex-shrink:0}
+.chk-dot.y{background:var(--green-bg);color:var(--green)}.chk-dot.n{background:var(--red-bg);color:var(--red)}
+.no-rep{background:#fff8f0;border:1px dashed #f0c080;border-radius:10px;padding:12px 16px;font-size:12px;color:var(--amber);display:flex;align-items:center;gap:10px}
+.weekly-list{display:flex;flex-direction:column;gap:8px}
+.weekly-row{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 16px;display:grid;grid-template-columns:120px 1fr 50px;align-items:center;gap:14px}
+.day-bars{display:flex;gap:4px;align-items:flex-end;height:40px}
+.day-bw{display:flex;flex-direction:column;align-items:center;gap:3px}
+.day-b{width:22px;border-radius:3px 3px 0 0}
+.day-l{font-size:9px;color:var(--muted)}
+.chart-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px}
+.loading{text-align:center;padding:50px 0;color:var(--muted);font-size:13px}
+.spinner{width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;display:inline-block}
+.badge-vn{background:#e1f5ee;color:#085041}.badge-ph{background:#faeeda;color:#633806}
+@media(max-width:700px){.metrics{grid-template-columns:1fr 1fr}.main{padding:14px}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div><div class="logo">체크리스트 대시보드</div><div class="logo-sub">Notion API 연동</div></div>
+  <div id="topbar-btns" style="display:none;gap:8px;align-items:center">
+    <button class="btn btn-ghost btn-sm" onclick="doRefresh()">↻ 새로고침</button>
+    <button class="btn btn-ghost btn-sm" onclick="goSetup()">⚙ 설정</button>
+  </div>
+</div>
+<div class="main">
+
+<div id="screen-setup">
+<div class="card">
+  <div class="card-title">노션 API 연동 설정</div>
+  <div class="card-sub">API 토큰과 Database ID를 입력하면 직원 체크리스트 데이터를 자동으로 불러와요.</div>
+  <div class="tip">
+    <strong>API 토큰 복사 방법</strong><br>
+    <a href="https://www.notion.so/my-integrations" target="_blank">notion.so/my-integrations</a> → integration 클릭 → 프라이빗 API 통합 시크릿 → 표시하기 → 복사<br>
+    토큰은 <code>ntn_</code> 또는 <code>secret_</code> 으로 시작해요
+  </div>
+  <div class="field">
+    <label>Notion API Token</label>
+    <input type="password" id="inp-token" placeholder="ntn_xxxx... 또는 secret_xxxx...">
+  </div>
+  <div class="field">
+    <label>Database ID</label>
+    <input type="text" id="inp-db" placeholder="32자리 영숫자">
+  </div>
+  <div class="fields-2">
+    <div class="field" style="margin:0"><label>날짜 속성명</label><input id="inp-date" value="날짜"></div>
+    <div class="field" style="margin:0"><label>담당자 속성명 (People)</label><input id="inp-assignee" value="담당자"></div>
+  </div>
+  <div class="section-sep">체크박스 속성명 — 노션 DB 열 이름과 정확히 일치해야 함</div>
+  <div class="checks-grid">
+    <div class="cf"><label>출근 보고</label><input data-key="clock_in" value="출근보고"></div>
+    <div class="cf"><label>업무일지</label><input data-key="work_log" value="업무일지"></div>
+    <div class="cf"><label>Task 리스트</label><input data-key="task_list" value="Task 리스트"></div>
+    <div class="cf"><label>미완료 사유</label><input data-key="incomplete" value="미완료사유"></div>
+    <div class="cf"><label>퇴근 보고</label><input data-key="clock_out" value="퇴근보고"></div>
+    <div class="cf"><label>내일 업무</label><input data-key="tomorrow" value="내일업무"></div>
+    <div class="cf"><label>매출 보고</label><input data-key="sales" value="매출보고"></div>
+    <div class="cf"><label>SNS 업로드</label><input data-key="sns_upload" value="SNS업로드"></div>
+    <div class="cf"><label>SNS 보고서</label><input data-key="sns_report" value="SNS보고서"></div>
+    <div class="cf"><label>KOC 출근</label><input data-key="koc_clock" value="KOC출근"></div>
+    <div class="cf"><label>라이브 일정</label><input data-key="live_sched" value="라이브일정"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-primary" onclick="doConnect()">노션 연결 &amp; 데이터 불러오기</button>
+    <button class="btn btn-ghost" onclick="loadDemo()">데모 미리보기</button>
+  </div>
+  <div class="err" id="err-box"></div>
+</div>
+</div>
+
+<div id="screen-dash">
+  <div class="dash-header">
+    <div class="dash-title">직원 체크리스트 현황<span id="demo-label"></span></div>
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('daily',this)">일간</button>
+      <button class="tab" onclick="switchTab('weekly',this)">주간</button>
+      <button class="tab" onclick="switchTab('monthly',this)">월간</button>
+    </div>
+  </div>
+  <div id="tab-daily">
+    <div class="filter-bar">
+      <select id="sel-date" onchange="renderDaily()"></select>
+      <select id="sel-country" onchange="renderDaily()">
+        <option value="all">전체 직원</option>
+        <option value="vn">베트남 (VN)</option>
+        <option value="ph">필리핀 (PH)</option>
+      </select>
+    </div>
+    <div class="metrics" id="daily-metrics"></div>
+    <div class="emp-list" id="daily-list"></div>
+  </div>
+  <div id="tab-weekly" style="display:none">
+    <div class="metrics" id="weekly-metrics"></div>
+    <div class="weekly-list" id="weekly-list"></div>
+  </div>
+  <div id="tab-monthly" style="display:none">
+    <div class="metrics" id="monthly-metrics"></div>
+    <div class="chart-wrap" style="margin-top:16px">
+      <canvas id="monthly-chart" style="max-height:260px" role="img" aria-label="월간 완료율 차트"></canvas>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+const S={token:'',dbId:'',dateProp:'날짜',assigneeProp:'담당자',checkProps:{},records:[],demo:false,chart:null};
+const VN=['Ban','Hana','Teamin','Chi','Hien'];
+const CL={clock_in:'출근 보고',work_log:'업무일지',task_list:'Task 리스트',incomplete:'미완료 사유',clock_out:'퇴근 보고',tomorrow:'내일 업무',sales:'매출 보고',sns_upload:'SNS 업로드',sns_report:'SNS 보고서',koc_clock:'KOC 출근',live_sched:'라이브 일정'};
+
+async function notionQuery(body){
+  const url=`https://api.notion.com/v1/databases/${S.dbId}/query`;
+  const hdrs={'Authorization':'Bearer '+S.token,'Notion-Version':'2022-06-28','Content-Type':'application/json'};
+  let res;
+  try{
+    res=await fetch(url,{method:'POST',headers:hdrs,body:JSON.stringify(body)});
+  }catch(e){
+    throw new Error('네트워크 오류: 인터넷 연결을 확인하세요.\n('+e.message+')');
+  }
+  if(!res.ok){
+    const e=await res.json().catch(()=>({}));
+    if(res.status===401)throw new Error('토큰 오류(401): 토큰을 다시 복사해주세요.\nntn_... 전체를 복사했는지 확인하세요.');
+    if(res.status===404)throw new Error('DB를 찾을 수 없음(404):\nDB ID를 확인하거나 ··· → 연결에서 integration 연결 여부를 확인해주세요.');
+    if(res.status===403)throw new Error('권한 없음(403):\n··· → 연결 → 글로벌 Divoost 업무체크리스트 연결 확인');
+    throw new Error('API 오류 '+res.status+': '+(e.message||''));
+  }
+  return res.json();
+}
+
+async function fetchAll(){
+  const rows=[];let cursor;
+  for(let i=0;i<20;i++){
+    const body={page_size:100,sorts:[{property:S.dateProp,direction:'descending'}]};
+    if(cursor)body.start_cursor=cursor;
+    const data=await notionQuery(body);
+    rows.push(...data.results);
+    if(!data.has_more)break;
+    cursor=data.next_cursor;
+  }
+  return rows;
+}
+
+function parseRow(r){
+  const p=r.properties;
+  const assignees=(p[S.assigneeProp]?.people||[]).map(x=>x.name||'Unknown');
+  let date=p[S.dateProp]?.date?.start||r.created_time?.slice(0,10)||'';
+  if(date.length>10)date=date.slice(0,10);
+  const checks={};
+  Object.entries(S.checkProps).forEach(([k,n])=>{if(p[n]!==undefined)checks[k]=p[n].checkbox===true;});
+  return{id:r.id,assignees,date,checks};
+}
+
+async function doConnect(){
+  const token=document.getElementById('inp-token').value.trim();
+  const dbId=document.getElementById('inp-db').value.trim().replace(/-/g,'');
+  if(!token||!dbId){showErr('토큰과 DB ID를 모두 입력해주세요.');return;}
+  S.token=token;S.dbId=dbId;
+  S.dateProp=document.getElementById('inp-date').value.trim()||'날짜';
+  S.assigneeProp=document.getElementById('inp-assignee').value.trim()||'담당자';
+  S.checkProps=getCP();S.demo=false;
+  showErr('');showDash();
+  document.getElementById('daily-list').innerHTML='<div class="loading"><div class="spinner"></div>노션에서 데이터 불러오는 중...</div>';
+  try{
+    const rows=await fetchAll();
+    S.records=rows.map(parseRow);
+    if(!S.records.length){document.getElementById('daily-list').innerHTML='<div class="loading">데이터 없음 — 노션 DB에 행을 추가해보세요.</div>';return;}
+    renderAll();
+  }catch(e){goSetup();showErr(e.message);}
+}
+
+function getCP(){const r={};document.querySelectorAll('.cf input[data-key]').forEach(i=>{if(i.value.trim())r[i.dataset.key]=i.value.trim();});return r;}
+
+async function doRefresh(){
+  if(S.demo)return;
+  try{const rows=await fetchAll();S.records=rows.map(parseRow);renderAll();}
+  catch(e){alert(e.message);}
+}
+
+function loadDemo(){
+  S.demo=true;S.checkProps=getCP();
+  const staff=[
+    {n:'Kaya',c:{clock_in:true,work_log:true,task_list:true,incomplete:false,clock_out:true,tomorrow:true,sales:true,sns_upload:true,sns_report:true,koc_clock:false,live_sched:false}},
+    {n:'Ban', c:{clock_in:true,work_log:true,task_list:false,incomplete:false,clock_out:true,tomorrow:true,sales:true,sns_upload:true,sns_report:false,koc_clock:true,live_sched:true}},
+    {n:'Hana',c:{clock_in:true,work_log:true,task_list:true,incomplete:false,clock_out:false,tomorrow:false,sales:true,sns_upload:true,sns_report:true,koc_clock:false,live_sched:false}},
+    {n:'Teamin',c:{clock_in:true,work_log:false,task_list:true,incomplete:false,clock_out:true,tomorrow:true,sales:false,sns_upload:true,sns_report:true,koc_clock:true,live_sched:true}},
+    {n:'Chi', c:{clock_in:true,work_log:true,task_list:true,incomplete:false,clock_out:false,tomorrow:true,sales:false,sns_upload:true,sns_report:true,koc_clock:true,live_sched:false}},
+    {n:'Hien',c:{clock_in:false,work_log:false,task_list:false,incomplete:false,clock_out:false,tomorrow:false,sales:false,sns_upload:false,sns_report:false,koc_clock:false,live_sched:false}},
+  ];
+  const recs=[];
+  for(let d=0;d<14;d++){
+    const dt=new Date();dt.setDate(dt.getDate()-d);
+    const ds=dt.toISOString().slice(0,10);
+    staff.forEach(s=>{
+      const checks={};
+      Object.entries(s.c).forEach(([k,v])=>{checks[k]=d===0?v:(v&&Math.random()>.15);});
+      recs.push({id:Math.random().toString(36),assignees:[s.n],date:ds,checks});
+    });
+  }
+  S.records=recs;showDash();
+  document.getElementById('demo-label').textContent=' (데모)';
+  renderAll();
+}
+
+function showDash(){document.getElementById('screen-setup').style.display='none';document.getElementById('screen-dash').style.display='block';document.getElementById('topbar-btns').style.display='flex';}
+function goSetup(){document.getElementById('screen-setup').style.display='block';document.getElementById('screen-dash').style.display='none';document.getElementById('topbar-btns').style.display='none';}
+function showErr(m){const e=document.getElementById('err-box');e.style.display=m?'block':'none';e.textContent=m;}
+function switchTab(n,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');['daily','weekly','monthly'].forEach(t=>{document.getElementById('tab-'+t).style.display=t===n?'block':'none';});if(n==='monthly')setTimeout(renderMonthly,50);if(n==='weekly')renderWeekly();}
+function pct(c){const v=Object.values(c);return v.length?Math.round(v.filter(x=>x).length/v.length*100):null;}
+function col(p){return p>=85?'#1d9e75':p>=60?'#ba7517':'#dd4444';}
+function cls(p){return p>=85?'g':p>=60?'a':'r';}
+function av(n){return`<div class="avatar ${VN.includes(n)?'av-vn':'av-ph'}">${n.slice(0,2).toUpperCase()}</div>`;}
+function badge(n){return`<span class="badge ${VN.includes(n)?'badge-vn':'badge-ph'}">${VN.includes(n)?'VN':'PH'}</span>`;}
+function eMap(){const m={};S.records.forEach(r=>r.assignees.forEach(n=>{if(!m[n])m[n]={name:n,records:[]};m[n].records.push(r);}));return m;}
+function metric(l,v,c,s=''){return`<div class="metric"><div class="mlabel">${l}</div><div class="mval ${c||''}">${v}</div>${s?`<div style="font-size:10px;color:var(--muted);margin-top:3px">${s}</div>`:''}</div>`;}
+
+function renderAll(){fillDates();renderDaily();renderWeekly();}
+
+function fillDates(){
+  const dates=[...new Set(S.records.map(r=>r.date).filter(Boolean))].sort((a,b)=>b.localeCompare(a));
+  document.getElementById('sel-date').innerHTML=dates.map((d,i)=>`<option value="${d}">${d}${i===0?' (최신)':''}</option>`).join('');
+}
+
+function renderDaily(){
+  const date=document.getElementById('sel-date').value;
+  const ctry=document.getElementById('sel-country').value;
+  const em=eMap();let emps=Object.values(em);
+  if(ctry==='vn')emps=emps.filter(e=>VN.includes(e.name));
+  if(ctry==='ph')emps=emps.filter(e=>!VN.includes(e.name));
+  const days=emps.map(e=>({...e,rec:e.records.find(r=>r.date===date)||null}));
+  const rep=days.filter(e=>e.rec).length;
+  const pcts=days.filter(e=>e.rec).map(e=>pct(e.rec.checks)).filter(v=>v!==null);
+  const avg=pcts.length?Math.round(pcts.reduce((a,b)=>a+b,0)/pcts.length):0;
+  const mis=days.filter(e=>e.rec&&Object.values(e.rec.checks).some(v=>v===false)).length;
+  document.getElementById('daily-metrics').innerHTML=metric('전체 직원',days.length,'')+metric('보고 완료',`${rep}/${days.length}`,rep===days.length?'g':'a')+metric('평균 완료율',avg+'%',cls(avg))+metric('미완료 직원',mis,mis>0?'r':'g');
+  let html='';
+  days.forEach(e=>{
+    if(!e.rec){html+=`<div class="no-rep">${av(e.name)}<div><strong>${e.name}</strong> ${badge(e.name)} — 보고 없음</div></div>`;return;}
+    const p2=pct(e.rec.checks),c=col(p2);
+    let chtml='';
+    Object.entries(e.rec.checks).forEach(([k,v])=>{chtml+=`<div class="chk"><div class="chk-dot ${v?'y':'n'}">${v?'✓':'✗'}</div><span>${CL[k]||k}</span></div>`;});
+    html+=`<div class="emp-card"><div class="emp-head">${av(e.name)}<div class="emp-info"><div class="emp-name">${e.name} ${badge(e.name)}</div><div class="emp-meta">${date}</div></div><div class="emp-pct" style="color:${c}">${p2}%</div></div><div class="bar-bg"><div class="bar-fill" style="width:${p2}%;background:${c}"></div></div><div class="checks-wrap">${chtml}</div></div>`;
+  });
+  document.getElementById('daily-list').innerHTML=html||'<div class="loading">해당 날짜 데이터 없음</div>';
+}
+
+function renderWeekly(){
+  const em=eMap(),emps=Object.values(em);
+  const dates=[...new Set(S.records.map(r=>r.date).filter(Boolean))].sort((a,b)=>b.localeCompare(a)).slice(0,7).reverse();
+  const ap=emps.flatMap(e=>e.records.map(r=>pct(r.checks)).filter(v=>v!==null));
+  const avg=ap.length?Math.round(ap.reduce((a,b)=>a+b,0)/ap.length):0;
+  document.getElementById('weekly-metrics').innerHTML=metric('최근 기간',dates.length+'일','')+metric('주간 평균',avg+'%',cls(avg))+metric('전체 직원',emps.length+'명','')+metric('총 기록',S.records.length+'건','');
+  const lbls=dates.map(d=>d.slice(5));
+  let html='';
+  emps.forEach(e=>{
+    const dp=dates.map(d=>{const r=e.records.find(r=>r.date===d);return r?pct(r.checks):null;});
+    const kn=dp.filter(v=>v!==null);
+    const av2=kn.length?Math.round(kn.reduce((a,b)=>a+b,0)/kn.length):0;
+    const bars=dp.map((v,i)=>{if(v===null)return`<div class="day-bw"><div class="day-b" style="height:4px;background:#e8e6e1;border-radius:2px"></div><div class="day-l">${lbls[i]}</div></div>`;return`<div class="day-bw"><div class="day-b" style="height:${Math.max(4,Math.round(v*.38))}px;background:${col(v)};opacity:.85"></div><div class="day-l">${lbls[i]}</div></div>`;}).join('');
+    html+=`<div class="weekly-row"><div style="font-size:13px;font-weight:600">${e.name} ${badge(e.name)}</div><div class="day-bars">${bars}</div><div style="font-size:15px;font-weight:700;text-align:right;color:${col(av2)}">${av2}%</div></div>`;
+  });
+  document.getElementById('weekly-list').innerHTML=html;
+}
+
+function renderMonthly(){
+  const em=eMap(),emps=Object.values(em);
+  const ap=emps.flatMap(e=>e.records.map(r=>pct(r.checks)).filter(v=>v!==null));
+  const avg=ap.length?Math.round(ap.reduce((a,b)=>a+b,0)/ap.length):0;
+  const td=[...new Set(S.records.map(r=>r.date).filter(Boolean))].length;
+  document.getElementById('monthly-metrics').innerHTML=metric('월간 평균',avg+'%',cls(avg))+metric('총 기록 일수',td+'일','')+metric('직원 수',emps.length+'명','')+metric('총 기록',S.records.length+'건','');
+  if(S.chart){S.chart.destroy();S.chart=null;}
+  const ctx=document.getElementById('monthly-chart');if(!ctx)return;
+  const labels=emps.map(e=>e.name);
+  const data=emps.map(e=>{const p2=e.records.map(r=>pct(r.checks)).filter(v=>v!==null);return p2.length?Math.round(p2.reduce((a,b)=>a+b,0)/p2.length):0;});
+  S.chart=new Chart(ctx,{type:'bar',data:{labels,datasets:[{label:'완료율(%)',data,backgroundColor:data.map(v=>col(v)),borderRadius:6,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:11}},grid:{color:'#f0eeeb'}},x:{ticks:{font:{size:11}},grid:{display:false}}}}});
+}
+</script>
+</body>
+</html>
