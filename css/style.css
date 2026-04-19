@@ -299,6 +299,38 @@ button {
     background: linear-gradient(180deg, #0a0a0a 0%, #0d1b2a 100%);
 }
 
+/* YouTube Background Video */
+.hero-video-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.hero-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.25vw; /* 16:9 aspect ratio */
+    min-width: 177.77vh; /* 16:9 aspect ratio for tall screens */
+    min-height: 100vh;
+    transform: translate(-50%, -50%);
+    border: 0;
+    pointer-events: none;
+}
+
+/* Hide video on mobile for better performance */
+@media (max-width: 768px) {
+    .hero-video-wrap {
+        display: none;
+    }
+}
+
 .hero-bg {
     position: absolute;
     top: 0;
@@ -306,6 +338,7 @@ button {
     right: 0;
     bottom: 0;
     background:
+        linear-gradient(180deg, rgba(10, 10, 10, 0.7) 0%, rgba(13, 27, 42, 0.85) 100%),
         radial-gradient(ellipse at top right, rgba(245, 184, 47, 0.12), transparent 50%),
         radial-gradient(ellipse at bottom left, rgba(27, 73, 101, 0.3), transparent 50%);
     z-index: 1;
