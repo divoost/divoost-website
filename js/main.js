@@ -1,32 +1,17 @@
-// =========================================
-// DIVOOST Main JavaScript
-// =========================================
-
 document.addEventListener('DOMContentLoaded', () => {
 
-    // =====================
-    // Header Scroll Effect
-    // =====================
     const header = document.getElementById('header');
-    let lastScrollY = window.scrollY;
 
     function handleScroll() {
-        const currentScrollY = window.scrollY;
-
-        if (currentScrollY > 50) {
+        if (window.scrollY > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-
-        lastScrollY = currentScrollY;
     }
 
     window.addEventListener('scroll', handleScroll, { passive: true });
 
-    // =====================
-    // Mobile Menu Toggle
-    // =====================
     const mobileToggle = document.getElementById('mobileToggle');
     const navMobile = document.getElementById('navMobile');
 
@@ -36,7 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
             navMobile.classList.toggle('active');
         });
 
-        // Close menu on link click
         navMobile.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 mobileToggle.classList.remove('active');
@@ -45,9 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // =====================
-    // Smooth Scroll for Anchor Links
-    // =====================
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
@@ -67,9 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // =====================
-    // Intersection Observer for Animations
-    // =====================
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -84,9 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, observerOptions);
 
-    // Observe sections and cards
     const animatedElements = document.querySelectorAll(
-        '.section-header, .company-grid, .business-card, .cert-item, .offline-feature, .marketing-card, .contact-grid'
+        '.section-header, .solution-card, .feature-item, .service-card, .market-item, .pricing-card, .case-card, .resource-card, .contact-grid, .cta-content'
     );
 
     animatedElements.forEach(el => {
@@ -96,37 +73,38 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
 
-    // Add CSS for in-view state
     const style = document.createElement('style');
     style.textContent = `
-        .in-view {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-        }
-        .business-card.in-view:nth-child(1) { transition-delay: 0s; }
-        .business-card.in-view:nth-child(2) { transition-delay: 0.15s; }
-        .business-card.in-view:nth-child(3) { transition-delay: 0.3s; }
-
-        .cert-item.in-view:nth-child(1) { transition-delay: 0s; }
-        .cert-item.in-view:nth-child(2) { transition-delay: 0.1s; }
-        .cert-item.in-view:nth-child(3) { transition-delay: 0.2s; }
-        .cert-item.in-view:nth-child(4) { transition-delay: 0.3s; }
-
-        .offline-feature.in-view:nth-child(1) { transition-delay: 0s; }
-        .offline-feature.in-view:nth-child(2) { transition-delay: 0.1s; }
-        .offline-feature.in-view:nth-child(3) { transition-delay: 0.2s; }
-        .offline-feature.in-view:nth-child(4) { transition-delay: 0.3s; }
-
-        .marketing-card.in-view:nth-child(1) { transition-delay: 0s; }
-        .marketing-card.in-view:nth-child(2) { transition-delay: 0.1s; }
-        .marketing-card.in-view:nth-child(3) { transition-delay: 0.2s; }
-        .marketing-card.in-view:nth-child(4) { transition-delay: 0.3s; }
+        .in-view { opacity: 1 !important; transform: translateY(0) !important; }
+        .solution-card.in-view:nth-child(1) { transition-delay: 0s; }
+        .solution-card.in-view:nth-child(2) { transition-delay: 0.1s; }
+        .solution-card.in-view:nth-child(3) { transition-delay: 0.2s; }
+        .solution-card.in-view:nth-child(4) { transition-delay: 0.3s; }
+        .feature-item.in-view:nth-child(1) { transition-delay: 0s; }
+        .feature-item.in-view:nth-child(2) { transition-delay: 0.05s; }
+        .feature-item.in-view:nth-child(3) { transition-delay: 0.1s; }
+        .feature-item.in-view:nth-child(4) { transition-delay: 0.15s; }
+        .feature-item.in-view:nth-child(5) { transition-delay: 0.2s; }
+        .feature-item.in-view:nth-child(6) { transition-delay: 0.25s; }
+        .feature-item.in-view:nth-child(7) { transition-delay: 0.3s; }
+        .feature-item.in-view:nth-child(8) { transition-delay: 0.35s; }
+        .service-card.in-view:nth-child(1) { transition-delay: 0s; }
+        .service-card.in-view:nth-child(2) { transition-delay: 0.1s; }
+        .service-card.in-view:nth-child(3) { transition-delay: 0.2s; }
+        .service-card.in-view:nth-child(4) { transition-delay: 0.3s; }
+        .pricing-card.in-view:nth-child(1) { transition-delay: 0s; }
+        .pricing-card.in-view:nth-child(2) { transition-delay: 0.1s; }
+        .pricing-card.in-view:nth-child(3) { transition-delay: 0.2s; }
+        .pricing-card.in-view:nth-child(4) { transition-delay: 0.3s; }
+        .case-card.in-view:nth-child(1) { transition-delay: 0s; }
+        .case-card.in-view:nth-child(2) { transition-delay: 0.1s; }
+        .case-card.in-view:nth-child(3) { transition-delay: 0.2s; }
+        .resource-card.in-view:nth-child(1) { transition-delay: 0s; }
+        .resource-card.in-view:nth-child(2) { transition-delay: 0.1s; }
+        .resource-card.in-view:nth-child(3) { transition-delay: 0.2s; }
     `;
     document.head.appendChild(style);
 
-    // =====================
-    // Contact Form Handling
-    // =====================
     const contactForm = document.getElementById('contactForm');
 
     if (contactForm) {
@@ -136,24 +114,41 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = contactForm.name.value;
             const email = contactForm.email.value;
             const company = contactForm.company.value;
+            const plan = contactForm.plan.value;
             const message = contactForm.message.value;
 
-            // Build mailto link as a simple, no-backend solution
-            const subject = encodeURIComponent(`[DIVOOST Inquiry] ${company || name}`);
+            const subject = encodeURIComponent(`[EZCOMET Inquiry] ${company || name}`);
             const body = encodeURIComponent(
                 `Name: ${name}\n` +
                 `Email: ${email}\n` +
-                `Company: ${company}\n\n` +
+                `Company: ${company}\n` +
+                `Plan: ${plan}\n\n` +
                 `Message:\n${message}`
             );
 
-            window.location.href = `mailto:bizpro@divoost.com?subject=${subject}&body=${body}`;
+            window.location.href = `mailto:support@ezcomet.io?subject=${subject}&body=${body}`;
         });
+
+        const trialBtn = document.getElementById('trialBtn');
+        if (trialBtn) {
+            trialBtn.addEventListener('click', () => {
+                const name = contactForm.name.value;
+                const email = contactForm.email.value;
+                const company = contactForm.company.value;
+
+                const subject = encodeURIComponent(`[EZCOMET Free Trial] ${company || name}`);
+                const body = encodeURIComponent(
+                    `Name: ${name}\n` +
+                    `Email: ${email}\n` +
+                    `Company: ${company}\n\n` +
+                    `I would like to start a free trial of EZCOMET.`
+                );
+
+                window.location.href = `mailto:support@ezcomet.io?subject=${subject}&body=${body}`;
+            });
+        }
     }
 
-    // =====================
-    // Active Nav Link on Scroll
-    // =====================
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
 
@@ -179,17 +174,3 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', highlightNavLink, { passive: true });
     highlightNavLink();
 });
-
-// =====================
-// Active nav link style injection
-// =====================
-const navStyle = document.createElement('style');
-navStyle.textContent = `
-    .nav-link.active {
-        color: var(--color-gold) !important;
-    }
-    .nav-link.active::after {
-        width: calc(100% - 32px) !important;
-    }
-`;
-document.head.appendChild(navStyle);
