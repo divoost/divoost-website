@@ -14,46 +14,32 @@
 <body>
     <!-- Header -->
     <header class="header" id="header">
-        <div class="header-container">
+        <div class="header-inner">
             <a href="index.html" class="logo">
                 <span class="logo-text">EZCOMET</span>
             </a>
 
-            <nav class="nav-desktop">
-                <ul class="nav-list">
-                    <li><a href="index.html" class="nav-link active">홈</a></li>
-                    <li><a href="solution.html" class="nav-link">솔루션</a></li>
-                    <li><a href="features.html" class="nav-link">기능</a></li>
-                    <li><a href="service.html" class="nav-link">서비스</a></li>
-                    <li><a href="market.html" class="nav-link">시장</a></li>
-                    <li><a href="pricing.html" class="nav-link">요금제</a></li>
-                    <li><a href="case.html" class="nav-link">사례</a></li>
-                    <li><a href="resources.html" class="nav-link">리소스</a></li>
-                    <li><a href="contact.html" class="nav-link">문의</a></li>
-                </ul>
+            <nav class="nav" id="navDesktop">
+                <a href="index.html" class="nav-link active">홈</a>
+                <a href="solution.html" class="nav-link">솔루션</a>
+                <a href="features.html" class="nav-link">기능</a>
+                <a href="service.html" class="nav-link">서비스</a>
+                <a href="market.html" class="nav-link">시장</a>
+                <a href="pricing.html" class="nav-link">요금제</a>
+                <a href="case.html" class="nav-link">사례</a>
+                <a href="resources.html" class="nav-link">리소스</a>
+                <a href="contact.html" class="nav-link">문의</a>
             </nav>
 
-            <button class="mobile-toggle" id="mobileToggle" aria-label="메뉴 열기">
+            <button class="menu-toggle" id="mobileToggle" aria-label="메뉴 열기">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
         </div>
 
-        <!-- Mobile Menu -->
-        <nav class="nav-mobile" id="navMobile">
-            <ul>
-                <li><a href="index.html" class="active">홈</a></li>
-                <li><a href="solution.html">솔루션</a></li>
-                <li><a href="features.html">기능</a></li>
-                <li><a href="service.html">서비스</a></li>
-                <li><a href="market.html">시장</a></li>
-                <li><a href="pricing.html">요금제</a></li>
-                <li><a href="case.html">사례</a></li>
-                <li><a href="resources.html">리소스</a></li>
-                <li><a href="contact.html">문의</a></li>
-            </ul>
-        </nav>
+        <!-- Mobile Menu Overlay -->
+        <div class="nav-overlay" id="navOverlay"></div>
     </header>
 
     <!-- Hero Section -->
@@ -69,8 +55,8 @@
             </h1>
             <p class="hero-subtitle">시장조사부터 입점, 물류, 마케팅까지 — 원스톱 크로스보더 이커머스 솔루션</p>
             <div class="hero-cta">
-                <a href="contact.html" class="btn btn-primary">무료 상담 신청</a>
-                <a href="service.html" class="btn btn-secondary">서비스 둘러보기</a>
+                <a href="contact.html" class="btn btn-primary btn-lg">무료 상담 신청</a>
+                <a href="service.html" class="btn btn-secondary btn-lg">서비스 둘러보기</a>
             </div>
             <div class="hero-stats">
                 <div class="stat">
@@ -99,33 +85,33 @@
     <!-- Why EZCOMET Section -->
     <section class="section section-why fade-in-up">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header text-center">
                 <span class="section-badge">WHY EZCOMET</span>
                 <h2 class="section-title">왜 이지코멧인가</h2>
-                <p class="section-subtitle">크로스보더 이커머스의 모든 것을 한곳에서</p>
+                <p class="section-desc">크로스보더 이커머스의 모든 것을 한곳에서</p>
             </div>
 
             <div class="why-grid">
-                <div class="why-card">
-                    <div class="why-icon">🌏</div>
+                <article class="why-card">
+                    <div class="why-icon" aria-hidden="true">🌏</div>
                     <h3 class="why-card-title">현지 시장 전문가</h3>
                     <p class="why-card-desc">동남아 5개국 현지 전문가 네트워크로 시장 맞춤 전략 수립</p>
-                </div>
-                <div class="why-card">
-                    <div class="why-icon">🚀</div>
+                </article>
+                <article class="why-card">
+                    <div class="why-icon" aria-hidden="true">🚀</div>
                     <h3 class="why-card-title">원스톱 솔루션</h3>
                     <p class="why-card-desc">시장조사부터 물류, CS까지 수출 전 과정을 하나의 플랫폼에서</p>
-                </div>
-                <div class="why-card">
-                    <div class="why-icon">📊</div>
+                </article>
+                <article class="why-card">
+                    <div class="why-icon" aria-hidden="true">📊</div>
                     <h3 class="why-card-title">데이터 기반 운영</h3>
                     <p class="why-card-desc">실시간 판매 데이터 분석으로 최적화된 운영 전략 제공</p>
-                </div>
-                <div class="why-card">
-                    <div class="why-icon">💰</div>
+                </article>
+                <article class="why-card">
+                    <div class="why-icon" aria-hidden="true">💰</div>
                     <h3 class="why-card-title">성과 중심 모델</h3>
                     <p class="why-card-desc">초기 비용 부담 없이 매출 성과에 따른 합리적 수수료 구조</p>
-                </div>
+                </article>
             </div>
         </div>
     </section>
@@ -133,10 +119,10 @@
     <!-- Supported Platforms Section -->
     <section class="section section-platforms fade-in-up">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header text-center">
                 <span class="section-badge">PLATFORMS</span>
                 <h2 class="section-title">주요 입점 플랫폼</h2>
-                <p class="section-subtitle">동남아 주요 이커머스 플랫폼에 원클릭 입점</p>
+                <p class="section-desc">동남아 주요 이커머스 플랫폼에 원클릭 입점</p>
             </div>
 
             <div class="platforms-row">
@@ -165,14 +151,14 @@
     <!-- Process Section -->
     <section class="section section-process fade-in-up">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header text-center">
                 <span class="section-badge">PROCESS</span>
                 <h2 class="section-title">간편한 수출 프로세스</h2>
-                <p class="section-subtitle">5단계로 완성하는 동남아 시장 진출</p>
+                <p class="section-desc">5단계로 완성하는 동남아 시장 진출</p>
             </div>
 
             <div class="process-stepper">
-                <div class="process-line"></div>
+                <div class="process-line" aria-hidden="true"></div>
                 <div class="process-step">
                     <div class="step-circle">1</div>
                     <div class="step-label">상담 신청</div>
@@ -203,7 +189,7 @@
             <div class="cta-banner">
                 <h2 class="cta-title">지금 바로 동남아 시장에 진출하세요</h2>
                 <p class="cta-subtitle">무료 시장 분석 리포트를 받아보세요</p>
-                <a href="contact.html" class="btn btn-cta">무료 상담 받기</a>
+                <a href="contact.html" class="btn btn-cta btn-lg">무료 상담 받기</a>
             </div>
         </div>
     </section>
@@ -211,12 +197,12 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-top">
+            <div class="footer-grid">
                 <div class="footer-brand">
-                    <a href="index.html" class="footer-logo-link">
+                    <a href="index.html" class="logo">
                         <span class="logo-text">EZCOMET</span>
                     </a>
-                    <p class="footer-desc">동남아 크로스보더 이커머스 전문 플랫폼</p>
+                    <p>동남아 크로스보더 이커머스 전문 플랫폼</p>
                 </div>
 
                 <div class="footer-col">

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EZCOMET 문의하기 - 동남아 시장 진출에 대해 궁금한 점이 있으시면 언제든 연락주세요">
+    <title>EZCOMET | 문의</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <span class="logo-text">EZCOMET</span>
+            </a>
+
+            <nav class="nav-desktop">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">홈</a></li>
+                    <li><a href="solution.html" class="nav-link">솔루션</a></li>
+                    <li><a href="features.html" class="nav-link">기능</a></li>
+                    <li><a href="service.html" class="nav-link">서비스</a></li>
+                    <li><a href="market.html" class="nav-link">시장</a></li>
+                    <li><a href="pricing.html" class="nav-link">요금제</a></li>
+                    <li><a href="case.html" class="nav-link">사례</a></li>
+                    <li><a href="resources.html" class="nav-link">리소스</a></li>
+                    <li><a href="contact.html" class="nav-link active">문의</a></li>
+                </ul>
+            </nav>
+
+            <button class="mobile-toggle" id="mobileToggle" aria-label="메뉴 열기">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <nav class="nav-mobile" id="navMobile">
+            <ul>
+                <li><a href="index.html">홈</a></li>
+                <li><a href="solution.html">솔루션</a></li>
+                <li><a href="features.html">기능</a></li>
+                <li><a href="service.html">서비스</a></li>
+                <li><a href="market.html">시장</a></li>
+                <li><a href="pricing.html">요금제</a></li>
+                <li><a href="case.html">사례</a></li>
+                <li><a href="resources.html">리소스</a></li>
+                <li><a href="contact.html" class="active">문의</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero fade-in-up">
+        <div class="container text-center">
+            <span class="section-badge">CONTACT</span>
+            <h1 class="section-title">문의하기</h1>
+            <p class="section-desc">동남아 시장 진출에 대해 궁금한 점이 있으시면 언제든 연락주세요</p>
+        </div>
+    </section>
+
+    <!-- Contact Layout -->
+    <section class="section contact-main fade-in-up">
+        <div class="container">
+            <div class="contact-layout">
+                <!-- Left: Contact Form -->
+                <div class="contact-form-wrap fade-in-up">
+                    <h2 class="contact-form-heading">문의 양식</h2>
+                    <form class="contact-form" onsubmit="return false;">
+                        <div class="form-group">
+                            <label class="form-label" for="company">회사명</label>
+                            <input type="text" id="company" class="form-input" placeholder="회사명을 입력하세요">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="name">담당자명</label>
+                            <input type="text" id="name" class="form-input" placeholder="담당자명을 입력하세요">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="email">이메일</label>
+                            <input type="email" id="email" class="form-input" placeholder="이메일 주소를 입력하세요">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="phone">연락처</label>
+                            <input type="tel" id="phone" class="form-input" placeholder="연락처를 입력하세요">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="service">관심 서비스</label>
+                            <select id="service" class="form-select">
+                                <option value="" disabled selected>관심 서비스를 선택하세요</option>
+                                <option value="platform">플랫폼 입점</option>
+                                <option value="logistics">물류 & 풀필먼트</option>
+                                <option value="marketing">마케팅</option>
+                                <option value="live">라이브커머스</option>
+                                <option value="consulting">종합 컨설팅</option>
+                                <option value="other">기타</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">진출 희망 국가</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="country" value="vietnam">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="checkbox-text">베트남</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="country" value="thailand">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="checkbox-text">태국</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="country" value="indonesia">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="checkbox-text">인도네시아</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="country" value="philippines">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="checkbox-text">필리핀</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="country" value="malaysia">
+                                    <span class="checkbox-custom"></span>
+                                    <span class="checkbox-text">말레이시아</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="message">문의 내용</label>
+                            <textarea id="message" class="form-textarea" placeholder="문의 내용을 입력하세요"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg contact-submit-btn">문의 보내기</button>
+                    </form>
+                </div>
+
+                <!-- Right: Contact Info -->
+                <div class="contact-info-wrap fade-in-up">
+                    <h2 class="contact-info-heading">연락처 정보</h2>
+                    <div class="contact-info-list">
+                        <div class="contact-info-item">
+                            <span class="contact-info-icon">📍</span>
+                            <div>
+                                <h4 class="contact-info-label">주소</h4>
+                                <p class="contact-info-value">서울특별시 강남구 테헤란로 123, EZCOMET 빌딩 5층</p>
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <span class="contact-info-icon">📞</span>
+                            <div>
+                                <h4 class="contact-info-label">전화</h4>
+                                <p class="contact-info-value">02-1234-5678</p>
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <span class="contact-info-icon">✉️</span>
+                            <div>
+                                <h4 class="contact-info-label">이메일</h4>
+                                <p class="contact-info-value">contact@ezcomet.com</p>
+                            </div>
+                        </div>
+                        <div class="contact-info-item">
+                            <span class="contact-info-icon">⏰</span>
+                            <div>
+                                <h4 class="contact-info-label">운영시간</h4>
+                                <p class="contact-info-value">평일 09:00 - 18:00 (KST)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Placeholder -->
+                    <div class="map-placeholder">
+                        <span class="map-placeholder-text">지도</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Contact Options -->
+    <section class="section section-light quick-contact-section fade-in-up">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-badge">QUICK CONTACT</span>
+                <h2 class="section-title">빠른 문의 방법</h2>
+            </div>
+            <div class="quick-contact-grid">
+                <div class="quick-contact-card fade-in-up">
+                    <span class="quick-contact-icon">💬</span>
+                    <h3 class="quick-contact-title">카카오톡 상담</h3>
+                    <p class="quick-contact-desc">실시간 채팅 상담 (평일 09-18시)</p>
+                </div>
+                <div class="quick-contact-card fade-in-up">
+                    <span class="quick-contact-icon">📞</span>
+                    <h3 class="quick-contact-title">전화 상담</h3>
+                    <p class="quick-contact-desc">02-1234-5678 (평일 09-18시)</p>
+                </div>
+                <div class="quick-contact-card fade-in-up">
+                    <span class="quick-contact-icon">📧</span>
+                    <h3 class="quick-contact-title">이메일 문의</h3>
+                    <p class="quick-contact-desc">contact@ezcomet.com (24시간 접수)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Office Info -->
+    <section class="section office-section fade-in-up">
+        <div class="container text-center">
+            <span class="section-badge">OFFICE</span>
+            <h2 class="section-title">찾아오시는 길</h2>
+            <p class="section-desc">서울특별시 강남구 테헤란로 123, EZCOMET 빌딩 5층</p>
+            <div class="office-details">
+                <div class="office-detail-item">
+                    <span class="office-detail-icon">🚇</span>
+                    <p class="office-detail-text">강남역 2번 출구에서 도보 5분</p>
+                </div>
+                <div class="office-detail-item">
+                    <span class="office-detail-icon">🅿️</span>
+                    <p class="office-detail-text">건물 내 지하주차장 이용 가능 (2시간 무료)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="index.html" class="footer-logo-link">
+                        <span class="logo-text">EZCOMET</span>
+                    </a>
+                    <p class="footer-desc">동남아 크로스보더 이커머스 전문 플랫폼</p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">서비스</h4>
+                    <ul class="footer-links">
+                        <li><a href="service.html">시장 분석</a></li>
+                        <li><a href="service.html">플랫폼 입점</a></li>
+                        <li><a href="service.html">물류 관리</a></li>
+                        <li><a href="service.html">마케팅</a></li>
+                        <li><a href="service.html">라이브커머스</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">고객 지원</h4>
+                    <ul class="footer-links">
+                        <li><a href="resources.html">자주 묻는 질문</a></li>
+                        <li><a href="resources.html">이용 가이드</a></li>
+                        <li><a href="contact.html">문의하기</a></li>
+                        <li><a href="contact.html">파트너십</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 EZCOMET. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/common.js"></script>
+</body>
+</html>
