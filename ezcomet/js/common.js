@@ -230,4 +230,83 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  /* ----------------------------------------------------------
+     Hero Slider
+     ---------------------------------------------------------- */
+  var heroSlider = document.getElementById('heroSlider');
+  if (heroSlider) {
+    var slides = heroSlider.querySelectorAll('.hero-slide');
+    var dots = document.querySelectorAll('.hero-dot');
+    var progressBar = document.getElementById('heroProgressBar');
+    var prevBtn = document.getElementById('heroPrev');
+    var nextBtn = document.getElementById('heroNext');
+    var currentSlide = 0;
+    var slideCount = slides.length;
+    var interval = 5000;
+    var timer = null;
+    var progressTimer = null;
+    var progressStart = 0;
+
+    function goToSlide(index) {
+      slides[currentSlide].classList.remove('active');
+      dots[currentSlide].classList.remove('active');
+      currentSlide = (index + slideCount) % slideCount;
+      slides[currentSlide].classList.add('active');
+      dots[currentSlide].classList.add('active');
+      resetProgress();
+    }
+
+    function nextSlide() {
+      goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      goToSlide(currentSlide - 1);
+    }
+
+    function resetProgress() {
+      if (progressBar) {
+        progressBar.style.transition = 'none';
+        progressBar.style.width = '0%';
+        progressBar.offsetHeight;
+        progressBar.style.transition = 'width ' + interval + 'ms linear';
+        progressBar.style.width = '100%';
+      }
+      clearInterval(timer);
+      timer = setInterval(nextSlide, interval);
+    }
+
+    if (nextBtn) nextBtn.addEventListener('click', function () { goToSlide(currentSlide + 1); });
+    if (prevBtn) prevBtn.addEventListener('click', function () { goToSlide(currentSlide - 1); });
+
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        goToSlide(parseInt(this.getAttribute('data-slide')));
+      });
+    });
+
+    heroSlider.addEventListener('mouseenter', function () {
+      clearInterval(timer);
+      if (progressBar) progressBar.style.animationPlayState = 'paused';
+    });
+
+    heroSlider.addEventListener('mouseleave', function () {
+      resetProgress();
+    });
+
+    var touchStartX = 0;
+    heroSlider.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    heroSlider.addEventListener('touchend', function (e) {
+      var diff = e.changedTouches[0].screenX - touchStartX;
+      if (Math.abs(diff) > 50) {
+        if (diff < 0) nextSlide();
+        else prevSlide();
+      }
+    }, { passive: true });
+
+    resetProgress();
+  }
+
 });
