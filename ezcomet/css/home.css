@@ -237,6 +237,10 @@
     gap: var(--space-lg);
 }
 
+.why-grid.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
 .why-card {
     background: var(--bg-white);
     border: 1px solid var(--border-light);
@@ -419,6 +423,85 @@
     font-size: var(--text-sm);
     line-height: 1.8;
     color: var(--text-secondary);
+}
+
+/* --- COMPETITOR COMPARISON SECTION --- */
+.section-comparison {
+    background: linear-gradient(135deg, #0a0f2c 0%, #0d1b3e 40%, #111d42 70%, #0b1228 100%);
+    color: #ffffff;
+}
+
+.section-comparison .section-badge {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: rgba(99, 102, 241, 0.4);
+    color: #a5b4fc;
+}
+
+.section-comparison .section-title {
+    color: #ffffff;
+}
+
+.section-comparison .section-desc {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.comparison-card {
+    max-width: 680px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    padding: var(--space-2xl) var(--space-xl);
+    backdrop-filter: blur(8px);
+}
+
+.comparison-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.comparison-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition: all 0.3s ease;
+}
+
+.comparison-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.comparison-check {
+    font-size: 22px;
+    line-height: 1.4;
+    flex-shrink: 0;
+}
+
+.comparison-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.comparison-text strong {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.comparison-note {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
 }
 
 /* --- CTA BANNER SECTION --- */
