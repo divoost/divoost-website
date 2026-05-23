@@ -208,6 +208,7 @@ p {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: all var(--transition-base);
+  overflow: visible;
 }
 
 .header.scrolled {
@@ -217,6 +218,8 @@ p {
 
 .header-inner {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   justify-content: space-between;
   height: 100%;
@@ -246,12 +249,16 @@ p {
 
 .nav {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
   align-items: center;
   gap: var(--space-xs);
 }
 
 .nav-link {
-  padding: var(--space-sm) var(--space-md);
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
   font-size: var(--text-sm);
   font-weight: 500;
   color: var(--text-secondary);
