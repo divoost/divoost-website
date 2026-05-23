@@ -570,6 +570,39 @@
     box-shadow: var(--shadow-btn-hover);
 }
 
+.cta-buttons {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+
+.btn-cta-outline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 18px 48px;
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: #ffffff;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    text-decoration: none;
+}
+
+.btn-cta-outline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: translateY(-3px);
+}
+
 /* --- FOOTER LOGO OVERRIDE --- */
 .footer .logo-text {
     font-family: var(--font-heading);
@@ -584,7 +617,8 @@
 /* --- RESPONSIVE: TABLET --- */
 @media (max-width: 1024px) {
     .hero-container { padding: 0 var(--space-xl); }
-    .why-grid { grid-template-columns: repeat(2, 1fr); }
+    .why-grid,
+    .why-grid.grid-3 { grid-template-columns: repeat(2, 1fr); }
     .hero-arrow { width: 40px; height: 40px; font-size: 16px; }
     .hero-arrow-prev { left: 12px; }
     .hero-arrow-next { right: 12px; }
@@ -606,11 +640,15 @@
     .hero-arrow { display: none; }
     .hero-slider-controls { bottom: 24px; }
 
-    .why-grid { grid-template-columns: 1fr; gap: var(--space-md); }
+    .why-grid,
+    .why-grid.grid-3 { grid-template-columns: 1fr; gap: var(--space-md); }
     .why-card { padding: var(--space-xl) var(--space-lg); }
 
     .platforms-row { flex-direction: column; align-items: stretch; }
     .platform-box { min-width: auto; }
+
+    .comparison-card { padding: var(--space-xl) var(--space-md); }
+    .comparison-item { padding: var(--space-sm) var(--space-md); }
 
     .features-preview-grid { grid-template-columns: 1fr; }
     .for-grid { grid-template-columns: 1fr; }
@@ -619,7 +657,9 @@
     .cta-banner { padding: var(--space-2xl) var(--space-lg); border-radius: var(--radius-lg); }
     .cta-title { font-size: var(--text-2xl); }
     .cta-subtitle { font-size: var(--text-base); }
-    .btn-cta { width: 100%; padding: var(--space-md) var(--space-xl); }
+    .cta-buttons { flex-direction: column; }
+    .btn-cta,
+    .btn-cta-outline { width: 100%; padding: var(--space-md) var(--space-xl); }
 }
 
 /* --- RESPONSIVE: SMALL MOBILE --- */
