@@ -7,7 +7,8 @@
 const TRANSLATIONS = {
     ko: null,
     vi: null,
-    en: null
+    en: null,
+    zh: null
 };
 
 // Translations are loaded from lang/*.json via fetch when served over HTTP (GitHub Pages).
@@ -15,7 +16,8 @@ const TRANSLATIONS = {
 const EMBEDDED_TRANSLATIONS_URL = {
     ko: 'lang/ko.json',
     vi: 'lang/vi.json',
-    en: 'lang/en.json'
+    en: 'lang/en.json',
+    zh: 'lang/zh.json'
 };
 
 let currentLang = 'ko';
@@ -82,7 +84,7 @@ async function switchLanguage(lang) {
     currentLang = lang;
 
     // Update body class for font switching
-    document.body.classList.remove('lang-ko', 'lang-vi', 'lang-en');
+    document.body.classList.remove('lang-ko', 'lang-vi', 'lang-en', 'lang-zh');
     document.body.classList.add(`lang-${lang}`);
 
     // Update html lang attribute

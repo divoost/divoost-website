@@ -65,6 +65,10 @@ body.lang-ko {
     font-family: 'Noto Sans KR', var(--font-body);
 }
 
+body.lang-zh {
+    font-family: 'Noto Sans SC', var(--font-body);
+}
+
 img {
     max-width: 100%;
     display: block;
