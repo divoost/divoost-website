@@ -242,7 +242,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var nextBtn = document.getElementById('heroNext');
     var currentSlide = 0;
     var slideCount = slides.length;
-    var interval = 5000;
+    var interval = 2500;
     var timer = null;
     var progressTimer = null;
     var progressStart = 0;
