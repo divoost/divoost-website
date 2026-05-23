@@ -14,46 +14,31 @@
 <body>
     <!-- Header -->
     <header class="header" id="header">
-        <div class="header-container">
+        <div class="header-inner">
             <a href="index.html" class="logo">
                 <span class="logo-text">EZCOMET</span>
             </a>
 
-            <nav class="nav-desktop">
-                <ul class="nav-list">
-                    <li><a href="index.html" class="nav-link">홈</a></li>
-                    <li><a href="solution.html" class="nav-link">솔루션</a></li>
-                    <li><a href="features.html" class="nav-link">기능</a></li>
-                    <li><a href="service.html" class="nav-link">서비스</a></li>
-                    <li><a href="market.html" class="nav-link active">시장</a></li>
-                    <li><a href="pricing.html" class="nav-link">요금제</a></li>
-                    <li><a href="case.html" class="nav-link">사례</a></li>
-                    <li><a href="resources.html" class="nav-link">리소스</a></li>
-                    <li><a href="contact.html" class="nav-link">문의</a></li>
-                </ul>
-            </nav>
+            <nav class="nav" id="navDesktop">
+                <a href="index.html" class="nav-link">홈</a>
+                <a href="solution.html" class="nav-link">솔루션</a>
+                <a href="features.html" class="nav-link">기능</a>
+                <a href="service.html" class="nav-link">서비스</a>
+                <a href="market.html" class="nav-link active">시장</a>
+                <a href="pricing.html" class="nav-link">요금제</a>
+                <a href="case.html" class="nav-link">사례</a>
+                <a href="resources.html" class="nav-link">리소스</a>
+                <a href="contact.html" class="nav-link">문의</a>            </nav>
 
-            <button class="mobile-toggle" id="mobileToggle" aria-label="메뉴 열기">
+            <button class="menu-toggle" id="mobileToggle" aria-label="메뉴 열기">
                 <span></span>
                 <span></span>
                 <span></span>
             </button>
         </div>
 
-        <!-- Mobile Menu -->
-        <nav class="nav-mobile" id="navMobile">
-            <ul>
-                <li><a href="index.html">홈</a></li>
-                <li><a href="solution.html">솔루션</a></li>
-                <li><a href="features.html">기능</a></li>
-                <li><a href="service.html">서비스</a></li>
-                <li><a href="market.html" class="active">시장</a></li>
-                <li><a href="pricing.html">요금제</a></li>
-                <li><a href="case.html">사례</a></li>
-                <li><a href="resources.html">리소스</a></li>
-                <li><a href="contact.html">문의</a></li>
-            </ul>
-        </nav>
+        <!-- Mobile Menu Overlay -->
+        <div class="nav-overlay" id="navOverlay"></div>
     </header>
 
     <!-- Page Hero -->
