@@ -1,0 +1,11 @@
+{
+  "name": "divoost-website",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "node-fetch": "^2.7.0"
+  }
+}
