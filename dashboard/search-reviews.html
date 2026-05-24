@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="소싱 트래커 - 쿠팡, 지마켓, 네이버스토어 검색 트렌드 및 리뷰 분석">
+    <title>소싱 트래커 | 검색 & 리뷰</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-layout">
+
+        <!-- Sidebar Overlay (mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- ============================================================
+             SIDEBAR
+             ============================================================ -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon">ST</div>
+                <div class="sidebar-logo-text">소싱 트래커<small>MULTI-CHANNEL</small></div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">소싱 플랫폼</div>
+                    <div style="padding:0 12px 12px;display:flex;gap:6px;">
+                        <span class="platform-badge p-1688 active"><span class="p-dot"></span>1688</span>
+                        <span class="platform-badge p-taobao active"><span class="p-dot"></span>타오바오</span>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">판매 플랫폼</div>
+                    <div style="padding:0 12px 12px;display:flex;gap:6px;flex-wrap:wrap;">
+                        <span class="platform-badge p-coupang active"><span class="p-dot"></span>쿠팡</span>
+                        <span class="platform-badge p-gmarket active"><span class="p-dot"></span>지마켓</span>
+                        <span class="platform-badge p-naver active"><span class="p-dot"></span>네이버</span>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">대시보드</div>
+                    <a href="index.html" class="sidebar-link"><span class="sidebar-link-icon">📊</span> 종합 현황</a>
+                    <a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품<span class="badge badge-new">87</span></a>
+                    <a href="trends.html" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a>
+                    <a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a>
+                    <a href="search-reviews.html" class="sidebar-link active"><span class="sidebar-link-icon">🔍</span> 검색 & 리뷰</a>
+                    <a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a>
+                </div>
+                            <div class="sidebar-section">
+                    <div class="sidebar-section-title">바로가기</div>
+                    <a href="../ezcomet/index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> EZCOMET 홈</a>
+                    <a href="../ezcomet/1688-coupang-guide.html" class="sidebar-link"><span class="sidebar-link-icon">📖</span> 1688 소싱 가이드</a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- ============================================================
+             MAIN CONTENT
+             ============================================================ -->
+        <div class="main-content">
+
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                    <div>
+                        <div class="top-bar-title">검색 & 리뷰 분석</div>
+                        <div class="top-bar-date">마지막 업데이트: <span id="lastUpdated">2025-05-24 09:15</span> | 환율: 1 CNY = 190.5 KRW</div>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <button class="top-bar-btn btn-export">📥 <span>CSV 내보내기</span></button>
+                    <button class="top-bar-btn btn-refresh">🔄 <span>새로고침</span></button>
+                    <button class="top-bar-btn btn-run">▶ <span>수집 실행</span></button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content-area">
+
+                <!-- ============================================================
+                     Platform Filter Tabs
+                     ============================================================ -->
+                <div style="margin-bottom:24px;">
+                    <div class="platform-tabs">
+                        <span class="platform-badge p-coupang active"><span class="p-dot"></span>쿠팡</span>
+                        <span class="platform-badge p-gmarket active"><span class="p-dot"></span>지마켓</span>
+                        <span class="platform-badge p-naver active"><span class="p-dot"></span>네이버</span>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     플랫폼별 인기 검색어
+                     ============================================================ -->
+                <div class="section-divider">
+                    <div class="section-divider-title">🔍 플랫폼별 인기 검색어</div>
+                    <div class="section-divider-line"></div>
+                </div>
+
+                <div class="charts-row charts-row-triple">
+                    <!-- 쿠팡 인기 검색어 -->
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">🚀</span>
+                                쿠팡 인기 검색어 TOP 10
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="search-keyword-list">
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">1</span>
+                                    <span class="keyword-text">무선이어폰</span>
+                                    <span class="keyword-volume">45,200</span>
+                                    <span class="keyword-trend trend-flat">→+2%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">2</span>
+                                    <span class="keyword-text">에코백</span>
+                                    <span class="keyword-volume">31,200</span>
+                                    <span class="keyword-trend trend-down">↓-5%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">3</span>
+                                    <span class="keyword-text">실리콘주방</span>
+                                    <span class="keyword-volume">28,400</span>
+                                    <span class="keyword-trend trend-up">↑+15%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">4</span>
+                                    <span class="keyword-text">강아지장난감</span>
+                                    <span class="keyword-volume">22,100</span>
+                                    <span class="keyword-trend trend-up">↑+18%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">5</span>
+                                    <span class="keyword-text">핸드폰거치대</span>
+                                    <span class="keyword-volume">19,500</span>
+                                    <span class="keyword-trend trend-flat">→+1%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">6</span>
+                                    <span class="keyword-text">LED무드등</span>
+                                    <span class="keyword-volume">18,700</span>
+                                    <span class="keyword-trend trend-up">↑+32%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">7</span>
+                                    <span class="keyword-text">메이크업브러쉬</span>
+                                    <span class="keyword-volume">15,600</span>
+                                    <span class="keyword-trend trend-up">↑+24%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">8</span>
+                                    <span class="keyword-text">차량용수납</span>
+                                    <span class="keyword-volume">12,800</span>
+                                    <span class="keyword-trend trend-up">↑+21%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">9</span>
+                                    <span class="keyword-text">캠핑LED</span>
+                                    <span class="keyword-volume">9,800</span>
+                                    <span class="keyword-trend trend-up">↑+45%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">10</span>
+                                    <span class="keyword-text">고양이스크래처</span>
+                                    <span class="keyword-volume">8,900</span>
+                                    <span class="keyword-trend trend-up">↑+28%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 지마켓 인기 검색어 -->
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">🟢</span>
+                                지마켓 인기 검색어 TOP 10
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="search-keyword-list">
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">1</span>
+                                    <span class="keyword-text">여름원피스</span>
+                                    <span class="keyword-volume">52,300</span>
+                                    <span class="keyword-trend trend-up">↑+35%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">2</span>
+                                    <span class="keyword-text">무선이어폰</span>
+                                    <span class="keyword-volume">38,100</span>
+                                    <span class="keyword-trend trend-flat">→+3%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">3</span>
+                                    <span class="keyword-text">선크림</span>
+                                    <span class="keyword-volume">34,500</span>
+                                    <span class="keyword-trend trend-up">↑+28%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">4</span>
+                                    <span class="keyword-text">에코백</span>
+                                    <span class="keyword-volume">29,800</span>
+                                    <span class="keyword-trend trend-down">↓-2%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">5</span>
+                                    <span class="keyword-text">실리콘주방</span>
+                                    <span class="keyword-volume">18,200</span>
+                                    <span class="keyword-trend trend-up">↑+12%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">6</span>
+                                    <span class="keyword-text">남성반바지</span>
+                                    <span class="keyword-volume">16,800</span>
+                                    <span class="keyword-trend trend-up">↑+42%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">7</span>
+                                    <span class="keyword-text">선글라스</span>
+                                    <span class="keyword-volume">15,200</span>
+                                    <span class="keyword-trend trend-up">↑+38%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">8</span>
+                                    <span class="keyword-text">양말세트</span>
+                                    <span class="keyword-volume">12,100</span>
+                                    <span class="keyword-trend trend-up">↑+8%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">9</span>
+                                    <span class="keyword-text">핸드폰거치대</span>
+                                    <span class="keyword-volume">11,500</span>
+                                    <span class="keyword-trend trend-flat">→+1%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">10</span>
+                                    <span class="keyword-text">보조배터리</span>
+                                    <span class="keyword-volume">10,200</span>
+                                    <span class="keyword-trend trend-up">↑+15%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 네이버 인기 검색어 -->
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">🟩</span>
+                                네이버 인기 검색어 TOP 10
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="search-keyword-list">
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">1</span>
+                                    <span class="keyword-text">LED무드등</span>
+                                    <span class="keyword-volume">42,800</span>
+                                    <span class="keyword-trend trend-up">↑+28%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">2</span>
+                                    <span class="keyword-text">실리콘주방</span>
+                                    <span class="keyword-volume">38,500</span>
+                                    <span class="keyword-trend trend-up">↑+22%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">3</span>
+                                    <span class="keyword-text">메이크업브러쉬</span>
+                                    <span class="keyword-volume">32,100</span>
+                                    <span class="keyword-trend trend-up">↑+18%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">4</span>
+                                    <span class="keyword-text">인테리어소품</span>
+                                    <span class="keyword-volume">28,900</span>
+                                    <span class="keyword-trend trend-up">↑+15%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">5</span>
+                                    <span class="keyword-text">강아지장난감</span>
+                                    <span class="keyword-volume">24,300</span>
+                                    <span class="keyword-trend trend-up">↑+20%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">6</span>
+                                    <span class="keyword-text">고양이스크래처</span>
+                                    <span class="keyword-volume">21,500</span>
+                                    <span class="keyword-trend trend-up">↑+32%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">7</span>
+                                    <span class="keyword-text">헤어클립세트</span>
+                                    <span class="keyword-volume">18,700</span>
+                                    <span class="keyword-trend trend-up">↑+25%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">8</span>
+                                    <span class="keyword-text">쿠션커버</span>
+                                    <span class="keyword-volume">15,400</span>
+                                    <span class="keyword-trend trend-up">↑+12%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">9</span>
+                                    <span class="keyword-text">캔들홀더</span>
+                                    <span class="keyword-volume">12,800</span>
+                                    <span class="keyword-trend trend-up">↑+35%</span>
+                                </div>
+                                <div class="search-keyword-item">
+                                    <span class="keyword-rank-num">10</span>
+                                    <span class="keyword-text">미니화병</span>
+                                    <span class="keyword-volume">10,500</span>
+                                    <span class="keyword-trend trend-up">↑+22%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     검색량 트렌드
+                     ============================================================ -->
+                <div class="section-divider">
+                    <div class="section-divider-title">📊 검색량 트렌드</div>
+                    <div class="section-divider-line"></div>
+                </div>
+
+                <div class="charts-row charts-row-equal">
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">📈</span>
+                                주요 키워드 검색량 추이 (7일)
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="chart-canvas-wrap chart-tall">
+                                <canvas id="keywordTrendChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">🍩</span>
+                                검색량 분포 (전체 플랫폼)
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="chart-canvas-wrap chart-tall">
+                                <canvas id="searchDistChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     리뷰 분석
+                     ============================================================ -->
+                <div class="section-divider">
+                    <div class="section-divider-title">⭐ 리뷰 분석</div>
+                    <div class="section-divider-line"></div>
+                </div>
+
+                <div class="charts-row charts-row-triple">
+                    <!-- 쿠팡 리뷰 현황 -->
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">🚀</span>
+                                쿠팡 리뷰 현황
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="review-stats-grid">
+                                <div class="review-stat-card">
+                                    <div class="review-stat-value">4.3</div>
+                                    <div class="review-stat-label">평균별점</div>
+                                </div>
+                                <div class="review-stat-card">
+                                    <div class="review-stat-value">52.8K</div>
+                                    <div class="review-stat-label">총리뷰</div>
+                                </div>
+                                <div class="review-stat-card">
+                                    <div class="review-stat-value">18.4K</div>
+                                    <div class="review-stat-label">포토리뷰</div>
+                                </div>
+                                <div class="review-stat-card">
+                                    <div class="review-stat-value" style="color:var(--success)">+12.4%</div>
+                                    <div class="review-stat-label">주간증가</div>
+                                </div>
+                            </div>
+                            <div class="review-bar-list">
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">5점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-5" style="width:54%"></div></div>
+                                    <span class="review-bar-count">54%</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">4점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-4" style="width:27%"></div></div>
+                                    <span class="review-bar-count">27%</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">3점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-3" style="width:11%"></div></div>
+                                    <span class="review-bar-count">11%</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">2점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-2" style="width:5%"></div></div>
+                                    <span class="review-bar-count">5%</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">1점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-1" style="width:3%"></div></div>
+                                    <span class="review-bar-count">3%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 지마켓 리뷰 현황 -->
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">🟢</span>
+                                지마켓 리뷰 현황
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="review-stats-grid">
+                                <div class="review-stat-card">
+                                    <div class="review-stat-value">4.1</div>
+                                    <div class="review-stat-label">평균별점</div>
+                                </div>
+                                <div class="review-stat-card">
+                                    <div class="review-stat-value">28.5K</div>
+                                    <div class="review-stat-label">총리뷰</div>
+                                </div>
+                                <div class="review-stat-card">
+                                    <div class="review-stat-value">8.2K</div>
+                                    <div class="review-stat-label">포토리뷰</div>
+                                </div>
+                                <div class="review-stat-card">
+                                    <div class="review-stat-value" style="color:var(--success)">+8.7%</div>
+                                    <div class="review-stat-label">주간증가</div>
+                                </div>
+                            </div>
+                            <div class="review-bar-list">
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">5점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-5" style="width:48%"></div></div>
+                                    <span class="review-bar-count">48%</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">4점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-4" style="width:29%"></div></div>
+                                    <span class="review-bar-count">29%</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">3점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-3" style="width:13%"></div></div>
+                                    <span class="review-bar-count">13%</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">2점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-2" style="width:6%"></div></div>
+                                    <span class="review-bar-count">6%</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">1점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-1" style="width:4%"></div></div>
+                                    <span class="review-bar-count">4%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 네이버 리뷰 현황 -->
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">🟩</span>
+                                네이버 리뷰 현황
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="review-stats-grid">
+                                <div class="review-stat-card">
+                                    <div class="review-stat-value">4.5</div>
+                                    <div class="review-stat-label">평균별점</div>
+                                </div>
+                                <div class="review-stat-card">
+                                    <div class="review-stat-value">41.2K</div>
+                                    <div class="review-stat-label">총리뷰</div>
+                                </div>
+                                <div class="review-stat-card">
+                                    <div class="review-stat-value">22.1K</div>
+                                    <div class="review-stat-label">포토리뷰</div>
+                                </div>
+                                <div class="review-stat-card">
+                                    <div class="review-stat-value" style="color:var(--success)">+15.2%</div>
+                                    <div class="review-stat-label">주간증가</div>
+                                </div>
+                            </div>
+                            <div class="review-bar-list">
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">5점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-5" style="width:58%"></div></div>
+                                    <span class="review-bar-count">58%</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">4점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-4" style="width:25%"></div></div>
+                                    <span class="review-bar-count">25%</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">3점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-3" style="width:10%"></div></div>
+                                    <span class="review-bar-count">10%</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">2점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-2" style="width:4%"></div></div>
+                                    <span class="review-bar-count">4%</span>
+                                </div>
+                                <div class="review-bar-row">
+                                    <span class="review-bar-label">1점</span>
+                                    <div class="review-bar-track"><div class="review-bar-fill bar-1" style="width:3%"></div></div>
+                                    <span class="review-bar-count">3%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     리뷰 급상승 상품
+                     ============================================================ -->
+                <div class="section-divider">
+                    <div class="section-divider-title">📈 리뷰 급상승 상품</div>
+                    <div class="section-divider-line"></div>
+                </div>
+
+                <div class="table-panel">
+                    <div class="table-panel-header">
+                        <div class="table-panel-title">
+                            <span>🔥</span> 리뷰 급상승 TOP 10
+                        </div>
+                    </div>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>순위</th>
+                                <th>상품명</th>
+                                <th>플랫폼</th>
+                                <th>현재리뷰</th>
+                                <th>7일전</th>
+                                <th>증가수</th>
+                                <th>증가율</th>
+                                <th>평균별점</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="rank-badge rank-1">1</span></td>
+                                <td><strong>USB-C 고속 충전 케이블 3개</strong></td>
+                                <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                <td>12,450</td>
+                                <td>11,594</td>
+                                <td><span class="trend-indicator trend-up">+856</span></td>
+                                <td><span class="trend-indicator trend-up">↑+7.4%</span></td>
+                                <td>4.5</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-2">2</span></td>
+                                <td><strong>LED 무드등 리모컨 포함</strong></td>
+                                <td><span class="sell-platform-tag tag-naver">네이버</span></td>
+                                <td>8,920</td>
+                                <td>8,210</td>
+                                <td><span class="trend-indicator trend-up">+710</span></td>
+                                <td><span class="trend-indicator trend-up">↑+8.6%</span></td>
+                                <td>4.6</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-3">3</span></td>
+                                <td><strong>실리콘 주방용품 12종 세트</strong></td>
+                                <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                <td>3,847</td>
+                                <td>3,505</td>
+                                <td><span class="trend-indicator trend-up">+342</span></td>
+                                <td><span class="trend-indicator trend-up">↑+9.8%</span></td>
+                                <td>4.4</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-n">4</span></td>
+                                <td><strong>TWS 블루투스 이어폰 5.3</strong></td>
+                                <td><span class="sell-platform-tag tag-gmarket">지마켓</span></td>
+                                <td>6,480</td>
+                                <td>6,068</td>
+                                <td><span class="trend-indicator trend-up">+412</span></td>
+                                <td><span class="trend-indicator trend-up">↑+6.8%</span></td>
+                                <td>4.2</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-n">5</span></td>
+                                <td><strong>메이크업 브러쉬 15종 세트</strong></td>
+                                <td><span class="sell-platform-tag tag-naver">네이버</span></td>
+                                <td>7,245</td>
+                                <td>6,890</td>
+                                <td><span class="trend-indicator trend-up">+355</span></td>
+                                <td><span class="trend-indicator trend-up">↑+5.2%</span></td>
+                                <td>4.7</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-n">6</span></td>
+                                <td><strong>스테인리스 밀폐용기 4종</strong></td>
+                                <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                <td>2,876</td>
+                                <td>2,642</td>
+                                <td><span class="trend-indicator trend-up">+234</span></td>
+                                <td><span class="trend-indicator trend-up">↑+8.9%</span></td>
+                                <td>4.3</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-n">7</span></td>
+                                <td><strong>강아지 노즈워크 장난감</strong></td>
+                                <td><span class="sell-platform-tag tag-gmarket">지마켓</span></td>
+                                <td>2,540</td>
+                                <td>2,351</td>
+                                <td><span class="trend-indicator trend-up">+189</span></td>
+                                <td><span class="trend-indicator trend-up">↑+8.0%</span></td>
+                                <td>4.4</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-n">8</span></td>
+                                <td><strong>고양이 스크래처 골판지</strong></td>
+                                <td><span class="sell-platform-tag tag-naver">네이버</span></td>
+                                <td>3,312</td>
+                                <td>3,134</td>
+                                <td><span class="trend-indicator trend-up">+178</span></td>
+                                <td><span class="trend-indicator trend-up">↑+5.7%</span></td>
+                                <td>4.5</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-n">9</span></td>
+                                <td><strong>에코백 캔버스 토트백</strong></td>
+                                <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                <td>4,567</td>
+                                <td>4,411</td>
+                                <td><span class="trend-indicator trend-up">+156</span></td>
+                                <td><span class="trend-indicator trend-up">↑+3.5%</span></td>
+                                <td>4.3</td>
+                            </tr>
+                            <tr>
+                                <td><span class="rank-badge rank-n">10</span></td>
+                                <td><strong>차량용 트렁크 정리함</strong></td>
+                                <td><span class="sell-platform-tag tag-gmarket">지마켓</span></td>
+                                <td>1,980</td>
+                                <td>1,882</td>
+                                <td><span class="trend-indicator trend-up">+98</span></td>
+                                <td><span class="trend-indicator trend-up">↑+5.2%</span></td>
+                                <td>4.1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div><!-- /content-area -->
+        </div><!-- /main-content -->
+    </div><!-- /dashboard-layout -->
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <script src="data/sample-data.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sidebar mobile toggle
+        var menuBtn = document.getElementById('mobileMenuBtn');
+        var sidebar = document.getElementById('sidebar');
+        var overlay = document.getElementById('sidebarOverlay');
+        if (menuBtn) {
+            menuBtn.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            });
+        }
+        if (overlay) {
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+        }
+
+        if (typeof Chart === 'undefined') return;
+
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.font.size = 11;
+        Chart.defaults.color = '#94A3B8';
+
+        // ── 주요 키워드 검색량 추이 (7일) ──
+        var ctxTrend = document.getElementById('keywordTrendChart');
+        if (ctxTrend) {
+            new Chart(ctxTrend, {
+                type: 'line',
+                data: {
+                    labels: ['05/18','05/19','05/20','05/21','05/22','05/23','05/24'],
+                    datasets: [
+                        { label:'무선이어폰', data:[41200,42100,43500,44000,44800,45000,45200], borderColor:'#2563EB', backgroundColor:'rgba(37,99,235,0.06)', fill:true, tension:0.4, borderWidth:2, pointRadius:3 },
+                        { label:'실리콘주방', data:[22000,23100,24500,25200,26800,27500,28400], borderColor:'#10B981', backgroundColor:'rgba(16,185,129,0.06)', fill:true, tension:0.4, borderWidth:2, pointRadius:3 },
+                        { label:'LED무드등', data:[12500,13800,14500,15200,16800,17500,18700], borderColor:'#F59E0B', backgroundColor:'rgba(245,158,11,0.06)', fill:true, tension:0.4, borderWidth:2, pointRadius:3 },
+                        { label:'강아지장난감', data:[16800,17200,18100,19000,20500,21200,22100], borderColor:'#EC4899', backgroundColor:'rgba(236,72,153,0.06)', fill:true, tension:0.4, borderWidth:2, pointRadius:3 },
+                        { label:'캠핑LED', data:[5200,5800,6500,7200,8100,8800,9800], borderColor:'#8B5CF6', backgroundColor:'rgba(139,92,246,0.06)', fill:true, tension:0.4, borderWidth:2, pointRadius:3 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position:'top', align:'end', labels: { usePointStyle:true, pointStyle:'circle', padding:14, font:{size:10,weight:500} } } },
+                    scales: { x: { grid: { display:false } }, y: { grid: { color:'rgba(0,0,0,0.04)' }, ticks: { callback: function(v){ return (v/1000).toFixed(0)+'K'; } } } },
+                    interaction: { mode:'index', intersect:false }
+                }
+            });
+        }
+
+        // ── 검색량 분포 (전체 플랫폼) ──
+        var ctxDist = document.getElementById('searchDistChart');
+        if (ctxDist) {
+            new Chart(ctxDist, {
+                type: 'doughnut',
+                data: {
+                    labels: ['무선이어폰','에코백','실리콘주방','강아지장난감','LED무드등','핸드폰거치대','메이크업브러쉬','캠핑LED','기타'],
+                    datasets: [{
+                        data: [45200,31200,28400,22100,18700,19500,15600,9800,25000],
+                        backgroundColor: ['#2563EB','#06B6D4','#10B981','#F59E0B','#EC4899','#8B5CF6','#F97316','#EF4444','#CBD5E1'],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    cutout: '55%',
+                    plugins: { legend: { position:'right', labels: { usePointStyle:true, pointStyle:'circle', padding:10, font:{size:11} } } }
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>

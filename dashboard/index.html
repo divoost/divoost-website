@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="멀티채널 소싱 트래커 대시보드 - 1688, 타오바오에서 쿠팡, 지마켓, 네이버스토어까지 매일 업데이트되는 인기상품, 마진 분석, 트렌드">
+    <title>소싱 트래커 | 멀티채널 대시보드</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-layout">
+
+        <!-- Sidebar Overlay (mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- ============================================================
+             SIDEBAR
+             ============================================================ -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon">ST</div>
+                <div class="sidebar-logo-text">소싱 트래커<small>MULTI-CHANNEL</small></div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">소싱 플랫폼</div>
+                    <div style="padding:0 12px 12px;display:flex;gap:6px;">
+                        <span class="platform-badge p-1688 active"><span class="p-dot"></span>1688</span>
+                        <span class="platform-badge p-taobao active"><span class="p-dot"></span>타오바오</span>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">판매 플랫폼</div>
+                    <div style="padding:0 12px 12px;display:flex;gap:6px;flex-wrap:wrap;">
+                        <span class="platform-badge p-coupang active"><span class="p-dot"></span>쿠팡</span>
+                        <span class="platform-badge p-gmarket active"><span class="p-dot"></span>지마켓</span>
+                        <span class="platform-badge p-naver active"><span class="p-dot"></span>네이버</span>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">대시보드</div>
+                    <a href="index.html" class="sidebar-link active"><span class="sidebar-link-icon">📊</span> 종합 현황</a>
+                    <a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품<span class="badge badge-new">87</span></a>
+                    <a href="trends.html" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a>
+                    <a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a>
+                    <a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 & 리뷰</a>
+                    <a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a>
+                </div>
+                            <div class="sidebar-section">
+                    <div class="sidebar-section-title">바로가기</div>
+                    <a href="../ezcomet/index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> EZCOMET 홈</a>
+                    <a href="../ezcomet/1688-coupang-guide.html" class="sidebar-link"><span class="sidebar-link-icon">📖</span> 1688 소싱 가이드</a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- ============================================================
+             MAIN CONTENT
+             ============================================================ -->
+        <div class="main-content">
+
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                    <div>
+                        <div class="top-bar-title">멀티채널 소싱 트래커</div>
+                        <div class="top-bar-date">마지막 업데이트: <span id="lastUpdated">-</span> | 환율: 1 CNY = 190.5 KRW</div>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <button class="top-bar-btn btn-export">📥 <span>CSV 내보내기</span></button>
+                    <button class="top-bar-btn btn-refresh">🔄 <span>새로고침</span></button>
+                    <button class="top-bar-btn btn-run">▶ <span>수집 실행</span></button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content-area">
+
+                <!-- Status Bar -->
+                <div class="status-bar">
+                    <div class="status-item">
+                        <span class="status-dot online"></span>
+                        쿠팡 API 정상
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot online"></span>
+                        지마켓 스크래핑 정상
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot online"></span>
+                        네이버 API 정상
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot online"></span>
+                        1688 스크래핑 정상
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot online"></span>
+                        타오바오 스크래핑 정상
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot online"></span>
+                        GitHub Actions 활성
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     Platform Overview Cards
+                     ============================================================ -->
+                <div class="platform-overview-grid">
+                    <div class="platform-overview-card po-1688">
+                        <div class="po-logo">🏭</div>
+                        <div class="po-info">
+                            <div class="po-name">1688</div>
+                            <div class="po-sub">소싱 플랫폼</div>
+                        </div>
+                        <div class="po-stats">
+                            <div class="po-stat">수집 <strong>342</strong>개</div>
+                            <div class="po-stat">직배송 <strong>218</strong>개</div>
+                        </div>
+                    </div>
+                    <div class="platform-overview-card po-taobao">
+                        <div class="po-logo">🛒</div>
+                        <div class="po-info">
+                            <div class="po-name">타오바오</div>
+                            <div class="po-sub">소싱 플랫폼</div>
+                        </div>
+                        <div class="po-stats">
+                            <div class="po-stat">수집 <strong>145</strong>개</div>
+                            <div class="po-stat">직배송 <strong>89</strong>개</div>
+                        </div>
+                    </div>
+                    <div class="platform-overview-card po-coupang">
+                        <div class="po-logo">🚀</div>
+                        <div class="po-info">
+                            <div class="po-name">쿠팡</div>
+                            <div class="po-sub">판매 플랫폼</div>
+                        </div>
+                        <div class="po-stats">
+                            <div class="po-stat">추천 <strong>63</strong>개</div>
+                            <div class="po-stat">평균마진 <strong>41.2%</strong></div>
+                        </div>
+                    </div>
+                    <div class="platform-overview-card po-gmarket">
+                        <div class="po-logo">🟢</div>
+                        <div class="po-info">
+                            <div class="po-name">지마켓</div>
+                            <div class="po-sub">판매 플랫폼</div>
+                        </div>
+                        <div class="po-stats">
+                            <div class="po-stat">추천 <strong>48</strong>개</div>
+                            <div class="po-stat">평균마진 <strong>38.5%</strong></div>
+                        </div>
+                    </div>
+                    <div class="platform-overview-card po-naver">
+                        <div class="po-logo">🟩</div>
+                        <div class="po-info">
+                            <div class="po-name">네이버스토어</div>
+                            <div class="po-sub">판매 플랫폼</div>
+                        </div>
+                        <div class="po-stats">
+                            <div class="po-stat">추천 <strong>52</strong>개</div>
+                            <div class="po-stat">평균마진 <strong>43.8%</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Period Tabs -->
+                <div class="period-tabs-bar">
+                    <div class="period-tabs">
+                        <button class="period-tab" data-period="hourly">시간별</button>
+                        <button class="period-tab active" data-period="daily">일별</button>
+                        <button class="period-tab" data-period="weekly">주별</button>
+                        <button class="period-tab" data-period="monthly">월별</button>
+                    </div>
+                    <div class="category-filter">
+                        <select class="category-select" id="globalCategoryFilter">
+                            <option value="all">전체 카테고리</option>
+                            <option value="kitchen">🍳 주방용품</option>
+                            <option value="electronics">🎧 전자기기</option>
+                            <option value="home">🏠 홈인테리어</option>
+                            <option value="beauty">💄 뷰티도구</option>
+                            <option value="fashion">👜 패션잡화</option>
+                            <option value="pet">🐾 반려동물</option>
+                            <option value="baby">👶 유아/아동</option>
+                            <option value="sports">🏋️ 스포츠</option>
+                            <option value="car">🚗 자동차용품</option>
+                            <option value="stationery">✏️ 문구/사무</option>
+                        </select>
+                        <select class="category-select">
+                            <option>오늘 (05/24)</option>
+                            <option>어제 (05/23)</option>
+                            <option>이번 주</option>
+                            <option>이번 달</option>
+                            <option>직접 선택</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     KPI Summary Cards
+                     ============================================================ -->
+                <section id="overview">
+                    <div class="kpi-grid">
+                        <div class="kpi-card kpi-total">
+                            <div class="kpi-header">
+                                <div class="kpi-icon">📦</div>
+                                <span class="kpi-change up">↑ +12</span>
+                            </div>
+                            <div class="kpi-value">487</div>
+                            <div class="kpi-label">수집 상품</div>
+                            <div class="kpi-sub">전일 대비 +2.5%</div>
+                        </div>
+                        <div class="kpi-card kpi-recommend">
+                            <div class="kpi-header">
+                                <div class="kpi-icon">🎯</div>
+                                <span class="kpi-change up">↑ +14</span>
+                            </div>
+                            <div class="kpi-value">87</div>
+                            <div class="kpi-label">추천 상품 (마진 30%+)</div>
+                            <div class="kpi-sub">쿠팡63 지마켓48 네이버52</div>
+                        </div>
+                        <div class="kpi-card kpi-margin">
+                            <div class="kpi-header">
+                                <div class="kpi-icon">💰</div>
+                                <span class="kpi-change up">↑ +2.3%p</span>
+                            </div>
+                            <div class="kpi-value">41.2%</div>
+                            <div class="kpi-label">평균 마진율</div>
+                            <div class="kpi-sub">최고: 뷰티 52.3%</div>
+                        </div>
+                        <div class="kpi-card kpi-new">
+                            <div class="kpi-header">
+                                <div class="kpi-icon">🆕</div>
+                                <span class="kpi-change up">↑ +8</span>
+                            </div>
+                            <div class="kpi-value">24</div>
+                            <div class="kpi-label">신규 발견</div>
+                            <div class="kpi-sub">1688: 18 / 타오바오: 6</div>
+                        </div>
+                        <div class="kpi-card kpi-hot">
+                            <div class="kpi-header">
+                                <div class="kpi-icon">🔥</div>
+                                <span class="kpi-change up">↑ +5</span>
+                            </div>
+                            <div class="kpi-value">11</div>
+                            <div class="kpi-label">핫 아이템</div>
+                            <div class="kpi-sub">리뷰 급상승 상품</div>
+                        </div>
+                        <div class="kpi-card kpi-alert">
+                            <div class="kpi-header">
+                                <div class="kpi-icon">⚠️</div>
+                                <span class="kpi-change down">↓ -1</span>
+                            </div>
+                            <div class="kpi-value">4</div>
+                            <div class="kpi-label">주의 필요</div>
+                            <div class="kpi-sub">KC인증 2 / 브랜드 2</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================
+                     Charts Row 1: 트렌드 + 마진율
+                     ============================================================ -->
+                <section id="trends">
+                    <div class="charts-row">
+                        <div class="chart-panel">
+                            <div class="chart-panel-header">
+                                <div class="chart-panel-title">
+                                    <span class="title-icon">📈</span>
+                                    상품 수집 & 추천 트렌드
+                                    <span id="periodLabel" style="font-size:11px;color:#94A3B8;font-weight:500">(일별)</span>
+                                </div>
+                                <div class="chart-panel-actions">
+                                    <button class="chart-tab active">7일</button>
+                                    <button class="chart-tab">30일</button>
+                                    <button class="chart-tab">90일</button>
+                                </div>
+                            </div>
+                            <div class="chart-panel-body">
+                                <div class="chart-canvas-wrap">
+                                    <canvas id="mainTrendChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-panel">
+                            <div class="chart-panel-header">
+                                <div class="chart-panel-title">
+                                    <span class="title-icon">💰</span>
+                                    평균 마진율 추이
+                                </div>
+                            </div>
+                            <div class="chart-panel-body">
+                                <div class="chart-canvas-wrap">
+                                    <canvas id="marginTrendChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ============================================================
+                     Charts Row 2: 카테고리별 마진 + 리뷰/판매량
+                     ============================================================ -->
+                <div class="charts-row charts-row-equal">
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">📂</span>
+                                카테고리별 평균 마진율
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="chart-canvas-wrap chart-tall">
+                                <canvas id="categoryMarginChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">⭐</span>
+                                TOP 상품 리뷰 현황
+                            </div>
+                            <div class="chart-panel-actions">
+                                <button class="chart-tab active">리뷰수</button>
+                                <button class="chart-tab">판매량</button>
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="chart-canvas-wrap chart-tall">
+                                <canvas id="salesRankChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     실시간 알림 & 핫이슈
+                     ============================================================ -->
+                <div class="section-divider">🔥 실시간 알림 & 핫이슈</div>
+                <div class="alert-list">
+                    <div class="alert-item alert-hot">
+                        <span class="alert-icon">🔥</span>
+                        <div class="alert-body">
+                            <div class="alert-title">[쿠팡] LED 무드등 리뷰 급상승</div>
+                            <div class="alert-desc">7일간 리뷰 528개 증가</div>
+                            <div class="alert-time">2시간 전</div>
+                        </div>
+                    </div>
+                    <div class="alert-item alert-rising">
+                        <span class="alert-icon">📈</span>
+                        <div class="alert-body">
+                            <div class="alert-title">[네이버] 실리콘 주방세트 검색량 폭증</div>
+                            <div class="alert-desc">네이버 검색량 전주 대비 +35%</div>
+                            <div class="alert-time">3시간 전</div>
+                        </div>
+                    </div>
+                    <div class="alert-item alert-price">
+                        <span class="alert-icon">💰</span>
+                        <div class="alert-body">
+                            <div class="alert-title">[1688] 블루투스 이어폰 단가 하락</div>
+                            <div class="alert-desc">22元→18元 (18% 하락)</div>
+                            <div class="alert-time">5시간 전</div>
+                        </div>
+                    </div>
+                    <div class="alert-item alert-new">
+                        <span class="alert-icon">🆕</span>
+                        <div class="alert-body">
+                            <div class="alert-title">[타오바오] 미니 빔프로젝터 신규 발견</div>
+                            <div class="alert-desc">1688 대비 15% 저렴한 공급상 발견</div>
+                            <div class="alert-time">6시간 전</div>
+                        </div>
+                    </div>
+                    <div class="alert-item alert-rising">
+                        <span class="alert-icon">📈</span>
+                        <div class="alert-body">
+                            <div class="alert-title">[지마켓] 강아지 장난감 판매 급증</div>
+                            <div class="alert-desc">지마켓 주간 판매량 +45%</div>
+                            <div class="alert-time">7시간 전</div>
+                        </div>
+                    </div>
+                    <div class="alert-item alert-hot">
+                        <span class="alert-icon">⚠️</span>
+                        <div class="alert-body">
+                            <div class="alert-title">[전체] 캠핑 LED 시즌 피크 진입</div>
+                            <div class="alert-desc">3개 플랫폼 모두 검색량 상승</div>
+                            <div class="alert-time">8시간 전</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /content-area -->
+        </div><!-- /main-content -->
+    </div><!-- /dashboard-layout -->
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <script src="data/sample-data.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
