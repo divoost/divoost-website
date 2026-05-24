@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소싱 트래커 | 추천 상품</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-layout">
+
+        <!-- Sidebar Overlay (mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- ============================================================
+             SIDEBAR
+             ============================================================ -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon">ST</div>
+                <div class="sidebar-logo-text">
+                    소싱 트래커
+                    <small>1688 → COUPANG</small>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">플랫폼</div>
+                    <div class="platform-tabs" style="padding:4px 12px 12px;gap:4px;">
+                        <span class="platform-badge p-coupang active" style="font-size:10px;padding:3px 8px;">쿠팡</span>
+                        <span class="platform-badge p-gmarket active" style="font-size:10px;padding:3px 8px;">지마켓</span>
+                        <span class="platform-badge p-naver active" style="font-size:10px;padding:3px 8px;">네이버</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">대시보드</div>
+                    <a href="index.html" class="sidebar-link">
+                        <span class="sidebar-link-icon">📊</span> 종합 현황
+                    </a>
+                    <a href="products.html" class="sidebar-link active">
+                        <span class="sidebar-link-icon">🏆</span> 추천 상품
+                        <span class="badge badge-new">87</span>
+                    </a>
+                    <a href="trends.html" class="sidebar-link">
+                        <span class="sidebar-link-icon">📈</span> 트렌드 분석
+                    </a>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">분석</div>
+                    <a href="platforms.html" class="sidebar-link">
+                        <span class="sidebar-link-icon">🏪</span> 플랫폼 비교
+                    </a>
+                    <a href="search-reviews.html" class="sidebar-link">
+                        <span class="sidebar-link-icon">🔍</span> 검색 & 리뷰
+                    </a>
+                    <a href="margin.html" class="sidebar-link">
+                        <span class="sidebar-link-icon">💰</span> 마진 분석
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- ============================================================
+             MAIN CONTENT
+             ============================================================ -->
+        <div class="main-content">
+
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                    <div>
+                        <div class="top-bar-title">추천 상품 트래커</div>
+                        <div class="top-bar-date">마지막 업데이트: <span id="lastUpdated">-</span> | 환율: 1 CNY = 190.5 KRW</div>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <button class="top-bar-btn btn-export">📥 <span>CSV 내보내기</span></button>
+                    <button class="top-bar-btn btn-refresh">🔄 <span>새로고침</span></button>
+                    <button class="top-bar-btn btn-run">▶ <span>수집 실행</span></button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content-area">
+
+                <!-- ============================================================
+                     Platform Filter Bar
+                     ============================================================ -->
+                <div class="period-tabs-bar">
+                    <div class="platform-tabs">
+                        <button class="platform-badge p-coupang active"><span class="p-dot"></span>쿠팡</button>
+                        <button class="platform-badge p-gmarket active"><span class="p-dot"></span>지마켓</button>
+                        <button class="platform-badge p-naver active"><span class="p-dot"></span>네이버</button>
+                    </div>
+                    <div class="category-filter">
+                        <select class="category-select">
+                            <option value="all">전체 소싱처</option>
+                            <option>🏭 1688</option>
+                            <option>🛒 타오바오</option>
+                        </select>
+                        <select class="category-select">
+                            <option value="all">전체 카테고리</option>
+                            <option>🍳 주방용품</option>
+                            <option>🎧 전자기기</option>
+                            <option>🏠 홈인테리어</option>
+                            <option>💄 뷰티도구</option>
+                            <option>👜 패션잡화</option>
+                            <option>🐾 반려동물</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     Main Product Table
+                     ============================================================ -->
+                <div class="table-panel">
+                    <div class="table-panel-header">
+                        <div class="table-panel-title">
+                            🏆 추천 상품 TOP (마진율 순)
+                        </div>
+                        <div class="table-filters">
+                            <button class="table-filter-btn active">전체</button>
+                            <button class="table-filter-btn">STRONG BUY</button>
+                            <button class="table-filter-btn">BUY</button>
+                            <button class="table-filter-btn">직배송만</button>
+                            <input type="text" class="table-search" placeholder="상품명 검색...">
+                        </div>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th data-sort="rank">순위 <span class="sort-icon">↕</span></th>
+                                    <th data-sort="name">상품명</th>
+                                    <th data-sort="source">소싱처 <span class="sort-icon">↕</span></th>
+                                    <th data-sort="platform">판매처 <span class="sort-icon">↕</span></th>
+                                    <th data-sort="sourcePrice">소싱가 <span class="sort-icon">↕</span></th>
+                                    <th data-sort="sellPrice">판매가 <span class="sort-icon">↕</span></th>
+                                    <th data-sort="margin" class="sorted">마진율 <span class="sort-icon">↓</span></th>
+                                    <th data-sort="reviews">리뷰수 <span class="sort-icon">↕</span></th>
+                                    <th data-sort="trend">7일 증가 <span class="sort-icon">↕</span></th>
+                                    <th>직배송</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Row 1 -->
+                                <tr>
+                                    <td><span class="rank-badge rank-1">1</span></td>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-thumb" style="background:linear-gradient(135deg,#EC4899,#F472B6)">💄</div>
+                                            <div class="product-info">
+                                                <div class="product-name">메이크업 브러쉬 15종</div>
+                                                <div class="product-category-sm">뷰티도구</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>
+                                        <span class="sell-platform-tag tag-coupang">쿠팡</span>
+                                        <span class="sell-platform-tag tag-naver">네이버</span>
+                                    </td>
+                                    <td>8.5元<br><small style="color:#94A3B8">1,619원</small></td>
+                                    <td><strong>12,900원</strong></td>
+                                    <td><span class="margin-badge margin-strong">56.8%</span></td>
+                                    <td>5,621</td>
+                                    <td><span class="trend-indicator trend-up">↑ +215</span></td>
+                                    <td><span class="shipping-badge shipping-direct">직배송</span></td>
+                                </tr>
+                                <!-- Row 2 -->
+                                <tr>
+                                    <td><span class="rank-badge rank-2">2</span></td>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-thumb" style="background:linear-gradient(135deg,#059669,#34D399)">🍳</div>
+                                            <div class="product-info">
+                                                <div class="product-name">실리콘 주방세트 12종</div>
+                                                <div class="product-category-sm">주방용품</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>
+                                        <span class="sell-platform-tag tag-coupang">쿠팡</span>
+                                        <span class="sell-platform-tag tag-gmarket">지마켓</span>
+                                        <span class="sell-platform-tag tag-naver">네이버</span>
+                                    </td>
+                                    <td>12.5元<br><small style="color:#94A3B8">2,381원</small></td>
+                                    <td><strong>18,900원</strong></td>
+                                    <td><span class="margin-badge margin-strong">54.2%</span></td>
+                                    <td>3,847</td>
+                                    <td><span class="trend-indicator trend-up">↑ +342</span></td>
+                                    <td><span class="shipping-badge shipping-direct">직배송</span></td>
+                                </tr>
+                                <!-- Row 3 -->
+                                <tr>
+                                    <td><span class="rank-badge rank-3">3</span></td>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-thumb" style="background:linear-gradient(135deg,#2563EB,#06B6D4)">🎧</div>
+                                            <div class="product-info">
+                                                <div class="product-name">USB-C 충전케이블 3개</div>
+                                                <div class="product-category-sm">전자기기</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="source-platform-tag tag-taobao">타오바오</span></td>
+                                    <td>
+                                        <span class="sell-platform-tag tag-coupang">쿠팡</span>
+                                        <span class="sell-platform-tag tag-gmarket">지마켓</span>
+                                    </td>
+                                    <td>3.0元<br><small style="color:#94A3B8">572원</small></td>
+                                    <td><strong>7,900원</strong></td>
+                                    <td><span class="margin-badge margin-strong">55.1%</span></td>
+                                    <td>12,450</td>
+                                    <td><span class="trend-indicator trend-up">↑ +856</span></td>
+                                    <td><span class="shipping-badge shipping-direct">직배송</span></td>
+                                </tr>
+                                <!-- Row 4 -->
+                                <tr>
+                                    <td><span class="rank-badge rank-n">4</span></td>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-thumb" style="background:linear-gradient(135deg,#10B981,#6EE7B7)">🐾</div>
+                                            <div class="product-info">
+                                                <div class="product-name">강아지 노즈워크</div>
+                                                <div class="product-category-sm">반려동물</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>
+                                        <span class="sell-platform-tag tag-coupang">쿠팡</span>
+                                        <span class="sell-platform-tag tag-naver">네이버</span>
+                                    </td>
+                                    <td>6.0元<br><small style="color:#94A3B8">1,143원</small></td>
+                                    <td><strong>9,900원</strong></td>
+                                    <td><span class="margin-badge margin-strong">51.3%</span></td>
+                                    <td>1,893</td>
+                                    <td><span class="trend-indicator trend-up">↑ +189</span></td>
+                                    <td><span class="shipping-badge shipping-direct">직배송</span></td>
+                                </tr>
+                                <!-- Row 5 -->
+                                <tr>
+                                    <td><span class="rank-badge rank-n">5</span></td>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-thumb" style="background:linear-gradient(135deg,#2563EB,#06B6D4)">🏠</div>
+                                            <div class="product-info">
+                                                <div class="product-name">LED 무드등 리모컨</div>
+                                                <div class="product-category-sm">홈인테리어</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>
+                                        <span class="sell-platform-tag tag-coupang">쿠팡</span>
+                                        <span class="sell-platform-tag tag-gmarket">지마켓</span>
+                                        <span class="sell-platform-tag tag-naver">네이버</span>
+                                    </td>
+                                    <td>18.0元<br><small style="color:#94A3B8">3,429원</small></td>
+                                    <td><strong>15,900원</strong></td>
+                                    <td><span class="margin-badge margin-strong">48.7%</span></td>
+                                    <td>2,156</td>
+                                    <td><span class="trend-indicator trend-up">↑ +528</span></td>
+                                    <td><span class="shipping-badge shipping-direct">직배송</span></td>
+                                </tr>
+                                <!-- Row 6 -->
+                                <tr>
+                                    <td><span class="rank-badge rank-n">6</span></td>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-thumb" style="background:linear-gradient(135deg,#7C3AED,#EC4899)">👜</div>
+                                            <div class="product-info">
+                                                <div class="product-name">에코백 캔버스</div>
+                                                <div class="product-category-sm">패션잡화</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="source-platform-tag tag-taobao">타오바오</span></td>
+                                    <td>
+                                        <span class="sell-platform-tag tag-gmarket">지마켓</span>
+                                        <span class="sell-platform-tag tag-naver">네이버</span>
+                                    </td>
+                                    <td>4.8元<br><small style="color:#94A3B8">914원</small></td>
+                                    <td><strong>8,500원</strong></td>
+                                    <td><span class="margin-badge margin-strong">47.2%</span></td>
+                                    <td>3,210</td>
+                                    <td><span class="trend-indicator trend-up">↑ +98</span></td>
+                                    <td><span class="shipping-badge shipping-direct">직배송</span></td>
+                                </tr>
+                                <!-- Row 7 -->
+                                <tr>
+                                    <td><span class="rank-badge rank-n">7</span></td>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-thumb" style="background:linear-gradient(135deg,#1E293B,#475569)">🚗</div>
+                                            <div class="product-info">
+                                                <div class="product-name">차량 트렁크 정리함</div>
+                                                <div class="product-category-sm">자동차용품</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>
+                                        <span class="sell-platform-tag tag-coupang">쿠팡</span>
+                                    </td>
+                                    <td>25.0元<br><small style="color:#94A3B8">4,763원</small></td>
+                                    <td><strong>19,900원</strong></td>
+                                    <td><span class="margin-badge margin-strong">44.8%</span></td>
+                                    <td>1,245</td>
+                                    <td><span class="trend-indicator trend-up">↑ +98</span></td>
+                                    <td><span class="shipping-badge shipping-direct">직배송</span></td>
+                                </tr>
+                                <!-- Row 8 -->
+                                <tr>
+                                    <td><span class="rank-badge rank-n">8</span></td>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-thumb" style="background:linear-gradient(135deg,#10B981,#6EE7B7)">🐾</div>
+                                            <div class="product-info">
+                                                <div class="product-name">고양이 스크래처</div>
+                                                <div class="product-category-sm">반려동물</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="source-platform-tag tag-taobao">타오바오</span></td>
+                                    <td>
+                                        <span class="sell-platform-tag tag-coupang">쿠팡</span>
+                                        <span class="sell-platform-tag tag-naver">네이버</span>
+                                    </td>
+                                    <td>7.2元<br><small style="color:#94A3B8">1,372원</small></td>
+                                    <td><strong>11,500원</strong></td>
+                                    <td><span class="margin-badge margin-good">43.5%</span></td>
+                                    <td>2,890</td>
+                                    <td><span class="trend-indicator trend-up">↑ +210</span></td>
+                                    <td><span class="shipping-badge shipping-direct">직배송</span></td>
+                                </tr>
+                                <!-- Row 9 -->
+                                <tr>
+                                    <td><span class="rank-badge rank-n">9</span></td>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-thumb" style="background:linear-gradient(135deg,#2563EB,#06B6D4)">🎧</div>
+                                            <div class="product-info">
+                                                <div class="product-name">TWS 블루투스 이어폰</div>
+                                                <div class="product-category-sm">전자기기</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>
+                                        <span class="sell-platform-tag tag-coupang">쿠팡</span>
+                                        <span class="sell-platform-tag tag-gmarket">지마켓</span>
+                                    </td>
+                                    <td>22.0元<br><small style="color:#94A3B8">4,191원</small></td>
+                                    <td><strong>14,900원</strong></td>
+                                    <td><span class="margin-badge margin-good">42.1%</span></td>
+                                    <td>8,234</td>
+                                    <td><span class="trend-indicator trend-up">↑ +412</span></td>
+                                    <td><span class="shipping-badge shipping-direct">직배송</span></td>
+                                </tr>
+                                <!-- Row 10 -->
+                                <tr>
+                                    <td><span class="rank-badge rank-n">10</span></td>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-thumb" style="background:linear-gradient(135deg,#8B5CF6,#A78BFA)">👶</div>
+                                            <div class="product-info">
+                                                <div class="product-name">몬테소리 원목 퍼즐</div>
+                                                <div class="product-category-sm">유아/아동</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>
+                                        <span class="sell-platform-tag tag-naver">네이버</span>
+                                    </td>
+                                    <td>28.0元<br><small style="color:#94A3B8">5,334원</small></td>
+                                    <td><strong>22,900원</strong></td>
+                                    <td><span class="margin-badge margin-good">38.5%</span></td>
+                                    <td>987</td>
+                                    <td><span class="trend-indicator trend-up">↑ +67</span></td>
+                                    <td><span class="shipping-badge shipping-agent">배대지</span></td>
+                                </tr>
+                                <!-- Row 11 -->
+                                <tr>
+                                    <td><span class="rank-badge rank-n">11</span></td>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-thumb" style="background:linear-gradient(135deg,#EC4899,#F472B6)">💄</div>
+                                            <div class="product-info">
+                                                <div class="product-name">실리콘 헤어클립 20개</div>
+                                                <div class="product-category-sm">뷰티도구</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="source-platform-tag tag-taobao">타오바오</span></td>
+                                    <td>
+                                        <span class="sell-platform-tag tag-coupang">쿠팡</span>
+                                        <span class="sell-platform-tag tag-gmarket">지마켓</span>
+                                        <span class="sell-platform-tag tag-naver">네이버</span>
+                                    </td>
+                                    <td>2.5元<br><small style="color:#94A3B8">476원</small></td>
+                                    <td><strong>6,900원</strong></td>
+                                    <td><span class="margin-badge margin-strong">52.8%</span></td>
+                                    <td>4,560</td>
+                                    <td><span class="trend-indicator trend-up">↑ +320</span></td>
+                                    <td><span class="shipping-badge shipping-direct">직배송</span></td>
+                                </tr>
+                                <!-- Row 12 -->
+                                <tr>
+                                    <td><span class="rank-badge rank-n">12</span></td>
+                                    <td>
+                                        <div class="product-cell">
+                                            <div class="product-thumb" style="background:linear-gradient(135deg,#1E293B,#475569)">🚗</div>
+                                            <div class="product-info">
+                                                <div class="product-name">차량용 핸드폰 거치대</div>
+                                                <div class="product-category-sm">자동차용품</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>
+                                        <span class="sell-platform-tag tag-coupang">쿠팡</span>
+                                        <span class="sell-platform-tag tag-gmarket">지마켓</span>
+                                    </td>
+                                    <td>8.0元<br><small style="color:#94A3B8">1,524원</small></td>
+                                    <td><strong>9,900원</strong></td>
+                                    <td><span class="margin-badge margin-good">40.2%</span></td>
+                                    <td>6,780</td>
+                                    <td><span class="trend-indicator trend-up">↑ +180</span></td>
+                                    <td><span class="shipping-badge shipping-direct">직배송</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-footer">
+                        <div class="table-footer-info">총 87개 추천 상품 중 1-12 표시</div>
+                        <div class="pagination">
+                            <button class="page-btn">←</button>
+                            <button class="page-btn active">1</button>
+                            <button class="page-btn">2</button>
+                            <button class="page-btn">3</button>
+                            <button class="page-btn">4</button>
+                            <button class="page-btn">5</button>
+                            <button class="page-btn">6</button>
+                            <button class="page-btn">7</button>
+                            <button class="page-btn">8</button>
+                            <button class="page-btn">→</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     Section Divider
+                     ============================================================ -->
+                <div class="section-divider">
+                    <div class="section-divider-title">📊 판매 플랫폼별 인기 상품 비교</div>
+                    <div class="section-divider-line"></div>
+                </div>
+
+                <!-- ============================================================
+                     Multi-Platform Price Comparison
+                     ============================================================ -->
+                <div class="mp-price-grid">
+                    <!-- Coupang TOP 5 -->
+                    <div class="mp-price-card">
+                        <div class="mp-price-header mp-coupang">🛒 쿠팡 TOP 5</div>
+                        <div class="mp-price-body">
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">실리콘 주방세트</span>
+                                <span class="mp-price-val">18,900원</span>
+                                <span class="mp-margin-val" style="color:#059669">마진 54.2%</span>
+                            </div>
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">TWS 이어폰</span>
+                                <span class="mp-price-val">14,900원</span>
+                                <span class="mp-margin-val" style="color:#2563EB">마진 42.1%</span>
+                            </div>
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">LED 무드등</span>
+                                <span class="mp-price-val">15,900원</span>
+                                <span class="mp-margin-val" style="color:#059669">마진 48.7%</span>
+                            </div>
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">메이크업 브러쉬</span>
+                                <span class="mp-price-val">12,900원</span>
+                                <span class="mp-margin-val" style="color:#059669">마진 56.8%</span>
+                            </div>
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">강아지 장난감</span>
+                                <span class="mp-price-val">9,900원</span>
+                                <span class="mp-margin-val" style="color:#059669">마진 51.3%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gmarket TOP 5 -->
+                    <div class="mp-price-card">
+                        <div class="mp-price-header mp-gmarket">🏬 지마켓 TOP 5</div>
+                        <div class="mp-price-body">
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">실리콘 주방세트</span>
+                                <span class="mp-price-val">17,500원</span>
+                                <span class="mp-margin-val" style="color:#059669">마진 48.3%</span>
+                            </div>
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">USB-C 케이블</span>
+                                <span class="mp-price-val">6,900원</span>
+                                <span class="mp-margin-val" style="color:#059669">마진 50.2%</span>
+                            </div>
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">LED 무드등</span>
+                                <span class="mp-price-val">14,500원</span>
+                                <span class="mp-margin-val" style="color:#2563EB">마진 44.1%</span>
+                            </div>
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">에코백</span>
+                                <span class="mp-price-val">8,500원</span>
+                                <span class="mp-margin-val" style="color:#059669">마진 47.2%</span>
+                            </div>
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">핸드폰 거치대</span>
+                                <span class="mp-price-val">8,900원</span>
+                                <span class="mp-margin-val" style="color:#2563EB">마진 38.5%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Naver TOP 5 -->
+                    <div class="mp-price-card">
+                        <div class="mp-price-header mp-naver">🟢 네이버 TOP 5</div>
+                        <div class="mp-price-body">
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">메이크업 브러쉬</span>
+                                <span class="mp-price-val">13,500원</span>
+                                <span class="mp-margin-val" style="color:#059669">마진 58.2%</span>
+                            </div>
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">실리콘 주방세트</span>
+                                <span class="mp-price-val">19,500원</span>
+                                <span class="mp-margin-val" style="color:#059669">마진 55.8%</span>
+                            </div>
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">고양이 스크래처</span>
+                                <span class="mp-price-val">12,500원</span>
+                                <span class="mp-margin-val" style="color:#059669">마진 45.2%</span>
+                            </div>
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">헤어클립 20개</span>
+                                <span class="mp-price-val">7,500원</span>
+                                <span class="mp-margin-val" style="color:#059669">마진 55.1%</span>
+                            </div>
+                            <div class="mp-price-row">
+                                <span class="mp-product-name">LED 무드등</span>
+                                <span class="mp-price-val">16,500원</span>
+                                <span class="mp-margin-val" style="color:#059669">마진 50.3%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /content-area -->
+        </div><!-- /main-content -->
+    </div><!-- /dashboard-layout -->
+
+    <script src="data/sample-data.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
