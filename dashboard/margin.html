@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="소싱 트래커 - 마진 분석 및 시뮬레이터">
+    <title>소싱 트래커 | 마진 분석</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="dashboard-layout">
+
+        <!-- Sidebar Overlay (mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+        <!-- ============================================================
+             SIDEBAR
+             ============================================================ -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon">ST</div>
+                <div class="sidebar-logo-text">소싱 트래커<small>MULTI-CHANNEL</small></div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">소싱 플랫폼</div>
+                    <div style="padding:0 12px 12px;display:flex;gap:6px;">
+                        <span class="platform-badge p-1688 active"><span class="p-dot"></span>1688</span>
+                        <span class="platform-badge p-taobao active"><span class="p-dot"></span>타오바오</span>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">판매 플랫폼</div>
+                    <div style="padding:0 12px 12px;display:flex;gap:6px;flex-wrap:wrap;">
+                        <span class="platform-badge p-coupang active"><span class="p-dot"></span>쿠팡</span>
+                        <span class="platform-badge p-gmarket active"><span class="p-dot"></span>지마켓</span>
+                        <span class="platform-badge p-naver active"><span class="p-dot"></span>네이버</span>
+                    </div>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">대시보드</div>
+                    <a href="index.html" class="sidebar-link"><span class="sidebar-link-icon">📊</span> 종합 현황</a>
+                    <a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품<span class="badge badge-new">87</span></a>
+                    <a href="trends.html" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a>
+                    <a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a>
+                    <a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 & 리뷰</a>
+                    <a href="margin.html" class="sidebar-link active"><span class="sidebar-link-icon">💰</span> 마진 분석</a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- ============================================================
+             MAIN CONTENT
+             ============================================================ -->
+        <div class="main-content">
+
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                    <div>
+                        <div class="top-bar-title">마진 분석</div>
+                        <div class="top-bar-date">마지막 업데이트: <span id="lastUpdated">2025-05-24 09:15</span> | 환율: 1 CNY = 190.5 KRW</div>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <button class="top-bar-btn btn-export">📥 <span>CSV 내보내기</span></button>
+                    <button class="top-bar-btn btn-refresh">🔄 <span>새로고침</span></button>
+                    <button class="top-bar-btn btn-run">▶ <span>수집 실행</span></button>
+                </div>
+            </header>
+
+            <!-- Content -->
+            <div class="content-area">
+
+                <!-- ============================================================
+                     마진 분석 종합
+                     ============================================================ -->
+                <div class="section-divider">
+                    <div class="section-divider-title">💰 마진 분석 종합</div>
+                    <div class="section-divider-line"></div>
+                </div>
+
+                <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);">
+                    <div class="kpi-card kpi-margin">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">💰</div>
+                            <span class="kpi-change up">↑ +2.3%p</span>
+                        </div>
+                        <div class="kpi-value">41.2%</div>
+                        <div class="kpi-label">전체 평균 마진</div>
+                    </div>
+                    <div class="kpi-card kpi-recommend">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">🏆</div>
+                        </div>
+                        <div class="kpi-value">52.3%</div>
+                        <div class="kpi-label">최고 마진 카테고리</div>
+                        <div class="kpi-sub">뷰티도구</div>
+                    </div>
+                    <div class="kpi-card kpi-hot">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">🎯</div>
+                        </div>
+                        <div class="kpi-value">28개</div>
+                        <div class="kpi-label">STRONG BUY 상품</div>
+                        <div class="kpi-sub">마진 40%+</div>
+                    </div>
+                    <div class="kpi-card kpi-new">
+                        <div class="kpi-header">
+                            <div class="kpi-icon">🚚</div>
+                            <span class="kpi-change up">↑ +6.2%p</span>
+                        </div>
+                        <div class="kpi-value">44.8%</div>
+                        <div class="kpi-label">직배송 평균 마진</div>
+                        <div class="kpi-sub">배대지 대비 +6.2%p</div>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     마진 분석 차트
+                     ============================================================ -->
+                <div class="section-divider">
+                    <div class="section-divider-title">📊 마진 분석 차트</div>
+                    <div class="section-divider-line"></div>
+                </div>
+
+                <div class="charts-row charts-row-equal">
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">📂</span>
+                                카테고리별 평균 마진율
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="chart-canvas-wrap chart-tall">
+                                <canvas id="marginCategoryChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">🏭</span>
+                                소싱처별 마진율 비교 (1688 vs 타오바오)
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="chart-canvas-wrap chart-tall">
+                                <canvas id="marginSourceChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-row charts-row-equal">
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">🏪</span>
+                                판매 플랫폼별 마진율
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="chart-canvas-wrap chart-tall">
+                                <canvas id="marginPlatformChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">📊</span>
+                                마진율 분포
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="chart-canvas-wrap chart-tall">
+                                <canvas id="marginDistChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     가격 비교
+                     ============================================================ -->
+                <div class="section-divider">
+                    <div class="section-divider-title">⚖️ 가격 비교 (원가 vs 판매가 vs 마진)</div>
+                    <div class="section-divider-line"></div>
+                </div>
+
+                <div class="chart-panel" style="margin-bottom:24px;">
+                    <div class="chart-panel-header">
+                        <div class="chart-panel-title">
+                            <span class="title-icon">📊</span>
+                            소싱 원가 vs 판매가 vs 순마진 TOP 10
+                        </div>
+                    </div>
+                    <div class="chart-panel-body">
+                        <div class="chart-canvas-wrap chart-tall">
+                            <canvas id="priceBreakdownChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     마진 시뮬레이터
+                     ============================================================ -->
+                <div class="section-divider">
+                    <div class="section-divider-title">🧮 마진 시뮬레이터</div>
+                    <div class="section-divider-line"></div>
+                </div>
+
+                <div class="charts-row charts-row-equal">
+                    <!-- 마진 시뮬레이터 Form -->
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">🧮</span>
+                                마진 시뮬레이터
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div style="display:flex;flex-direction:column;gap:14px;">
+                                <div style="display:flex;align-items:center;gap:12px;">
+                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;">소싱 플랫폼</label>
+                                    <select id="simSource" style="flex:1;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);">
+                                        <option value="1688">1688</option>
+                                        <option value="taobao">타오바오</option>
+                                    </select>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:12px;">
+                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;">상품 단가 (元)</label>
+                                    <input type="number" id="simUnitPrice" value="12.5" step="0.1" style="flex:1;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);">
+                                </div>
+                                <div style="display:flex;align-items:center;gap:12px;">
+                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;">국제 배송비 (원/개)</label>
+                                    <input type="number" id="simShipping" value="1800" step="100" style="flex:1;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);">
+                                </div>
+                                <div style="display:flex;align-items:center;gap:12px;">
+                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;">판매 플랫폼</label>
+                                    <select id="simSellPlatform" style="flex:1;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);">
+                                        <option value="coupang">쿠팡</option>
+                                        <option value="gmarket">지마켓</option>
+                                        <option value="naver">네이버</option>
+                                    </select>
+                                </div>
+                                <div style="display:flex;align-items:center;gap:12px;">
+                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;">판매가 (원)</label>
+                                    <input type="number" id="simSellPrice" value="18900" step="100" style="flex:1;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);">
+                                </div>
+                                <div style="display:flex;align-items:center;gap:12px;">
+                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;">수수료율 (%)</label>
+                                    <input type="number" id="simFeeRate" value="10" step="0.5" style="flex:1;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);">
+                                </div>
+
+                                <!-- Result Box -->
+                                <div id="simResult" style="background:var(--bg-body);border-radius:var(--radius-md);padding:20px;text-align:center;margin-top:8px;">
+                                    <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">예상 순마진</div>
+                                    <div id="simMarginValue" style="font-family:var(--font-heading);font-size:32px;font-weight:800;color:var(--success);">10,246원</div>
+                                    <div id="simMarginRate" style="font-size:18px;font-weight:700;color:var(--success);margin-top:2px;">마진율 54.2%</div>
+                                </div>
+
+                                <!-- Breakdown -->
+                                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+                                    <div style="background:var(--bg-body);border-radius:var(--radius-md);padding:14px;text-align:center;">
+                                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:2px;">상품원가</div>
+                                        <div id="simCostValue" style="font-size:16px;font-weight:700;color:var(--text-primary);">2,381원</div>
+                                    </div>
+                                    <div style="background:var(--bg-body);border-radius:var(--radius-md);padding:14px;text-align:center;">
+                                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:2px;">배송비</div>
+                                        <div id="simShipValue" style="font-size:16px;font-weight:700;color:var(--text-primary);">1,800원</div>
+                                    </div>
+                                    <div style="background:var(--bg-body);border-radius:var(--radius-md);padding:14px;text-align:center;">
+                                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:2px;">수수료</div>
+                                        <div id="simFeeValue" style="font-size:16px;font-weight:700;color:var(--text-primary);">1,890원</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 마진율별 상품 분포 -->
+                    <div class="chart-panel">
+                        <div class="chart-panel-header">
+                            <div class="chart-panel-title">
+                                <span class="title-icon">🍩</span>
+                                마진율별 상품 분포
+                            </div>
+                        </div>
+                        <div class="chart-panel-body">
+                            <div class="chart-canvas-wrap" style="height:220px;">
+                                <canvas id="marginPieChart"></canvas>
+                            </div>
+                            <table class="data-table" style="margin-top:16px;">
+                                <thead>
+                                    <tr>
+                                        <th>마진 등급</th>
+                                        <th>기준</th>
+                                        <th>상품수</th>
+                                        <th>비율</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><span class="margin-badge margin-strong">🟢 STRONG BUY</span></td>
+                                        <td>40%+</td>
+                                        <td>28개</td>
+                                        <td>32.2%</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="margin-badge margin-good">🔵 BUY</span></td>
+                                        <td>30~39%</td>
+                                        <td>35개</td>
+                                        <td>40.2%</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="margin-badge margin-ok">🟡 HOLD</span></td>
+                                        <td>20~29%</td>
+                                        <td>16개</td>
+                                        <td>18.4%</td>
+                                    </tr>
+                                    <tr>
+                                        <td><span class="margin-badge margin-low">🔴 SKIP</span></td>
+                                        <td>20%미만</td>
+                                        <td>8개</td>
+                                        <td>9.2%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============================================================
+                     전체 상품 마진 상세
+                     ============================================================ -->
+                <div class="section-divider">
+                    <div class="section-divider-title">📋 전체 상품 마진 상세</div>
+                    <div class="section-divider-line"></div>
+                </div>
+
+                <div class="table-panel">
+                    <div class="table-panel-header">
+                        <div class="table-panel-title">
+                            <span>💰</span> 전체 상품 마진 상세
+                        </div>
+                        <div class="table-filters">
+                            <button class="table-filter-btn active">전체</button>
+                            <button class="table-filter-btn">STRONG BUY</button>
+                            <button class="table-filter-btn">BUY</button>
+                            <button class="table-filter-btn">HOLD</button>
+                            <button class="table-filter-btn">SKIP</button>
+                        </div>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>상품명</th>
+                                    <th>소싱처</th>
+                                    <th>소싱가</th>
+                                    <th>배송비</th>
+                                    <th>관세</th>
+                                    <th>총원가</th>
+                                    <th>판매처</th>
+                                    <th>판매가</th>
+                                    <th>수수료</th>
+                                    <th>순마진</th>
+                                    <th>마진율</th>
+                                    <th>등급</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>메이크업 브러쉬 15종</strong></td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>1,619원</td>
+                                    <td>800원</td>
+                                    <td>0원</td>
+                                    <td>2,419원</td>
+                                    <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                    <td>12,900원</td>
+                                    <td>1,290원</td>
+                                    <td style="color:var(--success);font-weight:700;">9,191원</td>
+                                    <td style="color:var(--success);font-weight:700;">71.2%</td>
+                                    <td><span class="margin-badge margin-strong">STRONG BUY</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>실리콘 주방용품 12종</strong></td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>2,381원</td>
+                                    <td>1,800원</td>
+                                    <td>0원</td>
+                                    <td>4,181원</td>
+                                    <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                    <td>18,900원</td>
+                                    <td>1,890원</td>
+                                    <td style="color:var(--success);font-weight:700;">12,829원</td>
+                                    <td style="color:var(--success);font-weight:700;">67.9%</td>
+                                    <td><span class="margin-badge margin-strong">STRONG BUY</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>USB-C 충전 케이블 3개</strong></td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>667원</td>
+                                    <td>500원</td>
+                                    <td>0원</td>
+                                    <td>1,167원</td>
+                                    <td><span class="sell-platform-tag tag-naver">네이버</span></td>
+                                    <td>7,900원</td>
+                                    <td>790원</td>
+                                    <td style="color:var(--success);font-weight:700;">5,943원</td>
+                                    <td style="color:var(--success);font-weight:700;">75.2%</td>
+                                    <td><span class="margin-badge margin-strong">STRONG BUY</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>강아지 노즈워크 장난감</strong></td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>1,143원</td>
+                                    <td>1,000원</td>
+                                    <td>0원</td>
+                                    <td>2,143원</td>
+                                    <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                    <td>9,900원</td>
+                                    <td>990원</td>
+                                    <td style="color:var(--success);font-weight:700;">6,767원</td>
+                                    <td style="color:var(--success);font-weight:700;">68.4%</td>
+                                    <td><span class="margin-badge margin-strong">STRONG BUY</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>LED 무드등 리모컨</strong></td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>3,429원</td>
+                                    <td>1,200원</td>
+                                    <td>0원</td>
+                                    <td>4,629원</td>
+                                    <td><span class="sell-platform-tag tag-naver">네이버</span></td>
+                                    <td>15,900원</td>
+                                    <td>1,590원</td>
+                                    <td style="color:var(--success);font-weight:700;">9,681원</td>
+                                    <td style="color:var(--success);font-weight:700;">60.9%</td>
+                                    <td><span class="margin-badge margin-strong">STRONG BUY</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>에코백 캔버스 토트백</strong></td>
+                                    <td><span class="source-platform-tag tag-taobao">타오바오</span></td>
+                                    <td>1,048원</td>
+                                    <td>800원</td>
+                                    <td>0원</td>
+                                    <td>1,848원</td>
+                                    <td><span class="sell-platform-tag tag-gmarket">지마켓</span></td>
+                                    <td>8,900원</td>
+                                    <td>890원</td>
+                                    <td style="color:var(--success);font-weight:700;">6,162원</td>
+                                    <td style="color:var(--success);font-weight:700;">69.2%</td>
+                                    <td><span class="margin-badge margin-strong">STRONG BUY</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>차량용 트렁크 정리함</strong></td>
+                                    <td><span class="source-platform-tag tag-1688">1688</span></td>
+                                    <td>4,763원</td>
+                                    <td>2,500원</td>
+                                    <td>500원</td>
+                                    <td>7,763원</td>
+                                    <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                    <td>19,900원</td>
+                                    <td>1,990원</td>
+                                    <td style="color:var(--primary);font-weight:700;">10,147원</td>
+                                    <td style="color:var(--primary);font-weight:700;">51.0%</td>
+                                    <td><span class="margin-badge margin-strong">STRONG BUY</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>요가매트 6mm 논슬립</strong></td>
+                                    <td><span class="source-platform-tag tag-taobao">타오바오</span></td>
+                                    <td>3,810원</td>
+                                    <td>3,500원</td>
+                                    <td>800원</td>
+                                    <td>8,110원</td>
+                                    <td><span class="sell-platform-tag tag-gmarket">지마켓</span></td>
+                                    <td>16,900원</td>
+                                    <td>1,690원</td>
+                                    <td style="color:var(--warning);font-weight:700;">7,100원</td>
+                                    <td style="color:var(--warning);font-weight:700;">42.0%</td>
+                                    <td><span class="margin-badge margin-strong">STRONG BUY</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div><!-- /content-area -->
+        </div><!-- /main-content -->
+    </div><!-- /dashboard-layout -->
+
+    <!-- Back to Top -->
+    <button class="back-to-top" id="backToTop">↑</button>
+
+    <script src="data/sample-data.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Sidebar mobile toggle
+        var menuBtn = document.getElementById('mobileMenuBtn');
+        var sidebar = document.getElementById('sidebar');
+        var overlay = document.getElementById('sidebarOverlay');
+        if (menuBtn) {
+            menuBtn.addEventListener('click', function() {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            });
+        }
+        if (overlay) {
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+        }
+
+        // Table filter buttons
+        var filterBtns = document.querySelectorAll('.table-filter-btn');
+        filterBtns.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                var group = this.closest('.table-filters');
+                if (group) {
+                    group.querySelectorAll('.table-filter-btn').forEach(function(b) { b.classList.remove('active'); });
+                }
+                this.classList.add('active');
+            });
+        });
+
+        if (typeof Chart === 'undefined') return;
+
+        Chart.defaults.font.family = "'Inter', sans-serif";
+        Chart.defaults.font.size = 11;
+        Chart.defaults.color = '#94A3B8';
+
+        var categories = ['뷰티도구','홈인테리어','반려동물','주방용품','자동차용품','전자기기','문구/사무','유아/아동','패션잡화','스포츠'];
+        var catMargins = [52.3, 45.1, 44.8, 43.2, 41.6, 38.7, 39.5, 38.1, 36.4, 35.2];
+
+        // ── 카테고리별 평균 마진율 (horizontal bar) ──
+        var ctxCat = document.getElementById('marginCategoryChart');
+        if (ctxCat) {
+            new Chart(ctxCat, {
+                type: 'bar',
+                data: {
+                    labels: categories,
+                    datasets: [{
+                        label: '평균 마진율(%)',
+                        data: catMargins,
+                        backgroundColor: catMargins.map(function(v) {
+                            return v >= 45 ? 'rgba(16,185,129,0.7)' :
+                                   v >= 38 ? 'rgba(37,99,235,0.7)' :
+                                   'rgba(245,158,11,0.7)';
+                        }),
+                        borderRadius: 6,
+                        barThickness: 24
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                    plugins: { legend: { display: false } },
+                    scales: { x: { grid: { color:'rgba(0,0,0,0.04)' }, min:20, max:60, ticks:{ callback: function(v){return v+'%';} } }, y: { grid: { display:false } } }
+                }
+            });
+        }
+
+        // ── 소싱처별 마진율 비교 (grouped bar) ──
+        var ctxSource = document.getElementById('marginSourceChart');
+        if (ctxSource) {
+            new Chart(ctxSource, {
+                type: 'bar',
+                data: {
+                    labels: ['주방용품','전자기기','홈인테리어','뷰티도구','패션잡화','반려동물'],
+                    datasets: [
+                        { label:'1688', data:[43.2, 38.7, 45.1, 52.3, 36.4, 44.8], backgroundColor:'rgba(255,106,0,0.7)', borderRadius:4, barThickness:18 },
+                        { label:'타오바오', data:[39.8, 35.2, 41.5, 48.1, 33.8, 41.2], backgroundColor:'rgba(255,68,0,0.5)', borderRadius:4, barThickness:18 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position:'top', align:'end', labels: { usePointStyle:true, pointStyle:'circle', padding:16, font:{size:11} } } },
+                    scales: { x: { grid: { display:false } }, y: { grid: { color:'rgba(0,0,0,0.04)' }, min:20, max:60, ticks:{ callback: function(v){return v+'%';} } } }
+                }
+            });
+        }
+
+        // ── 판매 플랫폼별 마진율 (grouped bar) ──
+        var ctxPlat = document.getElementById('marginPlatformChart');
+        if (ctxPlat) {
+            new Chart(ctxPlat, {
+                type: 'bar',
+                data: {
+                    labels: ['주방용품','전자기기','홈인테리어','뷰티도구','패션잡화','반려동물'],
+                    datasets: [
+                        { label:'쿠팡', data:[41.2, 36.5, 43.8, 50.1, 34.2, 42.5], backgroundColor:'rgba(228,37,40,0.7)', borderRadius:4, barThickness:14 },
+                        { label:'지마켓', data:[38.5, 34.8, 40.2, 47.5, 32.1, 39.8], backgroundColor:'rgba(0,166,81,0.7)', borderRadius:4, barThickness:14 },
+                        { label:'네이버', data:[43.8, 39.2, 46.5, 53.8, 37.5, 45.2], backgroundColor:'rgba(3,199,90,0.7)', borderRadius:4, barThickness:14 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position:'top', align:'end', labels: { usePointStyle:true, pointStyle:'circle', padding:16, font:{size:11} } } },
+                    scales: { x: { grid: { display:false } }, y: { grid: { color:'rgba(0,0,0,0.04)' }, min:20, max:60, ticks:{ callback: function(v){return v+'%';} } } }
+                }
+            });
+        }
+
+        // ── 마진율 분포 (histogram) ──
+        var ctxDistM = document.getElementById('marginDistChart');
+        if (ctxDistM) {
+            new Chart(ctxDistM, {
+                type: 'bar',
+                data: {
+                    labels: ['0~10%','10~20%','20~30%','30~40%','40~50%','50%+'],
+                    datasets: [{
+                        label: '상품수',
+                        data: [3, 5, 16, 35, 18, 10],
+                        backgroundColor: [
+                            'rgba(239,68,68,0.7)',
+                            'rgba(249,115,22,0.7)',
+                            'rgba(245,158,11,0.7)',
+                            'rgba(37,99,235,0.7)',
+                            'rgba(16,185,129,0.7)',
+                            'rgba(5,150,105,0.8)'
+                        ],
+                        borderRadius: 6,
+                        barThickness: 36
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { x: { grid: { display:false } }, y: { grid: { color:'rgba(0,0,0,0.04)' }, ticks:{ stepSize:5 } } }
+                }
+            });
+        }
+
+        // ── 소싱 원가 vs 판매가 vs 순마진 TOP 10 (stacked bar) ──
+        var ctxBreak = document.getElementById('priceBreakdownChart');
+        if (ctxBreak) {
+            new Chart(ctxBreak, {
+                type: 'bar',
+                data: {
+                    labels: ['USB-C 케이블','메이크업 브러쉬','에코백 토트','강아지 장난감','실리콘 주방12종','LED 무드등','고양이 스크래처','블루투스 이어폰','트렁크 정리함','밀폐용기 4종'],
+                    datasets: [
+                        { label:'상품원가', data:[667,1619,1048,1143,2381,3429,1524,4191,4763,5715], backgroundColor:'rgba(255,106,0,0.7)', borderRadius:2 },
+                        { label:'배송비', data:[500,800,800,1000,1800,1200,2000,1000,2500,2200], backgroundColor:'rgba(245,158,11,0.7)', borderRadius:2 },
+                        { label:'수수료', data:[790,1290,890,990,1890,1590,1190,1490,1990,2190], backgroundColor:'rgba(139,92,246,0.5)', borderRadius:2 },
+                        { label:'순마진', data:[5943,9191,6162,6767,12829,9681,7186,8219,10647,11795], backgroundColor:'rgba(16,185,129,0.7)', borderRadius:2 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { position:'top', align:'end', labels: { usePointStyle:true, pointStyle:'circle', padding:12, font:{size:10} } } },
+                    scales: {
+                        x: { stacked: true, grid: { display:false }, ticks:{ font:{size:10} } },
+                        y: { stacked: true, grid: { color:'rgba(0,0,0,0.04)' }, ticks: { callback: function(v){ return (v/1000).toFixed(0)+'K'; } } }
+                    }
+                }
+            });
+        }
+
+        // ── 마진율별 상품 분포 (doughnut) ──
+        var ctxPie = document.getElementById('marginPieChart');
+        if (ctxPie) {
+            new Chart(ctxPie, {
+                type: 'doughnut',
+                data: {
+                    labels: ['STRONG BUY (40%+)','BUY (30~39%)','HOLD (20~29%)','SKIP (20%미만)'],
+                    datasets: [{
+                        data: [28, 35, 16, 8],
+                        backgroundColor: ['#059669','#2563EB','#F59E0B','#EF4444'],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    cutout: '55%',
+                    plugins: { legend: { position:'bottom', labels: { usePointStyle:true, pointStyle:'circle', padding:12, font:{size:11} } } }
+                }
+            });
+        }
+
+        // ── Margin Simulator Logic ──
+        var exchangeRate = 190.5;
+        function updateSimulator() {
+            var unitPrice = parseFloat(document.getElementById('simUnitPrice').value) || 0;
+            var shipping = parseFloat(document.getElementById('simShipping').value) || 0;
+            var sellPrice = parseFloat(document.getElementById('simSellPrice').value) || 0;
+            var feeRate = parseFloat(document.getElementById('simFeeRate').value) || 0;
+
+            var costKRW = Math.round(unitPrice * exchangeRate);
+            var fee = Math.round(sellPrice * feeRate / 100);
+            var totalCost = costKRW + shipping + fee;
+            var margin = sellPrice - totalCost;
+            var marginRate = sellPrice > 0 ? ((margin / sellPrice) * 100) : 0;
+
+            document.getElementById('simMarginValue').textContent = margin.toLocaleString() + '원';
+            document.getElementById('simMarginRate').textContent = '마진율 ' + marginRate.toFixed(1) + '%';
+            document.getElementById('simCostValue').textContent = costKRW.toLocaleString() + '원';
+            document.getElementById('simShipValue').textContent = shipping.toLocaleString() + '원';
+            document.getElementById('simFeeValue').textContent = fee.toLocaleString() + '원';
+
+            var color = margin >= 0 ? 'var(--success)' : 'var(--danger)';
+            document.getElementById('simMarginValue').style.color = color;
+            document.getElementById('simMarginRate').style.color = color;
+        }
+
+        ['simUnitPrice','simShipping','simSellPrice','simFeeRate','simSource','simSellPlatform'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.addEventListener('input', updateSimulator);
+        });
+    });
+    </script>
+</body>
+</html>
