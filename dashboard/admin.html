@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상품 관리 | 소싱 트래커</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        .admin-header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px; }
+        .admin-header h1 { font-size:1.4rem; margin:0; }
+        .admin-actions { display:flex; gap:8px; flex-wrap:wrap; }
+
+        .filter-bar { background:#1e293b; border-radius:12px; padding:16px 20px; margin-bottom:20px; display:flex; gap:12px; flex-wrap:wrap; align-items:flex-end; }
+        .filter-group { display:flex; flex-direction:column; gap:4px; }
+        .filter-group label { font-size:0.75rem; color:#94a3b8; font-weight:500; }
+        .filter-group input, .filter-group select { background:#0f172a; border:1px solid #334155; color:#e2e8f0; padding:8px 12px; border-radius:8px; font-size:0.85rem; }
+        .filter-group input:focus, .filter-group select:focus { border-color:#3b82f6; outline:none; }
+
+        .btn { padding:8px 16px; border-radius:8px; border:none; cursor:pointer; font-size:0.85rem; font-weight:500; transition:all 0.2s; }
+        .btn-primary { background:#3b82f6; color:#fff; }
+        .btn-primary:hover { background:#2563eb; }
+        .btn-success { background:#10b981; color:#fff; }
+        .btn-success:hover { background:#059669; }
+        .btn-danger { background:#ef4444; color:#fff; }
+        .btn-danger:hover { background:#dc2626; }
+        .btn-outline { background:transparent; border:1px solid #475569; color:#94a3b8; }
+        .btn-outline:hover { border-color:#3b82f6; color:#3b82f6; }
+        .btn-sm { padding:5px 10px; font-size:0.78rem; }
+        .btn-icon { width:32px; height:32px; padding:0; display:inline-flex; align-items:center; justify-content:center; }
+
+        .product-table { width:100%; border-collapse:separate; border-spacing:0; }
+        .product-table th { background:#1e293b; padding:10px 12px; text-align:left; font-size:0.75rem; color:#94a3b8; font-weight:600; text-transform:uppercase; position:sticky; top:0; z-index:1; white-space:nowrap; cursor:pointer; user-select:none; }
+        .product-table th:hover { color:#e2e8f0; }
+        .product-table th .sort-icon { margin-left:4px; font-size:0.65rem; }
+        .product-table td { padding:10px 12px; border-bottom:1px solid #1e293b; font-size:0.85rem; white-space:nowrap; }
+        .product-table tr:hover td { background:#1e293b; }
+        .table-wrap { overflow-x:auto; border-radius:12px; background:#0f172a; border:1px solid #1e293b; max-height:calc(100vh - 360px); overflow-y:auto; }
+
+        .margin-strong { color:#10b981; font-weight:600; }
+        .margin-good { color:#3b82f6; font-weight:600; }
+        .margin-ok { color:#f59e0b; font-weight:600; }
+        .margin-low { color:#ef4444; font-weight:600; }
+
+        .badge-platform { padding:3px 8px; border-radius:4px; font-size:0.72rem; font-weight:600; }
+        .badge-1688 { background:rgba(239,68,68,0.15); color:#f87171; }
+        .badge-taobao { background:rgba(249,115,22,0.15); color:#fb923c; }
+        .badge-coupang { background:rgba(59,130,246,0.15); color:#60a5fa; }
+        .badge-gmarket { background:rgba(16,185,129,0.15); color:#34d399; }
+        .badge-naver { background:rgba(34,197,94,0.15); color:#4ade80; }
+
+        .status-badge { padding:3px 8px; border-radius:4px; font-size:0.72rem; }
+        .status-판매중 { background:rgba(16,185,129,0.15); color:#34d399; }
+        .status-조사중 { background:rgba(249,115,22,0.15); color:#fb923c; }
+        .status-중단 { background:rgba(239,68,68,0.15); color:#f87171; }
+        .status-준비중 { background:rgba(59,130,246,0.15); color:#60a5fa; }
+
+        .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1000; align-items:center; justify-content:center; }
+        .modal-overlay.active { display:flex; }
+        .modal { background:#1e293b; border-radius:16px; padding:24px; width:90%; max-width:700px; max-height:90vh; overflow-y:auto; }
+        .modal h2 { margin:0 0 20px; font-size:1.2rem; }
+        .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+        .form-group { display:flex; flex-direction:column; gap:4px; }
+        .form-group.full { grid-column:1/-1; }
+        .form-group label { font-size:0.78rem; color:#94a3b8; font-weight:500; }
+        .form-group input, .form-group select, .form-group textarea { background:#0f172a; border:1px solid #334155; color:#e2e8f0; padding:10px 12px; border-radius:8px; font-size:0.85rem; }
+        .form-group textarea { resize:vertical; min-height:60px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color:#3b82f6; outline:none; }
+        .modal-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:20px; }
+
+        .stats-bar { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-bottom:20px; }
+        .stat-card { background:#1e293b; border-radius:10px; padding:14px 18px; }
+        .stat-card .stat-label { font-size:0.72rem; color:#94a3b8; margin-bottom:4px; }
+        .stat-card .stat-value { font-size:1.3rem; font-weight:700; color:#e2e8f0; }
+        .stat-card .stat-sub { font-size:0.72rem; color:#64748b; margin-top:2px; }
+
+        .pagination { display:flex; justify-content:center; gap:4px; margin-top:16px; }
+        .pagination button { background:#1e293b; border:1px solid #334155; color:#94a3b8; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.8rem; }
+        .pagination button.active { background:#3b82f6; color:#fff; border-color:#3b82f6; }
+        .pagination button:hover:not(.active) { border-color:#3b82f6; color:#e2e8f0; }
+
+        .empty-state { text-align:center; padding:60px 20px; color:#64748b; }
+        .empty-state h3 { color:#94a3b8; margin-bottom:8px; }
+
+        .toast { position:fixed; bottom:24px; right:24px; padding:12px 20px; border-radius:10px; color:#fff; font-size:0.85rem; z-index:2000; animation:slideIn 0.3s ease; }
+        .toast-success { background:#10b981; }
+        .toast-error { background:#ef4444; }
+        @keyframes slideIn { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+
+        @media(max-width:768px) {
+            .form-grid { grid-template-columns:1fr; }
+            .filter-bar { flex-direction:column; }
+            .admin-header { flex-direction:column; align-items:flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="sidebar-logo-icon">ST</div>
+                <div class="sidebar-logo-text">소싱 트래커<small>MULTI-CHANNEL</small></div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">대시보드</div>
+                    <a href="index.html" class="sidebar-link"><span class="sidebar-link-icon">📊</span> 종합 현황</a>
+                    <a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품</a>
+                    <a href="trends.html" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a>
+                    <a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a>
+                    <a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 & 리뷰</a>
+                    <a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">관리</div>
+                    <a href="admin.html" class="sidebar-link active"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a>
+                </div>
+                <div class="sidebar-section">
+                    <div class="sidebar-section-title">바로가기</div>
+                    <a href="../ezcomet/index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> EZCOMET 홈</a>
+                    <a href="../ezcomet/1688-coupang-guide.html" class="sidebar-link"><span class="sidebar-link-icon">📖</span> 1688 소싱 가이드</a>
+                </div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+                    <div>
+                        <div class="top-bar-title">상품 관리</div>
+                        <div class="top-bar-date">수동 데이터 입력 · 날짜별/월별 필터링</div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="content-area" style="padding:20px;">
+                <div class="admin-header">
+                    <h1>📦 소싱 상품 관리</h1>
+                    <div class="admin-actions">
+                        <button class="btn btn-primary" onclick="openModal()">+ 상품 추가</button>
+                        <button class="btn btn-outline" onclick="DataManager.exportJSON()">📥 JSON 내보내기</button>
+                        <label class="btn btn-outline" style="cursor:pointer;">📤 JSON 가져오기<input type="file" accept=".json" onchange="importData(this)" hidden></label>
+                    </div>
+                </div>
+
+                <div class="stats-bar" id="statsBar"></div>
+
+                <div class="filter-bar">
+                    <div class="filter-group">
+                        <label>기간</label>
+                        <select id="filterPeriod" onchange="applyPeriodPreset()">
+                            <option value="all">전체</option>
+                            <option value="today">오늘</option>
+                            <option value="7d">최근 7일</option>
+                            <option value="30d">최근 30일</option>
+                            <option value="month">이번 달</option>
+                            <option value="custom">직접 선택</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>시작일</label>
+                        <input type="date" id="filterDateFrom" onchange="applyFilters()">
+                    </div>
+                    <div class="filter-group">
+                        <label>종료일</label>
+                        <input type="date" id="filterDateTo" onchange="applyFilters()">
+                    </div>
+                    <div class="filter-group">
+                        <label>소싱 플랫폼</label>
+                        <select id="filterSource" onchange="applyFilters()">
+                            <option value="all">전체</option>
+                            <option value="1688">1688</option>
+                            <option value="타오바오">타오바오</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>판매 플랫폼</label>
+                        <select id="filterSell" onchange="applyFilters()">
+                            <option value="all">전체</option>
+                            <option value="쿠팡">쿠팡</option>
+                            <option value="지마켓">지마켓</option>
+                            <option value="네이버">네이버</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>카테고리</label>
+                        <select id="filterCategory" onchange="applyFilters()">
+                            <option value="all">전체</option>
+                            <option value="주방용품">주방용품</option>
+                            <option value="전자기기">전자기기</option>
+                            <option value="홈인테리어">홈인테리어</option>
+                            <option value="뷰티도구">뷰티도구</option>
+                            <option value="패션잡화">패션잡화</option>
+                            <option value="반려동물">반려동물</option>
+                            <option value="유아/아동">유아/아동</option>
+                            <option value="스포츠">스포츠</option>
+                            <option value="자동차용품">자동차용품</option>
+                            <option value="문구/사무">문구/사무</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>검색</label>
+                        <input type="text" id="filterSearch" placeholder="상품명/키워드..." oninput="applyFilters()">
+                    </div>
+                </div>
+
+                <div class="table-wrap">
+                    <table class="product-table">
+                        <thead>
+                            <tr>
+                                <th onclick="sortTable('date')">날짜 <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('name')">상품명 <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('category')">카테고리 <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('sourcePlatform')">소싱 <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('sellPlatform')">판매 <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('sourcePrice')">소싱가 <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('sellPrice')">판매가 <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('marginPct')">마진율 <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('monthlySales')">판매량 <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('status')">상태 <span class="sort-icon"></span></th>
+                                <th>작업</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productTableBody"></tbody>
+                    </table>
+                </div>
+                <div id="emptyState" class="empty-state" style="display:none;">
+                    <h3>등록된 상품이 없습니다</h3>
+                    <p>위의 "상품 추가" 버튼으로 소싱 상품을 등록하세요</p>
+                    <button class="btn btn-primary" onclick="loadSamples()" style="margin-top:12px;">샘플 데이터 불러오기</button>
+                </div>
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h2 id="modalTitle">상품 추가</h2>
+            <form id="productForm" onsubmit="saveProduct(event)">
+                <input type="hidden" id="editId">
+                <div class="form-grid">
+                    <div class="form-group full">
+                        <label>상품명 *</label>
+                        <input type="text" id="fName" required placeholder="예: 실리콘 주방용품 12종 세트">
+                    </div>
+                    <div class="form-group">
+                        <label>카테고리 *</label>
+                        <select id="fCategory" required>
+                            <option value="">선택</option>
+                            <option>주방용품</option><option>전자기기</option><option>홈인테리어</option>
+                            <option>뷰티도구</option><option>패션잡화</option><option>반려동물</option>
+                            <option>유아/아동</option><option>스포츠</option><option>자동차용품</option>
+                            <option>문구/사무</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>등록일 *</label>
+                        <input type="date" id="fDate" required>
+                    </div>
+                    <div class="form-group">
+                        <label>소싱 플랫폼 *</label>
+                        <select id="fSourcePlatform" required>
+                            <option value="">선택</option>
+                            <option>1688</option><option>타오바오</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>판매 플랫폼 *</label>
+                        <select id="fSellPlatform" required>
+                            <option value="">선택</option>
+                            <option>쿠팡</option><option>지마켓</option><option>네이버</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>소싱가 (CNY) *</label>
+                        <input type="number" id="fSourcePrice" step="0.1" required placeholder="예: 12.5">
+                    </div>
+                    <div class="form-group">
+                        <label>판매가 (KRW) *</label>
+                        <input type="number" id="fSellPrice" step="100" required placeholder="예: 18900">
+                    </div>
+                    <div class="form-group">
+                        <label>배송비 (KRW)</label>
+                        <input type="number" id="fShipping" step="100" value="0" placeholder="예: 1800">
+                    </div>
+                    <div class="form-group">
+                        <label>마진율 (%)</label>
+                        <input type="number" id="fMargin" step="0.1" placeholder="자동 계산 또는 직접 입력">
+                    </div>
+                    <div class="form-group">
+                        <label>월 판매량</label>
+                        <input type="number" id="fSales" placeholder="예: 3847">
+                    </div>
+                    <div class="form-group">
+                        <label>판매 순위</label>
+                        <input type="number" id="fRank" placeholder="예: 3">
+                    </div>
+                    <div class="form-group">
+                        <label>상태</label>
+                        <select id="fStatus">
+                            <option>판매중</option><option>조사중</option><option>준비중</option><option>중단</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>직배송 가능</label>
+                        <select id="fDirect">
+                            <option value="true">가능</option><option value="false">불가</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>검색 키워드 (중국어)</label>
+                        <input type="text" id="fKeywords" placeholder="예: 硅胶厨具套装">
+                    </div>
+                    <div class="form-group">
+                        <label>판매자 배지</label>
+                        <input type="text" id="fBadges" placeholder="예: 实力商家,超级工厂">
+                    </div>
+                    <div class="form-group full">
+                        <label>메모</label>
+                        <textarea id="fMemo" placeholder="메모 입력..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal()">취소</button>
+                    <button type="submit" class="btn btn-primary">저장</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/data-manager.js"></script>
+    <script>
+        let currentSort = { by: 'date', dir: 'desc' };
+        let currentPage = 1;
+        const PAGE_SIZE = 20;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            DataManager.loadSampleData();
+            document.getElementById('fDate').value = new Date().toISOString().slice(0, 10);
+            applyFilters();
+            initSidebar();
+        });
+
+        function initSidebar() {
+            const btn = document.getElementById('mobileMenuBtn');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (btn) btn.onclick = () => { sidebar.classList.toggle('open'); overlay.classList.toggle('active'); };
+            if (overlay) overlay.onclick = () => { sidebar.classList.remove('open'); overlay.classList.remove('active'); };
+        }
+
+        function getFilterValues() {
+            return {
+                platform: document.getElementById('filterSource').value !== 'all' ? document.getElementById('filterSource').value : (document.getElementById('filterSell').value !== 'all' ? document.getElementById('filterSell').value : undefined),
+                category: document.getElementById('filterCategory').value !== 'all' ? document.getElementById('filterCategory').value : undefined,
+                dateFrom: document.getElementById('filterDateFrom').value || undefined,
+                dateTo: document.getElementById('filterDateTo').value || undefined,
+                search: document.getElementById('filterSearch').value || undefined,
+                sortBy: currentSort.by,
+                sortDir: currentSort.dir
+            };
+        }
+
+        function applyPeriodPreset() {
+            const v = document.getElementById('filterPeriod').value;
+            const today = new Date().toISOString().slice(0, 10);
+            const fromEl = document.getElementById('filterDateFrom');
+            const toEl = document.getElementById('filterDateTo');
+            if (v === 'all') { fromEl.value = ''; toEl.value = ''; }
+            else if (v === 'today') { fromEl.value = today; toEl.value = today; }
+            else if (v === '7d') { const d = new Date(); d.setDate(d.getDate() - 7); fromEl.value = d.toISOString().slice(0, 10); toEl.value = today; }
+            else if (v === '30d') { const d = new Date(); d.setDate(d.getDate() - 30); fromEl.value = d.toISOString().slice(0, 10); toEl.value = today; }
+            else if (v === 'month') { fromEl.value = today.slice(0, 7) + '-01'; toEl.value = today; }
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const filters = getFilterValues();
+            if (filters.platform) {
+                const srcVal = document.getElementById('filterSource').value;
+                const sellVal = document.getElementById('filterSell').value;
+                let products = DataManager.getAll();
+                if (srcVal !== 'all') products = products.filter(p => p.sourcePlatform === srcVal);
+                if (sellVal !== 'all') products = products.filter(p => p.sellPlatform === sellVal);
+                if (filters.category) products = products.filter(p => p.category === filters.category);
+                if (filters.dateFrom) products = products.filter(p => p.date >= filters.dateFrom);
+                if (filters.dateTo) products = products.filter(p => p.date <= filters.dateTo);
+                if (filters.search) { const q = filters.search.toLowerCase(); products = products.filter(p => p.name.toLowerCase().includes(q) || (p.keywords && p.keywords.toLowerCase().includes(q))); }
+                products.sort((a, b) => { let va = a[currentSort.by], vb = b[currentSort.by]; if (typeof va === 'string') va = va.toLowerCase(); if (typeof vb === 'string') vb = vb.toLowerCase(); if (va < vb) return currentSort.dir === 'desc' ? 1 : -1; if (va > vb) return currentSort.dir === 'desc' ? -1 : 1; return 0; });
+                renderTable(products);
+                renderStats(products);
+            } else {
+                const products = DataManager.filter(filters);
+                renderTable(products);
+                renderStats(products);
+            }
+        }
+
+        function renderStats(products) {
+            const total = products.length;
+            const avgMargin = total ? (products.reduce((s, p) => s + (p.marginPct || 0), 0) / total).toFixed(1) : 0;
+            const totalSales = products.reduce((s, p) => s + (p.monthlySales || 0), 0);
+            const selling = products.filter(p => p.status === '판매중').length;
+            const highMargin = products.filter(p => (p.marginPct || 0) >= 45).length;
+
+            document.getElementById('statsBar').innerHTML = `
+                <div class="stat-card"><div class="stat-label">총 상품</div><div class="stat-value">${total}</div></div>
+                <div class="stat-card"><div class="stat-label">평균 마진율</div><div class="stat-value">${avgMargin}%</div></div>
+                <div class="stat-card"><div class="stat-label">총 판매량</div><div class="stat-value">${totalSales.toLocaleString()}</div></div>
+                <div class="stat-card"><div class="stat-label">판매중</div><div class="stat-value">${selling}</div></div>
+                <div class="stat-card"><div class="stat-label">고마진 (45%+)</div><div class="stat-value">${highMargin}</div></div>
+            `;
+        }
+
+        function renderTable(products) {
+            const tbody = document.getElementById('productTableBody');
+            const empty = document.getElementById('emptyState');
+            const totalPages = Math.ceil(products.length / PAGE_SIZE);
+            if (currentPage > totalPages) currentPage = Math.max(1, totalPages);
+            const start = (currentPage - 1) * PAGE_SIZE;
+            const pageProducts = products.slice(start, start + PAGE_SIZE);
+
+            if (products.length === 0) {
+                tbody.innerHTML = '';
+                empty.style.display = 'block';
+                document.getElementById('pagination').innerHTML = '';
+                return;
+            }
+            empty.style.display = 'none';
+
+            const platformClass = (p) => { const map = {'1688':'badge-1688','타오바오':'badge-taobao','쿠팡':'badge-coupang','지마켓':'badge-gmarket','네이버':'badge-naver'}; return map[p] || ''; };
+            const marginClass = (m) => m >= 50 ? 'margin-strong' : m >= 40 ? 'margin-good' : m >= 30 ? 'margin-ok' : 'margin-low';
+
+            tbody.innerHTML = pageProducts.map(p => `
+                <tr>
+                    <td>${p.date || '-'}</td>
+                    <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;" title="${p.name}">${p.name}</td>
+                    <td>${p.category}</td>
+                    <td><span class="badge-platform ${platformClass(p.sourcePlatform)}">${p.sourcePlatform}</span></td>
+                    <td><span class="badge-platform ${platformClass(p.sellPlatform)}">${p.sellPlatform}</span></td>
+                    <td>¥${p.sourcePrice}</td>
+                    <td>₩${(p.sellPrice || 0).toLocaleString()}</td>
+                    <td><span class="${marginClass(p.marginPct)}">${p.marginPct}%</span></td>
+                    <td>${(p.monthlySales || 0).toLocaleString()}</td>
+                    <td><span class="status-badge status-${p.status}">${p.status}</span></td>
+                    <td>
+                        <button class="btn btn-outline btn-icon btn-sm" onclick="editProduct('${p.id}')" title="수정">✏️</button>
+                        <button class="btn btn-danger btn-icon btn-sm" onclick="deleteProduct('${p.id}')" title="삭제">🗑</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            let pagHtml = '';
+            if (totalPages > 1) {
+                if (currentPage > 1) pagHtml += `<button onclick="goPage(${currentPage-1})">◀</button>`;
+                for (let i = 1; i <= totalPages; i++) {
+                    pagHtml += `<button class="${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+                }
+                if (currentPage < totalPages) pagHtml += `<button onclick="goPage(${currentPage+1})">▶</button>`;
+            }
+            document.getElementById('pagination').innerHTML = pagHtml;
+        }
+
+        function goPage(p) { currentPage = p; applyFilters(); }
+
+        function sortTable(field) {
+            if (currentSort.by === field) currentSort.dir = currentSort.dir === 'asc' ? 'desc' : 'asc';
+            else { currentSort.by = field; currentSort.dir = 'desc'; }
+            applyFilters();
+        }
+
+        function openModal(id) {
+            document.getElementById('modalOverlay').classList.add('active');
+            document.getElementById('modalTitle').textContent = id ? '상품 수정' : '상품 추가';
+            if (id) {
+                const p = DataManager.getAll().find(x => x.id === id);
+                if (!p) return;
+                document.getElementById('editId').value = id;
+                document.getElementById('fName').value = p.name;
+                document.getElementById('fCategory').value = p.category;
+                document.getElementById('fDate').value = p.date;
+                document.getElementById('fSourcePlatform').value = p.sourcePlatform;
+                document.getElementById('fSellPlatform').value = p.sellPlatform;
+                document.getElementById('fSourcePrice').value = p.sourcePrice;
+                document.getElementById('fSellPrice').value = p.sellPrice;
+                document.getElementById('fShipping').value = p.shippingCost || 0;
+                document.getElementById('fMargin').value = p.marginPct;
+                document.getElementById('fSales').value = p.monthlySales || '';
+                document.getElementById('fRank').value = p.salesRank || '';
+                document.getElementById('fStatus').value = p.status || '판매중';
+                document.getElementById('fDirect').value = p.directShipping ? 'true' : 'false';
+                document.getElementById('fKeywords').value = p.keywords || '';
+                document.getElementById('fBadges').value = p.badges || '';
+                document.getElementById('fMemo').value = p.memo || '';
+            } else {
+                document.getElementById('productForm').reset();
+                document.getElementById('editId').value = '';
+                document.getElementById('fDate').value = new Date().toISOString().slice(0, 10);
+            }
+        }
+
+        function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+
+        function saveProduct(e) {
+            e.preventDefault();
+            const data = {
+                name: document.getElementById('fName').value,
+                category: document.getElementById('fCategory').value,
+                date: document.getElementById('fDate').value,
+                sourcePlatform: document.getElementById('fSourcePlatform').value,
+                sellPlatform: document.getElementById('fSellPlatform').value,
+                sourcePrice: parseFloat(document.getElementById('fSourcePrice').value),
+                sourceCurrency: 'CNY',
+                sellPrice: parseInt(document.getElementById('fSellPrice').value),
+                sellCurrency: 'KRW',
+                shippingCost: parseInt(document.getElementById('fShipping').value) || 0,
+                marginPct: parseFloat(document.getElementById('fMargin').value) || 0,
+                monthlySales: parseInt(document.getElementById('fSales').value) || 0,
+                salesRank: parseInt(document.getElementById('fRank').value) || 0,
+                status: document.getElementById('fStatus').value,
+                directShipping: document.getElementById('fDirect').value === 'true',
+                keywords: document.getElementById('fKeywords').value,
+                badges: document.getElementById('fBadges').value,
+                memo: document.getElementById('fMemo').value
+            };
+
+            if (!data.marginPct && data.sourcePrice && data.sellPrice) {
+                const cost = data.sourcePrice * 190.5 + data.shippingCost;
+                data.marginPct = parseFloat(((data.sellPrice - cost) / data.sellPrice * 100).toFixed(1));
+            }
+
+            const editId = document.getElementById('editId').value;
+            if (editId) { DataManager.update(editId, data); showToast('상품이 수정되었습니다'); }
+            else { DataManager.add(data); showToast('상품이 추가되었습니다'); }
+
+            closeModal();
+            applyFilters();
+        }
+
+        function editProduct(id) { openModal(id); }
+
+        function deleteProduct(id) {
+            if (!confirm('이 상품을 삭제하시겠습니까?')) return;
+            DataManager.delete(id);
+            showToast('상품이 삭제되었습니다');
+            applyFilters();
+        }
+
+        function loadSamples() {
+            localStorage.removeItem(DataManager.STORAGE_KEY);
+            DataManager.loadSampleData();
+            applyFilters();
+            showToast('샘플 데이터가 로드되었습니다');
+        }
+
+        async function importData(input) {
+            if (!input.files[0]) return;
+            try {
+                const count = await DataManager.importJSON(input.files[0]);
+                showToast(`${count}개 상품이 가져오기 되었습니다`);
+                applyFilters();
+            } catch (err) { showToast(err, true); }
+            input.value = '';
+        }
+
+        function showToast(msg, isError) {
+            const t = document.createElement('div');
+            t.className = 'toast ' + (isError ? 'toast-error' : 'toast-success');
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
