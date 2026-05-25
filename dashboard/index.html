@@ -3,20 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="멀티채널 소싱 트래커 대시보드 - 1688, 타오바오에서 쿠팡, 지마켓, 네이버스토어까지 매일 업데이트되는 인기상품, 마진 분석, 트렌드">
+    <meta name="description" content="멀티채널 소싱 트래커 대시보드">
     <title>소싱 트래커 | 멀티채널 대시보드</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <style>
+        .data-source-badge { padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:600; margin-right:8px; }
+        .data-source-badge.sample { background:rgba(249,115,22,0.15); color:#fb923c; }
+        .data-source-badge.live { background:rgba(16,185,129,0.15); color:#34d399; }
+        .data-source-badge.crawl { background:rgba(139,92,246,0.15); color:#a78bfa; }
+        .data-source-badge.auto { background:rgba(59,130,246,0.15); color:#60a5fa; }
+        .btn-crawl { background:#7c3aed !important; color:#fff !important; }
+        .btn-crawl:hover { background:#6d28d9 !important; }
+        .btn-api { background:#0ea5e9 !important; color:#fff !important; }
+        .btn-api:hover { background:#0284c7 !important; }
+        .btn-api[disabled], .btn-crawl[disabled] { opacity:0.5; cursor:not-allowed; }
+        .status-dot.online { background:#10b981; }
+        .status-dot.offline { background:#64748b; }
+        .status-dot.working { background:#f59e0b; animation:pulse 1s infinite; }
+        .status-dot.error { background:#ef4444; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    </style>
 </head>
 <body>
     <div class="dashboard-layout">
-
-        <!-- Sidebar Overlay (mobile) -->
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-        <!-- ============================================================
-             SIDEBAR
-             ============================================================ -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-logo">
                 <div class="sidebar-logo-icon">ST</div>
@@ -47,7 +58,7 @@
                     <a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 & 리뷰</a>
                     <a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a>
                 </div>
-                            <div class="sidebar-section">
+                <div class="sidebar-section">
                     <div class="sidebar-section-title">관리</div>
                     <a href="admin.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a>
                     <a href="live-search.html" class="sidebar-link"><span class="sidebar-link-icon">🔴</span> 실시간 검색</a>
@@ -61,12 +72,7 @@
             </nav>
         </aside>
 
-        <!-- ============================================================
-             MAIN CONTENT
-             ============================================================ -->
         <div class="main-content">
-
-            <!-- Top Bar -->
             <header class="top-bar">
                 <div class="top-bar-left">
                     <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
@@ -84,10 +90,7 @@
                 </div>
             </header>
 
-            <!-- Content -->
             <div class="content-area">
-
-                <!-- Status Bar -->
                 <div class="status-bar" id="statusBar">
                     <div class="status-item" id="st-coupang"><span class="status-dot" id="dot-coupang"></span>쿠팡 <span id="st-coupang-mode">확인중</span></div>
                     <div class="status-item" id="st-gmarket"><span class="status-dot offline"></span>지마켓 <span>크롤링 대기</span></div>
@@ -97,74 +100,39 @@
                     <div class="status-item" id="st-schedule"><span class="status-dot"></span>자동수집 <span id="scheduleStatus">매일 00:00~07:00</span></div>
                 </div>
 
-                <!-- Collection Log -->
                 <div id="collectionLog" style="display:none;background:#0f172a;border:1px solid #334155;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-family:monospace;font-size:0.78rem;color:#94a3b8;max-height:150px;overflow-y:auto;">
                     <div style="color:#3b82f6;font-weight:600;margin-bottom:6px;">📡 수집 로그</div>
                     <div id="logContent"></div>
                 </div>
 
-                <!-- ============================================================
-                     Platform Overview Cards
-                     ============================================================ -->
                 <div class="platform-overview-grid">
                     <div class="platform-overview-card po-1688">
                         <div class="po-logo">🏭</div>
-                        <div class="po-info">
-                            <div class="po-name">1688</div>
-                            <div class="po-sub">소싱 플랫폼</div>
-                        </div>
-                        <div class="po-stats">
-                            <div class="po-stat">수집 <strong>342</strong>개</div>
-                            <div class="po-stat">직배송 <strong>218</strong>개</div>
-                        </div>
+                        <div class="po-info"><div class="po-name">1688</div><div class="po-sub">소싱 플랫폼</div></div>
+                        <div class="po-stats"><div class="po-stat">수집 <strong>342</strong>개</div><div class="po-stat">직배송 <strong>218</strong>개</div></div>
                     </div>
                     <div class="platform-overview-card po-taobao">
                         <div class="po-logo">🛒</div>
-                        <div class="po-info">
-                            <div class="po-name">타오바오</div>
-                            <div class="po-sub">소싱 플랫폼</div>
-                        </div>
-                        <div class="po-stats">
-                            <div class="po-stat">수집 <strong>145</strong>개</div>
-                            <div class="po-stat">직배송 <strong>89</strong>개</div>
-                        </div>
+                        <div class="po-info"><div class="po-name">타오바오</div><div class="po-sub">소싱 플랫폼</div></div>
+                        <div class="po-stats"><div class="po-stat">수집 <strong>145</strong>개</div><div class="po-stat">직배송 <strong>89</strong>개</div></div>
                     </div>
                     <div class="platform-overview-card po-coupang">
                         <div class="po-logo">🚀</div>
-                        <div class="po-info">
-                            <div class="po-name">쿠팡</div>
-                            <div class="po-sub">판매 플랫폼</div>
-                        </div>
-                        <div class="po-stats">
-                            <div class="po-stat">추천 <strong>63</strong>개</div>
-                            <div class="po-stat">평균마진 <strong>41.2%</strong></div>
-                        </div>
+                        <div class="po-info"><div class="po-name">쿠팡</div><div class="po-sub">판매 플랫폼</div></div>
+                        <div class="po-stats"><div class="po-stat">추천 <strong>63</strong>개</div><div class="po-stat">평균마진 <strong>41.2%</strong></div></div>
                     </div>
                     <div class="platform-overview-card po-gmarket">
                         <div class="po-logo">🟢</div>
-                        <div class="po-info">
-                            <div class="po-name">지마켓</div>
-                            <div class="po-sub">판매 플랫폼</div>
-                        </div>
-                        <div class="po-stats">
-                            <div class="po-stat">추천 <strong>48</strong>개</div>
-                            <div class="po-stat">평균마진 <strong>38.5%</strong></div>
-                        </div>
+                        <div class="po-info"><div class="po-name">지마켓</div><div class="po-sub">판매 플랫폼</div></div>
+                        <div class="po-stats"><div class="po-stat">추천 <strong>48</strong>개</div><div class="po-stat">평균마진 <strong>38.5%</strong></div></div>
                     </div>
                     <div class="platform-overview-card po-naver">
                         <div class="po-logo">🟩</div>
-                        <div class="po-info">
-                            <div class="po-name">네이버스토어</div>
-                            <div class="po-sub">판매 플랫폼</div>
-                        </div>
-                        <div class="po-stats">
-                            <div class="po-stat">추천 <strong>52</strong>개</div>
-                            <div class="po-stat">평균마진 <strong>43.8%</strong></div>
-                        </div>
+                        <div class="po-info"><div class="po-name">네이버스토어</div><div class="po-sub">판매 플랫폼</div></div>
+                        <div class="po-stats"><div class="po-stat">추천 <strong>52</strong>개</div><div class="po-stat">평균마진 <strong>43.8%</strong></div></div>
                     </div>
                 </div>
 
-                <!-- Period Tabs -->
                 <div class="period-tabs-bar">
                     <div class="period-tabs">
                         <button class="period-tab" data-period="hourly">시간별</button>
@@ -196,249 +164,72 @@
                     </div>
                 </div>
 
-                <!-- ============================================================
-                     KPI Summary Cards
-                     ============================================================ -->
                 <section id="overview">
                     <div class="kpi-grid">
-                        <div class="kpi-card kpi-total">
-                            <div class="kpi-header">
-                                <div class="kpi-icon">📦</div>
-                                <span class="kpi-change up">↑ +12</span>
-                            </div>
-                            <div class="kpi-value">487</div>
-                            <div class="kpi-label">수집 상품</div>
-                            <div class="kpi-sub">전일 대비 +2.5%</div>
-                        </div>
-                        <div class="kpi-card kpi-recommend">
-                            <div class="kpi-header">
-                                <div class="kpi-icon">🎯</div>
-                                <span class="kpi-change up">↑ +14</span>
-                            </div>
-                            <div class="kpi-value">87</div>
-                            <div class="kpi-label">추천 상품 (마진 30%+)</div>
-                            <div class="kpi-sub">쿠팡63 지마켓48 네이버52</div>
-                        </div>
-                        <div class="kpi-card kpi-margin">
-                            <div class="kpi-header">
-                                <div class="kpi-icon">💰</div>
-                                <span class="kpi-change up">↑ +2.3%p</span>
-                            </div>
-                            <div class="kpi-value">41.2%</div>
-                            <div class="kpi-label">평균 마진율</div>
-                            <div class="kpi-sub">최고: 뷰티 52.3%</div>
-                        </div>
-                        <div class="kpi-card kpi-new">
-                            <div class="kpi-header">
-                                <div class="kpi-icon">🆕</div>
-                                <span class="kpi-change up">↑ +8</span>
-                            </div>
-                            <div class="kpi-value">24</div>
-                            <div class="kpi-label">신규 발견</div>
-                            <div class="kpi-sub">1688: 18 / 타오바오: 6</div>
-                        </div>
-                        <div class="kpi-card kpi-hot">
-                            <div class="kpi-header">
-                                <div class="kpi-icon">🔥</div>
-                                <span class="kpi-change up">↑ +5</span>
-                            </div>
-                            <div class="kpi-value">11</div>
-                            <div class="kpi-label">핫 아이템</div>
-                            <div class="kpi-sub">리뷰 급상승 상품</div>
-                        </div>
-                        <div class="kpi-card kpi-alert">
-                            <div class="kpi-header">
-                                <div class="kpi-icon">⚠️</div>
-                                <span class="kpi-change down">↓ -1</span>
-                            </div>
-                            <div class="kpi-value">4</div>
-                            <div class="kpi-label">주의 필요</div>
-                            <div class="kpi-sub">KC인증 2 / 브랜드 2</div>
-                        </div>
+                        <div class="kpi-card kpi-total"><div class="kpi-header"><div class="kpi-icon">📦</div><span class="kpi-change up">↑ +12</span></div><div class="kpi-value">487</div><div class="kpi-label">수집 상품</div><div class="kpi-sub">전일 대비 +2.5%</div></div>
+                        <div class="kpi-card kpi-recommend"><div class="kpi-header"><div class="kpi-icon">🎯</div><span class="kpi-change up">↑ +14</span></div><div class="kpi-value">87</div><div class="kpi-label">추천 상품 (마진 30%+)</div><div class="kpi-sub">쿠팡63 지마켓48 네이버52</div></div>
+                        <div class="kpi-card kpi-margin"><div class="kpi-header"><div class="kpi-icon">💰</div><span class="kpi-change up">↑ +2.3%p</span></div><div class="kpi-value">41.2%</div><div class="kpi-label">평균 마진율</div><div class="kpi-sub">최고: 뷰티 52.3%</div></div>
+                        <div class="kpi-card kpi-new"><div class="kpi-header"><div class="kpi-icon">🆕</div><span class="kpi-change up">↑ +8</span></div><div class="kpi-value">24</div><div class="kpi-label">신규 발견</div><div class="kpi-sub">1688: 18 / 타오바오: 6</div></div>
+                        <div class="kpi-card kpi-hot"><div class="kpi-header"><div class="kpi-icon">🔥</div><span class="kpi-change up">↑ +5</span></div><div class="kpi-value">11</div><div class="kpi-label">핫 아이템</div><div class="kpi-sub">리뷰 급상승 상품</div></div>
+                        <div class="kpi-card kpi-alert"><div class="kpi-header"><div class="kpi-icon">⚠️</div><span class="kpi-change down">↓ -1</span></div><div class="kpi-value">4</div><div class="kpi-label">주의 필요</div><div class="kpi-sub">KC인증 2 / 브랜드 2</div></div>
                     </div>
                 </section>
 
-                <!-- ============================================================
-                     Charts Row 1: 트렌드 + 마진율
-                     ============================================================ -->
                 <section id="trends">
                     <div class="charts-row">
                         <div class="chart-panel">
-                            <div class="chart-panel-header">
-                                <div class="chart-panel-title">
-                                    <span class="title-icon">📈</span>
-                                    상품 수집 & 추천 트렌드
-                                    <span id="periodLabel" style="font-size:11px;color:#94A3B8;font-weight:500">(일별)</span>
-                                </div>
-                                <div class="chart-panel-actions">
-                                    <button class="chart-tab active">7일</button>
-                                    <button class="chart-tab">30일</button>
-                                    <button class="chart-tab">90일</button>
-                                </div>
-                            </div>
-                            <div class="chart-panel-body">
-                                <div class="chart-canvas-wrap">
-                                    <canvas id="mainTrendChart"></canvas>
-                                </div>
-                            </div>
+                            <div class="chart-panel-header"><div class="chart-panel-title"><span class="title-icon">📈</span> 상품 수집 &amp; 추천 트렌드 <span id="periodLabel" style="font-size:11px;color:#94A3B8;font-weight:500">(일별)</span></div><div class="chart-panel-actions"><button class="chart-tab active">7일</button><button class="chart-tab">30일</button><button class="chart-tab">90일</button></div></div>
+                            <div class="chart-panel-body"><div class="chart-canvas-wrap"><canvas id="mainTrendChart"></canvas></div></div>
                         </div>
                         <div class="chart-panel">
-                            <div class="chart-panel-header">
-                                <div class="chart-panel-title">
-                                    <span class="title-icon">💰</span>
-                                    평균 마진율 추이
-                                </div>
-                            </div>
-                            <div class="chart-panel-body">
-                                <div class="chart-canvas-wrap">
-                                    <canvas id="marginTrendChart"></canvas>
-                                </div>
-                            </div>
+                            <div class="chart-panel-header"><div class="chart-panel-title"><span class="title-icon">💰</span> 평균 마진율 추이</div></div>
+                            <div class="chart-panel-body"><div class="chart-canvas-wrap"><canvas id="marginTrendChart"></canvas></div></div>
                         </div>
                     </div>
                 </section>
 
-                <!-- ============================================================
-                     Charts Row 2: 카테고리별 마진 + 리뷰/판매량
-                     ============================================================ -->
                 <div class="charts-row charts-row-equal">
                     <div class="chart-panel">
-                        <div class="chart-panel-header">
-                            <div class="chart-panel-title">
-                                <span class="title-icon">📂</span>
-                                카테고리별 평균 마진율
-                            </div>
-                        </div>
-                        <div class="chart-panel-body">
-                            <div class="chart-canvas-wrap chart-tall">
-                                <canvas id="categoryMarginChart"></canvas>
-                            </div>
-                        </div>
+                        <div class="chart-panel-header"><div class="chart-panel-title"><span class="title-icon">📂</span> 카테고리별 평균 마진율</div></div>
+                        <div class="chart-panel-body"><div class="chart-canvas-wrap chart-tall"><canvas id="categoryMarginChart"></canvas></div></div>
                     </div>
                     <div class="chart-panel">
-                        <div class="chart-panel-header">
-                            <div class="chart-panel-title">
-                                <span class="title-icon">⭐</span>
-                                TOP 상품 리뷰 현황
-                            </div>
-                            <div class="chart-panel-actions">
-                                <button class="chart-tab active">리뷰수</button>
-                                <button class="chart-tab">판매량</button>
-                            </div>
-                        </div>
-                        <div class="chart-panel-body">
-                            <div class="chart-canvas-wrap chart-tall">
-                                <canvas id="salesRankChart"></canvas>
-                            </div>
-                        </div>
+                        <div class="chart-panel-header"><div class="chart-panel-title"><span class="title-icon">⭐</span> TOP 상품 리뷰 현황</div><div class="chart-panel-actions"><button class="chart-tab active">리뷰수</button><button class="chart-tab">판매량</button></div></div>
+                        <div class="chart-panel-body"><div class="chart-canvas-wrap chart-tall"><canvas id="salesRankChart"></canvas></div></div>
                     </div>
                 </div>
 
-                <!-- ============================================================
-                     실시간 알림 & 핫이슈
-                     ============================================================ -->
-                <div class="section-divider">🔥 실시간 알림 & 핫이슈</div>
+                <div class="section-divider">🔥 실시간 알림 &amp; 핫이슈</div>
                 <div class="alert-list">
-                    <div class="alert-item alert-hot">
-                        <span class="alert-icon">🔥</span>
-                        <div class="alert-body">
-                            <div class="alert-title">[쿠팡] LED 무드등 리뷰 급상승</div>
-                            <div class="alert-desc">7일간 리뷰 528개 증가</div>
-                            <div class="alert-time">2시간 전</div>
-                        </div>
-                    </div>
-                    <div class="alert-item alert-rising">
-                        <span class="alert-icon">📈</span>
-                        <div class="alert-body">
-                            <div class="alert-title">[네이버] 실리콘 주방세트 검색량 폭증</div>
-                            <div class="alert-desc">네이버 검색량 전주 대비 +35%</div>
-                            <div class="alert-time">3시간 전</div>
-                        </div>
-                    </div>
-                    <div class="alert-item alert-price">
-                        <span class="alert-icon">💰</span>
-                        <div class="alert-body">
-                            <div class="alert-title">[1688] 블루투스 이어폰 단가 하락</div>
-                            <div class="alert-desc">22元→18元 (18% 하락)</div>
-                            <div class="alert-time">5시간 전</div>
-                        </div>
-                    </div>
-                    <div class="alert-item alert-new">
-                        <span class="alert-icon">🆕</span>
-                        <div class="alert-body">
-                            <div class="alert-title">[타오바오] 미니 빔프로젝터 신규 발견</div>
-                            <div class="alert-desc">1688 대비 15% 저렴한 공급상 발견</div>
-                            <div class="alert-time">6시간 전</div>
-                        </div>
-                    </div>
-                    <div class="alert-item alert-rising">
-                        <span class="alert-icon">📈</span>
-                        <div class="alert-body">
-                            <div class="alert-title">[지마켓] 강아지 장난감 판매 급증</div>
-                            <div class="alert-desc">지마켓 주간 판매량 +45%</div>
-                            <div class="alert-time">7시간 전</div>
-                        </div>
-                    </div>
-                    <div class="alert-item alert-hot">
-                        <span class="alert-icon">⚠️</span>
-                        <div class="alert-body">
-                            <div class="alert-title">[전체] 캠핑 LED 시즌 피크 진입</div>
-                            <div class="alert-desc">3개 플랫폼 모두 검색량 상승</div>
-                            <div class="alert-time">8시간 전</div>
-                        </div>
-                    </div>
+                    <div class="alert-item alert-hot"><span class="alert-icon">🔥</span><div class="alert-body"><div class="alert-title">[쿠팡] LED 무드등 리뷰 급상승</div><div class="alert-desc">7일간 리뷰 528개 증가</div><div class="alert-time">2시간 전</div></div></div>
+                    <div class="alert-item alert-rising"><span class="alert-icon">📈</span><div class="alert-body"><div class="alert-title">[네이버] 실리콘 주방세트 검색량 폭증</div><div class="alert-desc">네이버 검색량 전주 대비 +35%</div><div class="alert-time">3시간 전</div></div></div>
+                    <div class="alert-item alert-price"><span class="alert-icon">💰</span><div class="alert-body"><div class="alert-title">[1688] 블루투스 이어폰 단가 하락</div><div class="alert-desc">22元→18元 (18% 하락)</div><div class="alert-time">5시간 전</div></div></div>
+                    <div class="alert-item alert-new"><span class="alert-icon">🆕</span><div class="alert-body"><div class="alert-title">[타오바오] 미니 빔프로젝터 신규 발견</div><div class="alert-desc">1688 대비 15% 저렴한 공급상 발견</div><div class="alert-time">6시간 전</div></div></div>
+                    <div class="alert-item alert-rising"><span class="alert-icon">📈</span><div class="alert-body"><div class="alert-title">[지마켓] 강아지 장난감 판매 급증</div><div class="alert-desc">지마켓 주간 판매량 +45%</div><div class="alert-time">7시간 전</div></div></div>
+                    <div class="alert-item alert-hot"><span class="alert-icon">⚠️</span><div class="alert-body"><div class="alert-title">[전체] 캠핑 LED 시즌 피크 진입</div><div class="alert-desc">3개 플랫폼 모두 검색량 상승</div><div class="alert-time">8시간 전</div></div></div>
                 </div>
+            </div>
+        </div>
+    </div>
 
-            </div><!-- /content-area -->
-        </div><!-- /main-content -->
-    </div><!-- /dashboard-layout -->
-
-    <!-- Back to Top -->
     <button class="back-to-top" id="backToTop">↑</button>
-
-    <style>
-        .data-source-badge { padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:600; margin-right:8px; }
-        .data-source-badge.sample { background:rgba(249,115,22,0.15); color:#fb923c; }
-        .data-source-badge.live { background:rgba(16,185,129,0.15); color:#34d399; }
-        .data-source-badge.crawl { background:rgba(139,92,246,0.15); color:#a78bfa; }
-        .data-source-badge.auto { background:rgba(59,130,246,0.15); color:#60a5fa; }
-        .btn-crawl { background:#7c3aed !important; color:#fff !important; }
-        .btn-crawl:hover { background:#6d28d9 !important; }
-        .btn-api { background:#0ea5e9 !important; color:#fff !important; }
-        .btn-api:hover { background:#0284c7 !important; }
-        .btn-api[disabled], .btn-crawl[disabled] { opacity:0.5; cursor:not-allowed; }
-        .status-dot.online { background:#10b981; }
-        .status-dot.offline { background:#64748b; }
-        .status-dot.working { background:#f59e0b; animation:pulse 1s infinite; }
-        .status-dot.error { background:#ef4444; }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-        .last-crawl-info { font-size:0.72rem; color:#64748b; margin-top:2px; }
-    </style>
     <script src="data/sample-data.js"></script>
     <script src="js/dashboard.js"></script>
     <script>
-        const DATA_STATE = {
-            source: 'sample',
-            lastCrawl: localStorage.getItem('lastCrawlTime') || null,
-            lastApi: localStorage.getItem('lastApiTime') || null,
-            crawlData: JSON.parse(localStorage.getItem('crawlData') || 'null'),
-            apiData: JSON.parse(localStorage.getItem('apiData') || 'null')
-        };
+        const DATA_STATE = { source:'sample', lastCrawl:localStorage.getItem('lastCrawlTime')||null, lastApi:localStorage.getItem('lastApiTime')||null };
 
         function updateBadge(source) {
             const badge = document.getElementById('dataSourceBadge');
             const labels = { sample:'📋 샘플 데이터', live:'🔌 API 실시간', crawl:'🕷 크롤링 데이터', auto:'⏰ 자동수집 데이터' };
             badge.textContent = labels[source] || labels.sample;
             badge.className = 'data-source-badge ' + source;
-            DATA_STATE.source = source;
         }
 
         function addLog(msg) {
             const log = document.getElementById('collectionLog');
             const content = document.getElementById('logContent');
             log.style.display = 'block';
-            const time = new Date().toLocaleTimeString('ko-KR');
-            content.innerHTML += `<div>[${time}] ${msg}</div>`;
+            content.innerHTML += '<div>[' + new Date().toLocaleTimeString('ko-KR') + '] ' + msg + '</div>';
             log.scrollTop = log.scrollHeight;
         }
 
@@ -447,40 +238,32 @@
             btn.disabled = true;
             btn.innerHTML = '🕷 <span>크롤링 중...</span>';
             addLog('크롤링 시작...');
-
             const platforms = [
                 { name:'쿠팡', dotId:'dot-coupang', keywords:['블루투스 이어폰','실리콘 주방용품','LED 무드등'] },
                 { name:'1688', dotId:'dot-1688', keywords:['蓝牙耳机','硅胶厨具','LED氛围灯'] }
             ];
-
             for (const p of platforms) {
                 const dot = document.getElementById(p.dotId);
                 if(dot) dot.className = 'status-dot working';
-                addLog(`${p.name} 크롤링 시작 (${p.keywords.length}개 키워드)`);
-
+                addLog(p.name + ' 크롤링 시작 (' + p.keywords.length + '개 키워드)');
                 for (const kw of p.keywords) {
                     try {
                         const endpoint = p.name === '쿠팡' ? '/api/coupang/search' : '/api/1688/search';
-                        const res = await fetch(`${endpoint}?keyword=${encodeURIComponent(kw)}&debug=true`);
+                        const res = await fetch(endpoint + '?keyword=' + encodeURIComponent(kw) + '&debug=true');
                         const data = await res.json();
-                        const count = data.raw?.data?.length || data.products?.length || 0;
-                        addLog(`  ✓ ${p.name} "${kw}" → ${count}개 수집`);
+                        const count = (data.raw && data.raw.data && data.raw.data.length) || (data.products && data.products.length) || 0;
+                        addLog('  ✓ ' + p.name + ' "' + kw + '" → ' + count + '개 수집');
                     } catch(e) {
-                        addLog(`  ✗ ${p.name} "${kw}" → 오류: ${e.message}`);
+                        addLog('  ✗ ' + p.name + ' "' + kw + '" → 오류: ' + e.message);
                     }
                 }
                 if(dot) dot.className = 'status-dot online';
-                addLog(`${p.name} 크롤링 완료`);
+                addLog(p.name + ' 크롤링 완료');
             }
-
-            const now = new Date().toISOString();
-            localStorage.setItem('lastCrawlTime', now);
-            DATA_STATE.lastCrawl = now;
-
+            localStorage.setItem('lastCrawlTime', new Date().toISOString());
             addLog('✅ 전체 크롤링 완료');
             updateBadge('crawl');
             document.getElementById('lastUpdated').textContent = new Date().toLocaleString('ko-KR');
-
             btn.disabled = false;
             btn.innerHTML = '🕷 <span>크롤링</span>';
         }
@@ -490,10 +273,9 @@
             btn.disabled = true;
             btn.innerHTML = '🔌 <span>API 수집 중...</span>';
             addLog('API 수집 시작...');
-
             try {
-                const health = await fetch('/api/health').then(r=>r.json());
-                if (health.apis?.coupang) {
+                const health = await fetch('/api/health').then(function(r){return r.json()});
+                if (health.apis && health.apis.coupang) {
                     addLog('✓ 쿠팡 윙 API 연결됨');
                     document.getElementById('dot-coupang').className = 'status-dot online';
                     document.getElementById('st-coupang-mode').textContent = 'API 연결됨';
@@ -502,7 +284,7 @@
                     document.getElementById('dot-coupang').className = 'status-dot error';
                     document.getElementById('st-coupang-mode').textContent = 'API 키 없음';
                 }
-                if (health.apis?.alibaba1688) {
+                if (health.apis && health.apis.alibaba1688) {
                     addLog('✓ 1688 API 연결됨');
                     document.getElementById('dot-1688').className = 'status-dot online';
                     document.getElementById('st-1688-mode').textContent = 'API 연결됨';
@@ -511,52 +293,29 @@
                     document.getElementById('dot-1688').className = 'status-dot offline';
                     document.getElementById('st-1688-mode').textContent = 'API 키 없음';
                 }
-
-                const now = new Date().toISOString();
-                localStorage.setItem('lastApiTime', now);
-                DATA_STATE.lastApi = now;
-                addLog('✅ API 상태 확인 완료 (파트너스 승인 후 실시간 데이터 수집 가능)');
+                addLog('✅ API 상태 확인 완료');
                 updateBadge('live');
             } catch(e) {
                 addLog('✗ API 서버 연결 실패: ' + e.message);
             }
-
             btn.disabled = false;
             btn.innerHTML = '🔌 <span>API 수집</span>';
         }
 
-        function checkAutoSchedule() {
-            const hour = new Date().getHours();
-            const el = document.getElementById('scheduleStatus');
-            if (hour >= 0 && hour < 7) {
-                el.textContent = '자동수집 진행 중';
-                el.parentElement.querySelector('.status-dot').className = 'status-dot working';
-            } else if (hour === 8) {
-                el.textContent = '08:00 수집 완료';
-                el.parentElement.querySelector('.status-dot').className = 'status-dot online';
-            } else {
-                el.textContent = '매일 00:00~07:00';
-                el.parentElement.querySelector('.status-dot').className = 'status-dot offline';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             updateBadge('sample');
-            checkAutoSchedule();
+            var hour = new Date().getHours();
+            var el = document.getElementById('scheduleStatus');
+            if (hour >= 0 && hour < 7) { el.textContent = '자동수집 진행 중'; }
+            else { el.textContent = '매일 00:00~07:00'; }
 
-            if (DATA_STATE.lastCrawl) {
-                const d = new Date(DATA_STATE.lastCrawl);
-                document.getElementById('lastUpdated').textContent = d.toLocaleString('ko-KR') + ' (크롤링)';
-            }
-
-            fetch('/api/health').then(r=>r.json()).then(h => {
-                document.getElementById('dot-coupang').className = 'status-dot ' + (h.apis?.coupang ? 'online' : 'offline');
-                document.getElementById('st-coupang-mode').textContent = h.apis?.coupang ? 'API 연결됨' : 'API 키 없음';
-                document.getElementById('dot-1688').className = 'status-dot ' + (h.apis?.alibaba1688 ? 'online' : 'offline');
-                document.getElementById('st-1688-mode').textContent = h.apis?.alibaba1688 ? 'API 연결됨' : 'API 키 없음';
-            }).catch(() => {});
+            fetch('/api/health').then(function(r){return r.json()}).then(function(h) {
+                document.getElementById('dot-coupang').className = 'status-dot ' + ((h.apis && h.apis.coupang) ? 'online' : 'offline');
+                document.getElementById('st-coupang-mode').textContent = (h.apis && h.apis.coupang) ? 'API 연결됨' : 'API 키 없음';
+                document.getElementById('dot-1688').className = 'status-dot ' + ((h.apis && h.apis.alibaba1688) ? 'online' : 'offline');
+                document.getElementById('st-1688-mode').textContent = (h.apis && h.apis.alibaba1688) ? 'API 연결됨' : 'API 키 없음';
+            }).catch(function(){});
         });
     </script>
 </body>
 </html>
-<!-- deploy 1779673956 -->
