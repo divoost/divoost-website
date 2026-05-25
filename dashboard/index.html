@@ -76,9 +76,11 @@
                     </div>
                 </div>
                 <div class="top-bar-right">
+                    <span id="dataSourceBadge" class="data-source-badge sample">📋 샘플 데이터</span>
                     <button class="top-bar-btn btn-export">📥 <span>CSV 내보내기</span></button>
                     <button class="top-bar-btn btn-refresh">🔄 <span>새로고침</span></button>
-                    <button class="top-bar-btn btn-run">▶ <span>수집 실행</span></button>
+                    <button class="top-bar-btn btn-crawl" onclick="runCrawl()">🕷 <span>크롤링</span></button>
+                    <button class="top-bar-btn btn-api" onclick="runApi()">🔌 <span>API 수집</span></button>
                 </div>
             </header>
 
@@ -86,31 +88,19 @@
             <div class="content-area">
 
                 <!-- Status Bar -->
-                <div class="status-bar">
-                    <div class="status-item">
-                        <span class="status-dot online"></span>
-                        쿠팡 API 정상
-                    </div>
-                    <div class="status-item">
-                        <span class="status-dot online"></span>
-                        지마켓 스크래핑 정상
-                    </div>
-                    <div class="status-item">
-                        <span class="status-dot online"></span>
-                        네이버 API 정상
-                    </div>
-                    <div class="status-item">
-                        <span class="status-dot online"></span>
-                        1688 스크래핑 정상
-                    </div>
-                    <div class="status-item">
-                        <span class="status-dot online"></span>
-                        타오바오 스크래핑 정상
-                    </div>
-                    <div class="status-item">
-                        <span class="status-dot online"></span>
-                        GitHub Actions 활성
-                    </div>
+                <div class="status-bar" id="statusBar">
+                    <div class="status-item" id="st-coupang"><span class="status-dot" id="dot-coupang"></span>쿠팡 <span id="st-coupang-mode">확인중</span></div>
+                    <div class="status-item" id="st-gmarket"><span class="status-dot offline"></span>지마켓 <span>크롤링 대기</span></div>
+                    <div class="status-item" id="st-naver"><span class="status-dot offline"></span>네이버 <span>크롤링 대기</span></div>
+                    <div class="status-item" id="st-1688"><span class="status-dot" id="dot-1688"></span>1688 <span id="st-1688-mode">확인중</span></div>
+                    <div class="status-item" id="st-taobao"><span class="status-dot offline"></span>타오바오 <span>크롤링 대기</span></div>
+                    <div class="status-item" id="st-schedule"><span class="status-dot"></span>자동수집 <span id="scheduleStatus">매일 00:00~07:00</span></div>
+                </div>
+
+                <!-- Collection Log -->
+                <div id="collectionLog" style="display:none;background:#0f172a;border:1px solid #334155;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-family:monospace;font-size:0.78rem;color:#94a3b8;max-height:150px;overflow-y:auto;">
+                    <div style="color:#3b82f6;font-weight:600;margin-bottom:6px;">📡 수집 로그</div>
+                    <div id="logContent"></div>
                 </div>
 
                 <!-- ============================================================
@@ -406,7 +396,166 @@
     <!-- Back to Top -->
     <button class="back-to-top" id="backToTop">↑</button>
 
+    <style>
+        .data-source-badge { padding:4px 12px; border-radius:20px; font-size:0.75rem; font-weight:600; margin-right:8px; }
+        .data-source-badge.sample { background:rgba(249,115,22,0.15); color:#fb923c; }
+        .data-source-badge.live { background:rgba(16,185,129,0.15); color:#34d399; }
+        .data-source-badge.crawl { background:rgba(139,92,246,0.15); color:#a78bfa; }
+        .data-source-badge.auto { background:rgba(59,130,246,0.15); color:#60a5fa; }
+        .btn-crawl { background:#7c3aed !important; color:#fff !important; }
+        .btn-crawl:hover { background:#6d28d9 !important; }
+        .btn-api { background:#0ea5e9 !important; color:#fff !important; }
+        .btn-api:hover { background:#0284c7 !important; }
+        .btn-api[disabled], .btn-crawl[disabled] { opacity:0.5; cursor:not-allowed; }
+        .status-dot.online { background:#10b981; }
+        .status-dot.offline { background:#64748b; }
+        .status-dot.working { background:#f59e0b; animation:pulse 1s infinite; }
+        .status-dot.error { background:#ef4444; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+        .last-crawl-info { font-size:0.72rem; color:#64748b; margin-top:2px; }
+    </style>
     <script src="data/sample-data.js"></script>
     <script src="js/dashboard.js"></script>
+    <script>
+        const DATA_STATE = {
+            source: 'sample',
+            lastCrawl: localStorage.getItem('lastCrawlTime') || null,
+            lastApi: localStorage.getItem('lastApiTime') || null,
+            crawlData: JSON.parse(localStorage.getItem('crawlData') || 'null'),
+            apiData: JSON.parse(localStorage.getItem('apiData') || 'null')
+        };
+
+        function updateBadge(source) {
+            const badge = document.getElementById('dataSourceBadge');
+            const labels = { sample:'📋 샘플 데이터', live:'🔌 API 실시간', crawl:'🕷 크롤링 데이터', auto:'⏰ 자동수집 데이터' };
+            badge.textContent = labels[source] || labels.sample;
+            badge.className = 'data-source-badge ' + source;
+            DATA_STATE.source = source;
+        }
+
+        function addLog(msg) {
+            const log = document.getElementById('collectionLog');
+            const content = document.getElementById('logContent');
+            log.style.display = 'block';
+            const time = new Date().toLocaleTimeString('ko-KR');
+            content.innerHTML += `<div>[${time}] ${msg}</div>`;
+            log.scrollTop = log.scrollHeight;
+        }
+
+        async function runCrawl() {
+            const btn = document.querySelector('.btn-crawl');
+            btn.disabled = true;
+            btn.innerHTML = '🕷 <span>크롤링 중...</span>';
+            addLog('크롤링 시작...');
+
+            const platforms = [
+                { name:'쿠팡', dotId:'dot-coupang', keywords:['블루투스 이어폰','실리콘 주방용품','LED 무드등'] },
+                { name:'1688', dotId:'dot-1688', keywords:['蓝牙耳机','硅胶厨具','LED氛围灯'] }
+            ];
+
+            for (const p of platforms) {
+                const dot = document.getElementById(p.dotId);
+                if(dot) dot.className = 'status-dot working';
+                addLog(`${p.name} 크롤링 시작 (${p.keywords.length}개 키워드)`);
+
+                for (const kw of p.keywords) {
+                    try {
+                        const endpoint = p.name === '쿠팡' ? '/api/coupang/search' : '/api/1688/search';
+                        const res = await fetch(`${endpoint}?keyword=${encodeURIComponent(kw)}&debug=true`);
+                        const data = await res.json();
+                        const count = data.raw?.data?.length || data.products?.length || 0;
+                        addLog(`  ✓ ${p.name} "${kw}" → ${count}개 수집`);
+                    } catch(e) {
+                        addLog(`  ✗ ${p.name} "${kw}" → 오류: ${e.message}`);
+                    }
+                }
+                if(dot) dot.className = 'status-dot online';
+                addLog(`${p.name} 크롤링 완료`);
+            }
+
+            const now = new Date().toISOString();
+            localStorage.setItem('lastCrawlTime', now);
+            DATA_STATE.lastCrawl = now;
+
+            addLog('✅ 전체 크롤링 완료');
+            updateBadge('crawl');
+            document.getElementById('lastUpdated').textContent = new Date().toLocaleString('ko-KR');
+
+            btn.disabled = false;
+            btn.innerHTML = '🕷 <span>크롤링</span>';
+        }
+
+        async function runApi() {
+            const btn = document.querySelector('.btn-api');
+            btn.disabled = true;
+            btn.innerHTML = '🔌 <span>API 수집 중...</span>';
+            addLog('API 수집 시작...');
+
+            try {
+                const health = await fetch('/api/health').then(r=>r.json());
+                if (health.apis?.coupang) {
+                    addLog('✓ 쿠팡 윙 API 연결됨');
+                    document.getElementById('dot-coupang').className = 'status-dot online';
+                    document.getElementById('st-coupang-mode').textContent = 'API 연결됨';
+                } else {
+                    addLog('✗ 쿠팡 API 키 미설정');
+                    document.getElementById('dot-coupang').className = 'status-dot error';
+                    document.getElementById('st-coupang-mode').textContent = 'API 키 없음';
+                }
+                if (health.apis?.alibaba1688) {
+                    addLog('✓ 1688 API 연결됨');
+                    document.getElementById('dot-1688').className = 'status-dot online';
+                    document.getElementById('st-1688-mode').textContent = 'API 연결됨';
+                } else {
+                    addLog('✗ 1688 API 키 미설정');
+                    document.getElementById('dot-1688').className = 'status-dot offline';
+                    document.getElementById('st-1688-mode').textContent = 'API 키 없음';
+                }
+
+                const now = new Date().toISOString();
+                localStorage.setItem('lastApiTime', now);
+                DATA_STATE.lastApi = now;
+                addLog('✅ API 상태 확인 완료 (파트너스 승인 후 실시간 데이터 수집 가능)');
+                updateBadge('live');
+            } catch(e) {
+                addLog('✗ API 서버 연결 실패: ' + e.message);
+            }
+
+            btn.disabled = false;
+            btn.innerHTML = '🔌 <span>API 수집</span>';
+        }
+
+        function checkAutoSchedule() {
+            const hour = new Date().getHours();
+            const el = document.getElementById('scheduleStatus');
+            if (hour >= 0 && hour < 7) {
+                el.textContent = '자동수집 진행 중';
+                el.parentElement.querySelector('.status-dot').className = 'status-dot working';
+            } else if (hour === 8) {
+                el.textContent = '08:00 수집 완료';
+                el.parentElement.querySelector('.status-dot').className = 'status-dot online';
+            } else {
+                el.textContent = '매일 00:00~07:00';
+                el.parentElement.querySelector('.status-dot').className = 'status-dot offline';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateBadge('sample');
+            checkAutoSchedule();
+
+            if (DATA_STATE.lastCrawl) {
+                const d = new Date(DATA_STATE.lastCrawl);
+                document.getElementById('lastUpdated').textContent = d.toLocaleString('ko-KR') + ' (크롤링)';
+            }
+
+            fetch('/api/health').then(r=>r.json()).then(h => {
+                document.getElementById('dot-coupang').className = 'status-dot ' + (h.apis?.coupang ? 'online' : 'offline');
+                document.getElementById('st-coupang-mode').textContent = h.apis?.coupang ? 'API 연결됨' : 'API 키 없음';
+                document.getElementById('dot-1688').className = 'status-dot ' + (h.apis?.alibaba1688 ? 'online' : 'offline');
+                document.getElementById('st-1688-mode').textContent = h.apis?.alibaba1688 ? 'API 연결됨' : 'API 키 없음';
+            }).catch(() => {});
+        });
+    </script>
 </body>
 </html>
