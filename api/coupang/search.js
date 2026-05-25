@@ -18,10 +18,17 @@ module.exports = async (req, res) => {
     const headers = getCoupangHeaders('GET', url);
 
     const response = await fetch(url, { headers });
-    const data = await response.json();
+    const text = await response.text();
 
-    if (data.rCode !== 200 && data.rCode !== '200') {
-      return res.status(502).json({ error: '쿠팡 API 오류', detail: data.rMessage || data });
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      return res.status(502).json({ error: '쿠팡 응답 파싱 실패', status: response.status, body: text.substring(0, 500) });
+    }
+
+    if (data.rCode && data.rCode !== 200 && data.rCode !== '200') {
+      return res.status(502).json({ error: '쿠팡 API 오류', rCode: data.rCode, detail: data.rMessage || data });
     }
 
     const products = (data.data?.productData || []).map(p => ({
@@ -47,6 +54,6 @@ module.exports = async (req, res) => {
       products
     });
   } catch (err) {
-    res.status(500).json({ error: 'API 호출 실패', message: err.message });
+    res.status(500).json({ error: 'API 호출 실패', message: err.message, stack: err.stack });
   }
 };

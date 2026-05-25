@@ -2,8 +2,18 @@ const crypto = require('crypto');
 
 function generateHmac(method, url, secretKey, accessKey) {
   const parts = new URL(url);
-  const path = parts.pathname + parts.search;
-  const datetime = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+/, '');
+  const path = parts.pathname + (parts.search || '');
+
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  const datetime = pad(now.getUTCFullYear() % 100)
+    + pad(now.getUTCMonth() + 1)
+    + pad(now.getUTCDate())
+    + 'T'
+    + pad(now.getUTCHours())
+    + pad(now.getUTCMinutes())
+    + pad(now.getUTCSeconds())
+    + 'Z';
 
   const message = datetime + method.toUpperCase() + path;
   const signature = crypto
