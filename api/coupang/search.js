@@ -6,14 +6,14 @@ const BASE_URL = 'https://api-gateway.coupang.com';
 module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  const { keyword, limit = 20, subId, debug } = req.query;
+  const { keyword, limit = 20, debug } = req.query;
 
   if (!keyword) {
     return res.status(400).json({ error: 'keyword 파라미터가 필요합니다' });
   }
 
   try {
-    const path = `/v2/providers/affiliate_open_api/apis/openapi/products/search?keyword=${encodeURIComponent(keyword)}&limit=${limit}${subId ? `&subId=${subId}` : ''}`;
+    const path = `/v2/providers/seller_api/apis/api/v1/marketplace/seller-products?vendorId=${process.env.COUPANG_VENDOR_ID || ''}&searchKeyword=${encodeURIComponent(keyword)}&maxPerPage=${limit}`;
     const url = BASE_URL + path;
     const headers = getCoupangHeaders('GET', url);
 
@@ -31,50 +31,29 @@ module.exports = async (req, res) => {
       return res.status(200).json({ raw: data });
     }
 
-    const productData = data.data?.productData
-      || data.data?.products
-      || data.productData
-      || data.products
-      || data.data
-      || [];
+    if (data.code === 'ERROR') {
+      return res.status(502).json({ error: '쿠팡 API 오류', detail: data.message });
+    }
 
-    const productList = Array.isArray(productData) ? productData : [];
-
-    const products = productList.map(p => ({
-      id: p.productId || p.id,
-      name: p.productName || p.name || p.title,
-      price: p.productPrice || p.salePrice || p.price,
-      originalPrice: p.originalPrice || p.productPrice || p.price,
-      category: p.categoryName || p.category,
-      image: p.productImage || p.imageUrl || p.image,
-      url: p.productUrl || p.url || p.landingUrl,
-      isRocket: p.isRocket || p.rocketDelivery || false,
-      isFreeShipping: p.isFreeShipping || p.freeShipping || false,
-      rating: p.productRating || p.rating || 0,
-      reviewCount: p.reviewCount || p.totalReviewCount || 0,
-      rank: p.rank || 0,
+    const productList = data.data || [];
+    const products = (Array.isArray(productList) ? productList : []).map(p => ({
+      id: p.sellerProductId || p.productId,
+      name: p.sellerProductName || p.productName || p.displayProductName,
+      price: p.salePrice || p.originalPrice || 0,
+      originalPrice: p.originalPrice || 0,
+      category: p.displayCategoryName || '',
+      image: p.productImageUrl || '',
+      status: p.statusName || p.saleStatus || '',
+      stockQuantity: p.stockQuantity || 0,
       platform: '쿠팡'
     }));
 
-    const result = {
+    res.status(200).json({
       success: true,
       keyword,
       total: products.length,
       products
-    };
-
-    if (products.length === 0) {
-      result._debug = {
-        httpStatus: response.status,
-        responseKeys: Object.keys(data),
-        rCode: data.rCode,
-        rMessage: data.rMessage,
-        dataKeys: data.data ? Object.keys(data.data) : null,
-        sampleData: JSON.stringify(data).substring(0, 500)
-      };
-    }
-
-    res.status(200).json(result);
+    });
   } catch (err) {
     res.status(500).json({ error: 'API 호출 실패', message: err.message });
   }

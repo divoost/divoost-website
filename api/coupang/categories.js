@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   try {
-    const path = '/v2/providers/affiliate_open_api/apis/openapi/deeplink/categories';
+    const path = '/v2/providers/seller_api/apis/api/v1/marketplace/meta/category-related-metas/display-categories';
     const url = BASE_URL + path;
     const headers = getCoupangHeaders('GET', url);
 
