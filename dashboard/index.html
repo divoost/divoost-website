@@ -143,51 +143,79 @@
         function updateBadge(s){var b=document.getElementById('dataSourceBadge');var l={sample:'📋 샘플 데이터',crawl:'🕷 스크래핑 데이터',live:'🔌 API 실시간'};b.textContent=l[s]||l.sample;b.className='data-source-badge '+s}
         function addLog(m){var l=document.getElementById('collectionLog'),c=document.getElementById('logContent');l.style.display='block';c.innerHTML+='<div>['+new Date().toLocaleTimeString('ko-KR')+'] '+m+'</div>';l.scrollTop=l.scrollHeight}
 
+        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
+
+        async function scrapePage(targetUrl){
+            var proxyUrl='https://api.scraperapi.com?api_key='+SCRAPER_KEY+'&url='+encodeURIComponent(targetUrl)+'&render=false';
+            var r=await fetch(proxyUrl);
+            if(!r.ok)throw new Error('status '+r.status);
+            return r.text();
+        }
+
+        function parseCoupang(html){
+            var products=[];
+            var regex=/<li[^>]*class="[^"]*search-product[^"]*"[^>]*>[\s\S]*?<\/li>/gi;
+            var matches=html.match(regex)||[];
+            for(var i=0;i<Math.min(matches.length,20);i++){
+                var item=matches[i];
+                var nm=item.match(/class="name"[^>]*>([\s\S]*?)<\//);
+                var pr=item.match(/class="price-value"[^>]*>([\s\S]*?)<\//);
+                var rv=item.match(/class="rating-total-count"[^>]*>\(?([\d,]+)\)?<\//);
+                var im=item.match(/src="(https?:\/\/[^"]*thumbnail[^"]*)"/i)||item.match(/data-img-src="([^"]*)"/);
+                var lk=item.match(/href="(\/vp\/products\/\d+[^"]*)"/);
+                if(nm)products.push({name:nm[1].replace(/<[^>]*>/g,'').trim(),price:pr?parseInt(pr[1].replace(/[^\d]/g,''))||0:0,reviewCount:rv?parseInt(rv[1].replace(/[^\d]/g,''))||0:0,image:im?im[1]:'',url:lk?'https://www.coupang.com'+lk[1]:'',isRocket:!!item.match(/rocket/i),platform:'쿠팡',source:'proxy'});
+            }
+            return products;
+        }
+
+        function parse1688(html){
+            var products=[];
+            var jm=html.match(/var\s+__INIT_DATA\s*=\s*({[\s\S]*?});?\s*<\/script>/);
+            if(jm){try{var d=JSON.parse(jm[1]);var ol=(d.data&&d.data.offerList)||[];for(var i=0;i<Math.min(ol.length,20);i++){var it=ol[i];var ps=(it.tradePrice&&it.tradePrice.offerPrice&&it.tradePrice.offerPrice.valueString)||'0';products.push({name:(it.information&&it.information.subject)||'',price:ps,priceKRW:Math.round(parseFloat(ps)*190.5),image:(it.image&&it.image.imgUrl)||'',url:'https://detail.1688.com/offer/'+(it.id||'')+'.html',tradeQuantity:(it.tradeQuantity&&it.tradeQuantity.number)||0,platform:'1688',source:'proxy'})}}catch(e){}}
+            return products;
+        }
+
         async function runCrawl(){
             var btn=document.querySelector('.btn-crawl');btn.disabled=true;btn.innerHTML='🕷 <span>수집중...</span>';
-            addLog('웹 스크래핑 시작 (API 키 불필요)');
+            addLog('ScraperAPI 프록시로 수집 시작');
             var results={coupang:0,alibaba:0,products:[],timestamp:new Date().toISOString()};
 
-            // 쿠팡 스크래핑
             var dotC=document.getElementById('dot-coupang');if(dotC)dotC.className='status-dot working';
             setText('st-coupang-mode','수집중...');
             var cpKW=['블루투스 이어폰','실리콘 주방용품','LED 무드등'];
             for(var ki=0;ki<cpKW.length;ki++){
                 var kw=cpKW[ki];
-                if(ki>0)await new Promise(function(r){setTimeout(r,3000+Math.random()*2000)});
+                if(ki>0)await new Promise(function(r){setTimeout(r,2000)});
                 try{
-                    addLog('쿠팡 "'+kw+'" 스크래핑... ('+(ki+1)+'/'+cpKW.length+')');
-                    var r=await fetch(API_BASE+'/api/scrape/coupang?keyword='+encodeURIComponent(kw));
-                    var txt=await r.text();
-                    try{var d=JSON.parse(txt)}catch(pe){addLog('  ⚠ 쿠팡 차단됨 (HTML 응답)');break}
-                    if(d.blocked){addLog('  ⚠ 쿠팡 차단됨 - 나머지 건너뜀');break}
-                    if(d.success&&d.total>0){results.coupang+=d.total;results.products=results.products.concat(d.products);addLog('  ✓ 쿠팡 "'+kw+'" → '+d.total+'개')}
-                    else{addLog('  △ 쿠팡 "'+kw+'" → 0개')}
-                }catch(e){addLog('  ✗ 쿠팡 연결실패: '+e.message);break}
+                    addLog('쿠팡 "'+kw+'" 프록시 수집... ('+(ki+1)+'/'+cpKW.length+')');
+                    var html=await scrapePage('https://www.coupang.com/np/search?component=&q='+encodeURIComponent(kw)+'&channel=user');
+                    var prods=parseCoupang(html);
+                    results.coupang+=prods.length;
+                    results.products=results.products.concat(prods);
+                    addLog('  ✓ 쿠팡 "'+kw+'" → '+prods.length+'개');
+                }catch(e){addLog('  ✗ 쿠팡 "'+kw+'" → '+e.message);break}
             }
             if(dotC)dotC.className='status-dot '+(results.coupang>0?'online':'error');
-            setText('st-coupang-mode',results.coupang>0?results.coupang+'개':'차단됨');
+            setText('st-coupang-mode',results.coupang>0?results.coupang+'개':'실패');
             addLog('쿠팡 완료: '+results.coupang+'개');
 
-            // 1688 스크래핑
             var dot1=document.getElementById('dot-1688');if(dot1)dot1.className='status-dot working';
             setText('st-1688-mode','수집중...');
             var a1KW=['蓝牙耳机','硅胶厨具','LED氛围灯'];
             for(var ai=0;ai<a1KW.length;ai++){
                 var kw2=a1KW[ai];
-                if(ai>0)await new Promise(function(r){setTimeout(r,4000+Math.random()*3000)});
+                if(ai>0)await new Promise(function(r){setTimeout(r,2000)});
                 try{
-                    addLog('1688 "'+kw2+'" 스크래핑... ('+(ai+1)+'/'+a1KW.length+')');
-                    var r2=await fetch(API_BASE+'/api/scrape/alibaba?keyword='+encodeURIComponent(kw2));
-                    var txt2=await r2.text();
-                    try{var d2=JSON.parse(txt2)}catch(pe2){addLog('  ⚠ 1688 차단됨 (HTML 응답)');break}
-                    if(d2.blocked){addLog('  ⚠ 1688 차단됨 - 나머지 건너뜀');break}
-                    if(d2.success&&d2.total>0){results.alibaba+=d2.total;results.products=results.products.concat(d2.products);addLog('  ✓ 1688 "'+kw2+'" → '+d2.total+'개')}
-                    else{addLog('  △ 1688 "'+kw2+'" → 0개')}
-                }catch(e2){addLog('  ✗ 1688 연결실패: '+e2.message);break}
+                    addLog('1688 "'+kw2+'" 프록시 수집... ('+(ai+1)+'/'+a1KW.length+')');
+                    var html2=await scrapePage('https://s.1688.com/selloffer/offer_search.htm?keywords='+encodeURIComponent(kw2));
+                    var prods2=parse1688(html2);
+                    results.alibaba+=prods2.length;
+                    results.products=results.products.concat(prods2);
+                    addLog('  ✓ 1688 "'+kw2+'" → '+prods2.length+'개');
+                }catch(e2){addLog('  ✗ 1688 "'+kw2+'" → '+e2.message);break}
             }
             if(dot1)dot1.className='status-dot '+(results.alibaba>0?'online':'offline');
-            setText('st-1688-mode',results.alibaba>0?results.alibaba+'개':'차단됨');
+            setText('st-1688-mode',results.alibaba>0?results.alibaba+'개':'실패');
             addLog('1688 완료: '+results.alibaba+'개');
 
             localStorage.setItem('crawlResults2',JSON.stringify(results));crawlResults=results;loadCrawlData(results);
