@@ -872,4 +872,26 @@
     }
     </script>
 </body>
+    <script src="js/data-sync.js"></script>
+    <script>
+    (function(){
+        var stats = DataSync.getStats();
+        if (!stats) return;
+        var kpis = document.querySelectorAll('.kpi-card .kpi-value');
+        if (kpis.length >= 4) {
+            kpis[0].textContent = stats.total;
+            kpis[0].parentElement.querySelector('.kpi-sub').textContent = '스크래핑 데이터';
+        }
+        var products = DataSync.getProducts();
+        if (!products) return;
+        var platforms = {};
+        products.forEach(function(p){ var k=p.platform||'기타'; if(!platforms[k])platforms[k]=0; platforms[k]++; });
+        var weeklyBody = document.querySelector('.data-table tbody');
+        if (weeklyBody && Object.keys(platforms).length > 0) {
+            weeklyBody.innerHTML = Object.keys(platforms).map(function(k){
+                return '<tr><td style="font-weight:600">'+k+'</td><td>'+platforms[k]+'</td><td>-</td><td>-</td><td><span style="font-size:.7rem;padding:2px 6px;border-radius:4px;background:rgba(139,92,246,.15);color:#a78bfa">실제</span></td></tr>';
+            }).join('');
+        }
+    })();
+    </script>
 </html>

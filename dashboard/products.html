@@ -583,5 +583,50 @@
 
     <script src="data/sample-data.js"></script>
     <script src="js/dashboard.js"></script>
+    <script src="js/data-sync.js"></script>
+    <script>
+    (function(){
+        var products = DataSync.getProducts();
+        if (!products || products.length === 0) return;
+
+        var tableBody = document.querySelector('.data-table tbody');
+        if (!tableBody) return;
+
+        var sorted = products.filter(function(p){ return p.name && p.price; })
+            .sort(function(a,b){ return (parseInt(b.reviewCount)||0) - (parseInt(a.reviewCount)||0); })
+            .slice(0, 20);
+
+        if (sorted.length === 0) return;
+
+        tableBody.innerHTML = sorted.map(function(p, i){
+            var rank = i + 1;
+            var rankClass = rank <= 3 ? 'rank-' + rank : 'rank-n';
+            var price = p.platform === '1688' ? '¥' + p.price : '₩' + (parseInt(p.price)||0).toLocaleString();
+            var img = p.image || '';
+            var platTag = p.platform === '쿠팡' ? 'tag-coupang' : p.platform === '1688' ? 'tag-1688' : '';
+            var platBg = p.platform === '쿠팡' ? '#E42528' : p.platform === '1688' ? '#FF6A00' : '#3b82f6';
+
+            return '<tr>' +
+                '<td><span class="rank-badge ' + rankClass + '">' + rank + '</span></td>' +
+                '<td><div class="product-cell">' +
+                    (img ? '<img src="' + img + '" style="width:44px;height:44px;object-fit:cover;border-radius:6px" onerror="this.outerHTML=\'<div class=product-thumb>📦</div>\'">' : '<div class="product-thumb">📦</div>') +
+                    '<div class="product-info"><div class="product-name">' + (p.name||'').substring(0,30) + '</div>' +
+                    '<div class="product-category-sm">' + (p.platform||'') + '</div></div></div></td>' +
+                '<td><span class="source-platform-tag" style="background:' + platBg + '">' + (p.platform||'') + '</span></td>' +
+                '<td style="font-weight:700">' + price + '</td>' +
+                '<td>' + (p.reviewCount || '-') + '</td>' +
+                '<td>' + (p.rating ? '⭐' + p.rating : '-') + '</td>' +
+                '<td>' + (p.isRocket ? '<span class="shipping-badge shipping-direct">🚀 로켓</span>' : '-') + '</td>' +
+                '<td>' + (p.url ? '<a href="' + p.url + '" target="_blank" style="color:#3b82f6;font-size:.75rem">보기</a>' : '') + '</td>' +
+                '</tr>';
+        }).join('');
+
+        var headerInfo = document.querySelector('.table-panel-header .table-panel-title');
+        if (headerInfo) {
+            headerInfo.innerHTML = '<span class="title-icon">🏆</span> 스크래핑 상품 TOP ' + sorted.length +
+                ' <span style="font-size:.7rem;padding:2px 8px;border-radius:10px;background:rgba(139,92,246,.15);color:#a78bfa;margin-left:8px">실제 데이터</span>';
+        }
+    })();
+    </script>
 </body>
 </html>

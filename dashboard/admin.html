@@ -576,5 +576,35 @@
             setTimeout(() => t.remove(), 3000);
         }
     </script>
+    <script src="js/data-sync.js"></script>
+    <script>
+    (function(){
+        var products = DataSync.getProducts();
+        if (!products || products.length === 0) return;
+        var existing = DataManager.getAll();
+        if (existing.length > 0) return;
+        products.forEach(function(p) {
+            DataManager.add({
+                name: p.name || '',
+                category: '스크래핑',
+                date: new Date().toISOString().slice(0, 10),
+                sourcePlatform: p.platform === '1688' ? '1688' : (p.platform === '쿠팡' ? '쿠팡' : p.platform || ''),
+                sellPlatform: p.platform === '쿠팡' ? '쿠팡' : '',
+                sourcePrice: p.platform === '1688' ? parseFloat(p.price) || 0 : 0,
+                sourceCurrency: p.platform === '1688' ? 'CNY' : 'KRW',
+                sellPrice: p.platform !== '1688' ? parseInt(p.price) || 0 : 0,
+                sellCurrency: 'KRW',
+                marginPct: 0,
+                monthlySales: parseInt(p.reviewCount) || 0,
+                status: '조사중',
+                directShipping: p.isRocket || false,
+                keywords: '',
+                memo: '스크래핑 데이터 자동 등록'
+            });
+        });
+        applyFilters();
+        showToast('스크래핑 데이터 ' + products.length + '개 자동 등록됨');
+    })();
+    </script>
 </body>
 </html>

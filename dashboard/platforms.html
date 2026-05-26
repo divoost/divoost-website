@@ -721,5 +721,19 @@
         }
     });
     </script>
+    <script src="js/data-sync.js"></script>
+    <script>
+    (function(){
+        var stats = DataSync.getStats();
+        if (!stats) return;
+        var badge = document.querySelector(".top-bar-right");
+        if (badge) DataSync.injectSourceBadge("sourceBadge");
+        var products = DataSync.getProducts();
+        if (!products) return;
+        document.querySelectorAll(".kpi-value").forEach(function(el,i){
+            if(i===0) el.textContent = stats.total;
+        });
+    })();
+    </script>
 </body>
 </html>
