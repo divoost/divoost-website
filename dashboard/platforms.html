@@ -722,17 +722,58 @@
     });
     </script>
     <script src="js/data-sync.js"></script>
+    <script src="js/supabase-client.js"></script>
     <script>
-    (function(){
-        var stats = DataSync.getStats();
-        if (!stats) return;
-        var badge = document.querySelector(".top-bar-right");
-        if (badge) DataSync.injectSourceBadge("sourceBadge");
+    (async function(){
         var products = DataSync.getProducts();
-        if (!products) return;
-        document.querySelectorAll(".kpi-value").forEach(function(el,i){
-            if(i===0) el.textContent = stats.total;
+        if (!products && DB.isConfigured()) {
+            try {
+                var dbP = await DB.getProducts({limit:100});
+                if (dbP && dbP.length > 0) products = dbP.map(function(p){return{name:p.name,price:p.price,platform:p.platform,image:p.image,url:p.url,reviewCount:p.review_count,rating:p.rating}});
+            } catch(e){}
+        }
+        if (!products || products.length === 0) return;
+
+        var platforms = {};
+        products.forEach(function(p) {
+            var k = p.platform || '기타';
+            if (!platforms[k]) platforms[k] = { count: 0, totalPrice: 0, withPrice: 0, products: [] };
+            platforms[k].count++;
+            platforms[k].products.push(p);
+            var price = parseFloat(p.price) || 0;
+            if (price > 0) { platforms[k].totalPrice += price; platforms[k].withPrice++; }
         });
+
+        var kpis = document.querySelectorAll('.kpi-value');
+        if (kpis.length >= 1) kpis[0].textContent = products.length;
+        if (kpis.length >= 2) kpis[1].textContent = Object.keys(platforms).length;
+
+        var cards = document.querySelectorAll('.platform-overview-card');
+        var platKeys = Object.keys(platforms);
+        cards.forEach(function(card, i) {
+            if (i < platKeys.length) {
+                var k = platKeys[i];
+                var p = platforms[k];
+                var nameEl = card.querySelector('.po-name');
+                var statsEls = card.querySelectorAll('.po-stat strong');
+                if (nameEl) nameEl.textContent = k;
+                if (statsEls.length >= 1) statsEls[0].textContent = p.count;
+                if (statsEls.length >= 2) {
+                    var avg = p.withPrice > 0 ? Math.round(p.totalPrice / p.withPrice) : 0;
+                    statsEls[1].textContent = avg > 0 ? (k === '1688' ? '¥' + avg : '₩' + avg.toLocaleString()) : '-';
+                }
+            }
+        });
+
+        var tableBody = document.querySelector('.platform-compare-table tbody, .data-table tbody');
+        if (tableBody) {
+            tableBody.innerHTML = platKeys.map(function(k) {
+                var p = platforms[k];
+                var avg = p.withPrice > 0 ? Math.round(p.totalPrice / p.withPrice) : 0;
+                var topProduct = p.products.sort(function(a,b){return (parseInt(b.reviewCount)||0)-(parseInt(a.reviewCount)||0)})[0];
+                return '<tr><td style="font-weight:600">'+k+'</td><td>'+p.count+'개</td><td>'+(avg>0?(k==='1688'?'¥'+avg:'₩'+avg.toLocaleString()):'-')+'</td><td>'+(topProduct?topProduct.name.substring(0,20):'-')+'</td><td><span style="font-size:.7rem;padding:2px 6px;border-radius:4px;background:rgba(139,92,246,.15);color:#a78bfa">실제</span></td></tr>';
+            }).join('');
+        }
     })();
     </script>
 </body>

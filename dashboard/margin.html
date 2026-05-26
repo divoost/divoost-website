@@ -728,17 +728,40 @@
     });
     </script>
     <script src="js/data-sync.js"></script>
+    <script src="js/supabase-client.js"></script>
     <script>
-    (function(){
-        var stats = DataSync.getStats();
-        if (!stats) return;
-        var badge = document.querySelector(".top-bar-right");
-        if (badge) DataSync.injectSourceBadge("sourceBadge");
+    (async function(){
         var products = DataSync.getProducts();
-        if (!products) return;
-        document.querySelectorAll(".kpi-value").forEach(function(el,i){
-            if(i===0) el.textContent = stats.total;
-        });
+        if (!products && DB.isConfigured()) {
+            try { var dbP = await DB.getProducts({limit:100}); if(dbP&&dbP.length>0) products=dbP.map(function(p){return{name:p.name,price:p.price,platform:p.platform,reviewCount:p.review_count}}); } catch(e){}
+        }
+        if (!products || products.length === 0) return;
+
+        var coupang = products.filter(function(p){return p.platform==='쿠팡'});
+        var ali = products.filter(function(p){return p.platform==='1688'});
+
+        var kpis = document.querySelectorAll('.kpi-value');
+        if(kpis.length>=1) kpis[0].textContent = products.length;
+
+        if (coupang.length > 0 && ali.length > 0) {
+            var avgCp = coupang.reduce(function(s,p){return s+(parseFloat(p.price)||0)},0) / coupang.length;
+            var avgAli = ali.reduce(function(s,p){return s+(parseFloat(p.price)||0)},0) / ali.length;
+            var avgAliKRW = avgAli * 190.5 + 2000;
+            var margin = avgCp > 0 ? ((avgCp - avgAliKRW) / avgCp * 100).toFixed(1) : 0;
+            if(kpis.length>=2) kpis[1].textContent = margin + '%';
+            if(kpis.length>=3) kpis[2].textContent = '₩' + Math.round(avgCp - avgAliKRW).toLocaleString();
+        }
+
+        var tableBody = document.querySelector('.data-table tbody');
+        if (tableBody && coupang.length > 0) {
+            tableBody.innerHTML = coupang.slice(0, 15).map(function(p, i) {
+                var price = parseInt(p.price) || 0;
+                var estCost = Math.round(price * 0.4);
+                var estMargin = price > 0 ? ((price - estCost) / price * 100).toFixed(1) : 0;
+                var mClass = estMargin >= 50 ? 'margin-strong' : estMargin >= 35 ? 'margin-good' : 'margin-ok';
+                return '<tr><td>'+(i+1)+'</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(p.name||'').substring(0,25)+'</td><td>쿠팡</td><td>₩'+price.toLocaleString()+'</td><td>₩'+estCost.toLocaleString()+'</td><td><span class="'+mClass+'">'+estMargin+'%</span></td><td><span style="font-size:.7rem;padding:2px 6px;border-radius:4px;background:rgba(139,92,246,.15);color:#a78bfa">실제</span></td></tr>';
+            }).join('');
+        }
     })();
     </script>
 </body>
