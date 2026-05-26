@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DB 데이터 | 소싱 트래커</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/mobile-fix.css">
+    <style>
+        .db-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+        .db-header h1{font-size:1.3rem;margin:0}
+        .db-stats{display:flex;gap:8px;flex-wrap:wrap}
+        .db-stat{background:#f1f5f9;padding:6px 14px;border-radius:8px;font-size:.78rem;font-weight:600}
+        .db-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+        .db-filters select,.db-filters input{padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.85rem}
+        .view-toggle{display:flex;gap:4px}
+        .view-btn{padding:6px 14px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:.78rem;cursor:pointer}
+        .view-btn.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+        .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+        .p-card{background:#fff;border-radius:10px;border:1px solid #e2e8f0;overflow:hidden;cursor:pointer;transition:all .2s}
+        .p-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-2px)}
+        .p-card img{width:100%;height:160px;object-fit:cover;background:#f1f5f9}
+        .p-card-body{padding:10px}
+        .p-card-name{font-size:.8rem;font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .p-card-price{font-size:1rem;font-weight:800;color:#e42528;margin:4px 0}
+        .p-card-meta{display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8}
+        .p-card-tag{display:inline-block;padding:2px 6px;border-radius:3px;font-size:.65rem;font-weight:600;background:rgba(59,130,246,.1);color:#3b82f6}
+        .p-table{width:100%;border-collapse:collapse}
+        .p-table th{padding:10px;text-align:left;font-size:.72rem;color:#94a3b8;font-weight:600;border-bottom:2px solid #e2e8f0;cursor:pointer}
+        .p-table td{padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:.82rem}
+        .p-table tr:hover td{background:#f8fafc}
+        .p-table img{width:40px;height:40px;object-fit:cover;border-radius:4px}
+        .pagination{display:flex;justify-content:center;gap:4px;margin-top:16px}
+        .page-btn{padding:6px 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:.78rem;cursor:pointer}
+        .page-btn.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+        @media(max-width:768px){.product-grid{grid-template-columns:1fr 1fr}.db-header{flex-direction:column;align-items:flex-start}.db-filters{flex-direction:column}}
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="sidebar-logo-icon">ST</div><div class="sidebar-logo-text">소싱 트래커<small>MULTI-CHANNEL</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section"><div class="sidebar-section-title">대시보드</div><a href="index.html" class="sidebar-link"><span class="sidebar-link-icon">📊</span> 종합 현황</a><a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품</a><a href="trends.html" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a><a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a><a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 &amp; 리뷰</a><a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a></div>
+                <div class="sidebar-section"><div class="sidebar-section-title">AI &amp; 도구</div><a href="ai-sourcing.html" class="sidebar-link"><span class="sidebar-link-icon">🤖</span> AI 소싱</a><a href="db-view.html" class="sidebar-link active"><span class="sidebar-link-icon">💾</span> DB 데이터</a><a href="live-search.html" class="sidebar-link"><span class="sidebar-link-icon">🔴</span> 실시간 검색</a><a href="admin.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a></div>
+                <div class="sidebar-section"><div class="sidebar-section-title">바로가기</div><a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span> 메인 홈</a><a href="../ezcomet/index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> EZCOMET</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">💾 DB 데이터 보기</div><div class="top-bar-date">Supabase에 저장된 수집 데이터</div></div></div></header>
+            <div class="content-area">
+                <div class="db-header"><h1>수집 데이터 <span id="totalCount" style="color:#3b82f6">로딩중...</span></h1><div class="db-stats"><span class="db-stat" id="statPlatforms">-</span><span class="db-stat" id="statDate">-</span></div></div>
+                <div class="db-filters">
+                    <select id="fPlatform" onchange="loadData()"><option value="">전체 플랫폼</option><option>쿠팡</option><option>무신사</option><option>지마켓</option><option>네이버</option><option>1688</option><option>wconcept</option></select>
+                    <select id="fSort" onchange="loadData()"><option value="scraped_at.desc">최신순</option><option value="price.desc">가격 높은순</option><option value="price.asc">가격 낮은순</option><option value="review_count.desc">리뷰 많은순</option><option value="rating.desc">평점 높은순</option></select>
+                    <input type="text" id="fSearch" placeholder="상품명 검색..." oninput="loadData()">
+                    <div class="view-toggle"><button class="view-btn active" onclick="setView('grid',this)">🖼 사진</button><button class="view-btn" onclick="setView('list',this)">📋 리스트</button></div>
+                </div>
+                <div id="gridView" class="product-grid"></div>
+                <div id="listView" style="display:none;overflow-x:auto"><table class="p-table"><thead><tr><th>이미지</th><th onclick="sortCol('name')">상품명</th><th onclick="sortCol('price')">가격</th><th onclick="sortCol('platform')">플랫폼</th><th onclick="sortCol('review_count')">리뷰</th><th onclick="sortCol('rating')">평점</th><th>날짜</th><th>링크</th></tr></thead><tbody id="tableBody"></tbody></table></div>
+                <div class="pagination" id="pagination"></div>
+            </div>
+        </div>
+    </div>
+    <script src="js/supabase-client.js"></script>
+    <script>
+        var currentPage=1,PAGE_SIZE=24,allProducts=[];
+        async function loadData(){
+            var platform=document.getElementById('fPlatform').value;
+            var sort=document.getElementById('fSort').value;
+            var search=document.getElementById('fSearch').value;
+            var params='order='+sort+'&limit=200';
+            if(platform)params+='&platform=eq.'+encodeURIComponent(platform);
+            if(search)params+='&name=ilike.*'+encodeURIComponent(search)+'*';
+            try{
+                var products=await DB.query('products',params);
+                if(!Array.isArray(products))products=[];
+                allProducts=products;
+                document.getElementById('totalCount').textContent=products.length+'개';
+                var platforms={};products.forEach(function(p){var k=p.platform||'기타';if(!platforms[k])platforms[k]=0;platforms[k]++});
+                document.getElementById('statPlatforms').textContent=Object.keys(platforms).map(function(k){return k+' '+platforms[k]}).join(' · ');
+                var dates=products.map(function(p){return p.scraped_at?p.scraped_at.substring(0,10):''}).filter(Boolean);
+                document.getElementById('statDate').textContent=[...new Set(dates)].length+'일간';
+                currentPage=1;render();
+            }catch(e){
+                document.getElementById('totalCount').textContent='DB 연결 실패';
+                document.getElementById('gridView').innerHTML='<div style="text-align:center;color:#ef4444;padding:40px;grid-column:1/-1">Supabase 연결 실패<br><small>종합 현황에서 크롤링을 먼저 실행하세요</small></div>';
+            }
+        }
+        function render(){
+            var start=(currentPage-1)*PAGE_SIZE,page=allProducts.slice(start,start+PAGE_SIZE);
+            document.getElementById('gridView').innerHTML=page.map(function(p){
+                var price=p.currency==='CNY'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
+                var date=p.scraped_at?p.scraped_at.substring(0,10):'';
+                return '<div class="p-card" onclick="'+(p.url?"window.open('"+p.url.replace(/'/g,'')+"')":"")+'"><img src="'+(p.image||'')+'" onerror="this.style.background=\'#f1f5f9\';this.style.display=\'flex\';this.outerHTML=\'<div style=padding:40px;text-align:center;color:#94a3b8;background:#f1f5f9;height:160px;display:flex;align-items:center;justify-content:center>📦</div>\'"><div class="p-card-body"><div class="p-card-name">'+(p.name||'')+'</div><div class="p-card-price">'+price+'</div><div class="p-card-meta"><span class="p-card-tag">'+(p.platform||'')+'</span><span>'+(p.review_count?'리뷰 '+p.review_count:'')+'</span></div><div class="p-card-meta"><span>'+date+'</span>'+(p.rating?'<span>⭐'+p.rating+'</span>':'')+'</div></div></div>';
+            }).join('')||'<div style="text-align:center;color:#94a3b8;padding:40px;grid-column:1/-1">데이터 없음 - 크롤링을 먼저 실행하세요</div>';
+            document.getElementById('tableBody').innerHTML=page.map(function(p){
+                var price=p.currency==='CNY'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
+                return '<tr><td>'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📦\'">':'📦')+'</td><td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(p.name||'')+'</td><td style="font-weight:700;color:#e42528">'+price+'</td><td><span class="p-card-tag">'+(p.platform||'')+'</span></td><td>'+(p.review_count||'-')+'</td><td>'+(p.rating?'⭐'+p.rating:'-')+'</td><td style="font-size:.72rem;color:#94a3b8">'+(p.scraped_at?p.scraped_at.substring(0,10):'')+'</td><td>'+(p.url?'<a href="'+p.url+'" target="_blank" style="color:#3b82f6;font-size:.75rem">보기</a>':'')+'</td></tr>';
+            }).join('');
+            var totalPages=Math.ceil(allProducts.length/PAGE_SIZE),ph='';
+            for(var i=1;i<=totalPages;i++)ph+='<button class="page-btn'+(i===currentPage?' active':'')+'" onclick="goPage('+i+')">'+i+'</button>';
+            document.getElementById('pagination').innerHTML=ph;
+        }
+        function goPage(p){currentPage=p;render();window.scrollTo(0,0)}
+        function setView(v,btn){document.getElementById('gridView').style.display=v==='grid'?'grid':'none';document.getElementById('listView').style.display=v==='list'?'block':'none';document.querySelectorAll('.view-btn').forEach(function(b){b.classList.remove('active')});if(btn)btn.classList.add('active')}
+        function sortCol(f){document.getElementById('fSort').value=f+'.desc';loadData()}
+        document.addEventListener('DOMContentLoaded',function(){
+            loadData();
+            var mb=document.getElementById('mobileMenuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('sidebarOverlay');
+            if(mb)mb.onclick=function(){sb.classList.toggle('open');ov.classList.toggle('active')};
+            if(ov)ov.onclick=function(){sb.classList.remove('open');ov.classList.remove('active')};
+        });
+    </script>
+</body>
+</html>
