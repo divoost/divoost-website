@@ -32,6 +32,7 @@
             <nav class="sidebar-nav">
                 <div class="sidebar-section"><div class="sidebar-section-title">소싱 플랫폼</div><div style="padding:0 12px 12px;display:flex;gap:6px"><span class="platform-badge p-1688 active"><span class="p-dot"></span>1688</span><span class="platform-badge p-taobao active"><span class="p-dot"></span>타오바오</span></div></div>
                 <div class="sidebar-section"><div class="sidebar-section-title">판매 플랫폼</div><div style="padding:0 12px 12px;display:flex;gap:6px;flex-wrap:wrap"><span class="platform-badge p-coupang active"><span class="p-dot"></span>쿠팡</span><span class="platform-badge p-gmarket active"><span class="p-dot"></span>지마켓</span><span class="platform-badge p-naver active"><span class="p-dot"></span>네이버</span></div></div>
+                <div class="sidebar-section"><div class="sidebar-section-title">글로벌 마켓</div><div style="padding:0 12px 12px;display:flex;gap:6px;flex-wrap:wrap"><span class="platform-badge active" style="background:#EE4D2D;color:#fff;border:none;font-size:10px;padding:3px 8px">Shopee</span><span class="platform-badge active" style="background:#0F146D;color:#fff;border:none;font-size:10px;padding:3px 8px">Lazada</span><span class="platform-badge active" style="background:#000;color:#fff;border:none;font-size:10px;padding:3px 8px">TikTok</span></div></div>
                 <div class="sidebar-section"><div class="sidebar-section-title">대시보드</div><a href="index.html" class="sidebar-link active"><span class="sidebar-link-icon">📊</span> 종합 현황</a><a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품</a><a href="trends.html" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a><a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a><a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 &amp; 리뷰</a><a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a></div>
                 <div class="sidebar-section"><div class="sidebar-section-title">관리</div><a href="ai-sourcing.html" class="sidebar-link"><span class="sidebar-link-icon">🤖</span> AI 소싱</a>
                     <a href="admin.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a><a href="db-view.html" class="sidebar-link"><span class="sidebar-link-icon">💾</span> DB 데이터</a>
@@ -57,6 +58,9 @@
                     <div class="status-item"><span class="status-dot offline"></span>네이버 대기</div>
                     <div class="status-item"><span class="status-dot" id="dot-1688"></span>1688 <span id="st-1688-mode">대기</span></div>
                     <div class="status-item"><span class="status-dot offline"></span>타오바오 대기</div>
+                    <div class="status-item"><span class="status-dot offline" id="dot-shopee"></span>Shopee 대기</div>
+                    <div class="status-item"><span class="status-dot offline" id="dot-lazada"></span>Lazada 대기</div>
+                    <div class="status-item"><span class="status-dot offline" id="dot-tiktok"></span>TikTok 대기</div>
                 </div>
                 <div id="collectionLog" style="display:none;background:#0f172a;border:1px solid #334155;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-family:monospace;font-size:.78rem;color:#94a3b8;max-height:200px;overflow-y:auto"><div style="color:#3b82f6;font-weight:600;margin-bottom:6px">📡 수집 로그</div><div id="logContent"></div></div>
                 <div class="platform-overview-grid">
@@ -65,6 +69,9 @@
                     <div class="platform-overview-card po-coupang"><div class="po-logo">🚀</div><div class="po-info"><div class="po-name">쿠팡</div><div class="po-sub">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-coupang-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-coupang">샘플</div></div>
                     <div class="platform-overview-card po-gmarket"><div class="po-logo">🟢</div><div class="po-info"><div class="po-name">지마켓</div><div class="po-sub">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-gmarket-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-gmarket">샘플</div></div>
                     <div class="platform-overview-card po-naver"><div class="po-logo">🟩</div><div class="po-info"><div class="po-name">네이버</div><div class="po-sub">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-naver-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-naver">샘플</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #EE4D2D"><div class="po-logo">🛍</div><div class="po-info"><div class="po-name">Shopee</div><div class="po-sub">동남아</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-shopee-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-shopee">샘플</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #0F146D"><div class="po-logo">🏬</div><div class="po-info"><div class="po-name">Lazada</div><div class="po-sub">동남아</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-lazada-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-lazada">샘플</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #000"><div class="po-logo">🎵</div><div class="po-info"><div class="po-name">TikTok Shop</div><div class="po-sub">글로벌</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-tiktok-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-tiktok">샘플</div></div>
                 </div>
                 <section id="overview"><div class="kpi-grid">
                     <div class="kpi-card kpi-total"><div class="kpi-header"><div class="kpi-icon">📦</div><span class="kpi-change up" id="kpi-total-change">-</span></div><div class="kpi-value" id="kpi-total-value">-</div><div class="kpi-label">수집 상품</div><div class="kpi-sub" id="kpi-total-sub">크롤링 버튼을 눌러주세요</div></div>
@@ -217,10 +224,34 @@
             setText('st-1688-mode',results.alibaba>0?results.alibaba+'개':'실패');
             addLog('중국 마켓 완료: '+results.alibaba+'개');
 
+            // 쇼피/라자다/틱톡샵 검색
+            var seaKW=[
+                {name:'Shopee',query:keyword+' shopee',country:'sg',key:'shopee'},
+                {name:'Lazada',query:keyword+' lazada',country:'sg',key:'lazada'},
+                {name:'TikTok Shop',query:keyword+' tiktok shop',country:'us',key:'tiktok'}
+            ];
+            results.shopee=0;results.lazada=0;results.tiktok=0;
+            for(var si=0;si<seaKW.length;si++){
+                var sea=seaKW[si];
+                try{
+                    addLog(sea.name+' "'+sea.query+'" 검색...');
+                    var seaData=await searchProducts(sea.query,sea.country);
+                    var seaItems=(seaData.shopping_results||seaData.results||[]);
+                    for(var sj=0;sj<seaItems.length;sj++){
+                        var sit=seaItems[sj];
+                        var sp=sit.extracted_price||0;
+                        if(typeof sp==='string')sp=parseFloat(sp.replace(/[^\d.]/g,''))||0;
+                        results.products.push({name:sit.title||'',price:sp,image:sit.thumbnail||'',url:sit.link||'',platform:sea.name,rating:sit.rating||0,reviewCount:sit.reviews||0,source:'google'});
+                        results[sea.key]++;
+                    }
+                    addLog('  ✓ '+sea.name+' → '+seaItems.length+'개');
+                }catch(se){addLog('  △ '+sea.name+' → '+se.message)}
+            }
+
             localStorage.setItem('crawlResults2',JSON.stringify(results));crawlResults=results;loadCrawlData(results);
             document.getElementById('lastUpdated').textContent=new Date().toLocaleString('ko-KR');
-            var total=results.coupang+results.alibaba;
-            addLog('✅ 전체 완료 - 총 '+total+'개 수집');
+            var total=results.products.length;
+            addLog('✅ 전체 완료 - 총 '+total+'개 수집 (쿠팡'+results.coupang+' 1688:'+results.alibaba+' Shopee:'+results.shopee+' Lazada:'+results.lazada+' TikTok:'+results.tiktok+')');
             if(results.products&&results.products.length>0){
                 showProducts(results.products);
                 if(DB.isConfigured()){
@@ -236,8 +267,11 @@
 
             // 알림 업데이트
             var ah='';
-            if(results.coupang>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">✅</span><div class="alert-body"><div class="alert-title">[쿠팡] '+results.coupang+'개 상품 수집 완료</div><div class="alert-desc">실제 웹 데이터</div><div class="alert-time">방금</div></div></div>';
-            if(results.alibaba>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">✅</span><div class="alert-body"><div class="alert-title">[1688] '+results.alibaba+'개 상품 수집 완료</div><div class="alert-desc">실제 웹 데이터</div><div class="alert-time">방금</div></div></div>';
+            if(results.coupang>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">✅</span><div class="alert-body"><div class="alert-title">[쿠팡] '+results.coupang+'개 수집</div><div class="alert-desc">Google Shopping</div><div class="alert-time">방금</div></div></div>';
+            if(results.alibaba>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">✅</span><div class="alert-body"><div class="alert-title">[1688] '+results.alibaba+'개 수집</div><div class="alert-desc">Google Shopping CN</div><div class="alert-time">방금</div></div></div>';
+            if(results.shopee>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">🛍</span><div class="alert-body"><div class="alert-title">[Shopee] '+results.shopee+'개 수집</div><div class="alert-desc">동남아 마켓</div><div class="alert-time">방금</div></div></div>';
+            if(results.lazada>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">🏬</span><div class="alert-body"><div class="alert-title">[Lazada] '+results.lazada+'개 수집</div><div class="alert-desc">동남아 마켓</div><div class="alert-time">방금</div></div></div>';
+            if(results.tiktok>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">🎵</span><div class="alert-body"><div class="alert-title">[TikTok Shop] '+results.tiktok+'개 수집</div><div class="alert-desc">글로벌 마켓</div><div class="alert-time">방금</div></div></div>';
             if(results.coupang===0&&results.alibaba===0){
                 ah+='<div class="alert-item alert-hot"><span class="alert-icon">🚫</span><div class="alert-body"><div class="alert-title">서버 스크래핑 차단됨</div><div class="alert-desc">쿠팡/1688이 Vercel 서버 IP를 차단했습니다.</div><div class="alert-time">방금</div></div></div>';
                 ah+='<div class="alert-item alert-new"><span class="alert-icon">💡</span><div class="alert-body"><div class="alert-title">대안: CSV/JSON 업로드</div><div class="alert-desc">① Chrome에서 Ultimate Web Scraper 설치<br>② 쿠팡/1688에서 직접 스크래핑<br>③ CSV/JSON 내보내기<br>④ 📤 업로드 버튼으로 데이터 불러오기</div><div class="alert-time">추천</div></div></div>';
