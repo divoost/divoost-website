@@ -47,4 +47,36 @@ function checkRateLimit(platform) {
   return true;
 }
 
-module.exports = { randomUA, sleep, randomDelay, getCached, setCache, checkRateLimit };
+async function fetchWithRetry(url, headers, maxRetries) {
+  maxRetries = maxRetries || 3;
+  for (var attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      await randomDelay(1000 * attempt, 3000 * attempt);
+      var newHeaders = Object.assign({}, headers, { 'User-Agent': randomUA() });
+      var r = await require('node-fetch')(url, {
+        headers: newHeaders,
+        redirect: 'follow',
+        timeout: 15000
+      });
+      if (r.status === 200) return r;
+      if (r.status === 403 || r.status === 429) {
+        if (attempt < maxRetries) continue;
+        return r;
+      }
+      return r;
+    } catch (e) {
+      if (attempt === maxRetries) throw e;
+    }
+  }
+}
+
+function getMobileUA() {
+  var mobileUAs = [
+    'Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1',
+    'Mozilla/5.0 (Linux; Android 14; SM-S928B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Mobile Safari/537.36',
+    'Mozilla/5.0 (iPad; CPU OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1'
+  ];
+  return mobileUAs[Math.floor(Math.random() * mobileUAs.length)];
+}
+
+module.exports = { randomUA, getMobileUA, sleep, randomDelay, getCached, setCache, checkRateLimit, fetchWithRetry };

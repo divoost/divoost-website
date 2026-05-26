@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { randomUA, randomDelay, getCached, setCache, checkRateLimit } = require('../lib/scrape-utils');
+const { randomUA, getMobileUA, randomDelay, getCached, setCache, checkRateLimit, fetchWithRetry } = require('../lib/scrape-utils');
 
 module.exports = async (req, res) => {
   if (req.method === 'OPTIONS') return res.status(200).end();
@@ -15,27 +15,28 @@ module.exports = async (req, res) => {
   }
 
   try {
-    await randomDelay(2000, 4000);
+    var urls = [
+      'https://s.1688.com/selloffer/offer_search.htm?keywords=' + encodeURIComponent(keyword) + '&n=y&netType=1',
+      'https://m.1688.com/offer_search/-6161.html?keywords=' + encodeURIComponent(keyword)
+    ];
+    var headers = {
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+      'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
+      'Accept-Encoding': 'gzip, deflate, br',
+      'Connection': 'keep-alive',
+      'Sec-Fetch-Dest': 'document',
+      'Sec-Fetch-Mode': 'navigate',
+      'Sec-Fetch-Site': 'none',
+      'Upgrade-Insecure-Requests': '1'
+    };
 
-    var url = 'https://s.1688.com/selloffer/offer_search.htm?keywords=' + encodeURIComponent(keyword) + '&n=y&netType=1';
-    var r = await fetch(url, {
-      headers: {
-        'User-Agent': randomUA(),
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-        'Accept-Encoding': 'gzip, deflate, br',
-        'Connection': 'keep-alive',
-        'Sec-Fetch-Dest': 'document',
-        'Sec-Fetch-Mode': 'navigate',
-        'Sec-Fetch-Site': 'none',
-        'Upgrade-Insecure-Requests': '1'
-      },
-      redirect: 'follow',
-      timeout: 10000
-    });
-
-    if (r.status === 403 || r.status === 429) {
-      return res.status(200).json({ success: true, keyword: keyword, total: 0, products: [], source: 'scraping', blocked: true, message: '1688 차단됨 - 잠시 후 재시도' });
+    var r = await fetchWithRetry(urls[0], headers, 2);
+    if (!r || r.status === 403 || r.status === 429) {
+      headers['User-Agent'] = getMobileUA();
+      r = await fetchWithRetry(urls[1], headers, 2);
+    }
+    if (!r || r.status === 403 || r.status === 429) {
+      return res.status(200).json({ success: true, keyword: keyword, total: 0, products: [], source: 'scraping', blocked: true, retries: 4, message: '1688 차단됨 - PC/모바일 모두 실패' });
     }
 
     var html = await r.text();

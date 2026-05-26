@@ -42,6 +42,7 @@
                 <div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">멀티채널 소싱 트래커</div><div class="top-bar-date">업데이트: <span id="lastUpdated">-</span></div></div></div>
                 <div class="top-bar-right">
                     <span id="dataSourceBadge" class="data-source-badge sample">📋 샘플 데이터</span>
+                    <label class="top-bar-btn btn-upload" style="background:#10b981!important;color:#fff!important;cursor:pointer">📤 <span>업로드</span><input type="file" accept=".json,.csv" onchange="handleUpload(this)" hidden></label>
                     <button class="top-bar-btn btn-crawl" onclick="runCrawl()">🕷 <span>크롤링</span></button>
                     <button class="top-bar-btn btn-api" onclick="runApi()">🔌 <span>API</span></button>
                     <button class="top-bar-btn btn-refresh" onclick="location.reload()">🔄</button>
@@ -68,8 +69,46 @@
                     <div class="kpi-card kpi-recommend"><div class="kpi-header"><div class="kpi-icon">🎯</div><span class="kpi-change up">-</span></div><div class="kpi-value" id="kpi-rec-value">-</div><div class="kpi-label">추천 상품</div><div class="kpi-sub">크롤링 후 표시</div></div>
                     <div class="kpi-card kpi-margin"><div class="kpi-header"><div class="kpi-icon">💰</div><span class="kpi-change up">-</span></div><div class="kpi-value" id="kpi-margin-value">-</div><div class="kpi-label">평균 마진율</div><div class="kpi-sub">크롤링 후 표시</div></div>
                 </div></section>
+                <!-- 수집 결과 통계 바 -->
+                <div id="extractionStats" style="display:none;background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid #334155;border-radius:12px;padding:16px 20px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+                    <div style="display:flex;align-items:center;gap:12px">
+                        <span style="font-size:1.5rem">📊</span>
+                        <div><div style="font-size:1.1rem;font-weight:700;color:#e2e8f0" id="extractTotal">0</div><div style="font-size:.72rem;color:#94a3b8">Items Extracted</div></div>
+                    </div>
+                    <div style="display:flex;gap:8px">
+                        <button onclick="exportData('csv')" style="padding:6px 14px;border-radius:6px;background:#10b981;color:#fff;border:none;font-size:.78rem;font-weight:600;cursor:pointer">📥 CSV</button>
+                        <button onclick="exportData('json')" style="padding:6px 14px;border-radius:6px;background:#3b82f6;color:#fff;border:none;font-size:.78rem;font-weight:600;cursor:pointer">📥 JSON</button>
+                        <button onclick="exportData('excel')" style="padding:6px 14px;border-radius:6px;background:#059669;color:#fff;border:none;font-size:.78rem;font-weight:600;cursor:pointer">📥 Excel</button>
+                    </div>
+                </div>
+
+                <!-- 상품 이미지 보기 토글 -->
+                <div id="viewToggle" style="display:none;margin-bottom:12px;display:flex;gap:8px;align-items:center">
+                    <button onclick="setView('grid')" id="viewGrid" style="padding:5px 12px;border-radius:6px;background:#3b82f6;color:#fff;border:none;font-size:.78rem;cursor:pointer">🖼 이미지</button>
+                    <button onclick="setView('table')" id="viewTable" style="padding:5px 12px;border-radius:6px;background:#1e293b;color:#94a3b8;border:1px solid #334155;font-size:.78rem;cursor:pointer">📋 테이블</button>
+                    <span style="font-size:.72rem;color:#64748b;margin-left:8px" id="productCountLabel">0개 상품</span>
+                </div>
+
+                <!-- 상품 이미지 그리드 -->
+                <div id="productGrid" style="display:none;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-bottom:20px"></div>
+
+                <!-- 상품 테이블 -->
+                <div id="productTable" style="display:none;overflow-x:auto;border-radius:10px;border:1px solid #e2e8f0;margin-bottom:20px">
+                    <table style="width:100%;border-collapse:collapse;font-size:.8rem">
+                        <thead><tr style="background:#f1f5f9">
+                            <th style="padding:8px 10px;text-align:left;font-size:.7rem;color:#64748b;font-weight:600">이미지</th>
+                            <th style="padding:8px 10px;text-align:left;font-size:.7rem;color:#64748b;font-weight:600">상품명</th>
+                            <th style="padding:8px 10px;text-align:left;font-size:.7rem;color:#64748b;font-weight:600">가격</th>
+                            <th style="padding:8px 10px;text-align:left;font-size:.7rem;color:#64748b;font-weight:600">플랫폼</th>
+                            <th style="padding:8px 10px;text-align:left;font-size:.7rem;color:#64748b;font-weight:600">리뷰</th>
+                            <th style="padding:8px 10px;text-align:left;font-size:.7rem;color:#64748b;font-weight:600">링크</th>
+                        </tr></thead>
+                        <tbody id="productTableBody"></tbody>
+                    </table>
+                </div>
+
                 <div class="section-divider">🔥 수집 결과</div>
-                <div class="alert-list" id="alertList"><div style="text-align:center;color:#94a3b8;padding:20px">🕷 크롤링 버튼을 눌러 실제 데이터를 수집하세요 (API 키 불필요)</div></div>
+                <div class="alert-list" id="alertList"><div style="text-align:center;color:#94a3b8;padding:20px">🕷 크롤링 버튼을 눌러 실제 데이터를 수집하세요<br><small>또는 📤 업로드 버튼으로 CSV/JSON 파일을 불러오세요</small></div></div>
             </div>
         </div>
     </div>
@@ -152,6 +191,7 @@
             document.getElementById('lastUpdated').textContent=new Date().toLocaleString('ko-KR');
             var total=results.coupang+results.alibaba;
             addLog('✅ 전체 완료 - 총 '+total+'개 수집');
+            if(results.products&&results.products.length>0)showProducts(results.products);
 
             // 알림 업데이트
             var ah='';
@@ -175,9 +215,101 @@
             btn.disabled=false;btn.innerHTML='🔌 <span>API</span>';
         }
 
+        function showProducts(products){
+            if(!products||!products.length)return;
+            document.getElementById('extractionStats').style.display='flex';
+            document.getElementById('viewToggle').style.display='flex';
+            document.getElementById('extractTotal').textContent=products.length;
+            document.getElementById('productCountLabel').textContent=products.length+'개 상품';
+            // 이미지 그리드
+            var grid=document.getElementById('productGrid');
+            grid.innerHTML=products.map(function(p){
+                var img=p.image||'';
+                var price=p.platform==='1688'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
+                return '<div style="background:#fff;border-radius:10px;border:1px solid #e2e8f0;overflow:hidden;cursor:pointer" onclick="window.open(\''+escH(p.url||'#')+'\')">'+
+                    '<div style="width:100%;height:140px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;overflow:hidden">'+(img?'<img src="'+escH(img)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'📦\'">':'<span style="font-size:2rem">📦</span>')+'</div>'+
+                    '<div style="padding:8px"><div style="font-size:.75rem;font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escH(p.name||'')+'</div>'+
+                    '<div style="font-size:.85rem;font-weight:700;color:#e42528;margin-top:4px">'+price+'</div>'+
+                    '<div style="display:flex;justify-content:space-between;margin-top:4px"><span style="font-size:.65rem;padding:2px 6px;border-radius:3px;background:rgba(37,99,235,.1);color:#3b82f6;font-weight:600">'+escH(p.platform||'')+'</span>'+(p.reviewCount?'<span style="font-size:.65rem;color:#94a3b8">리뷰 '+p.reviewCount+'</span>':'')+'</div></div></div>';
+            }).join('');
+            setView('grid');
+            // 테이블
+            var tbody=document.getElementById('productTableBody');
+            tbody.innerHTML=products.map(function(p){
+                var img=p.image||'';
+                var price=p.platform==='1688'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
+                return '<tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px">'+(img?'<img src="'+escH(img)+'" style="width:40px;height:40px;object-fit:cover;border-radius:4px" onerror="this.outerHTML=\'📦\'">':'📦')+'</td>'+
+                    '<td style="padding:6px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escH(p.name||'')+'</td>'+
+                    '<td style="padding:6px;font-weight:600;color:#e42528">'+price+'</td>'+
+                    '<td style="padding:6px"><span style="font-size:.7rem;padding:2px 6px;border-radius:3px;background:rgba(37,99,235,.1);color:#3b82f6;font-weight:600">'+escH(p.platform||'')+'</span></td>'+
+                    '<td style="padding:6px;color:#64748b">'+(p.reviewCount||'-')+'</td>'+
+                    '<td style="padding:6px">'+(p.url?'<a href="'+escH(p.url)+'" target="_blank" style="color:#3b82f6;font-size:.7rem">보기</a>':'')+'</td></tr>';
+            }).join('');
+            localStorage.setItem('crawlProducts',JSON.stringify(products));
+        }
+        function escH(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+        function setView(v){
+            document.getElementById('productGrid').style.display=v==='grid'?'grid':'none';
+            document.getElementById('productTable').style.display=v==='table'?'block':'none';
+            document.getElementById('viewGrid').style.background=v==='grid'?'#3b82f6':'#1e293b';
+            document.getElementById('viewGrid').style.color=v==='grid'?'#fff':'#94a3b8';
+            document.getElementById('viewTable').style.background=v==='table'?'#3b82f6':'#1e293b';
+            document.getElementById('viewTable').style.color=v==='table'?'#fff':'#94a3b8';
+        }
+        function handleUpload(input){
+            if(!input.files[0])return;
+            var file=input.files[0];
+            var reader=new FileReader();
+            reader.onload=function(e){
+                try{
+                    var products=[];
+                    if(file.name.endsWith('.json')){
+                        var data=JSON.parse(e.target.result);
+                        products=Array.isArray(data)?data:(data.products||data.data||[]);
+                    }else{
+                        var lines=e.target.result.split('\n');
+                        var headers=lines[0].split(',').map(function(h){return h.trim().replace(/"/g,'')});
+                        for(var i=1;i<lines.length;i++){
+                            if(!lines[i].trim())continue;
+                            var vals=lines[i].split(',');
+                            var obj={};
+                            headers.forEach(function(h,j){obj[h]=vals[j]?vals[j].trim().replace(/"/g,''):''});
+                            obj.platform=obj.platform||'업로드';
+                            obj.source='upload';
+                            products.push(obj);
+                        }
+                    }
+                    addLog('📤 파일 업로드: '+file.name+' → '+products.length+'개 상품');
+                    if(products.length>0){showProducts(products);updateBadge('crawl');
+                    setText('kpi-total-value',products.length);setText('kpi-total-sub','업로드 데이터');setText('kpi-total-change','업로드')}
+                }catch(err){addLog('✗ 파일 파싱 오류: '+err.message)}
+                input.value='';
+            };
+            reader.readAsText(file);
+        }
+        function exportData(format){
+            var products=JSON.parse(localStorage.getItem('crawlProducts')||'[]');
+            if(!products.length){addLog('내보낼 데이터가 없습니다');return}
+            var blob,filename;
+            if(format==='json'){
+                blob=new Blob([JSON.stringify(products,null,2)],{type:'application/json'});
+                filename='sourcing-data-'+new Date().toISOString().slice(0,10)+'.json';
+            }else{
+                var headers=['name','price','platform','image','url','reviewCount','rating','source'];
+                var csv=headers.join(',')+'\n';
+                products.forEach(function(p){csv+=headers.map(function(h){return '"'+(p[h]||'')+'"'}).join(',')+'\n'});
+                blob=new Blob(['﻿'+csv],{type:format==='excel'?'application/vnd.ms-excel':'text/csv;charset=utf-8'});
+                filename='sourcing-data-'+new Date().toISOString().slice(0,10)+(format==='excel'?'.xls':'.csv');
+            }
+            var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click();
+            addLog('📥 '+format.toUpperCase()+' 내보내기: '+products.length+'개 → '+filename);
+        }
+
         document.addEventListener('DOMContentLoaded',function(){
-            if(crawlResults&&(crawlResults.coupang>0||crawlResults.alibaba>0)){loadCrawlData(crawlResults);document.getElementById('lastUpdated').textContent=new Date(crawlResults.timestamp).toLocaleString('ko-KR')+' (스크래핑)'}
+            if(crawlResults&&(crawlResults.coupang>0||crawlResults.alibaba>0)){loadCrawlData(crawlResults);document.getElementById('lastUpdated').textContent=new Date(crawlResults.timestamp).toLocaleString('ko-KR')+' (스크래핑)';if(crawlResults.products)showProducts(crawlResults.products)}
             else{loadSampleData()}
+            var savedProducts=JSON.parse(localStorage.getItem('crawlProducts')||'null');
+            if(savedProducts&&savedProducts.length>0&&!crawlResults)showProducts(savedProducts);
             var mb=document.getElementById('mobileMenuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('sidebarOverlay');
             if(mb){mb.onclick=function(){sb.classList.toggle('open');ov.classList.toggle('active')}}
             if(ov){ov.onclick=function(){sb.classList.remove('open');ov.classList.remove('active')}}
