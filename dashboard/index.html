@@ -91,11 +91,13 @@
                     </div>
                 </div>
 
-                <!-- 상품 이미지 보기 토글 -->
-                <div id="viewToggle" style="display:none;margin-bottom:12px;display:flex;gap:8px;align-items:center">
+                <!-- 상품 이미지 보기 토글 + 플랫폼 필터 -->
+                <div id="viewToggle" style="display:none;margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
                     <button onclick="setView('grid')" id="viewGrid" style="padding:5px 12px;border-radius:6px;background:#3b82f6;color:#fff;border:none;font-size:.78rem;cursor:pointer">🖼 이미지</button>
                     <button onclick="setView('table')" id="viewTable" style="padding:5px 12px;border-radius:6px;background:#1e293b;color:#94a3b8;border:1px solid #334155;font-size:.78rem;cursor:pointer">📋 테이블</button>
-                    <span style="font-size:.72rem;color:#64748b;margin-left:8px" id="productCountLabel">0개 상품</span>
+                    <span style="font-size:.72rem;color:#64748b;margin-left:4px" id="productCountLabel">0개 상품</span>
+                    <span style="margin-left:auto"></span>
+                    <div id="platformFilters" style="display:flex;gap:4px;flex-wrap:wrap"></div>
                 </div>
 
                 <!-- 상품 이미지 그리드 -->
@@ -292,37 +294,56 @@
             btn.disabled=false;btn.innerHTML='🔌 <span>API</span>';
         }
 
+        var allCrawlProducts=[];
         function showProducts(products){
             if(!products||!products.length)return;
+            allCrawlProducts=products;
             document.getElementById('extractionStats').style.display='flex';
             document.getElementById('viewToggle').style.display='flex';
             document.getElementById('extractTotal').textContent=products.length;
             document.getElementById('productCountLabel').textContent=products.length+'개 상품';
-            // 이미지 그리드
+            // 플랫폼 필터 생성
+            var platforms={};products.forEach(function(p){var k=p.platform||'기타';if(!platforms[k])platforms[k]=0;platforms[k]++});
+            var pf=document.getElementById('platformFilters');
+            pf.innerHTML='<button onclick="filterPlatform(\'all\')" style="padding:3px 10px;border-radius:12px;border:1px solid #e2e8f0;background:#3b82f6;color:#fff;font-size:.7rem;font-weight:600;cursor:pointer" class="pf-btn pf-active">전체 ('+products.length+')</button>';
+            Object.keys(platforms).forEach(function(k){
+                pf.innerHTML+='<button onclick="filterPlatform(\''+escH(k)+'\')" style="padding:3px 10px;border-radius:12px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:.7rem;font-weight:600;cursor:pointer" class="pf-btn">'+escH(k)+' ('+platforms[k]+')</button>';
+            });
+            renderProductGrid(products);
+        }
+        function filterPlatform(platform){
+            document.querySelectorAll('.pf-btn').forEach(function(b){b.style.background='#fff';b.style.color='#64748b'});
+            event.target.style.background='#3b82f6';event.target.style.color='#fff';
+            var filtered=platform==='all'?allCrawlProducts:allCrawlProducts.filter(function(p){return p.platform===platform});
+            document.getElementById('productCountLabel').textContent=filtered.length+'개 상품';
+            renderProductGrid(filtered);
+        }
+        function renderProductGrid(products){
             var grid=document.getElementById('productGrid');
             grid.innerHTML=products.map(function(p){
                 var img=p.image||'';
-                var price=p.platform==='1688'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
-                return '<div style="background:#fff;border-radius:10px;border:1px solid #e2e8f0;overflow:hidden;cursor:pointer" onclick="window.open(\''+escH(p.url||'#')+'\')">'+
-                    '<div style="width:100%;height:140px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;overflow:hidden">'+(img?'<img src="'+escH(img)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'📦\'">':'<span style="font-size:2rem">📦</span>')+'</div>'+
-                    '<div style="padding:8px"><div style="font-size:.75rem;font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escH(p.name||'')+'</div>'+
-                    '<div style="font-size:.85rem;font-weight:700;color:#e42528;margin-top:4px">'+price+'</div>'+
-                    '<div style="display:flex;justify-content:space-between;margin-top:4px"><span style="font-size:.65rem;padding:2px 6px;border-radius:3px;background:rgba(37,99,235,.1);color:#3b82f6;font-weight:600">'+escH(p.platform||'')+'</span>'+(p.reviewCount?'<span style="font-size:.65rem;color:#94a3b8">리뷰 '+p.reviewCount+'</span>':'')+'</div></div></div>';
+                var price=p.platform==='1688'||p.market==='cn'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
+                var platColor={'쿠팡':'#E42528','무신사':'#000','지마켓':'#00A651','네이버':'#03C75A','1688':'#FF6A00','1688/중국':'#FF6A00','Shopee':'#EE4D2D','Lazada':'#0F146D','TikTok Shop':'#000','wconcept':'#000'}[p.platform]||'#3b82f6';
+                return '<div style="background:#fff;border-radius:10px;border:1px solid #e2e8f0;overflow:hidden;cursor:pointer;transition:all .2s" onclick="'+(p.url?"window.open('"+escH(p.url).replace(/'/g,'')+"','_blank')":'')+'" onmouseover="this.style.boxShadow=\'0 4px 12px rgba(0,0,0,.1)\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.boxShadow=\'none\';this.style.transform=\'none\'">'+
+                    '<div style="width:100%;height:150px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative">'+(img?'<img src="'+escH(img)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'<span style=font-size:2.5rem>📦</span>\'">':'<span style="font-size:2.5rem">📦</span>')+'<div style="position:absolute;top:6px;left:6px;padding:2px 8px;border-radius:4px;background:'+platColor+';color:#fff;font-size:.6rem;font-weight:700">'+escH(p.platform||'')+'</div>'+(p.url?'<div style="position:absolute;top:6px;right:6px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,.5);color:#fff;font-size:.55rem">↗ 바로가기</div>':'')+'</div>'+
+                    '<div style="padding:10px"><div style="font-size:.78rem;font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px">'+escH(p.name||'')+'</div>'+
+                    '<div style="font-size:.95rem;font-weight:800;color:#e42528">'+price+'</div>'+
+                    '<div style="display:flex;justify-content:space-between;margin-top:6px;font-size:.65rem;color:#94a3b8">'+(p.rating?'<span>⭐'+p.rating+'</span>':'<span></span>')+(p.reviewCount?'<span>리뷰 '+p.reviewCount+'</span>':'')+'</div></div></div>';
             }).join('');
-            setView('grid');
             // 테이블
             var tbody=document.getElementById('productTableBody');
             tbody.innerHTML=products.map(function(p){
                 var img=p.image||'';
-                var price=p.platform==='1688'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
-                return '<tr style="border-bottom:1px solid #f1f5f9"><td style="padding:6px">'+(img?'<img src="'+escH(img)+'" style="width:40px;height:40px;object-fit:cover;border-radius:4px" onerror="this.outerHTML=\'📦\'">':'📦')+'</td>'+
-                    '<td style="padding:6px;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escH(p.name||'')+'</td>'+
-                    '<td style="padding:6px;font-weight:600;color:#e42528">'+price+'</td>'+
-                    '<td style="padding:6px"><span style="font-size:.7rem;padding:2px 6px;border-radius:3px;background:rgba(37,99,235,.1);color:#3b82f6;font-weight:600">'+escH(p.platform||'')+'</span></td>'+
-                    '<td style="padding:6px;color:#64748b">'+(p.reviewCount||'-')+'</td>'+
-                    '<td style="padding:6px">'+(p.url?'<a href="'+escH(p.url)+'" target="_blank" style="color:#3b82f6;font-size:.7rem">보기</a>':'')+'</td></tr>';
+                var price=p.platform==='1688'||p.market==='cn'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
+                var platColor={'쿠팡':'#E42528','무신사':'#000','지마켓':'#00A651','네이버':'#03C75A','1688':'#FF6A00','Shopee':'#EE4D2D','Lazada':'#0F146D','TikTok Shop':'#000'}[p.platform]||'#3b82f6';
+                return '<tr style="border-bottom:1px solid #f1f5f9;cursor:pointer" onclick="'+(p.url?"window.open('"+escH(p.url).replace(/'/g,'')+"','_blank')":"")+'"><td style="padding:6px">'+(img?'<img src="'+escH(img)+'" style="width:44px;height:44px;object-fit:cover;border-radius:6px" onerror="this.outerHTML=\'📦\'">':'📦')+'</td>'+
+                    '<td style="padding:6px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500">'+escH(p.name||'')+'</td>'+
+                    '<td style="padding:6px;font-weight:700;color:#e42528">'+price+'</td>'+
+                    '<td style="padding:6px"><span style="font-size:.68rem;padding:2px 8px;border-radius:4px;background:'+platColor+';color:#fff;font-weight:600">'+escH(p.platform||'')+'</span></td>'+
+                    '<td style="padding:6px;color:#64748b;font-size:.78rem">'+(p.reviewCount||'-')+'</td>'+
+                    '<td style="padding:6px">'+(p.url?'<a href="'+escH(p.url)+'" target="_blank" onclick="event.stopPropagation()" style="color:#3b82f6;font-size:.72rem;font-weight:500">상세→</a>':'')+'</td></tr>';
             }).join('');
-            localStorage.setItem('crawlProducts',JSON.stringify(products));
+            localStorage.setItem('crawlProducts',JSON.stringify(allCrawlProducts));
         }
         function escH(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
         function setView(v){
