@@ -112,6 +112,7 @@
             </div>
         </div>
     </div>
+    <script src="js/supabase-client.js"></script>
     <script>
         var API_BASE = location.hostname.indexOf('github.io') !== -1 ? 'https://divoost-website.vercel.app' : '';
         var crawlResults = JSON.parse(localStorage.getItem('crawlResults2') || 'null');
@@ -191,7 +192,18 @@
             document.getElementById('lastUpdated').textContent=new Date().toLocaleString('ko-KR');
             var total=results.coupang+results.alibaba;
             addLog('✅ 전체 완료 - 총 '+total+'개 수집');
-            if(results.products&&results.products.length>0)showProducts(results.products);
+            if(results.products&&results.products.length>0){
+                showProducts(results.products);
+                if(DB.isConfigured()){
+                    addLog('💾 Supabase DB 저장 중...');
+                    try{
+                        await DB.saveProducts(results.products);
+                        if(results.coupang>0)await DB.logCrawl('쿠팡','mixed',results.coupang,'success');
+                        if(results.alibaba>0)await DB.logCrawl('1688','mixed',results.alibaba,'success');
+                        addLog('✅ DB 저장 완료: '+results.products.length+'개');
+                    }catch(dbe){addLog('⚠ DB 저장 실패: '+dbe.message)}
+                }
+            }
 
             // 알림 업데이트
             var ah='';
@@ -306,10 +318,28 @@
         }
 
         document.addEventListener('DOMContentLoaded',function(){
-            if(crawlResults&&(crawlResults.coupang>0||crawlResults.alibaba>0)){loadCrawlData(crawlResults);document.getElementById('lastUpdated').textContent=new Date(crawlResults.timestamp).toLocaleString('ko-KR')+' (스크래핑)';if(crawlResults.products)showProducts(crawlResults.products)}
-            else{loadSampleData()}
-            var savedProducts=JSON.parse(localStorage.getItem('crawlProducts')||'null');
-            if(savedProducts&&savedProducts.length>0&&!crawlResults)showProducts(savedProducts);
+            if(DB.isConfigured()){
+                addLog('💾 DB에서 데이터 로딩...');
+                try{
+                    var dbProducts=await DB.getProducts({limit:100});
+                    if(dbProducts&&dbProducts.length>0){
+                        var mapped=dbProducts.map(function(p){return{name:p.name,price:p.price,platform:p.platform,image:p.image,url:p.url,reviewCount:p.review_count,rating:p.rating,isRocket:p.is_rocket,source:'db'}});
+                        showProducts(mapped);
+                        var platforms={};mapped.forEach(function(p){var k=p.platform||'';if(!platforms[k])platforms[k]=0;platforms[k]++});
+                        Object.keys(platforms).forEach(function(k){setText('v-'+(k==='쿠팡'?'coupang':k==='1688'?'1688':'naver')+'-count',platforms[k]);});
+                        setText('kpi-total-value',mapped.length);setText('kpi-total-sub','DB 데이터');updateBadge('live');
+                        document.getElementById('lastUpdated').textContent='DB 연동 ('+mapped.length+'개)';
+                        addLog('✅ DB 로드: '+mapped.length+'개 상품');
+                    }else{loadSampleData();addLog('DB 비어있음 → 샘플 데이터')}
+                }catch(e){loadSampleData();addLog('DB 연결 실패 → 샘플 데이터')}
+            }else if(crawlResults&&(crawlResults.coupang>0||crawlResults.alibaba>0)){
+                loadCrawlData(crawlResults);document.getElementById('lastUpdated').textContent=new Date(crawlResults.timestamp).toLocaleString('ko-KR')+' (스크래핑)';
+                if(crawlResults.products)showProducts(crawlResults.products);
+            }else{
+                loadSampleData();
+                var savedProducts=JSON.parse(localStorage.getItem('crawlProducts')||'null');
+                if(savedProducts&&savedProducts.length>0)showProducts(savedProducts);
+            }
             var mb=document.getElementById('mobileMenuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('sidebarOverlay');
             if(mb){mb.onclick=function(){sb.classList.toggle('open');ov.classList.toggle('active')}}
             if(ov){ov.onclick=function(){sb.classList.remove('open');ov.classList.remove('active')}}
