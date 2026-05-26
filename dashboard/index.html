@@ -158,11 +158,12 @@
                 try{
                     addLog('쿠팡 "'+kw+'" 스크래핑... ('+(ki+1)+'/'+cpKW.length+')');
                     var r=await fetch(API_BASE+'/api/scrape/coupang?keyword='+encodeURIComponent(kw));
-                    var d=await r.json();
+                    var txt=await r.text();
+                    try{var d=JSON.parse(txt)}catch(pe){addLog('  ⚠ 쿠팡 차단됨 (HTML 응답)');break}
                     if(d.blocked){addLog('  ⚠ 쿠팡 차단됨 - 나머지 건너뜀');break}
                     if(d.success&&d.total>0){results.coupang+=d.total;results.products=results.products.concat(d.products);addLog('  ✓ 쿠팡 "'+kw+'" → '+d.total+'개')}
                     else{addLog('  △ 쿠팡 "'+kw+'" → 0개')}
-                }catch(e){addLog('  ✗ 쿠팡 오류: '+e.message)}
+                }catch(e){addLog('  ✗ 쿠팡 연결실패: '+e.message);break}
             }
             if(dotC)dotC.className='status-dot '+(results.coupang>0?'online':'error');
             setText('st-coupang-mode',results.coupang>0?results.coupang+'개':'차단됨');
@@ -178,11 +179,12 @@
                 try{
                     addLog('1688 "'+kw2+'" 스크래핑... ('+(ai+1)+'/'+a1KW.length+')');
                     var r2=await fetch(API_BASE+'/api/scrape/alibaba?keyword='+encodeURIComponent(kw2));
-                    var d2=await r2.json();
+                    var txt2=await r2.text();
+                    try{var d2=JSON.parse(txt2)}catch(pe2){addLog('  ⚠ 1688 차단됨 (HTML 응답)');break}
                     if(d2.blocked){addLog('  ⚠ 1688 차단됨 - 나머지 건너뜀');break}
                     if(d2.success&&d2.total>0){results.alibaba+=d2.total;results.products=results.products.concat(d2.products);addLog('  ✓ 1688 "'+kw2+'" → '+d2.total+'개')}
                     else{addLog('  △ 1688 "'+kw2+'" → 0개')}
-                }catch(e2){addLog('  ✗ 1688 오류: '+e2.message)}
+                }catch(e2){addLog('  ✗ 1688 연결실패: '+e2.message);break}
             }
             if(dot1)dot1.className='status-dot '+(results.alibaba>0?'online':'offline');
             setText('st-1688-mode',results.alibaba>0?results.alibaba+'개':'차단됨');
@@ -207,11 +209,13 @@
 
             // 알림 업데이트
             var ah='';
-            if(results.coupang>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">✅</span><div class="alert-body"><div class="alert-title">[쿠팡] '+results.coupang+'개 상품 스크래핑 완료</div><div class="alert-desc">실제 웹 데이터 (API 키 불필요)</div><div class="alert-time">방금</div></div></div>';
-            else ah+='<div class="alert-item alert-hot"><span class="alert-icon">⚠️</span><div class="alert-body"><div class="alert-title">[쿠팡] 스크래핑 차단됨</div><div class="alert-desc">쿠팡이 서버 요청을 차단했습니다. 잠시 후 재시도하세요.</div><div class="alert-time">방금</div></div></div>';
-            if(results.alibaba>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">✅</span><div class="alert-body"><div class="alert-title">[1688] '+results.alibaba+'개 상품 스크래핑 완료</div><div class="alert-desc">실제 웹 데이터 (API 키 불필요)</div><div class="alert-time">방금</div></div></div>';
-            else ah+='<div class="alert-item alert-price"><span class="alert-icon">⚠️</span><div class="alert-body"><div class="alert-title">[1688] 스크래핑 차단됨</div><div class="alert-desc">1688이 서버 요청을 차단했습니다. 잠시 후 재시도하세요.</div><div class="alert-time">방금</div></div></div>';
-            ah+='<div class="alert-item alert-rising"><span class="alert-icon">ℹ️</span><div class="alert-body"><div class="alert-title">지마켓/네이버/타오바오</div><div class="alert-desc">스크래핑 준비중</div><div class="alert-time">방금</div></div></div>';
+            if(results.coupang>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">✅</span><div class="alert-body"><div class="alert-title">[쿠팡] '+results.coupang+'개 상품 수집 완료</div><div class="alert-desc">실제 웹 데이터</div><div class="alert-time">방금</div></div></div>';
+            if(results.alibaba>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">✅</span><div class="alert-body"><div class="alert-title">[1688] '+results.alibaba+'개 상품 수집 완료</div><div class="alert-desc">실제 웹 데이터</div><div class="alert-time">방금</div></div></div>';
+            if(results.coupang===0&&results.alibaba===0){
+                ah+='<div class="alert-item alert-hot"><span class="alert-icon">🚫</span><div class="alert-body"><div class="alert-title">서버 스크래핑 차단됨</div><div class="alert-desc">쿠팡/1688이 Vercel 서버 IP를 차단했습니다.</div><div class="alert-time">방금</div></div></div>';
+                ah+='<div class="alert-item alert-new"><span class="alert-icon">💡</span><div class="alert-body"><div class="alert-title">대안: CSV/JSON 업로드</div><div class="alert-desc">① Chrome에서 Ultimate Web Scraper 설치<br>② 쿠팡/1688에서 직접 스크래핑<br>③ CSV/JSON 내보내기<br>④ 📤 업로드 버튼으로 데이터 불러오기</div><div class="alert-time">추천</div></div></div>';
+                ah+='<div class="alert-item alert-rising"><span class="alert-icon">🔌</span><div class="alert-body"><div class="alert-title">대안: API 키 연동</div><div class="alert-desc">쿠팡 파트너스 / 1688 API 키를 받으면 차단 없이 데이터 수집 가능</div><div class="alert-time">추천</div></div></div>';
+            }
             document.getElementById('alertList').innerHTML=ah;
             btn.disabled=false;btn.innerHTML='🕷 <span>크롤링</span>';
         }
