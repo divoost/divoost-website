@@ -249,6 +249,8 @@
                     addLog('쿠팡 "'+kw+'" 프록시 수집... ('+(ki+1)+'/'+cpKW.length+')');
                     var html=await scrapePage('https://www.coupang.com/np/search?component=&q='+encodeURIComponent(kw)+'&channel=user');
                     addLog('  응답: '+html.length+'자, search-product: '+(html.match(/search-product/g)||[]).length+'개');
+                    addLog('  HTML미리보기: '+html.substring(0,200).replace(/</g,'&lt;'));
+                    localStorage.setItem('debug_coupang_html',html.substring(0,5000));
                     var prods=parseCoupang(html);
                     results.coupang+=prods.length;
                     results.products=results.products.concat(prods);
@@ -269,6 +271,8 @@
                     addLog('1688 "'+kw2+'" 프록시 수집... ('+(ai+1)+'/'+a1KW.length+')');
                     var html2=await scrapePage('https://s.1688.com/selloffer/offer_search.htm?keywords='+encodeURIComponent(kw2));
                     addLog('  응답: '+html2.length+'자, INIT_DATA: '+(html2.indexOf('__INIT_DATA')>-1?'있음':'없음'));
+                    addLog('  HTML미리보기: '+html2.substring(0,200).replace(/</g,'&lt;'));
+                    localStorage.setItem('debug_1688_html',html2.substring(0,5000));
                     var prods2=parse1688(html2);
                     results.alibaba+=prods2.length;
                     results.products=results.products.concat(prods2);
