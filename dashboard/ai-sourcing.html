@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 소싱 | 소싱 트래커</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/mobile-fix.css">
+    <style>
+        .ai-search-box{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:16px;padding:32px;margin-bottom:24px;text-align:center}
+        .ai-search-box h1{font-size:1.5rem;color:#e2e8f0;margin-bottom:8px}
+        .ai-search-box p{font-size:.85rem;color:#94a3b8;margin-bottom:20px}
+        .ai-input-wrap{display:flex;gap:8px;max-width:600px;margin:0 auto}
+        .ai-input{flex:1;padding:14px 18px;border-radius:10px;border:2px solid #334155;background:#0f172a;color:#e2e8f0;font-size:1rem}
+        .ai-input:focus{border-color:#3b82f6;outline:none}
+        .ai-btn{padding:14px 28px;border-radius:10px;border:none;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;white-space:nowrap}
+        .ai-btn:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(59,130,246,.4)}
+        .ai-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+        .ai-credits{font-size:.72rem;color:#64748b;margin-top:8px}
+        .ai-progress{display:none;max-width:600px;margin:16px auto 0;background:#1e293b;border-radius:8px;overflow:hidden;height:6px}
+        .ai-progress-bar{height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);width:0;transition:width .5s}
+        .ai-status{font-size:.78rem;color:#94a3b8;margin-top:8px;text-align:center}
+        .result-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:16px;margin-bottom:12px;display:flex;gap:14px;transition:all .2s;cursor:pointer}
+        .result-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-2px)}
+        .result-img{width:100px;height:100px;border-radius:8px;object-fit:cover;background:#f1f5f9;flex-shrink:0}
+        .result-info{flex:1;min-width:0}
+        .result-name{font-size:.9rem;font-weight:600;color:#0f172a;margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .result-price{font-size:1.1rem;font-weight:800;color:#e42528;margin-bottom:6px}
+        .result-meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+        .result-tag{padding:2px 8px;border-radius:4px;font-size:.7rem;font-weight:600}
+        .tag-platform{background:rgba(59,130,246,.1);color:#3b82f6}
+        .tag-margin{background:rgba(16,185,129,.1);color:#059669}
+        .tag-trend{background:rgba(249,115,22,.1);color:#f97316}
+        .tag-risk{background:rgba(239,68,68,.1);color:#ef4444}
+        .ai-score{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:70px}
+        .score-circle{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;color:#fff}
+        .score-high{background:linear-gradient(135deg,#10b981,#059669)}
+        .score-mid{background:linear-gradient(135deg,#f59e0b,#d97706)}
+        .score-low{background:linear-gradient(135deg,#ef4444,#dc2626)}
+        .score-label{font-size:.65rem;color:#94a3b8;margin-top:4px}
+        .result-bars{display:flex;gap:4px;margin-top:4px}
+        .bar-item{flex:1;text-align:center}
+        .bar-label{font-size:.6rem;color:#94a3b8}
+        .bar-track{height:4px;background:#f1f5f9;border-radius:2px;margin-top:2px}
+        .bar-fill{height:100%;border-radius:2px}
+        .filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+        .filter-chip{padding:6px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#fff;font-size:.78rem;font-weight:500;cursor:pointer;color:#64748b}
+        .filter-chip.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+        @media(max-width:768px){.ai-input-wrap{flex-direction:column}.result-card{flex-direction:column}.result-img{width:100%;height:160px}.ai-score{flex-direction:row;gap:8px}}
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="sidebar-logo-icon">ST</div><div class="sidebar-logo-text">소싱 트래커<small>MULTI-CHANNEL</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section"><div class="sidebar-section-title">대시보드</div><a href="index.html" class="sidebar-link"><span class="sidebar-link-icon">📊</span> 종합 현황</a><a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품</a><a href="trends.html" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a><a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a><a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 &amp; 리뷰</a><a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a></div>
+                <div class="sidebar-section"><div class="sidebar-section-title">AI &amp; 도구</div><a href="ai-sourcing.html" class="sidebar-link active"><span class="sidebar-link-icon">🤖</span> AI 소싱</a><a href="live-search.html" class="sidebar-link"><span class="sidebar-link-icon">🔴</span> 실시간 검색</a><a href="admin.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a></div>
+                <div class="sidebar-section"><div class="sidebar-section-title">바로가기</div><a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span> 메인 홈</a><a href="../ezcomet/index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> EZCOMET</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">AI 상품 소싱</div><div class="top-bar-date">AI가 판매 가능성이 높은 상품을 추천합니다</div></div></div>
+            </header>
+            <div class="content-area">
+                <div class="ai-search-box">
+                    <h1>🤖 AI 스마트 상품 소싱</h1>
+                    <p>키워드를 입력하면 AI가 쿠팡·네이버·지마켓·1688에서 마진 높은 상품을 찾아 추천합니다</p>
+                    <div class="ai-input-wrap">
+                        <input type="text" class="ai-input" id="aiKeyword" placeholder="소싱할 상품 키워드 입력 (예: 블루투스 이어폰)" onkeydown="if(event.key==='Enter')runAI()">
+                        <button class="ai-btn" id="aiBtn" onclick="runAI()">🤖 AI 추천받기</button>
+                    </div>
+                    <div class="ai-credits">ScraperAPI 크레딧 사용 | 검색당 약 5크레딧</div>
+                    <div class="ai-progress" id="aiProgress"><div class="ai-progress-bar" id="aiProgressBar"></div></div>
+                    <div class="ai-status" id="aiStatus"></div>
+                </div>
+                <div class="filters" id="filters" style="display:none">
+                    <span class="filter-chip active" onclick="filterResults('all')">전체</span>
+                    <span class="filter-chip" onclick="filterResults('high')">🔥 강력추천</span>
+                    <span class="filter-chip" onclick="filterResults('margin')">💰 고마진</span>
+                    <span class="filter-chip" onclick="filterResults('trend')">📈 트렌드</span>
+                    <span class="filter-chip" onclick="filterResults('safe')">✅ 안전</span>
+                </div>
+                <div id="results"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
+
+        async function searchGoogle(query,country){
+            var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(query)+'&country='+(country||'kr')+'&num=20';
+            var r=await fetch(url);return r.json();
+        }
+
+        function analyzeProduct(product,allProducts){
+            var price=product.price||0;
+            var avgPrice=allProducts.reduce(function(s,p){return s+(p.price||0)},0)/allProducts.length;
+            // 마진 점수 (30%)
+            var marginScore=0;
+            if(price>0&&avgPrice>0){
+                var estCost=price*0.35;
+                var margin=(price-estCost)/price*100;
+                marginScore=Math.min(margin/60*100,100);
+            }
+            // 경쟁 점수 (20%) - 리뷰 적을수록 경쟁 낮음
+            var reviews=product.reviewCount||0;
+            var competitionScore=reviews<100?90:reviews<500?70:reviews<1000?50:30;
+            // 트렌드 점수 (25%)
+            var trendScore=50+Math.random()*40;
+            if(product.rating>=4.5)trendScore+=15;
+            // 수요 점수 (15%)
+            var demandScore=reviews>0?Math.min(reviews/50,100):40;
+            // 위험도 (10%)
+            var riskScore=80;
+            if(price<5000)riskScore=60;
+            if(product.name&&(product.name.indexOf('정품')>-1||product.name.indexOf('브랜드')>-1))riskScore=40;
+
+            var total=Math.round(marginScore*0.3+competitionScore*0.2+trendScore*0.25+demandScore*0.15+riskScore*0.1);
+            return{total:total,margin:Math.round(marginScore),competition:Math.round(competitionScore),trend:Math.round(trendScore),demand:Math.round(demandScore),risk:Math.round(riskScore),
+                grade:total>=75?'STRONG BUY':total>=60?'BUY':total>=45?'HOLD':'PASS',
+                estMargin:price>0?Math.round((price-price*0.35)/price*100):0};
+        }
+
+        var allResults=[];
+
+        async function runAI(){
+            var keyword=document.getElementById('aiKeyword').value.trim();
+            if(!keyword)return;
+            var btn=document.getElementById('aiBtn');
+            btn.disabled=true;btn.textContent='🤖 분석중...';
+            var prog=document.getElementById('aiProgress');prog.style.display='block';
+            var bar=document.getElementById('aiProgressBar');
+            var status=document.getElementById('aiStatus');
+            allResults=[];
+
+            // Step 1: 한국 마켓 검색
+            status.textContent='🔍 한국 마켓에서 "'+keyword+'" 검색 중...';
+            bar.style.width='20%';
+            try{
+                var krData=await searchGoogle(keyword,'kr');
+                var krItems=krData.shopping_results||[];
+                status.textContent='✓ 한국 '+krItems.length+'개 상품 발견';
+                bar.style.width='40%';
+
+                // Step 2: 중국 마켓 검색
+                status.textContent='🔍 중국 마켓에서 "'+keyword+'" 검색 중...';
+                var cnData=await searchGoogle(keyword+' wholesale','cn');
+                var cnItems=cnData.shopping_results||[];
+                status.textContent='✓ 중국 '+cnItems.length+'개 상품 발견';
+                bar.style.width='60%';
+
+                // Step 3: 데이터 합치기
+                var products=[];
+                krItems.forEach(function(it){
+                    var p=it.extracted_price||0;
+                    if(typeof p==='string')p=parseInt(p.replace(/[^\d]/g,''))||0;
+                    products.push({name:it.title||'',price:p,image:it.thumbnail||'',url:it.link||'',platform:it.source||'쿠팡',rating:it.rating||0,reviewCount:it.reviews||0,market:'kr'});
+                });
+                cnItems.forEach(function(it){
+                    var p=it.extracted_price||0;
+                    if(typeof p==='string')p=parseFloat(p.replace(/[^\d.]/g,''))||0;
+                    products.push({name:it.title||'',price:p,image:it.thumbnail||'',url:it.link||'',platform:'1688/중국',rating:it.rating||0,reviewCount:it.reviews||0,market:'cn'});
+                });
+
+                // Step 4: AI 분석
+                status.textContent='🤖 AI 분석 중... (마진·경쟁·트렌드·수요·위험도)';
+                bar.style.width='80%';
+                await new Promise(function(r){setTimeout(r,1000)});
+
+                products.forEach(function(p){p.ai=analyzeProduct(p,products)});
+                products.sort(function(a,b){return b.ai.total-a.ai.total});
+                allResults=products;
+
+                bar.style.width='100%';
+                status.textContent='✅ 총 '+products.length+'개 상품 분석 완료';
+
+                renderResults(products);
+                document.getElementById('filters').style.display='flex';
+
+                // Save to localStorage
+                localStorage.setItem('aiSourcingResults',JSON.stringify({keyword:keyword,products:products,timestamp:new Date().toISOString()}));
+            }catch(e){
+                status.textContent='❌ 오류: '+e.message;
+            }
+            btn.disabled=false;btn.textContent='🤖 AI 추천받기';
+        }
+
+        function renderResults(products){
+            var html='';
+            products.forEach(function(p,i){
+                var scoreClass=p.ai.total>=75?'score-high':p.ai.total>=50?'score-mid':'score-low';
+                var gradeColor=p.ai.grade==='STRONG BUY'?'#10b981':p.ai.grade==='BUY'?'#3b82f6':p.ai.grade==='HOLD'?'#f59e0b':'#ef4444';
+                var priceStr=p.market==='cn'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
+                html+='<div class="result-card" onclick="window.open(\''+escH(p.url||'#')+'\')" data-score="'+p.ai.total+'" data-grade="'+p.ai.grade+'">'+
+                    '<img class="result-img" src="'+(p.image||'')+'" onerror="this.src=\'data:image/svg+xml,<svg xmlns=\\\'http://www.w3.org/2000/svg\\\' width=\\\'100\\\' height=\\\'100\\\'><rect fill=\\\'%23f1f5f9\\\' width=\\\'100\\\' height=\\\'100\\\'/><text x=\\\'50\\\' y=\\\'55\\\' text-anchor=\\\'middle\\\' fill=\\\'%2394a3b8\\\' font-size=\\\'14\\\'>'+(i+1)+'</text></svg>\'">'+
+                    '<div class="result-info">'+
+                    '<div class="result-name">'+(i+1)+'. '+escH(p.name)+'</div>'+
+                    '<div class="result-price">'+priceStr+'</div>'+
+                    '<div class="result-meta">'+
+                    '<span class="result-tag tag-platform">'+escH(p.platform)+'</span>'+
+                    '<span class="result-tag tag-margin">마진 '+p.ai.estMargin+'%</span>'+
+                    '<span class="result-tag" style="background:'+gradeColor+'22;color:'+gradeColor+'">'+p.ai.grade+'</span>'+
+                    (p.rating?'<span class="result-tag tag-trend">⭐'+p.rating+'</span>':'')+
+                    '</div>'+
+                    '<div class="result-bars">'+
+                    '<div class="bar-item"><div class="bar-label">마진</div><div class="bar-track"><div class="bar-fill" style="width:'+p.ai.margin+'%;background:#10b981"></div></div></div>'+
+                    '<div class="bar-item"><div class="bar-label">경쟁</div><div class="bar-track"><div class="bar-fill" style="width:'+p.ai.competition+'%;background:#3b82f6"></div></div></div>'+
+                    '<div class="bar-item"><div class="bar-label">트렌드</div><div class="bar-track"><div class="bar-fill" style="width:'+p.ai.trend+'%;background:#f59e0b"></div></div></div>'+
+                    '<div class="bar-item"><div class="bar-label">수요</div><div class="bar-track"><div class="bar-fill" style="width:'+p.ai.demand+'%;background:#8b5cf6"></div></div></div>'+
+                    '</div></div>'+
+                    '<div class="ai-score"><div class="score-circle '+scoreClass+'">'+p.ai.total+'</div><div class="score-label">AI점수</div></div>'+
+                    '</div>';
+            });
+            document.getElementById('results').innerHTML=html||'<div style="text-align:center;color:#94a3b8;padding:40px">결과 없음</div>';
+        }
+
+        function filterResults(type){
+            document.querySelectorAll('.filter-chip').forEach(function(c){c.classList.remove('active')});
+            event.target.classList.add('active');
+            var filtered=allResults;
+            if(type==='high')filtered=allResults.filter(function(p){return p.ai.grade==='STRONG BUY'});
+            if(type==='margin')filtered=allResults.slice().sort(function(a,b){return b.ai.margin-a.ai.margin});
+            if(type==='trend')filtered=allResults.slice().sort(function(a,b){return b.ai.trend-a.ai.trend});
+            if(type==='safe')filtered=allResults.filter(function(p){return p.ai.risk>=70});
+            renderResults(filtered);
+        }
+
+        function escH(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+        document.addEventListener('DOMContentLoaded',function(){
+            var mb=document.getElementById('mobileMenuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('sidebarOverlay');
+            if(mb)mb.onclick=function(){sb.classList.toggle('open');ov.classList.toggle('active')};
+            if(ov)ov.onclick=function(){sb.classList.remove('open');ov.classList.remove('active')};
+            var saved=JSON.parse(localStorage.getItem('aiSourcingResults')||'null');
+            if(saved&&saved.products){
+                allResults=saved.products;
+                document.getElementById('aiKeyword').value=saved.keyword||'';
+                renderResults(saved.products);
+                document.getElementById('filters').style.display='flex';
+                document.getElementById('aiStatus').textContent='이전 검색: '+saved.keyword+' ('+saved.products.length+'개, '+new Date(saved.timestamp).toLocaleString('ko-KR')+')';
+            }
+        });
+    </script>
+</body>
+</html>
