@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>반자동 스크래퍼 | 소싱 트래커</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/mobile-fix.css">
+    <style>
+        .scraper-box{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:16px;padding:28px;margin-bottom:20px}
+        .scraper-box h1{font-size:1.4rem;color:#e2e8f0;margin-bottom:6px}
+        .scraper-box p{font-size:.82rem;color:#94a3b8;margin-bottom:16px}
+        .url-input-wrap{display:flex;gap:8px}
+        .url-input{flex:1;padding:12px 16px;border-radius:10px;border:2px solid #334155;background:#0f172a;color:#e2e8f0;font-size:.9rem}
+        .url-input:focus{border-color:#7c3aed;outline:none}
+        .scrape-btn{padding:12px 24px;border-radius:10px;border:none;background:#7c3aed;color:#fff;font-size:.9rem;font-weight:700;cursor:pointer;white-space:nowrap}
+        .scrape-btn:hover{background:#6d28d9}
+        .scrape-btn:disabled{opacity:.5;cursor:not-allowed}
+        .quick-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+        .quick-btn{padding:6px 14px;border-radius:20px;border:1px solid #334155;background:transparent;color:#94a3b8;font-size:.75rem;cursor:pointer;display:flex;align-items:center;gap:4px}
+        .quick-btn:hover{border-color:#7c3aed;color:#7c3aed}
+        .quick-dot{width:8px;height:8px;border-radius:50%}
+        .scrape-log{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-family:monospace;font-size:.75rem;color:#94a3b8;max-height:120px;overflow-y:auto;display:none}
+        .result-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-bottom:16px}
+        .r-stat{background:#fff;border-radius:8px;padding:12px;text-align:center;border:1px solid #e2e8f0}
+        .r-stat-val{font-size:1.3rem;font-weight:800;color:#0f172a}
+        .r-stat-label{font-size:.68rem;color:#94a3b8;margin-top:2px}
+        .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+        .p-card{background:#fff;border-radius:10px;border:1px solid #e2e8f0;overflow:hidden;cursor:pointer;transition:all .2s}
+        .p-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-2px)}
+        .p-card img{width:100%;height:150px;object-fit:cover;background:#f1f5f9}
+        .p-card-body{padding:8px 10px}
+        .p-card-name{font-size:.75rem;font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .p-card-price{font-size:.9rem;font-weight:800;color:#e42528;margin:3px 0}
+        .p-card-meta{display:flex;justify-content:space-between;font-size:.65rem;color:#94a3b8}
+        .p-card-tag{padding:2px 6px;border-radius:3px;font-size:.6rem;font-weight:700}
+        .export-bar{display:flex;gap:6px;margin-bottom:12px;align-items:center}
+        .export-btn{padding:6px 14px;border-radius:6px;border:none;color:#fff;font-size:.75rem;font-weight:600;cursor:pointer}
+        .view-btns{display:flex;gap:4px;margin-left:auto}
+        .v-btn{padding:5px 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:.72rem;cursor:pointer}
+        .v-btn.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+        .p-table{width:100%;border-collapse:collapse;display:none}
+        .p-table th{padding:8px;text-align:left;font-size:.7rem;color:#94a3b8;border-bottom:2px solid #e2e8f0}
+        .p-table td{padding:6px 8px;border-bottom:1px solid #f1f5f9;font-size:.78rem}
+        .p-table img{width:36px;height:36px;object-fit:cover;border-radius:4px}
+        @media(max-width:768px){.url-input-wrap{flex-direction:column}.product-grid{grid-template-columns:1fr 1fr}}
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="sidebar-logo-icon">ST</div><div class="sidebar-logo-text">소싱 트래커<small>MULTI-CHANNEL</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section"><div class="sidebar-section-title">대시보드</div><a href="index.html" class="sidebar-link"><span class="sidebar-link-icon">📊</span> 종합 현황</a><a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품</a><a href="trends.html" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a><a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a><a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 &amp; 리뷰</a><a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a></div>
+                <div class="sidebar-section"><div class="sidebar-section-title">AI &amp; 도구</div><a href="ai-sourcing.html" class="sidebar-link"><span class="sidebar-link-icon">🤖</span> AI 소싱</a><a href="scraper.html" class="sidebar-link active"><span class="sidebar-link-icon">🕷</span> 스크래퍼</a><a href="db-view.html" class="sidebar-link"><span class="sidebar-link-icon">💾</span> DB 데이터</a><a href="live-search.html" class="sidebar-link"><span class="sidebar-link-icon">🔴</span> 실시간 검색</a><a href="admin.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a></div>
+                <div class="sidebar-section"><div class="sidebar-section-title">바로가기</div><a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span> 메인 홈</a><a href="../ezcomet/index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> EZCOMET</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">🕷 반자동 스크래퍼</div><div class="top-bar-date">URL 입력 → 상품 자동 추출 → DB 저장</div></div></div></header>
+            <div class="content-area">
+                <div class="scraper-box">
+                    <h1>🕷 URL 기반 상품 수집기</h1>
+                    <p>쿠팡, 1688, 네이버, Shopee 등의 검색 결과 URL을 붙여넣으면 상품을 자동 추출합니다</p>
+                    <div class="url-input-wrap">
+                        <input type="text" class="url-input" id="scrapeUrl" placeholder="상품 검색 결과 URL 붙여넣기 (예: https://www.coupang.com/np/search?q=이어폰)" onkeydown="if(event.key==='Enter')startScrape()">
+                        <button class="scrape-btn" id="scrapeBtn" onclick="startScrape()">🕷 수집 시작</button>
+                    </div>
+                    <div class="quick-btns">
+                        <button class="quick-btn" onclick="quickSearch('coupang')"><span class="quick-dot" style="background:#E42528"></span>쿠팡</button>
+                        <button class="quick-btn" onclick="quickSearch('1688')"><span class="quick-dot" style="background:#FF6A00"></span>1688</button>
+                        <button class="quick-btn" onclick="quickSearch('naver')"><span class="quick-dot" style="background:#03C75A"></span>네이버</button>
+                        <button class="quick-btn" onclick="quickSearch('shopee')"><span class="quick-dot" style="background:#EE4D2D"></span>Shopee</button>
+                        <button class="quick-btn" onclick="quickSearch('lazada')"><span class="quick-dot" style="background:#0F146D"></span>Lazada</button>
+                        <button class="quick-btn" onclick="quickSearch('tiktok')"><span class="quick-dot" style="background:#000"></span>TikTok</button>
+                    </div>
+                </div>
+                <div class="scrape-log" id="scrapeLog"></div>
+                <div id="resultArea" style="display:none">
+                    <div class="result-stats" id="resultStats"></div>
+                    <div class="export-bar">
+                        <button class="export-btn" style="background:#10b981" onclick="exportResults('csv')">📥 CSV</button>
+                        <button class="export-btn" style="background:#3b82f6" onclick="exportResults('json')">📥 JSON</button>
+                        <button class="export-btn" style="background:#7c3aed" onclick="saveToDb()">💾 DB 저장</button>
+                        <span style="font-size:.72rem;color:#94a3b8" id="productCount">0개</span>
+                        <div class="view-btns">
+                            <button class="v-btn active" onclick="setView('grid',this)">🖼</button>
+                            <button class="v-btn" onclick="setView('table',this)">📋</button>
+                        </div>
+                    </div>
+                    <div class="product-grid" id="gridView"></div>
+                    <table class="p-table" id="tableView"><thead><tr><th>이미지</th><th>상품명</th><th>가격</th><th>플랫폼</th><th>링크</th></tr></thead><tbody id="tableBody"></tbody></table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/supabase-client.js"></script>
+    <script>
+        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
+        var allProducts=[];
+
+        function quickSearch(platform){
+            var kw=prompt('검색 키워드를 입력하세요:');
+            if(!kw)return;
+            var urls={
+                coupang:'https://www.coupang.com/np/search?component=&q='+encodeURIComponent(kw),
+                '1688':'https://s.1688.com/selloffer/offer_search.htm?keywords='+encodeURIComponent(kw),
+                naver:'https://search.shopping.naver.com/search/all?query='+encodeURIComponent(kw),
+                shopee:'https://shopee.vn/search?keyword='+encodeURIComponent(kw),
+                lazada:'https://www.lazada.vn/catalog/?q='+encodeURIComponent(kw),
+                tiktok:'https://shop.tiktok.com/search?q='+encodeURIComponent(kw)
+            };
+            document.getElementById('scrapeUrl').value=urls[platform]||'';
+            startScrape();
+        }
+
+        async function startScrape(){
+            var url=document.getElementById('scrapeUrl').value.trim();
+            if(!url){alert('URL을 입력하세요');return}
+            var btn=document.getElementById('scrapeBtn');
+            btn.disabled=true;btn.textContent='🕷 수집중...';
+            var log=document.getElementById('scrapeLog');log.style.display='block';
+            addLog('수집 시작: '+url.substring(0,60)+'...');
+
+            var platform=detectPlatform(url);
+            addLog('플랫폼 감지: '+(platform||'알 수 없음'));
+
+            // Google Shopping API로 키워드 추출 후 검색
+            var keyword=extractKeyword(url);
+            if(!keyword){addLog('키워드 추출 실패 → URL 직접 스크래핑');keyword=url}
+
+            addLog('키워드: "'+keyword+'" → Google Shopping 검색');
+
+            try{
+                var country=platform==='1688'?'cn':platform==='shopee'?'sg':'kr';
+                var apiUrl='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(keyword+(platform?' '+platform:''))+'&country='+country+'&num=30';
+                var r=await fetch(apiUrl);
+                var data=await r.json();
+                var items=data.shopping_results||data.results||[];
+                addLog('✓ '+items.length+'개 상품 발견');
+
+                allProducts=items.map(function(it){
+                    var p=it.extracted_price||0;
+                    if(typeof p==='string')p=parseFloat(p.replace(/[^\d.]/g,''))||0;
+                    return{name:it.title||'',price:p,image:it.thumbnail||'',url:it.link||'',platform:it.source||platform||'기타',rating:it.rating||0,reviewCount:it.reviews||0,source:'scraper'};
+                });
+
+                addLog('✅ 수집 완료: '+allProducts.length+'개');
+                renderResults();
+            }catch(e){
+                addLog('✗ 오류: '+e.message);
+            }
+
+            btn.disabled=false;btn.textContent='🕷 수집 시작';
+        }
+
+        function detectPlatform(url){
+            if(url.includes('coupang'))return'쿠팡';
+            if(url.includes('1688'))return'1688';
+            if(url.includes('naver'))return'네이버';
+            if(url.includes('shopee'))return'Shopee';
+            if(url.includes('lazada'))return'Lazada';
+            if(url.includes('tiktok'))return'TikTok';
+            if(url.includes('gmarket'))return'지마켓';
+            return null;
+        }
+
+        function extractKeyword(url){
+            try{
+                var u=new URL(url);
+                return u.searchParams.get('q')||u.searchParams.get('query')||u.searchParams.get('keyword')||u.searchParams.get('keywords')||u.searchParams.get('component')||'';
+            }catch(e){return url}
+        }
+
+        function renderResults(){
+            document.getElementById('resultArea').style.display='block';
+            var platforms={};allProducts.forEach(function(p){var k=p.platform||'기타';if(!platforms[k])platforms[k]=0;platforms[k]++});
+            document.getElementById('resultStats').innerHTML='<div class="r-stat"><div class="r-stat-val">'+allProducts.length+'</div><div class="r-stat-label">총 상품</div></div>'+Object.keys(platforms).map(function(k){return'<div class="r-stat"><div class="r-stat-val">'+platforms[k]+'</div><div class="r-stat-label">'+k+'</div></div>'}).join('');
+            document.getElementById('productCount').textContent=allProducts.length+'개';
+
+            document.getElementById('gridView').innerHTML=allProducts.map(function(p){
+                var price='₩'+(p.price||0).toLocaleString();
+                var platColors={'쿠팡':'#E42528','1688':'#FF6A00','네이버':'#03C75A','Shopee':'#EE4D2D','Lazada':'#0F146D','TikTok':'#000','지마켓':'#00A651'};
+                var c=platColors[p.platform]||'#3b82f6';
+                return'<div class="p-card" onclick="'+(p.url?"window.open('"+p.url.replace(/'/g,'')+"')":"")+'"><img src="'+(p.image||'')+'" onerror="this.outerHTML=\'<div style=height:150px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:2rem>📦</div>\'"><div class="p-card-body"><div class="p-card-name">'+esc(p.name)+'</div><div class="p-card-price">'+price+'</div><div class="p-card-meta"><span class="p-card-tag" style="background:'+c+';color:#fff">'+(p.platform||'')+'</span>'+(p.rating?'<span>⭐'+p.rating+'</span>':'')+'</div></div></div>';
+            }).join('');
+
+            document.getElementById('tableBody').innerHTML=allProducts.map(function(p){
+                var price='₩'+(p.price||0).toLocaleString();
+                return'<tr onclick="'+(p.url?"window.open('"+p.url.replace(/'/g,'')+"')":"")+'"><td>'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📦\'">':'📦')+'</td><td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(p.name)+'</td><td style="font-weight:700;color:#e42528">'+price+'</td><td>'+(p.platform||'')+'</td><td>'+(p.url?'<a href="'+p.url+'" target="_blank" onclick="event.stopPropagation()" style="color:#3b82f6;font-size:.7rem">보기</a>':'')+'</td></tr>';
+            }).join('');
+
+            localStorage.setItem('scraperProducts',JSON.stringify(allProducts));
+        }
+
+        function setView(v,btn){
+            document.getElementById('gridView').style.display=v==='grid'?'grid':'none';
+            document.getElementById('tableView').style.display=v==='table'?'table':'none';
+            document.querySelectorAll('.v-btn').forEach(function(b){b.classList.remove('active')});
+            if(btn)btn.classList.add('active');
+        }
+
+        async function saveToDb(){
+            if(!allProducts.length){addLog('저장할 데이터 없음');return}
+            addLog('💾 Supabase DB 저장중...');
+            try{
+                await DB.saveProducts(allProducts);
+                addLog('✅ DB 저장 완료: '+allProducts.length+'개');
+                alert('DB 저장 완료: '+allProducts.length+'개 상품');
+            }catch(e){addLog('⚠ DB 저장 실패: '+e.message)}
+        }
+
+        function exportResults(format){
+            if(!allProducts.length)return;
+            var blob,fn;
+            if(format==='json'){
+                blob=new Blob([JSON.stringify(allProducts,null,2)],{type:'application/json'});
+                fn='scraper-'+Date.now()+'.json';
+            }else{
+                var csv='상품명,가격,플랫폼,URL,평점,리뷰\n';
+                allProducts.forEach(function(p){csv+='"'+(p.name||'')+'",'+p.price+',"'+(p.platform||'')+'","'+(p.url||'')+'",'+p.rating+','+(p.reviewCount||0)+'\n'});
+                blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
+                fn='scraper-'+Date.now()+'.csv';
+            }
+            var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fn;a.click();
+        }
+
+        function addLog(m){var l=document.getElementById('scrapeLog');l.innerHTML+='['+new Date().toLocaleTimeString('ko-KR')+'] '+m+'<br>';l.scrollTop=l.scrollHeight}
+        function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+        document.addEventListener('DOMContentLoaded',function(){
+            var saved=JSON.parse(localStorage.getItem('scraperProducts')||'null');
+            if(saved&&saved.length){allProducts=saved;renderResults()}
+            var mb=document.getElementById('mobileMenuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('sidebarOverlay');
+            if(mb)mb.onclick=function(){sb.classList.toggle('open');ov.classList.toggle('active')};
+            if(ov)ov.onclick=function(){sb.classList.remove('open');ov.classList.remove('active')};
+        });
+    </script>
+</body>
+</html>
