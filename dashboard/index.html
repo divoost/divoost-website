@@ -145,143 +145,75 @@
 
         var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
 
-        async function scrapePage(targetUrl){
-            var cc=targetUrl.indexOf('1688.com')>-1?'cn':'kr';
-            var proxyUrl='https://api.scraperapi.com?api_key='+SCRAPER_KEY+'&url='+encodeURIComponent(targetUrl)+'&render=true&country_code='+cc+'&device_type=desktop';
-            var r=await fetch(proxyUrl);
+        async function searchProducts(keyword, country){
+            var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(keyword)+'&country='+(country||'kr')+'&num=20';
+            var r=await fetch(url);
             if(!r.ok)throw new Error('status '+r.status);
-            return r.text();
-        }
-
-        function parseCoupang(html){
-            var products=[];
-            // Try multiple product container patterns
-            var patterns=[
-                /<li[^>]*class="[^"]*search-product[^"]*"[^>]*>[\s\S]*?<\/li>/gi,
-                /<div[^>]*class="[^"]*product-card[^"]*"[^>]*>[\s\S]*?<\/div>\s*<\/div>/gi,
-                /<a[^>]*class="[^"]*baby-product[^"]*"[^>]*>[\s\S]*?<\/a>/gi
-            ];
-            var matches=[];
-            for(var pi=0;pi<patterns.length;pi++){
-                matches=html.match(patterns[pi])||[];
-                if(matches.length>0)break;
-            }
-            for(var i=0;i<Math.min(matches.length,20);i++){
-                var item=matches[i];
-                var nm=item.match(/class="[^"]*name[^"]*"[^>]*>([\s\S]*?)<\//)||item.match(/class="[^"]*title[^"]*"[^>]*>([\s\S]*?)<\//);
-                var pr=item.match(/class="[^"]*price-value[^"]*"[^>]*>([\s\S]*?)<\//)||item.match(/class="[^"]*price[^"]*"[^>]*>([\d,]+)</);
-                var rv=item.match(/class="[^"]*rating-total-count[^"]*"[^>]*>\(?([\d,]+)\)?<\//)||item.match(/class="[^"]*count[^"]*"[^>]*>\(?([\d,]+)\)?<\//);
-                var im=item.match(/src="(https?:\/\/[^"]*(?:thumbnail|product|image)[^"]*)"/i)||item.match(/data-img-src="([^"]*)"/);
-                var lk=item.match(/href="(\/vp\/products\/\d+[^"]*)"/)||item.match(/href="(https?:\/\/www\.coupang\.com\/vp\/products\/[^"]*)"/);
-                if(nm){
-                    var name=(nm[1]||nm[2]||'').replace(/<[^>]*>/g,'').trim();
-                    if(name.length>2)products.push({name:name,price:pr?parseInt((pr[1]||pr[2]||'0').replace(/[^\d]/g,''))||0:0,reviewCount:rv?parseInt((rv[1]||rv[2]||'0').replace(/[^\d]/g,''))||0:0,image:im?im[1]:'',url:lk?((lk[1].indexOf('http')===0?'':'https://www.coupang.com')+lk[1]):'',isRocket:!!item.match(/rocket/i),platform:'쿠팡',source:'proxy'});
-                }
-            }
-            // Fallback: extract from JSON-LD or meta tags
-            if(products.length===0){
-                var jsonLd=html.match(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/gi)||[];
-                for(var ji=0;ji<jsonLd.length;ji++){
-                    try{var ld=JSON.parse(jsonLd[ji].replace(/<[^>]*>/g,''));if(ld.itemListElement){ld.itemListElement.forEach(function(it){if(it.name)products.push({name:it.name,price:parseInt(it.offers&&it.offers.price)||0,url:it.url||'',platform:'쿠팡',source:'proxy'})})}}catch(e){}
-                }
-            }
-            return products;
-        }
-
-        function parse1688(html){
-            var products=[];
-            // Try multiple data patterns
-            var patterns=[
-                /var\s+__INIT_DATA\s*=\s*({[\s\S]*?});?\s*<\/script>/,
-                /window\.__INIT_DATA__?\s*=\s*({[\s\S]*?});?\s*<\/script>/,
-                /"offerList"\s*:\s*\[([\s\S]*?)\]\s*[,}]/
-            ];
-            for(var pi=0;pi<patterns.length;pi++){
-                var jm=html.match(patterns[pi]);
-                if(jm){
-                    try{
-                        var data=pi===2?JSON.parse('['+jm[1]+']'):JSON.parse(jm[1]);
-                        var ol=pi===2?data:(data.data&&data.data.offerList)||(data.offerList)||[];
-                        for(var i=0;i<Math.min(ol.length,20);i++){
-                            var it=ol[i];
-                            var ps=(it.tradePrice&&it.tradePrice.offerPrice&&it.tradePrice.offerPrice.valueString)||(it.price)||'0';
-                            var nm=(it.information&&it.information.subject)||(it.subject)||(it.title)||'';
-                            if(nm)products.push({name:nm,price:ps,priceKRW:Math.round(parseFloat(ps)*190.5),image:(it.image&&it.image.imgUrl)||(it.imgUrl)||'',url:'https://detail.1688.com/offer/'+(it.id||it.offerId||'')+'.html',tradeQuantity:(it.tradeQuantity&&it.tradeQuantity.number)||(it.quantityBegin)||0,platform:'1688',source:'proxy'});
-                        }
-                        if(products.length>0)break;
-                    }catch(e){}
-                }
-            }
-            // Fallback: extract from HTML tags
-            if(products.length===0){
-                var titleR=/<a[^>]*href="[^"]*detail\.1688\.com\/offer\/(\d+)[^"]*"[^>]*>([^<]{3,})<\/a>/gi;
-                var priceR=/<span[^>]*class="[^"]*price[^"]*"[^>]*>([\d.]+)<\/span>/gi;
-                var m,cnt=0;
-                while((m=titleR.exec(html))!==null&&cnt<20){
-                    products.push({name:m[2].trim(),price:'0',url:'https://detail.1688.com/offer/'+m[1]+'.html',platform:'1688',source:'proxy'});
-                    cnt++;
-                }
-            }
-            // Fallback 2: extract titles from any product-like elements
-            if(products.length===0){
-                var altR=/title="([^"]{5,80})"[^>]*href="[^"]*1688[^"]*"/gi;
-                var m2,cnt2=0;
-                while((m2=altR.exec(html))!==null&&cnt2<20){
-                    products.push({name:m2[1].trim(),price:'0',platform:'1688',source:'proxy'});
-                    cnt2++;
-                }
-            }
-            return products;
+            return r.json();
         }
 
         async function runCrawl(){
             var btn=document.querySelector('.btn-crawl');btn.disabled=true;btn.innerHTML='🕷 <span>수집중...</span>';
-            addLog('ScraperAPI 프록시로 수집 시작');
+            addLog('Google Shopping API로 수집 시작');
             var results={coupang:0,alibaba:0,products:[],timestamp:new Date().toISOString()};
 
             var dotC=document.getElementById('dot-coupang');if(dotC)dotC.className='status-dot working';
             setText('st-coupang-mode','수집중...');
-            var cpKW=['블루투스 이어폰','실리콘 주방용품','LED 무드등'];
+            var cpKW=['블루투스 이어폰 쿠팡','실리콘 주방용품','LED 무드등'];
             for(var ki=0;ki<cpKW.length;ki++){
                 var kw=cpKW[ki];
                 if(ki>0)await new Promise(function(r){setTimeout(r,2000)});
                 try{
-                    addLog('쿠팡 "'+kw+'" 프록시 수집... ('+(ki+1)+'/'+cpKW.length+')');
-                    var html=await scrapePage('https://www.coupang.com/np/search?component=&q='+encodeURIComponent(kw)+'&channel=user');
-                    addLog('  응답: '+html.length+'자, search-product: '+(html.match(/search-product/g)||[]).length+'개');
-                    addLog('  HTML미리보기: '+html.substring(0,200).replace(/</g,'&lt;'));
-                    localStorage.setItem('debug_coupang_html',html.substring(0,5000));
-                    var prods=parseCoupang(html);
-                    results.coupang+=prods.length;
-                    results.products=results.products.concat(prods);
-                    addLog('  ✓ 쿠팡 "'+kw+'" → '+prods.length+'개');
-                }catch(e){addLog('  ✗ 쿠팡 "'+kw+'" → '+e.message);break}
+                    addLog('한국 "'+kw+'" 검색... ('+(ki+1)+'/'+cpKW.length+')');
+                    var data=await searchProducts(kw,'kr');
+                    var items=(data.shopping_results||data.results||[]);
+                    addLog('  응답: '+items.length+'개 상품');
+                    for(var j=0;j<items.length;j++){
+                        var it=items[j];
+                        var platform='쿠팡';
+                        if(it.source){
+                            if(it.source.indexOf('쿠팡')>-1||it.source.indexOf('Coupang')>-1)platform='쿠팡';
+                            else if(it.source.indexOf('지마켓')>-1||it.source.indexOf('Gmarket')>-1)platform='지마켓';
+                            else if(it.source.indexOf('네이버')>-1||it.source.indexOf('Naver')>-1)platform='네이버';
+                            else if(it.source.indexOf('11번가')>-1)platform='11번가';
+                            else platform=it.source;
+                        }
+                        var price=it.extracted_price||it.price||0;
+                        if(typeof price==='string')price=parseInt(price.replace(/[^\d]/g,''))||0;
+                        results.products.push({name:it.title||'',price:price,image:it.thumbnail||'',url:it.link||'',platform:platform,rating:it.rating||0,reviewCount:it.reviews||0,source:'google'});
+                        if(platform==='쿠팡')results.coupang++;
+                    }
+                    addLog('  ✓ "'+kw+'" → '+items.length+'개 (쿠팡 '+results.coupang+'개)');
+                }catch(e){addLog('  ✗ "'+kw+'" → '+e.message);break}
             }
             if(dotC)dotC.className='status-dot '+(results.coupang>0?'online':'error');
             setText('st-coupang-mode',results.coupang>0?results.coupang+'개':'실패');
-            addLog('쿠팡 완료: '+results.coupang+'개');
+            addLog('한국 마켓 완료: '+results.products.length+'개');
 
             var dot1=document.getElementById('dot-1688');if(dot1)dot1.className='status-dot working';
             setText('st-1688-mode','수집중...');
-            var a1KW=['蓝牙耳机','硅胶厨具','LED氛围灯'];
+            var a1KW=['bluetooth earphone 1688','silicone kitchen 1688','LED light 1688'];
             for(var ai=0;ai<a1KW.length;ai++){
                 var kw2=a1KW[ai];
                 if(ai>0)await new Promise(function(r){setTimeout(r,2000)});
                 try{
-                    addLog('1688 "'+kw2+'" 프록시 수집... ('+(ai+1)+'/'+a1KW.length+')');
-                    var html2=await scrapePage('https://s.1688.com/selloffer/offer_search.htm?keywords='+encodeURIComponent(kw2));
-                    addLog('  응답: '+html2.length+'자, INIT_DATA: '+(html2.indexOf('__INIT_DATA')>-1?'있음':'없음'));
-                    addLog('  HTML미리보기: '+html2.substring(0,200).replace(/</g,'&lt;'));
-                    localStorage.setItem('debug_1688_html',html2.substring(0,5000));
-                    var prods2=parse1688(html2);
-                    results.alibaba+=prods2.length;
-                    results.products=results.products.concat(prods2);
-                    addLog('  ✓ 1688 "'+kw2+'" → '+prods2.length+'개');
-                }catch(e2){addLog('  ✗ 1688 "'+kw2+'" → '+e2.message);break}
+                    addLog('중국 "'+kw2+'" 검색... ('+(ai+1)+'/'+a1KW.length+')');
+                    var data2=await searchProducts(kw2,'cn');
+                    var items2=(data2.shopping_results||data2.results||[]);
+                    addLog('  응답: '+items2.length+'개 상품');
+                    for(var j2=0;j2<items2.length;j2++){
+                        var it2=items2[j2];
+                        var price2=it2.extracted_price||it2.price||0;
+                        if(typeof price2==='string')price2=parseFloat(price2.replace(/[^\d.]/g,''))||0;
+                        results.products.push({name:it2.title||'',price:price2,image:it2.thumbnail||'',url:it2.link||'',platform:'1688',source:'google'});
+                        results.alibaba++;
+                    }
+                    addLog('  ✓ "'+kw2+'" → '+items2.length+'개');
+                }catch(e2){addLog('  ✗ "'+kw2+'" → '+e2.message);break}
             }
             if(dot1)dot1.className='status-dot '+(results.alibaba>0?'online':'offline');
             setText('st-1688-mode',results.alibaba>0?results.alibaba+'개':'실패');
-            addLog('1688 완료: '+results.alibaba+'개');
+            addLog('중국 마켓 완료: '+results.alibaba+'개');
 
             localStorage.setItem('crawlResults2',JSON.stringify(results));crawlResults=results;loadCrawlData(results);
             document.getElementById('lastUpdated').textContent=new Date().toLocaleString('ko-KR');
