@@ -147,7 +147,7 @@
 
         async function scrapePage(targetUrl){
             var cc=targetUrl.indexOf('1688.com')>-1?'cn':'kr';
-            var proxyUrl='https://api.scraperapi.com?api_key='+SCRAPER_KEY+'&url='+encodeURIComponent(targetUrl)+'&render=true&country_code='+cc;
+            var proxyUrl='https://api.scraperapi.com?api_key='+SCRAPER_KEY+'&url='+encodeURIComponent(targetUrl)+'&render=true&country_code='+cc+'&device_type=desktop';
             var r=await fetch(proxyUrl);
             if(!r.ok)throw new Error('status '+r.status);
             return r.text();
