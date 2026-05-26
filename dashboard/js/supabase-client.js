@@ -1,5 +1,5 @@
-var SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-var SUPABASE_KEY = 'YOUR_ANON_KEY';
+var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
 
 var DB = {
   headers: function() {
@@ -44,7 +44,6 @@ var DB = {
     return r.json();
   },
 
-  // 상품 관련
   async getProducts(opts) {
     opts = opts || {};
     var params = 'order=scraped_at.desc&limit=' + (opts.limit || 100);
@@ -83,60 +82,28 @@ var DB = {
   },
 
   async logCrawl(platform, keyword, count, status, error) {
-    return this.insert('crawl_logs', {
-      platform: platform,
-      keyword: keyword,
-      product_count: count,
-      status: status || 'success',
-      error_message: error || null
-    });
+    return this.insert('crawl_logs', { platform: platform, keyword: keyword, product_count: count, status: status || 'success', error_message: error || null });
   },
 
   async updatePlatformStats(platform, totalProducts, avgPrice) {
-    return this.upsert('platform_stats', {
-      platform: platform,
-      total_products: totalProducts,
-      avg_price: avgPrice,
-      date: new Date().toISOString().slice(0, 10)
-    });
+    return this.upsert('platform_stats', { platform: platform, total_products: totalProducts, avg_price: avgPrice, date: new Date().toISOString().slice(0, 10) });
   },
 
-  // 소싱 아이템 CRUD
   async getSourcingItems(opts) {
     opts = opts || {};
     var params = 'order=created_at.desc&limit=' + (opts.limit || 100);
     if (opts.dateFrom) params += '&date=gte.' + opts.dateFrom;
     if (opts.dateTo) params += '&date=lte.' + opts.dateTo;
     if (opts.platform) params += '&source_platform=eq.' + encodeURIComponent(opts.platform);
-    if (opts.category) params += '&category=eq.' + encodeURIComponent(opts.category);
     return this.query('sourcing_items', params);
   },
 
-  async saveSourcingItem(item) {
-    return this.insert('sourcing_items', item);
-  },
+  async saveSourcingItem(item) { return this.insert('sourcing_items', item); },
+  async updateSourcingItem(id, item) { item.updated_at = new Date().toISOString(); return this.update('sourcing_items', id, item); },
+  async deleteSourcingItem(id) { return this.remove('sourcing_items', id); },
 
-  async updateSourcingItem(id, item) {
-    item.updated_at = new Date().toISOString();
-    return this.update('sourcing_items', id, item);
-  },
+  async getStats(days) { days = days || 7; var since = new Date(Date.now() - days * 86400000).toISOString().slice(0, 10); return this.query('platform_stats', 'date=gte.' + since + '&order=date.desc'); },
+  async getCrawlHistory(limit) { return this.query('crawl_logs', 'order=crawled_at.desc&limit=' + (limit || 50)); },
 
-  async deleteSourcingItem(id) {
-    return this.remove('sourcing_items', id);
-  },
-
-  // 통계
-  async getStats(days) {
-    days = days || 7;
-    var since = new Date(Date.now() - days * 86400000).toISOString().slice(0, 10);
-    return this.query('platform_stats', 'date=gte.' + since + '&order=date.desc');
-  },
-
-  async getCrawlHistory(limit) {
-    return this.query('crawl_logs', 'order=crawled_at.desc&limit=' + (limit || 50));
-  },
-
-  isConfigured: function() {
-    return SUPABASE_URL.indexOf('YOUR_PROJECT') === -1 && SUPABASE_KEY.indexOf('YOUR_ANON') === -1;
-  }
+  isConfigured: function() { return true; }
 };
