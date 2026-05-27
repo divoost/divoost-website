@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>키워드 분석 | 소싱 트래커</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/mobile-fix.css">
+    <style>
+        .kw-search{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:14px;padding:24px;margin-bottom:20px;text-align:center}
+        .kw-search h1{font-size:1.3rem;color:#e2e8f0;margin-bottom:8px}
+        .kw-search p{font-size:.82rem;color:#94a3b8;margin-bottom:16px}
+        .kw-input-wrap{display:flex;gap:8px;max-width:500px;margin:0 auto}
+        .kw-input{flex:1;padding:12px 16px;border-radius:10px;border:2px solid #334155;background:#0f172a;color:#e2e8f0;font-size:.9rem}
+        .kw-input:focus{border-color:#3b82f6;outline:none}
+        .kw-btn{padding:12px 24px;border-radius:10px;border:none;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer}
+        .score-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
+        .score-header{display:flex;align-items:center;gap:16px;margin-bottom:16px}
+        .score-circle-lg{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:800;color:#fff;flex-shrink:0}
+        .score-info h2{font-size:1.1rem;margin-bottom:4px}
+        .score-info p{font-size:.82rem;color:#64748b}
+        .score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+        .score-item{background:#f8fafc;border-radius:10px;padding:14px;text-align:center;border:1px solid #e2e8f0}
+        .score-item-val{font-size:1.4rem;font-weight:800}
+        .score-item-label{font-size:.7rem;color:#94a3b8;margin-top:4px}
+        .score-item-bar{height:4px;border-radius:2px;margin-top:6px;background:#e2e8f0}
+        .score-item-fill{height:100%;border-radius:2px}
+        .grade-badge{display:inline-block;padding:4px 12px;border-radius:6px;font-size:.8rem;font-weight:700;margin-left:8px}
+        .grade-strong{background:#dcfce7;color:#16a34a}
+        .grade-buy{background:#dbeafe;color:#2563eb}
+        .grade-hold{background:#fef3c7;color:#d97706}
+        .grade-pass{background:#fee2e2;color:#dc2626}
+        .related-kw{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
+        .related-tag{padding:4px 12px;border-radius:16px;background:#f1f5f9;font-size:.75rem;cursor:pointer;border:1px solid #e2e8f0}
+        .related-tag:hover{border-color:#3b82f6;color:#3b82f6}
+        .kw-history{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden}
+        .kw-history-item{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #f1f5f9;cursor:pointer}
+        .kw-history-item:hover{background:#f8fafc}
+        .kw-history-item:last-child{border:none}
+        @media(max-width:768px){.score-grid{grid-template-columns:repeat(3,1fr)}.kw-input-wrap{flex-direction:column}}
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="sidebar-logo-icon">ST</div><div class="sidebar-logo-text">소싱 트래커<small>MULTI-CHANNEL</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section"><div class="sidebar-section-title">대시보드</div><a href="index.html" class="sidebar-link"><span class="sidebar-link-icon">📊</span> 종합 현황</a><a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품</a><a href="trends.html" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a><a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a><a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 &amp; 리뷰</a><a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a></div>
+                <div class="sidebar-section"><div class="sidebar-section-title">AI &amp; 도구</div><a href="ai-sourcing.html" class="sidebar-link"><span class="sidebar-link-icon">🤖</span> AI 소싱</a><a href="keyword-analysis.html" class="sidebar-link active"><span class="sidebar-link-icon">🔑</span> 키워드 분석</a><a href="listing.html" class="sidebar-link"><span class="sidebar-link-icon">📤</span> 자동 등록</a><a href="scraper.html" class="sidebar-link"><span class="sidebar-link-icon">🕷</span> 스크래퍼</a><a href="db-view.html" class="sidebar-link"><span class="sidebar-link-icon">💾</span> DB 데이터</a><a href="live-search.html" class="sidebar-link"><span class="sidebar-link-icon">🔴</span> 실시간 검색</a><a href="admin.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a></div>
+                <div class="sidebar-section"><div class="sidebar-section-title">바로가기</div><a href="../sns-platform/index.html" class="sidebar-link"><span class="sidebar-link-icon">📱</span> SNS 플랫폼</a><a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span> 메인 홈</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">🔑 키워드 블루오션 분석</div><div class="top-bar-date">수요·경쟁·진입장벽·배송·가격 5요소 분석</div></div></div></header>
+            <div class="content-area">
+                <div class="kw-search">
+                    <h1>🔑 키워드 블루오션 분석</h1>
+                    <p>키워드를 입력하면 수요, 경쟁강도, 진입장벽, 배송유형, 가격매력도를 분석합니다</p>
+                    <div class="kw-input-wrap">
+                        <input type="text" class="kw-input" id="kwInput" placeholder="분석할 키워드 입력 (예: 블루투스 이어폰)" onkeydown="if(event.key==='Enter')analyzeKeyword()">
+                        <button class="kw-btn" onclick="analyzeKeyword()">🔍 분석</button>
+                    </div>
+                </div>
+                <div id="resultArea"></div>
+                <div style="margin-top:20px">
+                    <div class="section-divider" style="font-size:.9rem;font-weight:700;margin-bottom:10px">📜 분석 이력</div>
+                    <div class="kw-history" id="kwHistory"><div style="text-align:center;color:#94a3b8;padding:20px">분석 이력이 없습니다</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('mobileMenuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
+        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
+
+        async function analyzeKeyword(){
+            var kw=document.getElementById('kwInput').value.trim();
+            if(!kw)return;
+            document.getElementById('resultArea').innerHTML='<div style="text-align:center;padding:40px;color:#94a3b8"><div style="font-size:2rem;margin-bottom:8px">🔍</div>"'+kw+'" 분석 중...</div>';
+
+            try{
+                var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(kw)+'&country=kr&num=20';
+                var r=await fetch(url);var data=await r.json();
+                var items=data.shopping_results||[];
+
+                // 5요소 분석
+                var demand=Math.min(items.length*5,100); // 수요 (상품 수 기반)
+                var avgPrice=items.length>0?items.reduce(function(s,i){var p=i.extracted_price||0;return s+(typeof p==='string'?parseInt(p.replace(/[^\d]/g,''))||0:p)},0)/items.length:0;
+                var competition=items.length>15?30:items.length>10?50:items.length>5?70:90; // 경쟁 (적을수록 높은 점수)
+                var barrier=avgPrice>50000?40:avgPrice>20000?60:avgPrice>10000?75:90; // 진입장벽 (가격 낮을수록 진입 쉬움)
+                var shipping=items.filter(function(i){return i.delivery&&i.delivery.indexOf('무료')>-1||i.delivery&&i.delivery.indexOf('free')>-1}).length;
+                var shippingScore=shipping>items.length/2?60:80; // 무료배송 비율
+                var priceAttract=avgPrice>0&&avgPrice<30000?85:avgPrice<50000?65:45; // 가격 매력도
+
+                var total=Math.round(demand*0.25+competition*0.25+barrier*0.2+shippingScore*0.15+priceAttract*0.15);
+                var grade=total>=75?'STRONG BUY':total>=60?'BUY':total>=45?'HOLD':'PASS';
+                var gradeClass=total>=75?'grade-strong':total>=60?'grade-buy':total>=45?'grade-hold':'grade-pass';
+                var scoreColor=total>=75?'#10b981':total>=60?'#3b82f6':total>=45?'#f59e0b':'#ef4444';
+
+                var related=data.related_searches||[];
+
+                var html='<div class="score-card"><div class="score-header"><div class="score-circle-lg" style="background:'+scoreColor+'">'+total+'</div><div class="score-info"><h2>'+kw+' <span class="grade-badge '+gradeClass+'">'+grade+'</span></h2><p>총 '+items.length+'개 상품 발견 · 평균가 ₩'+Math.round(avgPrice).toLocaleString()+'</p></div></div>';
+                html+='<div class="score-grid">';
+                html+='<div class="score-item"><div class="score-item-val" style="color:'+(demand>=70?'#10b981':'#f59e0b')+'">'+demand+'</div><div class="score-item-label">수요</div><div class="score-item-bar"><div class="score-item-fill" style="width:'+demand+'%;background:'+(demand>=70?'#10b981':'#f59e0b')+'"></div></div></div>';
+                html+='<div class="score-item"><div class="score-item-val" style="color:'+(competition>=70?'#10b981':'#ef4444')+'">'+competition+'</div><div class="score-item-label">경쟁 여유</div><div class="score-item-bar"><div class="score-item-fill" style="width:'+competition+'%;background:'+(competition>=70?'#10b981':'#ef4444')+'"></div></div></div>';
+                html+='<div class="score-item"><div class="score-item-val" style="color:'+(barrier>=70?'#10b981':'#f59e0b')+'">'+barrier+'</div><div class="score-item-label">진입 용이</div><div class="score-item-bar"><div class="score-item-fill" style="width:'+barrier+'%;background:'+(barrier>=70?'#10b981':'#f59e0b')+'"></div></div></div>';
+                html+='<div class="score-item"><div class="score-item-val" style="color:'+(shippingScore>=70?'#10b981':'#f59e0b')+'">'+shippingScore+'</div><div class="score-item-label">배송 유리</div><div class="score-item-bar"><div class="score-item-fill" style="width:'+shippingScore+'%;background:'+(shippingScore>=70?'#10b981':'#f59e0b')+'"></div></div></div>';
+                html+='<div class="score-item"><div class="score-item-val" style="color:'+(priceAttract>=70?'#10b981':'#f59e0b')+'">'+priceAttract+'</div><div class="score-item-label">가격 매력</div><div class="score-item-bar"><div class="score-item-fill" style="width:'+priceAttract+'%;background:'+(priceAttract>=70?'#10b981':'#f59e0b')+'"></div></div></div>';
+                html+='</div>';
+
+                if(related.length>0){
+                    html+='<div style="font-size:.85rem;font-weight:600;margin-bottom:6px">🔗 연관 키워드</div><div class="related-kw">';
+                    related.forEach(function(r){html+='<span class="related-tag" onclick="document.getElementById(\'kwInput\').value=\''+r.query+'\';analyzeKeyword()">'+r.query+'</span>'});
+                    html+='</div>';
+                }
+
+                if(items.length>0){
+                    html+='<div style="font-size:.85rem;font-weight:600;margin:16px 0 8px">🏆 TOP 상품</div>';
+                    items.slice(0,5).forEach(function(it,i){
+                        var price=it.extracted_price||0;if(typeof price==='string')price=parseInt(price.replace(/[^\d]/g,''))||0;
+                        html+='<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f1f5f9;cursor:pointer" onclick="window.open(\''+((it.link||'').replace(/'/g,'%27'))+'\')">'+(it.thumbnail?'<img src="'+it.thumbnail+'" style="width:44px;height:44px;object-fit:cover;border-radius:6px" onerror="this.style.display=\'none\'">':'')+'<div style="flex:1;min-width:0"><div style="font-size:.8rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(i+1)+'. '+(it.title||'')+'</div><div style="font-size:.82rem;color:#e42528;font-weight:700">₩'+price.toLocaleString()+' <span style="font-size:.68rem;color:#94a3b8">'+(it.source||'')+'</span></div></div></div>';
+                    });
+                }
+                html+='</div>';
+                document.getElementById('resultArea').innerHTML=html;
+
+                // Save history
+                var history=JSON.parse(localStorage.getItem('kwHistory')||'[]');
+                history.unshift({keyword:kw,score:total,grade:grade,products:items.length,avgPrice:Math.round(avgPrice),date:new Date().toISOString().slice(0,10)});
+                if(history.length>20)history=history.slice(0,20);
+                localStorage.setItem('kwHistory',JSON.stringify(history));
+                renderHistory();
+
+            }catch(e){
+                document.getElementById('resultArea').innerHTML='<div style="text-align:center;color:#ef4444;padding:20px">분석 실패: '+e.message+'</div>';
+            }
+        }
+
+        function renderHistory(){
+            var history=JSON.parse(localStorage.getItem('kwHistory')||'[]');
+            if(history.length===0){document.getElementById('kwHistory').innerHTML='<div style="text-align:center;color:#94a3b8;padding:20px">분석 이력이 없습니다</div>';return}
+            document.getElementById('kwHistory').innerHTML=history.map(function(h){
+                var gradeClass=h.score>=75?'grade-strong':h.score>=60?'grade-buy':h.score>=45?'grade-hold':'grade-pass';
+                return '<div class="kw-history-item" onclick="document.getElementById(\'kwInput\').value=\''+h.keyword+'\';analyzeKeyword()"><div><span style="font-weight:600">'+h.keyword+'</span> <span class="grade-badge '+gradeClass+'" style="font-size:.65rem">'+h.grade+' '+h.score+'점</span></div><div style="font-size:.72rem;color:#94a3b8">'+h.products+'개 상품 · ₩'+h.avgPrice.toLocaleString()+' · '+h.date+'</div></div>';
+            }).join('');
+        }
+
+        renderHistory();
+    </script>
+</body>
+</html>
