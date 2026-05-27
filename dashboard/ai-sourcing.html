@@ -200,7 +200,7 @@
                 var platColors={'쿠팡':'#E42528','무신사':'#000','지마켓':'#00A651','네이버':'#03C75A','1688':'#FF6A00','Shopee':'#EE4D2D','Lazada':'#0F146D','TikTok Shop':'#000','SHEIN':'#000','Amazon':'#FF9900','테무':'#F05A28','11번가':'#FF0000','ssg.com':'#FF5A00'};
                 var pc=platColors[p.platform]||'#3b82f6';
                 html+='<div class="result-card" data-score="'+p.ai.total+'" data-grade="'+p.ai.grade+'">'+
-                    '<img class="result-img" src="'+(p.image||'')+'" onclick="window.open(\''+safeUrl+'\')" onerror="this.style.background=\'#f1f5f9\';this.outerHTML=\'<div class=result-img style=display:flex;align-items:center;justify-content:center;font-size:2rem>📦</div>\'">'+
+                    '<img class="result-img" src="'+(p.image||'')+'" onclick="window.open(\''+safeUrl+'\')" onerror="this.outerHTML=\'<div class=&quot;result-img&quot; style=&quot;display:flex;align-items:center;justify-content:center;font-size:2rem;background:#f1f5f9&quot;>📦</div>\'">'+
                     '<div class="result-info">'+
                     '<div class="result-name" onclick="window.open(\''+safeUrl+'\')" style="cursor:pointer">'+(i+1)+'. '+escH(p.name)+'</div>'+
                     '<div class="result-price">'+priceStr+'</div>'+

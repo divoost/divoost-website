@@ -183,7 +183,7 @@
                 var price='₩'+(p.price||0).toLocaleString();
                 var platColors={'쿠팡':'#E42528','1688':'#FF6A00','네이버':'#03C75A','Shopee':'#EE4D2D','Lazada':'#0F146D','TikTok':'#000','지마켓':'#00A651'};
                 var c=platColors[p.platform]||'#3b82f6';
-                return'<div class="p-card" onclick="'+(p.url?"window.open('"+p.url.replace(/'/g,'')+"')":"")+'"><img src="'+(p.image||'')+'" onerror="this.outerHTML=\'<div style=height:150px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:2rem>📦</div>\'"><div class="p-card-body"><div class="p-card-name">'+esc(p.name)+'</div><div class="p-card-price">'+price+'</div><div class="p-card-meta"><span class="p-card-tag" style="background:'+c+';color:#fff">'+(p.platform||'')+'</span>'+(p.rating?'<span>⭐'+p.rating+'</span>':'')+'</div></div></div>';
+                return'<div class="p-card" onclick="'+(p.url?"window.open('"+p.url.replace(/'/g,'')+"')":"")+'"><img src="'+(p.image||'')+'" onerror="this.outerHTML=\'<div style=&quot;height:150px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:2rem&quot;>📦</div>\'"><div class="p-card-body"><div class="p-card-name">'+esc(p.name)+'</div><div class="p-card-price">'+price+'</div><div class="p-card-meta"><span class="p-card-tag" style="background:'+c+';color:#fff">'+(p.platform||'')+'</span>'+(p.rating?'<span>⭐'+p.rating+'</span>':'')+'</div></div></div>';
             }).join('');
 
             document.getElementById('tableBody').innerHTML=allProducts.map(function(p){
