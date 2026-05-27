@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>소셜 리스닝 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .listen-box{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:14px;padding:24px;margin-bottom:20px;text-align:center}
+        .listen-box h1{font-size:1.3rem;color:#e2e8f0;margin-bottom:6px}
+        .listen-box p{font-size:.82rem;color:#94a3b8;margin-bottom:16px}
+        .listen-input-wrap{display:flex;gap:8px;max-width:500px;margin:0 auto}
+        .listen-input{flex:1;padding:12px 16px;border-radius:10px;border:2px solid #334155;background:#0f172a;color:#e2e8f0;font-size:.9rem}
+        .listen-btn{padding:12px 20px;border-radius:10px;border:none;background:#8b5cf6;color:#fff;font-weight:700;cursor:pointer}
+        .mention-card{background:#fff;border-radius:10px;border:1px solid #e2e8f0;padding:14px;margin-bottom:10px}
+        .mention-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+        .mention-source{font-size:.7rem;padding:2px 8px;border-radius:4px;font-weight:600}
+        .mention-date{font-size:.7rem;color:#94a3b8;margin-left:auto}
+        .mention-text{font-size:.82rem;line-height:1.6;color:#334155}
+        .mention-sentiment{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.68rem;font-weight:600;margin-top:6px}
+        .sent-positive{background:#dcfce7;color:#16a34a}
+        .sent-negative{background:#fee2e2;color:#dc2626}
+        .sent-neutral{background:#f1f5f9;color:#64748b}
+        .kw-tags{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+        .kw-tag{padding:4px 12px;border-radius:16px;background:#f1f5f9;font-size:.72rem;cursor:pointer;border:1px solid #e2e8f0}
+        .kw-tag:hover{border-color:#8b5cf6;color:#8b5cf6}
+        .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+        .stat-box{background:#fff;border-radius:10px;padding:14px;text-align:center;border:1px solid #e2e8f0}
+        .stat-box .val{font-size:1.3rem;font-weight:800}
+        .stat-box .lbl{font-size:.7rem;color:#94a3b8;margin-top:2px}
+        @media(max-width:768px){.stats-row{grid-template-columns:1fr 1fr}.listen-input-wrap{flex-direction:column}}
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a><a href="listening.html" class="nav-link active"><span>👂</span> 소셜 리스닝</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">👂 소셜 리스닝</div><div class="top-bar-sub">브랜드/키워드 언급 실시간 모니터링</div></div></div></header>
+            <div class="content">
+                <div class="listen-box">
+                    <h1>👂 소셜 리스닝</h1>
+                    <p>브랜드명 또는 키워드를 입력하면 SNS에서의 언급을 모니터링합니다</p>
+                    <div class="listen-input-wrap">
+                        <input type="text" class="listen-input" id="listenInput" placeholder="모니터링할 키워드 (예: DIVOOST)" onkeydown="if(event.key==='Enter')startListening()">
+                        <button class="listen-btn" onclick="startListening()">👂 모니터링</button>
+                    </div>
+                    <div class="kw-tags" id="savedKeywords"></div>
+                </div>
+                <div id="listenStats" style="display:none">
+                    <div class="stats-row">
+                        <div class="stat-box"><div class="val" id="totalMentions">0</div><div class="lbl">총 언급</div></div>
+                        <div class="stat-box"><div class="val" style="color:#16a34a" id="positivePct">0%</div><div class="lbl">긍정</div></div>
+                        <div class="stat-box"><div class="val" style="color:#dc2626" id="negativePct">0%</div><div class="lbl">부정</div></div>
+                        <div class="stat-box"><div class="val" style="color:#64748b" id="neutralPct">0%</div><div class="lbl">중립</div></div>
+                    </div>
+                </div>
+                <div id="mentionsList"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
+        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
+
+        function loadSavedKeywords(){
+            var kws=JSON.parse(localStorage.getItem('listenKeywords')||'[]');
+            document.getElementById('savedKeywords').innerHTML=kws.map(function(k){return '<span class="kw-tag" onclick="document.getElementById(\'listenInput\').value=\''+k+'\';startListening()">'+k+'</span>'}).join('');
+        }
+
+        async function startListening(){
+            var kw=document.getElementById('listenInput').value.trim();
+            if(!kw)return;
+            var kws=JSON.parse(localStorage.getItem('listenKeywords')||'[]');
+            if(kws.indexOf(kw)===-1){kws.unshift(kw);if(kws.length>10)kws=kws.slice(0,10);localStorage.setItem('listenKeywords',JSON.stringify(kws));loadSavedKeywords()}
+
+            document.getElementById('mentionsList').innerHTML='<div style="text-align:center;padding:30px;color:#94a3b8">👂 "'+kw+'" 모니터링 중...</div>';
+
+            try{
+                var url='https://api.scraperapi.com/structured/google/search?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(kw+' site:instagram.com OR site:facebook.com OR site:tiktok.com OR site:blog.naver.com')+'&country=kr&num=20';
+                var r=await fetch(url);var data=await r.json();
+                var results=data.organic_results||[];
+
+                var mentions=results.map(function(r){
+                    var source='웹';
+                    if(r.link&&r.link.indexOf('instagram')>-1)source='Instagram';
+                    else if(r.link&&r.link.indexOf('facebook')>-1)source='Facebook';
+                    else if(r.link&&r.link.indexOf('tiktok')>-1)source='TikTok';
+                    else if(r.link&&r.link.indexOf('blog.naver')>-1)source='네이버 블로그';
+                    else if(r.link&&r.link.indexOf('cafe.naver')>-1)source='네이버 카페';
+
+                    var text=(r.snippet||r.title||'').toLowerCase();
+                    var sentiment='neutral';
+                    var posWords=['좋아','추천','최고','대박','만족','편리','훌륭','love','great','best','amazing'];
+                    var negWords=['별로','나쁘','실망','불만','worst','bad','poor','terrible'];
+                    if(posWords.some(function(w){return text.indexOf(w)>-1}))sentiment='positive';
+                    if(negWords.some(function(w){return text.indexOf(w)>-1}))sentiment='negative';
+
+                    return{title:r.title||'',snippet:r.snippet||'',link:r.link||'',source:source,sentiment:sentiment,date:r.date||''};
+                });
+
+                var positive=mentions.filter(function(m){return m.sentiment==='positive'}).length;
+                var negative=mentions.filter(function(m){return m.sentiment==='negative'}).length;
+                var neutral=mentions.length-positive-negative;
+
+                document.getElementById('listenStats').style.display='block';
+                document.getElementById('totalMentions').textContent=mentions.length;
+                document.getElementById('positivePct').textContent=mentions.length>0?Math.round(positive/mentions.length*100)+'%':'0%';
+                document.getElementById('negativePct').textContent=mentions.length>0?Math.round(negative/mentions.length*100)+'%':'0%';
+                document.getElementById('neutralPct').textContent=mentions.length>0?Math.round(neutral/mentions.length*100)+'%':'0%';
+
+                var sourceColors={'Instagram':'#E4405F','Facebook':'#1877F2','TikTok':'#000','네이버 블로그':'#03C75A','네이버 카페':'#03C75A','웹':'#64748b'};
+                var sentLabels={'positive':'긍정','negative':'부정','neutral':'중립'};
+                var sentClasses={'positive':'sent-positive','negative':'sent-negative','neutral':'sent-neutral'};
+
+                document.getElementById('mentionsList').innerHTML=mentions.map(function(m){
+                    return '<div class="mention-card" onclick="window.open(\''+m.link.replace(/'/g,'%27')+'\')"><div class="mention-header"><span class="mention-source" style="background:'+(sourceColors[m.source]||'#64748b')+'22;color:'+(sourceColors[m.source]||'#64748b')+'">'+m.source+'</span><span class="mention-sentiment '+sentClasses[m.sentiment]+'">'+sentLabels[m.sentiment]+'</span><span class="mention-date">'+m.date+'</span></div><div style="font-size:.85rem;font-weight:600;margin-bottom:4px">'+m.title+'</div><div class="mention-text">'+m.snippet+'</div></div>';
+                }).join('')||'<div style="text-align:center;color:#94a3b8;padding:20px">언급을 찾을 수 없습니다</div>';
+
+            }catch(e){
+                document.getElementById('mentionsList').innerHTML='<div style="color:#ef4444;padding:20px">오류: '+e.message+'</div>';
+            }
+        }
+
+        loadSavedKeywords();
+    </script>
+</body>
+</html>
