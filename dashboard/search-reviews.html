@@ -88,20 +88,34 @@
             <!-- Content -->
             <div class="content-area">
 
-                <!-- ============================================================
-                     Platform Filter Tabs
-                     ============================================================ -->
+                <!-- 수동 검색 박스 -->
+                <div style="background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:14px;padding:20px;margin-bottom:20px">
+                    <div style="display:flex;gap:8px;max-width:600px;margin:0 auto">
+                        <input type="text" id="manualSearchInput" placeholder="검색어 입력 (예: 블루투스 이어폰)" style="flex:1;padding:12px 16px;border-radius:10px;border:2px solid #334155;background:#0f172a;color:#e2e8f0;font-size:.9rem" onkeydown="if(event.key==='Enter')manualSearch()">
+                        <button onclick="manualSearch()" style="padding:12px 20px;border-radius:10px;border:none;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer;white-space:nowrap">🔍 검색</button>
+                    </div>
+                    <div id="suggestBox" style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:10px">
+                        <span onclick="quickKeyword('블루투스 이어폰')" style="padding:4px 12px;border-radius:16px;background:rgba(59,130,246,.15);color:#60a5fa;font-size:.72rem;cursor:pointer">블루투스 이어폰</span>
+                        <span onclick="quickKeyword('실리콘 주방용품')" style="padding:4px 12px;border-radius:16px;background:rgba(16,185,129,.15);color:#34d399;font-size:.72rem;cursor:pointer">실리콘 주방용품</span>
+                        <span onclick="quickKeyword('LED 무드등')" style="padding:4px 12px;border-radius:16px;background:rgba(249,115,22,.15);color:#fb923c;font-size:.72rem;cursor:pointer">LED 무드등</span>
+                        <span onclick="quickKeyword('에코백')" style="padding:4px 12px;border-radius:16px;background:rgba(139,92,246,.15);color:#a78bfa;font-size:.72rem;cursor:pointer">에코백</span>
+                        <span onclick="quickKeyword('여름원피스')" style="padding:4px 12px;border-radius:16px;background:rgba(236,72,153,.15);color:#f472b6;font-size:.72rem;cursor:pointer">여름원피스</span>
+                    </div>
+                    <div id="searchResult" style="display:none;margin-top:12px;max-height:300px;overflow-y:auto"></div>
+                </div>
+
+                <!-- 플랫폼 필터 -->
                 <div style="margin-bottom:24px;">
                     <div class="platform-tabs">
                         <span class="platform-badge p-coupang active"><span class="p-dot"></span>쿠팡</span>
                         <span class="platform-badge p-gmarket active"><span class="p-dot"></span>지마켓</span>
                         <span class="platform-badge p-naver active"><span class="p-dot"></span>네이버</span>
+                        <span class="platform-badge active" style="background:#EE4D2D;color:#fff;border:none;font-size:10px;padding:3px 8px">Shopee</span>
+                        <span class="platform-badge active" style="background:#FF9900;color:#fff;border:none;font-size:10px;padding:3px 8px">Amazon</span>
+                        <span class="platform-badge active" style="background:#000;color:#fff;border:none;font-size:10px;padding:3px 8px">SHEIN</span>
                     </div>
                 </div>
 
-                <!-- ============================================================
-                     플랫폼별 인기 검색어
-                     ============================================================ -->
                 <div class="section-divider">
                     <div class="section-divider-title">🔍 플랫폼별 인기 검색어</div>
                     <div class="section-divider-line"></div>
@@ -764,6 +778,35 @@
     <script src="js/data-sync.js"></script>
     <script src="js/supabase-client.js"></script>
     <script>
+    var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
+    function quickKeyword(kw){document.getElementById('manualSearchInput').value=kw;manualSearch()}
+    async function manualSearch(){
+        var kw=document.getElementById('manualSearchInput').value.trim();
+        if(!kw)return;
+        var box=document.getElementById('searchResult');
+        box.style.display='block';
+        box.innerHTML='<div style="text-align:center;color:#94a3b8;padding:12px">🔍 "'+kw+'" 검색 중...</div>';
+        try{
+            var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(kw)+'&country=kr&num=20';
+            var r=await fetch(url);var data=await r.json();
+            var items=data.shopping_results||[];
+            if(items.length===0){box.innerHTML='<div style="text-align:center;color:#94a3b8;padding:12px">결과 없음</div>';return}
+            var related=data.related_searches||[];
+            var html='<div style="margin-bottom:8px;font-size:.72rem;color:#94a3b8">'+items.length+'개 결과</div>';
+            if(related.length>0){
+                html+='<div style="margin-bottom:10px;display:flex;gap:4px;flex-wrap:wrap">';
+                related.forEach(function(r){html+='<span onclick="quickKeyword(\''+r.query+'\')" style="padding:3px 10px;border-radius:12px;background:rgba(139,92,246,.1);color:#a78bfa;font-size:.65rem;cursor:pointer">'+r.query+'</span>'});
+                html+='</div>';
+            }
+            items.forEach(function(it,i){
+                var price=it.extracted_price||0;
+                if(typeof price==='string')price=parseInt(price.replace(/[^\d]/g,''))||0;
+                html+='<div style="display:flex;gap:8px;padding:8px;border-bottom:1px solid #334155;cursor:pointer" onclick="window.open(\''+((it.link||'').replace(/'/g,'%27'))+'\')"><img src="'+(it.thumbnail||'')+'" style="width:40px;height:40px;object-fit:cover;border-radius:4px" onerror="this.style.display=\'none\'"><div style="flex:1;min-width:0"><div style="font-size:.75rem;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(it.title||'')+'</div><div style="font-size:.8rem;font-weight:700;color:#e42528">₩'+price.toLocaleString()+' <span style="font-size:.6rem;color:#64748b">'+(it.source||'')+'</span></div></div></div>';
+            });
+            box.innerHTML=html;
+        }catch(e){box.innerHTML='<div style="color:#ef4444;padding:12px">오류: '+e.message+'</div>'}
+    }
+
     (async function(){
         var products = DataSync.getProducts();
         if (!products && DB.isConfigured()) {
