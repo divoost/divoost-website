@@ -63,13 +63,13 @@
                 <div class="create-box">
                     <h2>📱 발행 채널 선택</h2>
                     <div class="channel-select" id="channelSelect">
-                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="facebook">📘 Facebook</label>
-                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="tiktok">🎵 TikTok</label>
-                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="instagram">📸 Instagram</label>
-                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="naver_blog">📗 네이버 블로그</label>
-                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="naver_cafe">☕ 네이버 카페</label>
-                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="xiaohongshu">📕 샤오홍수</label>
-                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="douyin">🎬 도우인</label>
+                        <div class="ch-check" onclick="toggleCh(this)" data-value="facebook">📘 Facebook</div>
+                        <div class="ch-check" onclick="toggleCh(this)" data-value="tiktok">🎵 TikTok</div>
+                        <div class="ch-check" onclick="toggleCh(this)" data-value="instagram">📸 Instagram</div>
+                        <div class="ch-check" onclick="toggleCh(this)" data-value="naver_blog">📗 네이버 블로그</div>
+                        <div class="ch-check" onclick="toggleCh(this)" data-value="naver_cafe">☕ 네이버 카페</div>
+                        <div class="ch-check" onclick="toggleCh(this)" data-value="xiaohongshu">📕 샤오홍수</div>
+                        <div class="ch-check" onclick="toggleCh(this)" data-value="douyin">🎬 도우인</div>
                     </div>
                 </div>
 
@@ -94,14 +94,21 @@
 
                 <div class="action-bar">
                     <button class="btn-save" onclick="savePost('draft')">💾 임시저장</button>
-                    <button class="btn-schedule" onclick="savePost('scheduled')">⏰ 예약 발행</button>
-                    <button class="btn-publish" onclick="savePost('published')">🚀 지금 발행</button>
+                    <button class="btn-schedule" onclick="savePost('review')">👁 확인/수정</button>
+                    <button class="btn-publish" onclick="confirmPublish()">🚀 발행하기</button>
                 </div>
             </div>
         </div>
     </div>
     <script>
         document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
+
+        function toggleCh(el){el.classList.toggle('selected')}
+        function getSelectedChannels(){
+            var channels=[];
+            document.querySelectorAll('.ch-check.selected').forEach(function(el){channels.push(el.dataset.value)});
+            return channels;
+        }
 
         document.getElementById('postContent').oninput=function(){updatePreview()};
         document.getElementById('postTitle').oninput=function(){updatePreview()};
@@ -152,8 +159,7 @@
             var title=document.getElementById('postTitle').value;
             var content=document.getElementById('postContent').value;
             if(!title||!content){alert('제목과 내용을 입력하세요');return}
-            var channels=[];
-            document.querySelectorAll('.ch-check.selected input').forEach(function(i){channels.push(i.value)});
+            var channels=getSelectedChannels();
             if(channels.length===0){alert('발행 채널을 선택하세요');return}
 
             var post={
@@ -176,9 +182,34 @@
             posts.unshift(post);
             localStorage.setItem('snsPosts',JSON.stringify(posts));
 
-            var statusText={'draft':'임시저장','scheduled':'예약 발행','published':'발행'};
+            var statusText={'draft':'임시저장','review':'확인 대기','scheduled':'예약 발행','published':'발행'};
             alert('✅ '+statusText[status]+' 완료!\n\n채널: '+channels.join(', '));
             if(status==='published')location.href='history.html';
+            if(status==='review'){
+                document.getElementById('previewBox').scrollIntoView({behavior:'smooth'});
+                document.getElementById('previewBox').style.border='2px solid #3b82f6';
+                alert('👁 미리보기를 확인하세요.\n\n수정이 필요하면 내용을 수정하고,\n완료되면 "🚀 발행하기" 버튼을 누르세요.');
+            }
+        }
+
+        function confirmPublish(){
+            var title=document.getElementById('postTitle').value;
+            var content=document.getElementById('postContent').value;
+            var channels=getSelectedChannels();
+            if(!title||!content){alert('제목과 내용을 입력하세요');return}
+            if(channels.length===0){alert('발행 채널을 선택하세요');return}
+
+            var channelNames={'facebook':'Facebook','tiktok':'TikTok','instagram':'Instagram','naver_blog':'네이버 블로그','naver_cafe':'네이버 카페','xiaohongshu':'샤오홍수','douyin':'도우인'};
+            var chList=channels.map(function(c){return channelNames[c]||c}).join('\n  • ');
+            var msg='🚀 콘텐츠 발행 확인\n\n';
+            msg+='📌 제목: '+title+'\n';
+            msg+='📝 내용: '+content.substring(0,50)+'...\n';
+            msg+='📱 채널:\n  • '+chList+'\n\n';
+            msg+='발행하시겠습니까?';
+
+            if(confirm(msg)){
+                savePost('published');
+            }
         }
     </script>
 </body>
