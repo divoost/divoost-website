@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>템플릿 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .tmpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+        .tmpl-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:18px;cursor:pointer;transition:.2s}
+        .tmpl-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-2px);border-color:#3b82f6}
+        .tmpl-icon{font-size:28px;margin-bottom:8px}
+        .tmpl-name{font-size:.9rem;font-weight:700;margin-bottom:4px}
+        .tmpl-desc{font-size:.78rem;color:#64748b;margin-bottom:10px;line-height:1.5}
+        .tmpl-tags{display:flex;gap:4px;flex-wrap:wrap}
+        .tmpl-tag{padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:600;background:#f1f5f9;color:#64748b}
+        .filter-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+        .f-chip{padding:6px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#fff;font-size:.78rem;cursor:pointer}
+        .f-chip.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link active"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약</a><a href="history.html" class="nav-link"><span>📜</span> 이력</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">📋 콘텐츠 템플릿</div><div class="top-bar-sub">카테고리별 콘텐츠 템플릿</div></div></div></header>
+            <div class="content">
+                <div class="filter-chips">
+                    <span class="f-chip active" onclick="filterTemplates('all',this)">전체</span>
+                    <span class="f-chip" onclick="filterTemplates('product',this)">🛍 상품 홍보</span>
+                    <span class="f-chip" onclick="filterTemplates('review',this)">⭐ 리뷰/후기</span>
+                    <span class="f-chip" onclick="filterTemplates('tip',this)">💡 팁/노하우</span>
+                    <span class="f-chip" onclick="filterTemplates('event',this)">🎉 이벤트</span>
+                    <span class="f-chip" onclick="filterTemplates('daily',this)">📸 일상</span>
+                </div>
+                <div class="tmpl-grid" id="tmplGrid"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
+        var templates=[
+            {icon:'🛍',name:'상품 소개 (기본)',desc:'상품의 특징과 장점을 간결하게 소개하는 기본 템플릿',category:'product',channels:['instagram','facebook','naver_blog'],content:'✨ [상품명] 소개\n\n안녕하세요! 오늘은 [상품명]을 소개해드릴게요 🎉\n\n📌 주요 특징\n1. [특징1]\n2. [특징2]\n3. [특징3]\n\n💰 가격: [가격]\n🔗 구매 링크: [링크]\n\n#상품추천 #쇼핑 #추천아이템'},
+            {icon:'⭐',name:'솔직 리뷰',desc:'실제 사용 경험을 바탕으로 한 솔직한 리뷰 템플릿',category:'review',channels:['naver_blog','instagram'],content:'📝 [상품명] 솔직 리뷰\n\n사용 기간: [기간]\n평점: ⭐⭐⭐⭐☆\n\n✅ 장점\n- [장점1]\n- [장점2]\n\n❌ 단점\n- [단점1]\n\n💡 총평\n[총평 내용]\n\n#솔직리뷰 #리뷰 #추천'},
+            {icon:'💡',name:'꿀팁 공유',desc:'유용한 팁과 노하우를 공유하는 정보형 콘텐츠',category:'tip',channels:['tiktok','instagram','naver_blog'],content:'💡 [주제] 꿀팁 TOP 5\n\n1️⃣ [팁1]\n2️⃣ [팁2]\n3️⃣ [팁3]\n4️⃣ [팁4]\n5️⃣ [팁5]\n\n📌 저장해두고 필요할 때 꺼내보세요!\n\n#꿀팁 #노하우 #알아두면좋은'},
+            {icon:'🎉',name:'이벤트/할인',desc:'프로모션, 이벤트, 할인 안내 템플릿',category:'event',channels:['facebook','instagram','naver_cafe'],content:'🎉 [이벤트명]\n\n📅 기간: [시작일] ~ [종료일]\n🎁 혜택: [혜택 내용]\n\n참여 방법:\n1. [방법1]\n2. [방법2]\n3. [방법3]\n\n⏰ 놓치지 마세요!\n\n#이벤트 #할인 #프로모션'},
+            {icon:'📸',name:'일상 공유',desc:'자연스러운 일상을 공유하는 감성 콘텐츠',category:'daily',channels:['instagram','facebook','xiaohongshu'],content:'📸 오늘의 일상\n\n[일상 내용]\n\n좋은 하루 보내세요 ☺️\n\n#일상 #데일리 #좋은하루'},
+            {icon:'🔥',name:'트렌드 상품',desc:'요즘 핫한 트렌드 상품을 소개하는 템플릿',category:'product',channels:['tiktok','instagram','xiaohongshu'],content:'🔥 요즘 핫한 [상품명]\n\n왜 이렇게 인기인지 알려드릴게요!\n\n✨ 포인트\n- [포인트1]\n- [포인트2]\n\n💰 가격대: [가격]\n\n#트렌드 #핫아이템 #추천'},
+            {icon:'📊',name:'비교 분석',desc:'A vs B 상품 비교 분석 콘텐츠',category:'review',channels:['naver_blog','youtube'],content:'📊 [상품A] vs [상품B] 비교\n\n| 항목 | A | B |\n|------|---|---|\n| 가격 | | |\n| 품질 | | |\n| 디자인 | | |\n\n🏆 결론: [결론]\n\n#비교분석 #추천'},
+            {icon:'🎬',name:'숏폼 영상 스크립트',desc:'TikTok/릴스용 15-60초 영상 스크립트',category:'tip',channels:['tiktok','instagram','douyin'],content:'🎬 [주제] 숏폼 스크립트\n\n[오프닝 - 3초]\n👋 "이거 모르면 손해!"\n\n[본문 - 20초]\n📌 핵심 포인트 설명\n\n[클로저 - 5초]\n"저장하고 나중에 보세요!"\n\n#숏폼 #틱톡 #릴스'}
+        ];
+
+        function filterTemplates(cat,el){
+            document.querySelectorAll('.f-chip').forEach(function(c){c.classList.remove('active')});
+            if(el)el.classList.add('active');
+            var filtered=cat==='all'?templates:templates.filter(function(t){return t.category===cat});
+            renderTemplates(filtered);
+        }
+
+        function renderTemplates(list){
+            var channelNames={'facebook':'FB','tiktok':'TT','instagram':'IG','naver_blog':'블로그','naver_cafe':'카페','xiaohongshu':'샤오홍수','douyin':'도우인','youtube':'YT'};
+            document.getElementById('tmplGrid').innerHTML=list.map(function(t,i){
+                var tags=t.channels.map(function(c){return '<span class="tmpl-tag">'+channelNames[c]+'</span>'}).join('');
+                return '<div class="tmpl-card" onclick="useTemplate('+i+')"><div class="tmpl-icon">'+t.icon+'</div><div class="tmpl-name">'+t.name+'</div><div class="tmpl-desc">'+t.desc+'</div><div class="tmpl-tags">'+tags+'</div></div>';
+            }).join('');
+        }
+
+        function useTemplate(idx){
+            var t=templates[idx];
+            if(confirm(t.name+'\n\n이 템플릿으로 콘텐츠를 만드시겠습니까?')){
+                localStorage.setItem('templateContent',JSON.stringify(t));
+                location.href='create.html';
+            }
+        }
+
+        filterTemplates('all');
+    </script>
+</body>
+</html>

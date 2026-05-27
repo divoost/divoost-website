@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>미디어 라이브러리 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .upload-zone{background:#fff;border:2px dashed #cbd5e1;border-radius:12px;padding:40px;text-align:center;margin-bottom:20px;cursor:pointer;transition:.2s}
+        .upload-zone:hover{border-color:#3b82f6;background:#f8fafc}
+        .upload-zone input{display:none}
+        .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+        .media-item{background:#fff;border-radius:10px;border:1px solid #e2e8f0;overflow:hidden;cursor:pointer;transition:.2s;position:relative}
+        .media-item:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-2px)}
+        .media-item img{width:100%;height:120px;object-fit:cover}
+        .media-item-body{padding:8px}
+        .media-item-name{font-size:.72rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .media-item-size{font-size:.65rem;color:#94a3b8}
+        .media-item-del{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;border:none;font-size:10px;cursor:pointer;display:none;align-items:center;justify-content:center}
+        .media-item:hover .media-item-del{display:flex}
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link active"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약</a><a href="history.html" class="nav-link"><span>📜</span> 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">🖼 미디어 라이브러리</div><div class="top-bar-sub">이미지/동영상 관리</div></div></div></header>
+            <div class="content">
+                <label class="upload-zone" id="uploadZone">
+                    <input type="file" accept="image/*,video/*" multiple onchange="uploadFiles(this)">
+                    <div style="font-size:2.5rem;margin-bottom:8px">📤</div>
+                    <div style="font-size:.9rem;font-weight:600">클릭하거나 파일을 드래그하세요</div>
+                    <div style="font-size:.78rem;color:#94a3b8;margin-top:4px">이미지 (JPG, PNG, GIF) / 동영상 (MP4)</div>
+                </label>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+                    <div class="section-title" style="margin:0">📁 업로드된 미디어 (<span id="mediaCount">0</span>개)</div>
+                    <button onclick="addSampleMedia()" style="padding:6px 14px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:.75rem;cursor:pointer">📸 샘플 추가</button>
+                </div>
+                <div class="media-grid" id="mediaGrid"><div style="grid-column:1/-1;text-align:center;color:#94a3b8;padding:40px">미디어가 없습니다</div></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
+        function uploadFiles(input){
+            var files=input.files;
+            var media=JSON.parse(localStorage.getItem('snsMedia')||'[]');
+            for(var i=0;i<files.length;i++){
+                var f=files[i];
+                var reader=new FileReader();
+                reader.onload=function(e){
+                    media.push({id:Date.now().toString()+Math.random(),name:f.name,type:f.type,size:f.size,data:e.target.result,uploadedAt:new Date().toISOString()});
+                    localStorage.setItem('snsMedia',JSON.stringify(media));
+                    renderMedia();
+                };
+                reader.readAsDataURL(f);
+            }
+        }
+        function addSampleMedia(){
+            var media=JSON.parse(localStorage.getItem('snsMedia')||'[]');
+            var samples=['https://picsum.photos/300/200?random=1','https://picsum.photos/300/200?random=2','https://picsum.photos/300/200?random=3','https://picsum.photos/300/200?random=4'];
+            samples.forEach(function(url,i){media.push({id:Date.now().toString()+i,name:'sample_'+(i+1)+'.jpg',type:'image/jpeg',size:0,data:url,uploadedAt:new Date().toISOString()})});
+            localStorage.setItem('snsMedia',JSON.stringify(media));
+            renderMedia();
+        }
+        function renderMedia(){
+            var media=JSON.parse(localStorage.getItem('snsMedia')||'[]');
+            document.getElementById('mediaCount').textContent=media.length;
+            if(media.length===0){document.getElementById('mediaGrid').innerHTML='<div style="grid-column:1/-1;text-align:center;color:#94a3b8;padding:40px">미디어가 없습니다</div>';return}
+            document.getElementById('mediaGrid').innerHTML=media.map(function(m){
+                return '<div class="media-item"><img src="'+m.data+'" onerror="this.outerHTML=\'<div style=height:120px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:2rem>🎬</div>\'"><div class="media-item-body"><div class="media-item-name">'+m.name+'</div><div class="media-item-size">'+(m.size>0?Math.round(m.size/1024)+'KB':'외부 이미지')+'</div></div><button class="media-item-del" onclick="event.stopPropagation();deleteMedia(\''+m.id+'\')">×</button></div>';
+            }).join('');
+        }
+        function deleteMedia(id){
+            var media=JSON.parse(localStorage.getItem('snsMedia')||'[]');
+            media=media.filter(function(m){return m.id!==id});
+            localStorage.setItem('snsMedia',JSON.stringify(media));
+            renderMedia();
+        }
+        renderMedia();
+    </script>
+</body>
+</html>
