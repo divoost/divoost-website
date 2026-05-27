@@ -196,15 +196,26 @@
                 var scoreClass=p.ai.total>=75?'score-high':p.ai.total>=50?'score-mid':'score-low';
                 var gradeColor=p.ai.grade==='STRONG BUY'?'#10b981':p.ai.grade==='BUY'?'#3b82f6':p.ai.grade==='HOLD'?'#f59e0b':'#ef4444';
                 var priceStr=p.market==='cn'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
-                html+='<div class="result-card" onclick="window.open(\''+escH(p.url||'#')+'\')" data-score="'+p.ai.total+'" data-grade="'+p.ai.grade+'">'+
-                    '<img class="result-img" src="'+(p.image||'')+'" onerror="this.src=\'data:image/svg+xml,<svg xmlns=\\\'http://www.w3.org/2000/svg\\\' width=\\\'100\\\' height=\\\'100\\\'><rect fill=\\\'%23f1f5f9\\\' width=\\\'100\\\' height=\\\'100\\\'/><text x=\\\'50\\\' y=\\\'55\\\' text-anchor=\\\'middle\\\' fill=\\\'%2394a3b8\\\' font-size=\\\'14\\\'>'+(i+1)+'</text></svg>\'">'+
+                var safeUrl=(p.url||'').replace(/'/g,'%27');
+                var platColors={'쿠팡':'#E42528','무신사':'#000','지마켓':'#00A651','네이버':'#03C75A','1688':'#FF6A00','Shopee':'#EE4D2D','Lazada':'#0F146D','TikTok Shop':'#000','SHEIN':'#000','Amazon':'#FF9900','테무':'#F05A28','11번가':'#FF0000','ssg.com':'#FF5A00'};
+                var pc=platColors[p.platform]||'#3b82f6';
+                html+='<div class="result-card" data-score="'+p.ai.total+'" data-grade="'+p.ai.grade+'">'+
+                    '<img class="result-img" src="'+(p.image||'')+'" onclick="window.open(\''+safeUrl+'\')" onerror="this.style.background=\'#f1f5f9\';this.outerHTML=\'<div class=result-img style=display:flex;align-items:center;justify-content:center;font-size:2rem>📦</div>\'">'+
                     '<div class="result-info">'+
-                    '<div class="result-name">'+(i+1)+'. '+escH(p.name)+'</div>'+
+                    '<div class="result-name" onclick="window.open(\''+safeUrl+'\')" style="cursor:pointer">'+(i+1)+'. '+escH(p.name)+'</div>'+
                     '<div class="result-price">'+priceStr+'</div>'+
                     '<div class="result-meta">'+
-                    '<span class="result-tag tag-platform">'+escH(p.platform)+'</span>'+
+                    '<span class="result-tag" style="background:'+pc+'22;color:'+pc+'">'+escH(p.platform)+'</span>'+
                     '<span class="result-tag tag-margin">마진 '+p.ai.estMargin+'%</span>'+
                     '<span class="result-tag" style="background:'+gradeColor+'22;color:'+gradeColor+'">'+p.ai.grade+'</span>'+
+                    (p.rating?'<span class="result-tag tag-trend">⭐'+p.rating+'</span>':'')+
+                    (p.reviewCount?'<span class="result-tag" style="background:#f1f5f9;color:#64748b">리뷰 '+p.reviewCount+'</span>':'')+
+                    '</div>'+
+                    '<div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">'+
+                    '<button onclick="window.open(\''+safeUrl+'\')" style="padding:3px 10px;border-radius:4px;border:none;background:#3b82f6;color:#fff;font-size:.65rem;font-weight:600;cursor:pointer">상세보기↗</button>'+
+                    '<button onclick="saveFavorite('+i+')" style="padding:3px 10px;border-radius:4px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:.65rem;cursor:pointer">⭐ 저장</button>'+
+                    '<select onchange="listProduct(this.value,'+i+')" style="padding:3px 6px;border-radius:4px;border:1px solid #e2e8f0;font-size:.6rem;color:#64748b"><option value="">리스팅↗</option><option value="coupang">쿠팡</option><option value="naver">네이버</option><option value="gmarket">지마켓</option><option value="shopee">Shopee</option><option value="amazon">Amazon</option></select>'+
+                    '</div>'+
                     (p.rating?'<span class="result-tag tag-trend">⭐'+p.rating+'</span>':'')+
                     '</div>'+
                     '<div class="result-bars">'+
@@ -231,6 +242,30 @@
         }
 
         function escH(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+        function saveFavorite(idx){
+            var p=allResults[idx];if(!p)return;
+            var favs=JSON.parse(localStorage.getItem('favorites')||'[]');
+            if(favs.find(function(f){return f.name===p.name})){alert('이미 저장된 상품입니다');return}
+            favs.push({name:p.name,price:p.price,platform:p.platform,image:p.image,url:p.url,rating:p.rating,savedAt:new Date().toISOString()});
+            localStorage.setItem('favorites',JSON.stringify(favs));
+            alert('⭐ 즐겨찾기에 저장됨: '+p.name.substring(0,30));
+        }
+
+        function listProduct(platform,idx){
+            if(!platform)return;
+            var p=allResults[idx];if(!p)return;
+            var urls={
+                coupang:'https://wing.coupang.com/vendor/products/register',
+                naver:'https://sell.smartstore.naver.com/products/register',
+                gmarket:'https://www.gmarket.co.kr/n/superdeal/register',
+                shopee:'https://seller.shopee.vn/portal/product/new',
+                amazon:'https://sellercentral.amazon.com/product/create'
+            };
+            if(confirm(p.name.substring(0,40)+'\n\n→ '+platform+' 판매자 센터에서 리스팅하시겠습니까?')){
+                window.open(urls[platform],'_blank');
+            }
+        }
 
         document.addEventListener('DOMContentLoaded',function(){
             var mb=document.getElementById('mobileMenuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('sidebarOverlay');
