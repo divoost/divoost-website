@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>콘텐츠 만들기 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .create-box{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:24px;margin-bottom:20px}
+        .create-box h2{font-size:1.1rem;margin-bottom:16px}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+        .form-group{display:flex;flex-direction:column;gap:4px}
+        .form-group.full{grid-column:1/-1}
+        .form-group label{font-size:.78rem;font-weight:600;color:#64748b}
+        .form-group input,.form-group select,.form-group textarea{padding:10px 14px;border-radius:8px;border:1px solid #e2e8f0;font-size:.85rem;font-family:inherit}
+        .form-group textarea{min-height:120px;resize:vertical}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#3b82f6;outline:none}
+        .channel-select{display:flex;gap:8px;flex-wrap:wrap}
+        .ch-check{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;border:2px solid #e2e8f0;font-size:.78rem;font-weight:600;cursor:pointer;transition:.2s}
+        .ch-check.selected{border-color:#3b82f6;background:rgba(59,130,246,.08)}
+        .ch-check input{display:none}
+        .ai-gen-btn{padding:10px 20px;border-radius:8px;border:none;background:linear-gradient(135deg,#8b5cf6,#3b82f6);color:#fff;font-size:.85rem;font-weight:700;cursor:pointer}
+        .ai-gen-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(139,92,246,.3)}
+        .preview-box{background:#f8fafc;border-radius:10px;border:1px dashed #cbd5e1;padding:20px;min-height:200px;margin-top:12px}
+        .action-bar{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+        .btn-save{background:#10b981;color:#fff;padding:10px 24px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+        .btn-publish{background:#3b82f6;color:#fff;padding:10px 24px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+        .btn-schedule{background:#f59e0b;color:#fff;padding:10px 24px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
+        @media(max-width:768px){.form-row{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link active"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">✍️ 콘텐츠 만들기</div><div class="top-bar-sub">AI 자동 생성 또는 수동 작성</div></div></div></header>
+            <div class="content">
+                <div class="create-box">
+                    <h2>📌 기본 정보</h2>
+                    <div class="form-row">
+                        <div class="form-group"><label>콘텐츠 주제/제목</label><input type="text" id="postTitle" placeholder="예: 여름 필수 아이템 추천"></div>
+                        <div class="form-group"><label>키워드 (쉼표 구분)</label><input type="text" id="postKeywords" placeholder="예: 여름패션, 썸머룩, 데일리코디"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>카테고리</label>
+                            <select id="postCategory"><option>패션/뷰티</option><option>전자기기</option><option>생활/주방</option><option>반려동물</option><option>음식/맛집</option><option>여행</option><option>육아/교육</option><option>비즈니스</option><option>기타</option></select>
+                        </div>
+                        <div class="form-group"><label>톤 & 스타일</label>
+                            <select id="postTone"><option>친근한</option><option>전문적인</option><option>유머러스</option><option>감성적인</option><option>정보 전달</option><option>리뷰/후기</option></select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="create-box">
+                    <h2>📱 발행 채널 선택</h2>
+                    <div class="channel-select" id="channelSelect">
+                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="facebook">📘 Facebook</label>
+                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="tiktok">🎵 TikTok</label>
+                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="instagram">📸 Instagram</label>
+                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="naver_blog">📗 네이버 블로그</label>
+                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="naver_cafe">☕ 네이버 카페</label>
+                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="xiaohongshu">📕 샤오홍수</label>
+                        <label class="ch-check" onclick="this.classList.toggle('selected')"><input type="checkbox" value="douyin">🎬 도우인</label>
+                    </div>
+                </div>
+
+                <div class="create-box">
+                    <h2>✍️ 콘텐츠 내용</h2>
+                    <button class="ai-gen-btn" onclick="generateAI()">🤖 AI로 자동 생성</button>
+                    <div id="aiStatus" style="font-size:.78rem;color:#94a3b8;margin-top:8px"></div>
+                    <div class="form-group full" style="margin-top:12px">
+                        <label>본문</label>
+                        <textarea id="postContent" placeholder="콘텐츠 내용을 입력하거나 AI로 자동 생성하세요..."></textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>해시태그</label><input type="text" id="postHashtags" placeholder="#여름패션 #추천 #데일리"></div>
+                        <div class="form-group"><label>이미지 URL (선택)</label><input type="text" id="postImage" placeholder="https://..."></div>
+                    </div>
+                </div>
+
+                <div class="create-box">
+                    <h2>👁 미리보기</h2>
+                    <div class="preview-box" id="previewBox">콘텐츠를 입력하면 미리보기가 표시됩니다</div>
+                </div>
+
+                <div class="action-bar">
+                    <button class="btn-save" onclick="savePost('draft')">💾 임시저장</button>
+                    <button class="btn-schedule" onclick="savePost('scheduled')">⏰ 예약 발행</button>
+                    <button class="btn-publish" onclick="savePost('published')">🚀 지금 발행</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
+
+        document.getElementById('postContent').oninput=function(){updatePreview()};
+        document.getElementById('postTitle').oninput=function(){updatePreview()};
+
+        function updatePreview(){
+            var title=document.getElementById('postTitle').value;
+            var content=document.getElementById('postContent').value;
+            var hashtags=document.getElementById('postHashtags').value;
+            var image=document.getElementById('postImage').value;
+            var html='';
+            if(image)html+='<img src="'+image+'" style="width:100%;max-height:200px;object-fit:cover;border-radius:8px;margin-bottom:10px" onerror="this.style.display=\'none\'">';
+            if(title)html+='<div style="font-weight:700;font-size:1rem;margin-bottom:6px">'+title+'</div>';
+            if(content)html+='<div style="font-size:.85rem;line-height:1.6;white-space:pre-wrap">'+content+'</div>';
+            if(hashtags)html+='<div style="color:#3b82f6;font-size:.8rem;margin-top:8px">'+hashtags+'</div>';
+            document.getElementById('previewBox').innerHTML=html||'콘텐츠를 입력하면 미리보기가 표시됩니다';
+        }
+
+        async function generateAI(){
+            var title=document.getElementById('postTitle').value;
+            var keywords=document.getElementById('postKeywords').value;
+            var category=document.getElementById('postCategory').value;
+            var tone=document.getElementById('postTone').value;
+            if(!title&&!keywords){alert('주제 또는 키워드를 입력하세요');return}
+            document.getElementById('aiStatus').textContent='🤖 AI 콘텐츠 생성 중...';
+
+            var topic=title||keywords;
+            var content=topic+' 관련 '+category+' 콘텐츠\n\n';
+            content+='안녕하세요! 오늘은 '+topic+'에 대해 소개해드릴게요 🎉\n\n';
+            if(tone==='친근한')content+='여러분도 이런 경험 있으시죠? ';
+            if(tone==='전문적인')content+='전문가의 관점에서 분석해보면, ';
+            if(tone==='유머러스')content+='이거 진짜 대박인 거 아시죠? ㅋㅋ ';
+            content+=topic+'은(는) 요즘 정말 핫한 아이템인데요!\n\n';
+            content+='✅ 추천 포인트\n';
+            content+='1. 가성비가 뛰어납니다\n';
+            content+='2. 디자인이 트렌디합니다\n';
+            content+='3. 실사용 후기가 좋습니다\n\n';
+            content+='💡 꿀팁: '+topic+' 구매 시 꼭 비교해보세요!\n\n';
+            content+='더 자세한 정보가 궁금하시다면 댓글로 물어봐주세요 😊';
+
+            document.getElementById('postContent').value=content;
+            var tags=(keywords||topic).split(',').map(function(k){return '#'+k.trim().replace(/\s/g,'')}).join(' ');
+            document.getElementById('postHashtags').value=tags;
+            document.getElementById('aiStatus').textContent='✅ AI 생성 완료!';
+            updatePreview();
+        }
+
+        function savePost(status){
+            var title=document.getElementById('postTitle').value;
+            var content=document.getElementById('postContent').value;
+            if(!title||!content){alert('제목과 내용을 입력하세요');return}
+            var channels=[];
+            document.querySelectorAll('.ch-check.selected input').forEach(function(i){channels.push(i.value)});
+            if(channels.length===0){alert('발행 채널을 선택하세요');return}
+
+            var post={
+                id:Date.now().toString(),
+                title:title,
+                content:content,
+                keywords:document.getElementById('postKeywords').value,
+                hashtags:document.getElementById('postHashtags').value,
+                image:document.getElementById('postImage').value,
+                category:document.getElementById('postCategory').value,
+                tone:document.getElementById('postTone').value,
+                channels:channels,
+                status:status,
+                likes:0,comments:0,shares:0,views:0,
+                date:new Date().toISOString().slice(0,10),
+                createdAt:new Date().toISOString()
+            };
+
+            var posts=JSON.parse(localStorage.getItem('snsPosts')||'[]');
+            posts.unshift(post);
+            localStorage.setItem('snsPosts',JSON.stringify(posts));
+
+            var statusText={'draft':'임시저장','scheduled':'예약 발행','published':'발행'};
+            alert('✅ '+statusText[status]+' 완료!\n\n채널: '+channels.join(', '));
+            if(status==='published')location.href='history.html';
+        }
+    </script>
+</body>
+</html>
