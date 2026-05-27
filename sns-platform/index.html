@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNS 콘텐츠 플랫폼 | DIVOOST</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/sns.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon">📱</div>
+                <div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="index.html" class="nav-link active"><span>📊</span> 종합 현황</a><a href="pages/calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="pages/create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="pages/ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="pages/media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="pages/templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="pages/publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="pages/schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="pages/history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="pages/engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="pages/listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="pages/analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="pages/settings.html" class="nav-link"><span>⚙️</span> 설정</a></div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="menu-btn" id="menuBtn">☰</button>
+                    <div>
+                        <div class="top-bar-title">SNS 콘텐츠 플랫폼</div>
+                        <div class="top-bar-sub">7개 채널 통합 관리</div>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <button class="btn btn-primary" onclick="location.href='pages/create.html'">✍️ 콘텐츠 만들기</button>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- KPI Cards -->
+                <div class="kpi-row">
+                    <div class="kpi-card"><div class="kpi-icon">📝</div><div class="kpi-value" id="kpi-posts">0</div><div class="kpi-label">이번 주 포스팅</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">❤️</div><div class="kpi-value" id="kpi-likes">0</div><div class="kpi-label">총 좋아요</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">💬</div><div class="kpi-value" id="kpi-comments">0</div><div class="kpi-label">총 댓글</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">🔄</div><div class="kpi-value" id="kpi-shares">0</div><div class="kpi-label">총 공유</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">👁</div><div class="kpi-value" id="kpi-views">0</div><div class="kpi-label">총 조회수</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">📱</div><div class="kpi-value">7</div><div class="kpi-label">연결 채널</div></div>
+                </div>
+
+                <!-- Channel Status -->
+                <div class="section-title">📡 채널 현황</div>
+                <div class="channel-grid">
+                    <div class="ch-card" style="border-top:3px solid #1877F2"><div class="ch-icon">📘</div><div class="ch-name">Facebook</div><div class="ch-stats"><span>포스팅 <strong>-</strong></span><span>좋아요 <strong>-</strong></span></div><div class="ch-status">연결 대기</div></div>
+                    <div class="ch-card" style="border-top:3px solid #000"><div class="ch-icon">🎵</div><div class="ch-name">TikTok</div><div class="ch-stats"><span>포스팅 <strong>-</strong></span><span>조회수 <strong>-</strong></span></div><div class="ch-status">연결 대기</div></div>
+                    <div class="ch-card" style="border-top:3px solid #E4405F"><div class="ch-icon">📸</div><div class="ch-name">Instagram</div><div class="ch-stats"><span>포스팅 <strong>-</strong></span><span>좋아요 <strong>-</strong></span></div><div class="ch-status">연결 대기</div></div>
+                    <div class="ch-card" style="border-top:3px solid #03C75A"><div class="ch-icon">📗</div><div class="ch-name">네이버 블로그</div><div class="ch-stats"><span>포스팅 <strong>-</strong></span><span>조회수 <strong>-</strong></span></div><div class="ch-status">연결 대기</div></div>
+                    <div class="ch-card" style="border-top:3px solid #03C75A"><div class="ch-icon">☕</div><div class="ch-name">네이버 카페</div><div class="ch-stats"><span>포스팅 <strong>-</strong></span><span>댓글 <strong>-</strong></span></div><div class="ch-status">연결 대기</div></div>
+                    <div class="ch-card" style="border-top:3px solid #FF2442"><div class="ch-icon">📕</div><div class="ch-name">샤오홍수</div><div class="ch-stats"><span>포스팅 <strong>-</strong></span><span>좋아요 <strong>-</strong></span></div><div class="ch-status">연결 대기</div></div>
+                    <div class="ch-card" style="border-top:3px solid #000"><div class="ch-icon">🎬</div><div class="ch-name">도우인</div><div class="ch-stats"><span>포스팅 <strong>-</strong></span><span>조회수 <strong>-</strong></span></div><div class="ch-status">연결 대기</div></div>
+                </div>
+
+                <!-- Recent Posts -->
+                <div class="section-title">📝 최근 콘텐츠</div>
+                <div id="recentPosts" class="post-list">
+                    <div style="text-align:center;color:#94a3b8;padding:40px">
+                        <div style="font-size:3rem;margin-bottom:12px">✍️</div>
+                        <div style="font-size:1rem;font-weight:600;margin-bottom:8px">첫 콘텐츠를 만들어보세요</div>
+                        <div style="font-size:.85rem;margin-bottom:16px">AI가 키워드 기반으로 콘텐츠를 자동 생성합니다</div>
+                        <button class="btn btn-primary" onclick="location.href='pages/create.html'">✍️ 콘텐츠 만들기</button>
+                    </div>
+                </div>
+
+                <!-- Weekly Engagement -->
+                <div class="section-title">📈 주간 인터렉션</div>
+                <div class="engagement-grid">
+                    <div class="eng-card"><div class="eng-day">월</div><div class="eng-bar" style="height:20%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day">화</div><div class="eng-bar" style="height:40%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day">수</div><div class="eng-bar" style="height:60%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day">목</div><div class="eng-bar" style="height:35%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day">금</div><div class="eng-bar" style="height:80%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day">토</div><div class="eng-bar" style="height:50%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day">일</div><div class="eng-bar" style="height:30%"></div><div class="eng-val">-</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
+        // Load saved posts
+        var posts=JSON.parse(localStorage.getItem('snsPosts')||'[]');
+        if(posts.length>0){
+            document.getElementById('kpi-posts').textContent=posts.length;
+            var totalLikes=posts.reduce(function(s,p){return s+(p.likes||0)},0);
+            var totalComments=posts.reduce(function(s,p){return s+(p.comments||0)},0);
+            document.getElementById('kpi-likes').textContent=totalLikes;
+            document.getElementById('kpi-comments').textContent=totalComments;
+            var html='';
+            posts.slice(0,5).forEach(function(p){
+                html+='<div class="post-item"><div class="post-thumb">'+(p.image?'<img src="'+p.image+'">':'📝')+'</div><div class="post-info"><div class="post-title">'+p.title+'</div><div class="post-meta">'+p.channels.join(', ')+' · '+(p.date||'')+'</div></div><div class="post-stats"><span>❤️ '+(p.likes||0)+'</span><span>💬 '+(p.comments||0)+'</span></div></div>';
+            });
+            document.getElementById('recentPosts').innerHTML=html;
+        }
+    </script>
+</body>
+</html>

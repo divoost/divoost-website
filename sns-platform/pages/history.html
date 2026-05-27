@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>발행 이력 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
+        .filter-bar select,.filter-bar input{padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem}
+        .post-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:16px;margin-bottom:12px;display:flex;gap:14px}
+        .post-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+        .pc-img{width:80px;height:80px;border-radius:8px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;overflow:hidden}
+        .pc-img img{width:100%;height:100%;object-fit:cover}
+        .pc-info{flex:1;min-width:0}
+        .pc-title{font-size:.9rem;font-weight:700;margin-bottom:4px}
+        .pc-content{font-size:.78rem;color:#64748b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:6px}
+        .pc-meta{display:flex;gap:8px;flex-wrap:wrap;font-size:.7rem}
+        .pc-tag{padding:2px 8px;border-radius:4px;font-weight:600}
+        .pc-tag.published{background:rgba(16,185,129,.1);color:#10b981}
+        .pc-tag.draft{background:rgba(249,115,22,.1);color:#f97316}
+        .pc-tag.scheduled{background:rgba(59,130,246,.1);color:#3b82f6}
+        .pc-stats{display:flex;gap:12px;margin-top:8px;font-size:.75rem;color:#64748b}
+        .pc-actions{display:flex;flex-direction:column;gap:4px;justify-content:center}
+        .pc-actions button{padding:4px 10px;border-radius:4px;border:1px solid #e2e8f0;background:#fff;font-size:.68rem;cursor:pointer}
+        .pc-actions button:hover{background:#f1f5f9}
+        .empty{text-align:center;padding:60px;color:#94a3b8}
+        @media(max-width:768px){.post-card{flex-direction:column}.pc-actions{flex-direction:row}}
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link active"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">📜 발행 이력</div><div class="top-bar-sub">모든 콘텐츠 관리</div></div></div><div class="top-bar-right"><button class="btn btn-primary" onclick="location.href='create.html'">✍️ 새 콘텐츠</button></div></header>
+            <div class="content">
+                <div class="filter-bar">
+                    <select id="fStatus" onchange="render()"><option value="">전체 상태</option><option value="published">발행됨</option><option value="draft">임시저장</option><option value="scheduled">예약</option></select>
+                    <select id="fChannel" onchange="render()"><option value="">전체 채널</option><option>facebook</option><option>tiktok</option><option>instagram</option><option>naver_blog</option><option>naver_cafe</option><option>xiaohongshu</option><option>douyin</option></select>
+                    <input type="text" id="fSearch" placeholder="검색..." oninput="render()">
+                    <span style="margin-left:auto;font-size:.78rem;color:#64748b" id="countLabel">0개</span>
+                </div>
+                <div id="postList"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
+        function render(){
+            var posts=JSON.parse(localStorage.getItem('snsPosts')||'[]');
+            var status=document.getElementById('fStatus').value;
+            var channel=document.getElementById('fChannel').value;
+            var search=document.getElementById('fSearch').value.toLowerCase();
+            if(status)posts=posts.filter(function(p){return p.status===status});
+            if(channel)posts=posts.filter(function(p){return p.channels&&p.channels.indexOf(channel)>-1});
+            if(search)posts=posts.filter(function(p){return (p.title||'').toLowerCase().indexOf(search)>-1});
+            document.getElementById('countLabel').textContent=posts.length+'개';
+            if(posts.length===0){document.getElementById('postList').innerHTML='<div class="empty"><div style="font-size:3rem;margin-bottom:12px">📭</div>콘텐츠가 없습니다</div>';return}
+            var channelNames={'facebook':'📘 FB','tiktok':'🎵 TT','instagram':'📸 IG','naver_blog':'📗 블로그','naver_cafe':'☕ 카페','xiaohongshu':'📕 샤오홍수','douyin':'🎬 도우인'};
+            document.getElementById('postList').innerHTML=posts.map(function(p){
+                var channels=(p.channels||[]).map(function(c){return channelNames[c]||c}).join(' ');
+                return '<div class="post-card"><div class="pc-img">'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📝\'">':'📝')+'</div><div class="pc-info"><div class="pc-title">'+p.title+'</div><div class="pc-content">'+(p.content||'').substring(0,80)+'</div><div class="pc-meta"><span class="pc-tag '+(p.status||'draft')+'">'+({'published':'✅ 발행','draft':'📝 임시','scheduled':'⏰ 예약'}[p.status]||p.status)+'</span><span style="color:#94a3b8">'+channels+'</span><span style="color:#94a3b8">'+(p.date||'')+'</span></div><div class="pc-stats"><span>❤️ '+(p.likes||0)+'</span><span>💬 '+(p.comments||0)+'</span><span>🔄 '+(p.shares||0)+'</span><span>👁 '+(p.views||0)+'</span></div></div><div class="pc-actions"><button onclick="editPost(\''+p.id+'\')">✏️ 수정</button><button onclick="deletePost(\''+p.id+'\')">🗑 삭제</button><button onclick="simulateEngagement(\''+p.id+'\')">📊 시뮬레이션</button></div></div>';
+            }).join('');
+        }
+        function deletePost(id){
+            if(!confirm('삭제하시겠습니까?'))return;
+            var posts=JSON.parse(localStorage.getItem('snsPosts')||'[]');
+            posts=posts.filter(function(p){return p.id!==id});
+            localStorage.setItem('snsPosts',JSON.stringify(posts));
+            render();
+        }
+        function simulateEngagement(id){
+            var posts=JSON.parse(localStorage.getItem('snsPosts')||'[]');
+            var idx=posts.findIndex(function(p){return p.id===id});
+            if(idx===-1)return;
+            posts[idx].likes=(posts[idx].likes||0)+Math.floor(Math.random()*50)+10;
+            posts[idx].comments=(posts[idx].comments||0)+Math.floor(Math.random()*15)+2;
+            posts[idx].shares=(posts[idx].shares||0)+Math.floor(Math.random()*10)+1;
+            posts[idx].views=(posts[idx].views||0)+Math.floor(Math.random()*200)+50;
+            localStorage.setItem('snsPosts',JSON.stringify(posts));
+            render();
+            alert('📊 인터렉션 시뮬레이션 완료');
+        }
+        function editPost(id){location.href='create.html?edit='+id}
+        render();
+    </script>
+</body>
+</html>

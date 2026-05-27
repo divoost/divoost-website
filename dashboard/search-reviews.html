@@ -49,7 +49,12 @@
                 </div>
                             <div class="sidebar-section">
                     <div class="sidebar-section-title">관리</div>
+                    <a href="ai-sourcing.html" class="sidebar-link"><span class="sidebar-link-icon">🤖</span> AI 소싱</a>
                     <a href="admin.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a>
+                    <a href="keyword-analysis.html" class="sidebar-link"><span class="sidebar-link-icon">🔑</span> 키워드 분석</a>
+                    <a href="listing.html" class="sidebar-link"><span class="sidebar-link-icon">📤</span> 자동 등록</a>
+                    <a href="scraper.html" class="sidebar-link"><span class="sidebar-link-icon">🕷</span> 스크래퍼</a>
+                    <a href="db-view.html" class="sidebar-link"><span class="sidebar-link-icon">💾</span> DB 데이터</a>
                     <a href="live-search.html" class="sidebar-link"><span class="sidebar-link-icon">🔴</span> 실시간 검색</a>
                 </div>
                 <div class="sidebar-section">
@@ -76,29 +81,43 @@
                     </div>
                 </div>
                 <div class="top-bar-right">
-                    <button class="top-bar-btn btn-export">📥 <span>CSV 내보내기</span></button>
-                    <button class="top-bar-btn btn-refresh">🔄 <span>새로고침</span></button>
-                    <button class="top-bar-btn btn-run">▶ <span>수집 실행</span></button>
+                    
+                    <button class="top-bar-btn btn-refresh" onclick="location.reload()">🔄 <span>새로고침</span></button>
+                    
                 </div>
             </header>
 
             <!-- Content -->
             <div class="content-area">
 
-                <!-- ============================================================
-                     Platform Filter Tabs
-                     ============================================================ -->
+                <!-- 수동 검색 박스 -->
+                <div style="background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:14px;padding:20px;margin-bottom:20px">
+                    <div style="display:flex;gap:8px;max-width:600px;margin:0 auto">
+                        <input type="text" id="manualSearchInput" placeholder="검색어 입력 (예: 블루투스 이어폰)" style="flex:1;padding:12px 16px;border-radius:10px;border:2px solid #334155;background:#0f172a;color:#e2e8f0;font-size:.9rem" onkeydown="if(event.key==='Enter')manualSearch()">
+                        <button onclick="manualSearch()" style="padding:12px 20px;border-radius:10px;border:none;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer;white-space:nowrap">🔍 검색</button>
+                    </div>
+                    <div id="suggestBox" style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-top:10px">
+                        <span onclick="quickKeyword('블루투스 이어폰')" style="padding:4px 12px;border-radius:16px;background:rgba(59,130,246,.15);color:#60a5fa;font-size:.72rem;cursor:pointer">블루투스 이어폰</span>
+                        <span onclick="quickKeyword('실리콘 주방용품')" style="padding:4px 12px;border-radius:16px;background:rgba(16,185,129,.15);color:#34d399;font-size:.72rem;cursor:pointer">실리콘 주방용품</span>
+                        <span onclick="quickKeyword('LED 무드등')" style="padding:4px 12px;border-radius:16px;background:rgba(249,115,22,.15);color:#fb923c;font-size:.72rem;cursor:pointer">LED 무드등</span>
+                        <span onclick="quickKeyword('에코백')" style="padding:4px 12px;border-radius:16px;background:rgba(139,92,246,.15);color:#a78bfa;font-size:.72rem;cursor:pointer">에코백</span>
+                        <span onclick="quickKeyword('여름원피스')" style="padding:4px 12px;border-radius:16px;background:rgba(236,72,153,.15);color:#f472b6;font-size:.72rem;cursor:pointer">여름원피스</span>
+                    </div>
+                    <div id="searchResult" style="display:none;margin-top:12px;max-height:300px;overflow-y:auto"></div>
+                </div>
+
+                <!-- 플랫폼 필터 -->
                 <div style="margin-bottom:24px;">
                     <div class="platform-tabs">
                         <span class="platform-badge p-coupang active"><span class="p-dot"></span>쿠팡</span>
                         <span class="platform-badge p-gmarket active"><span class="p-dot"></span>지마켓</span>
                         <span class="platform-badge p-naver active"><span class="p-dot"></span>네이버</span>
+                        <span class="platform-badge active" style="background:#EE4D2D;color:#fff;border:none;font-size:10px;padding:3px 8px">Shopee</span>
+                        <span class="platform-badge active" style="background:#FF9900;color:#fff;border:none;font-size:10px;padding:3px 8px">Amazon</span>
+                        <span class="platform-badge active" style="background:#000;color:#fff;border:none;font-size:10px;padding:3px 8px">SHEIN</span>
                     </div>
                 </div>
 
-                <!-- ============================================================
-                     플랫폼별 인기 검색어
-                     ============================================================ -->
                 <div class="section-divider">
                     <div class="section-divider-title">🔍 플랫폼별 인기 검색어</div>
                     <div class="section-divider-line"></div>
@@ -118,61 +137,61 @@
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">1</span>
                                     <span class="keyword-text">무선이어폰</span>
-                                    <span class="keyword-volume">45,200</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-flat">→+2%</span>
                                 </div>
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">2</span>
                                     <span class="keyword-text">에코백</span>
-                                    <span class="keyword-volume">31,200</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-down">↓-5%</span>
                                 </div>
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">3</span>
                                     <span class="keyword-text">실리콘주방</span>
-                                    <span class="keyword-volume">28,400</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-up">↑+15%</span>
                                 </div>
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">4</span>
                                     <span class="keyword-text">강아지장난감</span>
-                                    <span class="keyword-volume">22,100</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-up">↑+18%</span>
                                 </div>
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">5</span>
                                     <span class="keyword-text">핸드폰거치대</span>
-                                    <span class="keyword-volume">19,500</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-flat">→+1%</span>
                                 </div>
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">6</span>
                                     <span class="keyword-text">LED무드등</span>
-                                    <span class="keyword-volume">18,700</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-up">↑+32%</span>
                                 </div>
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">7</span>
                                     <span class="keyword-text">메이크업브러쉬</span>
-                                    <span class="keyword-volume">15,600</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-up">↑+24%</span>
                                 </div>
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">8</span>
                                     <span class="keyword-text">차량용수납</span>
-                                    <span class="keyword-volume">12,800</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-up">↑+21%</span>
                                 </div>
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">9</span>
                                     <span class="keyword-text">캠핑LED</span>
-                                    <span class="keyword-volume">9,800</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-up">↑+45%</span>
                                 </div>
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">10</span>
                                     <span class="keyword-text">고양이스크래처</span>
-                                    <span class="keyword-volume">8,900</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-up">↑+28%</span>
                                 </div>
                             </div>
@@ -210,7 +229,7 @@
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">4</span>
                                     <span class="keyword-text">에코백</span>
-                                    <span class="keyword-volume">29,800</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-down">↓-2%</span>
                                 </div>
                                 <div class="search-keyword-item">
@@ -284,7 +303,7 @@
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">4</span>
                                     <span class="keyword-text">인테리어소품</span>
-                                    <span class="keyword-volume">28,900</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-up">↑+15%</span>
                                 </div>
                                 <div class="search-keyword-item">
@@ -302,7 +321,7 @@
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">7</span>
                                     <span class="keyword-text">헤어클립세트</span>
-                                    <span class="keyword-volume">18,700</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-up">↑+25%</span>
                                 </div>
                                 <div class="search-keyword-item">
@@ -314,7 +333,7 @@
                                 <div class="search-keyword-item">
                                     <span class="keyword-rank-num">9</span>
                                     <span class="keyword-text">캔들홀더</span>
-                                    <span class="keyword-volume">12,800</span>
+                                    <span class="keyword-volume">크롤링 후</span>
                                     <span class="keyword-trend trend-up">↑+35%</span>
                                 </div>
                                 <div class="search-keyword-item">
@@ -600,7 +619,7 @@
                                 <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
                                 <td>3,847</td>
                                 <td>3,505</td>
-                                <td><span class="trend-indicator trend-up">+342</span></td>
+                                <td><span class="trend-indicator trend-up">+0</span></td>
                                 <td><span class="trend-indicator trend-up">↑+9.8%</span></td>
                                 <td>4.4</td>
                             </tr>
@@ -719,7 +738,7 @@
                 data: {
                     labels: ['05/18','05/19','05/20','05/21','05/22','05/23','05/24'],
                     datasets: [
-                        { label:'무선이어폰', data:[41200,42100,43500,44000,44800,45000,45200], borderColor:'#2563EB', backgroundColor:'rgba(37,99,235,0.06)', fill:true, tension:0.4, borderWidth:2, pointRadius:3 },
+                        { label:'무선이어폰', data:[0,0,43500,44000,44800,45000,0], borderColor:'#2563EB', backgroundColor:'rgba(37,99,235,0.06)', fill:true, tension:0.4, borderWidth:2, pointRadius:3 },
                         { label:'실리콘주방', data:[22000,23100,24500,25200,26800,27500,28400], borderColor:'#10B981', backgroundColor:'rgba(16,185,129,0.06)', fill:true, tension:0.4, borderWidth:2, pointRadius:3 },
                         { label:'LED무드등', data:[12500,13800,14500,15200,16800,17500,18700], borderColor:'#F59E0B', backgroundColor:'rgba(245,158,11,0.06)', fill:true, tension:0.4, borderWidth:2, pointRadius:3 },
                         { label:'강아지장난감', data:[16800,17200,18100,19000,20500,21200,22100], borderColor:'#EC4899', backgroundColor:'rgba(236,72,153,0.06)', fill:true, tension:0.4, borderWidth:2, pointRadius:3 },
@@ -743,7 +762,7 @@
                 data: {
                     labels: ['무선이어폰','에코백','실리콘주방','강아지장난감','LED무드등','핸드폰거치대','메이크업브러쉬','캠핑LED','기타'],
                     datasets: [{
-                        data: [45200,31200,28400,22100,18700,19500,15600,9800,25000],
+                        data: [0,31200,28400,22100,18700,19500,15600,9800,25000],
                         backgroundColor: ['#2563EB','#06B6D4','#10B981','#F59E0B','#EC4899','#8B5CF6','#F97316','#EF4444','#CBD5E1'],
                         borderWidth: 2,
                         borderColor: '#fff'
@@ -757,6 +776,72 @@
             });
         }
     });
+    </script>
+    <script src="js/data-sync.js"></script>
+    <script src="js/supabase-client.js"></script>
+    <script>
+    var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
+    function quickKeyword(kw){document.getElementById('manualSearchInput').value=kw;manualSearch()}
+    async function manualSearch(){
+        var kw=document.getElementById('manualSearchInput').value.trim();
+        if(!kw)return;
+        var box=document.getElementById('searchResult');
+        box.style.display='block';
+        box.innerHTML='<div style="text-align:center;color:#94a3b8;padding:12px">🔍 "'+kw+'" 검색 중...</div>';
+        try{
+            var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(kw)+'&country=kr&num=20';
+            var r=await fetch(url);var data=await r.json();
+            var items=data.shopping_results||[];
+            if(items.length===0){box.innerHTML='<div style="text-align:center;color:#94a3b8;padding:12px">결과 없음</div>';return}
+            var related=data.related_searches||[];
+            var html='<div style="margin-bottom:8px;font-size:.72rem;color:#94a3b8">'+items.length+'개 결과</div>';
+            if(related.length>0){
+                html+='<div style="margin-bottom:10px;display:flex;gap:4px;flex-wrap:wrap">';
+                related.forEach(function(r){html+='<span onclick="quickKeyword(\''+r.query+'\')" style="padding:3px 10px;border-radius:12px;background:rgba(139,92,246,.1);color:#a78bfa;font-size:.65rem;cursor:pointer">'+r.query+'</span>'});
+                html+='</div>';
+            }
+            items.forEach(function(it,i){
+                var price=it.extracted_price||0;
+                if(typeof price==='string')price=parseInt(price.replace(/[^\d]/g,''))||0;
+                html+='<div style="display:flex;gap:8px;padding:8px;border-bottom:1px solid #334155;cursor:pointer" onclick="window.open(\''+((it.link||'').replace(/'/g,'%27'))+'\')"><img src="'+(it.thumbnail||'')+'" style="width:40px;height:40px;object-fit:cover;border-radius:4px" onerror="this.style.display=\'none\'"><div style="flex:1;min-width:0"><div style="font-size:.75rem;color:#e2e8f0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(it.title||'')+'</div><div style="font-size:.8rem;font-weight:700;color:#e42528">₩'+price.toLocaleString()+' <span style="font-size:.6rem;color:#64748b">'+(it.source||'')+'</span></div></div></div>';
+            });
+            box.innerHTML=html;
+        }catch(e){box.innerHTML='<div style="color:#ef4444;padding:12px">오류: '+e.message+'</div>'}
+    }
+
+    (async function(){
+        var products = DataSync.getProducts();
+        if (!products && DB.isConfigured()) {
+            try { var dbP = await DB.getProducts({limit:100}); if(dbP&&dbP.length>0) products=dbP.map(function(p){return{name:p.name,price:p.price,platform:p.platform,reviewCount:p.review_count,rating:p.rating}}); } catch(e){}
+        }
+        if (!products || products.length === 0) return;
+
+        var kpis = document.querySelectorAll('.kpi-value');
+        if (kpis.length >= 1) kpis[0].textContent = products.length;
+
+        var withReviews = products.filter(function(p){return parseInt(p.reviewCount)>0}).sort(function(a,b){return (parseInt(b.reviewCount)||0)-(parseInt(a.reviewCount)||0)});
+        var totalReviews = withReviews.reduce(function(s,p){return s+(parseInt(p.reviewCount)||0)},0);
+        if (kpis.length >= 2) kpis[1].textContent = totalReviews.toLocaleString();
+
+        var avgRating = 0;
+        var withRating = products.filter(function(p){return parseFloat(p.rating)>0});
+        if (withRating.length > 0) avgRating = (withRating.reduce(function(s,p){return s+(parseFloat(p.rating)||0)},0) / withRating.length).toFixed(1);
+        if (kpis.length >= 3) kpis[2].textContent = avgRating > 0 ? '⭐' + avgRating : '-';
+
+        var keywordList = document.querySelector('.search-keyword-list');
+        if (keywordList && withReviews.length > 0) {
+            keywordList.innerHTML = withReviews.slice(0, 10).map(function(p, i) {
+                return '<div class="search-keyword-item"><span class="keyword-rank-num">'+(i+1)+'</span><span class="keyword-text">'+(p.name||'').substring(0,25)+'</span><span class="keyword-volume">리뷰 '+(p.reviewCount||0)+'</span><span class="keyword-trend" style="color:#10b981">'+p.platform+'</span></div>';
+            }).join('');
+        }
+
+        var reviewTable = document.querySelector('.data-table tbody');
+        if (reviewTable) {
+            reviewTable.innerHTML = withReviews.slice(0, 15).map(function(p, i) {
+                return '<tr><td>'+(i+1)+'</td><td style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(p.name||'').substring(0,25)+'</td><td>'+p.platform+'</td><td>'+(p.reviewCount||0)+'</td><td>'+(p.rating?'⭐'+p.rating:'-')+'</td><td><span style="font-size:.7rem;padding:2px 6px;border-radius:4px;background:rgba(139,92,246,.15);color:#a78bfa">실제</span></td></tr>';
+            }).join('');
+        }
+    })();
     </script>
 </body>
 </html>

@@ -1,0 +1,69 @@
+{
+  "manifest_version": 3,
+  "name": "EZCOMET 소싱 트래커",
+  "version": "1.0.0",
+  "description": "쿠팡, 1688, 네이버, 지마켓, Shopee, Lazada, TikTok Shop에서 상품 데이터를 자동 수집하는 크로스보더 이커머스 소싱 도구",
+  "permissions": [
+    "storage",
+    "alarms",
+    "activeTab",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://www.coupang.com/*",
+    "https://m.coupang.com/*",
+    "https://www.1688.com/*",
+    "https://s.1688.com/*",
+    "https://detail.1688.com/*",
+    "https://shopping.naver.com/*",
+    "https://www.gmarket.co.kr/*",
+    "https://shopee.co.id/*",
+    "https://shopee.vn/*",
+    "https://shopee.co.th/*",
+    "https://shopee.sg/*",
+    "https://www.lazada.co.id/*",
+    "https://www.lazada.vn/*",
+    "https://www.lazada.co.th/*",
+    "https://www.lazada.sg/*",
+    "https://shop.tiktok.com/*",
+    "https://unruyezigyybnuvgdgdt.supabase.co/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.coupang.com/*", "https://m.coupang.com/*"],
+      "js": ["content/coupang.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://s.1688.com/*", "https://www.1688.com/*"],
+      "js": ["content/alibaba.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://shopping.naver.com/*"],
+      "js": ["content/naver.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://shopee.co.id/*", "https://shopee.vn/*", "https://shopee.co.th/*", "https://shopee.sg/*"],
+      "js": ["content/shopee.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

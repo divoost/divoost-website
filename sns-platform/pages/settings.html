@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>설정 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .settings-box{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:24px;margin-bottom:20px}
+        .settings-box h2{font-size:1.05rem;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .api-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:18px;margin-bottom:14px;transition:.2s}
+        .api-card:hover{border-color:#cbd5e1}
+        .api-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+        .api-icon{font-size:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px;flex-shrink:0}
+        .api-icon.fb{background:#e7f0ff}
+        .api-icon.tt{background:#f0f0f0}
+        .api-icon.ig{background:#fce7f3}
+        .api-icon.nb{background:#dcfce7}
+        .api-icon.nc{background:#fef3c7}
+        .api-icon.xhs{background:#fee2e2}
+        .api-icon.dy{background:#f3e8ff}
+        .api-name{font-weight:700;font-size:.95rem}
+        .api-status{margin-left:auto;font-size:.72rem;padding:4px 12px;border-radius:16px;font-weight:600}
+        .api-status.connected{background:#dcfce7;color:#16a34a}
+        .api-status.disconnected{background:#fee2e2;color:#dc2626}
+        .api-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        .api-field{display:flex;flex-direction:column;gap:4px}
+        .api-field.full{grid-column:1/-1}
+        .api-field label{font-size:.75rem;font-weight:600;color:#64748b}
+        .api-field input,.api-field select{padding:9px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem;font-family:inherit;transition:border-color .2s}
+        .api-field input:focus,.api-field select:focus{border-color:#3b82f6;outline:none;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+        .api-field input[type="password"]{font-family:monospace;letter-spacing:1px}
+        .api-actions{display:flex;gap:8px;margin-top:14px}
+        .btn-connect{padding:8px 20px;border-radius:8px;border:none;font-size:.8rem;font-weight:600;cursor:pointer;transition:.2s}
+        .btn-connect.primary{background:#3b82f6;color:#fff}
+        .btn-connect.primary:hover{background:#2563eb}
+        .btn-connect.danger{background:#fee2e2;color:#dc2626;border:1px solid #fecaca}
+        .btn-connect.danger:hover{background:#fecdd3}
+        .btn-connect.secondary{background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0}
+        .btn-connect.secondary:hover{background:#e2e8f0}
+        .guide-text{font-size:.75rem;color:#94a3b8;line-height:1.6;margin-top:8px;padding:10px 12px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe}
+        .guide-text a{color:#3b82f6;text-decoration:none;font-weight:600}
+        .guide-text a:hover{text-decoration:underline}
+        .toggle-pw{position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:14px;color:#94a3b8;background:none;border:none}
+        .pw-wrap{position:relative}
+        .general-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+        .general-field{display:flex;flex-direction:column;gap:4px}
+        .general-field label{font-size:.75rem;font-weight:600;color:#64748b}
+        .general-field select,.general-field input{padding:9px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem}
+        .save-bar{display:flex;gap:8px;justify-content:flex-end;padding:16px 0}
+        .btn-save{padding:10px 28px;border-radius:8px;border:none;background:#10b981;color:#fff;font-weight:700;font-size:.85rem;cursor:pointer;transition:.2s}
+        .btn-save:hover{background:#059669;box-shadow:0 4px 12px rgba(16,185,129,.3)}
+        .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;display:flex;align-items:center;gap:8px}
+        .toast.show{opacity:1;transform:translateY(0)}
+        @media(max-width:768px){.api-fields{grid-template-columns:1fr}.general-row{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link active"><span>⚙️</span> 설정</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">⚙️ 설정</div><div class="top-bar-sub">SNS 채널 API 연결 및 시스템 설정</div></div></div></header>
+            <div class="content">
+
+                <!-- General Settings -->
+                <div class="settings-box">
+                    <h2>🔧 일반 설정</h2>
+                    <div class="general-row">
+                        <div class="general-field">
+                            <label>기본 언어</label>
+                            <select id="genLang">
+                                <option value="ko" selected>🇰🇷 한국어</option>
+                                <option value="en">🇺🇸 English</option>
+                                <option value="zh">🇨🇳 中文</option>
+                                <option value="vi">🇻🇳 Tiếng Việt</option>
+                            </select>
+                        </div>
+                        <div class="general-field">
+                            <label>시간대 (Timezone)</label>
+                            <select id="genTimezone">
+                                <option value="Asia/Seoul" selected>🇰🇷 한국 (KST, UTC+9)</option>
+                                <option value="Asia/Ho_Chi_Minh">🇻🇳 베트남 (ICT, UTC+7)</option>
+                                <option value="Asia/Shanghai">🇨🇳 중국 (CST, UTC+8)</option>
+                                <option value="America/New_York">🇺🇸 미국 동부 (EST, UTC-5)</option>
+                                <option value="America/Los_Angeles">🇺🇸 미국 서부 (PST, UTC-8)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="general-row">
+                        <div class="general-field">
+                            <label>자동 저장 간격</label>
+                            <select id="genAutosave">
+                                <option value="0">사용 안함</option>
+                                <option value="30" selected>30초</option>
+                                <option value="60">1분</option>
+                                <option value="300">5분</option>
+                            </select>
+                        </div>
+                        <div class="general-field">
+                            <label>알림 설정</label>
+                            <select id="genNotify">
+                                <option value="all" selected>모든 알림</option>
+                                <option value="important">중요 알림만</option>
+                                <option value="none">알림 끄기</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SNS API Settings -->
+                <div class="settings-box">
+                    <h2>📡 SNS 채널 API 설정</h2>
+                    <p style="font-size:.8rem;color:#64748b;margin-bottom:16px">각 SNS 플랫폼의 API 키를 등록하면 자동 포스팅, 분석, 댓글 관리 기능을 사용할 수 있습니다.</p>
+
+                    <!-- Facebook -->
+                    <div class="api-card" id="card-facebook">
+                        <div class="api-header">
+                            <div class="api-icon fb">📘</div>
+                            <div><div class="api-name">Facebook</div><div style="font-size:.72rem;color:#94a3b8">페이지/그룹 자동 포스팅</div></div>
+                            <div class="api-status disconnected" id="status-facebook">연결 안됨</div>
+                        </div>
+                        <div class="api-fields">
+                            <div class="api-field"><label>App ID</label><input type="text" id="fb-appid" placeholder="Facebook App ID"></div>
+                            <div class="api-field"><label>App Secret</label><div class="pw-wrap"><input type="password" id="fb-secret" placeholder="App Secret"><button class="toggle-pw" onclick="togglePw('fb-secret')">👁</button></div></div>
+                            <div class="api-field full"><label>Page Access Token</label><div class="pw-wrap"><input type="password" id="fb-token" placeholder="장기 페이지 액세스 토큰"><button class="toggle-pw" onclick="togglePw('fb-token')">👁</button></div></div>
+                            <div class="api-field"><label>Page ID</label><input type="text" id="fb-pageid" placeholder="페이지 ID"></div>
+                        </div>
+                        <div class="guide-text">📌 <a href="https://developers.facebook.com" target="_blank">Facebook Developers</a>에서 앱을 생성하고, Graph API Explorer에서 Page Access Token을 발급받으세요.</div>
+                        <div class="api-actions">
+                            <button class="btn-connect primary" onclick="testConnection('facebook')">🔗 연결 테스트</button>
+                            <button class="btn-connect secondary" onclick="saveChannel('facebook')">💾 저장</button>
+                        </div>
+                    </div>
+
+                    <!-- TikTok -->
+                    <div class="api-card" id="card-tiktok">
+                        <div class="api-header">
+                            <div class="api-icon tt">🎵</div>
+                            <div><div class="api-name">TikTok</div><div style="font-size:.72rem;color:#94a3b8">비즈니스 계정 콘텐츠 관리</div></div>
+                            <div class="api-status disconnected" id="status-tiktok">연결 안됨</div>
+                        </div>
+                        <div class="api-fields">
+                            <div class="api-field"><label>Client Key</label><input type="text" id="tt-clientkey" placeholder="TikTok Client Key"></div>
+                            <div class="api-field"><label>Client Secret</label><div class="pw-wrap"><input type="password" id="tt-secret" placeholder="Client Secret"><button class="toggle-pw" onclick="togglePw('tt-secret')">👁</button></div></div>
+                            <div class="api-field full"><label>Access Token</label><div class="pw-wrap"><input type="password" id="tt-token" placeholder="OAuth Access Token"><button class="toggle-pw" onclick="togglePw('tt-token')">👁</button></div></div>
+                        </div>
+                        <div class="guide-text">📌 <a href="https://developers.tiktok.com" target="_blank">TikTok for Developers</a>에서 앱을 등록하고 Content Posting API 권한을 신청하세요.</div>
+                        <div class="api-actions">
+                            <button class="btn-connect primary" onclick="testConnection('tiktok')">🔗 연결 테스트</button>
+                            <button class="btn-connect secondary" onclick="saveChannel('tiktok')">💾 저장</button>
+                        </div>
+                    </div>
+
+                    <!-- Instagram -->
+                    <div class="api-card" id="card-instagram">
+                        <div class="api-header">
+                            <div class="api-icon ig">📸</div>
+                            <div><div class="api-name">Instagram</div><div style="font-size:.72rem;color:#94a3b8">비즈니스/크리에이터 계정</div></div>
+                            <div class="api-status disconnected" id="status-instagram">연결 안됨</div>
+                        </div>
+                        <div class="api-fields">
+                            <div class="api-field full"><label>Instagram 액세스 토큰 (Facebook Graph API 경유)</label><div class="pw-wrap"><input type="password" id="ig-token" placeholder="Instagram Graph API Access Token"><button class="toggle-pw" onclick="togglePw('ig-token')">👁</button></div></div>
+                            <div class="api-field"><label>Instagram Business Account ID</label><input type="text" id="ig-accountid" placeholder="비즈니스 계정 ID"></div>
+                        </div>
+                        <div class="guide-text">📌 Instagram API는 Facebook Graph API를 통해 접근합니다. Facebook 앱에서 Instagram Basic Display 또는 Instagram Graph API를 활성화하세요.</div>
+                        <div class="api-actions">
+                            <button class="btn-connect primary" onclick="testConnection('instagram')">🔗 연결 테스트</button>
+                            <button class="btn-connect secondary" onclick="saveChannel('instagram')">💾 저장</button>
+                        </div>
+                    </div>
+
+                    <!-- Naver Blog -->
+                    <div class="api-card" id="card-naver_blog">
+                        <div class="api-header">
+                            <div class="api-icon nb">📗</div>
+                            <div><div class="api-name">네이버 블로그</div><div style="font-size:.72rem;color:#94a3b8">블로그 자동 글쓰기</div></div>
+                            <div class="api-status disconnected" id="status-naver_blog">연결 안됨</div>
+                        </div>
+                        <div class="api-fields">
+                            <div class="api-field"><label>Client ID</label><input type="text" id="nb-clientid" placeholder="네이버 API Client ID"></div>
+                            <div class="api-field"><label>Client Secret</label><div class="pw-wrap"><input type="password" id="nb-secret" placeholder="Client Secret"><button class="toggle-pw" onclick="togglePw('nb-secret')">👁</button></div></div>
+                            <div class="api-field full"><label>Access Token (OAuth)</label><div class="pw-wrap"><input type="password" id="nb-token" placeholder="네이버 OAuth Access Token"><button class="toggle-pw" onclick="togglePw('nb-token')">👁</button></div></div>
+                            <div class="api-field"><label>블로그 ID</label><input type="text" id="nb-blogid" placeholder="블로그 아이디"></div>
+                        </div>
+                        <div class="guide-text">📌 <a href="https://developers.naver.com" target="_blank">네이버 개발자센터</a>에서 애플리케이션을 등록하고 블로그 API 사용 신청을 하세요. OAuth 2.0 인증이 필요합니다.</div>
+                        <div class="api-actions">
+                            <button class="btn-connect primary" onclick="testConnection('naver_blog')">🔗 연결 테스트</button>
+                            <button class="btn-connect secondary" onclick="saveChannel('naver_blog')">💾 저장</button>
+                        </div>
+                    </div>
+
+                    <!-- Naver Cafe -->
+                    <div class="api-card" id="card-naver_cafe">
+                        <div class="api-header">
+                            <div class="api-icon nc">☕</div>
+                            <div><div class="api-name">네이버 카페</div><div style="font-size:.72rem;color:#94a3b8">카페 자동 글쓰기</div></div>
+                            <div class="api-status disconnected" id="status-naver_cafe">연결 안됨</div>
+                        </div>
+                        <div class="api-fields">
+                            <div class="api-field"><label>Client ID</label><input type="text" id="nc-clientid" placeholder="네이버 API Client ID"></div>
+                            <div class="api-field"><label>Client Secret</label><div class="pw-wrap"><input type="password" id="nc-secret" placeholder="Client Secret"><button class="toggle-pw" onclick="togglePw('nc-secret')">👁</button></div></div>
+                            <div class="api-field"><label>카페 ID (Club ID)</label><input type="text" id="nc-cafeid" placeholder="카페 ID 숫자"></div>
+                            <div class="api-field"><label>게시판 메뉴 ID</label><input type="text" id="nc-menuid" placeholder="게시판 메뉴 ID"></div>
+                            <div class="api-field full"><label>Access Token (OAuth)</label><div class="pw-wrap"><input type="password" id="nc-token" placeholder="네이버 카페 OAuth Access Token"><button class="toggle-pw" onclick="togglePw('nc-token')">👁</button></div></div>
+                        </div>
+                        <div class="guide-text">📌 네이버 카페 API는 블로그와 동일한 Client ID/Secret을 사용하되, 카페 글쓰기 권한이 추가로 필요합니다.</div>
+                        <div class="api-actions">
+                            <button class="btn-connect primary" onclick="testConnection('naver_cafe')">🔗 연결 테스트</button>
+                            <button class="btn-connect secondary" onclick="saveChannel('naver_cafe')">💾 저장</button>
+                        </div>
+                    </div>
+
+                    <!-- Xiaohongshu -->
+                    <div class="api-card" id="card-xiaohongshu">
+                        <div class="api-header">
+                            <div class="api-icon xhs">📕</div>
+                            <div><div class="api-name">샤오홍수 (小红书)</div><div style="font-size:.72rem;color:#94a3b8">콘텐츠 발행 및 분석</div></div>
+                            <div class="api-status disconnected" id="status-xiaohongshu">연결 안됨</div>
+                        </div>
+                        <div class="api-fields">
+                            <div class="api-field"><label>App Key</label><input type="text" id="xhs-appkey" placeholder="小红书 App Key"></div>
+                            <div class="api-field"><label>App Secret</label><div class="pw-wrap"><input type="password" id="xhs-secret" placeholder="App Secret"><button class="toggle-pw" onclick="togglePw('xhs-secret')">👁</button></div></div>
+                            <div class="api-field full"><label>Access Token</label><div class="pw-wrap"><input type="password" id="xhs-token" placeholder="OAuth Access Token"><button class="toggle-pw" onclick="togglePw('xhs-token')">👁</button></div></div>
+                        </div>
+                        <div class="guide-text">📌 小红书 Open Platform (<a href="https://open.xiaohongshu.com" target="_blank">open.xiaohongshu.com</a>)에서 개발자 등록 후 앱을 생성하세요. 중국 사업자등록증이 필요할 수 있습니다.</div>
+                        <div class="api-actions">
+                            <button class="btn-connect primary" onclick="testConnection('xiaohongshu')">🔗 연결 테스트</button>
+                            <button class="btn-connect secondary" onclick="saveChannel('xiaohongshu')">💾 저장</button>
+                        </div>
+                    </div>
+
+                    <!-- Douyin -->
+                    <div class="api-card" id="card-douyin">
+                        <div class="api-header">
+                            <div class="api-icon dy">🎬</div>
+                            <div><div class="api-name">도우인 (抖音)</div><div style="font-size:.72rem;color:#94a3b8">숏폼 영상 콘텐츠 관리</div></div>
+                            <div class="api-status disconnected" id="status-douyin">연결 안됨</div>
+                        </div>
+                        <div class="api-fields">
+                            <div class="api-field"><label>Client Key</label><input type="text" id="dy-clientkey" placeholder="抖音 Client Key"></div>
+                            <div class="api-field"><label>Client Secret</label><div class="pw-wrap"><input type="password" id="dy-secret" placeholder="Client Secret"><button class="toggle-pw" onclick="togglePw('dy-secret')">👁</button></div></div>
+                            <div class="api-field full"><label>Access Token</label><div class="pw-wrap"><input type="password" id="dy-token" placeholder="OAuth Access Token"><button class="toggle-pw" onclick="togglePw('dy-token')">👁</button></div></div>
+                        </div>
+                        <div class="guide-text">📌 抖音 Open Platform (<a href="https://open.douyin.com" target="_blank">open.douyin.com</a>)에서 앱을 등록하세요. 중국 사업자 또는 개인 인증이 필요합니다.</div>
+                        <div class="api-actions">
+                            <button class="btn-connect primary" onclick="testConnection('douyin')">🔗 연결 테스트</button>
+                            <button class="btn-connect secondary" onclick="saveChannel('douyin')">💾 저장</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Settings -->
+                <div class="settings-box">
+                    <h2>🤖 AI 설정</h2>
+                    <div class="general-row">
+                        <div class="general-field">
+                            <label>AI 모델</label>
+                            <select id="aiModel">
+                                <option value="default" selected>기본 (내장 템플릿)</option>
+                                <option value="openai">OpenAI GPT-4</option>
+                                <option value="claude">Anthropic Claude</option>
+                            </select>
+                        </div>
+                        <div class="general-field">
+                            <label>AI API Key (선택)</label>
+                            <div class="pw-wrap" style="position:relative">
+                                <input type="password" id="aiApiKey" placeholder="외부 AI API 키 입력" style="padding:9px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem;width:100%">
+                                <button class="toggle-pw" onclick="togglePw('aiApiKey')">👁</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="guide-text">📌 AI API 키를 등록하면 더 고품질의 콘텐츠를 자동 생성할 수 있습니다. 미등록 시 내장 템플릿 기반으로 생성됩니다.</div>
+                </div>
+
+                <!-- Data Management -->
+                <div class="settings-box">
+                    <h2>💾 데이터 관리</h2>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap">
+                        <button class="btn-connect secondary" onclick="exportSettings()">📤 설정 내보내기</button>
+                        <button class="btn-connect secondary" onclick="document.getElementById('importFile').click()">📥 설정 가져오기</button>
+                        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSettings(this)">
+                        <button class="btn-connect danger" onclick="clearAllData()">🗑️ 전체 데이터 초기화</button>
+                    </div>
+                    <div style="margin-top:12px;font-size:.75rem;color:#94a3b8">
+                        현재 저장된 데이터: 콘텐츠 <strong id="dataPostCount">0</strong>개 · 미디어 <strong id="dataMediaCount">0</strong>개 · 예약 <strong id="dataScheduleCount">0</strong>개 · AI 초안 <strong id="dataDraftCount">0</strong>개
+                    </div>
+                </div>
+
+                <div class="save-bar">
+                    <button class="btn-save" onclick="saveAllSettings()">💾 전체 설정 저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+
+        var CHANNELS = ['facebook','tiktok','instagram','naver_blog','naver_cafe','xiaohongshu','douyin'];
+        var FIELD_MAP = {
+            facebook: ['fb-appid','fb-secret','fb-token','fb-pageid'],
+            tiktok: ['tt-clientkey','tt-secret','tt-token'],
+            instagram: ['ig-token','ig-accountid'],
+            naver_blog: ['nb-clientid','nb-secret','nb-token','nb-blogid'],
+            naver_cafe: ['nc-clientid','nc-secret','nc-cafeid','nc-menuid','nc-token'],
+            xiaohongshu: ['xhs-appkey','xhs-secret','xhs-token'],
+            douyin: ['dy-clientkey','dy-secret','dy-token']
+        };
+
+        function togglePw(id){
+            var el = document.getElementById(id);
+            el.type = el.type === 'password' ? 'text' : 'password';
+        }
+
+        function loadSettings(){
+            var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+
+            if(settings.general){
+                if(settings.general.lang) document.getElementById('genLang').value = settings.general.lang;
+                if(settings.general.timezone) document.getElementById('genTimezone').value = settings.general.timezone;
+                if(settings.general.autosave) document.getElementById('genAutosave').value = settings.general.autosave;
+                if(settings.general.notify) document.getElementById('genNotify').value = settings.general.notify;
+            }
+            if(settings.ai){
+                if(settings.ai.model) document.getElementById('aiModel').value = settings.ai.model;
+                if(settings.ai.apiKey) document.getElementById('aiApiKey').value = settings.ai.apiKey;
+            }
+
+            CHANNELS.forEach(function(ch){
+                var chSettings = settings[ch] || {};
+                var fields = FIELD_MAP[ch] || [];
+                fields.forEach(function(fid){
+                    var el = document.getElementById(fid);
+                    if(el && chSettings[fid]) el.value = chSettings[fid];
+                });
+                updateStatus(ch);
+            });
+
+            updateDataCounts();
+        }
+
+        function updateStatus(ch){
+            var fields = FIELD_MAP[ch] || [];
+            var hasValue = false;
+            fields.forEach(function(fid){
+                var el = document.getElementById(fid);
+                if(el && el.value.trim()) hasValue = true;
+            });
+            var statusEl = document.getElementById('status-' + ch);
+            if(statusEl){
+                if(hasValue){
+                    statusEl.textContent = '설정됨';
+                    statusEl.className = 'api-status connected';
+                } else {
+                    statusEl.textContent = '연결 안됨';
+                    statusEl.className = 'api-status disconnected';
+                }
+            }
+        }
+
+        function saveChannel(ch){
+            var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+            var fields = FIELD_MAP[ch] || [];
+            settings[ch] = settings[ch] || {};
+            fields.forEach(function(fid){
+                var el = document.getElementById(fid);
+                if(el) settings[ch][fid] = el.value.trim();
+            });
+            localStorage.setItem('snsSettings', JSON.stringify(settings));
+            updateStatus(ch);
+            showToast(ch + ' 설정이 저장되었습니다');
+        }
+
+        function testConnection(ch){
+            var fields = FIELD_MAP[ch] || [];
+            var hasToken = false;
+            fields.forEach(function(fid){
+                if(fid.indexOf('token') > -1){
+                    var el = document.getElementById(fid);
+                    if(el && el.value.trim()) hasToken = true;
+                }
+            });
+
+            if(!hasToken){
+                showToast('Access Token을 먼저 입력해주세요', 'warn');
+                return;
+            }
+
+            showToast(ch + ' 연결 테스트 중...', 'info');
+            setTimeout(function(){
+                saveChannel(ch);
+                showToast(ch + ' API 설정이 저장되었습니다. 실제 연결은 포스팅 시 확인됩니다.', 'success');
+            }, 800);
+        }
+
+        function saveAllSettings(){
+            var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+
+            settings.general = {
+                lang: document.getElementById('genLang').value,
+                timezone: document.getElementById('genTimezone').value,
+                autosave: document.getElementById('genAutosave').value,
+                notify: document.getElementById('genNotify').value
+            };
+            settings.ai = {
+                model: document.getElementById('aiModel').value,
+                apiKey: document.getElementById('aiApiKey').value.trim()
+            };
+
+            CHANNELS.forEach(function(ch){
+                var fields = FIELD_MAP[ch] || [];
+                settings[ch] = settings[ch] || {};
+                fields.forEach(function(fid){
+                    var el = document.getElementById(fid);
+                    if(el) settings[ch][fid] = el.value.trim();
+                });
+            });
+
+            localStorage.setItem('snsSettings', JSON.stringify(settings));
+            CHANNELS.forEach(function(ch){ updateStatus(ch); });
+            showToast('전체 설정이 저장되었습니다!', 'success');
+        }
+
+        function exportSettings(){
+            var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+            var blob = new Blob([JSON.stringify(settings, null, 2)], {type: 'application/json'});
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'sns-settings-' + new Date().toISOString().slice(0,10) + '.json';
+            a.click();
+            showToast('설정이 내보내기 되었습니다');
+        }
+
+        function importSettings(input){
+            var file = input.files[0];
+            if(!file) return;
+            var reader = new FileReader();
+            reader.onload = function(e){
+                try {
+                    var data = JSON.parse(e.target.result);
+                    localStorage.setItem('snsSettings', JSON.stringify(data));
+                    loadSettings();
+                    showToast('설정을 가져왔습니다!', 'success');
+                } catch(err){
+                    showToast('잘못된 파일 형식입니다', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function clearAllData(){
+            if(!confirm('⚠️ 모든 데이터가 삭제됩니다.\n\n삭제 대상:\n- SNS 설정\n- 저장된 콘텐츠\n- 미디어\n- 예약 발행\n- AI 초안\n\n정말 초기화하시겠습니까?')) return;
+            if(!confirm('정말로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) return;
+            localStorage.removeItem('snsSettings');
+            localStorage.removeItem('snsPosts');
+            localStorage.removeItem('snsMedia');
+            localStorage.removeItem('snsSchedules');
+            localStorage.removeItem('aiWriterDrafts');
+            loadSettings();
+            showToast('전체 데이터가 초기화되었습니다');
+        }
+
+        function updateDataCounts(){
+            document.getElementById('dataPostCount').textContent = JSON.parse(localStorage.getItem('snsPosts') || '[]').length;
+            document.getElementById('dataMediaCount').textContent = JSON.parse(localStorage.getItem('snsMedia') || '[]').length;
+            document.getElementById('dataScheduleCount').textContent = JSON.parse(localStorage.getItem('snsSchedules') || '[]').length;
+            document.getElementById('dataDraftCount').textContent = JSON.parse(localStorage.getItem('aiWriterDrafts') || '[]').length;
+        }
+
+        function showToast(message, type){
+            var toast = document.getElementById('toast');
+            var icon = '✅';
+            if(type === 'warn') icon = '⚠️';
+            else if(type === 'error') icon = '❌';
+            else if(type === 'info') icon = 'ℹ️';
+            toast.innerHTML = icon + ' ' + message;
+            toast.className = 'toast show';
+            setTimeout(function(){ toast.className = 'toast'; }, 2500);
+        }
+
+        loadSettings();
+    </script>
+</body>
+</html>

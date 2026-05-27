@@ -1,0 +1,56 @@
+/* Mobile fix for top-bar and status-bar */
+@media (max-width: 768px) {
+    .top-bar {
+        height: auto !important;
+        flex-wrap: wrap !important;
+        padding: 10px 12px !important;
+        gap: 8px;
+    }
+    .top-bar-left {
+        flex: 1;
+        min-width: 0;
+    }
+    .top-bar-title {
+        font-size: 14px !important;
+    }
+    .top-bar-date {
+        font-size: 10px !important;
+        white-space: normal !important;
+    }
+    .top-bar-right {
+        width: 100%;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 6px !important;
+        justify-content: flex-end;
+    }
+    .top-bar-btn {
+        padding: 6px 10px !important;
+        font-size: 11px !important;
+    }
+    .top-bar-btn span {
+        display: inline !important;
+        font-size: 10px;
+    }
+    .data-source-badge {
+        font-size: 10px !important;
+        padding: 3px 8px !important;
+        order: -1;
+        width: 100%;
+        text-align: center;
+        display: block !important;
+    }
+    .status-bar {
+        flex-wrap: wrap !important;
+        gap: 6px 12px !important;
+        padding: 10px 12px !important;
+        font-size: 11px;
+    }
+    .status-item {
+        font-size: 11px !important;
+        gap: 4px !important;
+    }
+    .content-area {
+        padding: 12px !important;
+    }
+}
