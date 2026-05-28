@@ -155,6 +155,62 @@
             </div>
         </div>
     </div>
-    <script>document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };</script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/supabase-admin.js"></script>
+    <script>
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+
+        function formatRelativeTime(iso){
+            if(!iso) return '-';
+            var d = new Date(iso);
+            var diff = (Date.now() - d.getTime()) / 1000;
+            if(diff < 60) return Math.floor(diff) + '초 전';
+            if(diff < 3600) return Math.floor(diff/60) + '분 전';
+            if(diff < 86400) return Math.floor(diff/3600) + '시간 전';
+            return Math.floor(diff/86400) + '일 전';
+        }
+
+        async function loadActivities(){
+            try {
+                var activities = await SNSAdmin.listActivities({limit: 50});
+                var feed = document.querySelector('.activity-feed');
+                if(!feed || activities.length === 0) return;
+
+                var iconMap = {
+                    LOGIN: {icon:'🔐', cls:'login'},
+                    LOGOUT: {icon:'🔓', cls:'login'},
+                    PUBLISH: {icon:'📤', cls:'post'},
+                    SNS_CONNECT: {icon:'🔗', cls:'connect'},
+                    PAYMENT: {icon:'💳', cls:'payment'},
+                    SETTINGS_UPDATE: {icon:'✏️', cls:'update'},
+                    DELETE: {icon:'🗑', cls:'delete'}
+                };
+
+                feed.innerHTML = activities.map(function(a){
+                    var info = iconMap[a.action_type] || {icon:'📋', cls:'update'};
+                    var time = formatRelativeTime(a.created_at);
+                    var t = a.created_at ? new Date(a.created_at).toTimeString().slice(0,8) : '';
+                    return '<div class="activity-item">' +
+                        '<div class="activity-icon ' + info.cls + '">' + info.icon + '</div>' +
+                        '<div class="activity-body">' +
+                            '<div class="activity-user">' + (a.user_email || '-') + '</div>' +
+                            '<div class="activity-action">' + (a.action_detail || a.action_type || '-') + '</div>' +
+                            '<div class="activity-meta"><span>' + t + ' (' + time + ')</span>' +
+                                (a.ip_address ? '<span>IP: ' + a.ip_address + '</span>' : '') +
+                            '</div>' +
+                        '</div>' +
+                    '</div>';
+                }).join('');
+            } catch(err){
+                console.error('활동 로드 실패:', err);
+            }
+        }
+
+        (async function(){
+            var ok = await SNSAdmin.requireAdmin();
+            if(!ok) return;
+            await loadActivities();
+        })();
+    </script>
 </body>
 </html>

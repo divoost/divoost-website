@@ -173,23 +173,49 @@
         </div>
     </div>
 
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/supabase-admin.js"></script>
     <script>
         document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
 
-        // 샘플 사용자 데이터 (실제 운영 시 Supabase Admin API에서 가져옴)
-        var sampleUsers = [
-            {id:'u1', email:'divoost@user.com', name:'마스터', joinedAt:'2026-05-28', plan:'trial', status:'active', lastActive:'방금 전', snsConnected:['Facebook'], posts:5},
-            {id:'u2', email:'ezwebpia001@gmail.com', name:'이지웹피아', joinedAt:'2026-05-27', plan:'pro', status:'active', lastActive:'10분 전', snsConnected:['Facebook','Instagram'], posts:42},
-            {id:'u3', email:'marketing@company.com', name:'홍길동', joinedAt:'2026-05-25', plan:'pro', status:'active', lastActive:'1시간 전', snsConnected:['Facebook','TikTok'], posts:128},
-            {id:'u4', email:'shop@brand.com', name:'김쇼핑', joinedAt:'2026-05-23', plan:'enterprise', status:'active', lastActive:'2시간 전', snsConnected:['Facebook','Instagram','TikTok','YouTube'], posts:356},
-            {id:'u5', email:'test1@gmail.com', name:'테스트1', joinedAt:'2026-05-20', plan:'trial', status:'inactive', lastActive:'3일 전', snsConnected:[], posts:0},
-            {id:'u6', email:'creator@studio.com', name:'크리에이터', joinedAt:'2026-05-18', plan:'pro', status:'active', lastActive:'5시간 전', snsConnected:['Instagram','TikTok'], posts:89},
-            {id:'u7', email:'spam@bad.com', name:'스팸유저', joinedAt:'2026-05-15', plan:'trial', status:'suspended', lastActive:'정지됨', snsConnected:[], posts:0},
-            {id:'u8', email:'business@corp.com', name:'법인계정', joinedAt:'2026-05-10', plan:'enterprise', status:'active', lastActive:'어제', snsConnected:['Facebook','Instagram'], posts:215}
-        ];
-
-        var filteredUsers = sampleUsers.slice();
+        var sampleUsers = [];  // 실제 Supabase 데이터로 채워짐
+        var filteredUsers = [];
         var selectedUser = null;
+
+        function formatRelativeTime(iso){
+            if(!iso) return '-';
+            var d = new Date(iso);
+            var diff = (Date.now() - d.getTime()) / 1000;
+            if(diff < 60) return '방금 전';
+            if(diff < 3600) return Math.floor(diff/60) + '분 전';
+            if(diff < 86400) return Math.floor(diff/3600) + '시간 전';
+            if(diff < 604800) return Math.floor(diff/86400) + '일 전';
+            return d.toISOString().slice(0,10);
+        }
+
+        async function loadUsersFromSupabase(){
+            try {
+                var users = await SNSAdmin.listUsers();
+                sampleUsers = users.map(function(u){
+                    return {
+                        id: u.id,
+                        email: u.email,
+                        name: u.full_name || (u.email || '').split('@')[0],
+                        joinedAt: u.created_at ? u.created_at.slice(0,10) : '-',
+                        plan: u.plan || 'trial',
+                        status: u.status || 'active',
+                        lastActive: formatRelativeTime(u.last_active_at),
+                        snsConnected: Array.isArray(u.sns_connected) ? u.sns_connected : [],
+                        posts: u.total_posts || 0
+                    };
+                });
+                filteredUsers = sampleUsers.slice();
+                renderUsers();
+            } catch(err){
+                console.error('회원 로딩 실패:', err);
+                alert('⚠️ 회원 데이터를 불러올 수 없습니다.\n\nSupabase에 profiles 테이블이 생성되어 있는지 확인하세요.\n(docs/supabase-admin-schema.sql 참고)');
+            }
+        }
 
         function renderUsers(){
             var search = (document.getElementById('searchInput').value || '').toLowerCase();
@@ -263,27 +289,45 @@
             selectedUser = null;
         }
 
-        function suspendUser(){
+        async function suspendUser(){
             if(!selectedUser) return;
             if(!confirm(selectedUser.name + '님의 계정을 정지하시겠습니까?')) return;
-            selectedUser.status = 'suspended';
-            renderUsers();
-            closeUserModal();
-            alert('✅ 계정이 정지되었습니다.');
+            var result = await SNSAdmin.suspendUser(selectedUser.id, 'admin action');
+            if(result.ok){
+                selectedUser.status = 'suspended';
+                renderUsers();
+                closeUserModal();
+                alert('✅ 계정이 정지되었습니다.');
+            } else {
+                alert('❌ 정지 실패: ' + (result.data && result.data.message || '권한 부족'));
+            }
         }
 
-        function suspendUserById(id){
+        async function suspendUserById(id){
             var u = sampleUsers.find(function(x){ return x.id === id; });
             if(!u) return;
             if(!confirm(u.name + '님의 계정을 정지하시겠습니까?')) return;
-            u.status = 'suspended';
-            renderUsers();
+            var result = await SNSAdmin.suspendUser(id, 'admin action');
+            if(result.ok){
+                u.status = 'suspended';
+                renderUsers();
+            } else {
+                alert('❌ 정지 실패: ' + (result.data && result.data.message || '권한 부족'));
+            }
         }
 
         function sendEmailToUser(){
             if(!selectedUser) return;
             var msg = prompt(selectedUser.email + '로 보낼 메시지:');
-            if(msg) alert('✅ 이메일 발송됨 (실제 운영 시 메일 서버 연동 필요)');
+            if(msg){
+                alert('✅ 이메일 발송 기록됨\n\n실제 발송은 백엔드 이메일 서비스 (SendGrid, AWS SES 등) 연동 필요');
+                SNSAdmin.logAdminAction({
+                    action: 'EMAIL_SEND',
+                    severity: 'info',
+                    target: selectedUser.email,
+                    metadata: {message_preview: msg.substring(0, 100)}
+                });
+            }
         }
 
         function exportUsers(){
@@ -299,10 +343,15 @@
         }
 
         async function refreshFromSupabase(){
-            alert('🔄 Supabase Admin API 호출\n\n실제 운영 시:\n- Supabase Service Role Key 사용\n- /auth/v1/admin/users 엔드포인트 호출\n- 백엔드 경유 필요 (보안)');
+            await loadUsersFromSupabase();
+            alert('✅ Supabase에서 ' + sampleUsers.length + '명의 회원 데이터를 가져왔습니다.');
         }
 
-        renderUsers();
+        (async function(){
+            var ok = await SNSAdmin.requireAdmin();
+            if(!ok) return;
+            await loadUsersFromSupabase();
+        })();
 
         document.getElementById('userModal').addEventListener('click', function(e){
             if(e.target === this) closeUserModal();

@@ -308,22 +308,68 @@
         </div>
     </div>
 
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/supabase-admin.js"></script>
     <script>
         document.getElementById('menuBtn').onclick = function(){
             document.getElementById('sidebar').classList.toggle('open');
         };
 
-        // localStorage에서 통계 조회 (현재는 본인 데이터지만, 실제 운영 시 백엔드 호출)
-        var posts = JSON.parse(localStorage.getItem('snsPosts') || '[]');
-        var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+        (async function(){
+            // 관리자 권한 확인
+            var isAdmin = await SNSAdmin.requireAdmin();
+            if(!isAdmin) return;
 
-        document.getElementById('kTotalUsers').textContent = 1; // 현재는 본인만
-        document.getElementById('kActiveUsers').textContent = 1;
-        document.getElementById('kPaidUsers').textContent = 0;
+            // 실제 데이터 로딩
+            try {
+                // 회원 통계
+                var stats = await SNSAdmin.getUserStats();
+                document.getElementById('kTotalUsers').textContent = stats.total.toLocaleString();
+                document.getElementById('kActiveUsers').textContent = stats.active.toLocaleString();
+                document.getElementById('kPaidUsers').textContent = stats.paid.toLocaleString();
 
-        var today = new Date().toISOString().slice(0,10);
-        var todayPosts = posts.filter(function(p){ return p.date === today; }).length;
-        document.getElementById('kPosts').textContent = todayPosts;
+                // 게시물 통계
+                var postStats = await SNSAdmin.getPostStats();
+                document.getElementById('kPosts').textContent = postStats.today.toLocaleString();
+
+                // 최근 가입자
+                var recentUsers = await SNSAdmin.listUsers({limit: 8});
+                var planNames = {trial:'체험', pro:'PRO', enterprise:'Enterprise'};
+                var statusNames = {active:'활성', inactive:'미인증', suspended:'정지'};
+                if(recentUsers.length > 0){
+                    document.getElementById('recentUsers').innerHTML = recentUsers.slice(0, 5).map(function(u){
+                        var date = u.created_at ? new Date(u.created_at).toISOString().slice(0,10).replace(/-/g,'.') : '-';
+                        return '<tr><td>' + (u.email || '-') + '</td><td>' + date + '</td>' +
+                            '<td><span class="pill ' + (u.plan||'trial') + '">' + (planNames[u.plan]||'체험') + '</span></td>' +
+                            '<td><span class="pill ' + (u.status||'active') + '">' + (statusNames[u.status]||'활성') + '</span></td></tr>';
+                    }).join('');
+                }
+
+                // 최근 활동 로그
+                var activities = await SNSAdmin.listActivities({limit: 10});
+                if(activities.length > 0){
+                    // 시스템 활동 테이블 찾아서 업데이트
+                    var sysTableBody = document.querySelectorAll('.admin-card table tbody');
+                    var systemTbody = sysTableBody[sysTableBody.length - 1];
+                    if(systemTbody){
+                        systemTbody.innerHTML = activities.slice(0,5).map(function(a){
+                            var t = a.created_at ? new Date(a.created_at).toTimeString().slice(0,5) : '-';
+                            return '<tr><td>' + t + '</td><td>' + (a.action_type || '-') + '</td>' +
+                                '<td>' + (a.user_email || '-') + '</td>' +
+                                '<td>' + (a.action_detail || '-') + '</td>' +
+                                '<td><span class="pill active">완료</span></td></tr>';
+                        }).join('');
+                    }
+                }
+
+                // 신고 건수
+                var pendingReports = await SNSAdmin.listReports({status: 'pending'});
+                var rc = document.getElementById('reportCount');
+                if(rc) rc.textContent = pendingReports.length;
+            } catch(err){
+                console.error('Admin dashboard load error:', err);
+            }
+        })();
     </script>
 </body>
 </html>

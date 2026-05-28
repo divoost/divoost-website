@@ -142,17 +142,81 @@
             </div>
         </div>
     </div>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/supabase-admin.js"></script>
     <script>
         document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
         function toggleTarget(el){ el.classList.toggle('active'); }
-        function saveDraft(){ alert('💾 임시저장 완료'); }
-        function sendNotice(){
+        function saveDraft(){
+            localStorage.setItem('noticeDraft', JSON.stringify({
+                type: document.getElementById('noticeType').value,
+                title: document.getElementById('noticeTitle').value,
+                body: document.getElementById('noticeBody').value
+            }));
+            alert('💾 임시저장 완료');
+        }
+        async function sendNotice(){
             var title = document.getElementById('noticeTitle').value.trim();
             var body = document.getElementById('noticeBody').value.trim();
+            var type = document.getElementById('noticeType').value;
             if(!title || !body){ alert('⚠️ 제목과 내용을 입력하세요'); return; }
-            if(!confirm('📤 공지를 발송합니다. 계속하시겠습니까?')) return;
-            alert('✅ 공지가 발송되었습니다.\n\n실제 운영 시 백엔드 메일 서버 + 푸시 서비스 연동 필요.');
+
+            // 활성화된 첫 타겟 칩 찾기
+            var targetChip = document.querySelector('#targetChips .target-chip.active');
+            var targetPlan = targetChip ? targetChip.dataset.target : 'all';
+
+            if(!confirm('📤 공지를 발송합니다.\n\n대상: ' + targetPlan + '\n제목: ' + title + '\n\n계속하시겠습니까?')) return;
+
+            var result = await SNSAdmin.sendNotice({
+                type: type,
+                title: title,
+                body: body,
+                targetPlan: targetPlan
+            });
+            if(result.ok){
+                alert('✅ 공지가 저장되었습니다.\n\n사용자 인앱 알림에 표시됩니다.\n이메일/푸시 발송은 백엔드 이메일 서비스 연동 후 자동화됩니다.');
+                document.getElementById('noticeTitle').value = '';
+                document.getElementById('noticeBody').value = '';
+                loadRecentNotices();
+            } else {
+                alert('❌ 발송 실패: ' + (result.data && result.data.message || ''));
+            }
         }
+
+        async function loadRecentNotices(){
+            try {
+                var notices = await SNSAdmin.listNotices(5);
+                if(notices.length === 0) return;
+                var list = document.querySelector('.notice-list');
+                if(!list) return;
+                list.innerHTML = notices.map(function(n){
+                    var date = n.sent_at ? new Date(n.sent_at).toISOString().slice(0,10).replace(/-/g,'.') : '';
+                    return '<div class="notice-item">' +
+                        '<div class="notice-item-header">' +
+                            '<span class="notice-tag ' + (n.type === 'general' ? '공지' : (n.type === 'update' ? '업데이트' : (n.type === 'urgent' ? '긴급' : '이벤트'))) + '">' + (n.type === 'general' ? '공지' : (n.type === 'update' ? '업데이트' : (n.type === 'urgent' ? '긴급' : '이벤트'))) + '</span>' +
+                            '<span class="notice-title">' + n.title + '</span>' +
+                            '<span class="notice-meta">' + date + ' · ' + (n.sent_to_count || 0) + '명 발송</span>' +
+                        '</div>' +
+                        '<div class="notice-body">' + n.body + '</div>' +
+                    '</div>';
+                }).join('');
+            } catch(err){
+                console.error('공지 로딩 실패:', err);
+            }
+        }
+
+        (async function(){
+            var ok = await SNSAdmin.requireAdmin();
+            if(!ok) return;
+            // 임시저장 복원
+            var draft = JSON.parse(localStorage.getItem('noticeDraft') || 'null');
+            if(draft){
+                if(draft.type) document.getElementById('noticeType').value = draft.type;
+                if(draft.title) document.getElementById('noticeTitle').value = draft.title;
+                if(draft.body) document.getElementById('noticeBody').value = draft.body;
+            }
+            await loadRecentNotices();
+        })();
     </script>
 </body>
 </html>
