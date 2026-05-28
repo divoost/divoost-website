@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운영 가이드 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .guide-hero{background:linear-gradient(135deg,#1e40af,#7c3aed);color:#fff;border-radius:14px;padding:28px;margin-bottom:20px}
+        .guide-hero h1{font-size:1.4rem;font-weight:800;margin-bottom:8px}
+        .guide-hero p{font-size:.92rem;opacity:.95;line-height:1.6}
+
+        .guide-toc{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;margin-bottom:20px;position:sticky;top:74px}
+        .guide-toc h3{font-size:.85rem;margin-bottom:10px;color:#475569}
+        .guide-toc-list{display:flex;flex-wrap:wrap;gap:6px}
+        .guide-toc-list a{padding:6px 12px;background:#f1f5f9;color:#475569;font-size:.74rem;border-radius:6px;text-decoration:none;font-weight:600;transition:.2s}
+        .guide-toc-list a:hover{background:#3b82f6;color:#fff}
+
+        .guide-section{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:24px;margin-bottom:18px;scroll-margin-top:80px}
+        .guide-section h2{font-size:1.1rem;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:10px;color:#0f172a;padding-bottom:10px;border-bottom:2px solid #f1f5f9}
+        .guide-section h3{font-size:.95rem;font-weight:700;margin:18px 0 10px;color:#1e293b}
+        .guide-section p{font-size:.86rem;line-height:1.7;color:#334155;margin-bottom:10px}
+
+        .platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin:14px 0}
+        .platform-info{padding:14px;border-radius:10px;border:1px solid #e2e8f0}
+        .platform-info.safe{background:#f0fdf4;border-color:#86efac}
+        .platform-info.caution{background:#fefce8;border-color:#fde047}
+        .platform-info.warning{background:#fef2f2;border-color:#fca5a5}
+        .platform-info h4{font-size:.92rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+        .platform-info .status-pill{font-size:.66rem;padding:2px 8px;border-radius:10px;font-weight:700;margin-left:auto}
+        .platform-info.safe .status-pill{background:#16a34a;color:#fff}
+        .platform-info.caution .status-pill{background:#eab308;color:#fff}
+        .platform-info.warning .status-pill{background:#dc2626;color:#fff}
+        .platform-info ul{font-size:.78rem;line-height:1.7;padding-left:18px;color:#475569}
+
+        .rule-card{padding:16px;border-radius:10px;background:#f8fafc;border-left:4px solid #3b82f6;margin-bottom:12px}
+        .rule-card.do{border-left-color:#10b981;background:#f0fdf4}
+        .rule-card.dont{border-left-color:#ef4444;background:#fef2f2}
+        .rule-card h4{font-size:.88rem;font-weight:700;margin-bottom:6px}
+        .rule-card.do h4{color:#15803d}
+        .rule-card.dont h4{color:#dc2626}
+        .rule-card p{font-size:.78rem;line-height:1.6;color:#475569;margin:0}
+
+        .limit-table{width:100%;border-collapse:collapse;margin:14px 0;font-size:.82rem}
+        .limit-table th{background:#f8fafc;padding:10px 14px;text-align:left;font-size:.75rem;font-weight:700;color:#475569;border-bottom:2px solid #e2e8f0}
+        .limit-table td{padding:10px 14px;border-bottom:1px solid #f1f5f9}
+        .limit-table tr:last-child td{border-bottom:none}
+        .limit-table .badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:700}
+        .limit-table .badge.ok{background:#dcfce7;color:#15803d}
+        .limit-table .badge.warn{background:#fef3c7;color:#92400e}
+        .limit-table .badge.danger{background:#fee2e2;color:#b91c1c}
+
+        .step-list{counter-reset:step;list-style:none;padding:0}
+        .step-list li{counter-increment:step;padding:12px 14px 12px 50px;background:#f8fafc;border-radius:10px;margin-bottom:8px;position:relative;font-size:.85rem;line-height:1.6}
+        .step-list li::before{content:counter(step);position:absolute;left:14px;top:12px;width:26px;height:26px;background:#3b82f6;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:700}
+
+        .checklist{padding:14px;background:#eff6ff;border-radius:10px;border:1px solid #bfdbfe;margin-top:12px}
+        .checklist h4{font-size:.85rem;font-weight:700;color:#1e40af;margin-bottom:10px}
+        .checklist ul{list-style:none;padding:0}
+        .checklist li{font-size:.8rem;padding:6px 0 6px 26px;position:relative;color:#1e293b;line-height:1.5}
+        .checklist li::before{content:'✓';position:absolute;left:6px;color:#10b981;font-weight:700}
+
+        .warning-box{padding:14px 16px;border-radius:10px;background:#fef2f2;border:1px solid #fca5a5;margin:12px 0}
+        .warning-box h4{font-size:.88rem;font-weight:700;color:#b91c1c;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+        .warning-box p{font-size:.78rem;line-height:1.6;color:#7f1d1d;margin:0}
+
+        .info-box{padding:14px 16px;border-radius:10px;background:#eff6ff;border:1px solid #bfdbfe;margin:12px 0}
+        .info-box h4{font-size:.88rem;font-weight:700;color:#1e40af;margin-bottom:6px}
+        .info-box p{font-size:.78rem;line-height:1.6;color:#1e3a8a;margin:0}
+
+        .success-box{padding:14px 16px;border-radius:10px;background:#f0fdf4;border:1px solid #86efac;margin:12px 0}
+        .success-box h4{font-size:.88rem;font-weight:700;color:#15803d;margin-bottom:6px}
+        .success-box p{font-size:.78rem;line-height:1.6;color:#14532d;margin:0}
+
+        .link-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+        .link-row a{padding:6px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:.76rem;color:#3b82f6;text-decoration:none;font-weight:600}
+        .link-row a:hover{background:#eff6ff}
+
+        @media(max-width:768px){.platform-grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>🏠</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="safety-guide.html" class="nav-link active"><span>⚠️</span> 운영 가이드</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">⚠️ 운영 시 주의 사항</div><div class="top-bar-sub">안전한 SNS 자동화를 위한 가이드</div></div></div></header>
+            <div class="content">
+
+                <!-- Hero -->
+                <div class="guide-hero">
+                    <h1>🛡 안전한 운영을 위한 필수 가이드</h1>
+                    <p>본 플랫폼은 각 SNS의 <strong>공식 API</strong>를 사용하여 합법적으로 운영됩니다. 다만 SNS 플랫폼별 약관이 다르므로, 다음 가이드를 반드시 숙지하시고 운영하세요.</p>
+                </div>
+
+                <!-- TOC -->
+                <div class="guide-toc">
+                    <h3>📚 목차</h3>
+                    <div class="guide-toc-list">
+                        <a href="#summary">🎯 핵심 요약</a>
+                        <a href="#platforms">📱 플랫폼별 가이드</a>
+                        <a href="#limits">📊 사용량 제한</a>
+                        <a href="#do-dont">✅ Do / ❌ Dont</a>
+                        <a href="#commercial">💼 상업 운영</a>
+                        <a href="#privacy">🔐 개인정보 보호</a>
+                        <a href="#review">📝 앱 검수</a>
+                        <a href="#risk">⚠️ 리스크 관리</a>
+                        <a href="#terms">📄 약관 권장 문구</a>
+                    </div>
+                </div>
+
+                <!-- 핵심 요약 -->
+                <div class="guide-section" id="summary">
+                    <h2>🎯 핵심 요약 (꼭 기억할 4가지)</h2>
+                    <div class="step-list" style="margin:0">
+                        <ol class="step-list">
+                            <li><strong>본인 소유 계정에만 자동화</strong> — 타인의 계정/페이지에 무단으로 발행하면 약관 위반 + 법적 문제 발생 가능</li>
+                            <li><strong>플랫폼별 사용량 제한 준수</strong> — Facebook 50건/일, Instagram 25건/일, TikTok 1건/시간 등</li>
+                            <li><strong>이용약관에 "공식 API만 사용" 명시</strong> — 사용자에게 합법적 도구임을 명확히 안내</li>
+                            <li><strong>상업 운영 시 Facebook 앱 검수 받기</strong> — 일반 사용자 100명 이상 서비스 시 필수</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- 플랫폼별 -->
+                <div class="guide-section" id="platforms">
+                    <h2>📱 플랫폼별 운영 가이드</h2>
+                    <div class="platform-grid">
+
+                        <div class="platform-info safe">
+                            <h4>📘 Facebook <span class="status-pill">합법</span></h4>
+                            <ul>
+                                <li>공식 Graph API 사용</li>
+                                <li>본인 페이지/그룹 자동 포스팅 가능</li>
+                                <li>이미지, 동영상, 텍스트 모두 지원</li>
+                                <li>댓글 자동 답글 가능</li>
+                                <li>인사이트(통계) 조회 가능</li>
+                                <li><strong>주의</strong>: 1일 50건 권장 한도</li>
+                            </ul>
+                        </div>
+
+                        <div class="platform-info safe">
+                            <h4>📸 Instagram <span class="status-pill">합법</span></h4>
+                            <ul>
+                                <li>Graph API (Facebook 경유)</li>
+                                <li><strong>비즈니스/크리에이터 계정 필수</strong></li>
+                                <li>이미지/비디오 필수 (텍스트만 불가)</li>
+                                <li>1일 25건 한도 (Meta 정책)</li>
+                                <li>Reels, Stories 지원</li>
+                                <li><strong>주의</strong>: 개인 계정은 불가</li>
+                            </ul>
+                        </div>
+
+                        <div class="platform-info safe">
+                            <h4>🎵 TikTok <span class="status-pill">합법</span></h4>
+                            <ul>
+                                <li>Content Posting API 사용</li>
+                                <li><strong>비즈니스 계정 + 앱 승인 필요</strong></li>
+                                <li>영상만 발행 가능</li>
+                                <li>발행 빈도 제한 있음</li>
+                                <li>커뮤니티 가이드라인 준수</li>
+                            </ul>
+                        </div>
+
+                        <div class="platform-info caution">
+                            <h4>📗 네이버 블로그 <span class="status-pill">회색</span></h4>
+                            <ul>
+                                <li>네이버 공식 API 미완전 (글쓰기 한정)</li>
+                                <li>OAuth 인증 필요</li>
+                                <li><strong>권장</strong>: 콘텐츠 작성 도구로만 사용</li>
+                                <li>실제 발행은 사용자 직접 수행</li>
+                                <li>크롤링/스크래핑은 약관 위반</li>
+                            </ul>
+                        </div>
+
+                        <div class="platform-info warning">
+                            <h4>☕ 네이버 카페 <span class="status-pill">위반</span></h4>
+                            <ul>
+                                <li><strong>자동 글쓰기 명시적 금지</strong></li>
+                                <li>네이버 운영원칙 위반</li>
+                                <li>적발 시 카페 활동 정지</li>
+                                <li><strong>권장</strong>: 콘텐츠 초안 작성만</li>
+                                <li>발행은 반드시 수동으로</li>
+                            </ul>
+                        </div>
+
+                        <div class="platform-info caution">
+                            <h4>📕 샤오홍수 (小红书) <span class="status-pill">조건부</span></h4>
+                            <ul>
+                                <li>Open Platform 제공</li>
+                                <li><strong>중국 사업자등록증 필요</strong></li>
+                                <li>콘텐츠 사전 검열 통과 필수</li>
+                                <li>개인 계정 자동화 불가</li>
+                            </ul>
+                        </div>
+
+                        <div class="platform-info caution">
+                            <h4>🎬 도우인 (抖音) <span class="status-pill">조건부</span></h4>
+                            <ul>
+                                <li>Open Platform 제공</li>
+                                <li><strong>중국 사업자/개인 인증 필요</strong></li>
+                                <li>영상 콘텐츠만 가능</li>
+                                <li>해외 사용자 제약 많음</li>
+                            </ul>
+                        </div>
+
+                        <div class="platform-info safe">
+                            <h4>📺 YouTube <span class="status-pill">합법</span></h4>
+                            <ul>
+                                <li>YouTube Data API v3 사용</li>
+                                <li>일일 할당량: 10,000 unit</li>
+                                <li>영상 업로드 가능 (1일 6건)</li>
+                                <li>제목/설명/태그 자동화 가능</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 사용량 제한 -->
+                <div class="guide-section" id="limits">
+                    <h2>📊 플랫폼별 사용량 제한</h2>
+                    <p>각 SNS는 API 호출 횟수를 제한합니다. 초과 시 일시적/영구적 차단될 수 있습니다.</p>
+
+                    <table class="limit-table">
+                        <thead>
+                            <tr>
+                                <th>플랫폼</th>
+                                <th>발행 한도</th>
+                                <th>API 호출</th>
+                                <th>위반 시</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>📘 Facebook</strong></td>
+                                <td>1일 50건 (페이지당)</td>
+                                <td>200 호출/시간/사용자</td>
+                                <td><span class="badge warn">앱 일시 차단</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>📸 Instagram</strong></td>
+                                <td>1일 25건 (계정당)</td>
+                                <td>200 호출/시간</td>
+                                <td><span class="badge danger">계정 정지 가능</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🎵 TikTok</strong></td>
+                                <td>1시간 1건 (권장)</td>
+                                <td>1,000 호출/일</td>
+                                <td><span class="badge warn">발행 거부</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>📗 네이버 블로그</strong></td>
+                                <td>1일 50건 (블로그당)</td>
+                                <td>25,000 호출/일</td>
+                                <td><span class="badge warn">노출 제한</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>📺 YouTube</strong></td>
+                                <td>1일 6건 (영상 업로드)</td>
+                                <td>10,000 unit/일</td>
+                                <td><span class="badge warn">할당량 차단</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box">
+                        <h4>💡 권장 발행 주기</h4>
+                        <p>같은 페이지에 너무 자주 발행하면 알고리즘이 스팸으로 판단할 수 있습니다.<br>
+                        <strong>1~2시간 간격</strong>으로 발행하는 것이 가장 안전합니다.</p>
+                    </div>
+                </div>
+
+                <!-- Do / Dont -->
+                <div class="guide-section" id="do-dont">
+                    <h2>✅ Do / ❌ Don't</h2>
+
+                    <h3>✅ 권장 사항 (Do)</h3>
+                    <div class="rule-card do">
+                        <h4>✅ 본인 소유 계정에만 자동화</h4>
+                        <p>본인이 직접 등록하고 관리하는 페이지/계정에만 자동 포스팅하세요. 가족/지인 계정이라도 본인 계정이 아니면 권한 위반입니다.</p>
+                    </div>
+                    <div class="rule-card do">
+                        <h4>✅ 콘텐츠 품질 관리</h4>
+                        <p>AI 생성 콘텐츠도 본인이 검수한 후 발행하세요. 부적절한 내용이 자동 발행되면 계정 신뢰도가 떨어집니다.</p>
+                    </div>
+                    <div class="rule-card do">
+                        <h4>✅ 발행 주기 적절히 조절</h4>
+                        <p>1~2시간 간격으로 발행하는 것이 자연스럽습니다. 1분 안에 10건 발행 등은 스팸으로 분류됩니다.</p>
+                    </div>
+                    <div class="rule-card do">
+                        <h4>✅ 토큰 정기 갱신</h4>
+                        <p>Facebook 토큰은 60일 만료입니다. 만료 전에 새로 발급받아 등록하세요.</p>
+                    </div>
+
+                    <h3 style="margin-top:24px">❌ 금지 사항 (Don't)</h3>
+                    <div class="rule-card dont">
+                        <h4>❌ 타인 계정 자동화 금지</h4>
+                        <p>다른 사람의 SNS 계정에 무단으로 자동 포스팅하는 것은 정보통신망법 위반 + 약관 위반입니다.</p>
+                    </div>
+                    <div class="rule-card dont">
+                        <h4>❌ 자동 좋아요/팔로우/댓글 봇 금지</h4>
+                        <p>인공적인 인터랙션 부풀리기는 모든 플랫폼에서 금지합니다. 적발 시 영구 정지.</p>
+                    </div>
+                    <div class="rule-card dont">
+                        <h4>❌ 스팸성 대량 발송 금지</h4>
+                        <p>같은 내용을 여러 페이지에 동시 발행, 1일 100건 이상 등은 스팸으로 분류됩니다.</p>
+                    </div>
+                    <div class="rule-card dont">
+                        <h4>❌ 크롤링/스크래핑 방식 금지</h4>
+                        <p>공식 API 외의 방식으로 SNS에 접근하는 것은 컴퓨터프로그램 보호법 위반 가능성이 있습니다.</p>
+                    </div>
+                    <div class="rule-card dont">
+                        <h4>❌ 네이버 카페 자동 글쓰기 절대 금지</h4>
+                        <p>네이버 카페 운영원칙에 자동화 도구 사용이 명시적으로 금지되어 있습니다. 발견 시 즉시 활동 제한됩니다.</p>
+                    </div>
+                </div>
+
+                <!-- 상업 운영 -->
+                <div class="guide-section" id="commercial">
+                    <h2>💼 상업적 운영 시 추가 절차</h2>
+
+                    <p>본 플랫폼을 사용한 SaaS 서비스를 일반 사용자에게 제공하려면 다음 절차가 필요합니다.</p>
+
+                    <h3>1) 사업자 등록</h3>
+                    <ol class="step-list">
+                        <li><strong>사업자 등록증</strong> 발급 (홈택스 → 사업자 등록 신청)</li>
+                        <li>업종: <strong>정보통신업 → 응용 소프트웨어 개발 및 공급업</strong></li>
+                        <li>통신판매업 신고 (유료 서비스 제공 시)</li>
+                    </ol>
+
+                    <h3>2) Facebook 앱 검수 (App Review)</h3>
+                    <ol class="step-list">
+                        <li>앱이 일반 사용자에게 공개되려면 Facebook의 <strong>앱 검수</strong>가 필요</li>
+                        <li>필요한 권한별로 검수 신청 (예: pages_manage_posts)</li>
+                        <li>비즈니스 인증 (Business Verification) 진행</li>
+                        <li>앱 사용 사례 영상 제출</li>
+                        <li>승인까지 약 2~4주 소요</li>
+                    </ol>
+
+                    <div class="link-row">
+                        <a href="https://developers.facebook.com/docs/app-review" target="_blank">📘 Facebook 앱 검수 가이드</a>
+                        <a href="https://developers.facebook.com/docs/development/release/business-verification" target="_blank">📘 비즈니스 인증</a>
+                    </div>
+
+                    <h3>3) 결제 시스템 (유료 서비스)</h3>
+                    <ul style="font-size:.84rem;line-height:1.8;padding-left:20px">
+                        <li>토스페이먼츠, 아임포트, 페이플 등 PG사 연동</li>
+                        <li>전자상거래법에 따른 환불 정책 명시</li>
+                        <li>전자세금계산서 발행 시스템 구축</li>
+                    </ul>
+
+                    <h3>4) 법무 검토</h3>
+                    <ul style="font-size:.84rem;line-height:1.8;padding-left:20px">
+                        <li>이용약관 작성 (반드시 변호사 검토 권장)</li>
+                        <li>개인정보처리방침 작성</li>
+                        <li>API 사용 면책 조항 포함</li>
+                    </ul>
+                </div>
+
+                <!-- 개인정보 보호 -->
+                <div class="guide-section" id="privacy">
+                    <h2>🔐 개인정보 보호 (개인정보보호법)</h2>
+
+                    <p>SNS 자동화 도구는 사용자의 SNS 액세스 토큰을 다룹니다. 개인정보보호법 준수가 필수입니다.</p>
+
+                    <div class="checklist">
+                        <h4>📝 개인정보처리방침에 포함할 내용</h4>
+                        <ul>
+                            <li>수집하는 개인정보 항목 (이메일, SNS 토큰 등)</li>
+                            <li>개인정보 수집/이용 목적 (자동 포스팅 등)</li>
+                            <li>보유 및 이용 기간 (회원 탈퇴 시 즉시 파기)</li>
+                            <li>제3자 제공 (SNS 플랫폼 API 호출)</li>
+                            <li>처리 위탁 (호스팅 업체 등)</li>
+                            <li>이용자 권리 (열람, 정정, 삭제 요구)</li>
+                            <li>개인정보보호 책임자 연락처</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>⚠️ 액세스 토큰 보안</h4>
+                        <p>사용자의 SNS 토큰은 <strong>암호화</strong>해서 저장해야 합니다. 현재 localStorage 저장은 본인 컴퓨터에만 저장되므로 안전하지만, 백엔드 DB로 옮길 때는 반드시 암호화하세요.</p>
+                    </div>
+                </div>
+
+                <!-- 앱 검수 -->
+                <div class="guide-section" id="review">
+                    <h2>📝 Facebook 앱 검수 (App Review) 상세</h2>
+
+                    <p>Facebook은 일반 사용자에게 공개되는 앱에 대해 검수 절차를 거칩니다. 우리 플랫폼을 정식 서비스로 운영하려면 필수입니다.</p>
+
+                    <h3>검수 요건</h3>
+                    <ul style="font-size:.84rem;line-height:1.8;padding-left:20px">
+                        <li><strong>비즈니스 인증</strong> (사업자등록증, 도메인 소유 증명)</li>
+                        <li><strong>개인정보처리방침 URL</strong> (공개 페이지)</li>
+                        <li><strong>이용약관 URL</strong> (공개 페이지)</li>
+                        <li><strong>앱 아이콘</strong> (1024x1024)</li>
+                        <li><strong>스크린샷</strong> 또는 시연 영상</li>
+                        <li><strong>권한별 사용 사례 설명</strong></li>
+                    </ul>
+
+                    <h3>필요한 권한 검수 신청</h3>
+                    <table class="limit-table">
+                        <thead><tr><th>권한</th><th>용도</th><th>검수 난이도</th></tr></thead>
+                        <tbody>
+                            <tr><td>pages_show_list</td><td>페이지 목록 조회</td><td><span class="badge ok">쉬움</span></td></tr>
+                            <tr><td>pages_read_engagement</td><td>게시물/댓글 조회</td><td><span class="badge ok">쉬움</span></td></tr>
+                            <tr><td>pages_manage_posts</td><td>게시물 작성/수정/삭제</td><td><span class="badge warn">보통</span></td></tr>
+                            <tr><td>pages_manage_engagement</td><td>댓글 관리</td><td><span class="badge warn">보통</span></td></tr>
+                            <tr><td>instagram_basic</td><td>인스타 기본 정보</td><td><span class="badge ok">쉬움</span></td></tr>
+                            <tr><td>instagram_content_publish</td><td>인스타 게시물 발행</td><td><span class="badge danger">어려움</span></td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>검수 통과 팁</h3>
+                    <ol class="step-list">
+                        <li><strong>시연 영상 제작</strong>: 실제 앱 사용 모습을 영어 자막으로 녹화</li>
+                        <li><strong>테스트 계정 제공</strong>: Facebook 검수팀이 직접 테스트할 수 있도록</li>
+                        <li><strong>명확한 설명</strong>: 왜 이 권한이 필요한지 구체적으로 작성</li>
+                        <li><strong>약관 페이지 완비</strong>: 개인정보처리방침과 이용약관이 실제로 접근 가능해야 함</li>
+                    </ol>
+                </div>
+
+                <!-- 리스크 관리 -->
+                <div class="guide-section" id="risk">
+                    <h2>⚠️ 리스크 관리</h2>
+
+                    <h3>🚨 발생 가능한 리스크</h3>
+                    <div class="rule-card dont">
+                        <h4>1. 토큰 만료/노출</h4>
+                        <p><strong>대처</strong>: 토큰은 절대 외부에 공유 금지. 노출 시 즉시 Facebook 앱 설정에서 시크릿 재발급</p>
+                    </div>
+                    <div class="rule-card dont">
+                        <h4>2. API 호출 한도 초과</h4>
+                        <p><strong>대처</strong>: 1일 사용량 모니터링. 한도 80% 도달 시 자동 일시정지 로직 권장</p>
+                    </div>
+                    <div class="rule-card dont">
+                        <h4>3. 부적절한 콘텐츠 발행</h4>
+                        <p><strong>대처</strong>: AI 생성 콘텐츠는 반드시 본인이 검수. 자동 발행보다 예약 발행 후 1차 검수 권장</p>
+                    </div>
+                    <div class="rule-card dont">
+                        <h4>4. 계정 정지</h4>
+                        <p><strong>대처</strong>: 발행 빈도/내용 점검. 항소 절차 진행 (각 플랫폼별 고객센터)</p>
+                    </div>
+                    <div class="rule-card dont">
+                        <h4>5. 사용자 데이터 유출</h4>
+                        <p><strong>대처</strong>: 토큰 암호화 저장. 정기 보안 점검. 유출 시 개인정보보호위원회 신고 (5일 내)</p>
+                    </div>
+
+                    <h3>🛡 권장 보호 조치</h3>
+                    <div class="checklist">
+                        <ul>
+                            <li>모든 토큰은 백엔드에 암호화하여 저장</li>
+                            <li>발행 로그 정기 백업 및 모니터링</li>
+                            <li>이상 발행 감지 시 자동 알림</li>
+                            <li>사용자 별 권한 분리 (관리자/일반)</li>
+                            <li>2단계 인증 (2FA) 필수 적용</li>
+                            <li>정기적 보안 감사 (분기 1회)</li>
+                            <li>침해 사고 대응 매뉴얼 작성</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 약관 문구 -->
+                <div class="guide-section" id="terms">
+                    <h2>📄 이용약관 권장 문구</h2>
+
+                    <p>아래 문구를 이용약관에 포함시키는 것을 권장합니다.</p>
+
+                    <div class="info-box">
+                        <h4>💼 서비스 범위</h4>
+                        <p>본 서비스는 각 SNS 플랫폼의 <strong>공식 API</strong>를 사용하여 사용자가 본인 소유의 계정에 자동 포스팅하도록 돕는 도구입니다. 본 서비스는 SNS 플랫폼과 무관한 독립 서비스이며, 각 플랫폼의 약관 준수는 사용자 본인의 책임입니다.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>🔒 사용자 의무</h4>
+                        <p>사용자는 다음을 준수해야 합니다:<br>
+                        ① 본인 소유 또는 정당한 권한을 가진 계정에만 본 서비스 사용<br>
+                        ② 각 SNS 플랫폼의 이용약관 및 커뮤니티 가이드라인 준수<br>
+                        ③ 불법, 음란, 폭력, 차별적 콘텐츠 발행 금지<br>
+                        ④ 타인의 저작권/초상권 침해 금지<br>
+                        ⑤ 스팸/광고성 대량 발송 금지</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>⚖️ 면책 조항</h4>
+                        <p>① SNS 플랫폼의 정책 변경, API 중단으로 인한 서비스 장애 시 본사는 책임지지 않습니다.<br>
+                        ② 사용자가 발행한 콘텐츠로 인한 법적 분쟁은 사용자 본인의 책임입니다.<br>
+                        ③ 사용자가 약관을 위반하여 SNS 계정이 정지된 경우, 본사는 책임지지 않습니다.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>🚫 금지 행위</h4>
+                        <p>다음 행위는 절대 금지됩니다:<br>
+                        ① 타인 명의의 SNS 계정 사용<br>
+                        ② 자동화 봇을 이용한 좋아요/팔로우/댓글 조작<br>
+                        ③ 동일 콘텐츠를 100개 이상의 계정에 동시 발행<br>
+                        ④ 본 서비스를 이용한 피싱, 사기 행위<br>
+                        ⑤ 본 서비스의 크롤링, 역공학 시도</p>
+                    </div>
+
+                    <div class="success-box">
+                        <h4>✅ 종합 결론</h4>
+                        <p>본 가이드를 준수하여 운영하시면 합법적이고 안전한 SNS 자동화 서비스를 운영하실 수 있습니다. 의문 사항은 변호사 또는 한국인터넷진흥원(KISA)에 문의하세요.</p>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="guide-section" style="text-align:center;background:#f8fafc">
+                    <p style="font-size:.78rem;color:#94a3b8;line-height:1.8;margin:0">
+                        본 가이드는 일반적인 권장 사항이며, 법률 자문이 아닙니다.<br>
+                        상업적 운영 전 반드시 법무 전문가의 검토를 받으시기 바랍니다.<br>
+                        <br>
+                        © DIVOOST SNS 콘텐츠 플랫폼
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+
+        // 스무스 스크롤
+        document.querySelectorAll('.guide-toc-list a').forEach(function(link){
+            link.addEventListener('click', function(e){
+                e.preventDefault();
+                var target = document.querySelector(this.getAttribute('href'));
+                if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+            });
+        });
+    </script>
+</body>
+</html>
