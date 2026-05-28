@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구독 관리 | 관리자</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        body{background:#f1f5f9}
+        .admin-bar{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;padding:8px 24px;font-size:.78rem;font-weight:600;text-align:center}
+        .admin-bar a{color:#fef2f2;margin-left:10px}
+        .sidebar{background:#0f172a !important}.sidebar-logo .logo-text{color:#fff !important}.sidebar-logo .logo-text small{color:#fca5a5 !important}.nav-title{color:#94a3b8 !important}.nav-link{color:#cbd5e1 !important}.nav-link:hover{background:rgba(255,255,255,.06) !important;color:#fff !important}.nav-link.active{background:rgba(220,38,38,.2) !important;color:#fca5a5 !important}
+
+        .card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
+        .card h2{font-size:1rem;margin-bottom:14px}
+        .summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+        .summary-card{background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0;text-align:center}
+        .summary-val{font-size:1.8rem;font-weight:800}
+        .summary-label{font-size:.74rem;color:#94a3b8;margin-top:4px;font-weight:600}
+
+        .plan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:16px}
+        .plan-card{padding:18px;border-radius:12px;border:2px solid #e2e8f0;background:#f8fafc}
+        .plan-card.pro{border-color:#7c3aed;background:#faf5ff}
+        .plan-card.enterprise{border-color:#be185d;background:#fce7f3}
+        .plan-name{font-weight:800;font-size:1.05rem;margin-bottom:6px}
+        .plan-price{font-size:1.6rem;font-weight:800;color:#0f172a}
+        .plan-price small{font-size:.78rem;color:#64748b;font-weight:500}
+        .plan-stat{display:flex;justify-content:space-between;font-size:.82rem;padding:6px 0;border-top:1px solid #e2e8f0;margin-top:8px}
+
+        .table{width:100%;border-collapse:collapse;font-size:.84rem}
+        .table th{background:#f8fafc;padding:10px 14px;text-align:left;font-size:.7rem;font-weight:700;color:#64748b;text-transform:uppercase}
+        .table td{padding:10px 14px;border-bottom:1px solid #f1f5f9}
+        .pill{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.7rem;font-weight:700}
+        .pill.success{background:#dcfce7;color:#15803d}
+        .pill.warn{background:#fef3c7;color:#92400e}
+        .pill.danger{background:#fee2e2;color:#b91c1c}
+        .pill.trial{background:#fef3c7;color:#92400e}
+        .pill.pro{background:#ede9fe;color:#6d28d9}
+        .pill.enterprise{background:#fce7f3;color:#be185d}
+    </style>
+</head>
+<body>
+    <div class="admin-bar">🛡 관리자 → <a href="../index.html">사용자 대시보드로</a></div>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">🛡</div><div class="logo-text">관리자 콘솔<small>DIVOOST SNS Admin</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">개요</div><a href="index.html" class="nav-link"><span>🏠</span> 관리자 대시보드</a></div>
+                <div class="nav-section"><div class="nav-title">회원 관리</div><a href="users.html" class="nav-link"><span>👥</span> 회원 목록</a><a href="subscriptions.html" class="nav-link active"><span>💳</span> 구독 관리</a><a href="user-activity.html" class="nav-link"><span>📊</span> 활동 로그</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 운영</div><a href="content-moderation.html" class="nav-link"><span>📝</span> 콘텐츠 검토</a><a href="reports.html" class="nav-link"><span>🚨</span> 신고/제재</a></div>
+                <div class="nav-section"><div class="nav-title">시스템 운영</div><a href="api-monitor.html" class="nav-link"><span>📡</span> API 사용량</a><a href="system-health.html" class="nav-link"><span>💚</span> 시스템 상태</a><a href="notifications.html" class="nav-link"><span>🔔</span> 공지 관리</a></div>
+                <div class="nav-section"><div class="nav-title">설정</div><a href="admin-settings.html" class="nav-link"><span>⚙️</span> 관리자 설정</a><a href="audit-log.html" class="nav-link"><span>📜</span> 감사 로그</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">💳 구독 관리</div><div class="top-bar-sub">유료 구독자 및 결제 내역 관리</div></div></div></header>
+            <div class="content">
+
+                <div class="summary-row">
+                    <div class="summary-card"><div class="summary-val" style="color:#3b82f6">₩4,580,000</div><div class="summary-label">이번 달 매출 (MRR)</div></div>
+                    <div class="summary-card"><div class="summary-val" style="color:#10b981">156</div><div class="summary-label">유료 회원</div></div>
+                    <div class="summary-card"><div class="summary-val" style="color:#f59e0b">23</div><div class="summary-label">이번 달 신규</div></div>
+                    <div class="summary-card"><div class="summary-val" style="color:#ef4444">5</div><div class="summary-label">이탈/취소</div></div>
+                </div>
+
+                <div class="card">
+                    <h2>📦 플랜별 현황</h2>
+                    <div class="plan-grid">
+                        <div class="plan-card">
+                            <div class="plan-name">🎁 체험 플랜</div>
+                            <div class="plan-price">무료 <small>/ 30일</small></div>
+                            <div class="plan-stat"><span>현재 가입자</span><strong>89명</strong></div>
+                            <div class="plan-stat"><span>전환율</span><strong style="color:#10b981">17.3%</strong></div>
+                        </div>
+                        <div class="plan-card pro">
+                            <div class="plan-name">⭐ PRO 플랜</div>
+                            <div class="plan-price">₩29,000 <small>/ 월</small></div>
+                            <div class="plan-stat"><span>구독자</span><strong>132명</strong></div>
+                            <div class="plan-stat"><span>월 매출</span><strong>₩3,828,000</strong></div>
+                        </div>
+                        <div class="plan-card enterprise">
+                            <div class="plan-name">🏢 Enterprise</div>
+                            <div class="plan-price">₩149,000 <small>/ 월</small></div>
+                            <div class="plan-stat"><span>구독자</span><strong>24명</strong></div>
+                            <div class="plan-stat"><span>월 매출</span><strong>₩3,576,000</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>💰 최근 결제 내역</h2>
+                    <table class="table">
+                        <thead><tr><th>날짜</th><th>회원</th><th>플랜</th><th>금액</th><th>결제수단</th><th>상태</th></tr></thead>
+                        <tbody>
+                            <tr><td>2026-05-28</td><td>marketing@company.com</td><td><span class="pill pro">PRO</span></td><td>₩29,000</td><td>카드</td><td><span class="pill success">결제완료</span></td></tr>
+                            <tr><td>2026-05-28</td><td>shop@brand.com</td><td><span class="pill enterprise">Enterprise</span></td><td>₩149,000</td><td>카드</td><td><span class="pill success">결제완료</span></td></tr>
+                            <tr><td>2026-05-27</td><td>creator@studio.com</td><td><span class="pill pro">PRO</span></td><td>₩29,000</td><td>계좌이체</td><td><span class="pill success">결제완료</span></td></tr>
+                            <tr><td>2026-05-27</td><td>test@trial.com</td><td><span class="pill pro">PRO</span></td><td>₩29,000</td><td>카드</td><td><span class="pill danger">결제실패</span></td></tr>
+                            <tr><td>2026-05-26</td><td>business@corp.com</td><td><span class="pill enterprise">Enterprise</span></td><td>₩149,000</td><td>세금계산서</td><td><span class="pill warn">대기중</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card">
+                    <h2>📊 매출 추이 (최근 6개월)</h2>
+                    <div style="display:flex;gap:8px;align-items:flex-end;height:160px;padding:20px 0">
+                        <div style="flex:1;text-align:center"><div style="background:linear-gradient(180deg,#3b82f6,#60a5fa);height:40%;border-radius:6px 6px 0 0"></div><div style="font-size:.7rem;color:#94a3b8;margin-top:4px">12월</div></div>
+                        <div style="flex:1;text-align:center"><div style="background:linear-gradient(180deg,#3b82f6,#60a5fa);height:55%;border-radius:6px 6px 0 0"></div><div style="font-size:.7rem;color:#94a3b8;margin-top:4px">1월</div></div>
+                        <div style="flex:1;text-align:center"><div style="background:linear-gradient(180deg,#3b82f6,#60a5fa);height:60%;border-radius:6px 6px 0 0"></div><div style="font-size:.7rem;color:#94a3b8;margin-top:4px">2월</div></div>
+                        <div style="flex:1;text-align:center"><div style="background:linear-gradient(180deg,#3b82f6,#60a5fa);height:70%;border-radius:6px 6px 0 0"></div><div style="font-size:.7rem;color:#94a3b8;margin-top:4px">3월</div></div>
+                        <div style="flex:1;text-align:center"><div style="background:linear-gradient(180deg,#3b82f6,#60a5fa);height:85%;border-radius:6px 6px 0 0"></div><div style="font-size:.7rem;color:#94a3b8;margin-top:4px">4월</div></div>
+                        <div style="flex:1;text-align:center"><div style="background:linear-gradient(180deg,#3b82f6,#60a5fa);height:100%;border-radius:6px 6px 0 0"></div><div style="font-size:.7rem;color:#94a3b8;margin-top:4px;font-weight:700">5월</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };</script>
+</body>
+</html>

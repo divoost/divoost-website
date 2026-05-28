@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>신고/제재 | 관리자</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        body{background:#f1f5f9}
+        .admin-bar{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;padding:8px 24px;font-size:.78rem;font-weight:600;text-align:center}
+        .admin-bar a{color:#fef2f2;margin-left:10px}
+        .sidebar{background:#0f172a !important}.sidebar-logo .logo-text{color:#fff !important}.sidebar-logo .logo-text small{color:#fca5a5 !important}.nav-title{color:#94a3b8 !important}.nav-link{color:#cbd5e1 !important}.nav-link:hover{background:rgba(255,255,255,.06) !important;color:#fff !important}.nav-link.active{background:rgba(220,38,38,.2) !important;color:#fca5a5 !important}
+
+        .card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
+        .card h2{font-size:1rem;margin-bottom:14px}
+        .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+        .stat-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:16px;text-align:center}
+        .stat-val{font-size:1.5rem;font-weight:800}
+        .stat-label{font-size:.72rem;color:#94a3b8;margin-top:2px}
+
+        .report-item{display:grid;grid-template-columns:auto 1fr auto;gap:14px;padding:16px;border-radius:10px;background:#f8fafc;border:1px solid #e2e8f0;margin-bottom:10px}
+        .report-icon{font-size:32px;width:48px;height:48px;border-radius:50%;background:#fee2e2;color:#dc2626;display:flex;align-items:center;justify-content:center}
+        .report-body{min-width:0}
+        .report-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+        .report-id{font-family:monospace;font-size:.72rem;color:#94a3b8;background:#fff;padding:2px 6px;border-radius:4px}
+        .report-type{font-size:.7rem;padding:2px 10px;border-radius:10px;font-weight:700}
+        .report-type.spam{background:#fee2e2;color:#b91c1c}
+        .report-type.abuse{background:#fef3c7;color:#92400e}
+        .report-type.copyright{background:#ede9fe;color:#6d28d9}
+        .report-type.fake{background:#dbeafe;color:#1e40af}
+        .report-status{margin-left:auto;font-size:.7rem;padding:2px 10px;border-radius:10px;font-weight:700}
+        .report-status.pending{background:#fef3c7;color:#92400e}
+        .report-status.resolved{background:#dcfce7;color:#15803d}
+        .report-status.escalated{background:#fee2e2;color:#b91c1c}
+        .report-target{font-weight:700;font-size:.86rem;margin-bottom:4px}
+        .report-reason{font-size:.82rem;color:#475569;margin-bottom:6px;line-height:1.5}
+        .report-meta{font-size:.7rem;color:#94a3b8}
+        .report-actions{display:flex;flex-direction:column;gap:6px}
+        .btn{padding:6px 12px;border-radius:6px;border:none;font-size:.74rem;cursor:pointer;font-weight:600;white-space:nowrap}
+        .btn.approve{background:#10b981;color:#fff}
+        .btn.reject{background:#dc2626;color:#fff}
+        .btn.escalate{background:#f59e0b;color:#fff}
+        .btn.secondary{background:#f1f5f9;color:#475569}
+
+        .ban-history{margin-top:8px;padding-top:8px;border-top:1px dashed #e2e8f0;font-size:.7rem;color:#dc2626}
+    </style>
+</head>
+<body>
+    <div class="admin-bar">🛡 관리자 → <a href="../index.html">사용자 대시보드로</a></div>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">🛡</div><div class="logo-text">관리자 콘솔<small>DIVOOST SNS Admin</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">개요</div><a href="index.html" class="nav-link"><span>🏠</span> 관리자 대시보드</a></div>
+                <div class="nav-section"><div class="nav-title">회원 관리</div><a href="users.html" class="nav-link"><span>👥</span> 회원 목록</a><a href="subscriptions.html" class="nav-link"><span>💳</span> 구독 관리</a><a href="user-activity.html" class="nav-link"><span>📊</span> 활동 로그</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 운영</div><a href="content-moderation.html" class="nav-link"><span>📝</span> 콘텐츠 검토</a><a href="reports.html" class="nav-link active"><span>🚨</span> 신고/제재</a></div>
+                <div class="nav-section"><div class="nav-title">시스템 운영</div><a href="api-monitor.html" class="nav-link"><span>📡</span> API 사용량</a><a href="system-health.html" class="nav-link"><span>💚</span> 시스템 상태</a><a href="notifications.html" class="nav-link"><span>🔔</span> 공지 관리</a></div>
+                <div class="nav-section"><div class="nav-title">설정</div><a href="admin-settings.html" class="nav-link"><span>⚙️</span> 관리자 설정</a><a href="audit-log.html" class="nav-link"><span>📜</span> 감사 로그</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">🚨 신고/제재</div><div class="top-bar-sub">사용자 신고 접수 및 제재 관리</div></div></div></header>
+            <div class="content">
+
+                <div class="stat-row">
+                    <div class="stat-card"><div class="stat-val" style="color:#f59e0b">8</div><div class="stat-label">대기중</div></div>
+                    <div class="stat-card"><div class="stat-val" style="color:#10b981">142</div><div class="stat-label">해결됨</div></div>
+                    <div class="stat-card"><div class="stat-val" style="color:#dc2626">3</div><div class="stat-label">긴급</div></div>
+                    <div class="stat-card"><div class="stat-val" style="color:#7c3aed">5</div><div class="stat-label">제재된 계정</div></div>
+                </div>
+
+                <div class="card">
+                    <h2>📨 접수된 신고</h2>
+
+                    <div class="report-item">
+                        <div class="report-icon">🚨</div>
+                        <div class="report-body">
+                            <div class="report-header">
+                                <span class="report-id">#REP-2026-0528-001</span>
+                                <span class="report-type spam">스팸</span>
+                                <span class="report-status escalated">긴급</span>
+                            </div>
+                            <div class="report-target">대상: spam@bad.com → Facebook 게시물 (Post ID: 100xxx_45678)</div>
+                            <div class="report-reason">"피싱 사이트 링크를 포함한 게시물이 30개 페이지에 동시 발행됨. 즉각 차단 필요"</div>
+                            <div class="report-meta">신고자: marketing@company.com · 2026-05-28 14:23 · 동일 신고 3건</div>
+                        </div>
+                        <div class="report-actions">
+                            <button class="btn reject">⛔ 계정 정지</button>
+                            <button class="btn escalate">📤 경찰 신고</button>
+                            <button class="btn secondary">👁 상세</button>
+                        </div>
+                    </div>
+
+                    <div class="report-item">
+                        <div class="report-icon">⚠️</div>
+                        <div class="report-body">
+                            <div class="report-header">
+                                <span class="report-id">#REP-2026-0528-002</span>
+                                <span class="report-type copyright">저작권</span>
+                                <span class="report-status pending">검토중</span>
+                            </div>
+                            <div class="report-target">대상: user@example.com → Instagram 게시물</div>
+                            <div class="report-reason">"타사 상품 이미지를 무단으로 사용. 출처 표기 없음"</div>
+                            <div class="report-meta">신고자: brand@official.com · 2026-05-28 13:15</div>
+                        </div>
+                        <div class="report-actions">
+                            <button class="btn reject">❌ 게시물 삭제</button>
+                            <button class="btn approve">✅ 신고 기각</button>
+                            <button class="btn secondary">👁 상세</button>
+                        </div>
+                    </div>
+
+                    <div class="report-item">
+                        <div class="report-icon">🤬</div>
+                        <div class="report-body">
+                            <div class="report-header">
+                                <span class="report-id">#REP-2026-0528-003</span>
+                                <span class="report-type abuse">욕설/비방</span>
+                                <span class="report-status pending">검토중</span>
+                            </div>
+                            <div class="report-target">대상: angry@user.com → 댓글</div>
+                            <div class="report-reason">"비방 및 욕설이 포함된 댓글 작성"</div>
+                            <div class="report-meta">신고자: 익명 신고 · 2026-05-28 12:08</div>
+                        </div>
+                        <div class="report-actions">
+                            <button class="btn escalate">⚠️ 경고</button>
+                            <button class="btn reject">❌ 댓글 삭제</button>
+                            <button class="btn secondary">👁 상세</button>
+                        </div>
+                    </div>
+
+                    <div class="report-item">
+                        <div class="report-icon">🎭</div>
+                        <div class="report-body">
+                            <div class="report-header">
+                                <span class="report-id">#REP-2026-0528-004</span>
+                                <span class="report-type fake">사칭</span>
+                                <span class="report-status pending">검토중</span>
+                            </div>
+                            <div class="report-target">대상: fake-divoost@user.com → 페이지 이름 사칭</div>
+                            <div class="report-reason">"DIVOOST 공식 페이지를 사칭하여 운영. 회사 로고와 콘텐츠를 무단 사용"</div>
+                            <div class="report-meta">신고자: 운영팀 직접 발견 · 2026-05-28 11:45</div>
+                        </div>
+                        <div class="report-actions">
+                            <button class="btn reject">⛔ 즉시 정지</button>
+                            <button class="btn escalate">⚖️ 법무팀 이관</button>
+                            <button class="btn secondary">👁 상세</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>⛔ 제재 이력</h2>
+                    <p style="font-size:.84rem;color:#475569;line-height:1.7">
+                        지난 30일간 제재 통계:<br>
+                        • 영구 정지: 3건 (스팸/피싱 2건, 사칭 1건)<br>
+                        • 일시 정지 (7일): 5건<br>
+                        • 경고: 12건<br>
+                        • 콘텐츠 삭제: 23건
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };</script>
+</body>
+</html>

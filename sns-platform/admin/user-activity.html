@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>활동 로그 | 관리자</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        body{background:#f1f5f9}
+        .admin-bar{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;padding:8px 24px;font-size:.78rem;font-weight:600;text-align:center}
+        .admin-bar a{color:#fef2f2;margin-left:10px}
+        .sidebar{background:#0f172a !important}.sidebar-logo .logo-text{color:#fff !important}.sidebar-logo .logo-text small{color:#fca5a5 !important}.nav-title{color:#94a3b8 !important}.nav-link{color:#cbd5e1 !important}.nav-link:hover{background:rgba(255,255,255,.06) !important;color:#fff !important}.nav-link.active{background:rgba(220,38,38,.2) !important;color:#fca5a5 !important}
+
+        .card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
+        .card h2{font-size:1rem;margin-bottom:14px}
+
+        .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+        .tb-input,.tb-select{padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem;background:#fff}
+        .tb-input{flex:1;min-width:240px}
+
+        .activity-feed{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden}
+        .activity-item{display:flex;gap:14px;padding:14px 18px;border-bottom:1px solid #f1f5f9;transition:.15s}
+        .activity-item:hover{background:#f8fafc}
+        .activity-item:last-child{border-bottom:none}
+        .activity-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+        .activity-icon.login{background:#dbeafe}
+        .activity-icon.post{background:#dcfce7}
+        .activity-icon.connect{background:#ede9fe}
+        .activity-icon.delete{background:#fee2e2}
+        .activity-icon.update{background:#fef3c7}
+        .activity-icon.payment{background:#fce7f3}
+        .activity-body{flex:1;min-width:0}
+        .activity-user{font-weight:700;font-size:.85rem;color:#0f172a}
+        .activity-action{font-size:.84rem;color:#475569;margin-top:2px}
+        .activity-meta{font-size:.7rem;color:#94a3b8;margin-top:4px;display:flex;gap:10px}
+
+        .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+        .stat-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:16px;text-align:center}
+        .stat-val{font-size:1.5rem;font-weight:800}
+        .stat-label{font-size:.72rem;color:#94a3b8;margin-top:2px}
+    </style>
+</head>
+<body>
+    <div class="admin-bar">🛡 관리자 → <a href="../index.html">사용자 대시보드로</a></div>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">🛡</div><div class="logo-text">관리자 콘솔<small>DIVOOST SNS Admin</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">개요</div><a href="index.html" class="nav-link"><span>🏠</span> 관리자 대시보드</a></div>
+                <div class="nav-section"><div class="nav-title">회원 관리</div><a href="users.html" class="nav-link"><span>👥</span> 회원 목록</a><a href="subscriptions.html" class="nav-link"><span>💳</span> 구독 관리</a><a href="user-activity.html" class="nav-link active"><span>📊</span> 활동 로그</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 운영</div><a href="content-moderation.html" class="nav-link"><span>📝</span> 콘텐츠 검토</a><a href="reports.html" class="nav-link"><span>🚨</span> 신고/제재</a></div>
+                <div class="nav-section"><div class="nav-title">시스템 운영</div><a href="api-monitor.html" class="nav-link"><span>📡</span> API 사용량</a><a href="system-health.html" class="nav-link"><span>💚</span> 시스템 상태</a><a href="notifications.html" class="nav-link"><span>🔔</span> 공지 관리</a></div>
+                <div class="nav-section"><div class="nav-title">설정</div><a href="admin-settings.html" class="nav-link"><span>⚙️</span> 관리자 설정</a><a href="audit-log.html" class="nav-link"><span>📜</span> 감사 로그</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">📊 활동 로그</div><div class="top-bar-sub">사용자 활동 실시간 모니터링</div></div></div></header>
+            <div class="content">
+
+                <div class="stat-row">
+                    <div class="stat-card"><div class="stat-val" style="color:#3b82f6">1,234</div><div class="stat-label">오늘 활동</div></div>
+                    <div class="stat-card"><div class="stat-val" style="color:#10b981">456</div><div class="stat-label">발행 활동</div></div>
+                    <div class="stat-card"><div class="stat-val" style="color:#7c3aed">89</div><div class="stat-label">신규 연동</div></div>
+                    <div class="stat-card"><div class="stat-val" style="color:#f59e0b">12</div><div class="stat-label">결제 이벤트</div></div>
+                </div>
+
+                <div class="card">
+                    <h2>🔍 필터</h2>
+                    <div class="toolbar">
+                        <input type="text" class="tb-input" placeholder="사용자 이메일 검색...">
+                        <select class="tb-select">
+                            <option>모든 활동</option>
+                            <option>로그인</option>
+                            <option>발행</option>
+                            <option>SNS 연동</option>
+                            <option>삭제</option>
+                            <option>결제</option>
+                        </select>
+                        <select class="tb-select">
+                            <option>최근 1시간</option>
+                            <option>최근 24시간</option>
+                            <option>최근 7일</option>
+                            <option>최근 30일</option>
+                        </select>
+                    </div>
+
+                    <div class="activity-feed">
+                        <div class="activity-item">
+                            <div class="activity-icon post">📤</div>
+                            <div class="activity-body">
+                                <div class="activity-user">marketing@company.com</div>
+                                <div class="activity-action">Facebook 페이지 'DIVOOST 메인'에 콘텐츠 발행</div>
+                                <div class="activity-meta"><span>15:32:45</span><span>IP: 211.234.xxx.xx</span><span>Chrome / macOS</span></div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon login">🔐</div>
+                            <div class="activity-body">
+                                <div class="activity-user">creator@studio.com</div>
+                                <div class="activity-action">로그인 성공</div>
+                                <div class="activity-meta"><span>15:30:12</span><span>IP: 110.45.xxx.xx</span><span>Safari / iOS</span></div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon connect">🔗</div>
+                            <div class="activity-body">
+                                <div class="activity-user">new@user.com</div>
+                                <div class="activity-action">Instagram 비즈니스 계정 연결 (@mybrand)</div>
+                                <div class="activity-meta"><span>15:25:33</span><span>IP: 220.117.xxx.xx</span></div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon payment">💳</div>
+                            <div class="activity-body">
+                                <div class="activity-user">shop@brand.com</div>
+                                <div class="activity-action">Enterprise 플랜 결제 완료 (₩149,000)</div>
+                                <div class="activity-meta"><span>15:20:08</span><span>토스페이먼츠</span></div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon update">✏️</div>
+                            <div class="activity-body">
+                                <div class="activity-user">user@example.com</div>
+                                <div class="activity-action">설정 변경: Facebook Page Access Token 업데이트</div>
+                                <div class="activity-meta"><span>15:18:42</span><span>IP: 121.130.xxx.xx</span></div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon delete">🗑</div>
+                            <div class="activity-body">
+                                <div class="activity-user">test@user.com</div>
+                                <div class="activity-action">발행 이력 5건 일괄 삭제</div>
+                                <div class="activity-meta"><span>15:15:23</span></div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon post">📤</div>
+                            <div class="activity-body">
+                                <div class="activity-user">creator@studio.com</div>
+                                <div class="activity-action">Instagram, TikTok 동시 발행 (2개 채널)</div>
+                                <div class="activity-meta"><span>15:12:11</span></div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon login">🔐</div>
+                            <div class="activity-body">
+                                <div class="activity-user">spam@bad.com</div>
+                                <div class="activity-action">로그인 실패 (비밀번호 5회 오류 - 계정 잠금)</div>
+                                <div class="activity-meta" style="color:#dc2626"><span>15:08:55</span><span>IP: 175.116.xxx.xx</span><span>⚠️ 의심 활동</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };</script>
+</body>
+</html>
