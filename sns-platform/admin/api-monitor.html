@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API 사용량 모니터 | 관리자</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        body{background:#f1f5f9}
+        .admin-bar{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;padding:8px 24px;font-size:.78rem;font-weight:600;text-align:center}
+        .admin-bar a{color:#fef2f2;margin-left:10px}
+        .sidebar{background:#0f172a !important}.sidebar-logo .logo-text{color:#fff !important}.sidebar-logo .logo-text small{color:#fca5a5 !important}.nav-title{color:#94a3b8 !important}.nav-link{color:#cbd5e1 !important}.nav-link:hover{background:rgba(255,255,255,.06) !important;color:#fff !important}.nav-link.active{background:rgba(220,38,38,.2) !important;color:#fca5a5 !important}
+
+        .api-card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
+        .api-card h2{font-size:1rem;margin-bottom:14px}
+
+        .platform-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+        .platform-card{padding:18px;border-radius:12px;background:#f8fafc;border:1px solid #e2e8f0}
+        .platform-card-header{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+        .platform-icon{font-size:28px;width:44px;height:44px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center}
+        .platform-name{font-weight:700;font-size:.92rem}
+        .usage-bar{height:10px;background:#fff;border-radius:5px;overflow:hidden;margin:8px 0}
+        .usage-bar-fill{height:100%;border-radius:5px;transition:width .3s}
+        .usage-bar-fill.ok{background:linear-gradient(90deg,#10b981,#22c55e)}
+        .usage-bar-fill.warn{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+        .usage-bar-fill.danger{background:linear-gradient(90deg,#ef4444,#dc2626)}
+        .usage-text{display:flex;justify-content:space-between;font-size:.72rem;color:#64748b;font-weight:600}
+        .usage-pct{font-size:1.4rem;font-weight:800;color:#0f172a;margin:8px 0 4px}
+
+        .log-table{width:100%;border-collapse:collapse;font-size:.82rem}
+        .log-table th{background:#f8fafc;padding:10px 12px;text-align:left;font-size:.7rem;font-weight:700;color:#64748b}
+        .log-table td{padding:10px 12px;border-bottom:1px solid #f1f5f9}
+        .log-pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.66rem;font-weight:700}
+        .log-pill.success{background:#dcfce7;color:#15803d}
+        .log-pill.error{background:#fee2e2;color:#b91c1c}
+        .log-pill.warn{background:#fef3c7;color:#92400e}
+    </style>
+</head>
+<body>
+    <div class="admin-bar">🛡 관리자 전용 페이지 → <a href="../index.html">사용자 대시보드로</a></div>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">🛡</div><div class="logo-text">관리자 콘솔<small>DIVOOST SNS Admin</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">개요</div><a href="index.html" class="nav-link"><span>🏠</span> 관리자 대시보드</a></div>
+                <div class="nav-section"><div class="nav-title">회원 관리</div><a href="users.html" class="nav-link"><span>👥</span> 회원 목록</a><a href="subscriptions.html" class="nav-link"><span>💳</span> 구독 관리</a><a href="user-activity.html" class="nav-link"><span>📊</span> 활동 로그</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 운영</div><a href="content-moderation.html" class="nav-link"><span>📝</span> 콘텐츠 검토</a><a href="reports.html" class="nav-link"><span>🚨</span> 신고/제재</a></div>
+                <div class="nav-section"><div class="nav-title">시스템 운영</div><a href="api-monitor.html" class="nav-link active"><span>📡</span> API 사용량</a><a href="system-health.html" class="nav-link"><span>💚</span> 시스템 상태</a><a href="notifications.html" class="nav-link"><span>🔔</span> 공지 관리</a></div>
+                <div class="nav-section"><div class="nav-title">설정</div><a href="admin-settings.html" class="nav-link"><span>⚙️</span> 관리자 설정</a><a href="audit-log.html" class="nav-link"><span>📜</span> 감사 로그</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">📡 API 사용량 모니터</div><div class="top-bar-sub">플랫폼별 API 호출 현황 및 한도 관리</div></div></div></header>
+            <div class="content">
+
+                <div class="api-card">
+                    <h2>📊 오늘의 API 사용량</h2>
+                    <div class="platform-row">
+                        <div class="platform-card">
+                            <div class="platform-card-header">
+                                <div class="platform-icon">📘</div>
+                                <div><div class="platform-name">Facebook</div><div style="font-size:.7rem;color:#94a3b8">Graph API</div></div>
+                            </div>
+                            <div class="usage-pct">23%</div>
+                            <div class="usage-bar"><div class="usage-bar-fill ok" style="width:23%"></div></div>
+                            <div class="usage-text"><span>46 / 200 호출</span><span>OK</span></div>
+                        </div>
+                        <div class="platform-card">
+                            <div class="platform-card-header">
+                                <div class="platform-icon">📸</div>
+                                <div><div class="platform-name">Instagram</div><div style="font-size:.7rem;color:#94a3b8">Graph API</div></div>
+                            </div>
+                            <div class="usage-pct">12%</div>
+                            <div class="usage-bar"><div class="usage-bar-fill ok" style="width:12%"></div></div>
+                            <div class="usage-text"><span>24 / 200 호출</span><span>OK</span></div>
+                        </div>
+                        <div class="platform-card">
+                            <div class="platform-card-header">
+                                <div class="platform-icon">🎵</div>
+                                <div><div class="platform-name">TikTok</div><div style="font-size:.7rem;color:#94a3b8">Content API</div></div>
+                            </div>
+                            <div class="usage-pct">68%</div>
+                            <div class="usage-bar"><div class="usage-bar-fill warn" style="width:68%"></div></div>
+                            <div class="usage-text"><span>680 / 1,000 호출</span><span>주의</span></div>
+                        </div>
+                        <div class="platform-card">
+                            <div class="platform-card-header">
+                                <div class="platform-icon">📺</div>
+                                <div><div class="platform-name">YouTube</div><div style="font-size:.7rem;color:#94a3b8">Data API v3</div></div>
+                            </div>
+                            <div class="usage-pct">8%</div>
+                            <div class="usage-bar"><div class="usage-bar-fill ok" style="width:8%"></div></div>
+                            <div class="usage-text"><span>800 / 10,000 unit</span><span>OK</span></div>
+                        </div>
+                        <div class="platform-card">
+                            <div class="platform-card-header">
+                                <div class="platform-icon">📗</div>
+                                <div><div class="platform-name">네이버 블로그</div><div style="font-size:.7rem;color:#94a3b8">Open API</div></div>
+                            </div>
+                            <div class="usage-pct">5%</div>
+                            <div class="usage-bar"><div class="usage-bar-fill ok" style="width:5%"></div></div>
+                            <div class="usage-text"><span>1,250 / 25,000 호출</span><span>OK</span></div>
+                        </div>
+                        <div class="platform-card">
+                            <div class="platform-card-header">
+                                <div class="platform-icon">🔐</div>
+                                <div><div class="platform-name">Supabase</div><div style="font-size:.7rem;color:#94a3b8">Auth + DB</div></div>
+                            </div>
+                            <div class="usage-pct">15%</div>
+                            <div class="usage-bar"><div class="usage-bar-fill ok" style="width:15%"></div></div>
+                            <div class="usage-text"><span>1.5 / 10 GB</span><span>OK</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="api-card">
+                    <h2>📜 최근 API 호출 로그</h2>
+                    <table class="log-table">
+                        <thead>
+                            <tr><th>시간</th><th>플랫폼</th><th>사용자</th><th>엔드포인트</th><th>응답</th><th>지연</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>15:32:45</td><td>📘 Facebook</td><td>user@example.com</td><td>/pageId/feed</td><td><span class="log-pill success">200 OK</span></td><td>342ms</td></tr>
+                            <tr><td>15:32:12</td><td>📸 Instagram</td><td>marketing@company.com</td><td>/me/media</td><td><span class="log-pill success">200 OK</span></td><td>521ms</td></tr>
+                            <tr><td>15:31:55</td><td>📘 Facebook</td><td>shop@brand.com</td><td>/pageId/photos</td><td><span class="log-pill error">400 Error</span></td><td>187ms</td></tr>
+                            <tr><td>15:31:23</td><td>🎵 TikTok</td><td>creator@studio.com</td><td>/video/upload</td><td><span class="log-pill warn">429 Rate</span></td><td>89ms</td></tr>
+                            <tr><td>15:30:48</td><td>📘 Facebook</td><td>user2@example.com</td><td>/me/accounts</td><td><span class="log-pill success">200 OK</span></td><td>231ms</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="api-card">
+                    <h2>⚠️ 한도 초과 알림</h2>
+                    <p style="font-size:.84rem;color:#64748b;line-height:1.6">
+                        다음 조건 충족 시 자동 알림 발송:<br>
+                        • API 사용량 80% 도달 시<br>
+                        • 1시간 내 에러율 10% 초과<br>
+                        • 특정 사용자가 1일 한도 초과<br>
+                        <br>
+                        <strong>📧 알림 수신처:</strong> ezwebpia001@gmail.com
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+    </script>
+</body>
+</html>
