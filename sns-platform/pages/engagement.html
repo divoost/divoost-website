@@ -7,81 +7,63 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
-        /* Filter Bar */
-        .eng-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
-        .eng-filter select,.eng-filter input{padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem;background:#fff}
-        .eng-filter .filter-count{margin-left:auto;font-size:.78rem;color:#64748b}
+        .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+        .stat-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:18px;text-align:center}
+        .stat-icon{font-size:2rem;margin-bottom:6px}
+        .stat-val{font-size:1.6rem;font-weight:800;color:#0f172a}
+        .stat-label{font-size:.72rem;color:#94a3b8;margin-top:4px;font-weight:600}
 
-        /* Bulk Actions */
-        .bulk-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center;padding:10px 16px;background:#fff;border-radius:10px;border:1px solid #e2e8f0}
-        .bulk-bar label{font-size:.8rem;font-weight:600;display:flex;align-items:center;gap:6px;cursor:pointer}
-        .bulk-bar .bulk-actions{display:flex;gap:6px;margin-left:auto}
-        .bulk-btn{padding:6px 14px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:.78rem;font-weight:600;cursor:pointer;transition:.2s}
-        .bulk-btn:hover{background:#f1f5f9}
-        .bulk-btn.primary{background:#3b82f6;color:#fff;border-color:#3b82f6}
-        .bulk-btn.primary:hover{background:#2563eb}
-        .bulk-btn.success{background:#10b981;color:#fff;border-color:#10b981}
-        .bulk-btn.success:hover{background:#059669}
+        .toolbar{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+        .tb-select{padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem;background:#fff;font-family:inherit}
+        .tb-btn{padding:8px 16px;border-radius:8px;border:none;font-size:.78rem;font-weight:700;cursor:pointer}
+        .tb-btn.primary{background:#3b82f6;color:#fff}
+        .tb-btn.primary:hover{background:#2563eb}
+        .tb-btn.secondary{background:#f1f5f9;color:#475569}
+        .tb-btn:disabled{opacity:.6;cursor:not-allowed}
 
-        /* KPI Row for engagement */
-        .eng-kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+        .comment-list{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden}
+        .comment-item{padding:14px 16px;border-bottom:1px solid #f1f5f9;display:flex;gap:12px}
+        .comment-item:last-child{border-bottom:none}
+        .comment-item.unread{background:#fefce8}
+        .comment-avatar{width:38px;height:38px;border-radius:50%;background:#3b82f6;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .comment-body{flex:1;min-width:0}
+        .comment-header{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+        .comment-author{font-weight:700;font-size:.85rem;color:#0f172a}
+        .comment-platform{font-size:.66rem;padding:2px 8px;border-radius:4px;font-weight:700}
+        .comment-platform.fb{background:#dbeafe;color:#1e40af}
+        .comment-platform.ig{background:#fce7f3;color:#be185d}
+        .comment-platform.tt{background:#e0e7ff;color:#3730a3}
+        .comment-time{font-size:.7rem;color:#94a3b8}
+        .comment-text{font-size:.85rem;line-height:1.55;color:#0f172a;margin-bottom:8px;white-space:pre-wrap}
+        .comment-meta{font-size:.7rem;color:#94a3b8;margin-bottom:8px}
+        .comment-meta .post-link{color:#3b82f6;text-decoration:none}
 
-        /* Comment Cards */
-        .comment-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:16px;margin-bottom:10px;transition:box-shadow .2s}
-        .comment-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
-        .comment-card.responded{border-left:3px solid #10b981}
-        .comment-card.pending{border-left:3px solid #f59e0b}
-        .cc-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-        .cc-checkbox{width:16px;height:16px;cursor:pointer;flex-shrink:0}
-        .cc-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#3b82f6,#8b5cf6);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.8rem;font-weight:700;flex-shrink:0}
-        .cc-user-info{flex:1;min-width:0}
-        .cc-username{font-size:.85rem;font-weight:700}
-        .cc-post-ref{font-size:.7rem;color:#64748b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-        .cc-channel-tag{padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:700;color:#fff;flex-shrink:0}
-        .cc-status-tag{padding:2px 8px;border-radius:10px;font-size:.65rem;font-weight:600;flex-shrink:0}
-        .cc-status-tag.responded{background:rgba(16,185,129,.1);color:#10b981}
-        .cc-status-tag.pending{background:rgba(245,158,11,.1);color:#f59e0b}
-        .cc-date{font-size:.68rem;color:#94a3b8;flex-shrink:0}
-        .cc-body{font-size:.85rem;line-height:1.5;color:#334155;padding:10px 14px;background:#f8fafc;border-radius:8px;margin-bottom:10px}
-        .cc-reply-area{display:none;margin-bottom:10px}
-        .cc-reply-area.open{display:block}
-        .cc-reply-input{width:100%;padding:10px 14px;border:1px solid #e2e8f0;border-radius:8px;font-size:.82rem;resize:vertical;min-height:60px;font-family:inherit}
-        .cc-reply-input:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
-        .cc-templates{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px;margin-bottom:8px}
-        .template-btn{padding:4px 10px;border-radius:12px;border:1px solid #e2e8f0;background:#fff;font-size:.68rem;cursor:pointer;transition:.2s;color:#64748b}
-        .template-btn:hover{background:#3b82f6;color:#fff;border-color:#3b82f6}
-        .cc-actions{display:flex;gap:6px;align-items:center}
-        .cc-btn{padding:6px 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:.75rem;font-weight:600;cursor:pointer;transition:.2s}
-        .cc-btn:hover{background:#f1f5f9}
-        .cc-btn.reply{background:#3b82f6;color:#fff;border-color:#3b82f6}
-        .cc-btn.reply:hover{background:#2563eb}
-        .cc-btn.mark{color:#10b981;border-color:#10b981}
-        .cc-btn.mark:hover{background:rgba(16,185,129,.05)}
-        .cc-btn.delete{color:#ef4444;border-color:#ef4444}
-        .cc-btn.delete:hover{background:rgba(239,68,68,.05)}
+        .comment-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+        .ca-btn{padding:6px 14px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:.74rem;cursor:pointer;font-weight:600;color:#475569;text-decoration:none;display:inline-block}
+        .ca-btn:hover{background:#f8fafc}
+        .ca-btn.primary{background:#3b82f6;color:#fff;border-color:#3b82f6}
+        .ca-btn.primary:hover{background:#2563eb}
+        .ca-btn.success{background:#10b981;color:#fff;border-color:#10b981}
 
-        /* Reply history */
-        .cc-reply-history{margin-top:8px;padding:8px 14px;background:#ecfdf5;border-radius:8px;font-size:.78rem;color:#065f46}
-        .cc-reply-history strong{font-size:.7rem;color:#10b981}
+        .reply-area{margin-top:10px;padding:10px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;display:none}
+        .reply-area.active{display:block}
+        .reply-area textarea{width:100%;padding:8px 10px;border-radius:6px;border:1px solid #e2e8f0;font-size:.82rem;font-family:inherit;resize:vertical;min-height:60px}
+        .reply-area-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:6px}
+        .ai-suggestions{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+        .ai-suggestion-btn{padding:4px 10px;border-radius:12px;border:1px solid #c4b5fd;background:#faf5ff;color:#7c3aed;font-size:.7rem;cursor:pointer;font-weight:600}
+        .ai-suggestion-btn:hover{background:#ede9fe}
 
-        .empty-state{text-align:center;padding:60px 20px;color:#94a3b8}
-        .empty-state .empty-icon{font-size:3rem;margin-bottom:12px}
-        .empty-state .empty-title{font-size:1rem;font-weight:600;margin-bottom:8px;color:#64748b}
-        .empty-state .empty-sub{font-size:.85rem;margin-bottom:16px}
+        .empty{text-align:center;padding:60px 20px;color:#94a3b8}
+        .empty-icon{font-size:3.5rem;margin-bottom:12px;opacity:.5}
 
-        /* Toast Notification */
-        .toast{position:fixed;bottom:24px;right:24px;padding:12px 20px;background:#0f172a;color:#fff;border-radius:10px;font-size:.82rem;font-weight:600;z-index:999;opacity:0;transform:translateY(20px);transition:.3s;pointer-events:none}
+        .source-badge{display:inline-block;font-size:.65rem;padding:1px 6px;border-radius:4px;font-weight:700;margin-left:6px}
+        .source-badge.real{background:#dcfce7;color:#166534}
+        .source-badge.sim{background:#fef3c7;color:#92400e}
+
+        .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:400px}
         .toast.show{opacity:1;transform:translateY(0)}
 
-        @media(max-width:768px){
-            .eng-kpi{grid-template-columns:repeat(2,1fr)}
-            .eng-filter{flex-direction:column;align-items:stretch}
-            .eng-filter .filter-count{margin-left:0;text-align:right}
-            .bulk-bar{flex-direction:column;align-items:stretch}
-            .bulk-bar .bulk-actions{margin-left:0;justify-content:flex-end}
-            .cc-header{flex-wrap:wrap}
-            .cc-actions{flex-wrap:wrap}
-        }
+        @media(max-width:768px){.stats-row{grid-template-columns:1fr 1fr}}
     </style>
 </head>
 <body>
@@ -89,7 +71,7 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
             <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>🏠</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
                 <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
                 <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
                 <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link active"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
@@ -98,360 +80,327 @@
         </aside>
         <div class="main-content">
             <header class="top-bar">
-                <div class="top-bar-left">
-                    <button class="menu-btn" id="menuBtn">☰</button>
-                    <div><div class="top-bar-title">💬 댓글/반응 관리</div><div class="top-bar-sub">모든 채널 댓글 통합 관리</div></div>
-                </div>
+                <div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">💬 댓글/반응 관리</div><div class="top-bar-sub">실제 SNS 댓글 조회 및 답글 작성</div></div></div>
                 <div class="top-bar-right">
-                    <button class="btn btn-primary" onclick="generateComments()">🧪 시뮬레이션 댓글 생성</button>
+                    <button class="tb-btn primary" onclick="fetchRealComments()" id="btnRefresh">🔄 실제 댓글 가져오기</button>
                 </div>
             </header>
             <div class="content">
-                <!-- KPI -->
-                <div class="eng-kpi">
-                    <div class="kpi-card"><div class="kpi-icon">💬</div><div class="kpi-value" id="kTotal">0</div><div class="kpi-label">전체 댓글</div></div>
-                    <div class="kpi-card"><div class="kpi-icon">⏳</div><div class="kpi-value" id="kPending">0</div><div class="kpi-label">미응답</div></div>
-                    <div class="kpi-card"><div class="kpi-icon">✅</div><div class="kpi-value" id="kResponded">0</div><div class="kpi-label">응답 완료</div></div>
-                    <div class="kpi-card"><div class="kpi-icon">📊</div><div class="kpi-value" id="kRate">0%</div><div class="kpi-label">응답률</div></div>
+
+                <div class="stats-row">
+                    <div class="stat-card"><div class="stat-icon">💬</div><div class="stat-val" id="statTotal">0</div><div class="stat-label">전체 댓글</div></div>
+                    <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-val" id="statPending" style="color:#f59e0b">0</div><div class="stat-label">미응답</div></div>
+                    <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-val" id="statReplied" style="color:#10b981">0</div><div class="stat-label">응답 완료</div></div>
+                    <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-val" id="statRate" style="color:#3b82f6">0%</div><div class="stat-label">응답률</div></div>
                 </div>
 
-                <!-- Filters -->
-                <div class="eng-filter">
-                    <select id="fChannel" onchange="renderComments()">
+                <div class="toolbar">
+                    <select class="tb-select" id="filterChannel" onchange="renderComments()">
                         <option value="">전체 채널</option>
-                        <option value="facebook">Facebook</option>
-                        <option value="tiktok">TikTok</option>
-                        <option value="instagram">Instagram</option>
-                        <option value="naver_blog">네이버 블로그</option>
-                        <option value="naver_cafe">네이버 카페</option>
-                        <option value="xiaohongshu">샤오홍수</option>
-                        <option value="douyin">도우인</option>
+                        <option value="facebook">📘 Facebook</option>
+                        <option value="instagram">📸 Instagram</option>
                     </select>
-                    <select id="fStatus" onchange="renderComments()">
+                    <select class="tb-select" id="filterStatus" onchange="renderComments()">
                         <option value="">전체 상태</option>
                         <option value="pending">미응답</option>
-                        <option value="responded">응답 완료</option>
+                        <option value="replied">응답 완료</option>
                     </select>
-                    <input type="date" id="fDateFrom" onchange="renderComments()" title="시작일">
-                    <input type="date" id="fDateTo" onchange="renderComments()" title="종료일">
-                    <input type="text" id="fSearch" placeholder="검색..." oninput="renderComments()" style="min-width:120px">
-                    <span class="filter-count" id="countLabel">0건</span>
+                    <input type="text" class="tb-select" id="filterSearch" placeholder="작성자/내용 검색..." oninput="renderComments()" style="flex:1;min-width:200px">
+                    <button class="tb-btn secondary" onclick="markAllRead()">전체 읽음 처리</button>
                 </div>
 
-                <!-- Bulk Actions -->
-                <div class="bulk-bar">
-                    <label><input type="checkbox" id="selectAll" onchange="toggleSelectAll()"> 전체 선택</label>
-                    <span style="font-size:.75rem;color:#94a3b8" id="selectedCount">0건 선택</span>
-                    <div class="bulk-actions">
-                        <button class="bulk-btn primary" onclick="bulkReply()">💬 일괄 답변</button>
-                        <button class="bulk-btn success" onclick="bulkMarkResponded()">✅ 일괄 응답 처리</button>
-                        <button class="bulk-btn" onclick="bulkDelete()">🗑 선택 삭제</button>
-                    </div>
-                </div>
-
-                <!-- Comment List -->
-                <div id="commentList"></div>
+                <div class="comment-list" id="commentList"></div>
             </div>
         </div>
     </div>
 
-    <!-- Toast -->
     <div class="toast" id="toast"></div>
 
     <script>
-        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
 
-        var channelMeta={
-            facebook:{icon:'📘',name:'Facebook',color:'#1877F2'},
-            tiktok:{icon:'🎵',name:'TikTok',color:'#000'},
-            instagram:{icon:'📸',name:'Instagram',color:'#E4405F'},
-            naver_blog:{icon:'📗',name:'네이버 블로그',color:'#03C75A'},
-            naver_cafe:{icon:'☕',name:'네이버 카페',color:'#03C75A'},
-            xiaohongshu:{icon:'📕',name:'샤오홍수',color:'#FF2442'},
-            douyin:{icon:'🎬',name:'도우인',color:'#000'}
-        };
+        var allComments = [];
 
-        var replyTemplates=[
-            {label:'감사 인사',text:'소중한 댓글 감사합니다! 앞으로도 좋은 콘텐츠로 찾아뵙겠습니다. 😊'},
-            {label:'문의 안내',text:'문의해 주셔서 감사합니다. 자세한 내용은 DM으로 안내드리겠습니다!'},
-            {label:'이벤트 안내',text:'관심 가져주셔서 감사합니다! 자세한 이벤트 정보는 프로필 링크를 확인해주세요.'},
-            {label:'공감',text:'공감해 주셔서 감사합니다! 더 유용한 정보 공유하겠습니다. 💪'},
-            {label:'재방문 유도',text:'방문해 주셔서 감사합니다! 팔로우하시면 새 소식을 가장 먼저 받아보실 수 있어요!'}
-        ];
-
-        function getComments(){return JSON.parse(localStorage.getItem('snsComments')||'[]')}
-        function saveComments(c){localStorage.setItem('snsComments',JSON.stringify(c))}
-
-        function showToast(msg){
-            var t=document.getElementById('toast');
-            t.textContent=msg;
-            t.classList.add('show');
-            setTimeout(function(){t.classList.remove('show')},2500);
+        function getSettings(){
+            return JSON.parse(localStorage.getItem('snsSettings') || '{}');
         }
 
-        function getFilteredComments(){
-            var comments=getComments();
-            var ch=document.getElementById('fChannel').value;
-            var st=document.getElementById('fStatus').value;
-            var from=document.getElementById('fDateFrom').value;
-            var to=document.getElementById('fDateTo').value;
-            var search=document.getElementById('fSearch').value.toLowerCase();
+        async function fetchRealComments(){
+            var btn = document.getElementById('btnRefresh');
+            btn.disabled = true;
+            btn.textContent = '⏳ 가져오는 중...';
 
-            if(ch)comments=comments.filter(function(c){return c.channel===ch});
-            if(st)comments=comments.filter(function(c){return c.status===st});
-            if(from)comments=comments.filter(function(c){return c.date>=from});
-            if(to)comments=comments.filter(function(c){return c.date<=to});
-            if(search)comments=comments.filter(function(c){
-                return (c.commenter||'').toLowerCase().indexOf(search)>-1||
-                       (c.text||'').toLowerCase().indexOf(search)>-1||
-                       (c.postTitle||'').toLowerCase().indexOf(search)>-1;
-            });
+            var settings = getSettings();
+            var fbAccounts = (settings.facebook && settings.facebook.accounts) || [];
+            var connectedAccounts = fbAccounts.filter(function(a){ return a.pageToken && a.pageId; });
 
-            // Sort: pending first, then by date desc
-            comments.sort(function(a,b){
-                if(a.status!==b.status){return a.status==='pending'?-1:1}
-                return (b.date||'').localeCompare(a.date||'');
-            });
-            return comments;
-        }
-
-        function renderComments(){
-            var comments=getFilteredComments();
-            var all=getComments();
-
-            // KPI
-            var total=all.length;
-            var pending=all.filter(function(c){return c.status==='pending'}).length;
-            var responded=all.filter(function(c){return c.status==='responded'}).length;
-            document.getElementById('kTotal').textContent=total;
-            document.getElementById('kPending').textContent=pending;
-            document.getElementById('kResponded').textContent=responded;
-            document.getElementById('kRate').textContent=total>0?Math.round(responded/total*100)+'%':'0%';
-
-            document.getElementById('countLabel').textContent=comments.length+'건';
-            document.getElementById('selectAll').checked=false;
-            updateSelectedCount();
-
-            if(comments.length===0){
-                document.getElementById('commentList').innerHTML='<div class="empty-state"><div class="empty-icon">💬</div><div class="empty-title">댓글이 없습니다</div><div class="empty-sub">시뮬레이션 댓글을 생성해보세요</div></div>';
+            if(connectedAccounts.length === 0){
+                btn.disabled = false;
+                btn.textContent = '🔄 실제 댓글 가져오기';
+                alert('⚠ 연결된 Facebook 페이지가 없습니다.\n\n설정 페이지에서 Facebook 페이지를 등록하고 Page Access Token + Page ID를 입력하세요.');
                 return;
             }
 
-            var html='';
-            comments.forEach(function(c){
-                var meta=channelMeta[c.channel]||{icon:'📱',name:c.channel,color:'#64748b'};
-                var initials=(c.commenter||'?').substring(0,1);
-                html+='<div class="comment-card '+c.status+'" data-id="'+c.id+'">';
-                html+='<div class="cc-header">';
-                html+='<input type="checkbox" class="cc-checkbox" data-id="'+c.id+'">';
-                html+='<div class="cc-avatar">'+initials+'</div>';
-                html+='<div class="cc-user-info"><div class="cc-username">'+escapeHtml(c.commenter||'익명')+'</div><div class="cc-post-ref">📝 '+escapeHtml(c.postTitle||'포스트')+'</div></div>';
-                html+='<span class="cc-channel-tag" style="background:'+meta.color+'">'+meta.icon+' '+meta.name+'</span>';
-                html+='<span class="cc-status-tag '+c.status+'">'+(c.status==='responded'?'✅ 응답 완료':'⏳ 미응답')+'</span>';
-                html+='<span class="cc-date">'+c.date+'</span>';
-                html+='</div>';
-                html+='<div class="cc-body">'+escapeHtml(c.text||'')+'</div>';
-                if(c.reply){
-                    html+='<div class="cc-reply-history"><strong>내 답변:</strong> '+escapeHtml(c.reply)+'</div>';
-                }
-                html+='<div class="cc-reply-area" id="reply_'+c.id+'">';
-                html+='<textarea class="cc-reply-input" id="replyText_'+c.id+'" placeholder="답변을 입력하세요..."></textarea>';
-                html+='<div class="cc-templates">';
-                replyTemplates.forEach(function(t,ti){
-                    html+='<button class="template-btn" onclick="applyTemplate(\''+c.id+'\','+ti+')">'+t.label+'</button>';
-                });
-                html+='</div>';
-                html+='<div style="display:flex;gap:6px;justify-content:flex-end">';
-                html+='<button class="cc-btn" onclick="toggleReply(\''+c.id+'\')">취소</button>';
-                html+='<button class="cc-btn reply" onclick="sendReply(\''+c.id+'\')">💬 답변 전송</button>';
-                html+='</div>';
-                html+='</div>';
-                html+='<div class="cc-actions">';
-                html+='<button class="cc-btn reply" onclick="toggleReply(\''+c.id+'\')">💬 답변</button>';
-                if(c.status==='pending'){
-                    html+='<button class="cc-btn mark" onclick="markResponded(\''+c.id+'\')">✅ 응답 처리</button>';
-                }
-                html+='<button class="cc-btn delete" onclick="deleteComment(\''+c.id+'\')">🗑 삭제</button>';
-                html+='</div>';
-                html+='</div>';
-            });
-            document.getElementById('commentList').innerHTML=html;
+            var fetched = [];
+            var errors = [];
+
+            for(var i = 0; i < connectedAccounts.length; i++){
+                var acc = connectedAccounts[i];
+                try {
+                    var postsUrl = 'https://graph.facebook.com/v18.0/' + acc.pageId + '/posts?fields=id,message,created_time,comments.limit(25){id,from,message,created_time,comment_count,like_count}&limit=10&access_token=' + encodeURIComponent(acc.pageToken);
+                    var r = await fetch(postsUrl);
+                    var d = await r.json();
+
+                    if(d.error){ errors.push(acc.name + ': ' + d.error.message); continue; }
+
+                    if(d.data){
+                        d.data.forEach(function(post){
+                            if(post.comments && post.comments.data){
+                                post.comments.data.forEach(function(c){
+                                    fetched.push({
+                                        id: c.id,
+                                        postId: post.id,
+                                        postMessage: (post.message || '').substring(0, 80),
+                                        author: c.from ? c.from.name : '알 수 없음',
+                                        authorId: c.from ? c.from.id : '',
+                                        message: c.message || '',
+                                        createdAt: c.created_time,
+                                        platform: 'facebook',
+                                        pageId: acc.pageId,
+                                        pageName: acc.name,
+                                        pageToken: acc.pageToken,
+                                        likeCount: c.like_count || 0,
+                                        replyCount: c.comment_count || 0,
+                                        status: getReplyStatus(c.id),
+                                        source: 'real'
+                                    });
+                                });
+                            }
+                        });
+                    }
+                } catch(err){ errors.push(acc.name + ': ' + err.message); }
+            }
+
+            btn.disabled = false;
+            btn.textContent = '🔄 실제 댓글 가져오기';
+
+            allComments = fetched;
+            localStorage.setItem('snsComments', JSON.stringify(fetched));
+            renderComments();
+
+            var msg = '✅ ' + fetched.length + '개 댓글을 가져왔습니다';
+            if(fetched.length === 0) msg = '📭 아직 댓글이 없습니다.\n\n페이지 게시물에 댓글이 달리면 여기에 표시됩니다.';
+            if(errors.length > 0) msg += '\n\n⚠ 일부 오류:\n' + errors.join('\n');
+            alert(msg);
         }
 
-        function escapeHtml(str){
-            var div=document.createElement('div');
-            div.textContent=str;
+        function getReplyStatus(commentId){
+            var replies = JSON.parse(localStorage.getItem('snsCommentReplies') || '{}');
+            return replies[commentId] ? 'replied' : 'pending';
+        }
+
+        function setReplied(commentId, replyText, replyId){
+            var replies = JSON.parse(localStorage.getItem('snsCommentReplies') || '{}');
+            replies[commentId] = {text:replyText, replyId:replyId, repliedAt: new Date().toISOString()};
+            localStorage.setItem('snsCommentReplies', JSON.stringify(replies));
+        }
+
+        function renderComments(){
+            var fc = document.getElementById('filterChannel').value;
+            var fs = document.getElementById('filterStatus').value;
+            var search = (document.getElementById('filterSearch').value || '').toLowerCase();
+
+            var filtered = allComments.filter(function(c){
+                if(fc && c.platform !== fc) return false;
+                if(fs === 'pending' && c.status !== 'pending') return false;
+                if(fs === 'replied' && c.status !== 'replied') return false;
+                if(search && c.message.toLowerCase().indexOf(search) === -1 && c.author.toLowerCase().indexOf(search) === -1) return false;
+                return true;
+            });
+
+            document.getElementById('statTotal').textContent = allComments.length;
+            var pending = allComments.filter(function(c){ return c.status === 'pending'; }).length;
+            var replied = allComments.length - pending;
+            document.getElementById('statPending').textContent = pending;
+            document.getElementById('statReplied').textContent = replied;
+            document.getElementById('statRate').textContent = (allComments.length > 0 ? Math.round(replied / allComments.length * 100) : 0) + '%';
+
+            var list = document.getElementById('commentList');
+            if(filtered.length === 0){
+                list.innerHTML = '<div class="empty"><div class="empty-icon">💬</div><div style="font-size:.95rem;font-weight:600;margin-bottom:6px">댓글이 없습니다</div><div style="font-size:.78rem">우측 상단 "🔄 실제 댓글 가져오기" 버튼으로 Facebook 페이지의 실제 댓글을 가져오세요</div></div>';
+                return;
+            }
+
+            list.innerHTML = filtered.map(function(c){
+                var avatar = (c.author || '?').charAt(0).toUpperCase();
+                var platformLabel = c.platform === 'facebook' ? '📘 FB' : (c.platform === 'instagram' ? '📸 IG' : c.platform);
+                var platformClass = c.platform === 'facebook' ? 'fb' : (c.platform === 'instagram' ? 'ig' : 'tt');
+                var statusLabel = c.status === 'replied' ? '✅ 응답 완료' : '⏳ 미응답';
+                var sourceBadge = '<span class="source-badge ' + (c.source === 'real' ? 'real' : 'sim') + '">' + (c.source === 'real' ? '실제' : '시뮬') + '</span>';
+
+                return '<div class="comment-item ' + (c.status === 'pending' ? 'unread' : '') + '" id="comment-' + c.id + '">' +
+                    '<div class="comment-avatar">' + escapeHtml(avatar) + '</div>' +
+                    '<div class="comment-body">' +
+                        '<div class="comment-header">' +
+                            '<span class="comment-author">' + escapeHtml(c.author) + '</span>' +
+                            '<span class="comment-platform ' + platformClass + '">' + platformLabel + '</span>' +
+                            sourceBadge +
+                            '<span class="comment-time">' + formatTime(c.createdAt) + '</span>' +
+                        '</div>' +
+                        '<div class="comment-text">' + escapeHtml(c.message) + '</div>' +
+                        '<div class="comment-meta">' +
+                            '📍 페이지: <strong>' + escapeHtml(c.pageName || '-') + '</strong> · ' +
+                            '게시물: ' + escapeHtml(c.postMessage || c.postId || '-').substring(0, 50) + (c.postMessage && c.postMessage.length > 50 ? '...' : '') +
+                            ' · 👍 ' + (c.likeCount || 0) +
+                            (c.replyCount ? ' · 💬 답글 ' + c.replyCount : '') +
+                        '</div>' +
+                        '<div style="font-size:.7rem;color:#64748b;margin-bottom:6px">상태: <strong>' + statusLabel + '</strong></div>' +
+                        '<div class="comment-actions">' +
+                            '<button class="ca-btn primary" onclick="toggleReply(\'' + c.id + '\')">💬 답글 작성</button>' +
+                            '<button class="ca-btn" onclick="aiSuggestReply(\'' + c.id + '\')">🤖 AI 답글 추천</button>' +
+                            '<button class="ca-btn" onclick="markRead(\'' + c.id + '\')">✓ 읽음 처리</button>' +
+                            (c.platform === 'facebook' ? '<a class="ca-btn" href="https://www.facebook.com/' + c.postId + '" target="_blank">🔗 페이스북에서 보기</a>' : '') +
+                        '</div>' +
+                        '<div class="reply-area" id="reply-' + c.id + '">' +
+                            '<textarea id="replyText-' + c.id + '" placeholder="답글을 입력하세요... (실제로 SNS에 답글이 작성됩니다)"></textarea>' +
+                            '<div class="ai-suggestions" id="suggestions-' + c.id + '"></div>' +
+                            '<div class="reply-area-actions">' +
+                                '<button class="ca-btn" onclick="toggleReply(\'' + c.id + '\')">취소</button>' +
+                                '<button class="ca-btn success" onclick="postReply(\'' + c.id + '\')">📤 실제 답글 작성</button>' +
+                            '</div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        window.toggleReply = function(commentId){
+            var area = document.getElementById('reply-' + commentId);
+            if(area) area.classList.toggle('active');
+        };
+
+        window.aiSuggestReply = function(commentId){
+            var comment = allComments.find(function(c){ return c.id === commentId; });
+            if(!comment) return;
+            var area = document.getElementById('reply-' + commentId);
+            if(area) area.classList.add('active');
+            var suggestions = generateAIReplies(comment.message);
+            var container = document.getElementById('suggestions-' + commentId);
+            container.innerHTML = '<div style="font-size:.7rem;color:#9333ea;font-weight:700;width:100%;margin-bottom:4px">🤖 AI 추천 답글 (클릭하여 사용):</div>' +
+                suggestions.map(function(s){
+                    return '<button class="ai-suggestion-btn" onclick="applyAISuggestion(\'' + commentId + '\',\'' + escapeAttrJs(s) + '\')">' + escapeHtml(s) + '</button>';
+                }).join('');
+        };
+
+        window.applyAISuggestion = function(commentId, text){
+            var ta = document.getElementById('replyText-' + commentId);
+            if(ta) ta.value = text;
+        };
+
+        function generateAIReplies(commentText){
+            var suggestions = [];
+            if(/감사|고맙|땡큐|thank/i.test(commentText)){
+                suggestions = ['감사합니다! 도움이 되었다니 기쁘네요 😊', '따뜻한 댓글 감사드려요 💕', '소중한 응원 감사합니다! 🙏'];
+            } else if(/좋|good|nice|예쁨|예뻐|멋|cool/i.test(commentText)){
+                suggestions = ['좋게 봐주셔서 감사합니다! ✨', '마음에 들어 하셔서 다행이에요 💕', '칭찬 감사합니다 😊'];
+            } else if(/\?|궁금|어디|얼마|언제/.test(commentText)){
+                suggestions = ['좋은 질문이네요! DM으로 안내드릴게요 📩', '문의 감사합니다. 곧 답변 드릴게요!', '궁금한 점은 언제든 물어봐주세요 😊'];
+            } else if(/싫|별로|아쉽|불만/.test(commentText)){
+                suggestions = ['소중한 피드백 감사합니다. 개선하도록 노력할게요 🙇', '의견 감사드려요. 다음에는 더 좋은 모습 보여드리겠습니다.', '아쉬운 점 알려주셔서 감사합니다.'];
+            } else {
+                suggestions = ['댓글 감사합니다! 😊', '함께 소통할 수 있어 기뻐요 💕', '좋은 의견 감사드려요!', '관심 가져주셔서 감사합니다 🙏'];
+            }
+            return suggestions;
+        }
+
+        window.postReply = async function(commentId){
+            var comment = allComments.find(function(c){ return c.id === commentId; });
+            if(!comment) return;
+            var replyText = document.getElementById('replyText-' + commentId).value.trim();
+            if(!replyText){ alert('⚠ 답글 내용을 입력하세요'); return; }
+            if(!confirm('📤 실제로 SNS에 답글을 작성합니다.\n\n작성자: ' + comment.author + '\n원댓글: ' + comment.message.substring(0,60) + '\n\n답글: ' + replyText.substring(0,100) + '\n\n계속하시겠습니까?')) return;
+
+            if(comment.platform === 'facebook'){
+                try {
+                    var url = 'https://graph.facebook.com/v18.0/' + encodeURIComponent(comment.id) + '/comments';
+                    var body = new URLSearchParams();
+                    body.append('message', replyText);
+                    body.append('access_token', comment.pageToken);
+                    var r = await fetch(url, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body.toString()});
+                    var d = await r.json();
+                    if(d.error){ alert('❌ 답글 작성 실패\n\n' + d.error.message); return; }
+                    setReplied(comment.id, replyText, d.id);
+                    comment.status = 'replied';
+                    showToast('✅ 답글 작성 완료');
+                    toggleReply(commentId);
+                    renderComments();
+                } catch(err){ alert('❌ 네트워크 오류: ' + err.message); }
+            } else {
+                setReplied(comment.id, replyText, '');
+                comment.status = 'replied';
+                showToast('✅ ' + comment.platform + ' 답글은 백엔드 연동 후 실제 발송됩니다');
+                toggleReply(commentId);
+                renderComments();
+            }
+        };
+
+        window.markRead = function(commentId){
+            var comment = allComments.find(function(c){ return c.id === commentId; });
+            if(!comment) return;
+            comment.status = 'replied';
+            setReplied(comment.id, '(읽음 처리)', '');
+            renderComments();
+            showToast('읽음 처리됨');
+        };
+
+        window.markAllRead = function(){
+            if(!confirm('모든 미응답 댓글을 읽음 처리하시겠습니까?')) return;
+            var replies = JSON.parse(localStorage.getItem('snsCommentReplies') || '{}');
+            allComments.forEach(function(c){
+                if(c.status === 'pending'){
+                    replies[c.id] = {text:'(일괄 읽음)', repliedAt: new Date().toISOString()};
+                    c.status = 'replied';
+                }
+            });
+            localStorage.setItem('snsCommentReplies', JSON.stringify(replies));
+            renderComments();
+            showToast('전체 읽음 처리 완료');
+        };
+
+        function formatTime(iso){
+            if(!iso) return '';
+            var d = new Date(iso);
+            var now = new Date();
+            var diff = (now - d) / 1000;
+            if(diff < 60) return '방금';
+            if(diff < 3600) return Math.floor(diff/60) + '분 전';
+            if(diff < 86400) return Math.floor(diff/3600) + '시간 전';
+            if(diff < 604800) return Math.floor(diff/86400) + '일 전';
+            return (d.getMonth()+1) + '/' + d.getDate();
+        }
+
+        function escapeHtml(s){
+            var div = document.createElement('div');
+            div.textContent = s || '';
             return div.innerHTML;
         }
+        function escapeAttrJs(s){ return (s||'').replace(/'/g,"\\'"); }
 
-        function toggleReply(id){
-            var area=document.getElementById('reply_'+id);
-            if(area)area.classList.toggle('open');
+        function showToast(msg){
+            var toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show';
+            setTimeout(function(){ toast.className = 'toast'; }, 2500);
         }
 
-        function applyTemplate(id,idx){
-            var textarea=document.getElementById('replyText_'+id);
-            if(textarea&&replyTemplates[idx]){
-                textarea.value=replyTemplates[idx].text;
-                textarea.focus();
+        // 초기화
+        (function(){
+            var stored = JSON.parse(localStorage.getItem('snsComments') || '[]');
+            if(stored.length > 0){
+                allComments = stored.map(function(c){ c.status = getReplyStatus(c.id); return c; });
             }
-        }
-
-        function sendReply(id){
-            var textarea=document.getElementById('replyText_'+id);
-            var text=textarea?textarea.value.trim():'';
-            if(!text){alert('답변 내용을 입력해주세요.');return;}
-            var comments=getComments();
-            var idx=comments.findIndex(function(c){return c.id===id});
-            if(idx===-1)return;
-            comments[idx].reply=text;
-            comments[idx].status='responded';
-            comments[idx].replyDate=new Date().toISOString().slice(0,10);
-            saveComments(comments);
-            showToast('💬 답변이 전송되었습니다.');
             renderComments();
-        }
-
-        function markResponded(id){
-            var comments=getComments();
-            var idx=comments.findIndex(function(c){return c.id===id});
-            if(idx===-1)return;
-            comments[idx].status='responded';
-            saveComments(comments);
-            showToast('✅ 응답 처리되었습니다.');
-            renderComments();
-        }
-
-        function deleteComment(id){
-            if(!confirm('이 댓글을 삭제하시겠습니까?'))return;
-            var comments=getComments().filter(function(c){return c.id!==id});
-            saveComments(comments);
-            showToast('🗑 삭제되었습니다.');
-            renderComments();
-        }
-
-        function getSelectedIds(){
-            var ids=[];
-            document.querySelectorAll('.cc-checkbox:checked').forEach(function(cb){
-                ids.push(cb.getAttribute('data-id'));
-            });
-            return ids;
-        }
-
-        function toggleSelectAll(){
-            var checked=document.getElementById('selectAll').checked;
-            document.querySelectorAll('.cc-checkbox').forEach(function(cb){cb.checked=checked});
-            updateSelectedCount();
-        }
-
-        document.addEventListener('change',function(e){
-            if(e.target.classList.contains('cc-checkbox'))updateSelectedCount();
-        });
-
-        function updateSelectedCount(){
-            var count=document.querySelectorAll('.cc-checkbox:checked').length;
-            document.getElementById('selectedCount').textContent=count+'건 선택';
-        }
-
-        function bulkReply(){
-            var ids=getSelectedIds();
-            if(ids.length===0){alert('댓글을 선택해주세요.');return;}
-            var text=prompt('일괄 답변 내용을 입력하세요:');
-            if(!text||!text.trim())return;
-            var comments=getComments();
-            ids.forEach(function(id){
-                var idx=comments.findIndex(function(c){return c.id===id});
-                if(idx>-1){
-                    comments[idx].reply=text.trim();
-                    comments[idx].status='responded';
-                    comments[idx].replyDate=new Date().toISOString().slice(0,10);
-                }
-            });
-            saveComments(comments);
-            showToast('💬 '+ids.length+'건에 일괄 답변 완료');
-            renderComments();
-        }
-
-        function bulkMarkResponded(){
-            var ids=getSelectedIds();
-            if(ids.length===0){alert('댓글을 선택해주세요.');return;}
-            var comments=getComments();
-            ids.forEach(function(id){
-                var idx=comments.findIndex(function(c){return c.id===id});
-                if(idx>-1)comments[idx].status='responded';
-            });
-            saveComments(comments);
-            showToast('✅ '+ids.length+'건 응답 처리 완료');
-            renderComments();
-        }
-
-        function bulkDelete(){
-            var ids=getSelectedIds();
-            if(ids.length===0){alert('댓글을 선택해주세요.');return;}
-            if(!confirm(ids.length+'건의 댓글을 삭제하시겠습니까?'))return;
-            var comments=getComments().filter(function(c){return ids.indexOf(c.id)===-1});
-            saveComments(comments);
-            showToast('🗑 '+ids.length+'건 삭제 완료');
-            renderComments();
-        }
-
-        function generateComments(){
-            var posts=JSON.parse(localStorage.getItem('snsPosts')||'[]');
-            var allChannels=['facebook','tiktok','instagram','naver_blog','naver_cafe','xiaohongshu','douyin'];
-            var commenters=['김민수','이서연','박지훈','최유진','정하늘','한소희','윤재민','오수빈','강태현','임다은','user_2026','sns_lover','daily_life','brand_fan','trend_watcher'];
-            var commentTexts=[
-                '이 제품 정말 좋아보여요! 어디서 구매할 수 있나요?',
-                '항상 좋은 콘텐츠 감사합니다! 공유할게요 😊',
-                '가격이 어떻게 되나요? DM 주세요!',
-                '친구한테도 추천했어요~ 다음 포스팅도 기대됩니다!',
-                '디자인이 너무 예뻐요! 색상 옵션이 더 있나요?',
-                '실제로 사용해봤는데 정말 만족스러워요',
-                '배송은 얼마나 걸리나요?',
-                '이번 이벤트 참여하고 싶어요!',
-                '품질이 좋아 보이네요. 리뷰 영상도 만들어주세요!',
-                '매번 유익한 정보 감사합니다 👍',
-                '할인 코드 있나요?',
-                '다른 색상도 출시 예정인가요?',
-                '이거 진짜 대박이에요!!! 바로 구매합니다',
-                '오프라인 매장에서도 구매 가능한가요?',
-                '사이즈 추천 부탁드려요~',
-                '이 브랜드 처음 알았는데 팬이 됐어요!',
-                '반품/교환 정책이 궁금합니다',
-                '다음 신상품 런칭은 언제인가요?',
-                '인스타 스토리에 공유했어요!',
-                '라이브 방송도 해주세요!'
-            ];
-
-            var existing=getComments();
-            var newComments=[];
-            var count=Math.floor(Math.random()*10)+8;
-
-            for(var i=0;i<count;i++){
-                var post=posts.length>0?posts[Math.floor(Math.random()*posts.length)]:null;
-                var ch=post&&post.channels&&post.channels.length>0?post.channels[Math.floor(Math.random()*post.channels.length)]:allChannels[Math.floor(Math.random()*allChannels.length)];
-                var d=new Date();d.setDate(d.getDate()-Math.floor(Math.random()*14));
-                var isPending=Math.random()>0.3;
-
-                newComments.push({
-                    id:'cmt_'+Date.now()+'_'+Math.random().toString(36).substr(2,6),
-                    postId:post?post.id:'unknown',
-                    postTitle:post?post.title:'샘플 포스트 #'+Math.floor(Math.random()*100),
-                    channel:ch,
-                    commenter:commenters[Math.floor(Math.random()*commenters.length)],
-                    text:commentTexts[Math.floor(Math.random()*commentTexts.length)],
-                    date:d.toISOString().slice(0,10),
-                    status:isPending?'pending':'responded',
-                    reply:isPending?'':'감사합니다! 확인 후 안내드리겠습니다.',
-                    replyDate:isPending?'':d.toISOString().slice(0,10)
-                });
-            }
-
-            saveComments(existing.concat(newComments));
-            showToast('🧪 시뮬레이션 댓글 '+count+'개 생성 완료');
-            renderComments();
-        }
-
-        renderComments();
+        })();
     </script>
 </body>
 </html>
