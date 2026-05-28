@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시스템 상태 | 관리자</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        body{background:#f1f5f9}
+        .admin-bar{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;padding:8px 24px;font-size:.78rem;font-weight:600;text-align:center}
+        .admin-bar a{color:#fef2f2;margin-left:10px}
+        .sidebar{background:#0f172a !important}.sidebar-logo .logo-text{color:#fff !important}.sidebar-logo .logo-text small{color:#fca5a5 !important}.nav-title{color:#94a3b8 !important}.nav-link{color:#cbd5e1 !important}.nav-link:hover{background:rgba(255,255,255,.06) !important;color:#fff !important}.nav-link.active{background:rgba(220,38,38,.2) !important;color:#fca5a5 !important}
+
+        .card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
+        .card h2{font-size:1rem;margin-bottom:14px}
+
+        .overall-status{padding:24px;border-radius:14px;text-align:center;background:linear-gradient(135deg,#10b981,#22c55e);color:#fff;margin-bottom:16px}
+        .overall-status h2{font-size:1.6rem;font-weight:800;margin-bottom:6px}
+        .overall-status p{font-size:.92rem;opacity:.95}
+        .overall-status.warn{background:linear-gradient(135deg,#f59e0b,#fbbf24)}
+        .overall-status.error{background:linear-gradient(135deg,#dc2626,#ef4444)}
+
+        .service-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+        .service-card{padding:16px;border-radius:12px;background:#f8fafc;border:1px solid #e2e8f0}
+        .service-header{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+        .service-icon{font-size:24px;width:40px;height:40px;border-radius:10px;background:#fff;display:flex;align-items:center;justify-content:center}
+        .service-name{font-weight:700;font-size:.92rem;flex:1}
+        .status-dot{width:10px;height:10px;border-radius:50%}
+        .status-dot.ok{background:#10b981;box-shadow:0 0 0 4px rgba(16,185,129,.2)}
+        .status-dot.warn{background:#f59e0b;box-shadow:0 0 0 4px rgba(245,158,11,.2)}
+        .status-dot.error{background:#dc2626;box-shadow:0 0 0 4px rgba(220,38,38,.2)}
+        .service-stat{display:flex;justify-content:space-between;font-size:.78rem;padding:4px 0;color:#475569}
+        .service-stat strong{color:#0f172a}
+
+        .uptime-chart{display:flex;gap:2px;height:30px;margin-top:6px}
+        .uptime-bar{flex:1;background:#10b981;border-radius:2px}
+        .uptime-bar.warn{background:#f59e0b}
+        .uptime-bar.error{background:#dc2626}
+
+        .incident-list{margin-top:8px}
+        .incident-item{padding:12px 14px;background:#f8fafc;border-radius:8px;border-left:4px solid #f59e0b;margin-bottom:8px}
+        .incident-item.resolved{border-left-color:#10b981}
+        .incident-item.error{border-left-color:#dc2626}
+        .incident-header{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:700;margin-bottom:4px}
+        .incident-body{font-size:.78rem;color:#475569;line-height:1.5}
+        .incident-time{font-size:.7rem;color:#94a3b8;margin-top:4px}
+    </style>
+</head>
+<body>
+    <div class="admin-bar">🛡 관리자 → <a href="../index.html">사용자 대시보드로</a></div>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">🛡</div><div class="logo-text">관리자 콘솔<small>DIVOOST SNS Admin</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">개요</div><a href="index.html" class="nav-link"><span>🏠</span> 관리자 대시보드</a></div>
+                <div class="nav-section"><div class="nav-title">회원 관리</div><a href="users.html" class="nav-link"><span>👥</span> 회원 목록</a><a href="subscriptions.html" class="nav-link"><span>💳</span> 구독 관리</a><a href="user-activity.html" class="nav-link"><span>📊</span> 활동 로그</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 운영</div><a href="content-moderation.html" class="nav-link"><span>📝</span> 콘텐츠 검토</a><a href="reports.html" class="nav-link"><span>🚨</span> 신고/제재</a></div>
+                <div class="nav-section"><div class="nav-title">시스템 운영</div><a href="api-monitor.html" class="nav-link"><span>📡</span> API 사용량</a><a href="system-health.html" class="nav-link active"><span>💚</span> 시스템 상태</a><a href="notifications.html" class="nav-link"><span>🔔</span> 공지 관리</a></div>
+                <div class="nav-section"><div class="nav-title">설정</div><a href="admin-settings.html" class="nav-link"><span>⚙️</span> 관리자 설정</a><a href="audit-log.html" class="nav-link"><span>📜</span> 감사 로그</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">💚 시스템 상태</div><div class="top-bar-sub">서비스 가동 상태 및 인시던트 관리</div></div></div></header>
+            <div class="content">
+
+                <div class="overall-status">
+                    <h2>💚 모든 시스템 정상</h2>
+                    <p>가동률 99.98% · 마지막 인시던트: 7일 전</p>
+                </div>
+
+                <div class="card">
+                    <h2>🔌 서비스별 상태</h2>
+                    <div class="service-grid">
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-icon">🌐</div>
+                                <div class="service-name">GitHub Pages</div>
+                                <div class="status-dot ok"></div>
+                            </div>
+                            <div class="service-stat"><span>응답 속도</span><strong>123ms</strong></div>
+                            <div class="service-stat"><span>가동률 (30일)</span><strong>100%</strong></div>
+                            <div class="uptime-chart">
+                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
+                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
+                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
+                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
+                            </div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-icon">🔐</div>
+                                <div class="service-name">Supabase Auth</div>
+                                <div class="status-dot ok"></div>
+                            </div>
+                            <div class="service-stat"><span>응답 속도</span><strong>89ms</strong></div>
+                            <div class="service-stat"><span>가동률 (30일)</span><strong>99.99%</strong></div>
+                            <div class="uptime-chart">
+                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
+                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
+                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
+                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar warn"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
+                            </div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-icon">📘</div>
+                                <div class="service-name">Facebook API</div>
+                                <div class="status-dot ok"></div>
+                            </div>
+                            <div class="service-stat"><span>응답 속도</span><strong>342ms</strong></div>
+                            <div class="service-stat"><span>가동률 (30일)</span><strong>99.95%</strong></div>
+                            <div class="service-stat"><span>오늘 호출</span><strong>1,234</strong></div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-icon">📸</div>
+                                <div class="service-name">Instagram API</div>
+                                <div class="status-dot ok"></div>
+                            </div>
+                            <div class="service-stat"><span>응답 속도</span><strong>421ms</strong></div>
+                            <div class="service-stat"><span>가동률 (30일)</span><strong>99.92%</strong></div>
+                            <div class="service-stat"><span>오늘 호출</span><strong>567</strong></div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-icon">🎵</div>
+                                <div class="service-name">TikTok API</div>
+                                <div class="status-dot warn"></div>
+                            </div>
+                            <div class="service-stat"><span>응답 속도</span><strong>1,234ms</strong></div>
+                            <div class="service-stat"><span>가동률 (30일)</span><strong>98.5%</strong></div>
+                            <div class="service-stat" style="color:#f59e0b"><span>주의: Rate Limit 임박</span></div>
+                        </div>
+
+                        <div class="service-card">
+                            <div class="service-header">
+                                <div class="service-icon">📺</div>
+                                <div class="service-name">YouTube API</div>
+                                <div class="status-dot ok"></div>
+                            </div>
+                            <div class="service-stat"><span>응답 속도</span><strong>234ms</strong></div>
+                            <div class="service-stat"><span>가동률 (30일)</span><strong>100%</strong></div>
+                            <div class="service-stat"><span>할당량 잔여</span><strong>9,200 unit</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>📜 최근 인시던트</h2>
+                    <div class="incident-list">
+                        <div class="incident-item resolved">
+                            <div class="incident-header">
+                                <span>✅</span>
+                                <span>[해결됨] Supabase Auth 일시적 지연</span>
+                            </div>
+                            <div class="incident-body">미국 동부 리전 일시적 지연. 평균 응답 시간 89ms → 320ms 로 증가. 자동 복구.</div>
+                            <div class="incident-time">2026-05-21 03:15 ~ 03:42 (27분 소요)</div>
+                        </div>
+                        <div class="incident-item resolved">
+                            <div class="incident-header">
+                                <span>✅</span>
+                                <span>[해결됨] Facebook Graph API v18 마이그레이션</span>
+                            </div>
+                            <div class="incident-body">v17에서 v18로 강제 업그레이드. 일부 엔드포인트 응답 형식 변경. 코드 패치 완료.</div>
+                            <div class="incident-time">2026-05-15 (계획된 작업)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };</script>
+</body>
+</html>
