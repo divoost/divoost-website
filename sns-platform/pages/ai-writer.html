@@ -336,6 +336,7 @@
                             <button class="btn-action btn-regenerate" onclick="generateContent()">🔄 다시 생성</button>
                             <button class="btn-action btn-copy-all" onclick="copyAll()">📋 전체 복사</button>
                             <button class="btn-action btn-draft" onclick="saveToDraft()">💾 임시저장</button>
+                            <button class="btn-action" style="background:#10b981;color:#fff" onclick="publishNow()">🚀 바로 발행</button>
                         </div>
                     </div>
                 </div>
@@ -627,11 +628,25 @@
                 updateCharCounter(r.content);
                 var hashtagListEl = document.getElementById('hashtagList');
                 hashtagListEl.innerHTML = '';
+
+                // 안내 메시지
+                var hint = document.createElement('div');
+                hint.style.cssText = 'font-size:.72rem;color:#94a3b8;margin-bottom:8px;width:100%';
+                hint.innerHTML = '💡 클릭하면 본문에 추가/제거됩니다 · 더블클릭하면 복사됩니다';
+                hashtagListEl.appendChild(hint);
+
                 r.hashtags.forEach(function(tag){
                     var span = document.createElement('span');
                     span.className = 'hashtag-tag';
                     span.textContent = tag;
-                    span.onclick = function(){ copyToClipboard(tag); showToast(tag + ' 복사됨!'); };
+                    span.dataset.tag = tag;
+                    // 본문에 이미 포함되어 있으면 선택 상태 표시
+                    if(r.content.indexOf(tag) > -1){
+                        span.style.background = '#3b82f6';
+                        span.style.color = '#fff';
+                    }
+                    span.onclick = function(){ toggleHashtagInContent(tag, this); };
+                    span.ondblclick = function(){ copyToClipboard(tag); showToast(tag + ' 복사됨!'); };
                     hashtagListEl.appendChild(span);
                 });
                 document.getElementById('imagePromptText').textContent = r.imagePrompt;
@@ -758,14 +773,143 @@
                 el.style.border = '1px solid #e2e8f0';
                 el.style.background = '#f8fafc';
                 updateCharCounter(el.textContent);
-                showToast('수정이 완료되었습니다');
+                // 편집한 내용을 generatedResults에 반영
+                if(selectedPlatforms.length === 1 && generatedResults[selectedPlatforms[0]]){
+                    generatedResults[selectedPlatforms[0]].content = el.textContent;
+                }
+                showToast('수정 완료. 발행 시 수정된 내용이 사용됩니다.');
             } else {
                 el.contentEditable = 'true';
                 el.style.border = '2px solid #8b5cf6';
                 el.style.background = '#fff';
                 el.focus();
-                showToast('콘텐츠를 직접 수정할 수 있습니다');
+                showToast('콘텐츠를 직접 수정하세요. 완료되면 ✏️ 수정 버튼을 다시 누르세요.');
             }
+        };
+
+        // ─── 해시태그 본문에 추가/제거 ───
+        window.toggleHashtagInContent = function(tag, el){
+            var contentEl = document.getElementById('generatedContent');
+            var content = contentEl.textContent;
+            var isInContent = content.indexOf(tag) > -1;
+
+            if(isInContent){
+                // 제거
+                var pattern = new RegExp('\\s*' + tag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*', 'g');
+                content = content.replace(pattern, ' ').replace(/\s+/g, ' ').trim();
+                el.style.background = '#dbeafe';
+                el.style.color = '#2563eb';
+                showToast(tag + ' 제거됨');
+            } else {
+                // 추가 (끝에)
+                content = content.trim() + ' ' + tag;
+                el.style.background = '#3b82f6';
+                el.style.color = '#fff';
+                showToast(tag + ' 추가됨');
+            }
+            contentEl.textContent = content;
+            updateCharCounter(content);
+            // generatedResults 업데이트
+            if(selectedPlatforms.length === 1 && generatedResults[selectedPlatforms[0]]){
+                generatedResults[selectedPlatforms[0]].content = content;
+            }
+        };
+
+        // ─── 바로 발행 ───
+        window.publishNow = async function(){
+            var platforms = selectedPlatforms;
+            if(!platforms || platforms.length === 0){
+                showToast('발행할 플랫폼을 선택하세요', 'warn');
+                return;
+            }
+
+            // 단일 플랫폼의 경우 generatedContent에서 직접 읽기 (수정 반영)
+            var currentContent;
+            if(platforms.length === 1){
+                currentContent = document.getElementById('generatedContent').textContent;
+            }
+
+            // 연결 상태 확인
+            var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+            var connectedPlatforms = [];
+            var disconnectedPlatforms = [];
+            platforms.forEach(function(p){
+                var s = settings[p] || {};
+                var hasToken = Object.keys(s).some(function(k){
+                    return k.indexOf('token') > -1 && s[k] && s[k].trim();
+                });
+                if(hasToken) connectedPlatforms.push(p);
+                else disconnectedPlatforms.push(p);
+            });
+
+            var msg = '🚀 콘텐츠 발행\n\n';
+            if(connectedPlatforms.length > 0){
+                msg += '✅ 연결된 채널 (실제 발행): ' + connectedPlatforms.join(', ') + '\n';
+            }
+            if(disconnectedPlatforms.length > 0){
+                msg += '⚠️ 미연결 채널 (이력만 저장): ' + disconnectedPlatforms.join(', ') + '\n';
+            }
+            msg += '\n계속하시겠습니까?';
+
+            if(!confirm(msg)) return;
+
+            var results = [];
+            for(var i = 0; i < platforms.length; i++){
+                var p = platforms[i];
+                var content = (p === platforms[0] && currentContent) ? currentContent : (generatedResults[p] && generatedResults[p].content) || '';
+                var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+                var s = settings[p] || {};
+                var hasToken = Object.keys(s).some(function(k){
+                    return k.indexOf('token') > -1 && s[k] && s[k].trim();
+                });
+
+                if(hasToken && p === 'facebook'){
+                    // 실제 Facebook 발행
+                    try {
+                        var token = s['fb-token'];
+                        var pageId = s['fb-pageid'];
+                        var url = 'https://graph.facebook.com/v18.0/' + encodeURIComponent(pageId) + '/feed';
+                        var body = new URLSearchParams();
+                        body.append('message', content);
+                        body.append('access_token', token);
+                        var r = await fetch(url, {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                            body: body.toString()
+                        });
+                        var d = await r.json();
+                        if(d.error){
+                            results.push('❌ Facebook 실패: ' + d.error.message);
+                        } else {
+                            results.push('✅ Facebook 발행 성공! Post ID: ' + d.id);
+                        }
+                    } catch(err){
+                        results.push('❌ Facebook 오류: ' + err.message);
+                    }
+                } else if(hasToken && p === 'instagram'){
+                    results.push('ℹ️ Instagram: 이미지 필요 (텍스트만 발행 불가)');
+                } else {
+                    results.push('ℹ️ ' + p + ': 미연결 - 이력만 저장됨');
+                }
+            }
+
+            // snsPosts에 저장 (발행 이력)
+            var posts = JSON.parse(localStorage.getItem('snsPosts') || '[]');
+            var topic = document.getElementById('aiTopic').value.trim();
+            var keywords = document.getElementById('aiKeywords').value.trim();
+            posts.unshift({
+                id: Date.now().toString(),
+                title: topic || keywords || '제목 없음',
+                content: currentContent || (generatedResults[platforms[0]] && generatedResults[platforms[0]].content) || '',
+                channels: platforms,
+                status: 'published',
+                date: new Date().toISOString().slice(0,10),
+                likes: 0, comments: 0, shares: 0, views: 0,
+                createdAt: new Date().toISOString()
+            });
+            localStorage.setItem('snsPosts', JSON.stringify(posts));
+
+            alert('🚀 발행 결과\n\n' + results.join('\n') + '\n\n발행 이력은 "발행 이력" 메뉴에서 확인하실 수 있습니다.');
         };
 
         // ─── Save to drafts (localStorage) ───
