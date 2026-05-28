@@ -403,7 +403,7 @@
             showToast(ch + ' 설정이 저장되었습니다');
         }
 
-        function testConnection(ch){
+        async function testConnection(ch){
             var fields = FIELD_MAP[ch] || [];
             var hasToken = false;
             fields.forEach(function(fid){
@@ -414,15 +414,144 @@
             });
 
             if(!hasToken){
-                showToast('Access Token을 먼저 입력해주세요', 'warn');
+                alert('⚠️ Access Token을 먼저 입력해주세요');
                 return;
             }
 
-            showToast(ch + ' 연결 테스트 중...', 'info');
-            setTimeout(function(){
-                saveChannel(ch);
-                showToast(ch + ' API 설정이 저장되었습니다. 실제 연결은 포스팅 시 확인됩니다.', 'success');
-            }, 800);
+            // 먼저 저장
+            saveChannel(ch);
+
+            // 채널별 실제 API 호출
+            if(ch === 'facebook'){
+                await testFacebook();
+            } else if(ch === 'instagram'){
+                await testInstagram();
+            } else if(ch === 'naver_blog' || ch === 'naver_cafe'){
+                alert('✅ ' + ch + ' 설정이 저장되었습니다.\n\n네이버 API는 OAuth 인증이 필요하여 별도 콜백 서버가 필요합니다.\n실제 포스팅은 백엔드 연동 후 가능합니다.');
+            } else {
+                alert('✅ ' + ch + ' 설정이 저장되었습니다.\n\n실제 연결 테스트는 해당 SNS 백엔드 연동 후 가능합니다.');
+            }
+        }
+
+        async function testFacebook(){
+            var token = document.getElementById('fb-token').value.trim();
+            var pageId = document.getElementById('fb-pageid').value.trim();
+            var appId = document.getElementById('fb-appid').value.trim();
+
+            var statusEl = document.getElementById('status-facebook');
+            statusEl.textContent = '연결 테스트 중...';
+            statusEl.className = 'api-status';
+            statusEl.style.background = '#dbeafe';
+            statusEl.style.color = '#1e40af';
+
+            var report = '🔍 Facebook 연결 테스트 결과\n\n';
+            var allOk = true;
+
+            // 1. 토큰 정보 확인
+            try {
+                var r1 = await fetch('https://graph.facebook.com/v18.0/me?fields=id,name&access_token=' + encodeURIComponent(token));
+                var d1 = await r1.json();
+                if(d1.error){
+                    report += '❌ 토큰 검증 실패\n';
+                    report += '   ' + (d1.error.message || '알 수 없는 오류') + '\n\n';
+                    allOk = false;
+                } else {
+                    report += '✅ 토큰 유효\n';
+                    report += '   페이지/사용자: ' + (d1.name || '-') + ' (ID: ' + (d1.id || '-') + ')\n\n';
+                }
+            } catch(err){
+                report += '❌ 네트워크 오류: ' + err.message + '\n\n';
+                allOk = false;
+            }
+
+            // 2. 페이지 ID 검증 (있는 경우)
+            if(pageId && allOk){
+                try {
+                    var r2 = await fetch('https://graph.facebook.com/v18.0/' + encodeURIComponent(pageId) + '?fields=id,name,fan_count&access_token=' + encodeURIComponent(token));
+                    var d2 = await r2.json();
+                    if(d2.error){
+                        report += '⚠️ 페이지 ID 검증 실패\n';
+                        report += '   ' + (d2.error.message || '알 수 없는 오류') + '\n\n';
+                    } else {
+                        report += '✅ 페이지 확인됨\n';
+                        report += '   이름: ' + (d2.name || '-') + '\n';
+                        report += '   ID: ' + (d2.id || '-') + '\n';
+                        if(d2.fan_count !== undefined) report += '   팬 수: ' + d2.fan_count + '명\n';
+                        report += '\n';
+                    }
+                } catch(err){
+                    report += '⚠️ 페이지 확인 실패: ' + err.message + '\n\n';
+                }
+            }
+
+            // 3. 토큰 만료일 확인
+            if(appId && allOk){
+                try {
+                    var r3 = await fetch('https://graph.facebook.com/v18.0/debug_token?input_token=' + encodeURIComponent(token) + '&access_token=' + encodeURIComponent(token));
+                    var d3 = await r3.json();
+                    if(d3.data){
+                        var expiresAt = d3.data.expires_at;
+                        if(expiresAt === 0 || !expiresAt){
+                            report += '✅ 토큰 만료: 영구 사용 가능 (Never)\n';
+                        } else {
+                            var expDate = new Date(expiresAt * 1000);
+                            var daysLeft = Math.floor((expiresAt * 1000 - Date.now()) / (1000 * 60 * 60 * 24));
+                            report += '⏰ 토큰 만료일: ' + expDate.toLocaleDateString() + ' (남은 ' + daysLeft + '일)\n';
+                        }
+                        if(d3.data.scopes){
+                            report += '🔐 권한: ' + d3.data.scopes.join(', ') + '\n';
+                        }
+                    }
+                } catch(err){
+                    // 무시 (선택사항)
+                }
+            }
+
+            if(allOk){
+                statusEl.textContent = '연결됨 ✓';
+                statusEl.className = 'api-status connected';
+                statusEl.style.background = '';
+                statusEl.style.color = '';
+                report += '\n🎉 Facebook 연결 성공! 자동 포스팅 사용 가능합니다.';
+            } else {
+                statusEl.textContent = '연결 실패';
+                statusEl.className = 'api-status disconnected';
+                statusEl.style.background = '';
+                statusEl.style.color = '';
+                report += '\n⚠️ 토큰 또는 페이지 ID를 다시 확인해주세요.';
+            }
+
+            alert(report);
+        }
+
+        async function testInstagram(){
+            var token = document.getElementById('ig-token').value.trim();
+            var accountId = document.getElementById('ig-accountid').value.trim();
+            var statusEl = document.getElementById('status-instagram');
+
+            var report = '🔍 Instagram 연결 테스트 결과\n\n';
+
+            try {
+                var url = 'https://graph.facebook.com/v18.0/' + encodeURIComponent(accountId || 'me') + '?fields=id,username,name&access_token=' + encodeURIComponent(token);
+                var r = await fetch(url);
+                var d = await r.json();
+                if(d.error){
+                    report += '❌ 연결 실패\n   ' + (d.error.message || '알 수 없는 오류');
+                    statusEl.textContent = '연결 실패';
+                    statusEl.className = 'api-status disconnected';
+                } else {
+                    report += '✅ Instagram 계정 확인됨\n';
+                    report += '   ' + (d.username || d.name || '-') + ' (ID: ' + d.id + ')';
+                    statusEl.textContent = '연결됨 ✓';
+                    statusEl.className = 'api-status connected';
+                }
+            } catch(err){
+                report += '❌ 네트워크 오류: ' + err.message;
+                statusEl.textContent = '연결 실패';
+                statusEl.className = 'api-status disconnected';
+            }
+
+            alert(report);
         }
 
         function saveAllSettings(){
