@@ -107,6 +107,56 @@
         if(emailEl) emailEl.textContent = email;
     }
 
+    // ─── 활동 로그 기록 (Supabase) ───
+    async function logActivity(actionType, detail, target, metadata){
+        var session = getSession();
+        if(!session || !session.user) return;
+        try {
+            await fetch(SUPABASE_URL + '/rest/v1/activity_logs', {
+                method: 'POST',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': 'Bearer ' + session.access_token,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({
+                    user_id: session.user.id,
+                    user_email: session.user.email,
+                    action_type: actionType,
+                    action_detail: detail || '',
+                    target: target || '',
+                    user_agent: navigator.userAgent,
+                    metadata: metadata || null
+                })
+            });
+        } catch(e){}
+    }
+
+    // ─── 사용자 활동 시간 갱신 (last_active_at) ───
+    async function touchActivity(){
+        var session = getSession();
+        if(!session || !session.user) return;
+        try {
+            await fetch(SUPABASE_URL + '/rest/v1/profiles?id=eq.' + session.user.id, {
+                method: 'PATCH',
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': 'Bearer ' + session.access_token,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify({last_active_at: new Date().toISOString()})
+            });
+        } catch(e){}
+    }
+
+    // 로그인 시 활동 시간 자동 갱신 (15분마다)
+    if(getSession()){
+        touchActivity();
+        setInterval(touchActivity, 15 * 60 * 1000);
+    }
+
     // Expose globally
     window.SNSAuth = {
         getSession: getSession,
@@ -114,6 +164,8 @@
         logout: logout,
         require: require,
         updateProfileUI: updateProfileUI,
+        logActivity: logActivity,
+        touchActivity: touchActivity,
         SUPABASE_URL: SUPABASE_URL,
         SUPABASE_KEY: SUPABASE_KEY
     };

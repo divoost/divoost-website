@@ -193,6 +193,42 @@
             </div>
         </div>
     </div>
-    <script>document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };</script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/supabase-admin.js"></script>
+    <script>
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+
+        async function loadAuditLogs(){
+            try {
+                var logs = await SNSAdmin.listAuditLogs({limit: 100});
+                var tbody = document.querySelector('.log-table tbody');
+                if(!tbody || logs.length === 0) return;
+                tbody.innerHTML = logs.map(function(log){
+                    var t = log.created_at ? new Date(log.created_at).toISOString().slice(0,19).replace('T',' ') : '-';
+                    var sevClass = log.severity || 'info';
+                    var sevUpper = (log.severity || 'INFO').toUpperCase();
+                    var resultClass = log.success ? 'success' : 'critical';
+                    var resultText = log.success ? 'SUCCESS' : 'FAILED';
+                    return '<tr>' +
+                        '<td>' + t + '</td>' +
+                        '<td><span class="severity ' + sevClass + '">' + sevUpper + '</span></td>' +
+                        '<td class="actor">' + (log.admin_email || '-') + '</td>' +
+                        '<td>' + (log.action || '-') + '</td>' +
+                        '<td>' + (log.target || '-') + '</td>' +
+                        '<td>' + (log.ip_address || '-') + '</td>' +
+                        '<td><span class="severity ' + resultClass + '">' + resultText + '</span></td>' +
+                    '</tr>';
+                }).join('');
+            } catch(err){
+                console.error('Audit log load error:', err);
+            }
+        }
+
+        (async function(){
+            var ok = await SNSAdmin.requireAdmin();
+            if(!ok) return;
+            await loadAuditLogs();
+        })();
+    </script>
 </body>
 </html>
