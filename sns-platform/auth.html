@@ -362,9 +362,8 @@
             var result = await supabaseAuth('signup', {
                 email: email,
                 password: password,
-                data: {full_name: name},
-                options: {emailRedirectTo: REDIRECT_URL}
-            });
+                data: {full_name: name}
+            }, 'redirect_to=' + encodeURIComponent(REDIRECT_URL));
 
             setLoading('btnSignup', false);
 
@@ -438,9 +437,8 @@
 
             var result = await supabaseAuth('resend', {
                 type: 'signup',
-                email: email,
-                options: {emailRedirectTo: REDIRECT_URL}
-            });
+                email: email
+            }, 'redirect_to=' + encodeURIComponent(REDIRECT_URL));
 
             if(result.ok){
                 showAlert('인증 메일이 재발송되었습니다. 메일함을 확인해주세요.', 'success');
@@ -460,9 +458,8 @@
 
             setLoading('btnForgot', true);
             var result = await supabaseAuth('recover', {
-                email: email,
-                options: {redirectTo: REDIRECT_URL}
-            });
+                email: email
+            }, 'redirect_to=' + encodeURIComponent(REDIRECT_URL));
             setLoading('btnForgot', false);
 
             if(result.ok){
