@@ -10,22 +10,46 @@
         .pub-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
         .pub-card h2{font-size:1rem;margin-bottom:12px}
         .ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
-        .ch-pub{background:#f8fafc;border-radius:10px;padding:16px;border:1px solid #e2e8f0}
+        .ch-pub{background:#f8fafc;border-radius:10px;padding:16px;border:1px solid #e2e8f0;transition:.2s}
+        .ch-pub.connected{background:#f0fdf4;border-color:#86efac}
         .ch-pub-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
         .ch-pub-icon{font-size:24px}
         .ch-pub-name{font-weight:700;font-size:.9rem}
-        .ch-pub-status{font-size:.7rem;padding:2px 8px;border-radius:10px;margin-left:auto}
-        .ch-pub-status.connected{background:rgba(16,185,129,.1);color:#10b981}
-        .ch-pub-status.pending{background:rgba(249,115,22,.1);color:#f59e0b}
-        .ch-pub-body{font-size:.8rem;color:#64748b;margin-bottom:10px}
-        .ch-pub-btn{padding:8px 16px;border-radius:6px;border:none;font-size:.78rem;font-weight:600;cursor:pointer;width:100%}
+        .ch-pub-status{font-size:.7rem;padding:3px 10px;border-radius:10px;margin-left:auto;font-weight:600}
+        .ch-pub-status.connected{background:#dcfce7;color:#16a34a}
+        .ch-pub-status.pending{background:#fef3c7;color:#d97706}
+        .ch-pub-body{font-size:.78rem;color:#64748b;margin-bottom:10px;line-height:1.5}
+        .ch-pub-info{font-size:.72rem;color:#475569;background:#fff;padding:6px 10px;border-radius:6px;border:1px solid #e2e8f0;margin-bottom:10px}
+        .ch-pub-btn{padding:8px 16px;border-radius:6px;border:none;font-size:.78rem;font-weight:600;cursor:pointer;width:100%;transition:.2s}
         .ch-pub-btn.connect{background:#3b82f6;color:#fff}
+        .ch-pub-btn.connect:hover{background:#2563eb}
         .ch-pub-btn.publish{background:#10b981;color:#fff}
+        .ch-pub-btn.publish:hover{background:#059669}
+        .ch-pub-btn.reconnect{background:#f59e0b;color:#fff}
+        .ch-pub-btn.test{background:#fff;color:#3b82f6;border:1px solid #3b82f6}
+        .ch-pub-btn.test:hover{background:#eff6ff}
+        .ch-pub-actions{display:flex;gap:6px}
+
         .quick-pub{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
         .quick-pub textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #e2e8f0;min-height:100px;font-family:inherit;font-size:.85rem;resize:vertical}
         .quick-channels{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
-        .qc-check{padding:4px 12px;border-radius:16px;border:2px solid #e2e8f0;font-size:.72rem;font-weight:600;cursor:pointer}
-        .qc-check.selected{border-color:#3b82f6;background:rgba(59,130,246,.08)}
+        .qc-check{padding:6px 14px;border-radius:16px;border:2px solid #e2e8f0;font-size:.74rem;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:5px;user-select:none}
+        .qc-check:hover{border-color:#cbd5e1}
+        .qc-check.selected{border-color:#3b82f6;background:rgba(59,130,246,.08);color:#1e40af}
+        .qc-check.disabled{opacity:.5;cursor:not-allowed;background:#f1f5f9}
+        .qc-check .conn-dot{width:6px;height:6px;border-radius:50%;background:#cbd5e1}
+        .qc-check.online .conn-dot{background:#10b981}
+
+        .post-log{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:16px;margin-bottom:16px;max-height:300px;overflow-y:auto;font-family:Menlo,Monaco,monospace;font-size:.78rem}
+        .post-log:empty{display:none}
+        .log-entry{padding:6px 0;border-bottom:1px solid #f1f5f9;line-height:1.6}
+        .log-entry:last-child{border-bottom:none}
+        .log-entry.success{color:#16a34a}
+        .log-entry.error{color:#dc2626}
+        .log-entry.info{color:#475569}
+
+        .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:400px}
+        .toast.show{opacity:1;transform:translateY(0)}
     </style>
 </head>
 <body>
@@ -33,7 +57,7 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
             <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>🏠</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
                 <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
                 <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link active"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
                 <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
@@ -46,49 +70,285 @@
                 <div class="quick-pub">
                     <h2 style="font-size:1rem;margin-bottom:10px">⚡ 빠른 포스팅</h2>
                     <textarea id="quickContent" placeholder="빠르게 포스팅할 내용을 입력하세요..."></textarea>
-                    <div class="quick-channels" id="quickChannels">
-                        <span class="qc-check" onclick="this.classList.toggle('selected')" data-ch="facebook">📘 Facebook</span>
-                        <span class="qc-check" onclick="this.classList.toggle('selected')" data-ch="tiktok">🎵 TikTok</span>
-                        <span class="qc-check" onclick="this.classList.toggle('selected')" data-ch="instagram">📸 Instagram</span>
-                        <span class="qc-check" onclick="this.classList.toggle('selected')" data-ch="naver_blog">📗 블로그</span>
-                        <span class="qc-check" onclick="this.classList.toggle('selected')" data-ch="naver_cafe">☕ 카페</span>
-                        <span class="qc-check" onclick="this.classList.toggle('selected')" data-ch="xiaohongshu">📕 샤오홍수</span>
-                        <span class="qc-check" onclick="this.classList.toggle('selected')" data-ch="douyin">🎬 도우인</span>
+                    <div class="quick-channels" id="quickChannels"></div>
+                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                        <button onclick="quickPublish()" style="padding:10px 24px;border-radius:8px;border:none;background:#10b981;color:#fff;font-weight:700;cursor:pointer">🚀 실제 발행하기</button>
+                        <span style="font-size:.72rem;color:#94a3b8">연결된 채널에는 실제로 포스팅됩니다</span>
                     </div>
-                    <button onclick="quickPublish()" style="padding:10px 24px;border-radius:8px;border:none;background:#10b981;color:#fff;font-weight:700;cursor:pointer">🚀 발행하기</button>
                 </div>
+
+                <div class="post-log" id="postLog"></div>
 
                 <div class="pub-card">
                     <h2>📡 채널별 연결 상태</h2>
-                    <div class="ch-grid">
-                        <div class="ch-pub"><div class="ch-pub-header"><span class="ch-pub-icon">📘</span><span class="ch-pub-name">Facebook</span><span class="ch-pub-status pending">연결 필요</span></div><div class="ch-pub-body">Facebook 페이지 또는 그룹과 연결하여 자동 포스팅</div><button class="ch-pub-btn connect" onclick="connectChannel('facebook')">🔗 연결하기</button></div>
-                        <div class="ch-pub"><div class="ch-pub-header"><span class="ch-pub-icon">🎵</span><span class="ch-pub-name">TikTok</span><span class="ch-pub-status pending">연결 필요</span></div><div class="ch-pub-body">TikTok 비즈니스 계정 연결</div><button class="ch-pub-btn connect" onclick="connectChannel('tiktok')">🔗 연결하기</button></div>
-                        <div class="ch-pub"><div class="ch-pub-header"><span class="ch-pub-icon">📸</span><span class="ch-pub-name">Instagram</span><span class="ch-pub-status pending">연결 필요</span></div><div class="ch-pub-body">Instagram 비즈니스 계정 연결</div><button class="ch-pub-btn connect" onclick="connectChannel('instagram')">🔗 연결하기</button></div>
-                        <div class="ch-pub"><div class="ch-pub-header"><span class="ch-pub-icon">📗</span><span class="ch-pub-name">네이버 블로그</span><span class="ch-pub-status pending">연결 필요</span></div><div class="ch-pub-body">네이버 블로그 API 연결</div><button class="ch-pub-btn connect" onclick="connectChannel('naver_blog')">🔗 연결하기</button></div>
-                        <div class="ch-pub"><div class="ch-pub-header"><span class="ch-pub-icon">☕</span><span class="ch-pub-name">네이버 카페</span><span class="ch-pub-status pending">연결 필요</span></div><div class="ch-pub-body">네이버 카페 자동 글쓰기</div><button class="ch-pub-btn connect" onclick="connectChannel('naver_cafe')">🔗 연결하기</button></div>
-                        <div class="ch-pub"><div class="ch-pub-header"><span class="ch-pub-icon">📕</span><span class="ch-pub-name">샤오홍수</span><span class="ch-pub-status pending">연결 필요</span></div><div class="ch-pub-body">小红书 계정 연결</div><button class="ch-pub-btn connect" onclick="connectChannel('xiaohongshu')">🔗 연결하기</button></div>
-                        <div class="ch-pub"><div class="ch-pub-header"><span class="ch-pub-icon">🎬</span><span class="ch-pub-name">도우인</span><span class="ch-pub-status pending">연결 필요</span></div><div class="ch-pub-body">抖音 계정 연결</div><button class="ch-pub-btn connect" onclick="connectChannel('douyin')">🔗 연결하기</button></div>
-                    </div>
+                    <div class="ch-grid" id="channelGrid"></div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="toast" id="toast"></div>
+
     <script>
-        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
-        function connectChannel(ch){if(confirm('📡 '+ch+' 연결\n\n각 플랫폼의 API 키 또는 OAuth 인증이 필요합니다.\n설정 페이지로 이동하시겠습니까?')){location.href='settings.html';}}
-        function quickPublish(){
-            var content=document.getElementById('quickContent').value;
-            if(!content){alert('내용을 입력하세요');return}
-            var channels=[];
-            document.querySelectorAll('.qc-check.selected').forEach(function(c){channels.push(c.dataset.ch)});
-            if(channels.length===0){alert('채널을 선택하세요');return}
-            var post={id:Date.now().toString(),title:content.substring(0,30),content:content,channels:channels,status:'published',date:new Date().toISOString().slice(0,10),likes:0,comments:0,shares:0,views:0,createdAt:new Date().toISOString()};
-            var posts=JSON.parse(localStorage.getItem('snsPosts')||'[]');
-            posts.unshift(post);
-            localStorage.setItem('snsPosts',JSON.stringify(posts));
-            alert('🚀 발행 완료! '+channels.length+'개 채널');
-            document.getElementById('quickContent').value='';
+        document.getElementById('menuBtn').onclick = function(){
+            document.getElementById('sidebar').classList.toggle('open');
+        };
+
+        var CHANNELS = [
+            {id:'facebook', name:'Facebook', icon:'📘', desc:'Facebook 페이지/그룹 자동 포스팅', tokenField:'fb-token', extraField:'fb-pageid'},
+            {id:'tiktok', name:'TikTok', icon:'🎵', desc:'TikTok 비즈니스 계정 연결', tokenField:'tt-token'},
+            {id:'instagram', name:'Instagram', icon:'📸', desc:'Instagram 비즈니스 계정 연결', tokenField:'ig-token', extraField:'ig-accountid'},
+            {id:'naver_blog', name:'네이버 블로그', icon:'📗', desc:'네이버 블로그 API 연결', tokenField:'nb-token'},
+            {id:'naver_cafe', name:'네이버 카페', icon:'☕', desc:'네이버 카페 자동 글쓰기', tokenField:'nc-token'},
+            {id:'xiaohongshu', name:'샤오홍수', icon:'📕', desc:'小红书 계정 연결', tokenField:'xhs-token'},
+            {id:'douyin', name:'도우인', icon:'🎬', desc:'抖音 계정 연결', tokenField:'dy-token'}
+        ];
+
+        function getSettings(){
+            return JSON.parse(localStorage.getItem('snsSettings') || '{}');
         }
+
+        function isChannelConnected(chId){
+            var settings = getSettings();
+            var ch = CHANNELS.find(function(c){ return c.id === chId; });
+            if(!ch) return false;
+            var chSettings = settings[chId] || {};
+            return !!(chSettings[ch.tokenField] && chSettings[ch.tokenField].trim());
+        }
+
+        function getChannelInfo(chId){
+            var settings = getSettings();
+            var ch = CHANNELS.find(function(c){ return c.id === chId; });
+            if(!ch) return null;
+            return settings[chId] || {};
+        }
+
+        function renderChannelGrid(){
+            var grid = document.getElementById('channelGrid');
+            grid.innerHTML = CHANNELS.map(function(ch){
+                var connected = isChannelConnected(ch.id);
+                var info = getChannelInfo(ch.id);
+                var extraInfo = '';
+                if(connected){
+                    if(ch.id === 'facebook' && info['fb-pageid']){
+                        extraInfo = '<div class="ch-pub-info">📋 Page ID: ' + info['fb-pageid'] + '</div>';
+                    } else if(ch.id === 'instagram' && info['ig-accountid']){
+                        extraInfo = '<div class="ch-pub-info">📋 Account ID: ' + info['ig-accountid'] + '</div>';
+                    } else if(ch.id === 'naver_blog' && info['nb-blogid']){
+                        extraInfo = '<div class="ch-pub-info">📋 Blog ID: ' + info['nb-blogid'] + '</div>';
+                    }
+                }
+
+                var btnHtml;
+                if(connected){
+                    btnHtml = '<div class="ch-pub-actions">' +
+                        '<button class="ch-pub-btn test" onclick="testChannel(\'' + ch.id + '\')">🔍 테스트</button>' +
+                        '<button class="ch-pub-btn reconnect" onclick="connectChannel(\'' + ch.id + '\')">⚙️ 재설정</button>' +
+                    '</div>';
+                } else {
+                    btnHtml = '<button class="ch-pub-btn connect" onclick="connectChannel(\'' + ch.id + '\')">🔗 연결하기</button>';
+                }
+
+                return '<div class="ch-pub ' + (connected ? 'connected' : '') + '">' +
+                    '<div class="ch-pub-header">' +
+                        '<span class="ch-pub-icon">' + ch.icon + '</span>' +
+                        '<span class="ch-pub-name">' + ch.name + '</span>' +
+                        '<span class="ch-pub-status ' + (connected ? 'connected' : 'pending') + '">' +
+                            (connected ? '✓ 연결됨' : '연결 필요') +
+                        '</span>' +
+                    '</div>' +
+                    '<div class="ch-pub-body">' + ch.desc + '</div>' +
+                    extraInfo +
+                    btnHtml +
+                '</div>';
+            }).join('');
+        }
+
+        function renderQuickChannels(){
+            var qc = document.getElementById('quickChannels');
+            qc.innerHTML = CHANNELS.map(function(ch){
+                var connected = isChannelConnected(ch.id);
+                return '<span class="qc-check ' + (connected ? 'online' : 'disabled') + '" ' +
+                    'onclick="' + (connected ? 'this.classList.toggle(\'selected\')' : 'alert(\'\\u26A0 ' + ch.name + ' 채널이 연결되지 않았습니다.\\n설정 페이지에서 먼저 연결하세요.\')') + '" ' +
+                    'data-ch="' + ch.id + '" ' +
+                    'title="' + (connected ? '클릭하여 선택' : '미연결 - 설정에서 연결 필요') + '">' +
+                    '<span class="conn-dot"></span>' + ch.icon + ' ' + ch.name +
+                '</span>';
+            }).join('');
+        }
+
+        function connectChannel(ch){
+            location.href = 'settings.html#' + ch;
+        }
+
+        async function testChannel(chId){
+            var info = getChannelInfo(chId);
+            log('🔍 ' + chId + ' 연결 테스트 시작...', 'info');
+
+            if(chId === 'facebook'){
+                var token = info['fb-token'];
+                var pageId = info['fb-pageid'];
+                try {
+                    var r = await fetch('https://graph.facebook.com/v18.0/' + encodeURIComponent(pageId || 'me') + '?fields=id,name,fan_count&access_token=' + encodeURIComponent(token));
+                    var d = await r.json();
+                    if(d.error){
+                        log('❌ Facebook: ' + d.error.message, 'error');
+                        showToast('❌ Facebook 연결 실패');
+                    } else {
+                        log('✅ Facebook 연결 성공: ' + d.name + ' (팬 ' + (d.fan_count || 0) + '명)', 'success');
+                        showToast('✅ Facebook 연결 정상');
+                    }
+                } catch(err){
+                    log('❌ 네트워크 오류: ' + err.message, 'error');
+                }
+            } else if(chId === 'instagram'){
+                var token = info['ig-token'];
+                var accountId = info['ig-accountid'];
+                try {
+                    var r = await fetch('https://graph.facebook.com/v18.0/' + encodeURIComponent(accountId || 'me') + '?fields=id,username,name&access_token=' + encodeURIComponent(token));
+                    var d = await r.json();
+                    if(d.error){
+                        log('❌ Instagram: ' + d.error.message, 'error');
+                    } else {
+                        log('✅ Instagram 연결 성공: ' + (d.username || d.name), 'success');
+                    }
+                } catch(err){
+                    log('❌ 네트워크 오류: ' + err.message, 'error');
+                }
+            } else {
+                log('ℹ️ ' + chId + ' 테스트는 백엔드 연동 필요', 'info');
+            }
+        }
+
+        async function publishToFacebook(content){
+            var info = getChannelInfo('facebook');
+            var token = info['fb-token'];
+            var pageId = info['fb-pageid'];
+
+            if(!token || !pageId){
+                throw new Error('Facebook 설정 누락 (Token 또는 Page ID)');
+            }
+
+            // POST to Facebook page feed
+            var url = 'https://graph.facebook.com/v18.0/' + encodeURIComponent(pageId) + '/feed';
+            var body = new URLSearchParams();
+            body.append('message', content);
+            body.append('access_token', token);
+
+            var r = await fetch(url, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: body.toString()
+            });
+            var d = await r.json();
+            if(d.error){
+                throw new Error(d.error.message || '알 수 없는 오류');
+            }
+            return d; // {id: "pageId_postId"}
+        }
+
+        async function publishToChannel(chId, content){
+            try {
+                if(chId === 'facebook'){
+                    var result = await publishToFacebook(content);
+                    log('✅ Facebook 발행 성공! Post ID: ' + result.id, 'success');
+                    return {ok: true, postId: result.id, url: 'https://www.facebook.com/' + result.id};
+                } else {
+                    log('ℹ️ ' + chId + ': 백엔드 연동 필요 (현재 미구현)', 'info');
+                    return {ok: false, error: 'Not implemented yet'};
+                }
+            } catch(err){
+                log('❌ ' + chId + ' 발행 실패: ' + err.message, 'error');
+                return {ok: false, error: err.message};
+            }
+        }
+
+        async function quickPublish(){
+            var content = document.getElementById('quickContent').value.trim();
+            if(!content){ alert('⚠️ 내용을 입력하세요'); return; }
+
+            var channels = [];
+            document.querySelectorAll('.qc-check.selected').forEach(function(c){ channels.push(c.dataset.ch); });
+            if(channels.length === 0){ alert('⚠️ 발행할 채널을 선택하세요\n\n(미연결 채널은 회색으로 표시됩니다. 설정에서 먼저 연결해주세요.)'); return; }
+
+            if(!confirm('🚀 ' + channels.length + '개 채널에 실제로 발행됩니다.\n\n계속하시겠습니까?\n\n채널: ' + channels.join(', ') + '\n\n내용:\n' + content.substring(0, 100) + (content.length > 100 ? '...' : ''))){
+                return;
+            }
+
+            log('━━━━━━━━━━━━━━━━━━━━', 'info');
+            log('📤 발행 시작: ' + channels.length + '개 채널', 'info');
+
+            var successCount = 0;
+            var failCount = 0;
+            var postRecord = {
+                id: Date.now().toString(),
+                title: content.substring(0, 30),
+                content: content,
+                channels: channels,
+                status: 'published',
+                date: new Date().toISOString().slice(0, 10),
+                likes: 0, comments: 0, shares: 0, views: 0,
+                createdAt: new Date().toISOString(),
+                channelResults: {}
+            };
+
+            for(var i = 0; i < channels.length; i++){
+                var ch = channels[i];
+                log('→ ' + ch + ' 발행 중...', 'info');
+                var result = await publishToChannel(ch, content);
+                postRecord.channelResults[ch] = result;
+                if(result.ok){
+                    successCount++;
+                } else {
+                    failCount++;
+                }
+            }
+
+            log('━━━━━━━━━━━━━━━━━━━━', 'info');
+            log('✅ 성공: ' + successCount + '개 / ❌ 실패: ' + failCount + '개', successCount > 0 ? 'success' : 'error');
+
+            // 저장
+            var posts = JSON.parse(localStorage.getItem('snsPosts') || '[]');
+            posts.unshift(postRecord);
+            localStorage.setItem('snsPosts', JSON.stringify(posts));
+
+            alert('🚀 발행 완료!\n\n✅ 성공: ' + successCount + '개\n❌ 실패: ' + failCount + '개\n\n자세한 결과는 로그를 확인하세요.');
+
+            // 발행 후 입력 초기화
+            if(successCount > 0){
+                document.getElementById('quickContent').value = '';
+                document.querySelectorAll('.qc-check.selected').forEach(function(c){ c.classList.remove('selected'); });
+            }
+        }
+
+        function log(message, type){
+            var logEl = document.getElementById('postLog');
+            var entry = document.createElement('div');
+            entry.className = 'log-entry ' + (type || 'info');
+            var time = new Date().toLocaleTimeString();
+            entry.textContent = '[' + time + '] ' + message;
+            logEl.appendChild(entry);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        function showToast(message){
+            var toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast show';
+            setTimeout(function(){ toast.className = 'toast'; }, 3000);
+        }
+
+        // Initial render
+        renderChannelGrid();
+        renderQuickChannels();
+
+        // Auto-refresh when localStorage changes (e.g., after settings save in another tab)
+        window.addEventListener('storage', function(e){
+            if(e.key === 'snsSettings'){
+                renderChannelGrid();
+                renderQuickChannels();
+            }
+        });
     </script>
 </body>
 </html>
