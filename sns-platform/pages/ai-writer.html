@@ -125,11 +125,11 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
             <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link active"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a></div>
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link active"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
                 <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
-                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a>
-                    <a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a></div>
             </nav>
         </aside>
 
@@ -225,6 +225,76 @@
                     </div>
                 </div>
 
+                <!-- Image & Video Options -->
+                <div class="writer-box">
+                    <h2>🖼️ 이미지 / 동영상 옵션</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>이미지 크기 (SNS 최적화)</label>
+                            <div class="chip-group" id="imgSizeGroup">
+                                <div class="option-chip selected" data-value="1080x1080" onclick="selectChip(this,'imgSizeGroup')">📐 1:1 (1080x1080)</div>
+                                <div class="option-chip" data-value="1080x1350" onclick="selectChip(this,'imgSizeGroup')">📱 4:5 (1080x1350)</div>
+                                <div class="option-chip" data-value="1080x1920" onclick="selectChip(this,'imgSizeGroup')">📲 9:16 (1080x1920)</div>
+                                <div class="option-chip" data-value="1200x630" onclick="selectChip(this,'imgSizeGroup')">🖥️ 16:9 (1200x630)</div>
+                            </div>
+                            <div style="margin-top:8px;font-size:.72rem;color:#94a3b8;line-height:1.5" id="imgSizeGuide">
+                                📌 1:1 - Instagram 피드, Facebook 포스트 | 4:5 - Instagram 피드 최적 | 9:16 - TikTok, 릴스, 스토리 | 16:9 - Facebook 링크, 블로그
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>이미지 스타일</label>
+                            <div class="chip-group" id="imgStyleGroup">
+                                <div class="option-chip selected" data-value="photo" onclick="selectChip(this,'imgStyleGroup')">📷 사진형</div>
+                                <div class="option-chip" data-value="graphic" onclick="selectChip(this,'imgStyleGroup')">🎨 그래픽</div>
+                                <div class="option-chip" data-value="card" onclick="selectChip(this,'imgStyleGroup')">🃏 카드뉴스</div>
+                                <div class="option-chip" data-value="meme" onclick="selectChip(this,'imgStyleGroup')">😂 밈/유머</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-top:12px">
+                        <div class="form-group">
+                            <label>동영상 길이</label>
+                            <div class="chip-group" id="vidLengthGroup">
+                                <div class="option-chip selected" data-value="15" onclick="selectChip(this,'vidLengthGroup')">⚡ 15초</div>
+                                <div class="option-chip" data-value="30" onclick="selectChip(this,'vidLengthGroup')">🎬 30초</div>
+                                <div class="option-chip" data-value="60" onclick="selectChip(this,'vidLengthGroup')">📹 60초</div>
+                                <div class="option-chip" data-value="180" onclick="selectChip(this,'vidLengthGroup')">🎥 3분</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>동영상 해상도 / 프레임</label>
+                            <div class="chip-group" id="vidResGroup">
+                                <div class="option-chip" data-value="720p30" onclick="selectChip(this,'vidResGroup')">720p 30fps</div>
+                                <div class="option-chip selected" data-value="1080p30" onclick="selectChip(this,'vidResGroup')">1080p 30fps</div>
+                                <div class="option-chip" data-value="1080p60" onclick="selectChip(this,'vidResGroup')">1080p 60fps</div>
+                                <div class="option-chip" data-value="4k30" onclick="selectChip(this,'vidResGroup')">4K 30fps</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-top:12px">
+                        <div class="form-group">
+                            <label>동영상 비율</label>
+                            <div class="chip-group" id="vidRatioGroup">
+                                <div class="option-chip selected" data-value="9:16" onclick="selectChip(this,'vidRatioGroup')">📱 9:16 (세로)</div>
+                                <div class="option-chip" data-value="1:1" onclick="selectChip(this,'vidRatioGroup')">⬜ 1:1 (정사각)</div>
+                                <div class="option-chip" data-value="16:9" onclick="selectChip(this,'vidRatioGroup')">🖥️ 16:9 (가로)</div>
+                            </div>
+                            <div style="margin-top:8px;font-size:.72rem;color:#94a3b8;line-height:1.5">
+                                📌 9:16 - TikTok, 릴스, 도우인, 샤오홍수 | 1:1 - Instagram, Facebook | 16:9 - YouTube, 블로그
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>동영상 스타일</label>
+                            <div class="chip-group" id="vidStyleGroup">
+                                <div class="option-chip selected" data-value="slideshow" onclick="selectChip(this,'vidStyleGroup')">🖼️ 슬라이드쇼</div>
+                                <div class="option-chip" data-value="talking" onclick="selectChip(this,'vidStyleGroup')">🗣️ 토킹헤드</div>
+                                <div class="option-chip" data-value="product" onclick="selectChip(this,'vidStyleGroup')">📦 상품 촬영</div>
+                                <div class="option-chip" data-value="vlog" onclick="selectChip(this,'vidStyleGroup')">📹 브이로그</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Generate Button -->
                 <div class="writer-box generate-section">
                     <button class="btn-generate" id="btnGenerate" onclick="generateContent()">
@@ -244,22 +314,24 @@
                                 <button class="result-btn" onclick="editContent()">✏️ 수정</button>
                             </div>
                         </div>
-                        <div class="generated-content" id="generatedContent"></div>
-                        <div class="char-counter" id="charCounter"></div>
 
-                        <!-- Hashtags -->
-                        <div class="hashtag-area" id="hashtagArea">
-                            <h4>🏷️ 추천 해시태그</h4>
-                            <div class="hashtag-list" id="hashtagList"></div>
+                        <!-- Multi-platform tabs -->
+                        <div id="multiResultTabs" style="display:none"></div>
+
+                        <!-- Single platform result -->
+                        <div id="singleResultWrap">
+                            <div class="generated-content" id="generatedContent"></div>
+                            <div class="char-counter" id="charCounter"></div>
+                            <div class="hashtag-area" id="hashtagArea">
+                                <h4>🏷️ 추천 해시태그</h4>
+                                <div class="hashtag-list" id="hashtagList"></div>
+                            </div>
+                            <div class="image-prompt-area" id="imagePromptArea">
+                                <h4>🖼️ 이미지 프롬프트 제안</h4>
+                                <div class="image-prompt-text" id="imagePromptText"></div>
+                            </div>
                         </div>
 
-                        <!-- Image Prompt -->
-                        <div class="image-prompt-area" id="imagePromptArea">
-                            <h4>🖼️ 이미지 프롬프트 제안</h4>
-                            <div class="image-prompt-text" id="imagePromptText"></div>
-                        </div>
-
-                        <!-- Action buttons -->
                         <div class="save-section">
                             <button class="btn-action btn-regenerate" onclick="generateContent()">🔄 다시 생성</button>
                             <button class="btn-action btn-copy-all" onclick="copyAll()">📋 전체 복사</button>
@@ -287,18 +359,20 @@
         'use strict';
 
         // ─── State ───
-        var selectedPlatform = null;
+        var selectedPlatforms = [];
 
         // ─── Sidebar toggle ───
         document.getElementById('menuBtn').onclick = function(){
             document.getElementById('sidebar').classList.toggle('open');
         };
 
-        // ─── Platform selection (single select) ───
+        // ─── Platform selection (multi select) ───
         window.selectPlatform = function(el){
-            document.querySelectorAll('.platform-chip').forEach(function(c){ c.classList.remove('selected'); });
-            el.classList.add('selected');
-            selectedPlatform = el.getAttribute('data-platform');
+            el.classList.toggle('selected');
+            selectedPlatforms = [];
+            document.querySelectorAll('.platform-chip.selected').forEach(function(c){
+                selectedPlatforms.push(c.getAttribute('data-platform'));
+            });
         };
 
         // ─── Chip group selection (single select within group) ───
@@ -476,23 +550,24 @@
             return tmpl.replace(/\{topic\}/g, topic);
         }
 
-        // ─── Content generation ───
+        // ─── Content generation (multi-platform) ───
+        var generatedResults = {};
+
         window.generateContent = function(){
             var topic = document.getElementById('aiTopic').value.trim();
             var keywords = document.getElementById('aiKeywords').value.trim();
-            var platform = selectedPlatform;
+            var platforms = selectedPlatforms;
             var length = getSelected('lengthGroup');
             var tone = getSelected('toneGroup');
             var lang = getSelected('langGroup');
 
-            // Validation
             if(!topic && !keywords){
                 showToast('주제 또는 키워드를 입력해주세요', 'warn');
                 document.getElementById('aiTopic').focus();
                 return;
             }
-            if(!platform){
-                showToast('대상 플랫폼을 선택해주세요', 'warn');
+            if(!platforms || platforms.length === 0){
+                showToast('대상 플랫폼을 1개 이상 선택해주세요', 'warn');
                 return;
             }
 
@@ -501,61 +576,112 @@
             btn.disabled = true;
             btn.querySelector('.loading-text').style.display = 'inline';
 
-            // Simulate generation delay for realistic feel
-            setTimeout(function(){
-                var templateFn = getTemplate(lang, tone, platform, length);
+            generatedResults = {};
+            var platformNames = {
+                facebook:'Facebook', tiktok:'TikTok', instagram:'Instagram',
+                naver_blog:'네이버 블로그', naver_cafe:'네이버 카페',
+                xiaohongshu:'샤오홍수', douyin:'도우인'
+            };
+            var platformIcons = {
+                facebook:'📘', tiktok:'🎵', instagram:'📸',
+                naver_blog:'📗', naver_cafe:'☕', xiaohongshu:'📕', douyin:'🎬'
+            };
+
+            var idx = 0;
+            function genNext(){
+                if(idx >= platforms.length){
+                    btn.classList.remove('loading');
+                    btn.disabled = false;
+                    btn.querySelector('.loading-text').style.display = 'none';
+                    renderMultiResult(platforms);
+                    showToast(platforms.length + '개 플랫폼 콘텐츠 생성 완료!', 'success');
+                    document.getElementById('resultArea').scrollIntoView({behavior:'smooth', block:'start'});
+                    return;
+                }
+                var p = platforms[idx];
+                var templateFn = getTemplate(lang, tone, p, length);
                 var content = templateFn(topic || keywords, keywords);
+                var hashtags = generateHashtags(topic, keywords, p, lang);
+                var imgPrompt = generateImagePrompt(topic || keywords, tone, lang);
+                generatedResults[p] = {
+                    content: content,
+                    hashtags: hashtags,
+                    imagePrompt: imgPrompt,
+                    name: platformNames[p] || p,
+                    icon: platformIcons[p] || '📱'
+                };
+                idx++;
+                setTimeout(genNext, 300 + Math.random() * 300);
+            }
+            setTimeout(genNext, 600);
+        };
 
-                // Display content
-                document.getElementById('generatedContent').textContent = content;
-                updateCharCounter(content);
+        function renderMultiResult(platforms){
+            var resultArea = document.getElementById('resultArea');
+            resultArea.classList.add('visible');
 
-                // Generate hashtags
-                var hashtags = generateHashtags(topic, keywords, platform, lang);
+            if(platforms.length === 1){
+                var p = platforms[0];
+                var r = generatedResults[p];
+                document.getElementById('generatedContent').textContent = r.content;
+                updateCharCounter(r.content);
                 var hashtagListEl = document.getElementById('hashtagList');
                 hashtagListEl.innerHTML = '';
-                hashtags.forEach(function(tag){
+                r.hashtags.forEach(function(tag){
                     var span = document.createElement('span');
                     span.className = 'hashtag-tag';
                     span.textContent = tag;
-                    span.onclick = function(){
-                        copyToClipboard(tag);
-                        showToast(tag + ' 복사됨!');
-                    };
+                    span.onclick = function(){ copyToClipboard(tag); showToast(tag + ' 복사됨!'); };
                     hashtagListEl.appendChild(span);
                 });
+                document.getElementById('imagePromptText').textContent = r.imagePrompt;
+                document.getElementById('multiResultTabs').style.display = 'none';
+                document.getElementById('singleResultWrap').style.display = 'block';
+                return;
+            }
 
-                // Generate image prompt
-                var imgPrompt = generateImagePrompt(topic || keywords, tone, lang);
-                document.getElementById('imagePromptText').textContent = imgPrompt;
+            document.getElementById('singleResultWrap').style.display = 'none';
+            var tabsEl = document.getElementById('multiResultTabs');
+            tabsEl.style.display = 'block';
 
-                // Show result area
-                document.getElementById('resultArea').classList.add('visible');
+            var tabsHtml = '<div style="display:flex;gap:0;border-bottom:2px solid #e2e8f0;margin-bottom:16px;overflow-x:auto">';
+            platforms.forEach(function(p, i){
+                var r = generatedResults[p];
+                tabsHtml += '<div class="multi-tab' + (i===0?' active':'') + '" data-p="' + p + '" onclick="switchMultiTab(\'' + p + '\')" style="padding:10px 18px;font-size:.82rem;font-weight:600;color:' + (i===0?'#8b5cf6':'#94a3b8') + ';cursor:pointer;border-bottom:3px solid ' + (i===0?'#8b5cf6':'transparent') + ';margin-bottom:-2px;white-space:nowrap">' + r.icon + ' ' + r.name + '</div>';
+            });
+            tabsHtml += '</div>';
 
-                // Reset button
-                btn.classList.remove('loading');
-                btn.disabled = false;
-                btn.querySelector('.loading-text').style.display = 'none';
+            platforms.forEach(function(p, i){
+                var r = generatedResults[p];
+                tabsHtml += '<div class="multi-panel" id="mpanel-' + p + '" style="display:' + (i===0?'block':'none') + '">';
+                tabsHtml += '<div class="generated-content" style="margin-bottom:8px">' + escapeHtml(r.content) + '</div>';
+                tabsHtml += '<div class="char-counter">' + r.content.length.toLocaleString() + '자</div>';
+                tabsHtml += '<div class="hashtag-area" style="margin-top:14px"><h4 style="font-size:.8rem;color:#3b82f6;margin-bottom:8px">🏷️ 추천 해시태그</h4><div class="hashtag-list">';
+                r.hashtags.forEach(function(tag){
+                    tabsHtml += '<span class="hashtag-tag" onclick="copyToClipboard(\'' + tag.replace(/'/g,'\\\'') + '\');showToast(\'' + tag.replace(/'/g,'\\\'') + ' 복사됨!\')">' + tag + '</span>';
+                });
+                tabsHtml += '</div></div>';
+                tabsHtml += '<div class="image-prompt-area" style="margin-top:14px"><h4 style="font-size:.8rem;color:#9333ea;margin-bottom:8px">🖼️ 이미지 프롬프트 제안</h4><div class="image-prompt-text">' + escapeHtml(r.imagePrompt) + '</div></div>';
+                tabsHtml += '</div>';
+            });
 
-                showToast('콘텐츠가 생성되었습니다!', 'success');
-
-                // Scroll to result
-                document.getElementById('resultArea').scrollIntoView({behavior:'smooth', block:'start'});
-            }, 1200);
-        };
-
-        // ─── Character counter ───
-        function updateCharCounter(content){
-            var len = content.length;
-            var counter = document.getElementById('charCounter');
-            counter.textContent = len.toLocaleString() + '자';
-            counter.className = 'char-counter';
-            if(len > 2000) counter.className = 'char-counter over';
-            else if(len > 1000) counter.className = 'char-counter warn';
+            tabsEl.innerHTML = tabsHtml;
         }
 
-        // ─── Copy functions ───
-        function copyToClipboard(text){
+        window.switchMultiTab = function(p){
+            document.querySelectorAll('.multi-tab').forEach(function(t){
+                t.style.color = '#94a3b8';
+                t.style.borderBottomColor = 'transparent';
+                t.classList.remove('active');
+            });
+            document.querySelectorAll('.multi-panel').forEach(function(el){ el.style.display = 'none'; });
+            var tab = document.querySelector('.multi-tab[data-p="' + p + '"]');
+            if(tab){ tab.style.color = '#8b5cf6'; tab.style.borderBottomColor = '#8b5cf6'; tab.classList.add('active'); }
+            var panel = document.getElementById('mpanel-' + p);
+            if(panel) panel.style.display = 'block';
+        };
+
+        window.copyToClipboard = function(text){
             if(navigator.clipboard && navigator.clipboard.writeText){
                 navigator.clipboard.writeText(text);
             } else {
@@ -568,12 +694,33 @@
                 document.execCommand('copy');
                 document.body.removeChild(ta);
             }
+        };
+
+        window.showToast = function(message, type){
+            var toast = document.getElementById('toast');
+            var icon = '✅';
+            if(type === 'warn') icon = '⚠️';
+            else if(type === 'error') icon = '❌';
+            toast.innerHTML = icon + ' ' + message;
+            toast.className = 'toast show';
+            setTimeout(function(){ toast.className = 'toast'; }, 2500);
+        };
+
+        // ─── Character counter ───
+        function updateCharCounter(content){
+            var len = content.length;
+            var counter = document.getElementById('charCounter');
+            counter.textContent = len.toLocaleString() + '자';
+            counter.className = 'char-counter';
+            if(len > 2000) counter.className = 'char-counter over';
+            else if(len > 1000) counter.className = 'char-counter warn';
         }
 
         window.copyContent = function(){
-            var content = document.getElementById('generatedContent').textContent;
+            var activePanel = document.querySelector('.multi-panel[style*="display: block"] .generated-content, .multi-panel[style*="display:block"] .generated-content');
+            var content = activePanel ? activePanel.textContent : document.getElementById('generatedContent').textContent;
             if(!content) return;
-            copyToClipboard(content);
+            window.copyToClipboard(content);
             var btn = document.getElementById('btnCopyContent');
             btn.classList.add('copied');
             btn.textContent = '✅ 복사됨!';
@@ -585,14 +732,22 @@
         };
 
         window.copyAll = function(){
-            var content = document.getElementById('generatedContent').textContent;
-            var hashtags = [];
-            document.querySelectorAll('#hashtagList .hashtag-tag').forEach(function(el){
-                hashtags.push(el.textContent);
-            });
-            var full = content + '\n\n' + hashtags.join(' ');
-            copyToClipboard(full);
-            showToast('콘텐츠 + 해시태그가 복사되었습니다');
+            var allText = '';
+            var platforms = selectedPlatforms;
+            if(platforms.length > 1 && Object.keys(generatedResults).length > 0){
+                platforms.forEach(function(p){
+                    var r = generatedResults[p];
+                    if(!r) return;
+                    allText += '【' + r.icon + ' ' + r.name + '】\n' + r.content + '\n' + r.hashtags.join(' ') + '\n\n';
+                });
+            } else {
+                var content = document.getElementById('generatedContent').textContent;
+                var hashtags = [];
+                document.querySelectorAll('#hashtagList .hashtag-tag').forEach(function(el){ hashtags.push(el.textContent); });
+                allText = content + '\n\n' + hashtags.join(' ');
+            }
+            window.copyToClipboard(allText);
+            showToast('전체 콘텐츠가 복사되었습니다');
         };
 
         // ─── Edit content ───
@@ -615,73 +770,73 @@
 
         // ─── Save to drafts (localStorage) ───
         window.saveToDraft = function(){
-            var content = document.getElementById('generatedContent').textContent;
-            if(!content){
+            var platforms = selectedPlatforms;
+            if(!platforms || platforms.length === 0){
                 showToast('저장할 콘텐츠가 없습니다', 'warn');
                 return;
+            }
+            if(Object.keys(generatedResults).length === 0){
+                var content = document.getElementById('generatedContent').textContent;
+                if(!content){ showToast('저장할 콘텐츠가 없습니다', 'warn'); return; }
             }
 
             var topic = document.getElementById('aiTopic').value.trim();
             var keywords = document.getElementById('aiKeywords').value.trim();
-            var hashtags = [];
-            document.querySelectorAll('#hashtagList .hashtag-tag').forEach(function(el){
-                hashtags.push(el.textContent);
-            });
-            var imagePrompt = document.getElementById('imagePromptText').textContent;
-
             var platformNames = {
-                facebook: 'Facebook', tiktok: 'TikTok', instagram: 'Instagram',
-                naver_blog: '네이버 블로그', naver_cafe: '네이버 카페',
-                xiaohongshu: '샤오홍수', douyin: '도우인'
+                facebook:'Facebook', tiktok:'TikTok', instagram:'Instagram',
+                naver_blog:'네이버 블로그', naver_cafe:'네이버 카페',
+                xiaohongshu:'샤오홍수', douyin:'도우인'
             };
             var platformIcons = {
-                facebook: '📘', tiktok: '🎵', instagram: '📸',
-                naver_blog: '📗', naver_cafe: '☕',
-                xiaohongshu: '📕', douyin: '🎬'
-            };
-
-            var draft = {
-                id: Date.now().toString(),
-                topic: topic || keywords || '제목 없음',
-                platform: selectedPlatform || 'facebook',
-                platformName: platformNames[selectedPlatform] || selectedPlatform,
-                platformIcon: platformIcons[selectedPlatform] || '📱',
-                content: content,
-                hashtags: hashtags,
-                imagePrompt: imagePrompt,
-                tone: getSelected('toneGroup'),
-                lang: getSelected('langGroup'),
-                length: getSelected('lengthGroup'),
-                createdAt: new Date().toISOString()
+                facebook:'📘', tiktok:'🎵', instagram:'📸',
+                naver_blog:'📗', naver_cafe:'☕', xiaohongshu:'📕', douyin:'🎬'
             };
 
             var drafts = JSON.parse(localStorage.getItem('aiWriterDrafts') || '[]');
-            drafts.unshift(draft);
-            // Keep max 50 drafts
+            var posts = JSON.parse(localStorage.getItem('snsPosts') || '[]');
+
+            platforms.forEach(function(p){
+                var r = generatedResults[p];
+                if(!r) return;
+                var draft = {
+                    id: Date.now().toString() + '_' + p,
+                    topic: topic || keywords || '제목 없음',
+                    platform: p,
+                    platformName: platformNames[p] || p,
+                    platformIcon: platformIcons[p] || '📱',
+                    content: r.content,
+                    hashtags: r.hashtags,
+                    imagePrompt: r.imagePrompt,
+                    tone: getSelected('toneGroup'),
+                    lang: getSelected('langGroup'),
+                    length: getSelected('lengthGroup'),
+                    createdAt: new Date().toISOString()
+                };
+                drafts.unshift(draft);
+
+                var post = {
+                    id: draft.id,
+                    title: draft.topic,
+                    content: draft.content,
+                    keywords: keywords,
+                    hashtags: r.hashtags.join(' '),
+                    image: '',
+                    category: '기타',
+                    tone: draft.tone,
+                    channels: [p],
+                    status: 'draft',
+                    likes: 0, comments: 0, shares: 0, views: 0,
+                    date: new Date().toISOString().slice(0, 10),
+                    createdAt: draft.createdAt
+                };
+                posts.unshift(post);
+            });
+
             if(drafts.length > 50) drafts = drafts.slice(0, 50);
             localStorage.setItem('aiWriterDrafts', JSON.stringify(drafts));
-
-            // Also save to snsPosts for cross-page compatibility
-            var post = {
-                id: draft.id,
-                title: draft.topic,
-                content: draft.content,
-                keywords: keywords,
-                hashtags: hashtags.join(' '),
-                image: '',
-                category: '기타',
-                tone: draft.tone,
-                channels: [draft.platform],
-                status: 'draft',
-                likes: 0, comments: 0, shares: 0, views: 0,
-                date: new Date().toISOString().slice(0, 10),
-                createdAt: draft.createdAt
-            };
-            var posts = JSON.parse(localStorage.getItem('snsPosts') || '[]');
-            posts.unshift(post);
             localStorage.setItem('snsPosts', JSON.stringify(posts));
 
-            showToast('초안이 저장되었습니다!', 'success');
+            showToast(platforms.length + '개 플랫폼 초안이 저장되었습니다!', 'success');
             renderDrafts();
         };
 
@@ -734,17 +889,15 @@
             var draft = drafts[idx];
             if(!draft) return;
 
-            // Fill in the form
             document.getElementById('aiTopic').value = draft.topic || '';
 
-            // Select platform
             document.querySelectorAll('.platform-chip').forEach(function(c){
                 c.classList.remove('selected');
                 if(c.getAttribute('data-platform') === draft.platform){
                     c.classList.add('selected');
-                    selectedPlatform = draft.platform;
                 }
             });
+            selectedPlatforms = [draft.platform];
 
             // Select tone
             if(draft.tone){
@@ -810,17 +963,6 @@
             renderDrafts();
             showToast('초안이 삭제되었습니다');
         };
-
-        // ─── Toast notification ───
-        function showToast(message, type){
-            var toast = document.getElementById('toast');
-            var icon = '✅';
-            if(type === 'warn') icon = '⚠️';
-            else if(type === 'error') icon = '❌';
-            toast.innerHTML = icon + ' ' + message;
-            toast.className = 'toast show';
-            setTimeout(function(){ toast.className = 'toast'; }, 2500);
-        }
 
         // ─── Initialize ───
         renderDrafts();
