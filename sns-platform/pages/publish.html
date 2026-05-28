@@ -7,46 +7,65 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
-        .pub-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
+        .pub-card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
         .pub-card h2{font-size:1rem;margin-bottom:12px}
-        .ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
-        .ch-pub{background:#f8fafc;border-radius:10px;padding:16px;border:1px solid #e2e8f0;transition:.2s}
-        .ch-pub.connected{background:#f0fdf4;border-color:#86efac}
-        .ch-pub-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-        .ch-pub-icon{font-size:24px}
-        .ch-pub-name{font-weight:700;font-size:.9rem}
-        .ch-pub-status{font-size:.7rem;padding:3px 10px;border-radius:10px;margin-left:auto;font-weight:600}
-        .ch-pub-status.connected{background:#dcfce7;color:#16a34a}
-        .ch-pub-status.pending{background:#fef3c7;color:#d97706}
-        .ch-pub-body{font-size:.78rem;color:#64748b;margin-bottom:10px;line-height:1.5}
-        .ch-pub-info{font-size:.72rem;color:#475569;background:#fff;padding:6px 10px;border-radius:6px;border:1px solid #e2e8f0;margin-bottom:10px}
-        .ch-pub-btn{padding:8px 16px;border-radius:6px;border:none;font-size:.78rem;font-weight:600;cursor:pointer;width:100%;transition:.2s}
-        .ch-pub-btn.connect{background:#3b82f6;color:#fff}
-        .ch-pub-btn.connect:hover{background:#2563eb}
-        .ch-pub-btn.publish{background:#10b981;color:#fff}
-        .ch-pub-btn.publish:hover{background:#059669}
-        .ch-pub-btn.reconnect{background:#f59e0b;color:#fff}
-        .ch-pub-btn.test{background:#fff;color:#3b82f6;border:1px solid #3b82f6}
-        .ch-pub-btn.test:hover{background:#eff6ff}
-        .ch-pub-actions{display:flex;gap:6px}
 
-        .quick-pub{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
-        .quick-pub textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #e2e8f0;min-height:100px;font-family:inherit;font-size:.85rem;resize:vertical}
-        .quick-channels{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
-        .qc-check{padding:6px 14px;border-radius:16px;border:2px solid #e2e8f0;font-size:.74rem;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:5px;user-select:none}
-        .qc-check:hover{border-color:#cbd5e1}
-        .qc-check.selected{border-color:#3b82f6;background:rgba(59,130,246,.08);color:#1e40af}
-        .qc-check.disabled{opacity:.5;cursor:not-allowed;background:#f1f5f9}
-        .qc-check .conn-dot{width:6px;height:6px;border-radius:50%;background:#cbd5e1}
-        .qc-check.online .conn-dot{background:#10b981}
+        /* 플랫폼 그룹 */
+        .platform-group{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:12px;transition:.2s}
+        .platform-group.active{background:#eff6ff;border-color:#3b82f6}
+        .platform-group-header{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+        .platform-checkbox{width:18px;height:18px;border-radius:4px;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff}
+        .platform-checkbox.checked{background:#3b82f6;border-color:#3b82f6;color:#fff}
+        .platform-checkbox.partial{background:#dbeafe;border-color:#3b82f6;color:#3b82f6}
+        .platform-icon{font-size:22px}
+        .platform-name{font-weight:700;font-size:.9rem;flex:1}
+        .platform-count{font-size:.72rem;padding:3px 10px;border-radius:12px;font-weight:600;background:#e2e8f0;color:#475569}
+        .platform-count.has-selected{background:#3b82f6;color:#fff}
+        .platform-chevron{color:#94a3b8;transition:transform .2s}
+        .platform-group.expanded .platform-chevron{transform:rotate(180deg)}
 
-        .post-log{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:16px;margin-bottom:16px;max-height:300px;overflow-y:auto;font-family:Menlo,Monaco,monospace;font-size:.78rem}
+        .platform-accounts{display:none;margin-top:12px;padding-top:12px;border-top:1px solid #e2e8f0;padding-left:28px}
+        .platform-group.expanded .platform-accounts{display:block}
+        .account-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:.15s;margin-bottom:4px}
+        .account-item:hover{background:#fff}
+        .account-item.selected{background:#fff;border:1px solid #3b82f6}
+        .acc-checkbox{width:16px;height:16px;border-radius:4px;border:2px solid #cbd5e1;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#fff;font-size:11px}
+        .acc-checkbox.checked{background:#3b82f6;border-color:#3b82f6;color:#fff}
+        .acc-info{flex:1;min-width:0}
+        .acc-name{font-size:.82rem;font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .acc-meta{font-size:.68rem;color:#94a3b8;margin-top:1px}
+        .acc-status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+        .acc-status-dot.connected{background:#10b981}
+        .acc-status-dot.disconnected{background:#cbd5e1}
+
+        .no-accounts{padding:12px;text-align:center;color:#94a3b8;font-size:.78rem;background:#fff;border-radius:8px;border:1px dashed #e2e8f0}
+        .no-accounts a{color:#3b82f6;font-weight:600;text-decoration:none}
+
+        .quick-pub{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
+        .quick-pub textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #e2e8f0;min-height:120px;font-family:inherit;font-size:.88rem;resize:vertical}
+
+        .summary-bar{background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;margin:14px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+        .summary-count{font-size:.85rem;font-weight:700;color:#1e40af}
+        .summary-list{font-size:.74rem;color:#475569;flex:1}
+
+        .btn-publish{padding:12px 32px;border-radius:10px;border:none;background:#10b981;color:#fff;font-weight:700;cursor:pointer;font-size:.92rem;transition:.2s}
+        .btn-publish:hover{background:#059669}
+        .btn-publish:disabled{background:#cbd5e1;cursor:not-allowed}
+
+        .media-upload{margin-bottom:14px;padding:12px;background:#faf5ff;border:1px solid #e9d5ff;border-radius:10px}
+        .media-upload-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+        .media-upload-btn{padding:8px 14px;background:#fff;border:1px dashed #d8b4fe;border-radius:8px;font-size:.78rem;font-weight:600;color:#9333ea;cursor:pointer;display:flex;align-items:center;gap:6px}
+        .attached-media{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+        .attached-item{position:relative;width:60px;height:60px;border-radius:6px;overflow:hidden;border:1px solid #e9d5ff;background:#fff}
+        .attached-item img{width:100%;height:100%;object-fit:cover}
+        .attached-item .remove-x{position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;border:none;font-size:9px;cursor:pointer}
+
+        .post-log{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:14px;margin-bottom:16px;max-height:300px;overflow-y:auto;font-family:Menlo,Monaco,monospace;font-size:.74rem}
         .post-log:empty{display:none}
-        .log-entry{padding:6px 0;border-bottom:1px solid #f1f5f9;line-height:1.6}
-        .log-entry:last-child{border-bottom:none}
-        .log-entry.success{color:#16a34a}
-        .log-entry.error{color:#dc2626}
-        .log-entry.info{color:#475569}
+        .log-entry{padding:4px 0;line-height:1.6}
+        .log-entry.success{color:#10b981}
+        .log-entry.error{color:#f87171}
+        .log-entry.info{color:#94a3b8}
 
         .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:400px}
         .toast.show{opacity:1;transform:translateY(0)}
@@ -65,24 +84,49 @@
             </nav>
         </aside>
         <div class="main-content">
-            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">🚀 포스팅</div><div class="top-bar-sub">SNS 채널에 콘텐츠 발행</div></div></div></header>
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">🚀 포스팅</div><div class="top-bar-sub">플랫폼 × 계정 그룹핑으로 선택 발행</div></div></div></header>
             <div class="content">
+
+                <!-- 빠른 포스팅 -->
                 <div class="quick-pub">
-                    <h2 style="font-size:1rem;margin-bottom:10px">⚡ 빠른 포스팅</h2>
-                    <textarea id="quickContent" placeholder="빠르게 포스팅할 내용을 입력하세요..."></textarea>
-                    <div class="quick-channels" id="quickChannels"></div>
-                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-                        <button onclick="quickPublish()" style="padding:10px 24px;border-radius:8px;border:none;background:#10b981;color:#fff;font-weight:700;cursor:pointer">🚀 실제 발행하기</button>
-                        <span style="font-size:.72rem;color:#94a3b8">연결된 채널에는 실제로 포스팅됩니다</span>
+                    <h2 style="font-size:1rem;margin-bottom:12px">⚡ 빠른 포스팅</h2>
+                    <textarea id="quickContent" placeholder="여기에 발행할 내용을 입력하세요..."></textarea>
+
+                    <!-- 미디어 첨부 -->
+                    <div class="media-upload">
+                        <div class="media-upload-row">
+                            <label class="media-upload-btn">
+                                <input type="file" accept="image/*" multiple onchange="uploadMedia(this,'image')" style="display:none">
+                                🖼️ 이미지 첨부
+                            </label>
+                            <label class="media-upload-btn">
+                                <input type="file" accept="video/*" multiple onchange="uploadMedia(this,'video')" style="display:none">
+                                🎬 동영상 첨부
+                            </label>
+                            <span id="mediaCountLabel" style="font-size:.72rem;color:#9333ea;font-weight:600">첨부 0개</span>
+                        </div>
+                        <div class="attached-media" id="attachedMedia"></div>
                     </div>
                 </div>
 
-                <div class="post-log" id="postLog"></div>
-
+                <!-- 플랫폼 × 계정 그룹핑 -->
                 <div class="pub-card">
-                    <h2>📡 채널별 연결 상태</h2>
-                    <div class="ch-grid" id="channelGrid"></div>
+                    <h2>🎯 발행 대상 선택 (플랫폼 → 계정)</h2>
+                    <p style="font-size:.78rem;color:#64748b;margin-bottom:14px">플랫폼을 클릭하여 펼친 후, 발행할 계정을 개별 선택하세요.</p>
+                    <div id="platformGroups"></div>
                 </div>
+
+                <!-- 발행 요약 + 버튼 -->
+                <div class="summary-bar" id="summaryBar" style="display:none">
+                    <div>
+                        <div class="summary-count"><span id="selectedCount">0</span>개 계정 선택됨</div>
+                        <div class="summary-list" id="selectedList"></div>
+                    </div>
+                    <button class="btn-publish" onclick="publishToSelected()">🚀 선택한 대상에 발행</button>
+                </div>
+
+                <!-- 로그 -->
+                <div class="post-log" id="postLog"></div>
             </div>
         </div>
     </div>
@@ -90,265 +134,371 @@
     <div class="toast" id="toast"></div>
 
     <script>
-        document.getElementById('menuBtn').onclick = function(){
-            document.getElementById('sidebar').classList.toggle('open');
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+
+        // ─── 채널 정의 ───
+        var CHANNEL_DEFS = {
+            facebook: {name:'Facebook', icon:'📘', accountLabel:'페이지', tokenField:'pageToken'},
+            tiktok: {name:'TikTok', icon:'🎵', accountLabel:'계정', tokenField:'accessToken'},
+            instagram: {name:'Instagram', icon:'📸', accountLabel:'계정', tokenField:'accessToken'},
+            naver_blog: {name:'네이버 블로그', icon:'📗', accountLabel:'블로그', tokenField:'accessToken'},
+            naver_cafe: {name:'네이버 카페', icon:'☕', accountLabel:'카페', tokenField:'accessToken'},
+            xiaohongshu: {name:'샤오홍수', icon:'📕', accountLabel:'계정', tokenField:'accessToken'},
+            douyin: {name:'도우인', icon:'🎬', accountLabel:'계정', tokenField:'accessToken'}
         };
 
-        var CHANNELS = [
-            {id:'facebook', name:'Facebook', icon:'📘', desc:'Facebook 페이지/그룹 자동 포스팅', tokenField:'fb-token', extraField:'fb-pageid'},
-            {id:'tiktok', name:'TikTok', icon:'🎵', desc:'TikTok 비즈니스 계정 연결', tokenField:'tt-token'},
-            {id:'instagram', name:'Instagram', icon:'📸', desc:'Instagram 비즈니스 계정 연결', tokenField:'ig-token', extraField:'ig-accountid'},
-            {id:'naver_blog', name:'네이버 블로그', icon:'📗', desc:'네이버 블로그 API 연결', tokenField:'nb-token'},
-            {id:'naver_cafe', name:'네이버 카페', icon:'☕', desc:'네이버 카페 자동 글쓰기', tokenField:'nc-token'},
-            {id:'xiaohongshu', name:'샤오홍수', icon:'📕', desc:'小红书 계정 연결', tokenField:'xhs-token'},
-            {id:'douyin', name:'도우인', icon:'🎬', desc:'抖音 계정 연결', tokenField:'dy-token'}
-        ];
+        // ─── 상태 ───
+        var selectedAccounts = {}; // {chId: [accId, accId, ...]}
+        var attachedMedia = [];
+        var settings = null;
 
         function getSettings(){
-            return JSON.parse(localStorage.getItem('snsSettings') || '{}');
+            if(!settings){
+                settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+            }
+            return settings;
         }
 
-        function isChannelConnected(chId){
-            var settings = getSettings();
-            var ch = CHANNELS.find(function(c){ return c.id === chId; });
-            if(!ch) return false;
-            var chSettings = settings[chId] || {};
-            return !!(chSettings[ch.tokenField] && chSettings[ch.tokenField].trim());
+        function isAccountConnected(chId, account){
+            var def = CHANNEL_DEFS[chId];
+            if(!def || !account) return false;
+            return !!(account[def.tokenField] && account[def.tokenField].trim());
         }
 
-        function getChannelInfo(chId){
-            var settings = getSettings();
-            var ch = CHANNELS.find(function(c){ return c.id === chId; });
-            if(!ch) return null;
-            return settings[chId] || {};
-        }
+        // ─── 플랫폼 그룹 렌더링 ───
+        function renderPlatformGroups(){
+            var s = getSettings();
+            var container = document.getElementById('platformGroups');
+            var html = '';
 
-        function renderChannelGrid(){
-            var grid = document.getElementById('channelGrid');
-            grid.innerHTML = CHANNELS.map(function(ch){
-                var connected = isChannelConnected(ch.id);
-                var info = getChannelInfo(ch.id);
-                var extraInfo = '';
-                if(connected){
-                    if(ch.id === 'facebook' && info['fb-pageid']){
-                        extraInfo = '<div class="ch-pub-info">📋 Page ID: ' + info['fb-pageid'] + '</div>';
-                    } else if(ch.id === 'instagram' && info['ig-accountid']){
-                        extraInfo = '<div class="ch-pub-info">📋 Account ID: ' + info['ig-accountid'] + '</div>';
-                    } else if(ch.id === 'naver_blog' && info['nb-blogid']){
-                        extraInfo = '<div class="ch-pub-info">📋 Blog ID: ' + info['nb-blogid'] + '</div>';
-                    }
+            Object.keys(CHANNEL_DEFS).forEach(function(chId){
+                var def = CHANNEL_DEFS[chId];
+                var accounts = (s[chId] && s[chId].accounts) || [];
+                var connectedAccounts = accounts.filter(function(a){ return isAccountConnected(chId, a); });
+                var selectedInPlatform = selectedAccounts[chId] || [];
+
+                // 체크박스 상태: 0=none, partial, all
+                var checkState = 'none';
+                if(selectedInPlatform.length > 0){
+                    checkState = selectedInPlatform.length === connectedAccounts.length ? 'all' : 'partial';
                 }
 
-                var btnHtml;
-                if(connected){
-                    btnHtml = '<div class="ch-pub-actions">' +
-                        '<button class="ch-pub-btn test" onclick="testChannel(\'' + ch.id + '\')">🔍 테스트</button>' +
-                        '<button class="ch-pub-btn reconnect" onclick="connectChannel(\'' + ch.id + '\')">⚙️ 재설정</button>' +
-                    '</div>';
+                html += '<div class="platform-group ' + (selectedInPlatform.length > 0 ? 'active' : '') + '" id="group-' + chId + '">';
+                html += '<div class="platform-group-header" onclick="togglePlatformExpand(\'' + chId + '\')">';
+                html += '<div class="platform-checkbox ' + (checkState === 'all' ? 'checked' : (checkState === 'partial' ? 'partial' : '')) + '" onclick="event.stopPropagation();togglePlatformAll(\'' + chId + '\')">' +
+                    (checkState === 'all' ? '✓' : (checkState === 'partial' ? '−' : '')) +
+                '</div>';
+                html += '<span class="platform-icon">' + def.icon + '</span>';
+                html += '<span class="platform-name">' + def.name + '</span>';
+                html += '<span class="platform-count ' + (selectedInPlatform.length > 0 ? 'has-selected' : '') + '">';
+                if(selectedInPlatform.length > 0){
+                    html += selectedInPlatform.length + '/' + connectedAccounts.length + ' 선택';
                 } else {
-                    btnHtml = '<button class="ch-pub-btn connect" onclick="connectChannel(\'' + ch.id + '\')">🔗 연결하기</button>';
+                    html += accounts.length + '개 ' + def.accountLabel;
                 }
+                html += '</span>';
+                html += '<span class="platform-chevron">▼</span>';
+                html += '</div>';
 
-                return '<div class="ch-pub ' + (connected ? 'connected' : '') + '">' +
-                    '<div class="ch-pub-header">' +
-                        '<span class="ch-pub-icon">' + ch.icon + '</span>' +
-                        '<span class="ch-pub-name">' + ch.name + '</span>' +
-                        '<span class="ch-pub-status ' + (connected ? 'connected' : 'pending') + '">' +
-                            (connected ? '✓ 연결됨' : '연결 필요') +
-                        '</span>' +
-                    '</div>' +
-                    '<div class="ch-pub-body">' + ch.desc + '</div>' +
-                    extraInfo +
-                    btnHtml +
+                // 계정 목록
+                html += '<div class="platform-accounts">';
+                if(accounts.length === 0){
+                    html += '<div class="no-accounts">아직 등록된 ' + def.accountLabel + '가 없습니다. <a href="settings.html">설정 페이지</a>에서 추가하세요.</div>';
+                } else {
+                    accounts.forEach(function(acc){
+                        var connected = isAccountConnected(chId, acc);
+                        var isSelected = selectedInPlatform.indexOf(acc.id) > -1;
+                        var meta = [];
+                        if(chId === 'facebook' && acc.pageId) meta.push('Page ' + acc.pageId);
+                        if(chId === 'instagram' && acc.username) meta.push('@' + acc.username);
+                        if(chId === 'naver_blog' && acc.blogId) meta.push('Blog ' + acc.blogId);
+
+                        html += '<div class="account-item ' + (isSelected ? 'selected' : '') + '" onclick="toggleAccount(\'' + chId + '\',\'' + acc.id + '\')">';
+                        html += '<div class="acc-checkbox ' + (isSelected ? 'checked' : '') + '">' + (isSelected ? '✓' : '') + '</div>';
+                        html += '<div class="acc-status-dot ' + (connected ? 'connected' : 'disconnected') + '"></div>';
+                        html += '<div class="acc-info">';
+                        html += '<div class="acc-name">' + escapeHtml(acc.name || '이름 없음') + '</div>';
+                        if(meta.length > 0) html += '<div class="acc-meta">' + meta.join(' · ') + (connected ? '' : ' · ⚠ 미연결') + '</div>';
+                        else if(!connected) html += '<div class="acc-meta">⚠ 토큰 미등록</div>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                }
+                html += '</div>';
+                html += '</div>';
+            });
+
+            container.innerHTML = html;
+            updateSummary();
+        }
+
+        window.togglePlatformExpand = function(chId){
+            var group = document.getElementById('group-' + chId);
+            if(group) group.classList.toggle('expanded');
+        };
+
+        window.togglePlatformAll = function(chId){
+            var s = getSettings();
+            var accounts = (s[chId] && s[chId].accounts) || [];
+            var connectedAccounts = accounts.filter(function(a){ return isAccountConnected(chId, a); });
+            var current = selectedAccounts[chId] || [];
+
+            if(current.length === connectedAccounts.length && current.length > 0){
+                // 전체 선택 → 모두 해제
+                selectedAccounts[chId] = [];
+            } else {
+                // 일부 또는 미선택 → 연결된 모든 계정 선택
+                selectedAccounts[chId] = connectedAccounts.map(function(a){ return a.id; });
+            }
+            renderPlatformGroups();
+        };
+
+        window.toggleAccount = function(chId, accId){
+            if(!selectedAccounts[chId]) selectedAccounts[chId] = [];
+            var idx = selectedAccounts[chId].indexOf(accId);
+            if(idx > -1){
+                selectedAccounts[chId].splice(idx, 1);
+            } else {
+                // 연결 확인
+                var s = getSettings();
+                var acc = ((s[chId] && s[chId].accounts) || []).find(function(a){ return a.id === accId; });
+                if(!isAccountConnected(chId, acc)){
+                    showToast('⚠ 토큰이 등록되지 않은 계정입니다. 설정에서 먼저 토큰을 입력하세요.');
+                    return;
+                }
+                selectedAccounts[chId].push(accId);
+            }
+            renderPlatformGroups();
+            // 펼친 상태 유지
+            setTimeout(function(){
+                var group = document.getElementById('group-' + chId);
+                if(group) group.classList.add('expanded');
+            }, 10);
+        };
+
+        function updateSummary(){
+            var total = 0;
+            var labels = [];
+            var s = getSettings();
+            Object.keys(selectedAccounts).forEach(function(chId){
+                var ids = selectedAccounts[chId] || [];
+                if(ids.length === 0) return;
+                total += ids.length;
+                var def = CHANNEL_DEFS[chId];
+                var accounts = (s[chId] && s[chId].accounts) || [];
+                var names = ids.map(function(id){
+                    var acc = accounts.find(function(a){ return a.id === id; });
+                    return acc ? acc.name : id;
+                });
+                labels.push(def.icon + ' ' + def.name + ': ' + names.join(', '));
+            });
+
+            var bar = document.getElementById('summaryBar');
+            if(total === 0){
+                bar.style.display = 'none';
+            } else {
+                bar.style.display = 'flex';
+                document.getElementById('selectedCount').textContent = total;
+                document.getElementById('selectedList').innerHTML = labels.join(' · ');
+            }
+        }
+
+        // ─── 미디어 업로드 ───
+        window.uploadMedia = function(input, type){
+            var files = input.files;
+            if(!files || files.length === 0) return;
+            Array.from(files).forEach(function(f){
+                if(f.size > 50 * 1024 * 1024){
+                    showToast('⚠ ' + f.name + ': 50MB 초과 생략');
+                    return;
+                }
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    attachedMedia.push({
+                        id: Date.now().toString() + Math.random().toString(36).slice(2,5),
+                        name: f.name, type: type, mimeType: f.type, size: f.size,
+                        data: e.target.result
+                    });
+                    renderAttachedMedia();
+                };
+                reader.readAsDataURL(f);
+            });
+            input.value = '';
+        };
+
+        function renderAttachedMedia(){
+            document.getElementById('mediaCountLabel').textContent = '첨부 ' + attachedMedia.length + '개';
+            document.getElementById('attachedMedia').innerHTML = attachedMedia.map(function(m, idx){
+                var thumb;
+                if(m.type === 'image' && m.data){
+                    thumb = '<img src="' + m.data + '">';
+                } else {
+                    thumb = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:1.5rem">🎬</div>';
+                }
+                return '<div class="attached-item" title="' + escapeAttr(m.name) + '">' +
+                    thumb +
+                    '<button class="remove-x" onclick="removeMedia(' + idx + ')">×</button>' +
                 '</div>';
             }).join('');
         }
 
-        function renderQuickChannels(){
-            var qc = document.getElementById('quickChannels');
-            qc.innerHTML = CHANNELS.map(function(ch){
-                var connected = isChannelConnected(ch.id);
-                return '<span class="qc-check ' + (connected ? 'online' : 'disabled') + '" ' +
-                    'onclick="' + (connected ? 'this.classList.toggle(\'selected\')' : 'alert(\'\\u26A0 ' + ch.name + ' 채널이 연결되지 않았습니다.\\n설정 페이지에서 먼저 연결하세요.\')') + '" ' +
-                    'data-ch="' + ch.id + '" ' +
-                    'title="' + (connected ? '클릭하여 선택' : '미연결 - 설정에서 연결 필요') + '">' +
-                    '<span class="conn-dot"></span>' + ch.icon + ' ' + ch.name +
-                '</span>';
-            }).join('');
-        }
+        window.removeMedia = function(idx){
+            attachedMedia.splice(idx, 1);
+            renderAttachedMedia();
+        };
 
-        function connectChannel(ch){
-            location.href = 'settings.html#' + ch;
-        }
-
-        async function testChannel(chId){
-            var info = getChannelInfo(chId);
-            log('🔍 ' + chId + ' 연결 테스트 시작...', 'info');
-
-            if(chId === 'facebook'){
-                var token = info['fb-token'];
-                var pageId = info['fb-pageid'];
-                try {
-                    var r = await fetch('https://graph.facebook.com/v18.0/' + encodeURIComponent(pageId || 'me') + '?fields=id,name,fan_count&access_token=' + encodeURIComponent(token));
-                    var d = await r.json();
-                    if(d.error){
-                        log('❌ Facebook: ' + d.error.message, 'error');
-                        showToast('❌ Facebook 연결 실패');
-                    } else {
-                        log('✅ Facebook 연결 성공: ' + d.name + ' (팬 ' + (d.fan_count || 0) + '명)', 'success');
-                        showToast('✅ Facebook 연결 정상');
-                    }
-                } catch(err){
-                    log('❌ 네트워크 오류: ' + err.message, 'error');
-                }
-            } else if(chId === 'instagram'){
-                var token = info['ig-token'];
-                var accountId = info['ig-accountid'];
-                try {
-                    var r = await fetch('https://graph.facebook.com/v18.0/' + encodeURIComponent(accountId || 'me') + '?fields=id,username,name&access_token=' + encodeURIComponent(token));
-                    var d = await r.json();
-                    if(d.error){
-                        log('❌ Instagram: ' + d.error.message, 'error');
-                    } else {
-                        log('✅ Instagram 연결 성공: ' + (d.username || d.name), 'success');
-                    }
-                } catch(err){
-                    log('❌ 네트워크 오류: ' + err.message, 'error');
-                }
-            } else {
-                log('ℹ️ ' + chId + ' 테스트는 백엔드 연동 필요', 'info');
-            }
-        }
-
-        async function publishToFacebook(content){
-            var info = getChannelInfo('facebook');
-            var token = info['fb-token'];
-            var pageId = info['fb-pageid'];
-
-            if(!token || !pageId){
-                throw new Error('Facebook 설정 누락 (Token 또는 Page ID)');
-            }
-
-            // POST to Facebook page feed
-            var url = 'https://graph.facebook.com/v18.0/' + encodeURIComponent(pageId) + '/feed';
-            var body = new URLSearchParams();
-            body.append('message', content);
-            body.append('access_token', token);
-
-            var r = await fetch(url, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: body.toString()
-            });
-            var d = await r.json();
-            if(d.error){
-                throw new Error(d.error.message || '알 수 없는 오류');
-            }
-            return d; // {id: "pageId_postId"}
-        }
-
-        async function publishToChannel(chId, content){
-            try {
-                if(chId === 'facebook'){
-                    var result = await publishToFacebook(content);
-                    log('✅ Facebook 발행 성공! Post ID: ' + result.id, 'success');
-                    return {ok: true, postId: result.id, url: 'https://www.facebook.com/' + result.id};
-                } else {
-                    log('ℹ️ ' + chId + ': 백엔드 연동 필요 (현재 미구현)', 'info');
-                    return {ok: false, error: 'Not implemented yet'};
-                }
-            } catch(err){
-                log('❌ ' + chId + ' 발행 실패: ' + err.message, 'error');
-                return {ok: false, error: err.message};
-            }
-        }
-
-        async function quickPublish(){
+        // ─── 발행 ───
+        window.publishToSelected = async function(){
             var content = document.getElementById('quickContent').value.trim();
-            if(!content){ alert('⚠️ 내용을 입력하세요'); return; }
+            if(!content){ alert('⚠ 내용을 입력하세요'); return; }
 
-            var channels = [];
-            document.querySelectorAll('.qc-check.selected').forEach(function(c){ channels.push(c.dataset.ch); });
-            if(channels.length === 0){ alert('⚠️ 발행할 채널을 선택하세요\n\n(미연결 채널은 회색으로 표시됩니다. 설정에서 먼저 연결해주세요.)'); return; }
+            var totalAccounts = 0;
+            Object.keys(selectedAccounts).forEach(function(ch){ totalAccounts += (selectedAccounts[ch] || []).length; });
+            if(totalAccounts === 0){ alert('⚠ 발행 대상을 선택하세요'); return; }
 
-            if(!confirm('🚀 ' + channels.length + '개 채널에 실제로 발행됩니다.\n\n계속하시겠습니까?\n\n채널: ' + channels.join(', ') + '\n\n내용:\n' + content.substring(0, 100) + (content.length > 100 ? '...' : ''))){
-                return;
-            }
+            if(!confirm('🚀 ' + totalAccounts + '개 계정에 실제 발행됩니다.\n\n계속하시겠습니까?')) return;
 
-            log('━━━━━━━━━━━━━━━━━━━━', 'info');
-            log('📤 발행 시작: ' + channels.length + '개 채널', 'info');
+            log('━━━━━━━━━━━━━━━━━━', 'info');
+            log('📤 발행 시작 (' + totalAccounts + '개 계정)', 'info');
 
+            var s = getSettings();
             var successCount = 0;
             var failCount = 0;
-            var postRecord = {
+            var publishedTo = [];
+
+            for(var chId in selectedAccounts){
+                var ids = selectedAccounts[chId] || [];
+                var accounts = (s[chId] && s[chId].accounts) || [];
+
+                for(var i = 0; i < ids.length; i++){
+                    var acc = accounts.find(function(a){ return a.id === ids[i]; });
+                    if(!acc) continue;
+
+                    log('→ ' + CHANNEL_DEFS[chId].name + ' / ' + acc.name + ' 발행중...', 'info');
+                    var result = await publishToAccount(chId, acc, content);
+                    if(result.ok){
+                        successCount++;
+                        log('  ✅ ' + result.message, 'success');
+                        publishedTo.push({channel: chId, accountId: acc.id, accountName: acc.name, postId: result.postId, url: result.url});
+                    } else {
+                        failCount++;
+                        log('  ❌ ' + result.message, 'error');
+                    }
+                }
+            }
+
+            log('━━━━━━━━━━━━━━━━━━', 'info');
+            log('✅ 성공 ' + successCount + ' · ❌ 실패 ' + failCount, successCount > 0 ? 'success' : 'error');
+
+            // 발행 이력 저장
+            var posts = JSON.parse(localStorage.getItem('snsPosts') || '[]');
+            posts.unshift({
                 id: Date.now().toString(),
                 title: content.substring(0, 30),
                 content: content,
-                channels: channels,
+                channels: Object.keys(selectedAccounts).filter(function(c){ return (selectedAccounts[c]||[]).length > 0; }),
+                publishedTo: publishedTo,
                 status: 'published',
-                date: new Date().toISOString().slice(0, 10),
-                likes: 0, comments: 0, shares: 0, views: 0,
+                date: new Date().toISOString().slice(0,10),
+                time: new Date().toTimeString().slice(0,5),
+                likes:0, comments:0, shares:0, views:0,
                 createdAt: new Date().toISOString(),
-                channelResults: {}
-            };
-
-            for(var i = 0; i < channels.length; i++){
-                var ch = channels[i];
-                log('→ ' + ch + ' 발행 중...', 'info');
-                var result = await publishToChannel(ch, content);
-                postRecord.channelResults[ch] = result;
-                if(result.ok){
-                    successCount++;
-                } else {
-                    failCount++;
-                }
-            }
-
-            log('━━━━━━━━━━━━━━━━━━━━', 'info');
-            log('✅ 성공: ' + successCount + '개 / ❌ 실패: ' + failCount + '개', successCount > 0 ? 'success' : 'error');
-
-            // 저장
-            var posts = JSON.parse(localStorage.getItem('snsPosts') || '[]');
-            posts.unshift(postRecord);
+                attachedMediaCount: attachedMedia.length
+            });
             localStorage.setItem('snsPosts', JSON.stringify(posts));
 
             alert('🚀 발행 완료!\n\n✅ 성공: ' + successCount + '개\n❌ 실패: ' + failCount + '개\n\n자세한 결과는 로그를 확인하세요.');
 
-            // 발행 후 입력 초기화
             if(successCount > 0){
                 document.getElementById('quickContent').value = '';
-                document.querySelectorAll('.qc-check.selected').forEach(function(c){ c.classList.remove('selected'); });
+                attachedMedia = [];
+                renderAttachedMedia();
+            }
+        };
+
+        async function publishToAccount(chId, acc, content){
+            if(chId === 'facebook'){
+                return await publishToFacebook(acc, content);
+            } else if(chId === 'instagram'){
+                return {ok: false, message: 'Instagram은 이미지 필수 (별도 구현 예정)'};
+            } else {
+                return {ok: false, message: chId + ': 백엔드 연동 필요'};
             }
         }
 
-        function log(message, type){
+        async function publishToFacebook(acc, content){
+            var token = acc.pageToken;
+            var pageId = acc.pageId;
+            if(!token || !pageId) return {ok: false, message: 'Token/PageID 누락'};
+
+            try {
+                var images = attachedMedia.filter(function(m){ return m.type === 'image'; });
+                var videos = attachedMedia.filter(function(m){ return m.type === 'video'; });
+
+                if(videos.length > 0){
+                    var video = videos[0];
+                    var blobRes = await fetch(video.data);
+                    var blob = await blobRes.blob();
+                    var fd = new FormData();
+                    fd.append('source', blob, video.name);
+                    fd.append('description', content);
+                    fd.append('access_token', token);
+                    var r = await fetch('https://graph-video.facebook.com/v18.0/' + pageId + '/videos', {method:'POST', body:fd});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: d.error.message};
+                    return {ok: true, message: '동영상 발행 (Post ID: ' + d.id + ')', postId: d.id, url: 'https://facebook.com/' + d.id};
+                } else if(images.length === 1){
+                    var img = images[0];
+                    var blobRes = await fetch(img.data);
+                    var blob = await blobRes.blob();
+                    var fd = new FormData();
+                    fd.append('source', blob, img.name);
+                    fd.append('message', content);
+                    fd.append('access_token', token);
+                    var r = await fetch('https://graph.facebook.com/v18.0/' + pageId + '/photos', {method:'POST', body:fd});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: d.error.message};
+                    return {ok: true, message: '이미지 발행 (Post ID: ' + (d.post_id || d.id) + ')', postId: d.post_id || d.id, url: 'https://facebook.com/' + (d.post_id || d.id)};
+                } else {
+                    var url = 'https://graph.facebook.com/v18.0/' + pageId + '/feed';
+                    var body = new URLSearchParams();
+                    body.append('message', content);
+                    body.append('access_token', token);
+                    var r = await fetch(url, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body.toString()});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: d.error.message};
+                    return {ok: true, message: '텍스트 발행 (Post ID: ' + d.id + ')', postId: d.id, url: 'https://facebook.com/' + d.id};
+                }
+            } catch(err){
+                return {ok: false, message: err.message};
+            }
+        }
+
+        function log(msg, type){
             var logEl = document.getElementById('postLog');
             var entry = document.createElement('div');
             entry.className = 'log-entry ' + (type || 'info');
-            var time = new Date().toLocaleTimeString();
-            entry.textContent = '[' + time + '] ' + message;
+            entry.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
             logEl.appendChild(entry);
             logEl.scrollTop = logEl.scrollHeight;
         }
 
-        function showToast(message){
+        function showToast(msg){
             var toast = document.getElementById('toast');
-            toast.textContent = message;
+            toast.textContent = msg;
             toast.className = 'toast show';
-            setTimeout(function(){ toast.className = 'toast'; }, 3000);
+            setTimeout(function(){ toast.className = 'toast'; }, 2500);
         }
 
-        // Initial render
-        renderChannelGrid();
-        renderQuickChannels();
+        function escapeHtml(s){
+            var div = document.createElement('div');
+            div.textContent = s || '';
+            return div.innerHTML;
+        }
+        function escapeAttr(s){ return (s||'').replace(/"/g,'&quot;'); }
 
-        // Auto-refresh when localStorage changes (e.g., after settings save in another tab)
-        window.addEventListener('storage', function(e){
-            if(e.key === 'snsSettings'){
-                renderChannelGrid();
-                renderQuickChannels();
-            }
-        });
+        // 초기화
+        renderPlatformGroups();
     </script>
 </body>
 </html>
