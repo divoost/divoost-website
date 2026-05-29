@@ -126,6 +126,14 @@
                         </div>
                         <div class="attached-media" id="attachedMedia"></div>
                     </div>
+
+                    <!-- Instagram 발행 옵션 -->
+                    <div style="margin-top:10px;padding:10px 12px;background:#fce7f3;border:1px solid #f9a8d4;border-radius:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                        <span style="font-size:.78rem;font-weight:700;color:#be185d">📸 Instagram 발행 형식:</span>
+                        <label style="font-size:.76rem;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="radio" name="igPostType" value="feed" checked> 피드 (이미지/Reels)</label>
+                        <label style="font-size:.76rem;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="radio" name="igPostType" value="stories"> 스토리</label>
+                        <span style="font-size:.68rem;color:#9d174d">※ 스토리는 24시간 후 자동 소멸</span>
+                    </div>
                 </div>
 
                 <!-- 플랫폼 × 계정 그룹핑 -->
@@ -495,6 +503,14 @@
             return SUPABASE_URL + '/storage/v1/object/public/sns-media/' + fname;
         }
 
+        function getIgPostType(){
+            var radios = document.getElementsByName('igPostType');
+            for(var i = 0; i < radios.length; i++){
+                if(radios[i].checked) return radios[i].value;
+            }
+            return 'feed';
+        }
+
         async function publishToInstagram(acc, content){
             var token = acc.accessToken;
             var igId = acc.businessAccountId;
@@ -507,19 +523,46 @@
                 return {ok: false, message: 'Instagram은 이미지/동영상이 필수입니다'};
             }
 
+            var postType = getIgPostType();
+            var apiBase = 'https://graph.facebook.com/v18.0/';
+
             try {
                 var mediaUrls = [];
                 log('  ↑ Storage 업로드 중...', 'info');
                 if(videos.length > 0){
                     mediaUrls.push({type: 'video', url: await uploadMediaToStorage(videos[0])});
                 } else {
-                    for(var i = 0; i < Math.min(images.length, 10); i++){
+                    var limit = postType === 'stories' ? 1 : 10;
+                    for(var i = 0; i < Math.min(images.length, limit); i++){
                         mediaUrls.push({type: 'image', url: await uploadMediaToStorage(images[i])});
                     }
                 }
 
-                var apiBase = 'https://graph.facebook.com/v18.0/';
+                // STORIES 모드
+                if(postType === 'stories'){
+                    var body = new URLSearchParams();
+                    body.append('media_type', 'STORIES');
+                    if(mediaUrls[0].type === 'video'){
+                        body.append('video_url', mediaUrls[0].url);
+                    } else {
+                        body.append('image_url', mediaUrls[0].url);
+                    }
+                    body.append('access_token', token);
+                    var r = await fetch(apiBase + igId + '/media', {method:'POST', body: body});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: 'Story 컨테이너 실패: ' + d.error.message};
 
+                    if(mediaUrls[0].type === 'video'){
+                        log('  ⏳ Story 비디오 처리 대기...', 'info');
+                        var ready = await waitForContainerReady(d.id, token);
+                        if(!ready.ok) return {ok: false, message: ready.message};
+                    }
+                    var pub = await publishIgContainer(igId, d.id, token);
+                    if(pub.ok) pub.message = '📸 Story 발행 (24시간 노출, ID: ' + pub.postId + ')';
+                    return pub;
+                }
+
+                // FEED 모드
                 // 1) 단일 비디오 (Reels)
                 if(videos.length > 0){
                     var body = new URLSearchParams();
@@ -532,7 +575,6 @@
                     if(d.error) return {ok: false, message: 'Container 생성 실패: ' + d.error.message};
                     var containerId = d.id;
 
-                    // 비디오는 처리 대기
                     log('  ⏳ Instagram 비디오 처리 대기...', 'info');
                     var ready = await waitForContainerReady(containerId, token);
                     if(!ready.ok) return {ok: false, message: ready.message};

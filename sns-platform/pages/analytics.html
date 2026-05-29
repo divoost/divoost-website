@@ -121,10 +121,20 @@
                     <div><div class="top-bar-title">📈 분석 리포트</div><div class="top-bar-sub">채널별 성과 분석</div></div>
                 </div>
                 <div class="top-bar-right">
+                    <button class="btn btn-primary" onclick="fetchInstagramInsights()" id="btnIgInsights" style="background:#ec4899;border-color:#ec4899">📸 Instagram 인사이트</button>
                     <button class="btn btn-primary" onclick="generateSampleData()">🧪 샘플 데이터 생성</button>
                 </div>
             </header>
             <div class="content">
+                <!-- Instagram Insights Panel -->
+                <div id="igInsightsPanel" style="display:none;background:linear-gradient(135deg,#fce7f3,#fef3c7);border:1px solid #f9a8d4;border-radius:14px;padding:18px;margin-bottom:18px">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+                        <h3 style="font-size:1rem;margin:0;color:#be185d">📸 Instagram 인사이트 (실시간)</h3>
+                        <button onclick="document.getElementById('igInsightsPanel').style.display='none'" style="background:none;border:none;color:#94a3b8;font-size:18px;cursor:pointer">×</button>
+                    </div>
+                    <div id="igInsightsContent"></div>
+                </div>
+
                 <!-- Period Selector -->
                 <div class="period-bar">
                     <button class="period-btn active" data-period="daily" onclick="setPeriod('daily')">일간</button>
@@ -540,6 +550,99 @@
             alert('🧪 샘플 데이터 10개가 생성되었습니다.');
             renderAll();
         }
+
+        // ─── Instagram Insights ───
+        window.fetchInstagramInsights = async function(){
+            var btn = document.getElementById('btnIgInsights');
+            btn.disabled = true;
+            btn.textContent = '⏳ 가져오는 중...';
+
+            var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+            var igAccounts = ((settings.instagram && settings.instagram.accounts) || [])
+                .filter(function(a){ return a.accessToken && a.businessAccountId; });
+
+            if(igAccounts.length === 0){
+                btn.disabled = false;
+                btn.textContent = '📸 Instagram 인사이트';
+                alert('⚠ 연결된 Instagram 비즈니스 계정이 없습니다.\n설정 페이지에서 등록하세요.');
+                return;
+            }
+
+            var html = '';
+            for(var i = 0; i < igAccounts.length; i++){
+                var acc = igAccounts[i];
+                try {
+                    // 1) 계정 레벨 인사이트 (reach, profile_views, accounts_engaged)
+                    var since = Math.floor((Date.now() - 28*86400000) / 1000);
+                    var until = Math.floor(Date.now() / 1000);
+                    var accUrl = 'https://graph.facebook.com/v18.0/' + acc.businessAccountId +
+                        '/insights?metric=reach,profile_views,accounts_engaged&period=day&since=' + since + '&until=' + until +
+                        '&access_token=' + encodeURIComponent(acc.accessToken);
+                    var ar = await fetch(accUrl);
+                    var ad = await ar.json();
+
+                    // 2) 최근 게시물별 인사이트
+                    var mUrl = 'https://graph.facebook.com/v18.0/' + acc.businessAccountId +
+                        '/media?fields=id,caption,media_type,permalink,timestamp,like_count,comments_count,insights.metric(reach,impressions,engagement)&limit=10&access_token=' + encodeURIComponent(acc.accessToken);
+                    var mr = await fetch(mUrl);
+                    var md = await mr.json();
+
+                    html += '<div style="background:#fff;border-radius:10px;padding:14px;margin-bottom:12px">';
+                    html += '<div style="font-weight:700;color:#be185d;margin-bottom:8px">@' + (acc.username || acc.businessAccountId) + ' · ' + escapeHtml(acc.name || '') + '</div>';
+
+                    if(ad.error){
+                        html += '<div style="color:#dc2626;font-size:.82rem">❌ 계정 인사이트: ' + ad.error.message + '</div>';
+                    } else if(ad.data){
+                        var sums = {};
+                        ad.data.forEach(function(metric){
+                            sums[metric.name] = (metric.values || []).reduce(function(s, v){ return s + (v.value || 0); }, 0);
+                        });
+                        html += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px">';
+                        html += '<div style="background:#fef3c7;padding:10px;border-radius:8px;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:#92400e">' + (sums.reach || 0).toLocaleString() + '</div><div style="font-size:.7rem;color:#92400e">28일 도달</div></div>';
+                        html += '<div style="background:#fce7f3;padding:10px;border-radius:8px;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:#be185d">' + (sums.profile_views || 0).toLocaleString() + '</div><div style="font-size:.7rem;color:#be185d">프로필 조회</div></div>';
+                        html += '<div style="background:#dcfce7;padding:10px;border-radius:8px;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:#166534">' + (sums.accounts_engaged || 0).toLocaleString() + '</div><div style="font-size:.7rem;color:#166534">참여 계정</div></div>';
+                        html += '</div>';
+                    }
+
+                    if(md.error){
+                        html += '<div style="color:#dc2626;font-size:.82rem">❌ 미디어: ' + md.error.message + '</div>';
+                    } else if(md.data && md.data.length > 0){
+                        html += '<div style="font-size:.78rem;font-weight:700;margin-bottom:6px">최근 게시물 TOP 10</div>';
+                        html += '<div style="overflow-x:auto"><table style="width:100%;font-size:.74rem;border-collapse:collapse">';
+                        html += '<tr style="background:#f8fafc;text-align:left"><th style="padding:6px">유형</th><th style="padding:6px">캡션</th><th style="padding:6px;text-align:right">👁 도달</th><th style="padding:6px;text-align:right">📊 노출</th><th style="padding:6px;text-align:right">❤</th><th style="padding:6px;text-align:right">💬</th><th style="padding:6px">링크</th></tr>';
+                        md.data.forEach(function(media){
+                            var ins = {};
+                            if(media.insights && media.insights.data){
+                                media.insights.data.forEach(function(m){ ins[m.name] = (m.values && m.values[0]) ? m.values[0].value : 0; });
+                            }
+                            var typeBadge = media.media_type === 'VIDEO' ? '🎬' : (media.media_type === 'CAROUSEL_ALBUM' ? '🖼×N' : '🖼');
+                            html += '<tr style="border-bottom:1px solid #f1f5f9">';
+                            html += '<td style="padding:6px">' + typeBadge + '</td>';
+                            html += '<td style="padding:6px">' + escapeHtml((media.caption || '').substring(0, 40)) + (media.caption && media.caption.length > 40 ? '...' : '') + '</td>';
+                            html += '<td style="padding:6px;text-align:right">' + (ins.reach || 0).toLocaleString() + '</td>';
+                            html += '<td style="padding:6px;text-align:right">' + (ins.impressions || 0).toLocaleString() + '</td>';
+                            html += '<td style="padding:6px;text-align:right">' + (media.like_count || 0) + '</td>';
+                            html += '<td style="padding:6px;text-align:right">' + (media.comments_count || 0) + '</td>';
+                            html += '<td style="padding:6px"><a href="' + media.permalink + '" target="_blank" style="color:#3b82f6">🔗</a></td>';
+                            html += '</tr>';
+                        });
+                        html += '</table></div>';
+                    } else {
+                        html += '<div style="color:#94a3b8;font-size:.82rem">📭 게시물이 없습니다.</div>';
+                    }
+                    html += '</div>';
+                } catch(err){
+                    html += '<div style="color:#dc2626">❌ ' + escapeHtml(acc.name) + ': ' + err.message + '</div>';
+                }
+            }
+
+            document.getElementById('igInsightsContent').innerHTML = html;
+            document.getElementById('igInsightsPanel').style.display = 'block';
+            btn.disabled = false;
+            btn.textContent = '📸 Instagram 인사이트';
+        };
+
+        function escapeHtml(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
 
         renderAll();
     </script>
