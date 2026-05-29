@@ -74,7 +74,21 @@
             var channelNames={'facebook':'📘 FB','tiktok':'🎵 TT','instagram':'📸 IG','naver_blog':'📗 블로그','naver_cafe':'☕ 카페','xiaohongshu':'📕 샤오홍수','douyin':'🎬 도우인'};
             document.getElementById('postList').innerHTML=posts.map(function(p){
                 var channels=(p.channels||[]).map(function(c){return channelNames[c]||c}).join(' ');
-                return '<div class="post-card"><div class="pc-img">'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📝\'">':'📝')+'</div><div class="pc-info"><div class="pc-title">'+p.title+'</div><div class="pc-content">'+(p.content||'').substring(0,80)+'</div><div class="pc-meta"><span class="pc-tag '+(p.status||'draft')+'">'+({'published':'✅ 발행','draft':'📝 임시','scheduled':'⏰ 예약'}[p.status]||p.status)+'</span><span style="color:#94a3b8">'+channels+'</span><span style="color:#94a3b8">'+(p.date||'')+'</span></div><div class="pc-stats"><span>❤️ '+(p.likes||0)+'</span><span>💬 '+(p.comments||0)+'</span><span>🔄 '+(p.shares||0)+'</span><span>👁 '+(p.views||0)+'</span></div></div><div class="pc-actions"><button onclick="editPost(\''+p.id+'\')">✏️ 수정</button><button onclick="deletePost(\''+p.id+'\')">🗑 삭제</button><button onclick="simulateEngagement(\''+p.id+'\')">📊 시뮬레이션</button></div></div>';
+                var publishedLinks='';
+                if(p.publishedTo && p.publishedTo.length>0){
+                    publishedLinks='<div style="margin-top:6px;font-size:.7rem;display:flex;gap:6px;flex-wrap:wrap">';
+                    p.publishedTo.forEach(function(pt){
+                        var icon = pt.channel==='instagram' ? '📸' : (pt.channel==='facebook' ? '📘' : '🔗');
+                        var label = pt.accountName || pt.channel;
+                        if(pt.url){
+                            publishedLinks+='<a href="'+pt.url+'" target="_blank" style="padding:2px 8px;border-radius:4px;background:#eff6ff;color:#1e40af;text-decoration:none;font-weight:600">'+icon+' '+label+' →</a>';
+                        } else {
+                            publishedLinks+='<span style="padding:2px 8px;border-radius:4px;background:#f1f5f9;color:#64748b">'+icon+' '+label+'</span>';
+                        }
+                    });
+                    publishedLinks+='</div>';
+                }
+                return '<div class="post-card"><div class="pc-img">'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📝\'">':'📝')+'</div><div class="pc-info"><div class="pc-title">'+p.title+'</div><div class="pc-content">'+(p.content||'').substring(0,80)+'</div><div class="pc-meta"><span class="pc-tag '+(p.status||'draft')+'">'+({'published':'✅ 발행','draft':'📝 임시','scheduled':'⏰ 예약'}[p.status]||p.status)+'</span><span style="color:#94a3b8">'+channels+'</span><span style="color:#94a3b8">'+(p.date||'')+'</span></div>'+publishedLinks+'<div class="pc-stats"><span>❤️ '+(p.likes||0)+'</span><span>💬 '+(p.comments||0)+'</span><span>🔄 '+(p.shares||0)+'</span><span>👁 '+(p.views||0)+'</span></div></div><div class="pc-actions"><button onclick="editPost(\''+p.id+'\')">✏️ 수정</button><button onclick="deletePost(\''+p.id+'\')">🗑 삭제</button><button onclick="simulateEngagement(\''+p.id+'\')">📊 시뮬레이션</button></div></div>';
             }).join('');
         }
         function deletePost(id){

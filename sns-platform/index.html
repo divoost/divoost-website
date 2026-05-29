@@ -61,6 +61,27 @@
                     <button class="promo-banner-btn" onclick="location.href='pages/settings.html'">🔗 채널 연동하기</button>
                 </div>
 
+                <!-- SNS 바로가기 -->
+                <div class="section-title" style="margin-top:16px">🔗 내 SNS 바로가기</div>
+                <div id="snsShortcuts" class="sns-shortcuts">
+                    <div style="grid-column:1/-1;text-align:center;padding:20px;color:#94a3b8;font-size:.85rem">불러오는 중...</div>
+                </div>
+
+                <style>
+                    .sns-shortcuts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:24px}
+                    .sns-shortcut{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;transition:.18s;cursor:pointer;text-decoration:none;color:inherit}
+                    .sns-shortcut:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.08);border-color:#bfdbfe}
+                    .sns-shortcut-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+                    .sns-shortcut-info{flex:1;min-width:0}
+                    .sns-shortcut-name{font-size:.85rem;font-weight:700;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+                    .sns-shortcut-platform{font-size:.7rem;color:#94a3b8;margin-top:2px}
+                    .sns-shortcut-arrow{color:#cbd5e1;font-size:14px}
+                    .sns-shortcut-empty{background:#f8fafc;border:1px dashed #cbd5e1;color:#94a3b8;justify-content:center;font-size:.82rem;padding:18px}
+                    .sns-shortcut-empty:hover{background:#eff6ff;border-color:#3b82f6;color:#3b82f6}
+                    @media(max-width:768px){.sns-shortcuts{grid-template-columns:1fr 1fr}.sns-shortcut{padding:10px 12px}}
+                    @media(max-width:480px){.sns-shortcuts{grid-template-columns:1fr}}
+                </style>
+
                 <!-- 3-column Cards -->
                 <div class="dashboard-cards">
                     <!-- 체험 플랜 -->
@@ -189,24 +210,67 @@
         };
 
         var CHANNEL_INFO = {
-            facebook: {name: '📘 Facebook'}, instagram: {name: '📸 Instagram'},
-            tiktok: {name: '🎵 TikTok'}, naver_blog: {name: '📗 네이버 블로그'},
-            naver_cafe: {name: '☕ 네이버 카페'}, xiaohongshu: {name: '📕 샤오홍수'},
-            douyin: {name: '🎬 도우인'}
+            facebook: {name: '📘 Facebook', icon: '📘', bg: '#e7f0ff', urlOf: function(a){ return a.pageId ? 'https://www.facebook.com/' + a.pageId : 'https://www.facebook.com/'; }},
+            instagram: {name: '📸 Instagram', icon: '📸', bg: '#fce7f3', urlOf: function(a){ return a.username ? 'https://www.instagram.com/' + a.username.replace(/^@/, '') + '/' : 'https://www.instagram.com/'; }},
+            tiktok: {name: '🎵 TikTok', icon: '🎵', bg: '#f0f0f0', urlOf: function(a){ return a.username ? 'https://www.tiktok.com/@' + a.username.replace(/^@/, '') : 'https://www.tiktok.com/'; }},
+            naver_blog: {name: '📗 네이버 블로그', icon: '📗', bg: '#dcfce7', urlOf: function(a){ return a.blogId ? 'https://blog.naver.com/' + a.blogId : 'https://blog.naver.com/'; }},
+            naver_cafe: {name: '☕ 네이버 카페', icon: '☕', bg: '#fef3c7', urlOf: function(a){ return a.cafeId ? 'https://cafe.naver.com/ca-fe/cafes/' + a.cafeId : 'https://cafe.naver.com/'; }},
+            xiaohongshu: {name: '📕 샤오홍수', icon: '📕', bg: '#fee2e2', urlOf: function(){ return 'https://www.xiaohongshu.com/'; }},
+            douyin: {name: '🎬 도우인', icon: '🎬', bg: '#f3e8ff', urlOf: function(){ return 'https://www.douyin.com/'; }}
         };
+
+        function renderSnsShortcuts(){
+            var container = document.getElementById('snsShortcuts');
+            if(!container) return;
+            var html = '';
+            var hasAny = false;
+            Object.keys(CHANNEL_INFO).forEach(function(chId){
+                var info = CHANNEL_INFO[chId];
+                var ch = settings[chId] || {};
+                var accounts = ch.accounts || [];
+                accounts.forEach(function(acc){
+                    var hasCred = acc.accessToken || acc.pageToken;
+                    if(!hasCred) return;
+                    hasAny = true;
+                    var url = info.urlOf(acc);
+                    var platformLabel = info.name.replace(/^\S+\s/, '');
+                    html += '<a class="sns-shortcut" href="' + url + '" target="_blank" rel="noopener">' +
+                        '<div class="sns-shortcut-icon" style="background:' + info.bg + '">' + info.icon + '</div>' +
+                        '<div class="sns-shortcut-info">' +
+                            '<div class="sns-shortcut-name">' + escapeHtml(acc.name || platformLabel) + '</div>' +
+                            '<div class="sns-shortcut-platform">' + platformLabel + '</div>' +
+                        '</div>' +
+                        '<span class="sns-shortcut-arrow">↗</span>' +
+                    '</a>';
+                });
+            });
+            if(!hasAny){
+                html = '<a class="sns-shortcut sns-shortcut-empty" href="pages/settings.html">+ 설정에서 SNS 계정을 등록하면 여기에 바로가기가 표시됩니다</a>';
+            }
+            container.innerHTML = html;
+        }
+
+        function escapeHtml(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
 
         // Load data
         var posts = JSON.parse(localStorage.getItem('snsPosts') || '[]');
         var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
 
-        // Channel connection count
+        // Channel connection count (멀티 계정 형식 지원)
+        function channelHasConnectedAccount(ch){
+            var s = settings[ch] || {};
+            if(s.accounts && s.accounts.length > 0){
+                return s.accounts.some(function(a){ return (a.accessToken && a.accessToken.trim()) || (a.pageToken && a.pageToken.trim()); });
+            }
+            // 옛 형식
+            return Object.keys(s).some(function(k){ return typeof s[k] === 'string' && s[k].trim() !== ''; });
+        }
         var connectedChannels = 0;
         Object.keys(CHANNEL_INFO).forEach(function(ch){
-            var s = settings[ch] || {};
-            var hasToken = Object.keys(s).some(function(k){ return s[k] && s[k].trim() !== ''; });
-            if(hasToken) connectedChannels++;
+            if(channelHasConnectedAccount(ch)) connectedChannels++;
         });
         document.getElementById('kpi-channels').textContent = connectedChannels;
+        renderSnsShortcuts();
 
         // KPIs
         document.getElementById('kpi-posts').textContent = posts.length;
@@ -235,8 +299,7 @@
             channelsByOrder.forEach(function(ch, i){
                 var cells = document.querySelectorAll('#' + tableId + ' td.ch-value-cell');
                 if(!cells[i]) return;
-                var s = settings[ch] || {};
-                var connected = Object.keys(s).some(function(k){ return s[k] && s[k].trim() !== ''; });
+                var connected = channelHasConnectedAccount(ch);
                 var src = filterToday ? todayPosts : posts;
                 var count = src.filter(function(p){ return p.channels && p.channels.indexOf(ch) > -1; }).length;
                 if(connected){

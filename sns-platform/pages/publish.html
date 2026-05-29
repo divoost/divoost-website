@@ -74,9 +74,23 @@
 
         .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:400px}
         .toast.show{opacity:1;transform:translateY(0)}
+
+        @media(max-width:768px){
+            .pub-card,.quick-pub{padding:14px}
+            .pub-card h2{font-size:.92rem}
+            .platform-name{font-size:.85rem}
+            .platform-count{font-size:.66rem;padding:2px 8px}
+            .acc-name{font-size:.78rem}
+            .summary-bar{flex-direction:column;align-items:stretch;padding:12px}
+            .btn-publish{width:100%;padding:14px;font-size:.9rem}
+            .toast{bottom:12px;right:12px;left:12px;max-width:none}
+            .media-upload-btn{font-size:.74rem;padding:10px 12px}
+            .attached-item{width:56px;height:56px}
+            .quick-pub textarea{min-height:100px;font-size:16px}
+        }
     </style>
 </head>
-<body>
+<body data-require-auth="true">
     <div class="app-layout">
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
@@ -111,6 +125,14 @@
                             <span id="mediaCountLabel" style="font-size:.72rem;color:#9333ea;font-weight:600">첨부 0개</span>
                         </div>
                         <div class="attached-media" id="attachedMedia"></div>
+                    </div>
+
+                    <!-- Instagram 발행 옵션 -->
+                    <div style="margin-top:10px;padding:10px 12px;background:#fce7f3;border:1px solid #f9a8d4;border-radius:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                        <span style="font-size:.78rem;font-weight:700;color:#be185d">📸 Instagram 발행 형식:</span>
+                        <label style="font-size:.76rem;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="radio" name="igPostType" value="feed" checked> 피드 (이미지/Reels)</label>
+                        <label style="font-size:.76rem;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="radio" name="igPostType" value="stories"> 스토리</label>
+                        <span style="font-size:.68rem;color:#9d174d">※ 스토리는 24시간 후 자동 소멸</span>
                     </div>
                 </div>
 
@@ -215,7 +237,10 @@
                         var isSelected = selectedInPlatform.indexOf(acc.id) > -1;
                         var meta = [];
                         if(chId === 'facebook' && acc.pageId) meta.push('Page ' + acc.pageId);
-                        if(chId === 'instagram' && acc.username) meta.push('@' + acc.username);
+                        if(chId === 'instagram'){
+                            if(acc.username) meta.push('@' + acc.username.replace(/^@/, ''));
+                            else if(acc.businessAccountId) meta.push('IG ' + acc.businessAccountId.slice(-8));
+                        }
                         if(chId === 'naver_blog' && acc.blogId) meta.push('Blog ' + acc.blogId);
 
                         html += '<div class="account-item ' + (isSelected ? 'selected' : '') + '" onclick="toggleAccount(\'' + chId + '\',\'' + acc.id + '\')">';
@@ -425,10 +450,197 @@
             if(chId === 'facebook'){
                 return await publishToFacebook(acc, content);
             } else if(chId === 'instagram'){
-                return {ok: false, message: 'Instagram은 이미지 필수 (별도 구현 예정)'};
+                return await publishToInstagram(acc, content);
             } else {
                 return {ok: false, message: chId + ': 백엔드 연동 필요'};
             }
+        }
+
+        // ─── Supabase Storage 업로드 (Instagram용 공개 URL 확보) ───
+        var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
+        var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
+
+        function getSupabaseToken(){
+            try {
+                var s = JSON.parse(localStorage.getItem('snsAuthSession') || 'null');
+                return s ? s.access_token : null;
+            } catch(e){ return null; }
+        }
+        function getSupabaseUserId(){
+            try {
+                var s = JSON.parse(localStorage.getItem('snsAuthSession') || 'null');
+                return s && s.user ? s.user.id : 'anonymous';
+            } catch(e){ return 'anonymous'; }
+        }
+
+        async function uploadMediaToStorage(media){
+            // data URI → Blob 변환
+            var blobRes = await fetch(media.data);
+            var blob = await blobRes.blob();
+
+            var userId = getSupabaseUserId();
+            var token = getSupabaseToken();
+            if(!token) throw new Error('로그인 정보가 없습니다. 다시 로그인하세요.');
+
+            var ext = (media.name.split('.').pop() || (media.type === 'video' ? 'mp4' : 'jpg')).toLowerCase();
+            var fname = userId + '/' + Date.now() + '_' + Math.random().toString(36).slice(2,8) + '.' + ext;
+            var uploadUrl = SUPABASE_URL + '/storage/v1/object/sns-media/' + fname;
+
+            var r = await fetch(uploadUrl, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'apikey': SUPABASE_KEY,
+                    'Content-Type': blob.type || 'application/octet-stream',
+                    'x-upsert': 'true'
+                },
+                body: blob
+            });
+            if(!r.ok){
+                var errTxt = await r.text();
+                throw new Error('Storage 업로드 실패: ' + errTxt.slice(0, 200));
+            }
+            return SUPABASE_URL + '/storage/v1/object/public/sns-media/' + fname;
+        }
+
+        function getIgPostType(){
+            var radios = document.getElementsByName('igPostType');
+            for(var i = 0; i < radios.length; i++){
+                if(radios[i].checked) return radios[i].value;
+            }
+            return 'feed';
+        }
+
+        async function publishToInstagram(acc, content){
+            var token = acc.accessToken;
+            var igId = acc.businessAccountId;
+            if(!token || !igId) return {ok: false, message: 'Access Token / Business Account ID 누락'};
+
+            var images = attachedMedia.filter(function(m){ return m.type === 'image'; });
+            var videos = attachedMedia.filter(function(m){ return m.type === 'video'; });
+
+            if(images.length === 0 && videos.length === 0){
+                return {ok: false, message: 'Instagram은 이미지/동영상이 필수입니다'};
+            }
+
+            var postType = getIgPostType();
+            var apiBase = 'https://graph.facebook.com/v18.0/';
+
+            try {
+                var mediaUrls = [];
+                log('  ↑ Storage 업로드 중...', 'info');
+                if(videos.length > 0){
+                    mediaUrls.push({type: 'video', url: await uploadMediaToStorage(videos[0])});
+                } else {
+                    var limit = postType === 'stories' ? 1 : 10;
+                    for(var i = 0; i < Math.min(images.length, limit); i++){
+                        mediaUrls.push({type: 'image', url: await uploadMediaToStorage(images[i])});
+                    }
+                }
+
+                // STORIES 모드
+                if(postType === 'stories'){
+                    var body = new URLSearchParams();
+                    body.append('media_type', 'STORIES');
+                    if(mediaUrls[0].type === 'video'){
+                        body.append('video_url', mediaUrls[0].url);
+                    } else {
+                        body.append('image_url', mediaUrls[0].url);
+                    }
+                    body.append('access_token', token);
+                    var r = await fetch(apiBase + igId + '/media', {method:'POST', body: body});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: 'Story 컨테이너 실패: ' + d.error.message};
+
+                    if(mediaUrls[0].type === 'video'){
+                        log('  ⏳ Story 비디오 처리 대기...', 'info');
+                        var ready = await waitForContainerReady(d.id, token);
+                        if(!ready.ok) return {ok: false, message: ready.message};
+                    }
+                    var pub = await publishIgContainer(igId, d.id, token);
+                    if(pub.ok) pub.message = '📸 Story 발행 (24시간 노출, ID: ' + pub.postId + ')';
+                    return pub;
+                }
+
+                // FEED 모드
+                // 1) 단일 비디오 (Reels)
+                if(videos.length > 0){
+                    var body = new URLSearchParams();
+                    body.append('media_type', 'REELS');
+                    body.append('video_url', mediaUrls[0].url);
+                    body.append('caption', content);
+                    body.append('access_token', token);
+                    var r = await fetch(apiBase + igId + '/media', {method:'POST', body: body});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: 'Container 생성 실패: ' + d.error.message};
+                    var containerId = d.id;
+
+                    log('  ⏳ Instagram 비디오 처리 대기...', 'info');
+                    var ready = await waitForContainerReady(containerId, token);
+                    if(!ready.ok) return {ok: false, message: ready.message};
+
+                    return await publishIgContainer(igId, containerId, token);
+                }
+
+                // 2) 단일 이미지
+                if(mediaUrls.length === 1){
+                    var body = new URLSearchParams();
+                    body.append('image_url', mediaUrls[0].url);
+                    body.append('caption', content);
+                    body.append('access_token', token);
+                    var r = await fetch(apiBase + igId + '/media', {method:'POST', body: body});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: 'Container 생성 실패: ' + d.error.message};
+                    return await publishIgContainer(igId, d.id, token);
+                }
+
+                // 3) 캐러셀 (2~10개 이미지)
+                var childIds = [];
+                for(var j = 0; j < mediaUrls.length; j++){
+                    var body = new URLSearchParams();
+                    body.append('image_url', mediaUrls[j].url);
+                    body.append('is_carousel_item', 'true');
+                    body.append('access_token', token);
+                    var r = await fetch(apiBase + igId + '/media', {method:'POST', body: body});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: '캐러셀 자식 ' + (j+1) + ' 실패: ' + d.error.message};
+                    childIds.push(d.id);
+                }
+                var body = new URLSearchParams();
+                body.append('media_type', 'CAROUSEL');
+                body.append('children', childIds.join(','));
+                body.append('caption', content);
+                body.append('access_token', token);
+                var r = await fetch(apiBase + igId + '/media', {method:'POST', body: body});
+                var d = await r.json();
+                if(d.error) return {ok: false, message: '캐러셀 컨테이너 실패: ' + d.error.message};
+                return await publishIgContainer(igId, d.id, token);
+            } catch(err){
+                return {ok: false, message: err.message};
+            }
+        }
+
+        async function waitForContainerReady(containerId, token){
+            var maxAttempts = 20; // 약 60초
+            for(var i = 0; i < maxAttempts; i++){
+                var r = await fetch('https://graph.facebook.com/v18.0/' + containerId + '?fields=status_code,status&access_token=' + encodeURIComponent(token));
+                var d = await r.json();
+                if(d.error) return {ok: false, message: '상태 확인 실패: ' + d.error.message};
+                if(d.status_code === 'FINISHED') return {ok: true};
+                if(d.status_code === 'ERROR') return {ok: false, message: 'Instagram 처리 실패: ' + (d.status || 'ERROR')};
+                await new Promise(function(res){ setTimeout(res, 3000); });
+            }
+            return {ok: false, message: '처리 시간 초과 (60초)'};
+        }
+
+        async function publishIgContainer(igId, containerId, token){
+            var body = new URLSearchParams();
+            body.append('creation_id', containerId);
+            body.append('access_token', token);
+            var r = await fetch('https://graph.facebook.com/v18.0/' + igId + '/media_publish', {method:'POST', body: body});
+            var d = await r.json();
+            if(d.error) return {ok: false, message: '발행 실패: ' + d.error.message};
+            return {ok: true, message: 'Instagram 발행 (ID: ' + d.id + ')', postId: d.id, url: 'https://www.instagram.com/p/' + d.id};
         }
 
         async function publishToFacebook(acc, content){
