@@ -227,14 +227,15 @@
             },
             instagram: {
                 name: 'Instagram', icon: '📸', iconClass: 'ig',
-                desc: '비즈니스/크리에이터 계정',
+                desc: '비즈니스/크리에이터 계정 - 이미지/Reels 자동 발행',
                 accountLabel: '계정',
                 fields: [
-                    {key:'accessToken', label:'Access Token', type:'password', placeholder:'Instagram Graph API Access Token', full:true},
-                    {key:'businessAccountId', label:'Business Account ID', type:'text', placeholder:'비즈니스 계정 ID'},
-                    {key:'username', label:'Username', type:'text', placeholder:'@사용자명'}
+                    {key:'accessToken', label:'Access Token (Facebook Page Token 사용)', type:'password', placeholder:'Facebook Page Access Token 입력', full:true},
+                    {key:'businessAccountId', label:'Business Account ID', type:'text', placeholder:'17841... 로 시작하는 ID'},
+                    {key:'linkedPageId', label:'연결된 Facebook Page ID (선택)', type:'text', placeholder:'IG가 연결된 FB 페이지 ID'},
+                    {key:'username', label:'Username (표시용)', type:'text', placeholder:'@사용자명'}
                 ],
-                guide: 'Facebook 비즈니스 페이지에 연결된 Instagram 계정. Facebook Graph API 경유.'
+                guide: 'Instagram 비즈니스/크리에이터 계정만 가능. <strong>Page ID 입력 후 [🔍 연결 테스트]</strong>를 누르면 Business Account ID를 자동으로 찾아드립니다.'
             },
             naver_blog: {
                 name: '네이버 블로그', icon: '📗', iconClass: 'nb',
@@ -382,7 +383,11 @@
             var hasToken = !!(acc.accessToken || acc.pageToken);
             var meta = [];
             if(chId === 'facebook' && acc.pageId) meta.push('Page ID: ' + acc.pageId);
-            if(chId === 'instagram' && acc.businessAccountId) meta.push('Account: ' + (acc.username || acc.businessAccountId));
+            if(chId === 'instagram'){
+                if(acc.username) meta.push('@' + acc.username.replace(/^@/, ''));
+                else if(acc.businessAccountId) meta.push('IG ID: ' + acc.businessAccountId);
+                if(acc.linkedPageId) meta.push('Page: ' + acc.linkedPageId);
+            }
             if(chId === 'naver_blog' && acc.blogId) meta.push('Blog: ' + acc.blogId);
             if(chId === 'naver_cafe' && acc.cafeId) meta.push('Cafe: ' + acc.cafeId);
             if(chId === 'tiktok' && acc.openId) meta.push('OpenID: ' + acc.openId.slice(0, 12) + '...');
@@ -517,13 +522,49 @@
             } else if(chId === 'instagram'){
                 var token = acc.accessToken;
                 var accountId = acc.businessAccountId;
+                var pageId = acc.linkedPageId;
                 if(!token){ alert('⚠️ Access Token을 입력하세요'); return; }
+                var report = '🔍 Instagram 연결 테스트\n계정: ' + (acc.name || '') + '\n\n';
                 try {
-                    var r = await fetch('https://graph.facebook.com/v18.0/' + encodeURIComponent(accountId || 'me') + '?fields=id,username,name&access_token=' + encodeURIComponent(token));
+                    // 1) Business Account ID 자동 발견 (Page ID 입력시)
+                    if(!accountId && pageId){
+                        report += '🔎 Page에서 Instagram 계정 검색중...\n';
+                        var rp = await fetch('https://graph.facebook.com/v18.0/' + encodeURIComponent(pageId) + '?fields=instagram_business_account{id,username}&access_token=' + encodeURIComponent(token));
+                        var dp = await rp.json();
+                        if(dp.error){ report += '❌ ' + dp.error.message; alert(report); return; }
+                        if(dp.instagram_business_account && dp.instagram_business_account.id){
+                            accountId = dp.instagram_business_account.id;
+                            settings[chId].accounts[idx].businessAccountId = accountId;
+                            if(dp.instagram_business_account.username){
+                                settings[chId].accounts[idx].username = dp.instagram_business_account.username;
+                            }
+                            localStorage.setItem('snsSettings', JSON.stringify(settings));
+                            report += '✅ 자동 발견: ID=' + accountId + '\n';
+                            renderAllChannels();
+                        } else {
+                            report += '❌ 이 Page에 Instagram 비즈니스 계정이 연결되어 있지 않습니다.\n';
+                            alert(report); return;
+                        }
+                    }
+                    if(!accountId){
+                        report += '⚠️ Business Account ID 또는 Page ID 중 하나는 입력해야 합니다.';
+                        alert(report); return;
+                    }
+                    // 2) IG 계정 정보 조회
+                    var r = await fetch('https://graph.facebook.com/v18.0/' + encodeURIComponent(accountId) + '?fields=id,username,name,followers_count,media_count&access_token=' + encodeURIComponent(token));
                     var d = await r.json();
-                    if(d.error) alert('❌ ' + d.error.message);
-                    else alert('✅ Instagram 연결됨\n' + (d.username || d.name) + ' (ID: ' + d.id + ')');
-                } catch(err){ alert('❌ ' + err.message); }
+                    if(d.error){
+                        report += '❌ ' + d.error.message;
+                    } else {
+                        report += '✅ 연결 성공\n';
+                        report += '· 계정: @' + (d.username || '?') + '\n';
+                        report += '· ID: ' + d.id + '\n';
+                        if(d.followers_count !== undefined) report += '· 팔로워: ' + d.followers_count + '\n';
+                        if(d.media_count !== undefined) report += '· 게시물 수: ' + d.media_count + '\n';
+                        report += '\n📌 발행시 Supabase Storage(sns-media 버킷)에 미디어가 업로드됩니다.';
+                    }
+                } catch(err){ report += '❌ ' + err.message; }
+                alert(report);
             } else {
                 alert('✅ ' + acc.name + ' 설정 저장됨\n\n실제 연결 테스트는 해당 SNS 백엔드 연동 후 가능합니다.');
             }
