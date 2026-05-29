@@ -186,3 +186,53 @@ body{font-family:'Inter','Pretendard',-apple-system,sans-serif;background:#f8faf
     .stats-row{grid-template-columns:1fr}
     .promo-banner{flex-direction:column;align-items:flex-start}
 }
+
+/* ─── 모바일 + PWA 최적화 ─── */
+@media(max-width:768px){
+    body{font-size:14px;-webkit-tap-highlight-color:transparent}
+    .top-bar{padding:0 16px;height:56px}
+    .top-bar-title{font-size:15px}
+    .top-bar-sub{display:none}
+    .content{padding:14px}
+    button,a,.nav-link,.f-chip,.option-chip{min-height:44px;touch-action:manipulation}
+    input,textarea,select{font-size:16px !important;-webkit-appearance:none}
+    .kpi-row{grid-template-columns:repeat(2,1fr) !important;gap:8px}
+    .kpi-card{padding:12px}
+    .kpi-value{font-size:18px}
+    .channel-grid{grid-template-columns:1fr !important}
+    .dashboard-cards{grid-template-columns:1fr !important;gap:10px}
+    .stats-row{grid-template-columns:1fr !important}
+    .promo-banner{padding:14px;flex-direction:column;text-align:center;gap:10px}
+    .promo-banner-text{font-size:13px}
+    .promo-banner-btn{width:100%;justify-content:center}
+    .sidebar{width:280px}
+    .form-row{grid-template-columns:1fr !important}
+    .channel-table td{padding:6px 8px;font-size:11px}
+}
+
+/* iOS Safari 노치 대응 */
+@supports(padding:env(safe-area-inset-top)){
+    body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+    .top-bar{padding-top:env(safe-area-inset-top)}
+    .sidebar{padding-top:env(safe-area-inset-top)}
+}
+
+/* PWA standalone 모드 표시 */
+@media(display-mode:standalone){
+    .top-bar{padding-top:env(safe-area-inset-top,8px)}
+}
+
+/* 모바일 사이드바 슬라이드 인 */
+@media(max-width:768px){
+    .sidebar{box-shadow:2px 0 16px rgba(0,0,0,.15)}
+    .sidebar::after{content:'';position:fixed;top:0;right:-100vw;width:100vw;height:100vh;background:rgba(0,0,0,.5);opacity:0;transition:.3s;pointer-events:none}
+    .sidebar.open::after{opacity:1;pointer-events:auto}
+}
+
+/* 터치 친화적 스크롤바 */
+.cal-grid::-webkit-scrollbar,
+.type-tabs::-webkit-scrollbar,
+.filter-chips::-webkit-scrollbar{height:4px}
+.cal-grid::-webkit-scrollbar-thumb,
+.type-tabs::-webkit-scrollbar-thumb,
+.filter-chips::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:2px}
