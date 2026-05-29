@@ -157,6 +157,73 @@
         setInterval(touchActivity, 15 * 60 * 1000);
     }
 
+    // ─── 관리자 여부 확인 (Supabase profiles.role 조회) ───
+    var _adminCache = null;
+    async function isAdmin(){
+        if(_adminCache !== null) return _adminCache;
+        var session = getSession();
+        if(!session || !session.user) return false;
+        try {
+            var r = await fetch(SUPABASE_URL + '/rest/v1/profiles?id=eq.' + session.user.id + '&select=role', {
+                headers: {
+                    'apikey': SUPABASE_KEY,
+                    'Authorization': 'Bearer ' + session.access_token
+                }
+            });
+            var d = await r.json();
+            if(d && d.length > 0){
+                var role = d[0].role;
+                _adminCache = (role === 'admin' || role === 'super_admin');
+                return _adminCache;
+            }
+        } catch(e){}
+        _adminCache = false;
+        return false;
+    }
+
+    // ─── 관리자 진입 버튼 자동 주입 ───
+    async function injectAdminButton(){
+        var admin = await isAdmin();
+        if(!admin) return;
+
+        // 이미 추가되어 있으면 skip
+        if(document.getElementById('adminSwitchBtn')) return;
+
+        // 사이드바에 관리자 콘솔 메뉴 추가
+        var sidebarNav = document.querySelector('.sidebar-nav');
+        if(sidebarNav){
+            var isOnAdminPage = window.location.pathname.indexOf('/admin/') > -1;
+            var adminUrl = isOnAdminPage
+                ? (window.location.pathname.indexOf('/admin/') > -1 ? '../index.html' : '/divoost-website/sns-platform/')
+                : (window.location.pathname.indexOf('/pages/') > -1 ? '../admin/index.html' : 'admin/index.html');
+
+            var section = document.createElement('div');
+            section.className = 'nav-section';
+            section.id = 'adminSwitchBtn';
+            section.innerHTML = '<div class="nav-title" style="color:#dc2626 !important;font-weight:700">🛡 관리자</div>' +
+                '<a href="' + adminUrl + '" class="nav-link" style="background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff !important;font-weight:700;border-radius:8px;box-shadow:0 2px 6px rgba(220,38,38,.25)">' +
+                '<span>🛡</span> 관리자 콘솔로 이동' +
+                '</a>';
+            sidebarNav.appendChild(section);
+        }
+
+        // 상단바에도 작은 관리자 배지 추가
+        var topBarRight = document.querySelector('.top-bar-right');
+        if(topBarRight){
+            var isOnAdminPage = window.location.pathname.indexOf('/admin/') > -1;
+            if(!isOnAdminPage){
+                var adminBtn = document.createElement('a');
+                adminBtn.id = 'topBarAdminBtn';
+                adminBtn.href = window.location.pathname.indexOf('/pages/') > -1 ? '../admin/index.html' : 'admin/index.html';
+                adminBtn.style.cssText = 'padding:7px 14px;border-radius:8px;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:.2s;margin-right:8px';
+                adminBtn.innerHTML = '🛡 관리자 콘솔';
+                adminBtn.onmouseover = function(){ this.style.transform = 'translateY(-1px)'; this.style.boxShadow = '0 4px 12px rgba(220,38,38,.3)'; };
+                adminBtn.onmouseout = function(){ this.style.transform = ''; this.style.boxShadow = ''; };
+                topBarRight.insertBefore(adminBtn, topBarRight.firstChild);
+            }
+        }
+    }
+
     // Expose globally
     window.SNSAuth = {
         getSession: getSession,
@@ -166,9 +233,18 @@
         updateProfileUI: updateProfileUI,
         logActivity: logActivity,
         touchActivity: touchActivity,
+        isAdmin: isAdmin,
+        injectAdminButton: injectAdminButton,
         SUPABASE_URL: SUPABASE_URL,
         SUPABASE_KEY: SUPABASE_KEY
     };
+
+    // 페이지 로드 후 관리자 버튼 자동 주입
+    document.addEventListener('DOMContentLoaded', function(){
+        if(getSession()){
+            setTimeout(injectAdminButton, 100);
+        }
+    });
 
     // Auto-require on protected pages (run after DOM loads to ensure no race)
     if(document.body && document.body.hasAttribute('data-require-auth')){
