@@ -862,7 +862,7 @@
         };
 
         // ─── Facebook OAuth 한 번에 연동 (페이지 + Instagram 자동 등록) ───
-        var FB_APP_ID = '1774380433543061'; // sns-연동 app
+        var FB_APP_ID = '968013862681713'; // DIVOOST-SNS-V2 (Business 유형, Instagram 이용 사례 포함)
         var FB_SDK_LOADED = false;
 
         function loadFbSdk(){
@@ -905,11 +905,9 @@
                 }
                 fetchPagesAndInstagram(response.authResponse.accessToken);
             }, {
-                // ⚠ instagram_* scopes 는 Facebook App에 "Instagram Graph API" 제품이
-                // 추가되어야 사용 가능. 없으면 "Invalid Scopes" 에러로 OAuth 자체가 막힘.
-                // 대신 Page Access Token 으로 instagram_business_account 필드 조회를 시도하고,
-                // 실패시 사용자에게 앱 설정 안내를 보여줌.
-                scope: 'pages_show_list,pages_manage_posts,pages_read_engagement,business_management',
+                // DIVOOST-SNS-V2 앱은 Instagram 이용 사례를 포함하므로 instagram_*
+                // scope 가 유효합니다. (이전 앱 1774380433543061 은 미포함이라 Invalid Scopes 발생)
+                scope: 'pages_show_list,pages_manage_posts,pages_read_engagement,pages_manage_engagement,instagram_basic,instagram_content_publish,instagram_manage_comments,instagram_manage_insights,business_management',
                 return_scopes: true
             });
         };
@@ -1058,7 +1056,7 @@
                     var footer;
                     if(allNoIg){
                         footer = [
-                            { label:'📖 Facebook 앱에 Instagram 추가 방법', type:'reauth', action: function(){ window.open('https://developers.facebook.com/apps/1774380433543061/dashboard/', '_blank'); } },
+                            { label:'📖 Facebook 앱에 Instagram 추가 방법', type:'reauth', action: function(){ window.open('https://developers.facebook.com/apps/968013862681713/dashboard/', '_blank'); } },
                             { label:'확인', type:'primary', action: closeResultModal }
                         ];
                     }
