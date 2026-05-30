@@ -905,9 +905,12 @@
                 }
                 fetchPagesAndInstagram(response.authResponse.accessToken);
             }, {
-                // DIVOOST-SNS-V2 앱의 이용 사례에 포함된 권한만 사용
-                // 콘텐츠 게시 (content_publish) 는 별도 권한 활성화 후 추가 예정
-                scope: 'pages_show_list,pages_read_engagement,pages_manage_posts,pages_manage_engagement,instagram_business_basic,instagram_business_manage_messages,instagram_manage_comments,business_management',
+                // ⚠ Facebook 로그인이 포함된 API 설정 (Facebook Login flow)은
+                // OLD 권한 이름을 사용함. Instagram Login 방식의 새 이름과 다름.
+                // - instagram_basic (NOT instagram_business_basic)
+                // - instagram_content_publishing (NOT content_publish)
+                // - instagram_manage_messages (NOT business_manage_messages)
+                scope: 'pages_show_list,pages_read_engagement,pages_manage_posts,pages_manage_engagement,business_management,instagram_basic,instagram_content_publishing,instagram_manage_messages',
                 return_scopes: true
             });
         };
