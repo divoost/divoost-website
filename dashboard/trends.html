@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="소싱 트래커 트렌드 분석 - 시간대별, 플랫폼별, 카테고리별 트렌드 데이터">
     <title>소싱 트래커 | 트렌드 분석</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
@@ -11,12 +10,8 @@
 <body>
     <div class="dashboard-layout">
 
-        <!-- Sidebar Overlay (mobile) -->
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
-        <!-- ============================================================
-             SIDEBAR
-             ============================================================ -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-logo">
                 <div class="sidebar-logo-icon">ST</div>
@@ -43,31 +38,17 @@
 
                 <div class="sidebar-section">
                     <div class="sidebar-section-title">대시보드</div>
-                    <a href="index.html" class="sidebar-link">
-                        <span class="sidebar-link-icon">📊</span> 종합 현황
-                    </a>
-                    <a href="products.html" class="sidebar-link">
-                        <span class="sidebar-link-icon">🏆</span> 추천 상품
-                    </a>
-                    <a href="trends.html" class="sidebar-link active">
-                        <span class="sidebar-link-icon">📈</span> 트렌드 분석
-                    </a>
-                    <a href="platforms.html" class="sidebar-link">
-                        <span class="sidebar-link-icon">🏪</span> 플랫폼 비교
-                    </a>
-                    <a href="search-reviews.html" class="sidebar-link">
-                        <span class="sidebar-link-icon">🔍</span> 검색 &amp; 리뷰
-                    </a>
-                    <a href="margin.html" class="sidebar-link">
-                        <span class="sidebar-link-icon">💰</span> 마진 분석
-                    </a>
+                    <a href="index.html" class="sidebar-link"><span class="sidebar-link-icon">📊</span> 종합 현황</a>
+                    <a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품</a>
+                    <a href="trends.html" class="sidebar-link active"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a>
+                    <a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a>
+                    <a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 &amp; 리뷰</a>
+                    <a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a>
                 </div>
-                            <div class="sidebar-section">
+                <div class="sidebar-section">
                     <div class="sidebar-section-title">관리</div>
                     <a href="ai-sourcing.html" class="sidebar-link"><span class="sidebar-link-icon">🤖</span> AI 소싱</a>
                     <a href="admin.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a>
-                    <a href="keyword-analysis.html" class="sidebar-link"><span class="sidebar-link-icon">🔑</span> 키워드 분석</a>
-                    <a href="listing.html" class="sidebar-link"><span class="sidebar-link-icon">📤</span> 자동 등록</a>
                     <a href="scraper.html" class="sidebar-link"><span class="sidebar-link-icon">🕷</span> 스크래퍼</a>
                     <a href="db-view.html" class="sidebar-link"><span class="sidebar-link-icon">💾</span> DB 데이터</a>
                     <a href="live-search.html" class="sidebar-link"><span class="sidebar-link-icon">🔴</span> 실시간 검색</a>
@@ -81,33 +62,24 @@
             </nav>
         </aside>
 
-        <!-- ============================================================
-             MAIN CONTENT
-             ============================================================ -->
         <div class="main-content">
 
-            <!-- Top Bar -->
             <header class="top-bar">
                 <div class="top-bar-left">
                     <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
                     <div>
                         <div class="top-bar-title">트렌드 분석</div>
-                        <div class="top-bar-date">마지막 업데이트: <span id="lastUpdated">2026-05-24 09:15</span> | 환율: 1 CNY = 190.5 KRW</div>
+                        <div class="top-bar-date">마지막 업데이트: <span id="lastUpdated">-</span> | 환율: 1 CNY = 190.5 KRW</div>
                     </div>
                 </div>
                 <div class="top-bar-right">
-                    
                     <button class="top-bar-btn btn-refresh" onclick="location.reload()">🔄 <span>새로고침</span></button>
-                    
                 </div>
             </header>
 
-            <!-- Content -->
             <div class="content-area">
 
-                <!-- ============================================================
-                     Period Tabs + Platform Filters
-                     ============================================================ -->
+                <!-- Period Tabs -->
                 <div class="period-tabs-bar">
                     <div class="period-tabs">
                         <button class="period-tab" data-period="hourly">시간별</button>
@@ -130,9 +102,7 @@
                     </div>
                 </div>
 
-                <!-- ============================================================
-                     Section: 상품 수집 & 추천 트렌드
-                     ============================================================ -->
+                <!-- Section: 상품 수집 & 추천 트렌드 -->
                 <div class="section-divider">
                     <div class="section-divider-title">📈 상품 수집 &amp; 추천 트렌드</div>
                     <div class="section-divider-line"></div>
@@ -141,40 +111,33 @@
                 <div class="charts-row">
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title">
-                                <span class="title-icon">📈</span>
-                                상품 수집 &amp; 추천 트렌드
-                            </div>
+                            <div class="chart-panel-title"><span class="title-icon">📈</span> 상품 수집 &amp; 추천 트렌드</div>
                             <div class="chart-panel-actions">
-                                <button class="chart-tab active">7일</button>
-                                <button class="chart-tab">30일</button>
-                                <button class="chart-tab">90일</button>
+                                <button class="chart-tab active" data-chart="trendCollection" data-days="7">7일</button>
+                                <button class="chart-tab" data-chart="trendCollection" data-days="30">30일</button>
+                                <button class="chart-tab" data-chart="trendCollection" data-days="90">90일</button>
                             </div>
                         </div>
                         <div class="chart-panel-body">
-                            <div class="chart-canvas-wrap">
-                                <canvas id="trendCollectionChart"></canvas>
-                            </div>
+                            <div class="chart-canvas-wrap"><canvas id="trendCollectionChart"></canvas></div>
                         </div>
                     </div>
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title">
-                                <span class="title-icon">💰</span>
-                                평균 마진율 추이
+                            <div class="chart-panel-title"><span class="title-icon">💰</span> 평균 마진율 추이</div>
+                            <div class="chart-panel-actions">
+                                <button class="chart-tab active" data-chart="trendMargin" data-days="7">7일</button>
+                                <button class="chart-tab" data-chart="trendMargin" data-days="30">30일</button>
+                                <button class="chart-tab" data-chart="trendMargin" data-days="90">90일</button>
                             </div>
                         </div>
                         <div class="chart-panel-body">
-                            <div class="chart-canvas-wrap">
-                                <canvas id="trendMarginChart"></canvas>
-                            </div>
+                            <div class="chart-canvas-wrap"><canvas id="trendMarginChart"></canvas></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- ============================================================
-                     Section: 플랫폼별 트렌드
-                     ============================================================ -->
+                <!-- Section: 플랫폼별 트렌드 -->
                 <div class="section-divider">
                     <div class="section-divider-title">🏪 플랫폼별 트렌드</div>
                     <div class="section-divider-line"></div>
@@ -183,48 +146,40 @@
                 <div class="charts-row charts-row-triple">
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title">
-                                <span class="title-icon">🛒</span>
-                                쿠팡 판매 트렌드
+                            <div class="chart-panel-title"><span class="title-icon">🛒</span> 쿠팡</div>
+                            <div class="chart-panel-actions">
+                                <button class="chart-tab active" data-chart="coupang" data-days="7">7일</button>
+                                <button class="chart-tab" data-chart="coupang" data-days="30">30일</button>
+                                <button class="chart-tab" data-chart="coupang" data-days="90">90일</button>
                             </div>
                         </div>
-                        <div class="chart-panel-body">
-                            <div class="chart-canvas-wrap">
-                                <canvas id="coupangTrendChart"></canvas>
-                            </div>
-                        </div>
+                        <div class="chart-panel-body"><div class="chart-canvas-wrap"><canvas id="coupangTrendChart"></canvas></div></div>
                     </div>
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title">
-                                <span class="title-icon">🏪</span>
-                                지마켓 판매 트렌드
+                            <div class="chart-panel-title"><span class="title-icon">🏪</span> 지마켓</div>
+                            <div class="chart-panel-actions">
+                                <button class="chart-tab active" data-chart="gmarket" data-days="7">7일</button>
+                                <button class="chart-tab" data-chart="gmarket" data-days="30">30일</button>
+                                <button class="chart-tab" data-chart="gmarket" data-days="90">90일</button>
                             </div>
                         </div>
-                        <div class="chart-panel-body">
-                            <div class="chart-canvas-wrap">
-                                <canvas id="gmarketTrendChart"></canvas>
-                            </div>
-                        </div>
+                        <div class="chart-panel-body"><div class="chart-canvas-wrap"><canvas id="gmarketTrendChart"></canvas></div></div>
                     </div>
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title">
-                                <span class="title-icon">🟢</span>
-                                네이버 판매 트렌드
+                            <div class="chart-panel-title"><span class="title-icon">🟢</span> 네이버</div>
+                            <div class="chart-panel-actions">
+                                <button class="chart-tab active" data-chart="naver" data-days="7">7일</button>
+                                <button class="chart-tab" data-chart="naver" data-days="30">30일</button>
+                                <button class="chart-tab" data-chart="naver" data-days="90">90일</button>
                             </div>
                         </div>
-                        <div class="chart-panel-body">
-                            <div class="chart-canvas-wrap">
-                                <canvas id="naverTrendChart"></canvas>
-                            </div>
-                        </div>
+                        <div class="chart-panel-body"><div class="chart-canvas-wrap"><canvas id="naverTrendChart"></canvas></div></div>
                     </div>
                 </div>
 
-                <!-- ============================================================
-                     Section: 시간대별 분석
-                     ============================================================ -->
+                <!-- Section: 시간대별 분석 -->
                 <div class="section-divider">
                     <div class="section-divider-title">⏰ 시간대별 분석</div>
                     <div class="section-divider-line"></div>
@@ -233,35 +188,29 @@
                 <div class="charts-row charts-row-equal">
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title">
-                                <span class="title-icon">🔍</span>
-                                시간대별 검색량 (전체 플랫폼)
+                            <div class="chart-panel-title"><span class="title-icon">🔍</span> 시간대별 검색량</div>
+                            <div class="chart-panel-actions">
+                                <button class="chart-tab active" data-chart="hourlySearch" data-days="7">7일</button>
+                                <button class="chart-tab" data-chart="hourlySearch" data-days="30">30일</button>
+                                <button class="chart-tab" data-chart="hourlySearch" data-days="90">90일</button>
                             </div>
                         </div>
-                        <div class="chart-panel-body">
-                            <div class="chart-canvas-wrap">
-                                <canvas id="hourlySearchChart"></canvas>
-                            </div>
-                        </div>
+                        <div class="chart-panel-body"><div class="chart-canvas-wrap"><canvas id="hourlySearchChart"></canvas></div></div>
                     </div>
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title">
-                                <span class="title-icon">🛒</span>
-                                시간대별 판매량 (전체 플랫폼)
+                            <div class="chart-panel-title"><span class="title-icon">🛒</span> 시간대별 판매량</div>
+                            <div class="chart-panel-actions">
+                                <button class="chart-tab active" data-chart="hourlySales" data-days="7">7일</button>
+                                <button class="chart-tab" data-chart="hourlySales" data-days="30">30일</button>
+                                <button class="chart-tab" data-chart="hourlySales" data-days="90">90일</button>
                             </div>
                         </div>
-                        <div class="chart-panel-body">
-                            <div class="chart-canvas-wrap">
-                                <canvas id="hourlySalesChart"></canvas>
-                            </div>
-                        </div>
+                        <div class="chart-panel-body"><div class="chart-canvas-wrap"><canvas id="hourlySalesChart"></canvas></div></div>
                     </div>
                 </div>
 
-                <!-- ============================================================
-                     Section: 카테고리 트렌드
-                     ============================================================ -->
+                <!-- Section: 카테고리 트렌드 -->
                 <div class="section-divider">
                     <div class="section-divider-title">📂 카테고리 트렌드</div>
                     <div class="section-divider-line"></div>
@@ -270,643 +219,457 @@
                 <div class="charts-row charts-row-equal">
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title">
-                                <span class="title-icon">📈</span>
-                                카테고리별 마진율 변동 (7일)
+                            <div class="chart-panel-title"><span class="title-icon">📈</span> 카테고리별 마진율 변동</div>
+                            <div class="chart-panel-actions">
+                                <button class="chart-tab active" data-chart="categoryTrend" data-days="7">7일</button>
+                                <button class="chart-tab" data-chart="categoryTrend" data-days="30">30일</button>
+                                <button class="chart-tab" data-chart="categoryTrend" data-days="90">90일</button>
                             </div>
                         </div>
-                        <div class="chart-panel-body">
-                            <div class="chart-canvas-wrap chart-tall">
-                                <canvas id="categoryTrendChart"></canvas>
-                            </div>
-                        </div>
+                        <div class="chart-panel-body"><div class="chart-canvas-wrap chart-tall"><canvas id="categoryTrendChart"></canvas></div></div>
                     </div>
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title">
-                                <span class="title-icon">📊</span>
-                                카테고리별 수집 상품 수
+                            <div class="chart-panel-title"><span class="title-icon">📊</span> 카테고리별 수집 상품 수</div>
+                            <div class="chart-panel-actions">
+                                <button class="chart-tab active" data-chart="categoryCount" data-days="7">7일</button>
+                                <button class="chart-tab" data-chart="categoryCount" data-days="30">30일</button>
+                                <button class="chart-tab" data-chart="categoryCount" data-days="90">90일</button>
                             </div>
                         </div>
-                        <div class="chart-panel-body">
-                            <div class="chart-canvas-wrap chart-tall">
-                                <canvas id="categoryCountChart"></canvas>
-                            </div>
-                        </div>
+                        <div class="chart-panel-body"><div class="chart-canvas-wrap chart-tall"><canvas id="categoryCountChart"></canvas></div></div>
                     </div>
                 </div>
 
-                <!-- ============================================================
-                     Section: 월별 성과 요약
-                     ============================================================ -->
+                <!-- 월별 성과 요약 -->
                 <div class="section-divider">
                     <div class="section-divider-title">📅 월별 성과 요약</div>
                     <div class="section-divider-line"></div>
                 </div>
 
                 <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);">
-                    <div class="kpi-card kpi-total">
-                        <div class="kpi-header">
-                            <div class="kpi-icon">📦</div>
-                            <span class="kpi-change up">↑ +16.0%</span>
-                        </div>
-                        <div class="kpi-value">-</div>
-                        <div class="kpi-label">이번 달 수집</div>
-                        <div class="kpi-sub">vs 지난달 +16.0%</div>
-                    </div>
-                    <div class="kpi-card kpi-recommend">
-                        <div class="kpi-header">
-                            <div class="kpi-icon">🎯</div>
-                            <span class="kpi-change up">↑ +21.4%</span>
-                        </div>
-                        <div class="kpi-value">87개</div>
-                        <div class="kpi-label">이번 달 추천</div>
-                        <div class="kpi-sub">vs 지난달 +21.4%</div>
-                    </div>
-                    <div class="kpi-card kpi-margin">
-                        <div class="kpi-header">
-                            <div class="kpi-icon">💰</div>
-                            <span class="kpi-change up">↑ +2.1%p</span>
-                        </div>
-                        <div class="kpi-value" id="t-kpi-2">-</div>
-                        <div class="kpi-label">이번 달 평균 마진</div>
-                        <div class="kpi-sub">vs 지난달 +2.1%p</div>
-                    </div>
-                    <div class="kpi-card kpi-hot">
-                        <div class="kpi-header">
-                            <div class="kpi-icon">🔥</div>
-                            <span class="kpi-change up">↑ +25.0%</span>
-                        </div>
-                        <div class="kpi-value">35개</div>
-                        <div class="kpi-label">이번 달 핫 아이템</div>
-                        <div class="kpi-sub">vs 지난달 +25.0%</div>
-                    </div>
+                    <div class="kpi-card kpi-total"><div class="kpi-header"><div class="kpi-icon">📦</div><span class="kpi-change up">↑ +16.0%</span></div><div class="kpi-value">487개</div><div class="kpi-label">이번 달 수집</div><div class="kpi-sub">vs 지난달 +16.0%</div></div>
+                    <div class="kpi-card kpi-recommend"><div class="kpi-header"><div class="kpi-icon">🎯</div><span class="kpi-change up">↑ +21.4%</span></div><div class="kpi-value">87개</div><div class="kpi-label">이번 달 추천</div><div class="kpi-sub">vs 지난달 +21.4%</div></div>
+                    <div class="kpi-card kpi-margin"><div class="kpi-header"><div class="kpi-icon">💰</div><span class="kpi-change up">↑ +2.1%p</span></div><div class="kpi-value">41.2%</div><div class="kpi-label">이번 달 평균 마진</div><div class="kpi-sub">vs 지난달 +2.1%p</div></div>
+                    <div class="kpi-card kpi-hot"><div class="kpi-header"><div class="kpi-icon">🔥</div><span class="kpi-change up">↑ +25.0%</span></div><div class="kpi-value">35개</div><div class="kpi-label">이번 달 핫 아이템</div><div class="kpi-sub">vs 지난달 +25.0%</div></div>
                 </div>
 
-                <!-- ============================================================
-                     주간 성과 테이블
-                     ============================================================ -->
+                <!-- 주간 성과 테이블 -->
                 <div class="table-panel">
                     <div class="table-panel-header">
-                        <div class="table-panel-title">
-                            📊 주간 성과 테이블
-                        </div>
+                        <div class="table-panel-title">📊 주간 성과 테이블</div>
                     </div>
                     <div style="overflow-x:auto;">
                         <table class="data-table">
                             <thead>
                                 <tr>
-                                    <th>기간</th>
-                                    <th>수집상품</th>
-                                    <th>추천상품</th>
-                                    <th>평균마진</th>
-                                    <th>신규발견</th>
-                                    <th>핫아이템</th>
-                                    <th>전주대비</th>
+                                    <th>기간</th><th>수집상품</th><th>추천상품</th><th>평균마진</th><th>신규발견</th><th>핫아이템</th><th>전주대비</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><strong>5/19~5/24</strong></td>
-                                    <td>487</td>
-                                    <td>87</td>
-                                    <td><span class="margin-badge margin-strong">41.2%</span></td>
-                                    <td>24</td>
-                                    <td>11</td>
-                                    <td><span class="trend-indicator trend-up">↑+8.2%</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>5/12~5/18</strong></td>
-                                    <td>450</td>
-                                    <td>72</td>
-                                    <td><span class="margin-badge margin-good">39.8%</span></td>
-                                    <td>18</td>
-                                    <td>8</td>
-                                    <td><span class="trend-indicator trend-up">↑+5.1%</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>5/05~5/11</strong></td>
-                                    <td>428</td>
-                                    <td>65</td>
-                                    <td><span class="margin-badge margin-good">38.5%</span></td>
-                                    <td>15</td>
-                                    <td>6</td>
-                                    <td><span class="trend-indicator trend-up">↑+3.8%</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>4/28~5/04</strong></td>
-                                    <td>412</td>
-                                    <td>58</td>
-                                    <td><span class="margin-badge margin-ok">37.2%</span></td>
-                                    <td>12</td>
-                                    <td>5</td>
-                                    <td><span class="trend-indicator trend-up">↑+2.5%</span></td>
-                                </tr>
-                                <tr>
-                                    <td><strong>4/21~4/27</strong></td>
-                                    <td>402</td>
-                                    <td>54</td>
-                                    <td><span class="margin-badge margin-ok">36.8%</span></td>
-                                    <td>10</td>
-                                    <td>4</td>
-                                    <td><span style="color:var(--text-muted);font-size:12px;">-</span></td>
-                                </tr>
+                                <tr><td><strong>5/19~5/24</strong></td><td>487</td><td>87</td><td><span class="margin-badge margin-strong">41.2%</span></td><td>24</td><td>11</td><td><span class="trend-indicator trend-up">↑+8.2%</span></td></tr>
+                                <tr><td><strong>5/12~5/18</strong></td><td>450</td><td>72</td><td><span class="margin-badge margin-good">39.8%</span></td><td>18</td><td>8</td><td><span class="trend-indicator trend-up">↑+5.1%</span></td></tr>
+                                <tr><td><strong>5/05~5/11</strong></td><td>428</td><td>65</td><td><span class="margin-badge margin-good">38.5%</span></td><td>15</td><td>6</td><td><span class="trend-indicator trend-up">↑+3.8%</span></td></tr>
+                                <tr><td><strong>4/28~5/04</strong></td><td>412</td><td>58</td><td><span class="margin-badge margin-ok">37.2%</span></td><td>12</td><td>5</td><td><span class="trend-indicator trend-up">↑+2.5%</span></td></tr>
+                                <tr><td><strong>4/21~4/27</strong></td><td>402</td><td>54</td><td><span class="margin-badge margin-ok">36.8%</span></td><td>10</td><td>4</td><td><span style="color:var(--text-muted);font-size:12px;">-</span></td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-            </div><!-- /content-area -->
-        </div><!-- /main-content -->
-    </div><!-- /dashboard-layout -->
+            </div>
+        </div>
+    </div>
 
     <script src="data/sample-data.js"></script>
-    <script>
-    /* ============================================================
-       트렌드 분석 페이지 JS
-       ============================================================ */
-    document.addEventListener('DOMContentLoaded', function() {
-        initSidebar();
-        initPeriodTabs();
-        initChartTabs();
-        initCharts();
-    });
-
-    /* ----------------------------------------------------------
-       Sidebar (mobile)
-       ---------------------------------------------------------- */
-    function initSidebar() {
-        var menuBtn = document.getElementById('mobileMenuBtn');
-        var sidebar = document.getElementById('sidebar');
-        var overlay = document.getElementById('sidebarOverlay');
-
-        if (menuBtn) {
-            menuBtn.addEventListener('click', function() {
-                sidebar.classList.toggle('open');
-                overlay.classList.toggle('active');
-            });
-        }
-        if (overlay) {
-            overlay.addEventListener('click', function() {
-                sidebar.classList.remove('open');
-                overlay.classList.remove('active');
-            });
-        }
-    }
-
-    /* ----------------------------------------------------------
-       Period Tabs
-       ---------------------------------------------------------- */
-    function initPeriodTabs() {
-        var tabs = document.querySelectorAll('.period-tab');
-        tabs.forEach(function(tab) {
-            tab.addEventListener('click', function() {
-                tabs.forEach(function(t) { t.classList.remove('active'); });
-                this.classList.add('active');
-            });
-        });
-    }
-
-    /* ----------------------------------------------------------
-       Chart Tabs (7일/30일/90일)
-       ---------------------------------------------------------- */
-    function initChartTabs() {
-        var tabGroups = document.querySelectorAll('.chart-panel-actions');
-        tabGroups.forEach(function(group) {
-            var btns = group.querySelectorAll('.chart-tab');
-            btns.forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    btns.forEach(function(b) { b.classList.remove('active'); });
-                    this.classList.add('active');
-                });
-            });
-        });
-    }
-
-    /* ----------------------------------------------------------
-       Charts
-       ---------------------------------------------------------- */
-    function initCharts() {
-        if (typeof Chart === 'undefined') return;
-
-        Chart.defaults.font.family = "'Inter', sans-serif";
-        Chart.defaults.font.size = 11;
-        Chart.defaults.color = '#94A3B8';
-
-        createTrendCollectionChart();
-        createTrendMarginChart();
-        createCoupangTrendChart();
-        createGmarketTrendChart();
-        createNaverTrendChart();
-        createHourlySearchChart();
-        createHourlySalesChart();
-        createCategoryTrendChart();
-        createCategoryCountChart();
-    }
-
-    /* 상품 수집 & 추천 트렌드 */
-    function createTrendCollectionChart() {
-        var ctx = document.getElementById('trendCollectionChart');
-        if (!ctx) return;
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: SAMPLE_DATA.trendHistory.labels,
-                datasets: [
-                    {
-                        label: '수집 상품',
-                        data: SAMPLE_DATA.trendHistory.products,
-                        borderColor: '#2563EB',
-                        backgroundColor: 'rgba(37,99,235,0.08)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 2.5,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#2563EB'
-                    },
-                    {
-                        label: '추천 상품',
-                        data: SAMPLE_DATA.trendHistory.recommended,
-                        borderColor: '#10B981',
-                        backgroundColor: 'rgba(16,185,129,0.08)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 2.5,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#10B981'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'top', align: 'end', labels: { usePointStyle: true, pointStyle: 'circle', padding: 20, font: { size: 11, weight: 500 } } }
-                },
-                scales: {
-                    x: { grid: { display: false } },
-                    y: { grid: { color: 'rgba(0,0,0,0.04)' }, beginAtZero: false }
-                },
-                interaction: { mode: 'index', intersect: false }
-            }
-        });
-    }
-
-    /* 평균 마진율 추이 */
-    function createTrendMarginChart() {
-        var ctx = document.getElementById('trendMarginChart');
-        if (!ctx) return;
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: SAMPLE_DATA.trendHistory.labels,
-                datasets: [{
-                    label: '평균 마진율(%)',
-                    data: SAMPLE_DATA.trendHistory.margin,
-                    borderColor: '#06B6D4',
-                    backgroundColor: 'rgba(6,182,212,0.1)',
-                    fill: true,
-                    tension: 0.4,
-                    borderWidth: 2.5,
-                    pointRadius: 4,
-                    pointBackgroundColor: '#06B6D4'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { grid: { display: false } },
-                    y: { grid: { color: 'rgba(0,0,0,0.04)' }, min: 30, max: 50 }
-                }
-            }
-        });
-    }
-
-    /* 쿠팡 판매 트렌드 */
-    function createCoupangTrendChart() {
-        var ctx = document.getElementById('coupangTrendChart');
-        if (!ctx) return;
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: SAMPLE_DATA.trendHistory.labels,
-                datasets: [
-                    {
-                        label: '판매량',
-                        data: [320, 345, 360, 378, 395, 410, 435],
-                        borderColor: '#E42528',
-                        backgroundColor: 'rgba(228,37,40,0.08)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 2.5,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#E42528'
-                    },
-                    {
-                        label: '매출(만원)',
-                        data: [480, 510, 530, 565, 590, 620, 658],
-                        borderColor: '#FF6B6B',
-                        backgroundColor: 'rgba(255,107,107,0.06)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 2,
-                        pointRadius: 3,
-                        pointBackgroundColor: '#FF6B6B'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'top', align: 'end', labels: { usePointStyle: true, pointStyle: 'circle', padding: 12, font: { size: 10 } } } },
-                scales: {
-                    x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-                    y: { grid: { color: 'rgba(0,0,0,0.04)' } }
-                }
-            }
-        });
-    }
-
-    /* 지마켓 판매 트렌드 */
-    function createGmarketTrendChart() {
-        var ctx = document.getElementById('gmarketTrendChart');
-        if (!ctx) return;
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: SAMPLE_DATA.trendHistory.labels,
-                datasets: [
-                    {
-                        label: '판매량',
-                        data: [180, 195, 205, 218, 230, 245, 260],
-                        borderColor: '#00A651',
-                        backgroundColor: 'rgba(0,166,81,0.08)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 2.5,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#00A651'
-                    },
-                    {
-                        label: '매출(만원)',
-                        data: [270, 290, 305, 325, 340, 360, 385],
-                        borderColor: '#4DD88A',
-                        backgroundColor: 'rgba(77,216,138,0.06)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 2,
-                        pointRadius: 3,
-                        pointBackgroundColor: '#4DD88A'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'top', align: 'end', labels: { usePointStyle: true, pointStyle: 'circle', padding: 12, font: { size: 10 } } } },
-                scales: {
-                    x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-                    y: { grid: { color: 'rgba(0,0,0,0.04)' } }
-                }
-            }
-        });
-    }
-
-    /* 네이버 판매 트렌드 */
-    function createNaverTrendChart() {
-        var ctx = document.getElementById('naverTrendChart');
-        if (!ctx) return;
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: SAMPLE_DATA.trendHistory.labels,
-                datasets: [
-                    {
-                        label: '판매량',
-                        data: [150, 162, 170, 185, 198, 210, 225],
-                        borderColor: '#03C75A',
-                        backgroundColor: 'rgba(3,199,90,0.08)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 2.5,
-                        pointRadius: 4,
-                        pointBackgroundColor: '#03C75A'
-                    },
-                    {
-                        label: '매출(만원)',
-                        data: [225, 240, 255, 275, 295, 315, 338],
-                        borderColor: '#2DB400',
-                        backgroundColor: 'rgba(45,180,0,0.06)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 2,
-                        pointRadius: 3,
-                        pointBackgroundColor: '#2DB400'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { position: 'top', align: 'end', labels: { usePointStyle: true, pointStyle: 'circle', padding: 12, font: { size: 10 } } } },
-                scales: {
-                    x: { grid: { display: false }, ticks: { font: { size: 10 } } },
-                    y: { grid: { color: 'rgba(0,0,0,0.04)' } }
-                }
-            }
-        });
-    }
-
-    /* 시간대별 검색량 */
-    function createHourlySearchChart() {
-        var ctx = document.getElementById('hourlySearchChart');
-        if (!ctx) return;
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: SAMPLE_DATA.hourlyData.labels,
-                datasets: [{
-                    label: '검색량',
-                    data: SAMPLE_DATA.hourlyData.searches,
-                    backgroundColor: function(context) {
-                        var chart = context.chart;
-                        var ctx2 = chart.ctx;
-                        var gradient = ctx2.createLinearGradient(0, 0, 0, chart.height);
-                        gradient.addColorStop(0, 'rgba(37,99,235,0.8)');
-                        gradient.addColorStop(1, 'rgba(6,182,212,0.4)');
-                        return gradient;
-                    },
-                    borderRadius: 6,
-                    barThickness: 20
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { grid: { display: false } },
-                    y: { grid: { color: 'rgba(0,0,0,0.04)' }, beginAtZero: true }
-                }
-            }
-        });
-    }
-
-    /* 시간대별 판매량 */
-    function createHourlySalesChart() {
-        var ctx = document.getElementById('hourlySalesChart');
-        if (!ctx) return;
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: SAMPLE_DATA.hourlyData.labels,
-                datasets: [{
-                    label: '판매량',
-                    data: SAMPLE_DATA.hourlyData.sales,
-                    backgroundColor: function(context) {
-                        var chart = context.chart;
-                        var ctx2 = chart.ctx;
-                        var gradient = ctx2.createLinearGradient(0, 0, 0, chart.height);
-                        gradient.addColorStop(0, 'rgba(16,185,129,0.8)');
-                        gradient.addColorStop(1, 'rgba(6,182,212,0.4)');
-                        return gradient;
-                    },
-                    borderRadius: 6,
-                    barThickness: 20
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { grid: { display: false } },
-                    y: { grid: { color: 'rgba(0,0,0,0.04)' }, beginAtZero: true }
-                }
-            }
-        });
-    }
-
-    /* 카테고리별 마진율 변동 (7일) */
-    function createCategoryTrendChart() {
-        var ctx = document.getElementById('categoryTrendChart');
-        if (!ctx) return;
-        var ct = SAMPLE_DATA.categoryTrend;
-        var colors = {
-            '주방용품': '#2563EB',
-            '뷰티도구': '#EC4899',
-            '홈인테리어': '#F59E0B',
-            '반려동물': '#10B981',
-            '전자기기': '#8B5CF6'
-        };
-        var datasets = [];
-        Object.keys(ct.datasets).forEach(function(cat) {
-            datasets.push({
-                label: cat,
-                data: ct.datasets[cat],
-                borderColor: colors[cat] || '#94A3B8',
-                backgroundColor: 'transparent',
-                tension: 0.4,
-                borderWidth: 2.5,
-                pointRadius: 3,
-                pointBackgroundColor: colors[cat] || '#94A3B8'
-            });
-        });
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ct.labels,
-                datasets: datasets
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { position: 'top', align: 'end', labels: { usePointStyle: true, pointStyle: 'circle', padding: 12, font: { size: 10 } } }
-                },
-                scales: {
-                    x: { grid: { display: false } },
-                    y: { grid: { color: 'rgba(0,0,0,0.04)' }, min: 34, max: 56 }
-                },
-                interaction: { mode: 'index', intersect: false }
-            }
-        });
-    }
-
-    /* 카테고리별 수집 상품 수 (horizontal bar) */
-    function createCategoryCountChart() {
-        var ctx = document.getElementById('categoryCountChart');
-        if (!ctx) return;
-        var cats = SAMPLE_DATA.categories.sort(function(a, b) { return b.products - a.products; });
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: cats.map(function(c) { return c.emoji + ' ' + c.name; }),
-                datasets: [{
-                    label: '수집 상품 수',
-                    data: cats.map(function(c) { return c.products; }),
-                    backgroundColor: [
-                        'rgba(37,99,235,0.7)',
-                        'rgba(16,185,129,0.7)',
-                        'rgba(6,182,212,0.7)',
-                        'rgba(139,92,246,0.7)',
-                        'rgba(236,72,153,0.7)',
-                        'rgba(245,158,11,0.7)',
-                        'rgba(249,115,22,0.7)',
-                        'rgba(239,68,68,0.7)',
-                        'rgba(100,116,139,0.7)',
-                        'rgba(168,162,158,0.7)'
-                    ],
-                    borderRadius: 6,
-                    barThickness: 22
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                indexAxis: 'y',
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { grid: { color: 'rgba(0,0,0,0.04)' }, beginAtZero: true },
-                    y: { grid: { display: false } }
-                }
-            }
-        });
-    }
-    </script>
     <script src="js/data-sync.js"></script>
     <script src="js/supabase-client.js"></script>
     <script>
-    (async function(){
-        var products = DataSync.getProducts();
-        if (!products && DB.isConfigured()) {
-            try { var dbP = await DB.getProducts({limit:100}); if(dbP&&dbP.length>0) products=dbP.map(function(p){return{name:p.name,price:p.price,platform:p.platform,reviewCount:p.review_count,rating:p.rating}}); } catch(e){}
+    (function() {
+        'use strict';
+
+        // Chart instances registry
+        var charts = {};
+
+        // ============================================================
+        // Data generation for different periods
+        // ============================================================
+        function generateDateLabels(days) {
+            var labels = [];
+            var now = new Date();
+            for (var i = days - 1; i >= 0; i--) {
+                var d = new Date(now.getTime() - i * 86400000);
+                labels.push(String(d.getMonth() + 1).padStart(2, '0') + '/' + String(d.getDate()).padStart(2, '0'));
+            }
+            return labels;
         }
-        if (!products || products.length === 0) return;
 
-        var kpis = document.querySelectorAll('.kpi-card .kpi-value');
-        if (kpis.length >= 1) { kpis[0].textContent = products.length; kpis[0].parentElement.querySelector('.kpi-sub').textContent = '스크래핑/DB 데이터'; }
-
-        var platforms = {};
-        products.forEach(function(p){ var k=p.platform||'기타'; if(!platforms[k])platforms[k]=0; platforms[k]++; });
-
-        if (kpis.length >= 2) kpis[1].textContent = Object.keys(platforms).length + '개 플랫폼';
-        if (kpis.length >= 3) {
-            var withReviews = products.filter(function(p){return parseInt(p.reviewCount)>0});
-            kpis[2].textContent = withReviews.length;
+        function generateTrendData(baseValue, days, volatility, trend) {
+            var data = [];
+            var v = baseValue;
+            for (var i = 0; i < days; i++) {
+                v += (Math.random() - 0.3) * volatility + trend;
+                data.push(Math.round(Math.max(0, v)));
+            }
+            return data;
         }
 
-        var weeklyBody = document.querySelector('.data-table tbody');
-        if (weeklyBody && Object.keys(platforms).length > 0) {
-            weeklyBody.innerHTML = Object.keys(platforms).map(function(k){
-                var count = platforms[k];
-                var platProducts = products.filter(function(p){return p.platform===k});
-                var avgPrice = platProducts.reduce(function(s,p){return s+(parseFloat(p.price)||0)},0) / platProducts.length;
-                return '<tr><td style="font-weight:600">'+k+'</td><td>'+count+'개</td><td>'+(avgPrice>0?(k==='1688'?'¥'+avgPrice.toFixed(1):'₩'+Math.round(avgPrice).toLocaleString()):'-')+'</td><td>'+(platProducts[0]?platProducts[0].name.substring(0,20):'-')+'</td><td><span style="font-size:.7rem;padding:2px 6px;border-radius:4px;background:rgba(139,92,246,.15);color:#a78bfa">실제</span></td></tr>';
-            }).join('');
+        function generateFloatTrendData(baseValue, days, volatility, trend) {
+            var data = [];
+            var v = baseValue;
+            for (var i = 0; i < days; i++) {
+                v += (Math.random() - 0.4) * volatility + trend;
+                data.push(parseFloat(Math.max(0, v).toFixed(1)));
+            }
+            return data;
         }
+
+        function getCollectionData(days) {
+            if (days === 7) {
+                return {
+                    labels: SAMPLE_DATA.trendHistory.labels,
+                    products: SAMPLE_DATA.trendHistory.products,
+                    recommended: SAMPLE_DATA.trendHistory.recommended
+                };
+            }
+            return {
+                labels: generateDateLabels(days),
+                products: generateTrendData(350, days, 15, 1.5),
+                recommended: generateTrendData(35, days, 4, 0.3)
+            };
+        }
+
+        function getMarginData(days) {
+            if (days === 7) {
+                return { labels: SAMPLE_DATA.trendHistory.labels, margin: SAMPLE_DATA.trendHistory.margin };
+            }
+            return { labels: generateDateLabels(days), margin: generateFloatTrendData(36, days, 1.2, 0.06) };
+        }
+
+        function getPlatformData(platform, days) {
+            var bases = {
+                coupang:  { sales: 320, revenue: 480, color1: '#E42528', color2: '#FF6B6B' },
+                gmarket:  { sales: 180, revenue: 270, color1: '#00A651', color2: '#4DD88A' },
+                naver:    { sales: 150, revenue: 225, color1: '#03C75A', color2: '#2DB400' }
+            };
+            var b = bases[platform] || bases.coupang;
+            if (days === 7) {
+                var hardcoded = {
+                    coupang: { sales: [320,345,360,378,395,410,435], revenue: [480,510,530,565,590,620,658] },
+                    gmarket: { sales: [180,195,205,218,230,245,260], revenue: [270,290,305,325,340,360,385] },
+                    naver:   { sales: [150,162,170,185,198,210,225], revenue: [225,240,255,275,295,315,338] }
+                };
+                return {
+                    labels: SAMPLE_DATA.trendHistory.labels,
+                    sales: hardcoded[platform].sales,
+                    revenue: hardcoded[platform].revenue,
+                    color1: b.color1, color2: b.color2
+                };
+            }
+            return {
+                labels: generateDateLabels(days),
+                sales: generateTrendData(b.sales, days, 12, 1.2),
+                revenue: generateTrendData(b.revenue, days, 18, 1.8),
+                color1: b.color1, color2: b.color2
+            };
+        }
+
+        function getHourlyData(type, days) {
+            var baseData = type === 'search' ? SAMPLE_DATA.hourlyData.searches : SAMPLE_DATA.hourlyData.sales;
+            var multiplier = days === 7 ? 1 : days === 30 ? 4.2 : 12.5;
+            return {
+                labels: SAMPLE_DATA.hourlyData.labels,
+                data: baseData.map(function(v) { return Math.round(v * multiplier * (0.85 + Math.random() * 0.3)); })
+            };
+        }
+
+        function getCategoryTrendData(days) {
+            var ct = SAMPLE_DATA.categoryTrend;
+            if (days === 7) {
+                return { labels: ct.labels, datasets: ct.datasets };
+            }
+            var labels = generateDateLabels(days);
+            var datasets = {};
+            Object.keys(ct.datasets).forEach(function(cat) {
+                var base = ct.datasets[cat][0];
+                datasets[cat] = generateFloatTrendData(base - 3, days, 1.0, 0.05);
+            });
+            return { labels: labels, datasets: datasets };
+        }
+
+        function getCategoryCountData(days) {
+            var cats = SAMPLE_DATA.categories.sort(function(a, b) { return b.products - a.products; });
+            var multiplier = days === 7 ? 1 : days === 30 ? 3.5 : 10;
+            return {
+                labels: cats.map(function(c) { return c.emoji + ' ' + c.name; }),
+                data: cats.map(function(c) { return Math.round(c.products * multiplier * (0.8 + Math.random() * 0.4)); })
+            };
+        }
+
+        // ============================================================
+        // Chart creation / update functions
+        // ============================================================
+        var chartOpts = {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false }
+        };
+
+        function lineScales() {
+            return { x: { grid: { display: false } }, y: { grid: { color: 'rgba(0,0,0,0.04)' }, beginAtZero: false } };
+        }
+        function barScales() {
+            return { x: { grid: { display: false } }, y: { grid: { color: 'rgba(0,0,0,0.04)' }, beginAtZero: true } };
+        }
+
+        function buildChart(canvasId, type, data, options) {
+            var ctx = document.getElementById(canvasId);
+            if (!ctx) return null;
+            if (charts[canvasId]) { charts[canvasId].destroy(); }
+            charts[canvasId] = new Chart(ctx, { type: type, data: data, options: options });
+            return charts[canvasId];
+        }
+
+        function legendTop() {
+            return { position: 'top', align: 'end', labels: { usePointStyle: true, pointStyle: 'circle', padding: 16, font: { size: 11, weight: 500 } } };
+        }
+        function legendSmall() {
+            return { position: 'top', align: 'end', labels: { usePointStyle: true, pointStyle: 'circle', padding: 12, font: { size: 10 } } };
+        }
+
+        function renderTrendCollection(days) {
+            var d = getCollectionData(days);
+            buildChart('trendCollectionChart', 'line', {
+                labels: d.labels,
+                datasets: [
+                    { label: '수집 상품', data: d.products, borderColor: '#2563EB', backgroundColor: 'rgba(37,99,235,0.08)', fill: true, tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 4 : days <= 30 ? 2 : 0, pointBackgroundColor: '#2563EB' },
+                    { label: '추천 상품', data: d.recommended, borderColor: '#10B981', backgroundColor: 'rgba(16,185,129,0.08)', fill: true, tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 4 : days <= 30 ? 2 : 0, pointBackgroundColor: '#10B981' }
+                ]
+            }, Object.assign({}, chartOpts, { plugins: { legend: legendTop() }, scales: lineScales() }));
+        }
+
+        function renderTrendMargin(days) {
+            var d = getMarginData(days);
+            buildChart('trendMarginChart', 'line', {
+                labels: d.labels,
+                datasets: [{ label: '평균 마진율(%)', data: d.margin, borderColor: '#06B6D4', backgroundColor: 'rgba(6,182,212,0.1)', fill: true, tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 4 : days <= 30 ? 2 : 0, pointBackgroundColor: '#06B6D4' }]
+            }, Object.assign({}, chartOpts, { plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(0,0,0,0.04)' }, min: 30, max: 50 } } }));
+        }
+
+        function renderPlatformChart(platform, canvasId, days) {
+            var d = getPlatformData(platform, days);
+            buildChart(canvasId, 'line', {
+                labels: d.labels,
+                datasets: [
+                    { label: '판매량', data: d.sales, borderColor: d.color1, backgroundColor: hexToRgba(d.color1, 0.08), fill: true, tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 4 : days <= 30 ? 2 : 0, pointBackgroundColor: d.color1 },
+                    { label: '매출(만원)', data: d.revenue, borderColor: d.color2, backgroundColor: hexToRgba(d.color2, 0.06), fill: true, tension: 0.4, borderWidth: 2, pointRadius: days <= 7 ? 3 : days <= 30 ? 1 : 0, pointBackgroundColor: d.color2 }
+                ]
+            }, Object.assign({}, chartOpts, { plugins: { legend: legendSmall() }, scales: lineScales() }));
+        }
+
+        function renderHourlyChart(canvasId, type, days) {
+            var d = getHourlyData(type, days);
+            var colors = type === 'search'
+                ? { start: 'rgba(37,99,235,0.8)', end: 'rgba(6,182,212,0.4)' }
+                : { start: 'rgba(16,185,129,0.8)', end: 'rgba(6,182,212,0.4)' };
+            buildChart(canvasId, 'bar', {
+                labels: d.labels,
+                datasets: [{
+                    label: type === 'search' ? '검색량' : '판매량',
+                    data: d.data,
+                    backgroundColor: function(context) {
+                        var chart = context.chart;
+                        var ctx2 = chart.ctx;
+                        var gradient = ctx2.createLinearGradient(0, 0, 0, chart.height);
+                        gradient.addColorStop(0, colors.start);
+                        gradient.addColorStop(1, colors.end);
+                        return gradient;
+                    },
+                    borderRadius: 6,
+                    barThickness: 20
+                }]
+            }, Object.assign({}, chartOpts, { plugins: { legend: { display: false } }, scales: barScales() }));
+        }
+
+        function renderCategoryTrend(days) {
+            var d = getCategoryTrendData(days);
+            var catColors = { '주방용품': '#2563EB', '뷰티도구': '#EC4899', '홈인테리어': '#F59E0B', '반려동물': '#10B981', '전자기기': '#8B5CF6' };
+            var datasets = [];
+            Object.keys(d.datasets).forEach(function(cat) {
+                datasets.push({
+                    label: cat, data: d.datasets[cat],
+                    borderColor: catColors[cat] || '#94A3B8', backgroundColor: 'transparent',
+                    tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 3 : days <= 30 ? 1 : 0,
+                    pointBackgroundColor: catColors[cat] || '#94A3B8'
+                });
+            });
+            buildChart('categoryTrendChart', 'line', { labels: d.labels, datasets: datasets }, Object.assign({}, chartOpts, {
+                plugins: { legend: legendSmall() },
+                scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(0,0,0,0.04)' }, min: 34, max: 56 } }
+            }));
+        }
+
+        function renderCategoryCount(days) {
+            var d = getCategoryCountData(days);
+            var barColors = ['rgba(37,99,235,0.7)','rgba(16,185,129,0.7)','rgba(6,182,212,0.7)','rgba(139,92,246,0.7)','rgba(236,72,153,0.7)','rgba(245,158,11,0.7)','rgba(249,115,22,0.7)','rgba(239,68,68,0.7)','rgba(100,116,139,0.7)','rgba(168,162,158,0.7)'];
+            buildChart('categoryCountChart', 'bar', {
+                labels: d.labels,
+                datasets: [{ label: '수집 상품 수', data: d.data, backgroundColor: barColors, borderRadius: 6, barThickness: 22 }]
+            }, Object.assign({}, chartOpts, { indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { grid: { color: 'rgba(0,0,0,0.04)' }, beginAtZero: true }, y: { grid: { display: false } } } }));
+        }
+
+        function hexToRgba(hex, alpha) {
+            if (hex.charAt(0) === '#') hex = hex.substring(1);
+            var r = parseInt(hex.substring(0, 2), 16);
+            var g = parseInt(hex.substring(2, 4), 16);
+            var b = parseInt(hex.substring(4, 6), 16);
+            return 'rgba(' + r + ',' + g + ',' + b + ',' + alpha + ')';
+        }
+
+        // ============================================================
+        // Chart update dispatcher
+        // ============================================================
+        function updateChart(chartName, days) {
+            switch (chartName) {
+                case 'trendCollection': renderTrendCollection(days); break;
+                case 'trendMargin':     renderTrendMargin(days); break;
+                case 'coupang':         renderPlatformChart('coupang', 'coupangTrendChart', days); break;
+                case 'gmarket':         renderPlatformChart('gmarket', 'gmarketTrendChart', days); break;
+                case 'naver':           renderPlatformChart('naver', 'naverTrendChart', days); break;
+                case 'hourlySearch':    renderHourlyChart('hourlySearchChart', 'search', days); break;
+                case 'hourlySales':     renderHourlyChart('hourlySalesChart', 'sales', days); break;
+                case 'categoryTrend':   renderCategoryTrend(days); break;
+                case 'categoryCount':   renderCategoryCount(days); break;
+            }
+        }
+
+        function updateAllCharts(days) {
+            renderTrendCollection(days);
+            renderTrendMargin(days);
+            renderPlatformChart('coupang', 'coupangTrendChart', days);
+            renderPlatformChart('gmarket', 'gmarketTrendChart', days);
+            renderPlatformChart('naver', 'naverTrendChart', days);
+            renderHourlyChart('hourlySearchChart', 'search', days);
+            renderHourlyChart('hourlySalesChart', 'sales', days);
+            renderCategoryTrend(days);
+            renderCategoryCount(days);
+        }
+
+        // ============================================================
+        // Period tabs (시간별/일별/주별/월별) → changes all charts
+        // ============================================================
+        function initPeriodTabs() {
+            var tabs = document.querySelectorAll('.period-tab');
+            tabs.forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(function(t) { t.classList.remove('active'); });
+                    this.classList.add('active');
+                    var period = this.getAttribute('data-period');
+                    var daysMap = { hourly: 1, daily: 7, weekly: 30, monthly: 90 };
+                    var days = daysMap[period] || 7;
+
+                    // Sync all per-chart tabs to matching day value
+                    document.querySelectorAll('.chart-tab').forEach(function(ct) {
+                        ct.classList.remove('active');
+                    });
+                    var matchDays = days === 1 ? '7' : String(days);
+                    document.querySelectorAll('.chart-tab[data-days="' + matchDays + '"]').forEach(function(ct) {
+                        ct.classList.add('active');
+                    });
+
+                    updateAllCharts(days === 1 ? 7 : days);
+                });
+            });
+        }
+
+        // ============================================================
+        // Per-chart 7일/30일/90일 tabs
+        // ============================================================
+        function initChartTabs() {
+            document.addEventListener('click', function(e) {
+                var btn = e.target.closest('.chart-tab');
+                if (!btn) return;
+
+                var chartName = btn.getAttribute('data-chart');
+                var days = parseInt(btn.getAttribute('data-days'));
+                if (!chartName || !days) return;
+
+                // Toggle active within same group
+                var parent = btn.closest('.chart-panel-actions');
+                if (parent) {
+                    parent.querySelectorAll('.chart-tab').forEach(function(b) { b.classList.remove('active'); });
+                }
+                btn.classList.add('active');
+
+                updateChart(chartName, days);
+            });
+        }
+
+        // ============================================================
+        // Init
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof Chart === 'undefined') return;
+
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            Chart.defaults.font.size = 11;
+            Chart.defaults.color = '#94A3B8';
+
+            // Sidebar mobile toggle
+            var menuBtn = document.getElementById('mobileMenuBtn');
+            var sidebar = document.getElementById('sidebar');
+            var overlay = document.getElementById('sidebarOverlay');
+            if (menuBtn) {
+                menuBtn.addEventListener('click', function() {
+                    sidebar.classList.toggle('open');
+                    overlay.classList.toggle('active');
+                });
+            }
+            if (overlay) {
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('open');
+                    overlay.classList.remove('active');
+                });
+            }
+
+            // Render all charts at 7-day default
+            updateAllCharts(7);
+
+            // Init tab handlers
+            initPeriodTabs();
+            initChartTabs();
+
+            // Last updated
+            var el = document.getElementById('lastUpdated');
+            if (el) el.textContent = new Date().toLocaleString('ko-KR');
+        });
+
+        // ============================================================
+        // DB/crawl data overlay for KPIs
+        // ============================================================
+        (async function() {
+            var products = null;
+            try {
+                var crawled = JSON.parse(localStorage.getItem('crawlProducts') || '[]');
+                if (crawled.length > 0) products = crawled;
+            } catch (e) {}
+
+            if (!products && typeof DB !== 'undefined' && DB.isConfigured()) {
+                try {
+                    var dbP = await DB.getProducts({ limit: 100 });
+                    if (dbP && dbP.length > 0) products = dbP.map(function(p) { return { name: p.name, price: p.price, platform: p.platform, reviewCount: p.review_count, rating: p.rating }; });
+                } catch (e) {}
+            }
+            if (!products || products.length === 0) return;
+
+            var kpis = document.querySelectorAll('.kpi-card .kpi-value');
+            if (kpis.length >= 1) {
+                kpis[0].textContent = products.length + '개';
+                var sub = kpis[0].parentElement.querySelector('.kpi-sub');
+                if (sub) sub.textContent = '스크래핑/DB 데이터';
+            }
+        })();
     })();
     </script>
+</body>
 </html>
