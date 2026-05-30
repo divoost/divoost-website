@@ -126,6 +126,47 @@
         .rm-btn.reauth:hover{box-shadow:0 4px 12px rgba(24,119,242,.4)}
         .rm-btn.ghost{background:#fff;color:#475569;border:1px solid #e2e8f0}
         .rm-btn.ghost:hover{border-color:#3b82f6;color:#3b82f6}
+        .rm-btn.danger{background:#dc2626;color:#fff}
+        .rm-btn.danger:hover{background:#b91c1c}
+
+        /* Page Selector Modal */
+        .ps-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:10001;justify-content:center;align-items:center;padding:20px;animation:rmFade .15s ease}
+        .ps-overlay.open{display:flex}
+        .ps-dialog{background:#fff;border-radius:14px;width:100%;max-width:600px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:rmIn .2s ease}
+        .ps-header{padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:10px;flex-shrink:0}
+        .ps-header h3{flex:1;font-size:1rem;font-weight:700;color:#0f172a;margin:0}
+        .ps-header .ps-sub{font-size:.72rem;color:#94a3b8}
+        .ps-toolbar{padding:10px 20px;background:#f8fafc;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex-shrink:0}
+        .ps-toolbar-info{font-size:.78rem;color:#475569;font-weight:600}
+        .ps-toolbar-info .num{color:#3b82f6}
+        .ps-toolbar-actions{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+        .ps-mini-btn{padding:5px 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#475569;font-size:.72rem;font-weight:600;cursor:pointer}
+        .ps-mini-btn:hover{border-color:#3b82f6;color:#3b82f6}
+        .ps-body{padding:6px 12px 12px;overflow-y:auto;flex:1}
+        .ps-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+        .ps-row{display:flex;align-items:center;gap:12px;padding:11px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;cursor:pointer;transition:.15s}
+        .ps-row:hover{border-color:#3b82f6;background:#f8fafc}
+        .ps-row.selected{border-color:#3b82f6;background:#eff6ff}
+        .ps-row.disabled{opacity:.55;cursor:not-allowed;background:#f8fafc}
+        .ps-row.disabled:hover{border-color:#e2e8f0;background:#f8fafc}
+        .ps-check{width:18px;height:18px;border-radius:5px;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s;background:#fff}
+        .ps-row.selected .ps-check{border-color:#3b82f6;background:#3b82f6;color:#fff}
+        .ps-check::before{content:'';width:9px;height:5px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translateY(-1px);opacity:0;transition:.15s}
+        .ps-row.selected .ps-check::before{opacity:1}
+        .ps-info{flex:1;min-width:0}
+        .ps-name{font-size:.88rem;font-weight:700;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .ps-meta{font-size:.7rem;color:#64748b;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .ps-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+        .ps-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:99px;font-size:.65rem;font-weight:700;line-height:1.4}
+        .ps-tag.ig{background:#fce7f3;color:#be185d}
+        .ps-tag.no-ig{background:#fef3c7;color:#92400e}
+        .ps-tag.registered{background:#dbeafe;color:#1d4ed8}
+        .ps-tag.danger{background:#fee2e2;color:#b91c1c}
+        .ps-empty{text-align:center;padding:40px 20px;color:#94a3b8;font-size:.85rem}
+        .ps-footer{padding:12px 20px;border-top:1px solid #e2e8f0;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;flex-shrink:0;background:#f8fafc}
+
+        .cleanup-btn{padding:5px 12px;border-radius:6px;border:1px solid #fecaca;background:#fff;color:#dc2626;font-size:.72rem;font-weight:600;cursor:pointer;margin-left:6px;transition:.15s}
+        .cleanup-btn:hover{background:#fef2f2;border-color:#dc2626}
 
         @media(max-width:768px){.account-fields-grid{grid-template-columns:1fr}.general-row{grid-template-columns:1fr}}
     </style>
@@ -262,6 +303,32 @@
 
     <div class="toast" id="toast"></div>
 
+    <!-- Page Selector Modal -->
+    <div class="ps-overlay" id="pageSelectorModal" role="dialog" aria-modal="true">
+        <div class="ps-dialog">
+            <div class="ps-header">
+                <div style="font-size:24px">📋</div>
+                <div style="flex:1">
+                    <h3 id="psTitle">페이지 선택</h3>
+                    <div class="ps-sub" id="psSubtitle"></div>
+                </div>
+                <button class="rm-close" id="psCloseX" aria-label="닫기">✕</button>
+            </div>
+            <div class="ps-toolbar">
+                <span class="ps-toolbar-info"><span class="num" id="psSelectedCount">0</span> / <span id="psTotalCount">0</span> 선택됨</span>
+                <div class="ps-toolbar-actions">
+                    <button class="ps-mini-btn" id="psSelectAll">모두 선택</button>
+                    <button class="ps-mini-btn" id="psDeselectAll">모두 해제</button>
+                    <button class="ps-mini-btn" id="psSelectIg" title="Instagram 연결된 항목만 선택">📷 IG만</button>
+                </div>
+            </div>
+            <div class="ps-body">
+                <div class="ps-list" id="psList"></div>
+            </div>
+            <div class="ps-footer" id="psFooter"></div>
+        </div>
+    </div>
+
     <!-- Result Modal -->
     <div class="rm-overlay" id="resultModal" role="dialog" aria-modal="true">
         <div class="rm-dialog">
@@ -392,7 +459,126 @@
 
         document.getElementById('rmCloseX').addEventListener('click', closeResultModal);
         document.getElementById('resultModal').addEventListener('click', function(e){ if(e.target === this) closeResultModal(); });
-        document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeResultModal(); });
+        document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ closeResultModal(); closePageSelector(); } });
+
+        // ─── 페이지 선택 모달 ───
+        var _psState = { items: [], selected: {}, onConfirm: null, confirmLabel: '선택 항목 등록', confirmType: 'primary' };
+
+        /**
+         * showPageSelector({
+         *   title, subtitle,
+         *   items: [{id, name, meta, hasIg, igUsername, igName, alreadyRegistered, disabled, defaultChecked, dangerTag, raw}],
+         *   confirmLabel, confirmType: 'primary'|'danger',
+         *   onConfirm: function(selectedItems){...}
+         * })
+         */
+        function showPageSelector(opts){
+            opts = opts || {};
+            _psState.items = opts.items || [];
+            _psState.selected = {};
+            _psState.onConfirm = opts.onConfirm || function(){};
+            _psState.confirmLabel = opts.confirmLabel || '선택 항목 등록';
+            _psState.confirmType = opts.confirmType || 'primary';
+
+            _psState.items.forEach(function(it){
+                if(it.defaultChecked && !it.disabled) _psState.selected[it.id] = true;
+            });
+
+            document.getElementById('psTitle').textContent = opts.title || '항목 선택';
+            document.getElementById('psSubtitle').textContent = opts.subtitle || '';
+            document.getElementById('psTotalCount').textContent = _psState.items.filter(function(it){ return !it.disabled; }).length;
+
+            renderPsList();
+            renderPsFooter();
+            document.getElementById('pageSelectorModal').classList.add('open');
+        }
+
+        function closePageSelector(){
+            document.getElementById('pageSelectorModal').classList.remove('open');
+        }
+
+        function renderPsList(){
+            var listEl = document.getElementById('psList');
+            if(_psState.items.length === 0){
+                listEl.innerHTML = '<div class="ps-empty">표시할 항목이 없습니다</div>';
+                document.getElementById('psSelectedCount').textContent = '0';
+                return;
+            }
+            listEl.innerHTML = _psState.items.map(function(it){
+                var isSel = !!_psState.selected[it.id];
+                var tags = [];
+                if(it.hasIg){
+                    var igLabel = it.igUsername ? '📷 IG @' + it.igUsername : '📷 IG 자동 포함';
+                    tags.push('<span class="ps-tag ig">' + escH(igLabel) + '</span>');
+                } else if(it.hasIg === false){
+                    tags.push('<span class="ps-tag no-ig">⚠ IG 미연결</span>');
+                }
+                if(it.alreadyRegistered) tags.push('<span class="ps-tag registered">↩ 이미 등록됨</span>');
+                if(it.dangerTag) tags.push('<span class="ps-tag danger">' + escH(it.dangerTag) + '</span>');
+
+                return '<div class="ps-row' + (isSel ? ' selected' : '') + (it.disabled ? ' disabled' : '') + '" data-ps-id="' + escH(it.id) + '">' +
+                    '<div class="ps-check"></div>' +
+                    '<div class="ps-info">' +
+                        '<div class="ps-name">' + escH(it.name) + '</div>' +
+                        (it.meta ? '<div class="ps-meta">' + escH(it.meta) + '</div>' : '') +
+                        (tags.length ? '<div class="ps-tags">' + tags.join('') + '</div>' : '') +
+                    '</div>' +
+                '</div>';
+            }).join('');
+
+            listEl.querySelectorAll('.ps-row').forEach(function(row){
+                row.addEventListener('click', function(){
+                    if(row.classList.contains('disabled')) return;
+                    var id = row.getAttribute('data-ps-id');
+                    if(_psState.selected[id]) delete _psState.selected[id];
+                    else _psState.selected[id] = true;
+                    row.classList.toggle('selected');
+                    updatePsSelectedCount();
+                });
+            });
+            updatePsSelectedCount();
+        }
+
+        function updatePsSelectedCount(){
+            var n = Object.keys(_psState.selected).length;
+            document.getElementById('psSelectedCount').textContent = n;
+            var confirmBtn = document.querySelector('#psFooter button[data-ps="confirm"]');
+            if(confirmBtn){
+                confirmBtn.disabled = n === 0;
+                confirmBtn.style.opacity = n === 0 ? '.5' : '1';
+                confirmBtn.style.cursor = n === 0 ? 'not-allowed' : 'pointer';
+            }
+        }
+
+        function renderPsFooter(){
+            var n = Object.keys(_psState.selected).length;
+            document.getElementById('psFooter').innerHTML =
+                '<button class="rm-btn ghost" data-ps="cancel">취소</button>' +
+                '<button class="rm-btn ' + _psState.confirmType + '" data-ps="confirm"' + (n === 0 ? ' disabled style="opacity:.5;cursor:not-allowed"' : '') + '>' + escH(_psState.confirmLabel) + '</button>';
+            document.querySelector('#psFooter button[data-ps="cancel"]').addEventListener('click', closePageSelector);
+            document.querySelector('#psFooter button[data-ps="confirm"]').addEventListener('click', function(){
+                var picked = _psState.items.filter(function(it){ return _psState.selected[it.id] && !it.disabled; });
+                var callback = _psState.onConfirm;
+                closePageSelector();
+                if(typeof callback === 'function') callback(picked);
+            });
+        }
+
+        document.getElementById('psCloseX').addEventListener('click', closePageSelector);
+        document.getElementById('pageSelectorModal').addEventListener('click', function(e){ if(e.target === this) closePageSelector(); });
+        document.getElementById('psSelectAll').addEventListener('click', function(){
+            _psState.items.forEach(function(it){ if(!it.disabled) _psState.selected[it.id] = true; });
+            renderPsList();
+        });
+        document.getElementById('psDeselectAll').addEventListener('click', function(){
+            _psState.selected = {};
+            renderPsList();
+        });
+        document.getElementById('psSelectIg').addEventListener('click', function(){
+            _psState.selected = {};
+            _psState.items.forEach(function(it){ if(!it.disabled && it.hasIg) _psState.selected[it.id] = true; });
+            renderPsList();
+        });
 
         // ─── 채널 정의 ───
         var CHANNEL_DEFS = {
@@ -596,18 +782,84 @@
                     });
                 }
 
-                html += '<button class="btn-add-account" onclick="addAccount(\'' + chId + '\')">+ ' + def.accountLabel + ' 추가</button>';
+                // 개별 추가 + 일괄 정리 버튼 (2개 이상 계정 있을 때)
+                if(count >= 2){
+                    html += '<div style="display:flex;gap:6px;margin-top:6px">';
+                    html += '<button class="btn-add-account" style="flex:1;margin-top:0" onclick="addAccount(\'' + chId + '\')">+ ' + def.accountLabel + ' 추가</button>';
+                    html += '<button class="cleanup-btn" style="padding:8px 14px;border-radius:8px;margin-left:0" onclick="bulkCleanupChannel(\'' + chId + '\')">🧹 일괄 정리</button>';
+                    html += '</div>';
+                } else {
+                    html += '<button class="btn-add-account" onclick="addAccount(\'' + chId + '\')">+ ' + def.accountLabel + ' 추가</button>';
+                }
                 if(chId === 'facebook'){
-                    html += '<button class="btn-add-account" style="border-color:#1877f2;color:#1877f2;background:#e7f0ff;margin-top:6px" onclick="connectFacebookOAuth()">🔗 Facebook 계정으로 한 번에 연동 (페이지 + Instagram)</button>';
+                    html += '<button class="btn-add-account" style="border-color:#1877f2;color:#1877f2;background:#e7f0ff;margin-top:6px" onclick="connectFacebookOAuth()">🔗 Facebook 계정으로 한 번에 연동 (선택형)</button>';
                 }
                 if(chId === 'instagram'){
-                    html += '<button class="btn-add-account" style="border-color:#ec4899;color:#ec4899;background:#fdf2f8;margin-top:6px" onclick="autoConnectInstagramFromFacebook()">⚡ Facebook 페이지에서 Instagram 자동 연결</button>';
+                    html += '<button class="btn-add-account" style="border-color:#ec4899;color:#ec4899;background:#fdf2f8;margin-top:6px" onclick="autoConnectInstagramFromFacebook()">⚡ Facebook 페이지에서 Instagram 자동 연결 (선택형)</button>';
                 }
                 html += '<div class="guide-text">📌 ' + def.guide + '</div>';
                 html += '</div>';
             });
             container.innerHTML = html;
         }
+
+        // ─── 일괄 정리: 채널 내 여러 계정을 선택해서 한꺼번에 삭제 ───
+        window.bulkCleanupChannel = function(chId){
+            var def = CHANNEL_DEFS[chId];
+            var accounts = (settings[chId] && settings[chId].accounts) || [];
+            if(accounts.length === 0){
+                showResultModal({ kind:'info', title:'삭제할 계정 없음', text:'등록된 ' + def.accountLabel + '가 없습니다.', skipReauth:true });
+                return;
+            }
+            var items = accounts.map(function(acc, idx){
+                var meta = [];
+                if(chId === 'facebook' && acc.pageId) meta.push('Page ID: ' + acc.pageId);
+                if(chId === 'instagram'){
+                    if(acc.username) meta.push('@' + acc.username.replace(/^@/, ''));
+                    if(acc.businessAccountId) meta.push('IG ID: ' + acc.businessAccountId);
+                    if(acc.linkedPageId) meta.push('Page: ' + acc.linkedPageId);
+                }
+                if(chId === 'naver_blog' && acc.blogId) meta.push('Blog: ' + acc.blogId);
+                if(chId === 'naver_cafe' && acc.cafeId) meta.push('Cafe: ' + acc.cafeId);
+                var hasToken = !!(acc.accessToken || acc.pageToken);
+                return {
+                    id: acc.id || ('idx_' + idx),
+                    name: acc.name || (def.name + ' #' + (idx+1)),
+                    meta: meta.join(' · '),
+                    hasIg: undefined, // 정리 모달에서는 표시 안 함
+                    alreadyRegistered: false,
+                    defaultChecked: false,
+                    dangerTag: hasToken ? '' : '⚠ 토큰 없음',
+                    raw: { acc: acc, idx: idx }
+                };
+            });
+
+            showPageSelector({
+                title: '🧹 ' + def.name + ' 계정 일괄 정리',
+                subtitle: '삭제할 ' + def.accountLabel + '를 선택하세요. 선택한 계정은 영구 삭제됩니다.',
+                items: items,
+                confirmLabel: '🗑 선택 항목 삭제',
+                confirmType: 'danger',
+                onConfirm: function(picked){
+                    if(picked.length === 0) return;
+                    if(!confirm('정말로 ' + picked.length + '개 ' + def.accountLabel + '를 삭제하시겠습니까?\n\n이 작업은 되돌릴 수 없습니다.')) return;
+                    var pickedIds = {};
+                    picked.forEach(function(p){ pickedIds[p.id] = true; });
+                    settings[chId].accounts = settings[chId].accounts.filter(function(acc, idx){
+                        var key = acc.id || ('idx_' + idx);
+                        return !pickedIds[key];
+                    });
+                    localStorage.setItem('snsSettings', JSON.stringify(settings));
+                    renderAllChannels();
+                    showResultModal({
+                        kind:'success',
+                        title:'정리 완료',
+                        text: picked.length + '개 ' + def.accountLabel + '가 삭제되었습니다.',
+                        skipReauth: true
+                    });
+                }
+            });
+        };
 
         // ─── Facebook OAuth 한 번에 연동 (페이지 + Instagram 자동 등록) ───
         var FB_APP_ID = '1774380433543061'; // sns-연동 app
@@ -678,7 +930,7 @@
         async function fetchPagesAndInstagram(userToken){
             try {
                 // 1) 페이지 목록 + 각 페이지 토큰 가져오기
-                var r = await fetch('https://graph.facebook.com/v18.0/me/accounts?fields=id,name,access_token,instagram_business_account{id,username,name}&access_token=' + encodeURIComponent(userToken));
+                var r = await fetch('https://graph.facebook.com/v18.0/me/accounts?fields=id,name,access_token,instagram_business_account{id,username,name,profile_picture_url}&access_token=' + encodeURIComponent(userToken));
                 var d = await r.json();
                 if(d.error){
                     showResultModal({ kind:'error', title:'Facebook 연동 실패', items:[{ kind:'err', msg: d.error.message }] });
@@ -689,6 +941,52 @@
                     return;
                 }
 
+                // 2) 선택 모달 표시 (자동 등록 대신 사용자가 직접 선택)
+                if(!settings.facebook) settings.facebook = {accounts: []};
+                if(!settings.facebook.accounts) settings.facebook.accounts = [];
+                if(!settings.instagram) settings.instagram = {accounts: []};
+                if(!settings.instagram.accounts) settings.instagram.accounts = [];
+
+                var items = d.data.map(function(page){
+                    var ig = page.instagram_business_account;
+                    var alreadyFb = settings.facebook.accounts.some(function(a){ return a.pageId === page.id; });
+                    return {
+                        id: page.id,
+                        name: page.name,
+                        meta: 'Page ID: ' + page.id,
+                        hasIg: !!(ig && ig.id),
+                        igUsername: ig ? ig.username : '',
+                        igName: ig ? ig.name : '',
+                        alreadyRegistered: alreadyFb,
+                        defaultChecked: false,
+                        raw: page
+                    };
+                });
+
+                showPageSelector({
+                    title: '연결할 Facebook 페이지 선택',
+                    subtitle: '관리 중인 ' + items.length + '개 페이지 중 연동할 페이지만 선택하세요. Instagram이 연결된 페이지는 자동 포함됩니다.',
+                    items: items,
+                    confirmLabel: '선택한 페이지 등록',
+                    onConfirm: function(picked){
+                        registerSelectedFbPages(picked);
+                    }
+                });
+                return; // 등록은 registerSelectedFbPages 에서 처리
+            } catch(err){
+                showResultModal({ kind:'error', title:'연동 중 오류', items:[{ kind:'err', msg: err.message }] });
+                return;
+            }
+        }
+
+        // 선택된 Facebook 페이지를 실제로 settings에 등록 (Instagram도 자동 포함)
+        function registerSelectedFbPages(picked){
+            try {
+                if(!settings.facebook) settings.facebook = {accounts: []};
+                if(!settings.facebook.accounts) settings.facebook.accounts = [];
+                if(!settings.instagram) settings.instagram = {accounts: []};
+                if(!settings.instagram.accounts) settings.instagram.accounts = [];
+
                 if(!settings.facebook) settings.facebook = {accounts: []};
                 if(!settings.facebook.accounts) settings.facebook.accounts = [];
                 if(!settings.instagram) settings.instagram = {accounts: []};
@@ -698,7 +996,8 @@
                 var igAdded = 0, igUpdated = 0;
                 var noIg = [];
 
-                d.data.forEach(function(page){
+                picked.forEach(function(item){
+                    var page = item.raw;
                     // Facebook 페이지 등록 (이미 있으면 토큰 갱신)
                     var existingFb = settings.facebook.accounts.find(function(a){ return a.pageId === page.id; });
                     if(existingFb){
@@ -715,7 +1014,7 @@
                         fbAdded++;
                     }
 
-                    // Instagram 비즈니스 계정 자동 등록
+                    // Instagram 비즈니스 계정 자동 등록 (선택된 페이지에 연결된 IG만)
                     if(page.instagram_business_account && page.instagram_business_account.id){
                         var igId = page.instagram_business_account.id;
                         var igUser = page.instagram_business_account.username || '';
@@ -737,13 +1036,11 @@
                             });
                             igAdded++;
                         }
-                    }
-
-                    if(!page.instagram_business_account || !page.instagram_business_account.id){
+                    } else {
                         noIg.push(page.name);
                     }
 
-                    // ★ 수동 등록된 IG 계정의 토큰도 linkedPageId 기준으로 자동 동기화
+                    // 수동 등록된 IG 계정의 토큰도 linkedPageId 기준으로 자동 동기화
                     settings.instagram.accounts.forEach(function(ig){
                         if(ig.linkedPageId === page.id && ig.accessToken !== page.access_token){
                             ig.accessToken = page.access_token;
@@ -762,19 +1059,23 @@
                 var groups = [];
                 if(noIg.length > 0){
                     groups.push({
-                        title:'⚠ Instagram 미연결 페이지',
-                        items: noIg.map(function(n){ return { kind:'warn', name:n, msg:'Instagram 비즈니스/크리에이터 계정을 이 페이지에 연결하세요.' }; })
+                        title:'⚠ 선택한 페이지 중 Instagram 미연결',
+                        items: noIg.map(function(n){ return { kind:'warn', name:n, msg:'Instagram 비즈니스/크리에이터 계정을 이 페이지에 연결하면 자동 포함됩니다.' }; })
                     });
                 }
-                showResultModal({
-                    kind:'success',
-                    title:'Facebook 한 번에 연동 완료',
-                    summary: summary,
-                    groups: groups,
-                    skipReauth: true
-                });
+                if(fbAdded === 0 && fbUpdated === 0){
+                    showResultModal({ kind:'warn', title:'등록 안 됨', text:'선택한 페이지가 없습니다.', skipReauth:true });
+                } else {
+                    showResultModal({
+                        kind:'success',
+                        title:'선택한 페이지 등록 완료',
+                        summary: summary,
+                        groups: groups,
+                        skipReauth: true
+                    });
+                }
             } catch(err){
-                showResultModal({ kind:'error', title:'연동 중 오류', items:[{ kind:'err', msg: err.message }] });
+                showResultModal({ kind:'error', title:'등록 중 오류', items:[{ kind:'err', msg: err.message }] });
             }
         }
 
@@ -797,15 +1098,11 @@
                 return;
             }
 
-            if(!confirm('🔗 등록된 ' + fbAccounts.length + '개 Facebook 페이지에서 Instagram 비즈니스 계정을 자동으로 찾아 등록합니다.\n\n계속하시겠습니까?')) return;
-
             if(!settings.instagram) settings.instagram = {accounts: []};
             if(!settings.instagram.accounts) settings.instagram.accounts = [];
 
-            var added = 0;
-            var skipped = 0;
-            var errors = [];
-
+            // Step 1: 각 FB 페이지의 IG 연결 상태를 미리 확인
+            var probeResults = [];
             for(var i = 0; i < fbAccounts.length; i++){
                 var fbAcc = fbAccounts[i];
                 try {
@@ -813,31 +1110,98 @@
                         '?fields=instagram_business_account{id,username,name,profile_picture_url,followers_count}&access_token=' +
                         encodeURIComponent(fbAcc.pageToken));
                     var d = await r.json();
-                    if(d.error){ errors.push(fbAcc.name + ': ' + d.error.message); continue; }
-
-                    if(!d.instagram_business_account || !d.instagram_business_account.id){
-                        errors.push(fbAcc.name + ': Instagram 비즈니스 계정이 연결되어 있지 않음');
-                        continue;
-                    }
-                    var igId = d.instagram_business_account.id;
-
-                    // 이미 등록된 계정인지 확인
-                    var exists = settings.instagram.accounts.some(function(a){ return a.businessAccountId === igId; });
-                    if(exists){ skipped++; continue; }
-
-                    settings.instagram.accounts.push({
-                        id: generateAccountId(),
-                        name: d.instagram_business_account.name || ('@' + (d.instagram_business_account.username || igId)),
-                        accessToken: fbAcc.pageToken,
-                        businessAccountId: igId,
-                        linkedPageId: fbAcc.pageId,
-                        username: d.instagram_business_account.username || ''
-                    });
-                    added++;
+                    probeResults.push({ fbAcc: fbAcc, response: d });
                 } catch(err){
-                    errors.push(fbAcc.name + ': ' + err.message);
+                    probeResults.push({ fbAcc: fbAcc, response: { error: { message: err.message } } });
                 }
             }
+
+            // Step 2: 선택 모달 표시
+            var items = probeResults.map(function(pr){
+                var ig = pr.response.instagram_business_account;
+                var hasErr = !!pr.response.error;
+                var alreadyRegistered = ig && ig.id && settings.instagram.accounts.some(function(a){ return a.businessAccountId === ig.id; });
+                var disabled = hasErr || !ig || !ig.id || alreadyRegistered;
+                var dangerTag = '';
+                if(hasErr){
+                    dangerTag = isTokenExpiredMessage(pr.response.error.message) ? '❌ 토큰 만료' : '❌ 에러';
+                } else if(!ig || !ig.id){
+                    // 그냥 'IG 미연결' 태그는 hasIg=false로 표시
+                }
+                return {
+                    id: pr.fbAcc.pageId,
+                    name: pr.fbAcc.name,
+                    meta: 'Page ID: ' + pr.fbAcc.pageId,
+                    hasIg: ig && ig.id ? true : false,
+                    igUsername: ig ? ig.username : '',
+                    alreadyRegistered: alreadyRegistered,
+                    disabled: disabled,
+                    defaultChecked: !disabled,
+                    dangerTag: dangerTag,
+                    raw: pr
+                };
+            });
+
+            var connectableCount = items.filter(function(it){ return !it.disabled; }).length;
+            if(connectableCount === 0){
+                var probeErrs = items.filter(function(it){ return it.dangerTag; }).map(function(it){ return { kind:'err', name: it.name, msg: it.dangerTag }; });
+                var noIgItems = items.filter(function(it){ return !it.hasIg && !it.dangerTag; }).map(function(it){ return { kind:'warn', name: it.name, msg: 'Instagram 비즈니스 계정이 이 페이지에 연결되어 있지 않습니다.' }; });
+                var alreadyItems = items.filter(function(it){ return it.alreadyRegistered; }).map(function(it){ return { kind:'warn', name: it.name, msg: '이미 등록된 IG 계정입니다.' }; });
+                var groups = [];
+                if(probeErrs.length) groups.push({ title:'❌ 조회 실패', items: probeErrs });
+                if(noIgItems.length) groups.push({ title:'⚠ Instagram 미연결', items: noIgItems });
+                if(alreadyItems.length) groups.push({ title:'↩ 이미 등록됨', items: alreadyItems });
+                showResultModal({
+                    kind:'warn',
+                    title:'연결 가능한 Instagram 계정 없음',
+                    text:'아래 페이지들은 Instagram 자동 연결이 불가능합니다.',
+                    groups: groups
+                });
+                return;
+            }
+
+            showPageSelector({
+                title: '연결할 Instagram 선택',
+                subtitle: '등록된 ' + fbAccounts.length + '개 Facebook 페이지 중 Instagram 자동 연결할 페이지를 선택하세요.',
+                items: items,
+                confirmLabel: '선택한 Instagram 등록',
+                onConfirm: function(picked){
+                    addSelectedInstagrams(picked);
+                }
+            });
+        };
+
+        function addSelectedInstagrams(picked){
+            if(!settings.instagram) settings.instagram = {accounts: []};
+            if(!settings.instagram.accounts) settings.instagram.accounts = [];
+
+            var added = 0;
+            var skipped = 0;
+            var errors = [];
+
+            picked.forEach(function(item){
+                var pr = item.raw;
+                var fbAcc = pr.fbAcc;
+                var d = pr.response;
+                if(d.error){ errors.push(fbAcc.name + ': ' + d.error.message); return; }
+                if(!d.instagram_business_account || !d.instagram_business_account.id){
+                    errors.push(fbAcc.name + ': Instagram 비즈니스 계정이 연결되어 있지 않음');
+                    return;
+                }
+                var igId = d.instagram_business_account.id;
+                var exists = settings.instagram.accounts.some(function(a){ return a.businessAccountId === igId; });
+                if(exists){ skipped++; return; }
+
+                settings.instagram.accounts.push({
+                    id: generateAccountId(),
+                    name: d.instagram_business_account.name || ('@' + (d.instagram_business_account.username || igId)),
+                    accessToken: fbAcc.pageToken,
+                    businessAccountId: igId,
+                    linkedPageId: fbAcc.pageId,
+                    username: d.instagram_business_account.username || ''
+                });
+                added++;
+            });
 
             localStorage.setItem('snsSettings', JSON.stringify(settings));
             renderAllChannels();
