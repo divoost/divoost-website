@@ -543,9 +543,19 @@
                             });
                             igAdded++;
                         }
-                    } else {
+                    }
+
+                    if(!page.instagram_business_account || !page.instagram_business_account.id){
                         noIg.push(page.name);
                     }
+
+                    // ★ 수동 등록된 IG 계정의 토큰도 linkedPageId 기준으로 자동 동기화
+                    settings.instagram.accounts.forEach(function(ig){
+                        if(ig.linkedPageId === page.id && ig.accessToken !== page.access_token){
+                            ig.accessToken = page.access_token;
+                            igUpdated++;
+                        }
+                    });
                 });
 
                 localStorage.setItem('snsSettings', JSON.stringify(settings));
