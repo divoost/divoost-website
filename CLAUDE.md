@@ -117,11 +117,11 @@ divoost-website/
 
 ---
 
-## 🧪 TDD 의무 (요약)
+## 🧪 TDD 의무 — 20개 항목 (3단계)
 
-전체 가이드: [`docs/tdd-guide.md`](docs/tdd-guide.md)
+전체 가이드: [`docs/tdd-guide.md`](docs/tdd-guide.md) · 블로그 버전: [`docs/blog-tdd-guide-post.md`](docs/blog-tdd-guide-post.md)
 
-### 모든 신규 기능 = 테스트 먼저
+### 🔑 기본 사이클 (절대 변경 불가)
 
 ```
 1. 실패 테스트 작성 (Red)
@@ -135,22 +135,155 @@ divoost-website/
 npm run typecheck && npm run lint && npm run test
 ```
 
-### 테스트 작성 체크리스트
+---
 
-- [ ] 정상 케이스 (happy path)
-- [ ] 엣지 케이스 (빈값, 0, null, 경계값)
-- [ ] 에러 케이스 (네트워크 실패, 잘못된 입력)
-- [ ] 비동기는 loading / success / error 3분기 모두
-- [ ] `beforeEach(vi.clearAllMocks)` 격리
+### 🟢 1단계 — 반드시 익히기 (모든 코드에 적용)
 
-### 안티패턴 금지
+> "이거 안 지키면 PR 안 받음" 레벨. 입사 1개월 안에 본능화.
 
-- ❌ `catch {}` 빈 catch
-- ❌ 매직넘버 (`if (status === 2)`)
-- ❌ 거대 snapshot
-- ❌ `(x as Mock)` 캐스팅 → `vi.mocked(x)` 사용
-- ❌ 구현 디테일 검증 → 행동(behavior) 기준
-- ❌ 한 테스트에 여러 행동 검증
+| # | 규칙 | 적용 |
+|---|---|---|
+| 1 | **Red→Green→Refactor 사이클** 이해 | 모든 신규 기능 |
+| 2 | **테스트 이름 "조건→결과"** 작성 (`'양수끼리 더하면 합을 반환'`) | 모든 `it()` |
+| 3 | **매직넘버 상수화** (`const STATUS_PAID = 2` + `as const`) | 모든 숫자/문자 리터럴 |
+| 4 | **`catch {}` 금지** — 최소 `logger.error()` 후 `throw` 또는 사용자 표시 | 모든 try/catch |
+| 5 | **테스트 파일을 소스 옆에** (`PriceBadge.tsx` + `PriceBadge.test.tsx`) | 모든 신규 파일 |
+
+```ts
+// 1단계 예시 - 모두 종합
+const ORDER_STATUS = { PAID: 2 } as const;       // ← 규칙 3
+
+it('PAID 상태면 영수증 URL을 반환한다', () => {    // ← 규칙 2
+  expect(getReceipt(ORDER_STATUS.PAID)).toMatch(/receipt/);
+});
+
+try {
+  await save();
+} catch (err) {
+  logger.error('주문 저장 실패', { err, orderId });  // ← 규칙 4
+  throw err;
+}
+```
+
+---
+
+### 🟡 2단계 — 실무 핵심 (3개월 안에 의식적으로 적용)
+
+> 이거 잘하면 시니어 평가받음. 7가지.
+
+| # | 규칙 | 적용 |
+|---|---|---|
+| 6 | **`vi.mock` + `beforeEach(clearAllMocks)`** — 테스트 간 격리 | 외부 의존성 있는 모든 테스트 |
+| 7 | **동기는 `act()`, 비동기는 `await act(async () => ...)`** | React 상태 변경 모든 곳 |
+| 8 | **`waitFor`로 비동기 결과 대기** | 비동기 결과 검증 |
+| 9 | **loading / success / **error** 3분기 모두 테스트** ★ 가장 자주 빠뜨림 | 모든 비동기 hook/함수 |
+| 10 | **엣지케이스 체크리스트** (null/0/빈배열/경계값) 적용 | 모든 함수 |
+| 11 | **Coverage 80/70 목표** — 100% 금지 | CI 임계값 |
+| 12 | **함수 30줄 가이드** — 길면 분리 검토 | 모든 함수 |
+
+```ts
+// 2단계 예시 - 3분기 + 격리 + 비동기 act
+import { vi, beforeEach } from 'vitest';
+import { fetchOrders } from './api';
+
+vi.mock('./api', () => ({ fetchOrders: vi.fn() }));
+
+beforeEach(() => {
+  vi.clearAllMocks();                                  // ← 규칙 6
+});
+
+it('loading → success로 상태가 바뀐다', async () => {     // ← 규칙 9
+  vi.mocked(fetchOrders).mockResolvedValue([{ id: 1 }]);
+  const { result } = renderHook(() => useOrders());
+  expect(result.current.loading).toBe(true);
+  await waitFor(() =>                                  // ← 규칙 8
+    expect(result.current.loading).toBe(false)
+  );
+});
+
+it('API 실패 시 error 분기로 들어간다', async () => {     // ← 규칙 9 (★ 자주 빠뜨림)
+  vi.mocked(fetchOrders).mockRejectedValue(new Error('500'));
+  const { result } = renderHook(() => useOrders());
+  await waitFor(() => expect(result.current.error).toBeTruthy());
+});
+
+it('비동기 refetch는 await act로 감싼다', async () => {   // ← 규칙 7
+  const { result } = renderHook(() => useOrders());
+  await act(async () => {
+    await result.current.refetch();
+  });
+});
+```
+
+---
+
+### 🔴 3단계 — 고급 / 컨벤션 주도 (시니어 권장)
+
+> 주니어 가르치는 레벨. 8가지.
+
+| # | 규칙 | 적용 |
+|---|---|---|
+| 13 | **`vi.mocked()` vs `as Mock`** — 타입 안전성 우위 (vi.mocked 사용) | 모든 mock 검증 |
+| 14 | **MSW (Mock Service Worker)** — 통합 테스트 핵심 | API 통합 테스트 |
+| 15 | **타이머 mock** (`vi.useFakeTimers` + `advanceTimersByTime`) | debounce/throttle/setTimeout 코드 |
+| 16 | **React Query wrapper** — 매 테스트 새 client | React Query 사용 컴포넌트 |
+| 17 | **Inline snapshot** 적절 사용 (한정된 텍스트만, 거대 DOM 금지) | 출력 형식 검증 |
+| 18 | **StrictMode + act 경고** 해석 — 비동기 effect 미반영 신호 | React 18 환경 |
+| 19 | **ESLint testing rules** (`vitest/no-focused-tests` 등) | CI lint 단계 |
+| 20 | **PR 리뷰 체크포인트 8가지** 자동 검토 | 모든 PR 리뷰 |
+
+```ts
+// 3단계 예시 - vi.mocked + 타이머
+vi.mocked(fetchOrders).mockResolvedValue([{ id: 1 }]);  // ← 규칙 13
+
+it('debounce는 300ms 후 한 번만 호출', () => {
+  vi.useFakeTimers();                                    // ← 규칙 15
+  const fn = vi.fn();
+  const debounced = debounce(fn, 300);
+  debounced(); debounced(); debounced();
+  vi.advanceTimersByTime(300);
+  expect(fn).toHaveBeenCalledTimes(1);
+  vi.useRealTimers();
+});
+
+// React Query wrapper - 캐시 누수 방지                   // ← 규칙 16
+function wrapper({ children }) {
+  const client = new QueryClient({
+    defaultOptions: { queries: { retry: false, gcTime: 0 } },
+  });
+  return <QueryClientProvider client={client}>{children}</QueryClientProvider>;
+}
+```
+
+---
+
+### 🚨 안티패턴 절대 금지
+
+| ❌ 금지 | ✅ 대신 |
+|---|---|
+| `catch {}` 빈 catch (규칙 4 위반) | `logger.error()` + `throw` |
+| `if (status === 2)` 매직넘버 (규칙 3 위반) | `if (status === ORDER_STATUS.PAID)` |
+| 거대 snapshot (규칙 17 위반) | `toMatchInlineSnapshot()` 좁은 범위 |
+| `(x as Mock)` 캐스팅 (규칙 13 위반) | `vi.mocked(x)` |
+| 구현 디테일 검증 | 행동(behavior) 기준 검증 |
+| 한 테스트에 여러 행동 검증 (규칙 2 위반) | 케이스별 분리 |
+| `vi.clearAllMocks()` 누락 (규칙 6 위반) | `beforeEach`에 강제 |
+| error 분기 테스트 누락 (규칙 9 위반) | `mockRejectedValue` 필수 |
+
+---
+
+### ✅ PR 리뷰 체크포인트 8가지 (규칙 20)
+
+리뷰어가 5분 안에 확인:
+
+- [ ] 테스트 이름이 한국어로 "조건→결과"를 설명하는가? (규칙 2)
+- [ ] 에러 케이스가 테스트에 있는가? (규칙 9)
+- [ ] `vi.mock` 호출이 **모듈 최상단**에 있는가? (hoisting)
+- [ ] `beforeEach`/`afterEach`로 **격리** 되어 있는가? (규칙 6)
+- [ ] 새 매직넘버가 **상수화** 되어 있는가? (규칙 3)
+- [ ] `try/catch`로 **에러를 삼키지** 않는가? (규칙 4)
+- [ ] Snapshot이 거대하지 않은가? (규칙 17)
+- [ ] Coverage가 떨어지지 않았는가? (규칙 11)
 
 ---
 
