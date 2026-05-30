@@ -905,10 +905,9 @@
                 }
                 fetchPagesAndInstagram(response.authResponse.accessToken);
             }, {
-                // DIVOOST-SNS-V2 앱은 Instagram 이용 사례를 포함하므로 instagram_*
-                // scope 가 유효합니다. (이전 앱 1774380433543061 은 미포함이라 Invalid Scopes 발생)
-                // ⚠ 새 Meta API 권한 이름: instagram_basic → instagram_business_basic 등
-                scope: 'pages_show_list,pages_manage_posts,pages_read_engagement,pages_manage_engagement,instagram_business_basic,instagram_business_content_publish,instagram_business_manage_comments,instagram_business_manage_messages,business_management',
+                // DIVOOST-SNS-V2 앱의 이용 사례에 포함된 권한만 사용
+                // 콘텐츠 게시 (content_publish) 는 별도 권한 활성화 후 추가 예정
+                scope: 'pages_show_list,pages_read_engagement,pages_manage_posts,pages_manage_engagement,instagram_business_basic,instagram_business_manage_messages,instagram_manage_comments,business_management',
                 return_scopes: true
             });
         };
