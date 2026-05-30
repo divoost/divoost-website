@@ -676,6 +676,32 @@
                     var d = await r.json();
                     if(d.error) return {ok: false, message: d.error.message};
                     return {ok: true, message: '이미지 발행 (Post ID: ' + (d.post_id || d.id) + ')', postId: d.post_id || d.id, url: 'https://facebook.com/' + (d.post_id || d.id)};
+                } else if(images.length >= 2){
+                    // Multi-photo: 1) 각 이미지를 published=false 로 업로드 → media_fbid 수집
+                    //              2) /feed 에 attached_media 와 함께 게시
+                    var attached = [];
+                    for(var i = 0; i < images.length; i++){
+                        var im = images[i];
+                        var br = await fetch(im.data);
+                        var bl = await br.blob();
+                        var fd = new FormData();
+                        fd.append('source', bl, im.name);
+                        fd.append('published', 'false');
+                        fd.append('access_token', token);
+                        var rr = await fetch('https://graph.facebook.com/v18.0/' + pageId + '/photos', {method:'POST', body:fd});
+                        var dd = await rr.json();
+                        if(dd.error) return {ok: false, message: '이미지 ' + (i+1) + '/' + images.length + ' 업로드 실패: ' + dd.error.message};
+                        if(!dd.id) return {ok: false, message: '이미지 ' + (i+1) + ' 업로드 응답에 ID 없음'};
+                        attached.push({media_fbid: dd.id});
+                    }
+                    var body = new URLSearchParams();
+                    body.append('message', content);
+                    body.append('attached_media', JSON.stringify(attached));
+                    body.append('access_token', token);
+                    var r2 = await fetch('https://graph.facebook.com/v18.0/' + pageId + '/feed', {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body.toString()});
+                    var d2 = await r2.json();
+                    if(d2.error) return {ok: false, message: '게시 실패 (이미지 ' + images.length + '장 업로드는 성공): ' + d2.error.message};
+                    return {ok: true, message: '이미지 ' + images.length + '장 발행 (Post ID: ' + d2.id + ')', postId: d2.id, url: 'https://facebook.com/' + d2.id};
                 } else {
                     var url = 'https://graph.facebook.com/v18.0/' + pageId + '/feed';
                     var body = new URLSearchParams();
