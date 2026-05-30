@@ -399,623 +399,66 @@ npm install <pkg> --dry-run
 
 ---
 
-## 🧠 시스템 사고 7수칙 (구조적 결함 방지)
+## 🧠 시스템 사고 7수칙 (C1~C7) — 구조 결함 방지
+
+> 운영 후 6개월 뒤 터지는 문제 방지.
+> 큰 설계 변경, 새 모듈 작성, 아키텍처 결정 시 → 📖 [`docs/rules/system-thinking-7.md`](docs/rules/system-thinking-7.md) 읽기
+
+| # | 제목 | 핵심 |
+|---|---|---|
+| C1 | AI 환각 ⚠️ | 존재하지 않는 API 만들지 않기 (가장 중요) |
+| C2 | 보안 | 입력검증/인증/인가/인젝션 방지 |
+| C3 | 성능 | N+1/리렌더/메모리 누수 |
+| C4 | 아키텍처 | SOLID/Layer/적정 함수 길이 |
+| C5 | 동시성 | 트랜잭션/Optimistic Lock/Idempotency |
+| C6 | 하위 호환 | 변경 전 영향 분석, 점진적 마이그레이션 |
+| C7 | 의존성 | npm audit + 라이선스 (MIT OK, GPL ❌) |
+
+
+## 📊 관찰성 7수칙 (D1~D7) — 운영 가시성
+
+> 운영 환경 진입 직전, Edge Functions 작성 시, 모니터링 설계 시 → 📖 [`docs/rules/observability-7.md`](docs/rules/observability-7.md) 읽기
+
+| # | 제목 | 핵심 |
+|---|---|---|
+| D1 | 구조화된 로그 | JSON + 컨텍스트, 민감 정보 마스킹 |
+| D2 | RED Method | Rate / Errors / Duration p99 |
+| D3 | 분산 추적 | trace_id 전파 |
+| D4 | 알림 설계 | 사용자 영향 기준 (false alarm 방지) |
+| D5 | SLI / SLO | Error Budget 운영 |
+| D6 | 대시보드 | 한 화면 = 한 질문 |
+| D7 | 디버그 정보 | 5분 진단 가능하게 |
 
-> 안전 6수칙은 "당장 사고", 품질 7수칙은 "코드 부패",
-> **시스템 사고 7수칙은 "운영 후 6개월 뒤 터지는 문제"**.
-> AI가 가장 자주 빠뜨리는 시스템적 사고.
-
-### 1️⃣ AI가 지어낸 "그럴듯한 거짓말" 잡아내기 ⚠️ **가장 중요** 🆕
-
-**문제**: AI(Claude 포함)는 모르는 걸 모른다고 안 하고, **존재하지 않는 함수·옵션·API를 그럴듯하게 만들어냄**.
-- `array.findLastIndexWhere()` 같은 가짜 메서드
-- 라이브러리에 없는 옵션 (`{ deepClone: true }` 같은 것)
-- 잘못된 함수 시그니처 (인자 순서/타입)
-- API 엔드포인트 (`/api/v2/users/:id/preferences` 가 실재하지 않음)
-
-코드는 멀쩡해 보이는데 **실행하면 `is not a function` 또는 404**.
-
-**Claude 행동 규칙** (자기 검증 의무):
-- 처음 쓰는 메서드·옵션·API는 **불확실하면 "확인 필요" 명시**
-- 가능하면 **실제 코드베이스/패키지에서 확인** (`grep`, `package.json` 조회)
-- 외부 API는 **버전 명시** + 공식 문서 링크 제공
-- "이거 진짜 있어?" 질문 받으면 **솔직하게 재확인** (체면 차리지 않음)
-- 응답 마지막에 **"검증되지 않은 항목"** 별도 표시
-
-**자기 검증 패턴**:
-```
-✓ 검증됨 (실행/문서 확인): fetch(), Array.prototype.find()
-⚠ 추정 (검증 필요): array.findLastIndexWhere() — 실재 여부 확인 권장
-❌ 사용 금지: 존재 확실치 않음
-```
-
-**자동 감지 (마스터님 확인용)**:
-```bash
-# 의심스러운 메서드 호출 패턴 검색
-# 예: 코드에 사용된 메서드가 실제 lib에 있는지 확인
-grep -rn "\.someUnusualMethod(" src/
-node -e "console.log(typeof [].findLastIndexWhere)"  # undefined면 가짜
-```
-
-**행동 원칙**: "**모르는 건 솔직하게 모른다고 한다.**"
-- "이거 진짜 있어?" 마스터님이 물으시면 → 즉시 재확인
-- 추측 기반 코드는 **반드시 주석으로 표시** (`// API 시그니처 확인 필요`)
-
-**중복**: 안전수칙 #1과 보완 — **AI 특화 환각 방지**
-
----
-
-### 2️⃣ 보안 — 입력 검증·인증·인가·인젝션 🟡 (강화)
-
-**문제**: AI는 "동작하는 코드"에 집중하다 **보안을 자주 빠뜨림**:
-- 사용자 입력 → 그대로 SQL 쿼리 → **SQL Injection**
-- 로그인만 확인, "이 사람이 이 데이터 볼 권한 있나?" 빠뜨림 → **IDOR (Insecure Direct Object Reference)**
-- 사용자 입력 → 그대로 HTML 렌더 → **XSS**
-- 파일 업로드 검증 없음 → **임의 파일 업로드**
-- CORS 와일드카드 (`*`) → 외부 사이트가 우리 API 호출
-
-**Claude 행동 규칙**:
-
-**A) 입력 검증 (Input Validation)**
-- 모든 사용자 입력은 **타입 + 형식 + 범위** 검증
-- 화이트리스트 우선 (`['admin', 'user']` 중 하나만)
-- DB 쿼리는 **반드시 prepared statement** (RPC, parameterized query)
-- HTML 렌더링 시 **반드시 escape** (`escapeHtml()`)
-
-**B) 인증 vs 인가 구분**
-- **인증 (Authentication)**: "누구냐?" — Supabase JWT 검증
-- **인가 (Authorization)**: "이걸 할 수 있냐?" — 본인 데이터/role 검증
-- 둘 다 매번 확인 — 인증만 하고 인가 빠뜨리는 게 IDOR
-
-**C) RLS 정책 필수 (우리 프로젝트)**
-```sql
--- ✅ 본인만 본인 데이터 조회
-CREATE POLICY "user_view_own" ON public.orders FOR SELECT
-USING (auth.uid() = user_id);
-
--- ❌ RLS 없으면 인증된 누구나 다른 사람 데이터 조회 가능
-```
-
-**D) 흔한 취약점 체크**
-- [ ] SQL Injection: prepared statement 사용?
-- [ ] XSS: HTML escape?
-- [ ] CSRF: SameSite=Strict 또는 토큰 검증?
-- [ ] IDOR: 본인 데이터인지 확인?
-- [ ] Open Redirect: 리디렉션 URL 화이트리스트?
-- [ ] File Upload: 확장자/MIME/크기 검증?
-- [ ] CORS: 와일드카드 금지, 특정 origin만
-
-**자동 감지**:
-```bash
-# CORS 와일드카드
-grep -rn "Access-Control-Allow-Origin.*\*" --include="*.ts" --include="*.js"
-# SQL string concat (위험)
-grep -rn "query.*+.*\${" --include="*.ts" --include="*.js"
-# 본인 검증 없는 fetch (의심)
-grep -rn "supabase.from.*select" --include="*.ts" | grep -v "auth.uid()"
-```
-
-**중복**: 최우선 원칙 #3 + 코딩규칙 보안 체크리스트 — **인가/IDOR 추가 강화**
-
----
-
-### 3️⃣ 성능 — N+1 쿼리·불필요한 리렌더·메모리 누수 🆕
-
-**문제**: AI는 데이터 양을 고려 안 하고 짬:
-- **N+1 쿼리**: 주문 100개 + 각 주문 상세 = 101번 쿼리 (데이터 적을 때 안 보임)
-- **불필요한 리렌더**: 부모 state 바뀔 때마다 자식 전체 리렌더
-- **메모리 누수**: `useEffect` cleanup 안 함, 이벤트 리스너 안 떼냄
-- **번들 크기**: 큰 lib 통째 import (tree-shaking 안 됨)
-
-**Claude 행동 규칙**:
-
-**A) N+1 쿼리 방지**
-```ts
-// ❌ N+1
-const orders = await db.orders.findAll();
-for (const order of orders) {
-  order.items = await db.items.findByOrderId(order.id);  // N번 더!
-}
-
-// ✅ 한 번에 JOIN 또는 IN 쿼리
-const orders = await db.orders.findAll({
-  include: ['items'],  // ORM 사용 시
-});
-
-// ✅ Supabase 예시
-const { data } = await supabase
-  .from('orders')
-  .select('*, items(*)');  // ← 한 번 쿼리
-```
-
-**B) React 리렌더 최소화**
-- `React.memo` / `useMemo` / `useCallback` 적절히 사용
-- key prop 정확히 (배열 index ❌)
-- Context 분리 (값/액션 분리)
-
-**C) 메모리 누수 방지**
-```ts
-useEffect(() => {
-  const handler = () => { /* ... */ };
-  window.addEventListener('resize', handler);
-  return () => window.removeEventListener('resize', handler);  // ★ cleanup 필수
-}, []);
-```
-
-**D) 자기 질문 체크리스트**
-- [ ] 데이터 10만 건이면 어떻게 되나?
-- [ ] 동시 사용자 1000명이면?
-- [ ] 1년 운영하면 DB 크기 얼마?
-- [ ] 모바일 3G 환경에서 페이지 로딩 시간?
-
-**우리 프로젝트 특화**:
-- Supabase는 `.select('*, related(*)')`로 JOIN
-- AI 호출은 비싸므로 **결과 캐싱** 필수 (Storage 영구 저장)
-- localStorage 크기 5MB 한도 — 큰 데이터는 IndexedDB
-
-**자동 감지**:
-```bash
-# 반복문 안의 await (N+1 의심)
-grep -rn "for.*await\|forEach.*await" --include="*.ts" --include="*.js"
-# cleanup 없는 useEffect
-grep -B2 -A10 "useEffect" src/ | grep -L "return"
-```
-
----
-
-### 4️⃣ 아키텍처 — 책임 분리·결합도·추상화 수준 🟡 (강화)
-
-**문제**: 두 극단 모두 위험:
-- **책임 과다**: 한 함수가 조회 + 계산 + 화면 그리기 (God function)
-- **과도한 추상화**: 단순한 걸 5겹 wrapper로 싸서 읽기 어려움
-
-둘 다 **요구사항 변경 시 지옥**.
-
-**Claude 행동 규칙**:
-
-**A) SOLID 원칙 (적당히)**
-- **S**ingle Responsibility: 한 함수/클래스 = 한 가지 일
-- **O**pen/Closed: 확장 가능, 수정 불가능
-- **L**iskov Substitution: 자식이 부모 대체 가능
-- **I**nterface Segregation: 큰 인터페이스보다 작은 여러 개
-- **D**ependency Inversion: 추상화에 의존
-
-**B) 책임 분리 (Layer)**
-```
-[표현 계층] UI 컴포넌트, 페이지
-   ↓
-[비즈니스 로직] 도메인 함수, 서비스
-   ↓
-[데이터 접근] DB 쿼리, API 호출
-```
-
-각 층은 **자기 일만** 함. 컴포넌트가 직접 DB 쿼리 ❌
-
-**C) 결합도 vs 응집도**
-- **낮은 결합도**: 모듈 간 의존성 최소
-- **높은 응집도**: 한 모듈 안 코드들은 강하게 관련
-
-**D) 자기 질문**
-- [ ] 요구사항 한 가지 바뀌면 **한 군데만** 고치면 되나?
-- [ ] 함수 이름이 "**and**" 또는 "**or**" 들어가나? (= 책임 과다)
-- [ ] 인자가 5개 이상인가? (= 책임 과다 또는 객체 분리 필요)
-- [ ] 같은 코드가 3곳 이상 반복인가? (= 추상화 필요)
-- [ ] 추상화 레이어가 정말 필요한가? (= 과도한 추상화 의심)
-
-**적정 함수 길이**:
-- 컴포넌트: 100~200줄
-- 함수: 30줄 (TDD #12)
-- 클래스: 200줄 미만
-
-**중복**: TDD #12와 통합 — **SOLID + Layer 추가**
-
----
-
-### 5️⃣ 동시성·경쟁 상태·트랜잭션 경계 🆕
-
-**문제**: 운영에서 가장 무서운 버그.
-- **재고 1개에 두 명 동시 주문 → 둘 다 성공** (Race Condition)
-- **결제는 됐는데 주문 저장 실패 → 돈만 빠짐** (Transaction 누락)
-- **동일 사용자 더블 클릭 → 중복 결제**
-- **여러 탭에서 동시 수정 → 마지막 글만 살아남음** (Last Write Wins)
-
-**Claude 행동 규칙**:
-
-**A) 원자적 트랜잭션 (DB 수준)**
-```sql
--- ✅ 우리 프로젝트 사례: 크레딧 차감 RPC
-CREATE FUNCTION deduct_credits(...) RETURNS JSONB
-LANGUAGE plpgsql AS $$
-BEGIN
-  -- SELECT ... FOR UPDATE (잠금)
-  -- 잔액 확인 + 차감
-  -- 트랜잭션 로그
-  -- 전체가 한 번에 성공 or 전체 롤백
-END;
-$$;
-
--- ❌ 클라이언트에서 SELECT → 차감 → UPDATE
--- → 두 사용자 동시 호출 시 race condition
-```
-
-**B) Optimistic Locking (낙관적 잠금)**
-```sql
-UPDATE posts
-   SET content = $1, version = version + 1
- WHERE id = $2 AND version = $3;  -- ← 버전 일치할 때만
--- 0행 영향이면 충돌 → 사용자에게 재시도 요청
-```
-
-**C) Idempotency (멱등성)**
-```ts
-// ❌ 결제 더블 클릭 → 두 번 결제
-function pay(amount) {
-  return api.post('/pay', { amount });
-}
-
-// ✅ 멱등 키 (idempotency key)
-function pay(amount, idempotencyKey) {
-  return api.post('/pay', { amount }, {
-    headers: { 'Idempotency-Key': idempotencyKey }
-  });
-}
-```
-
-**D) 자기 질문 체크리스트**
-- [ ] 두 사용자가 **정확히 동시에** 같은 자원 건드리면?
-- [ ] 결제처럼 **여러 단계 중 중간에 실패**하면 앞 단계 롤백되나?
-- [ ] 같은 요청이 **두 번 도착**하면 한 번만 처리되나? (멱등성)
-- [ ] 같은 사용자가 **여러 탭에서 동시 수정**하면?
-- [ ] **백엔드와 클라이언트 시계가 다르면** 영향 있나?
-
-**우리 프로젝트 적용**:
-- 크레딧 차감: `deduct_credits()` RPC (이미 적용 ✅)
-- 결제: idempotency_key + payments 테이블 unique constraint
-- 발행: 동일 콘텐츠 중복 발행 방지 (postId hash)
-
----
-
-### 6️⃣ 하위 호환성·마이그레이션 파급 🆕
-
-**문제**: AI는 **눈앞의 파일만** 보고 시스템 전체 파급은 못 봄.
-- DB 컬럼명 변경 → **그걸 쓰던 다른 화면 다 깨짐**
-- API 응답 형식 변경 → **모바일 앱 강제 업데이트 필요**
-- 함수 시그니처 변경 → **호출하던 30곳 다 수정 필요**
-
-**Claude 행동 규칙**:
-
-**A) 변경 전 영향 분석**
-- DB 컬럼 변경 → `grep -rn "column_name"` 으로 모든 참조 검색
-- API 응답 변경 → 호출하는 모든 클라이언트 확인
-- 함수 시그니처 변경 → `grep -rn "functionName("` 으로 호출처 검색
-- **영향 받는 파일 리스트를 마스터에게 사전 보고**
-
-**B) 하위 호환 유지 패턴**
-```ts
-// ❌ 갑작스런 변경
-interface User { name: string; }
-// → interface User { fullName: string; }  // 모든 클라이언트 깨짐
-
-// ✅ 점진적 마이그레이션
-interface User {
-  name: string;       // @deprecated - fullName 사용
-  fullName: string;   // 신규
-}
-// → 모든 클라이언트 업데이트 후 → name 제거
-```
-
-**C) DB 마이그레이션 안전 패턴**
-1. **컬럼 추가** (NULL 허용): 안전
-2. **컬럼 백필** (기존 데이터 채우기)
-3. **신규 코드 배포** (둘 다 읽기)
-4. **NOT NULL 제약** 추가
-5. (필요 시) 옛 컬럼 제거 (다음 릴리즈)
-
-**D) API 버전 관리**
-```
-/api/v1/users   ← 기존 (유지)
-/api/v2/users   ← 신규 (변경된 응답)
-```
-모바일 앱이 v1을 1년간 쓴다면 1년간 둘 다 유지.
-
-**E) 자기 질문 체크리스트**
-- [ ] 이 변경이 영향 주는 다른 파일은? (`grep` 결과)
-- [ ] 기존 운영 데이터는 안 깨지나?
-- [ ] 모바일 앱/타사 통합이 있으면 강제 업데이트 필요한가?
-- [ ] 점진적 마이그레이션 가능한가?
-- [ ] 롤백 가능한가? (DB 변경은 특히 위험)
-
-**우리 프로젝트 특화**:
-- DB 스키마 변경 시 → `docs/billing-schema.sql`에 마이그레이션 명령 추가
-- API 응답 변경 시 → 모든 페이지의 fetch 호출 확인
-- localStorage 구조 변경 시 → 마이그레이션 함수 (이미 `migrateOldSettings` 패턴 사용 ✅)
-
----
-
-### 7️⃣ 의존성 보안 취약점·라이선스 🟡 (강화)
-
-**문제**: 새 라이브러리에 **알려진 보안 구멍** 또는 **상업적 사용 불가 라이선스** (GPL).
-- `npm audit` 안 돌리면 취약점 모름
-- GPL 라이선스 라이브러리 → 우리 제품도 GPL 강제됨 (오픈소스화 의무)
-
-**Claude 행동 규칙**:
-
-**A) 신규 의존성 추가 전 4가지 확인**
-1. **보안 취약점**: `npm audit` 결과
-2. **라이선스**: MIT/Apache 2.0/BSD 안전, GPL/AGPL 위험
-3. **마지막 업데이트**: 1년 이상 안 됨 → 의심
-4. **다운로드 수**: 주당 1000회 미만 → 의심
-
-**B) 안전한 라이선스 (상업 OK)**
-- ✅ MIT
-- ✅ Apache 2.0
-- ✅ BSD (2-Clause, 3-Clause)
-- ✅ ISC
-- ⚠ MPL 2.0 (제한 있음)
-
-**C) 위험한 라이선스 (상업 제한)**
-- ❌ GPL v2/v3 (코드 공개 의무)
-- ❌ AGPL (서버 코드도 공개 의무)
-- ⚠ LGPL (정적 링크 시 제한)
-- ⚠ Creative Commons NC (비상업)
-
-**D) 검증 명령**
-```bash
-# 보안 취약점 점검
-npm audit
-npm audit fix  # 자동 수정 (호환되는 경우)
-
-# 라이선스 확인
-npx license-checker --summary
-npx license-checker --onlyAllow "MIT;Apache-2.0;BSD-2-Clause;BSD-3-Clause;ISC"
-
-# 의존성 트리 확인
-npm ls <package-name>
-```
-
-**E) 정기 점검**
-- 매월 `npm audit` 자동 실행 (GitHub Actions)
-- Dependabot으로 보안 패치 자동 PR
-- 주요 의존성은 마이너 버전까지 lock
-
-**중복**: 품질 #7과 통합 — **취약점/라이선스 추가**
-
----
-
-### 📊 시스템 사고 7수칙 체크리스트
-
-```
-□ 1. AI 환각 — 처음 쓰는 메서드/API 실재 확인
-□ 2. 보안 — 입력 검증 + 인증 + 인가 + 인젝션 방지
-□ 3. 성능 — N+1 쿼리, 리렌더, 메모리 누수
-□ 4. 아키텍처 — 책임 분리 (한 곳 수정으로 충분?)
-□ 5. 동시성 — race condition, 트랜잭션, 멱등성
-□ 6. 하위 호환 — 영향 받는 다른 곳 분석
-□ 7. 의존성 — npm audit + 라이선스 확인
-```
-
-## 📊 관찰성 (Observability) 7수칙 (D1~D7) — 운영 가시성
-
-> 주니어는 "동작하면 끝", 시니어는 "**운영에서 무슨 일이 일어나는지 안다**".
-
-### D1. 구조화된 로그 (Structured Logging)
-- `console.log('error happened')` ❌ → 검색·필터링 불가
-- ✅ JSON 형태 + 컨텍스트: `logger.error({ event: 'payment_failed', userId, amount, err })`
-- 로그 레벨: `debug / info / warn / error / fatal`
-- **민감 정보 마스킹** (카드번호, 토큰, 이메일 일부)
-- 우리 프로젝트: Edge Functions에서 `console.error(JSON.stringify({...}))`
-
-### D2. 메트릭 3종 (Latency / Error Rate / Traffic — RED Method)
-- **R**ate: 초당 요청 수
-- **E**rrors: 실패율 (%)
-- **D**uration: p50 / p95 / p99 응답 시간
-- 평균만 보지 말 것 (long tail 숨김) → **p99 필수**
-- 우리 프로젝트 대상: AI 호출, 결제, 발행 API
-
-### D3. 분산 추적 (Distributed Tracing)
-- `request_id` 또는 `trace_id` 생성 → 모든 다운스트림 호출에 전파
-- 클라이언트 → Edge Function → Supabase → 외부 API 흐름 추적
-- 예시:
-  ```ts
-  const traceId = crypto.randomUUID();
-  fetch(url, { headers: { 'X-Trace-Id': traceId } });
-  // 로그에 traceId 항상 포함
-  ```
-- 사고 시 "이 요청이 어디서 막혔지?" 즉답 가능
-
-### D4. 알림 설계 (Alert as Code)
-- 알림 조건: **사용자 영향 있을 때만** (CPU 80%는 무의미)
-- ❌ "에러 1건 발생" → false alarm 폭주
-- ✅ "5분간 에러율 1% 초과" 또는 "p99 > 5초가 10분 지속"
-- 알림 피로 (alert fatigue) 방지 — 매일 울리면 무시함
-- **Runbook 링크** 포함 (D5 참고)
-
-### D5. SLI / SLO (Service Level Indicator / Objective)
-- **SLI**: 측정 가능한 지표 (가용성, 응답 시간, 정확도)
-- **SLO**: 목표값 (예: 99.9% 가용성)
-- **Error Budget** = 100% − SLO (99.9% SLO → 월 43분 다운 허용)
-- 우리 SNS Platform SLO 후보:
-  - 발행 성공률: 99% (월 7시간 실패 허용)
-  - AI 생성 p95: 30초 이내
-  - 결제 가용성: 99.95%
-
-### D6. 대시보드 설계 원칙
-- 한 화면 = 한 질문 (혼합 X)
-- 위에서 아래로: **사용자 영향 → 시스템 건강 → 인프라 세부**
-- 색상: 빨강(에러)/노랑(경고)/녹색(정상) 일관
-- 시간 범위: 1h / 24h / 7d / 30d 토글
-- 우리 프로젝트: 관리자 콘솔에 매출/AI사용량/에러율 대시보드
-
-### D7. 디버그 정보 수집 (Diagnostics)
-- 사용자가 "안 돼요" 신고 시 5분 안에 진단 가능해야 함
-- 필수 컨텍스트:
-  - `user_id` + `request_id`
-  - 브라우저/OS
-  - 발생 시각 (ms 단위)
-  - 입력 파라미터 (민감 정보 마스킹)
-  - 스택 트레이스 또는 API 응답
-- "재현 안 돼요" 답변 금지 — 로그가 부족한 것
-
----
 
 ## 🎯 의사결정 / ADR 7수칙 (E1~E7) — 왜 이렇게 했는가
 
-> 주니어는 "어떻게 짤까?", 시니어는 "**왜 이걸 선택하는가**".
+> 기술 스택 선택, 아키텍처 큰 변경, 외부 서비스 도입 시 → 📖 [`docs/rules/adr-decision-7.md`](docs/rules/adr-decision-7.md) 읽기
 
-### E1. ADR (Architecture Decision Records) 작성
-- 중요한 기술 선택은 **반드시 문서화**
-- 파일: `docs/adr/ADR-NNN-제목.md`
-- 템플릿:
-  ```
-  # ADR-001: 결제 PG로 토스 + Stripe 이중 채택
+| # | 제목 | 핵심 |
+|---|---|---|
+| E1 | ADR 작성 | `docs/adr/ADR-NNN-제목.md` |
+| E2 | 트레이드오프 명시 | 장점/단점/위험 모두 |
+| E3 | Type 1 vs Type 2 | 가역적 결정은 빠르게 |
+| E4 | 거절된 옵션 기록 | 왜 안 썼는지 |
+| E5 | 가정 검증 | A/B/인터뷰/데이터 |
+| E6 | Last Responsible Moment | 너무 빠르지도 늦지도 |
+| E7 | RFC 프로세스 | 옵션 + 트레이드오프 명시 |
 
-  ## 상태
-  승인됨 (2026-05-30)
 
-  ## 컨텍스트
-  국내 + 해외 고객 동시 서비스 필요
+## 🚨 장애 대응 7수칙 (F1~F7) — 사고 발생 시
 
-  ## 결정
-  국내: 토스페이먼츠 / 해외: Stripe
+> 알림 수신 시, Postmortem/Runbook 작성 시 → 📖 [`docs/rules/incident-response-7.md`](docs/rules/incident-response-7.md) 읽기
 
-  ## 대안
-  - 토스만: 해외 카드 결제 약함
-  - Stripe만: 한국 카드/카카오페이 제한
-  - 자체 결제: PCI-DSS 부담
+| # | 제목 | 핵심 |
+|---|---|---|
+| F1 | Severity 등급 | P0(전체 다운)~P4(코스메틱) |
+| F2 | 5분 룰 | 인지→완화→분석→Postmortem |
+| F3 | Blameless Postmortem | 사람 X, 시스템 O |
+| F4 | 5 Whys | 근본 원인까지 |
+| F5 | Postmortem 문서 | docs/postmortems/ |
+| F6 | Runbook | 같은 장애 2번 → 작성 |
+| F7 | Chaos Engineering | 의도적 장애 실험 |
 
-  ## 결과 (파급)
-  - 운영 복잡도 ↑ (PG 2개 관리)
-  - 회계 리포팅 분리 필요
-  - 환율 처리 (KRW vs USD)
-  ```
-
-### E2. 트레이드오프 명시 (Pros / Cons / Risks)
-- 모든 선택에는 **공짜가 없음**
-- 장점만 적지 말 것 — **단점/위험도 명시**
-- 예시:
-  ```
-  ✅ 장점: 빠른 개발 (1주)
-  ❌ 단점: 종속성 ↑ (벤더 락인)
-  ⚠️ 위험: 가격 인상 시 대안 없음
-  ```
-
-### E3. 가역적 vs 비가역적 결정 구분 (Type 1 vs Type 2)
-- **Type 1 (비가역)**: 신중히 결정 (DB 스키마, 인증 시스템, 결제 PG)
-- **Type 2 (가역)**: 빠르게 결정 후 학습 (UI 색상, 카피, 작은 기능)
-- 70% 확신이면 Type 2는 진행 (Jeff Bezos)
-- **Type 1을 Type 2처럼 처리하면 사고**
-
-### E4. "선택하지 않은 옵션" 기록
-- ADR에 거절된 대안을 **이유와 함께** 기록
-- 6개월 뒤 "왜 X 안 썼지?" → ADR에 답 있음
-- 새 팀원 온보딩에 가장 가치 있는 자료
-
-### E5. 가정 검증 (Assumption Testing)
-- "사용자가 이렇게 쓸 것이다" 가정은 **반드시 검증**
-- 방법:
-  - 1주일 A/B 테스트
-  - 사용자 인터뷰 5명
-  - 분석 데이터 확인
-- 가정만으로 큰 결정 ❌
-
-### E6. "지금 결정 vs 나중 결정" 판단 (Last Responsible Moment)
-- **지금 결정해야 할 것**: 후행 작업 막는 것
-- **나중 결정**: 정보 더 모이면 좋은 것
-- 너무 빠른 결정 = 정보 부족 / 너무 늦은 결정 = 진행 정체
-- "이 결정을 지금 안 하면 진행 막히나?" 자문
-
-### E7. RFC (Request for Comments) 프로세스
-- 큰 변경은 **사전 RFC 작성** → 팀 리뷰 후 결정
-- 1인 결정 → 사후 비난 vs RFC 후 합의 → 책임 공유
-- 우리 프로젝트: 마스터-Claude 협업이지만, **마스터에게 사전 옵션 제시 + 트레이드오프 명시** 의무
-
----
-
-## 🚨 장애 대응 (Incident Response) 7수칙 (F1~F7)
-
-> 주니어는 "복구"만, 시니어는 "**학습**까지".
-
-### F1. Incident Severity 등급 (P0~P4)
-- **P0 (Critical)**: 전체 서비스 다운, 데이터 손실 — 5분 내 대응
-- **P1 (High)**: 주요 기능 장애, 일부 사용자 영향 — 30분 내 대응
-- **P2 (Medium)**: 부분 기능 장애, 우회 가능 — 4시간 내 대응
-- **P3 (Low)**: 사소한 버그, 사용자 영향 적음 — 다음 영업일
-- **P4 (Trivial)**: UI 오타, 코스메틱 — 백로그
-- 우리 SNS Platform 예시:
-  - P0: 발행 100% 실패, 결제 차단
-  - P1: 특정 SNS 채널 발행 불가
-  - P2: 분석 리포트 지연
-  - P3: UI 깨짐 (모바일 일부)
-
-### F2. 5분 룰 (Time-Critical Response)
-- **0~5분**: 알림 수신 → 인지
-- **5~30분**: 임시 완화 (mitigation) — **근본 해결 아님**
-- **30분~4시간**: 근본 원인 분석 (RCA - Root Cause Analysis)
-- **24시간 내**: Postmortem 초안
-- **1주일 내**: Action Items 시작
-- 완화 우선, 분석 나중 (사용자 우선)
-
-### F3. Blameless Postmortem
-- 사람 탓 ❌ → 시스템 탓 ✅
-- "왜 ${사람}이 실수했나?" ❌ → "왜 ${사람}이 실수할 수 있는 시스템이었나?" ✅
-- 솔직한 보고 환경 → 다음 사고 예방
-- 비난 문화 = 사고 숨김 = 더 큰 사고
-
-### F4. 5 Whys (근본 원인까지)
-- 표면 원인에서 멈추지 말 것
-- 예시:
-  ```
-  문제: 결제 100% 실패
-  Why 1: PG 응답 타임아웃
-  Why 2: PG 서버 다운
-  Why 3: 우리가 하나의 PG만 사용
-  Why 4: 이중화 ADR 결정 미흡
-  Why 5: 단일 장애점 (SPOF) 감사 부재
-  → 진짜 해결: SPOF 정기 감사 프로세스
-  ```
-
-### F5. Postmortem 문서 양식
-- 파일: `docs/postmortems/YYYY-MM-DD-제목.md`
-- 필수 항목:
-  - **요약 (TL;DR)**: 1-2줄
-  - **영향 (Impact)**: 사용자 수, 시간, 매출 손실
-  - **타임라인 (Timeline)**: 분 단위
-  - **근본 원인 (Root Cause)**: 5 Whys 결과
-  - **잘된 점 (What went well)**
-  - **개선점 (What didn't)**
-  - **운 좋았던 점 (Where got lucky)** — 다음엔 운 없을 수도
-  - **Action Items**: 담당자 + 마감일
-
-### F6. Runbook 작성 (반복 장애 대응)
-- 같은 장애 두 번 → Runbook 작성 의무
-- 새벽 3시 호출 받은 신입이 따라 할 수 있게
-- 위치: `docs/runbooks/장애유형.md`
-- 예시:
-  ```
-  # AI 호출 실패 Runbook
-
-  ## 증상
-  - 사용자: "이미지 생성 실패"
-  - 알림: ai_generation_error > 5%
-
-  ## 1단계: 임시 완화 (5분)
-  1. Replicate 상태: https://status.replicate.com
-  2. Edge Function 환경변수 확인: REPLICATE_API_KEY
-  3. 잔액 확인: replicate.com/account/billing
-
-  ## 2단계: 원인 분석
-  ...
-  ```
-
-### F7. Chaos Engineering (의도적 장애)
-- 운영 시작 후: 의도적으로 장애 주입해서 시스템 회복력 검증
-- 예시: Netflix Chaos Monkey (랜덤 서버 종료)
-- 우리 프로젝트 (작게 시작):
-  - 월 1회 Replicate API 키 잠깐 무효화 → 환불 로직 작동 확인
-  - Edge Function 콜드 스타트 일부러 발생
-- 위험 회피보다 위험 발견이 안전
-
----
 
 ## 🤖 AI 페어 프로그래밍 (Claude 협업) 7수칙 (G1~G7)
 
@@ -1070,81 +513,27 @@ npm ls <package-name>
 
 ---
 
-## 🏚 레거시 / 기술부채 (Legacy & Tech Debt) 7수칙 (H1~H7)
+## 🏚 레거시 / 기술부채 7수칙 (H1~H7) — 점진 개선
 
-> 주니어는 "**다 갈아엎자**", 시니어는 "**점진적 개선**".
+> 리팩터 시작 시, 마이그레이션 계획 시 → 📖 [`docs/rules/legacy-refactor-7.md`](docs/rules/legacy-refactor-7.md) 읽기
 
-### H1. 기술부채 시각화 (Make Debt Visible)
-- 머릿속에만 있으면 우선순위 못 매김
-- 도구:
-  - `TODO(#123): ...` (이슈 번호 연결)
-  - 부채 대시보드 (코드 복잡도, 테스트 커버리지, 의존성 outdated)
-  - `docs/tech-debt.md` 백로그
-- 측정 가능한 메트릭화:
-  - 함수당 평균 줄 수
-  - 순환 복잡도 (Cyclomatic Complexity)
-  - 중복 코드 %
+| # | 제목 | 핵심 |
+|---|---|---|
+| H1 | 기술부채 시각화 | TODO + 메트릭 + 백로그 |
+| H2 | ROI 평가 | (자주 수정 × 복잡) 매트릭스 |
+| H3 | Strangler Fig | 점진 교체 (재작성 ❌) |
+| H4 | Branch by Abstraction | 추상화 후 교체 |
+| H5 | 보이스카웃 룰 | 만질 때마다 조금씩 |
+| H6 | 리팩터 vs 재작성 | 재작성은 ×3 시간 예산 |
+| H7 | 부채 vs 단축 | 주석으로 명시 |
 
-### H2. ROI 평가 (Refactor vs Stay)
-- 리팩터는 **공짜가 아님** — 비용 vs 효과
-- 매트릭스:
-  ```
-                자주 수정      가끔 수정
-  복잡          🔥 즉시 리팩터  ⏳ 나중에
-  단순          ✅ 두면 됨      💀 무시 OK
-  ```
-- "어차피 안 건드릴 코드"는 못생겨도 OK
 
-### H3. Strangler Fig 패턴 (점진 교체)
-- 큰 시스템 통째 재작성 ❌ (대부분 실패)
-- ✅ 새 시스템 만들고, 옛 시스템과 병행 → 점진 이전 → 옛 시스템 제거
-- 우리 사례:
-  - ES5 HTML/JS → 점진적으로 React + TS 마이그레이션
-  - 새 기능부터 React로, 기존은 그대로
-  - 완전 이전 후 기존 제거
+## 🎯 통합 최종 체크리스트 (55수칙 = 항상 + 상황별)
 
-### H4. Branch by Abstraction (안전한 리팩터)
-1. 기존 구현 위에 **추상화 계층** 추가
-2. 새 구현 만들기 (기존과 병행)
-3. 호출자를 추상화 통해 전환
-4. 기존 구현 제거
-- 중간 상태 항상 동작 → 안전한 리팩터
-
-### H5. 보이스카웃 룰 (Boy Scout Rule)
-- "온 것보다 깨끗하게 떠나라"
-- 한 번에 다 고치지 말고, **만질 때마다 조금씩**
-- 매번 함수 하나 정리 → 1년 누적 = 큰 개선
-- 단, **관련 없는 리팩터 금지** (안전수칙 #3)
-
-### H6. 리팩터 vs 재작성 판단
-- **리팩터** 선택 조건:
-  - 동작은 OK, 구조만 문제
-  - 테스트 있음 (안전망)
-  - 점진 가능
-- **재작성** 선택 조건:
-  - 동작 자체가 잘못됨
-  - 테스트 없음 + 너무 복잡
-  - 점진 불가능
-- 재작성은 항상 **예상의 3배** 걸림 (예측 후 곱하기 3)
-
-### H7. 부채 vs 의도된 단축 구분 (Tech Debt vs Quick Win)
-- **부채**: 나중에 갚아야 할 빚 (이자 발생) — 의식적 선택
-- **의도된 단축**: MVP, 검증용, 곧 버릴 것 — 갚지 않음
-- 코드에 주석으로 구분:
-  ```ts
-  // 부채: 6/30까지 리팩터 (이슈 #234)
-  function ugly() { ... }
-
-  // 의도된 단축: MVP용, 사용자 검증 후 결정
-  function temp() { ... }
-  ```
-
----
-
-## 🎯 통합 최종 체크리스트 (안전 6 + 품질 7 + 시스템 7 + 관찰성 7 + ADR 7 + 장애 7 + AI페어 7 + 레거시 7 = 55수칙)
+### 항상 적용 (이 CLAUDE.md에서 직접 검증)
 
 ```
-🛡 안전 6수칙 (즉시 사고 방지) — 모든 작업
+🛡 A. 안전 6수칙 (모든 작업)
 □ A1. 빌드/테스트 실행 확인
 □ A2. 요구사항 항목 대조
 □ A3. 범위 외 변경 없음
@@ -1152,7 +541,7 @@ npm ls <package-name>
 □ A5. 비밀키 패턴 0건
 □ A6. 변경 파일 수 적정
 
-🔍 품질 7수칙 (코드 부패 방지) — 모든 PR
+🔍 B. 품질 7수칙 (모든 PR)
 □ B1. 테스트 실제 통과
 □ B2. 엣지케이스 + 에러 분기
 □ B3. 기존 컨벤션 준수
@@ -1161,64 +550,27 @@ npm ls <package-name>
 □ B6. console.log/임시코드 정리
 □ B7. 신규 라이브러리 사전 보고
 
-🧠 시스템 사고 7수칙 (구조 결함 방지) — 설계 시
-□ C1. AI 환각 검증
-□ C2. 보안 (입력/인증/인가/인젝션)
-□ C3. 성능 (N+1/리렌더/누수)
-□ C4. 아키텍처 (책임 분리/SOLID)
-□ C5. 동시성 (트랜잭션/멱등성)
-□ C6. 하위 호환 (영향 파급)
-□ C7. 의존성 (취약점/라이선스)
-
-📊 관찰성 7수칙 — 운영 진입 시
-□ D1. 구조화된 로그
-□ D2. 메트릭 (RED Method)
-□ D3. 분산 추적 (trace_id)
-□ D4. 알림 설계 (사용자 영향)
-□ D5. SLI/SLO/Error Budget
-□ D6. 대시보드 (한 화면 한 질문)
-□ D7. 디버그 정보 수집
-
-🎯 의사결정 7수칙 — 큰 결정 시
-□ E1. ADR 작성 (Architecture Decision Records)
-□ E2. 트레이드오프 명시
-□ E3. 가역적/비가역적 구분
-□ E4. 선택 안 한 옵션 기록
-□ E5. 가정 검증
-□ E6. 결정 타이밍 (Last Responsible Moment)
-□ E7. RFC 프로세스
-
-🚨 장애 대응 7수칙 — 사고 발생 시
-□ F1. Severity 등급 (P0~P4)
-□ F2. 5분 룰 (완화→분석→Postmortem)
-□ F3. Blameless Postmortem
-□ F4. 5 Whys (근본 원인)
-□ F5. Postmortem 문서 양식
-□ F6. Runbook 작성
-□ F7. Chaos Engineering
-
-🤖 AI 페어 7수칙 — 모든 협업
+🤖 G. AI 페어 7수칙 (Claude 본인 의무)
 □ G1. 명확한 프롬프트
 □ G2. 단계 분해
-□ G3. 검증 의무 (Verify)
+□ G3. 검증 의무 (Verify, Don't Trust)
 □ G4. AI 한계 인식
 □ G5. 메타 인지 (확신도)
 □ G6. 피드백 루프
 □ G7. 책임은 개발자
-
-🏚 레거시 7수칙 — 부채 마주 시
-□ H1. 기술부채 시각화
-□ H2. ROI 평가 (리팩터 vs Stay)
-□ H3. Strangler Fig (점진 교체)
-□ H4. Branch by Abstraction
-□ H5. 보이스카웃 룰
-□ H6. 리팩터 vs 재작성 판단
-□ H7. 부채 vs 의도된 단축 구분
 ```
 
-**총 55수칙** — 시니어 차별화 영역까지 커버.
+### 상황별 적용 (각 docs/rules/*.md 참조)
 
-### 📚 적용 우선순위 (지금 → 6개월 후)
+| 그룹 | 적용 시점 | 참조 문서 |
+|---|---|---|
+| 🧠 C. 시스템 7수칙 | 큰 설계 변경 시 | [`system-thinking-7.md`](docs/rules/system-thinking-7.md) |
+| 📊 D. 관찰성 7수칙 | 운영 진입 시 | [`observability-7.md`](docs/rules/observability-7.md) |
+| 🎯 E. ADR 7수칙 | 큰 결정 시 | [`adr-decision-7.md`](docs/rules/adr-decision-7.md) |
+| 🚨 F. 장애대응 7수칙 | 사고 발생 시 | [`incident-response-7.md`](docs/rules/incident-response-7.md) |
+| 🏚 H. 레거시 7수칙 | 리팩터 시 | [`legacy-refactor-7.md`](docs/rules/legacy-refactor-7.md) |
+
+### 적용 우선순위 (지금 → 6개월 후)
 
 | 시기 | 수칙 그룹 | 우선도 |
 |---|---|---|
@@ -1228,7 +580,6 @@ npm ls <package-name>
 | **리팩터 시작 시** | H (레거시 7) | ⭐⭐⭐ |
 | **TDD 적용 시** | TDD 20개 (별도) | ⭐⭐⭐⭐ |
 
----
 
 ## 📚 필수 참고 문서 (작업 전 반드시 확인)
 
@@ -1244,6 +595,18 @@ npm ls <package-name>
 | [`docs/email-schema.sql`](docs/email-schema.sql) | 이메일 시스템 스키마 | 알림/이메일 |
 | [`sns-platform/js/secure-storage.js`](sns-platform/js/secure-storage.js) | 토큰 만료/스윕 유틸 | SNS 토큰 저장 |
 | [`.env.example`](/.env.example) | 환경변수 템플릿 (Supabase/AI/PG/SNS) | 배포 / 신규 환경 |
+
+### 📖 상황별 깊이 학습 문서 (`docs/rules/`)
+
+CLAUDE.md에는 요약만, 깊이는 다음 5개 파일에:
+
+| 문서 | 그룹 | 언제 읽어야 하나 |
+|---|---|---|
+| [`docs/rules/system-thinking-7.md`](docs/rules/system-thinking-7.md) | C 시스템 사고 | 큰 설계, 새 모듈, 아키텍처 결정 시 |
+| [`docs/rules/observability-7.md`](docs/rules/observability-7.md) | D 관찰성 | 운영 환경 진입 직전, 모니터링 설계 시 |
+| [`docs/rules/adr-decision-7.md`](docs/rules/adr-decision-7.md) | E ADR | 기술 스택 선택, 큰 결정 시 |
+| [`docs/rules/incident-response-7.md`](docs/rules/incident-response-7.md) | F 장애 대응 | 알림 수신, Postmortem 작성 시 |
+| [`docs/rules/legacy-refactor-7.md`](docs/rules/legacy-refactor-7.md) | H 레거시 | 리팩터 시작, 마이그레이션 시 |
 
 ---
 
