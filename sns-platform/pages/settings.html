@@ -102,7 +102,7 @@
                 <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
                 <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
                 <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
-                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link active"><span>⚙️</span> 설정</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link active"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
             </nav>
         </aside>
         <div class="main-content">
@@ -157,43 +157,11 @@
 
                 <!-- AI Settings -->
                 <div class="settings-box">
-                    <h2>🤖 AI 이미지/영상 생성 설정</h2>
-                    <p style="font-size:.8rem;color:#64748b;margin-bottom:14px">멀티 프로바이더 게이트웨이를 통해 <strong>Flux / DALL-E / Pika / Runway / Kling</strong> 등을 한 번에 사용합니다.</p>
-
-                    <div class="general-row">
-                        <div class="general-field">
-                            <label>Replicate API Key <span style="color:#10b981;font-size:.7rem">★ 추천</span></label>
-                            <div class="pw-wrap" style="position:relative">
-                                <input type="password" id="aiReplicateKey" placeholder="r8_... (Replicate.com에서 발급)">
-                                <button class="toggle-pw" onclick="togglePw('aiReplicateKey')">👁</button>
-                            </div>
-                        </div>
-                        <div class="general-field">
-                            <label>Fal.ai API Key (선택)</label>
-                            <div class="pw-wrap" style="position:relative">
-                                <input type="password" id="aiFalKey" placeholder="Fal.ai 키 (빠른 inference)">
-                                <button class="toggle-pw" onclick="togglePw('aiFalKey')">👁</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="general-row">
-                        <div class="general-field">
-                            <label>OpenAI API Key (DALL-E 3, GPT-4 텍스트)</label>
-                            <div class="pw-wrap" style="position:relative">
-                                <input type="password" id="aiOpenAIKey" placeholder="sk-... (OpenAI Platform)">
-                                <button class="toggle-pw" onclick="togglePw('aiOpenAIKey')">👁</button>
-                            </div>
-                        </div>
-                        <div class="general-field">
-                            <label>텍스트 생성 모델</label>
-                            <select id="aiModel">
-                                <option value="default">기본 (내장 템플릿)</option>
-                                <option value="openai-gpt4">OpenAI GPT-4o</option>
-                                <option value="claude-sonnet">Anthropic Claude 4.6 Sonnet</option>
-                            </select>
-                        </div>
-                    </div>
+                    <h2>🤖 AI 이미지/영상 생성 기본 설정</h2>
+                    <p style="font-size:.8rem;color:#64748b;margin-bottom:14px">
+                        AI 생성은 <strong>DIVOOST 플랫폼이 제공</strong>합니다. 별도 API 키 입력 불필요.
+                        <a href="billing.html" style="color:#3b82f6;font-weight:600">💳 크레딧 잔액 및 결제 →</a>
+                    </p>
 
                     <div class="general-row">
                         <div class="general-field">
@@ -217,12 +185,16 @@
                             </select>
                         </div>
                         <div class="general-field">
-                            <label>월 예산 알림 (USD)</label>
-                            <input type="number" id="aiBudget" placeholder="예: 50" min="0">
+                            <label>텍스트 생성 모델</label>
+                            <select id="aiModel">
+                                <option value="default">기본 (내장 템플릿)</option>
+                                <option value="openai-gpt4">OpenAI GPT-4o (Pro 이상)</option>
+                                <option value="claude-sonnet">Claude 4.6 Sonnet (Pro 이상)</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div class="guide-text">📌 <strong>Replicate</strong>가 가장 많은 모델을 지원합니다. <a href="https://replicate.com/account/api-tokens" target="_blank">Replicate 키 발급</a> · <a href="https://fal.ai/dashboard/keys" target="_blank">Fal.ai 키 발급</a> · <a href="https://platform.openai.com/api-keys" target="_blank">OpenAI 키 발급</a></div>
+                    <div class="guide-text">📌 사용 가능한 모델은 현재 구독 플랜에 따라 다릅니다. <a href="billing.html">플랜 변경 / 크레딧 충전</a></div>
                 </div>
 
                 <!-- Data Management -->
@@ -389,21 +361,13 @@
                 if(settings.general.lang) document.getElementById('genLang').value = settings.general.lang;
                 if(settings.general.timezone) document.getElementById('genTimezone').value = settings.general.timezone;
             }
+            populateAiModels();
             if(settings.ai){
                 var ai = settings.ai;
                 if(ai.model) document.getElementById('aiModel').value = ai.model;
-                var keys = ai.keys || {};
-                if(keys.replicate) document.getElementById('aiReplicateKey').value = keys.replicate;
-                if(keys.fal) document.getElementById('aiFalKey').value = keys.fal;
-                if(keys.openai) document.getElementById('aiOpenAIKey').value = keys.openai;
                 if(ai.defaultAspect) document.getElementById('aiDefaultAspect').value = ai.defaultAspect;
-                if(ai.budget) document.getElementById('aiBudget').value = ai.budget;
-                // Default model 선택은 populateAiModels 호출 후 적용됨
-            }
-            populateAiModels();
-            if(settings.ai){
-                if(settings.ai.defaultImageModel) document.getElementById('aiDefaultImage').value = settings.ai.defaultImageModel;
-                if(settings.ai.defaultVideoModel) document.getElementById('aiDefaultVideo').value = settings.ai.defaultVideoModel;
+                if(ai.defaultImageModel) document.getElementById('aiDefaultImage').value = ai.defaultImageModel;
+                if(ai.defaultVideoModel) document.getElementById('aiDefaultVideo').value = ai.defaultVideoModel;
             }
             renderAllChannels();
         }
@@ -416,7 +380,8 @@
                 SNSAI.listImageModels().forEach(function(m){
                     var opt = document.createElement('option');
                     opt.value = m.id;
-                    opt.textContent = m.label + ' (~$' + (m.costPerImage||0).toFixed(3) + '/장)';
+                    var krw = Math.round((m.chargedCents/100) * 1400);
+                    opt.textContent = m.label + ' (₩' + krw + '/장)' + (m.premium ? ' ⭐Pro+' : '');
                     imgSel.appendChild(opt);
                 });
                 imgSel.value = 'flux-schnell';
@@ -425,7 +390,8 @@
                 SNSAI.listVideoModels().forEach(function(m){
                     var opt = document.createElement('option');
                     opt.value = m.id;
-                    opt.textContent = m.label + ' (~$' + ((m.costPerSecond||0)*5).toFixed(2) + '/5초)';
+                    var krw = Math.round(((m.chargedPerSecCents * m.defaultDuration)/100) * 1400);
+                    opt.textContent = m.label + ' (₩' + krw + '/' + m.defaultDuration + '초)' + (m.premium ? ' ⭐Pro+' : '');
                     vidSel.appendChild(opt);
                 });
                 vidSel.value = 'pika-2.0';
@@ -863,15 +829,9 @@
             };
             settings.ai = {
                 model: document.getElementById('aiModel').value,
-                keys: {
-                    replicate: document.getElementById('aiReplicateKey').value.trim(),
-                    fal: document.getElementById('aiFalKey').value.trim(),
-                    openai: document.getElementById('aiOpenAIKey').value.trim()
-                },
                 defaultImageModel: document.getElementById('aiDefaultImage').value,
                 defaultVideoModel: document.getElementById('aiDefaultVideo').value,
-                defaultAspect: document.getElementById('aiDefaultAspect').value,
-                budget: parseFloat(document.getElementById('aiBudget').value) || 0
+                defaultAspect: document.getElementById('aiDefaultAspect').value
             };
             localStorage.setItem('snsSettings', JSON.stringify(settings));
             showToast('✅ 전체 설정 저장 완료');
