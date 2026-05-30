@@ -97,6 +97,308 @@
 
 ---
 
+## 🔍 코드 품질 7수칙 (PR 머지 전 자체 검토)
+
+> 안전 6수칙이 "사고 방지"라면, 7수칙은 "**코드베이스 부패 방지**".
+> AI가 자주 빠뜨리는 품질 결함을 머지 전에 잡는다.
+
+### 1️⃣ 테스트가 함께 왔고 실제로 통과하는가
+
+**문제**: AI는 "테스트도 작성했습니다"라고 말하지만 실제로:
+- 깨져 있거나
+- `expect(true).toBe(true)` 같은 빈 껍데기거나
+- 정작 검증하려는 동작을 안 다루거나
+
+**Claude 행동 규칙**:
+- 신규/변경 함수마다 **반드시 테스트 동반** (TDD 사이클)
+- 테스트 작성 후 **실제로 실행** (`npm run test`)
+- 실행 못 한 경우 **"실행 미확인"** 명시
+- 테스트 내용 자체 검증: `expect`가 **실제 동작을 검증**하는가?
+  - ❌ `expect(true).toBe(true)` — 무의미
+  - ❌ `expect(fn()).toBeDefined()` — 너무 약함
+  - ✅ `expect(formatPrice(13000, 'KRW')).toBe('13,000원')` — 명확한 검증
+
+**자동 감지**:
+```bash
+# 빈 껍데기 테스트 패턴 찾기
+grep -rn "expect(true).toBe(true)\|expect.*toBeDefined()" --include="*.test.*"
+grep -rn "it.todo\|it.skip\|xit\|xdescribe" --include="*.test.*"
+```
+
+**중복**: 안전수칙 #1 + TDD 20개 항목 #1~#5와 연관 — **테스트 실행 검증 강화**
+
+---
+
+### 2️⃣ 엣지케이스·에러 분기를 처리했는가 ⭐
+
+**문제**: AI는 happy path만 짠다. 실무 버그의 **80%가 엣지케이스/에러 분기**에서 발생.
+
+**Claude 행동 규칙**:
+- 모든 함수 작성 시 **다음 7가지 의심**:
+  - [ ] 빈 배열 / 빈 문자열 / 빈 객체
+  - [ ] `null` / `undefined`
+  - [ ] `0` / 음수 / `NaN` / `Infinity`
+  - [ ] 경계값 (min/max, off-by-one, 배열 첫/마지막)
+  - [ ] 비동기 실패 (네트워크, 타임아웃, abort)
+  - [ ] 동시성 (중복 호출, race condition)
+  - [ ] 권한 거부 / 인증 만료
+- 비동기는 **loading / success / error 3분기 모두** 작성 (TDD #9)
+- "이건 절대 안 일어나" 가정 금지 — 사용자는 결국 한다
+
+**실전 예시**:
+```ts
+// ❌ Happy path만
+function average(nums: number[]) {
+  return nums.reduce((a, b) => a + b) / nums.length;
+}
+
+// ✅ 엣지 처리
+function average(nums: number[]) {
+  if (!Array.isArray(nums) || nums.length === 0) return 0;
+  return nums.reduce((a, b) => a + b, 0) / nums.length;
+}
+
+// ✅ 테스트
+it('빈 배열은 0', () => expect(average([])).toBe(0));
+it('null이면 0 (방어)', () => expect(average(null as any)).toBe(0));
+it('단일 원소는 그 자체', () => expect(average([5])).toBe(5));
+```
+
+**중복**: TDD 20개 #9, #10과 통합 — **이거 빠뜨리면 PR 자동 거절**
+
+---
+
+### 3️⃣ 기존 컨벤션·폴더 구조·네이밍을 따랐는가 🆕
+
+**문제**: AI는 자기 스타일로 짠다 → 코드베이스가 누더기.
+- 프로젝트가 `camelCase`인데 혼자 `snake_case`
+- 컴포넌트 폴더 구조 임의로 만듦
+- 한국어 메시지인데 영어 섞어 씀
+
+**Claude 행동 규칙**:
+- 신규 파일 생성 전 **반드시 인접 파일 1~2개 읽기** (`Read`)
+- 다음 사항 자동 일치:
+  - 변수/함수: 기존 케이스 (camel/snake/Pascal)
+  - 파일명: 기존 패턴 (`PriceBadge.tsx` vs `price-badge.tsx`)
+  - import 순서/그룹화
+  - 들여쓰기 (탭 vs 스페이스, 2/4칸)
+  - 따옴표 ('single' vs "double")
+  - 세미콜론 유무
+  - 한국어/영어 혼합 비율 (주석, UI 텍스트)
+- 우리 프로젝트 컨벤션 (현재):
+  - HTML/JS: **ES5 호환** (`var`, function 선언, prototype)
+  - 함수/변수: **camelCase**
+  - 파일명: **kebab-case** (`secure-storage.js`)
+  - DB 컬럼: **snake_case** (`user_id`, `created_at`)
+  - UI 텍스트: **한국어** (마스터 호칭)
+  - 들여쓰기: **4-space**
+  - 따옴표: **single quote** 우선
+
+**자동 감지**:
+```bash
+# 우리 프로젝트에 var/function 컨벤션인지 확인
+grep -c "^const\|^let" sns-platform/js/*.js  # 0이어야 정상
+# 들여쓰기 일관성
+awk '/^\t/' sns-platform/**/*.html  # 탭 있으면 비정상
+```
+
+**행동 원칙**: "**짧은 컨벤션 위반 > 새 스타일 도입**"
+
+---
+
+### 4️⃣ 에러를 조용히 삼키지 않았는가 🔴
+
+> 안전수칙 #4와 완전 중복 — 여기서 **더 강화**
+
+**Claude 행동 규칙**:
+- `catch {}` / `catch (e) {}` **절대 금지**
+- 최소한 다음 중 하나:
+  - `console.error('명확한 컨텍스트', { err, params })` + `throw`
+  - `logger.error(...)` + `throw`
+  - `setError(err.message)` + UI 알림
+  - 의도적 무시면 **명시적 주석** (`// 의도적 무시: 폴링 중 일시 실패`)
+
+**자동 감지**:
+```bash
+# 빈 catch 찾기
+grep -rn "catch\s*{\s*}\|catch\s*([^)]*)\s*{\s*}" --include="*.ts" --include="*.js" --include="*.html"
+# catch 안에 throw나 로그가 있는지
+grep -B1 -A5 "} catch" src/ | grep -v "throw\|error\|logger\|setError"
+```
+
+**중복**: 안전수칙 #4 — **두 번 강조해도 부족함**
+
+---
+
+### 5️⃣ `any` 남발·타입 회피가 없는가 🆕 (TypeScript 전용)
+
+**문제**: 타입스크립트 쓰는 이유는 미리 실수 잡으려는 건데, AI가 귀찮으면 `any`로 도망감 → TS 의미 상실.
+
+**Claude 행동 규칙**:
+- `any` 사용 시 **반드시 주석으로 정당화**:
+  ```ts
+  // any 사용 사유: 외부 라이브러리 타입 정의 없음 (TODO: 자체 타입 작성)
+  declare const externalLib: any;
+  ```
+- 다음 패턴 우선 사용:
+  - 알 수 없으면 **`unknown`** (런타임 검증 강제)
+  - 함수 매개변수 → **generic** 또는 **union**
+  - 라이브러리 타입 → `@types/...` 패키지 찾기
+  - JSON 응답 → **interface/type 정의**
+- 타입 단언(`as`) 최소화 — 가능하면 type guard 사용
+
+**실전 예시**:
+```ts
+// ❌ any 도망
+function parse(data: any): any {
+  return data.items[0].name;
+}
+
+// ✅ unknown + 검증
+function parse(data: unknown): string {
+  if (
+    typeof data === 'object' && data !== null &&
+    'items' in data && Array.isArray((data as any).items) &&
+    (data as any).items[0]?.name
+  ) {
+    return (data as any).items[0].name;
+  }
+  throw new Error('Invalid data shape');
+}
+
+// ✅ 더 좋은 방법: 타입 정의
+interface ApiResponse {
+  items: Array<{ name: string }>;
+}
+function parse(data: ApiResponse): string {
+  return data.items[0]?.name ?? '';
+}
+```
+
+**자동 감지**:
+```bash
+# any 사용 카운트
+grep -rn ": any\|<any>\|as any" --include="*.ts" --include="*.tsx" | wc -l
+# ESLint 룰
+"@typescript-eslint/no-explicit-any": "error"
+```
+
+**예외 허용**: 외부 SDK 임시 사용, 마이그레이션 중간 단계 — **반드시 TODO 주석**
+
+---
+
+### 6️⃣ console.log·임시 코드·주석 처리한 코드가 남지 않았는가 🆕
+
+**문제**: 디버깅용 `console.log`, "혹시 몰라서" 주석 처리한 옛 코드가 머지됨.
+- 코드베이스 지저분
+- 운영 환경에서 로그 누출 (비밀 정보 포함 가능)
+- 옛 코드 = 죽은 코드 = 혼란
+
+**Claude 행동 규칙**:
+- 머지 전 다음 자동 정리:
+  - [ ] `console.log` / `console.debug` 제거 (의도된 것만 `console.error` / `console.warn`로 유지)
+  - [ ] 주석 처리된 코드 블록 제거 (`// const x = ...` 같은 것)
+  - [ ] `TODO` 주석은 GitHub Issue 번호와 연결 (`// TODO(#123): ...`)
+  - [ ] `FIXME` / `HACK` 주석은 코드 리뷰에서 명확히 짚기
+  - [ ] 사용 안 하는 import 제거
+  - [ ] 사용 안 하는 변수 제거 (또는 `_` prefix)
+
+**자동 감지**:
+```bash
+# 의심 패턴 스캔
+grep -rn "console.log\|console.debug\|debugger" --include="*.ts" --include="*.js" src/
+grep -rn "^// const\|^// let\|^// function" --include="*.ts" --include="*.js"
+grep -rn "TODO[^(]\|FIXME\|XXX\|HACK" --include="*.ts" --include="*.js"  # 이슈 번호 없는 것
+```
+
+**예외**: 의도된 로그
+- 사용자 알림용 `console.error` (개발자도구 표시) ✅
+- 정보성 `console.warn` (deprecated 경고 등) ✅
+- **디버깅 잔재** `console.log('here')` ❌
+
+---
+
+### 7️⃣ 굳이 새 라이브러리를 안 깔고 기존 걸로 해결했는가 🆕
+
+**문제**: AI는 간단한 기능에도 라이브러리 추가하는 경향.
+- 의존성 ↑ = 보안 위험 ↑ + 용량 ↑ + 관리 부담 ↑
+- `node_modules` 비대화 → CI 느려짐
+- 작은 유틸리티(`lodash.debounce` 등)는 기본 기능으로 충분
+
+**Claude 행동 규칙**:
+- 새 라이브러리 추가 전 **반드시 자문**:
+  - [ ] 기존 라이브러리로 가능한가? (`package.json` 확인)
+  - [ ] 표준 JS/브라우저 API로 가능한가?
+  - [ ] 10~20줄 자체 구현으로 충분한가?
+- 추가가 정말 필요하면:
+  - 번들 크기 확인 (`bundlephobia.com`)
+  - 마지막 업데이트 / 다운로드 수
+  - 라이선스 (MIT/Apache 권장)
+  - 보안 취약점 (`npm audit`)
+  - **마스터에게 사전 보고**: "이런 이유로 X 패키지 추가가 필요합니다, 추가해도 될까요?"
+
+**자체 구현 가능한 흔한 경우**:
+
+| 기능 | 라이브러리 사용 | 표준 대안 |
+|---|---|---|
+| 날짜 포맷 | `moment` / `dayjs` | `Date.prototype.toLocaleDateString()` |
+| 디바운스 | `lodash.debounce` | 자체 구현 (10줄) |
+| HTTP | `axios` | `fetch()` (표준) |
+| UUID | `uuid` | `crypto.randomUUID()` (브라우저 표준) |
+| 깊은 복사 | `lodash.cloneDeep` | `structuredClone()` (표준) |
+| 클래스명 조합 | `classnames` | 템플릿 리터럴 |
+| 폼 검증 | `formik` + `yup` | 간단하면 자체 검증 |
+
+**자동 감지**:
+```bash
+# package.json 변경 확인
+git diff HEAD~1 package.json | grep "^\+ "
+# 새 의존성 추가 시 사이즈 체크
+npm install <pkg> --dry-run
+```
+
+**예외 허용**:
+- 명확히 복잡한 도메인 (date-fns, react-query, zod 등)
+- 보안에 관련 (인증, 암호화)
+- 표준이 너무 빈약 (e.g., timezone 처리)
+
+---
+
+### 📊 7수칙 자체 검증 체크리스트 (PR 머지 전)
+
+```
+□ 1. 테스트가 실제로 통과했는가 (npm run test 실행 확인)
+□ 2. 엣지케이스 7가지 (빈값/null/0/경계/비동기/동시성/권한) 검토했는가
+□ 3. 기존 컨벤션 (case/들여쓰기/따옴표/한영) 따랐는가
+□ 4. catch {}, console.log() 빈 catch 없는가
+□ 5. any 사용 시 정당화 주석 있는가 (또는 unknown/generic 사용)
+□ 6. console.log, 주석 처리 코드, 사용 안 하는 import 제거했는가
+□ 7. 새 라이브러리 추가 시 마스터 사전 보고했는가
+```
+
+### 🚨 통합 검증 체크리스트 (안전 6 + 품질 7 = 13가지)
+
+```
+[안전 6수칙 - 사고 방지]
+□ A1. 빌드/테스트 실행 확인
+□ A2. 요구사항 항목 대조 ✅/❌
+□ A3. 범위 외 변경 없음 (git diff 확인)
+□ A4. Read 후 Edit (기존 파일 보존)
+□ A5. 비밀키 패턴 0건 (sk_/r8_/EAAB 스캔)
+□ A6. 변경 파일 수가 의도와 일치
+
+[품질 7수칙 - 부패 방지]
+□ B1. 테스트 실제 통과 + 의미있는 검증
+□ B2. 엣지케이스 + 에러 분기 처리
+□ B3. 기존 컨벤션 준수
+□ B4. catch 비어있지 않음 (안전수칙 #4 강화)
+□ B5. any 남발 없음 (TS 전용)
+□ B6. console.log/임시코드 정리
+□ B7. 신규 라이브러리 사전 보고
+```
+
+---
+
 ## 📚 필수 참고 문서 (작업 전 반드시 확인)
 
 | 문서 | 내용 | 작업 시 참조 |
