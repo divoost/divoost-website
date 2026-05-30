@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원 관리 | 관리자</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        body{background:#f1f5f9}
+        .admin-bar{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;padding:8px 24px;font-size:.78rem;font-weight:600;text-align:center}
+        .admin-bar a{color:#fef2f2;margin-left:10px}
+        .sidebar{background:#0f172a !important;color:#e2e8f0}
+        .sidebar-logo .logo-text{color:#fff !important}
+        .sidebar-logo .logo-text small{color:#fca5a5 !important}
+        .nav-title{color:#94a3b8 !important}
+        .nav-link{color:#cbd5e1 !important}
+        .nav-link:hover{background:rgba(255,255,255,.06) !important;color:#fff !important}
+        .nav-link.active{background:rgba(220,38,38,.2) !important;color:#fca5a5 !important}
+
+        .toolbar{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+        .tb-input{padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem;font-family:inherit;flex:1;min-width:200px}
+        .tb-select{padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem;background:#fff}
+        .tb-btn{padding:8px 16px;border-radius:8px;border:none;font-size:.78rem;font-weight:700;cursor:pointer}
+        .tb-btn.primary{background:#3b82f6;color:#fff}
+        .tb-btn.secondary{background:#f1f5f9;color:#475569}
+        .tb-btn.danger{background:#fee2e2;color:#b91c1c;border:1px solid #fecaca}
+
+        .user-table-wrap{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden}
+        .user-table{width:100%;border-collapse:collapse;font-size:.84rem}
+        .user-table th{background:#f8fafc;padding:12px 14px;text-align:left;font-size:.7rem;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.05em;border-bottom:2px solid #e2e8f0}
+        .user-table td{padding:12px 14px;border-bottom:1px solid #f1f5f9}
+        .user-table tr:hover{background:#f8fafc}
+        .user-table tr:last-child td{border-bottom:none}
+
+        .user-cell{display:flex;align-items:center;gap:10px}
+        .user-avatar{width:36px;height:36px;border-radius:50%;background:#3b82f6;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+        .user-name{font-weight:700;font-size:.85rem}
+        .user-email{font-size:.72rem;color:#64748b}
+
+        .pill{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.7rem;font-weight:700}
+        .pill.active{background:#dcfce7;color:#15803d}
+        .pill.inactive{background:#fee2e2;color:#b91c1c}
+        .pill.suspended{background:#1e293b;color:#fff}
+        .pill.trial{background:#fef3c7;color:#92400e}
+        .pill.pro{background:#ede9fe;color:#6d28d9}
+        .pill.enterprise{background:#fce7f3;color:#be185d}
+
+        .action-btn{padding:5px 10px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:.7rem;cursor:pointer;font-weight:600;margin-right:4px;color:#475569}
+        .action-btn:hover{background:#f8fafc}
+        .action-btn.danger{color:#dc2626;border-color:#fecaca}
+        .action-btn.danger:hover{background:#fef2f2}
+
+        .pagination{padding:14px;text-align:center;background:#f8fafc;border-top:1px solid #e2e8f0;font-size:.78rem;display:flex;align-items:center;justify-content:center;gap:8px}
+        .page-btn{padding:6px 10px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:.74rem}
+        .page-btn.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+
+        .summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+        .summary-card{background:#fff;border-radius:10px;padding:14px;border:1px solid #e2e8f0}
+        .summary-val{font-size:1.4rem;font-weight:800}
+        .summary-label{font-size:.7rem;color:#94a3b8;margin-top:2px}
+
+        /* Modal */
+        .modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:9999;align-items:center;justify-content:center;padding:20px}
+        .modal.show{display:flex}
+        .modal-box{background:#fff;border-radius:14px;padding:24px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
+        .modal h3{font-size:1.05rem;margin-bottom:14px}
+        .detail-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f1f5f9;font-size:.85rem}
+        .detail-row:last-child{border-bottom:none}
+        .detail-label{color:#64748b}
+        .detail-val{font-weight:600;color:#0f172a}
+        .modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+        .modal-btn{padding:9px 18px;border-radius:8px;border:none;font-size:.82rem;font-weight:700;cursor:pointer}
+
+        @media(max-width:768px){.summary-row{grid-template-columns:1fr 1fr}.user-table{font-size:.78rem}}
+    </style>
+</head>
+<body>
+    <div class="admin-bar">🛡 관리자 전용 페이지 → <a href="../index.html">사용자 대시보드로</a></div>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">🛡</div><div class="logo-text">관리자 콘솔<small>DIVOOST SNS Admin</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">개요</div><a href="index.html" class="nav-link"><span>🏠</span> 관리자 대시보드</a></div>
+                <div class="nav-section"><div class="nav-title">회원 관리</div><a href="users.html" class="nav-link active"><span>👥</span> 회원 목록</a><a href="subscriptions.html" class="nav-link"><span>💳</span> 구독 관리</a><a href="user-activity.html" class="nav-link"><span>📊</span> 활동 로그</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 운영</div><a href="content-moderation.html" class="nav-link"><span>📝</span> 콘텐츠 검토</a><a href="reports.html" class="nav-link"><span>🚨</span> 신고/제재</a></div>
+                <div class="nav-section"><div class="nav-title">시스템 운영</div><a href="api-monitor.html" class="nav-link"><span>📡</span> API 사용량</a><a href="system-health.html" class="nav-link"><span>💚</span> 시스템 상태</a><a href="notifications.html" class="nav-link"><span>🔔</span> 공지 관리</a></div>
+                <div class="nav-section"><div class="nav-title">설정</div><a href="admin-settings.html" class="nav-link"><span>⚙️</span> 관리자 설정</a><a href="audit-log.html" class="nav-link"><span>📜</span> 감사 로그</a></div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="menu-btn" id="menuBtn">☰</button>
+                    <div>
+                        <div class="top-bar-title">👥 회원 관리</div>
+                        <div class="top-bar-sub">전체 가입자 조회 및 관리</div>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <button class="tb-btn primary" onclick="exportUsers()">📥 CSV 내보내기</button>
+                </div>
+            </header>
+
+            <div class="content">
+
+                <!-- 요약 -->
+                <div class="summary-row">
+                    <div class="summary-card"><div class="summary-val" id="cTotal" style="color:#3b82f6">0</div><div class="summary-label">전체 회원</div></div>
+                    <div class="summary-card"><div class="summary-val" id="cActive" style="color:#10b981">0</div><div class="summary-label">활성</div></div>
+                    <div class="summary-card"><div class="summary-val" id="cPaid" style="color:#7c3aed">0</div><div class="summary-label">유료 회원</div></div>
+                    <div class="summary-card"><div class="summary-val" id="cNew" style="color:#f59e0b">0</div><div class="summary-label">이번 달 신규</div></div>
+                </div>
+
+                <!-- 필터 -->
+                <div class="toolbar">
+                    <input type="text" class="tb-input" id="searchInput" placeholder="이메일, 이름으로 검색..." oninput="filterUsers()">
+                    <select class="tb-select" id="filterStatus" onchange="filterUsers()">
+                        <option value="">전체 상태</option>
+                        <option value="active">활성</option>
+                        <option value="inactive">미인증</option>
+                        <option value="suspended">정지</option>
+                    </select>
+                    <select class="tb-select" id="filterPlan" onchange="filterUsers()">
+                        <option value="">전체 플랜</option>
+                        <option value="trial">체험</option>
+                        <option value="pro">PRO</option>
+                        <option value="enterprise">Enterprise</option>
+                    </select>
+                    <button class="tb-btn secondary" onclick="refreshFromSupabase()">🔄 Supabase 동기화</button>
+                </div>
+
+                <!-- 회원 목록 -->
+                <div class="user-table-wrap">
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th style="width:30%">회원</th>
+                                <th>가입일</th>
+                                <th>플랜</th>
+                                <th>상태</th>
+                                <th>최근 활동</th>
+                                <th>SNS 연동</th>
+                                <th>작업</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTbody"></tbody>
+                    </table>
+                    <div class="pagination">
+                        <button class="page-btn">◀</button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">▶</button>
+                        <span style="margin-left:14px;color:#94a3b8">총 <strong id="totalCount">0</strong>명</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 회원 상세 모달 -->
+    <div class="modal" id="userModal">
+        <div class="modal-box">
+            <h3 id="modalUserName"></h3>
+            <div id="modalDetails"></div>
+            <div class="modal-actions">
+                <button class="modal-btn" style="background:#f1f5f9;color:#475569" onclick="closeUserModal()">닫기</button>
+                <button class="modal-btn" style="background:#3b82f6;color:#fff" onclick="sendEmailToUser()">📧 이메일 발송</button>
+                <button class="modal-btn" style="background:#dc2626;color:#fff" onclick="suspendUser()">⛔ 계정 정지</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/supabase-admin.js"></script>
+    <script>
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+
+        var sampleUsers = [];  // 실제 Supabase 데이터로 채워짐
+        var filteredUsers = [];
+        var selectedUser = null;
+
+        function formatRelativeTime(iso){
+            if(!iso) return '-';
+            var d = new Date(iso);
+            var diff = (Date.now() - d.getTime()) / 1000;
+            if(diff < 60) return '방금 전';
+            if(diff < 3600) return Math.floor(diff/60) + '분 전';
+            if(diff < 86400) return Math.floor(diff/3600) + '시간 전';
+            if(diff < 604800) return Math.floor(diff/86400) + '일 전';
+            return d.toISOString().slice(0,10);
+        }
+
+        async function loadUsersFromSupabase(){
+            try {
+                var users = await SNSAdmin.listUsers();
+                sampleUsers = users.map(function(u){
+                    return {
+                        id: u.id,
+                        email: u.email,
+                        name: u.full_name || (u.email || '').split('@')[0],
+                        joinedAt: u.created_at ? u.created_at.slice(0,10) : '-',
+                        plan: u.plan || 'trial',
+                        status: u.status || 'active',
+                        lastActive: formatRelativeTime(u.last_active_at),
+                        snsConnected: Array.isArray(u.sns_connected) ? u.sns_connected : [],
+                        posts: u.total_posts || 0
+                    };
+                });
+                filteredUsers = sampleUsers.slice();
+                renderUsers();
+            } catch(err){
+                console.error('회원 로딩 실패:', err);
+                alert('⚠️ 회원 데이터를 불러올 수 없습니다.\n\nSupabase에 profiles 테이블이 생성되어 있는지 확인하세요.\n(docs/supabase-admin-schema.sql 참고)');
+            }
+        }
+
+        function renderUsers(){
+            var search = (document.getElementById('searchInput').value || '').toLowerCase();
+            var status = document.getElementById('filterStatus').value;
+            var plan = document.getElementById('filterPlan').value;
+
+            filteredUsers = sampleUsers.filter(function(u){
+                if(search && u.email.toLowerCase().indexOf(search) === -1 && u.name.toLowerCase().indexOf(search) === -1) return false;
+                if(status && u.status !== status) return false;
+                if(plan && u.plan !== plan) return false;
+                return true;
+            });
+
+            var planNames = {trial:'체험', pro:'PRO', enterprise:'Enterprise'};
+            var statusNames = {active:'활성', inactive:'미인증', suspended:'정지'};
+
+            document.getElementById('userTbody').innerHTML = filteredUsers.map(function(u){
+                var initial = u.name.charAt(0);
+                var sns = u.snsConnected.length > 0
+                    ? u.snsConnected.map(function(s){
+                        var icons = {Facebook:'📘', Instagram:'📸', TikTok:'🎵', YouTube:'📺'};
+                        return icons[s] || s;
+                    }).join(' ')
+                    : '<span style="color:#94a3b8;font-size:.72rem">없음</span>';
+
+                return '<tr>' +
+                    '<td><div class="user-cell"><div class="user-avatar">' + initial + '</div><div><div class="user-name">' + u.name + '</div><div class="user-email">' + u.email + '</div></div></div></td>' +
+                    '<td>' + u.joinedAt + '</td>' +
+                    '<td><span class="pill ' + u.plan + '">' + (planNames[u.plan] || u.plan) + '</span></td>' +
+                    '<td><span class="pill ' + u.status + '">' + (statusNames[u.status] || u.status) + '</span></td>' +
+                    '<td>' + u.lastActive + '</td>' +
+                    '<td>' + sns + '</td>' +
+                    '<td>' +
+                        '<button class="action-btn" onclick="viewUser(\'' + u.id + '\')">👁 상세</button>' +
+                        '<button class="action-btn danger" onclick="suspendUserById(\'' + u.id + '\')">⛔</button>' +
+                    '</td>' +
+                '</tr>';
+            }).join('');
+
+            // 요약 업데이트
+            document.getElementById('cTotal').textContent = sampleUsers.length;
+            document.getElementById('cActive').textContent = sampleUsers.filter(function(u){ return u.status === 'active'; }).length;
+            document.getElementById('cPaid').textContent = sampleUsers.filter(function(u){ return u.plan !== 'trial'; }).length;
+            document.getElementById('cNew').textContent = sampleUsers.filter(function(u){ return u.joinedAt >= '2026-05-01'; }).length;
+            document.getElementById('totalCount').textContent = filteredUsers.length;
+        }
+
+        function filterUsers(){ renderUsers(); }
+
+        function viewUser(id){
+            var u = sampleUsers.find(function(x){ return x.id === id; });
+            if(!u) return;
+            selectedUser = u;
+            var planNames = {trial:'체험', pro:'PRO', enterprise:'Enterprise'};
+            var statusNames = {active:'활성', inactive:'미인증', suspended:'정지'};
+
+            document.getElementById('modalUserName').textContent = '👤 ' + u.name;
+            document.getElementById('modalDetails').innerHTML =
+                '<div class="detail-row"><span class="detail-label">이메일</span><span class="detail-val">' + u.email + '</span></div>' +
+                '<div class="detail-row"><span class="detail-label">가입일</span><span class="detail-val">' + u.joinedAt + '</span></div>' +
+                '<div class="detail-row"><span class="detail-label">플랜</span><span class="detail-val">' + (planNames[u.plan]||u.plan) + '</span></div>' +
+                '<div class="detail-row"><span class="detail-label">상태</span><span class="detail-val">' + (statusNames[u.status]||u.status) + '</span></div>' +
+                '<div class="detail-row"><span class="detail-label">최근 활동</span><span class="detail-val">' + u.lastActive + '</span></div>' +
+                '<div class="detail-row"><span class="detail-label">총 발행 수</span><span class="detail-val">' + u.posts + '건</span></div>' +
+                '<div class="detail-row"><span class="detail-label">연결된 SNS</span><span class="detail-val">' + (u.snsConnected.join(', ') || '없음') + '</span></div>';
+            document.getElementById('userModal').classList.add('show');
+        }
+
+        function closeUserModal(){
+            document.getElementById('userModal').classList.remove('show');
+            selectedUser = null;
+        }
+
+        async function suspendUser(){
+            if(!selectedUser) return;
+            if(!confirm(selectedUser.name + '님의 계정을 정지하시겠습니까?')) return;
+            var result = await SNSAdmin.suspendUser(selectedUser.id, 'admin action');
+            if(result.ok){
+                selectedUser.status = 'suspended';
+                renderUsers();
+                closeUserModal();
+                alert('✅ 계정이 정지되었습니다.');
+            } else {
+                alert('❌ 정지 실패: ' + (result.data && result.data.message || '권한 부족'));
+            }
+        }
+
+        async function suspendUserById(id){
+            var u = sampleUsers.find(function(x){ return x.id === id; });
+            if(!u) return;
+            if(!confirm(u.name + '님의 계정을 정지하시겠습니까?')) return;
+            var result = await SNSAdmin.suspendUser(id, 'admin action');
+            if(result.ok){
+                u.status = 'suspended';
+                renderUsers();
+            } else {
+                alert('❌ 정지 실패: ' + (result.data && result.data.message || '권한 부족'));
+            }
+        }
+
+        function sendEmailToUser(){
+            if(!selectedUser) return;
+            var msg = prompt(selectedUser.email + '로 보낼 메시지:');
+            if(msg){
+                alert('✅ 이메일 발송 기록됨\n\n실제 발송은 백엔드 이메일 서비스 (SendGrid, AWS SES 등) 연동 필요');
+                SNSAdmin.logAdminAction({
+                    action: 'EMAIL_SEND',
+                    severity: 'info',
+                    target: selectedUser.email,
+                    metadata: {message_preview: msg.substring(0, 100)}
+                });
+            }
+        }
+
+        function exportUsers(){
+            var csv = 'email,name,joinedAt,plan,status,lastActive,posts\n';
+            filteredUsers.forEach(function(u){
+                csv += [u.email, u.name, u.joinedAt, u.plan, u.status, u.lastActive, u.posts].join(',') + '\n';
+            });
+            var blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'users_' + new Date().toISOString().slice(0,10) + '.csv';
+            a.click();
+        }
+
+        async function refreshFromSupabase(){
+            await loadUsersFromSupabase();
+            alert('✅ Supabase에서 ' + sampleUsers.length + '명의 회원 데이터를 가져왔습니다.');
+        }
+
+        (async function(){
+            var ok = await SNSAdmin.requireAdmin();
+            if(!ok) return;
+            await loadUsersFromSupabase();
+        })();
+
+        document.getElementById('userModal').addEventListener('click', function(e){
+            if(e.target === this) closeUserModal();
+        });
+    </script>
+</body>
+</html>

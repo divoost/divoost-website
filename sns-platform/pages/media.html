@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>미디어 라이브러리 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .upload-zone{background:#fff;border:2px dashed #cbd5e1;border-radius:14px;padding:36px;text-align:center;margin-bottom:20px;cursor:pointer;transition:.2s;display:block}
+        .upload-zone:hover{border-color:#3b82f6;background:#f8fafc}
+        .upload-zone.dragover{border-color:#3b82f6;background:#eff6ff;border-style:solid}
+        .upload-zone input{display:none}
+        .upload-icon{font-size:2.5rem;margin-bottom:10px}
+        .upload-title{font-size:.95rem;font-weight:700;color:#0f172a;margin-bottom:4px}
+        .upload-sub{font-size:.75rem;color:#94a3b8;line-height:1.6}
+
+        .type-tabs{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+        .type-tab{padding:8px 16px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;font-size:.78rem;font-weight:600;color:#64748b;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px;transition:.2s}
+        .type-tab:hover{border-color:#cbd5e1}
+        .type-tab.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+        .type-tab .count{background:rgba(255,255,255,.25);padding:1px 7px;border-radius:10px;font-size:.7rem;font-weight:700}
+        .type-tab:not(.active) .count{background:#f1f5f9;color:#64748b}
+
+        .upload-types{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:20px}
+        .upload-type-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:.2s;display:block;color:inherit;text-decoration:none}
+        .upload-type-card:hover{border-color:#3b82f6;background:#eff6ff;transform:translateY(-1px);box-shadow:0 4px 12px rgba(59,130,246,.08)}
+        .upload-type-icon{font-size:1.8rem;margin-bottom:6px}
+        .upload-type-name{font-size:.8rem;font-weight:700;color:#0f172a;margin-bottom:2px}
+        .upload-type-desc{font-size:.68rem;color:#94a3b8}
+
+        .media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+        .media-item{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;cursor:pointer;transition:.2s;position:relative}
+        .media-item:hover{box-shadow:0 4px 14px rgba(0,0,0,.08);transform:translateY(-2px);border-color:#cbd5e1}
+        .media-thumb{width:100%;height:130px;background:#f8fafc;display:flex;align-items:center;justify-content:center;font-size:2.2rem;overflow:hidden;position:relative}
+        .media-thumb img{width:100%;height:100%;object-fit:cover}
+        .media-thumb video{width:100%;height:100%;object-fit:cover}
+        .media-thumb .duration{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.7);color:#fff;font-size:10px;padding:2px 6px;border-radius:4px;font-weight:600}
+        .media-type-badge{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.7);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px}
+        .media-body{padding:10px}
+        .media-name{font-size:.74rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600;color:#0f172a}
+        .media-meta{font-size:.66rem;color:#94a3b8;margin-top:2px;display:flex;justify-content:space-between}
+        .media-actions{position:absolute;top:6px;right:6px;display:flex;gap:4px;opacity:0;transition:.2s}
+        .media-item:hover .media-actions{opacity:1}
+        .media-action-btn{width:24px;height:24px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+        .media-action-btn:hover{background:rgba(0,0,0,.85)}
+
+        .empty-state{grid-column:1/-1;text-align:center;color:#94a3b8;padding:60px 20px;background:#fff;border-radius:12px;border:1px dashed #e2e8f0}
+        .empty-state-icon{font-size:3.5rem;margin-bottom:12px;opacity:.5}
+        .empty-state-title{font-size:.95rem;font-weight:700;color:#475569;margin-bottom:6px}
+        .empty-state-sub{font-size:.82rem;color:#94a3b8;line-height:1.6}
+
+        .storage-info{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:14px}
+        .storage-icon{font-size:1.6rem}
+        .storage-text{flex:1}
+        .storage-title{font-size:.82rem;font-weight:700;margin-bottom:4px}
+        .storage-bar{height:6px;background:#f1f5f9;border-radius:3px;overflow:hidden}
+        .storage-bar-fill{height:100%;background:linear-gradient(90deg,#3b82f6,#60a5fa);border-radius:3px;transition:width .3s}
+        .storage-stats{font-size:.74rem;color:#94a3b8;margin-top:4px}
+
+        .url-modal{display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:9999;align-items:center;justify-content:center;padding:20px}
+        .url-modal.show{display:flex}
+        .url-modal-box{background:#fff;border-radius:14px;padding:24px;width:100%;max-width:480px}
+        .url-modal h3{font-size:1rem;margin-bottom:14px}
+        .url-modal input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid #e2e8f0;font-size:.85rem;margin-bottom:12px;font-family:inherit}
+        .url-modal-actions{display:flex;gap:8px;justify-content:flex-end}
+        .url-modal-btn{padding:8px 18px;border-radius:8px;border:none;font-size:.82rem;font-weight:600;cursor:pointer}
+        .url-modal-btn.primary{background:#3b82f6;color:#fff}
+        .url-modal-btn.secondary{background:#f1f5f9;color:#475569}
+
+        .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+        .toast.show{opacity:1;transform:translateY(0)}
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <div class="sidebar-profile" onclick="location.href='settings.html'">
+                <div class="profile-avatar">D</div>
+                <div class="profile-info"><div class="profile-email">divoost@user.com</div><div class="profile-plan">체험플랜 사용 중</div></div>
+                <div class="profile-arrow">▼</div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>🏠</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link active"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="menu-btn" id="menuBtn">☰</button>
+                    <div>
+                        <div class="top-bar-title">🖼 미디어 라이브러리</div>
+                        <div class="top-bar-sub">이미지, 동영상, 오디오, 문서, 링크 등 모든 콘텐츠 자료를 통합 관리합니다</div>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <button class="top-bar-btn" onclick="addSampleMedia()">📸 샘플 추가</button>
+                </div>
+            </header>
+
+            <div class="content">
+
+                <div class="section-title">📁 업로드 유형 선택</div>
+                <div class="upload-types">
+                    <label class="upload-type-card" for="upload-image"><div class="upload-type-icon">🖼️</div><div class="upload-type-name">이미지</div><div class="upload-type-desc">JPG, PNG, WebP</div></label>
+                    <label class="upload-type-card" for="upload-video"><div class="upload-type-icon">🎬</div><div class="upload-type-name">동영상</div><div class="upload-type-desc">MP4, MOV, WebM</div></label>
+                    <label class="upload-type-card" for="upload-gif"><div class="upload-type-icon">🎞️</div><div class="upload-type-name">GIF 애니메이션</div><div class="upload-type-desc">움직이는 이미지</div></label>
+                    <label class="upload-type-card" for="upload-audio"><div class="upload-type-icon">🎵</div><div class="upload-type-name">오디오</div><div class="upload-type-desc">MP3, WAV, M4A</div></label>
+                    <label class="upload-type-card" for="upload-doc"><div class="upload-type-icon">📄</div><div class="upload-type-name">문서</div><div class="upload-type-desc">PDF, DOC, PPT</div></label>
+                    <label class="upload-type-card" for="upload-subtitle"><div class="upload-type-icon">💬</div><div class="upload-type-name">자막</div><div class="upload-type-desc">SRT, VTT</div></label>
+                    <div class="upload-type-card" onclick="openUrlModal()"><div class="upload-type-icon">🔗</div><div class="upload-type-name">URL 링크</div><div class="upload-type-desc">외부 이미지/링크</div></div>
+                    <label class="upload-type-card" for="upload-logo"><div class="upload-type-icon">⭐</div><div class="upload-type-name">워터마크</div><div class="upload-type-desc">로고/브랜드</div></label>
+                </div>
+
+                <input type="file" id="upload-image" accept="image/jpeg,image/png,image/webp" multiple onchange="uploadFiles(this,'image')" style="display:none">
+                <input type="file" id="upload-video" accept="video/mp4,video/quicktime,video/webm" multiple onchange="uploadFiles(this,'video')" style="display:none">
+                <input type="file" id="upload-gif" accept="image/gif" multiple onchange="uploadFiles(this,'gif')" style="display:none">
+                <input type="file" id="upload-audio" accept="audio/mpeg,audio/wav,audio/mp4" multiple onchange="uploadFiles(this,'audio')" style="display:none">
+                <input type="file" id="upload-doc" accept="application/pdf,application/msword,.doc,.docx,.ppt,.pptx" multiple onchange="uploadFiles(this,'document')" style="display:none">
+                <input type="file" id="upload-subtitle" accept=".srt,.vtt,text/vtt" multiple onchange="uploadFiles(this,'subtitle')" style="display:none">
+                <input type="file" id="upload-logo" accept="image/png,image/svg+xml" multiple onchange="uploadFiles(this,'logo')" style="display:none">
+
+                <label class="upload-zone" id="uploadZone" for="upload-image">
+                    <input type="file" accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.ppt,.pptx,.srt,.vtt" multiple onchange="uploadFiles(this,'auto')">
+                    <div class="upload-icon">📤</div>
+                    <div class="upload-title">클릭하거나 파일을 드래그하세요</div>
+                    <div class="upload-sub">모든 형식 지원 · 한 번에 여러 파일 업로드 가능 · 최대 100MB/파일</div>
+                </label>
+
+                <div class="storage-info">
+                    <div class="storage-icon">💾</div>
+                    <div class="storage-text">
+                        <div class="storage-title">저장공간</div>
+                        <div class="storage-bar"><div class="storage-bar-fill" id="storageBar" style="width:5%"></div></div>
+                        <div class="storage-stats" id="storageStats">0MB / ~100MB (localStorage)</div>
+                    </div>
+                </div>
+
+                <div class="type-tabs">
+                    <button class="type-tab active" onclick="filterType('all', this)">📚 전체 <span class="count" id="cnt-all">0</span></button>
+                    <button class="type-tab" onclick="filterType('image', this)">🖼️ 이미지 <span class="count" id="cnt-image">0</span></button>
+                    <button class="type-tab" onclick="filterType('video', this)">🎬 동영상 <span class="count" id="cnt-video">0</span></button>
+                    <button class="type-tab" onclick="filterType('gif', this)">🎞️ GIF <span class="count" id="cnt-gif">0</span></button>
+                    <button class="type-tab" onclick="filterType('audio', this)">🎵 오디오 <span class="count" id="cnt-audio">0</span></button>
+                    <button class="type-tab" onclick="filterType('document', this)">📄 문서 <span class="count" id="cnt-document">0</span></button>
+                    <button class="type-tab" onclick="filterType('subtitle', this)">💬 자막 <span class="count" id="cnt-subtitle">0</span></button>
+                    <button class="type-tab" onclick="filterType('url', this)">🔗 링크 <span class="count" id="cnt-url">0</span></button>
+                    <button class="type-tab" onclick="filterType('logo', this)">⭐ 워터마크 <span class="count" id="cnt-logo">0</span></button>
+                </div>
+
+                <div class="media-grid" id="mediaGrid"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="url-modal" id="urlModal">
+        <div class="url-modal-box">
+            <h3>🔗 URL/링크 추가</h3>
+            <input type="url" id="urlInput" placeholder="https://example.com/image.jpg 또는 외부 링크">
+            <input type="text" id="urlName" placeholder="이름 (선택)">
+            <div class="url-modal-actions">
+                <button class="url-modal-btn secondary" onclick="closeUrlModal()">취소</button>
+                <button class="url-modal-btn primary" onclick="saveUrl()">추가</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+
+        var currentFilter = 'all';
+        var TYPE_INFO = {
+            image: {icon:'🖼️', label:'이미지'},
+            video: {icon:'🎬', label:'동영상'},
+            gif:   {icon:'🎞️', label:'GIF'},
+            audio: {icon:'🎵', label:'오디오'},
+            document: {icon:'📄', label:'문서'},
+            subtitle: {icon:'💬', label:'자막'},
+            url:   {icon:'🔗', label:'링크'},
+            logo:  {icon:'⭐', label:'워터마크'}
+        };
+
+        function detectFileType(file){
+            if(!file || !file.type) return 'document';
+            var t = file.type;
+            if(t === 'image/gif') return 'gif';
+            if(t.indexOf('image/') === 0) return 'image';
+            if(t.indexOf('video/') === 0) return 'video';
+            if(t.indexOf('audio/') === 0) return 'audio';
+            if(t === 'application/pdf') return 'document';
+            if(file.name && file.name.match(/\.(srt|vtt)$/i)) return 'subtitle';
+            return 'document';
+        }
+
+        function uploadFiles(input, forceType){
+            var files = input.files;
+            if(!files || files.length === 0) return;
+            var media = JSON.parse(localStorage.getItem('snsMedia') || '[]');
+            var done = 0;
+            var total = files.length;
+
+            Array.from(files).forEach(function(f, i){
+                if(f.size > 100 * 1024 * 1024){
+                    showToast('⚠️ ' + f.name + ': 100MB 초과 (생략)');
+                    done++;
+                    if(done === total){ renderMedia(); }
+                    return;
+                }
+
+                var type = forceType === 'auto' ? detectFileType(f) : forceType;
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    var item = {
+                        id: Date.now().toString() + '_' + i + Math.random().toString(36).slice(2,7),
+                        name: f.name,
+                        type: type,
+                        mimeType: f.type,
+                        size: f.size,
+                        data: e.target.result,
+                        uploadedAt: new Date().toISOString()
+                    };
+                    media.push(item);
+                    try {
+                        localStorage.setItem('snsMedia', JSON.stringify(media));
+                    } catch(err){
+                        showToast('⚠️ 저장공간 부족: ' + f.name);
+                    }
+                    done++;
+                    if(done === total){
+                        renderMedia();
+                        showToast('✅ ' + total + '개 업로드 완료');
+                    }
+                };
+                reader.readAsDataURL(f);
+            });
+            input.value = '';
+        }
+
+        function openUrlModal(){ document.getElementById('urlModal').classList.add('show'); document.getElementById('urlInput').focus(); }
+        function closeUrlModal(){
+            document.getElementById('urlModal').classList.remove('show');
+            document.getElementById('urlInput').value = '';
+            document.getElementById('urlName').value = '';
+        }
+
+        function saveUrl(){
+            var url = document.getElementById('urlInput').value.trim();
+            var name = document.getElementById('urlName').value.trim();
+            if(!url){ showToast('⚠️ URL을 입력하세요'); return; }
+            var media = JSON.parse(localStorage.getItem('snsMedia') || '[]');
+            var isImage = /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url);
+            media.push({
+                id: Date.now().toString() + Math.random().toString(36).slice(2,7),
+                name: name || (url.split('/').pop() || 'URL 링크'),
+                type: isImage ? 'image' : 'url',
+                url: url,
+                data: isImage ? url : null,
+                size: 0,
+                uploadedAt: new Date().toISOString()
+            });
+            localStorage.setItem('snsMedia', JSON.stringify(media));
+            closeUrlModal();
+            renderMedia();
+            showToast('✅ URL이 추가되었습니다');
+        }
+
+        function addSampleMedia(){
+            var media = JSON.parse(localStorage.getItem('snsMedia') || '[]');
+            for(var i=1; i<=4; i++){
+                media.push({
+                    id: Date.now().toString() + i + Math.random().toString(36).slice(2,7),
+                    name: 'sample_' + i + '.jpg',
+                    type: 'image',
+                    url: 'https://picsum.photos/300/300?random=' + (Date.now()%1000 + i),
+                    data: 'https://picsum.photos/300/300?random=' + (Date.now()%1000 + i),
+                    size: 0, uploadedAt: new Date().toISOString()
+                });
+            }
+            localStorage.setItem('snsMedia', JSON.stringify(media));
+            renderMedia();
+            showToast('✅ 샘플 4개 추가됨');
+        }
+
+        function renderMedia(){
+            var media = JSON.parse(localStorage.getItem('snsMedia') || '[]');
+
+            var counts = {all: media.length};
+            Object.keys(TYPE_INFO).forEach(function(t){ counts[t] = 0; });
+            media.forEach(function(m){ if(counts[m.type] !== undefined) counts[m.type]++; });
+            Object.keys(counts).forEach(function(t){
+                var el = document.getElementById('cnt-' + t);
+                if(el) el.textContent = counts[t];
+            });
+
+            var totalBytes = media.reduce(function(s,m){ return s + (m.size||0) + (m.data && typeof m.data === 'string' && m.data.indexOf('data:') === 0 ? m.data.length : 0); }, 0);
+            var totalMB = (totalBytes / (1024*1024)).toFixed(1);
+            document.getElementById('storageStats').textContent = totalMB + 'MB / ~100MB (localStorage)';
+            document.getElementById('storageBar').style.width = Math.min(100, (totalBytes/(100*1024*1024))*100) + '%';
+
+            var filtered = currentFilter === 'all' ? media : media.filter(function(m){ return m.type === currentFilter; });
+            var grid = document.getElementById('mediaGrid');
+
+            if(filtered.length === 0){
+                grid.innerHTML = '<div class="empty-state">' +
+                    '<div class="empty-state-icon">📭</div>' +
+                    '<div class="empty-state-title">' + (currentFilter === 'all' ? '미디어가 없습니다' : ((TYPE_INFO[currentFilter] && TYPE_INFO[currentFilter].label) || '') + '이(가) 없습니다') + '</div>' +
+                    '<div class="empty-state-sub">위의 업로드 영역을 사용하거나 "샘플 추가"로 시작해보세요</div>' +
+                '</div>';
+                return;
+            }
+
+            grid.innerHTML = filtered.map(function(m){
+                var info = TYPE_INFO[m.type] || TYPE_INFO.document;
+                var thumb = '';
+                if(m.type === 'image' || m.type === 'gif' || m.type === 'logo'){
+                    thumb = '<img src="' + (m.data || m.url || '') + '" alt="" onerror="this.outerHTML=\'<div style=font-size:2.5rem>' + info.icon + '</div>\'">';
+                } else if(m.type === 'video' && m.data){
+                    thumb = '<video src="' + m.data + '" muted></video>';
+                } else if(m.type === 'audio'){
+                    thumb = '<div style="font-size:2.5rem">🎵</div>';
+                } else if(m.type === 'url'){
+                    thumb = '<div style="text-align:center;padding:14px"><div style="font-size:2rem">🔗</div><div style="font-size:.65rem;color:#64748b;margin-top:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:140px">' + escapeHtml(m.url||'') + '</div></div>';
+                } else {
+                    thumb = '<div style="font-size:2.5rem">' + info.icon + '</div>';
+                }
+                var size = m.size > 0 ? Math.round(m.size/1024) + 'KB' : (m.url ? '외부' : '-');
+                return '<div class="media-item" onclick="useMedia(\'' + m.id + '\')">' +
+                    '<div class="media-thumb">' + thumb +
+                        '<span class="media-type-badge">' + info.label + '</span>' +
+                    '</div>' +
+                    '<div class="media-body">' +
+                        '<div class="media-name" title="' + escapeAttr(m.name) + '">' + escapeHtml(m.name) + '</div>' +
+                        '<div class="media-meta"><span>' + size + '</span><span>' + formatDate(m.uploadedAt) + '</span></div>' +
+                    '</div>' +
+                    '<div class="media-actions">' +
+                        '<button class="media-action-btn" title="사용" onclick="event.stopPropagation();useMedia(\'' + m.id + '\')">✓</button>' +
+                        '<button class="media-action-btn" title="삭제" onclick="event.stopPropagation();deleteMedia(\'' + m.id + '\')">×</button>' +
+                    '</div>' +
+                '</div>';
+            }).join('');
+        }
+
+        function filterType(type, el){
+            currentFilter = type;
+            document.querySelectorAll('.type-tab').forEach(function(t){ t.classList.remove('active'); });
+            if(el) el.classList.add('active');
+            renderMedia();
+        }
+
+        function useMedia(id){
+            var media = JSON.parse(localStorage.getItem('snsMedia') || '[]');
+            var item = media.find(function(m){ return m.id === id; });
+            if(!item) return;
+            if(confirm('"' + item.name + '"을(를) 콘텐츠 만들기에서 사용하시겠습니까?')){
+                localStorage.setItem('selectedMedia', JSON.stringify(item));
+                location.href = 'create.html';
+            }
+        }
+
+        function deleteMedia(id){
+            if(!confirm('삭제하시겠습니까?')) return;
+            var media = JSON.parse(localStorage.getItem('snsMedia') || '[]');
+            media = media.filter(function(m){ return m.id !== id; });
+            localStorage.setItem('snsMedia', JSON.stringify(media));
+            renderMedia();
+            showToast('삭제되었습니다');
+        }
+
+        function formatDate(iso){
+            if(!iso) return '';
+            try {
+                var d = new Date(iso);
+                return (d.getMonth()+1) + '/' + d.getDate();
+            } catch(e){ return ''; }
+        }
+
+        function escapeHtml(str){
+            var div = document.createElement('div');
+            div.textContent = str || '';
+            return div.innerHTML;
+        }
+        function escapeAttr(str){
+            return (str||'').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function showToast(msg){
+            var toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show';
+            setTimeout(function(){ toast.className = 'toast'; }, 2500);
+        }
+
+        var zone = document.getElementById('uploadZone');
+        ['dragenter','dragover'].forEach(function(ev){
+            zone.addEventListener(ev, function(e){ e.preventDefault(); zone.classList.add('dragover'); });
+        });
+        ['dragleave','drop'].forEach(function(ev){
+            zone.addEventListener(ev, function(e){ e.preventDefault(); zone.classList.remove('dragover'); });
+        });
+        zone.addEventListener('drop', function(e){
+            e.preventDefault();
+            var fakeInput = {files: e.dataTransfer.files, value: ''};
+            uploadFiles(fakeInput, 'auto');
+        });
+
+        renderMedia();
+    </script>
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script>
+        if("serviceWorker" in navigator){ navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
+    </script>
+</body>
+</html>

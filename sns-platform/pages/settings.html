@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>설정 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .settings-box{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:24px;margin-bottom:20px}
+        .settings-box h2{font-size:1.05rem;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        .ch-section{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:18px;margin-bottom:14px}
+        .ch-section-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+        .ch-section-icon{font-size:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px;flex-shrink:0}
+        .ch-section-icon.fb{background:#e7f0ff}
+        .ch-section-icon.tt{background:#f0f0f0}
+        .ch-section-icon.ig{background:#fce7f3}
+        .ch-section-icon.nb{background:#dcfce7}
+        .ch-section-icon.nc{background:#fef3c7}
+        .ch-section-icon.xhs{background:#fee2e2}
+        .ch-section-icon.dy{background:#f3e8ff}
+        .ch-section-name{font-weight:700;font-size:.95rem}
+        .ch-section-count{margin-left:auto;font-size:.72rem;padding:4px 12px;border-radius:16px;font-weight:600;background:#dbeafe;color:#1e40af}
+        .ch-section-count.empty{background:#f1f5f9;color:#94a3b8}
+        .btn-add-account{padding:8px 16px;border-radius:8px;border:1px dashed #3b82f6;background:#fff;color:#3b82f6;font-size:.78rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.2s;width:100%;justify-content:center;margin-top:8px}
+        .btn-add-account:hover{background:#eff6ff;border-style:solid}
+
+        .account-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin-bottom:10px;transition:.2s}
+        .account-card.expanded{box-shadow:0 4px 12px rgba(0,0,0,.04)}
+        .account-header{display:flex;align-items:center;gap:10px;cursor:pointer}
+        .account-status-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+        .account-status-dot.connected{background:#10b981}
+        .account-status-dot.disconnected{background:#cbd5e1}
+        .account-name{flex:1;font-weight:600;font-size:.88rem}
+        .account-name input{border:none;background:transparent;font:inherit;color:inherit;width:100%;padding:2px 4px;border-radius:4px}
+        .account-name input:focus{outline:none;background:#f1f5f9}
+        .account-meta{font-size:.7rem;color:#94a3b8;margin-top:2px}
+        .account-actions{display:flex;gap:6px}
+        .account-chevron{color:#94a3b8;font-size:14px;transition:transform .2s}
+        .account-card.expanded .account-chevron{transform:rotate(180deg)}
+
+        .account-fields{display:none;margin-top:14px;padding-top:14px;border-top:1px solid #f1f5f9}
+        .account-card.expanded .account-fields{display:block}
+        .account-fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        .account-fields-grid .full{grid-column:1/-1}
+        .field-group{display:flex;flex-direction:column;gap:4px}
+        .field-group label{font-size:.72rem;font-weight:600;color:#64748b}
+        .field-group input,.field-group select{padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.8rem;font-family:inherit;width:100%}
+        .field-group input:focus{border-color:#3b82f6;outline:none;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+        .pw-wrap{position:relative}
+        .pw-wrap input{padding-right:36px}
+        .toggle-pw{position:absolute;right:8px;top:50%;transform:translateY(-50%);cursor:pointer;background:none;border:none;color:#94a3b8}
+
+        .acc-btn{padding:7px 14px;border-radius:6px;border:none;font-size:.74rem;font-weight:600;cursor:pointer;transition:.2s}
+        .acc-btn.primary{background:#3b82f6;color:#fff}
+        .acc-btn.primary:hover{background:#2563eb}
+        .acc-btn.secondary{background:#f1f5f9;color:#475569}
+        .acc-btn.secondary:hover{background:#e2e8f0}
+        .acc-btn.danger{background:#fee2e2;color:#dc2626}
+        .acc-btn.danger:hover{background:#fecdd3}
+        .acc-actions-bar{display:flex;gap:6px;justify-content:flex-end;margin-top:12px}
+
+        .empty-accounts{text-align:center;padding:20px;color:#94a3b8;font-size:.78rem;background:#fff;border-radius:8px;border:1px dashed #e2e8f0}
+
+        .guide-text{font-size:.72rem;color:#475569;line-height:1.6;margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe}
+        .guide-text a{color:#3b82f6;text-decoration:none;font-weight:600}
+
+        .general-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+        .general-field{display:flex;flex-direction:column;gap:4px}
+        .general-field label{font-size:.75rem;font-weight:600;color:#64748b}
+        .general-field select,.general-field input{padding:9px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem}
+
+        .btn-connect{padding:8px 18px;border-radius:8px;border:none;font-size:.78rem;font-weight:600;cursor:pointer}
+        .btn-connect.primary{background:#3b82f6;color:#fff}
+        .btn-connect.secondary{background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0}
+        .btn-connect.danger{background:#fee2e2;color:#dc2626;border:1px solid #fecaca}
+
+        .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+        .toast.show{opacity:1;transform:translateY(0)}
+
+        @media(max-width:768px){.account-fields-grid{grid-template-columns:1fr}.general-row{grid-template-columns:1fr}}
+    </style>
+</head>
+<body data-require-auth="true">
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/ai-gateway.js"></script>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <div class="sidebar-profile">
+                <div class="profile-avatar">U</div>
+                <div class="profile-info"><div class="profile-email">guest@example.com</div><div class="profile-plan">체험플랜 사용 중</div></div>
+                <button onclick="if(confirm('로그아웃 하시겠습니까?'))SNSAuth.logout()" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:11px;font-weight:600;padding:4px 8px;border-radius:4px" title="로그아웃">↪</button>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>🏠</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link active"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">⚙️ 설정</div><div class="top-bar-sub">SNS 채널 멀티 계정 관리</div></div></div></header>
+            <div class="content">
+
+                <!-- Account Info -->
+                <div class="settings-box" style="background:linear-gradient(135deg,#eff6ff,#f0f9ff)">
+                    <h2>👤 내 계정</h2>
+                    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+                        <div id="accountAvatar" style="width:56px;height:56px;border-radius:50%;background:#3b82f6;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">U</div>
+                        <div style="flex:1;min-width:200px">
+                            <div id="accountName" style="font-size:1rem;font-weight:700;color:#0f172a">사용자</div>
+                            <div id="accountEmail" style="font-size:.82rem;color:#64748b;margin-top:2px">guest@example.com</div>
+                            <div id="accountStatus" style="font-size:.72rem;color:#10b981;margin-top:4px;font-weight:600">✓ 이메일 인증 완료</div>
+                        </div>
+                        <button class="btn-connect danger" onclick="if(confirm('로그아웃 하시겠습니까?'))SNSAuth.logout()">↪ 로그아웃</button>
+                    </div>
+                </div>
+
+                <!-- General Settings -->
+                <div class="settings-box">
+                    <h2>🔧 일반 설정</h2>
+                    <div class="general-row">
+                        <div class="general-field">
+                            <label>기본 언어</label>
+                            <select id="genLang">
+                                <option value="ko" selected>🇰🇷 한국어</option>
+                                <option value="en">🇺🇸 English</option>
+                                <option value="zh">🇨🇳 中文</option>
+                                <option value="vi">🇻🇳 Tiếng Việt</option>
+                            </select>
+                        </div>
+                        <div class="general-field">
+                            <label>시간대</label>
+                            <select id="genTimezone">
+                                <option value="Asia/Seoul" selected>🇰🇷 한국 (KST)</option>
+                                <option value="Asia/Ho_Chi_Minh">🇻🇳 베트남 (ICT)</option>
+                                <option value="Asia/Shanghai">🇨🇳 중국 (CST)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SNS Multi-Account Settings -->
+                <div class="settings-box">
+                    <h2>📡 SNS 채널 계정 관리</h2>
+                    <p style="font-size:.8rem;color:#64748b;margin-bottom:16px">각 SNS 플랫폼마다 <strong>여러 계정</strong>을 등록하여 함께 관리할 수 있습니다. (예: Facebook 페이지 여러 개)</p>
+
+                    <div id="channelsContainer"></div>
+                </div>
+
+                <!-- AI Settings -->
+                <div class="settings-box">
+                    <h2>🤖 AI 이미지/영상 생성 기본 설정</h2>
+                    <p style="font-size:.8rem;color:#64748b;margin-bottom:14px">
+                        AI 생성은 <strong>DIVOOST 플랫폼이 제공</strong>합니다. 별도 API 키 입력 불필요.
+                        <a href="billing.html" style="color:#3b82f6;font-weight:600">💳 크레딧 잔액 및 결제 →</a>
+                    </p>
+
+                    <div class="general-row">
+                        <div class="general-field">
+                            <label>기본 이미지 모델</label>
+                            <select id="aiDefaultImage"></select>
+                        </div>
+                        <div class="general-field">
+                            <label>기본 영상 모델</label>
+                            <select id="aiDefaultVideo"></select>
+                        </div>
+                    </div>
+
+                    <div class="general-row">
+                        <div class="general-field">
+                            <label>기본 화면비</label>
+                            <select id="aiDefaultAspect">
+                                <option value="1:1">정사각 1:1 (Instagram Feed)</option>
+                                <option value="9:16">세로 9:16 (Reels/Stories/TikTok)</option>
+                                <option value="16:9">가로 16:9 (YouTube)</option>
+                                <option value="4:5">세로 4:5 (Instagram Feed 권장)</option>
+                            </select>
+                        </div>
+                        <div class="general-field">
+                            <label>텍스트 생성 모델</label>
+                            <select id="aiModel">
+                                <option value="default">기본 (내장 템플릿)</option>
+                                <option value="openai-gpt4">OpenAI GPT-4o (Pro 이상)</option>
+                                <option value="claude-sonnet">Claude 4.6 Sonnet (Pro 이상)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="guide-text">📌 사용 가능한 모델은 현재 구독 플랜에 따라 다릅니다. <a href="billing.html">플랜 변경 / 크레딧 충전</a></div>
+                </div>
+
+                <!-- Data Management -->
+                <div class="settings-box">
+                    <h2>💾 데이터 관리</h2>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap">
+                        <button class="btn-connect secondary" onclick="exportSettings()">📤 설정 내보내기</button>
+                        <button class="btn-connect secondary" onclick="document.getElementById('importFile').click()">📥 설정 가져오기</button>
+                        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importSettings(this)">
+                        <button class="btn-connect danger" onclick="clearAllData()">🗑️ 전체 초기화</button>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:8px;justify-content:flex-end;padding:16px 0">
+                    <button class="btn-connect" style="background:#10b981;color:#fff;padding:10px 28px;font-size:.85rem;font-weight:700;border-radius:8px;border:none" onclick="saveAll()">💾 전체 저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+
+        // ─── 채널 정의 ───
+        var CHANNEL_DEFS = {
+            facebook: {
+                name: 'Facebook', icon: '📘', iconClass: 'fb',
+                desc: '페이지/그룹 자동 포스팅',
+                accountLabel: '페이지',
+                fields: [
+                    {key:'appId', label:'App ID', type:'text', placeholder:'Facebook App ID'},
+                    {key:'appSecret', label:'App Secret', type:'password', placeholder:'App Secret'},
+                    {key:'pageToken', label:'Page Access Token', type:'password', placeholder:'장기 페이지 액세스 토큰', full:true},
+                    {key:'pageId', label:'Page ID', type:'text', placeholder:'페이지 ID'}
+                ],
+                guide: '<a href="https://developers.facebook.com" target="_blank">Facebook Developers</a>에서 페이지 별로 토큰을 발급받아 추가하세요.'
+            },
+            tiktok: {
+                name: 'TikTok', icon: '🎵', iconClass: 'tt',
+                desc: '비즈니스 계정 콘텐츠 관리',
+                accountLabel: '계정',
+                fields: [
+                    {key:'clientKey', label:'Client Key', type:'text', placeholder:'TikTok Client Key'},
+                    {key:'clientSecret', label:'Client Secret', type:'password', placeholder:'Client Secret'},
+                    {key:'accessToken', label:'Access Token', type:'password', placeholder:'OAuth Access Token', full:true},
+                    {key:'openId', label:'Open ID', type:'text', placeholder:'사용자 Open ID'}
+                ],
+                guide: '<a href="https://developers.tiktok.com" target="_blank">TikTok Developers</a>에서 앱 등록 후 Content Posting API 권한 신청.'
+            },
+            instagram: {
+                name: 'Instagram', icon: '📸', iconClass: 'ig',
+                desc: '비즈니스/크리에이터 계정 - 이미지/Reels 자동 발행',
+                accountLabel: '계정',
+                fields: [
+                    {key:'accessToken', label:'Access Token (Facebook Page Token 사용)', type:'password', placeholder:'Facebook Page Access Token 입력', full:true},
+                    {key:'businessAccountId', label:'Business Account ID', type:'text', placeholder:'17841... 로 시작하는 ID'},
+                    {key:'linkedPageId', label:'연결된 Facebook Page ID (선택)', type:'text', placeholder:'IG가 연결된 FB 페이지 ID'},
+                    {key:'username', label:'Username (표시용)', type:'text', placeholder:'@사용자명'}
+                ],
+                guide: 'Instagram 비즈니스/크리에이터 계정만 가능. <strong>Page ID 입력 후 [🔍 연결 테스트]</strong>를 누르면 Business Account ID를 자동으로 찾아드립니다.'
+            },
+            naver_blog: {
+                name: '네이버 블로그', icon: '📗', iconClass: 'nb',
+                desc: '블로그 자동 글쓰기',
+                accountLabel: '블로그',
+                fields: [
+                    {key:'clientId', label:'Client ID', type:'text', placeholder:'네이버 API Client ID'},
+                    {key:'clientSecret', label:'Client Secret', type:'password', placeholder:'Client Secret'},
+                    {key:'accessToken', label:'Access Token (OAuth)', type:'password', placeholder:'네이버 OAuth Access Token', full:true},
+                    {key:'blogId', label:'블로그 ID', type:'text', placeholder:'블로그 아이디'}
+                ],
+                guide: '<a href="https://developers.naver.com" target="_blank">네이버 개발자센터</a>에서 OAuth 2.0 인증 필요.'
+            },
+            naver_cafe: {
+                name: '네이버 카페', icon: '☕', iconClass: 'nc',
+                desc: '카페 자동 글쓰기',
+                accountLabel: '카페',
+                fields: [
+                    {key:'clientId', label:'Client ID', type:'text', placeholder:'네이버 API Client ID'},
+                    {key:'clientSecret', label:'Client Secret', type:'password', placeholder:'Client Secret'},
+                    {key:'cafeId', label:'카페 ID (Club ID)', type:'text', placeholder:'숫자 ID'},
+                    {key:'menuId', label:'게시판 메뉴 ID', type:'text', placeholder:'메뉴 ID'},
+                    {key:'accessToken', label:'Access Token', type:'password', placeholder:'OAuth Token', full:true}
+                ],
+                guide: '네이버 카페 글쓰기 권한 별도 필요.'
+            },
+            xiaohongshu: {
+                name: '샤오홍수 (小红书)', icon: '📕', iconClass: 'xhs',
+                desc: '콘텐츠 발행 및 분석',
+                accountLabel: '계정',
+                fields: [
+                    {key:'appKey', label:'App Key', type:'text', placeholder:'小红书 App Key'},
+                    {key:'appSecret', label:'App Secret', type:'password', placeholder:'App Secret'},
+                    {key:'accessToken', label:'Access Token', type:'password', placeholder:'OAuth Access Token', full:true}
+                ],
+                guide: '<a href="https://open.xiaohongshu.com" target="_blank">小红书 Open Platform</a>에서 등록.'
+            },
+            douyin: {
+                name: '도우인 (抖音)', icon: '🎬', iconClass: 'dy',
+                desc: '숏폼 영상 콘텐츠 관리',
+                accountLabel: '계정',
+                fields: [
+                    {key:'clientKey', label:'Client Key', type:'text', placeholder:'抖音 Client Key'},
+                    {key:'clientSecret', label:'Client Secret', type:'password', placeholder:'Client Secret'},
+                    {key:'accessToken', label:'Access Token', type:'password', placeholder:'OAuth Access Token', full:true},
+                    {key:'openId', label:'Open ID', type:'text', placeholder:'사용자 Open ID'}
+                ],
+                guide: '<a href="https://open.douyin.com" target="_blank">抖音 Open Platform</a>에서 앱 등록.'
+            }
+        };
+
+        // ─── 상태 ───
+        var settings = {};
+
+        function generateAccountId(){
+            return 'acc_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+        }
+
+        // ─── 기존 단일-계정 형식에서 멀티 계정 형식으로 마이그레이션 ───
+        function migrateOldSettings(rawSettings){
+            var migrated = JSON.parse(JSON.stringify(rawSettings));
+            Object.keys(CHANNEL_DEFS).forEach(function(chId){
+                var ch = migrated[chId] || {};
+                if(ch.accounts && Array.isArray(ch.accounts)){
+                    // 이미 새 형식
+                    return;
+                }
+                // 옛 형식: { 'fb-token': 'xxx', 'fb-pageid': 'xxx' } 등
+                var hasAnyValue = Object.keys(ch).some(function(k){ return ch[k] && typeof ch[k] === 'string' && ch[k].trim(); });
+                if(!hasAnyValue){
+                    migrated[chId] = {accounts: []};
+                    return;
+                }
+                // 옛 키 → 새 키 매핑
+                var keyMap = {
+                    facebook: {'fb-appid':'appId', 'fb-secret':'appSecret', 'fb-token':'pageToken', 'fb-pageid':'pageId'},
+                    tiktok: {'tt-clientkey':'clientKey', 'tt-secret':'clientSecret', 'tt-token':'accessToken'},
+                    instagram: {'ig-token':'accessToken', 'ig-accountid':'businessAccountId'},
+                    naver_blog: {'nb-clientid':'clientId', 'nb-secret':'clientSecret', 'nb-token':'accessToken', 'nb-blogid':'blogId'},
+                    naver_cafe: {'nc-clientid':'clientId', 'nc-secret':'clientSecret', 'nc-cafeid':'cafeId', 'nc-menuid':'menuId', 'nc-token':'accessToken'},
+                    xiaohongshu: {'xhs-appkey':'appKey', 'xhs-secret':'appSecret', 'xhs-token':'accessToken'},
+                    douyin: {'dy-clientkey':'clientKey', 'dy-secret':'clientSecret', 'dy-token':'accessToken'}
+                };
+                var account = {id: generateAccountId(), name: CHANNEL_DEFS[chId].name + ' 계정 1'};
+                var mapping = keyMap[chId] || {};
+                Object.keys(ch).forEach(function(oldKey){
+                    var newKey = mapping[oldKey];
+                    if(newKey && ch[oldKey]) account[newKey] = ch[oldKey];
+                });
+                migrated[chId] = {accounts: [account]};
+            });
+            return migrated;
+        }
+
+        function loadSettings(){
+            var raw = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+            settings = migrateOldSettings(raw);
+            // Save migrated version
+            localStorage.setItem('snsSettings', JSON.stringify(settings));
+
+            if(settings.general){
+                if(settings.general.lang) document.getElementById('genLang').value = settings.general.lang;
+                if(settings.general.timezone) document.getElementById('genTimezone').value = settings.general.timezone;
+            }
+            populateAiModels();
+            if(settings.ai){
+                var ai = settings.ai;
+                if(ai.model) document.getElementById('aiModel').value = ai.model;
+                if(ai.defaultAspect) document.getElementById('aiDefaultAspect').value = ai.defaultAspect;
+                if(ai.defaultImageModel) document.getElementById('aiDefaultImage').value = ai.defaultImageModel;
+                if(ai.defaultVideoModel) document.getElementById('aiDefaultVideo').value = ai.defaultVideoModel;
+            }
+            renderAllChannels();
+        }
+
+        function populateAiModels(){
+            if(!window.SNSAI) return;
+            var imgSel = document.getElementById('aiDefaultImage');
+            var vidSel = document.getElementById('aiDefaultVideo');
+            if(imgSel && imgSel.options.length === 0){
+                SNSAI.listImageModels().forEach(function(m){
+                    var opt = document.createElement('option');
+                    opt.value = m.id;
+                    var krw = Math.round((m.chargedCents/100) * 1400);
+                    opt.textContent = m.label + ' (₩' + krw + '/장)' + (m.premium ? ' ⭐Pro+' : '');
+                    imgSel.appendChild(opt);
+                });
+                imgSel.value = 'flux-schnell';
+            }
+            if(vidSel && vidSel.options.length === 0){
+                SNSAI.listVideoModels().forEach(function(m){
+                    var opt = document.createElement('option');
+                    opt.value = m.id;
+                    var krw = Math.round(((m.chargedPerSecCents * m.defaultDuration)/100) * 1400);
+                    opt.textContent = m.label + ' (₩' + krw + '/' + m.defaultDuration + '초)' + (m.premium ? ' ⭐Pro+' : '');
+                    vidSel.appendChild(opt);
+                });
+                vidSel.value = 'pika-2.0';
+            }
+        }
+
+        function renderAllChannels(){
+            var container = document.getElementById('channelsContainer');
+            var html = '';
+            Object.keys(CHANNEL_DEFS).forEach(function(chId){
+                var def = CHANNEL_DEFS[chId];
+                var ch = settings[chId] || {accounts: []};
+                if(!ch.accounts) ch.accounts = [];
+                var count = ch.accounts.length;
+
+                html += '<div class="ch-section">';
+                html += '<div class="ch-section-header">';
+                html += '<div class="ch-section-icon ' + def.iconClass + '">' + def.icon + '</div>';
+                html += '<div><div class="ch-section-name">' + def.name + '</div><div style="font-size:.72rem;color:#94a3b8">' + def.desc + '</div></div>';
+                html += '<div class="ch-section-count ' + (count === 0 ? 'empty' : '') + '">' + count + '개 ' + def.accountLabel + '</div>';
+                html += '</div>';
+
+                if(count === 0){
+                    html += '<div class="empty-accounts">아직 등록된 ' + def.accountLabel + '가 없습니다.</div>';
+                } else {
+                    ch.accounts.forEach(function(acc, idx){
+                        html += renderAccountCard(chId, idx, acc);
+                    });
+                }
+
+                html += '<button class="btn-add-account" onclick="addAccount(\'' + chId + '\')">+ ' + def.accountLabel + ' 추가</button>';
+                if(chId === 'facebook'){
+                    html += '<button class="btn-add-account" style="border-color:#1877f2;color:#1877f2;background:#e7f0ff;margin-top:6px" onclick="connectFacebookOAuth()">🔗 Facebook 계정으로 한 번에 연동 (페이지 + Instagram)</button>';
+                }
+                if(chId === 'instagram'){
+                    html += '<button class="btn-add-account" style="border-color:#ec4899;color:#ec4899;background:#fdf2f8;margin-top:6px" onclick="autoConnectInstagramFromFacebook()">⚡ Facebook 페이지에서 Instagram 자동 연결</button>';
+                }
+                html += '<div class="guide-text">📌 ' + def.guide + '</div>';
+                html += '</div>';
+            });
+            container.innerHTML = html;
+        }
+
+        // ─── Facebook OAuth 한 번에 연동 (페이지 + Instagram 자동 등록) ───
+        var FB_APP_ID = '1774380433543061'; // sns-연동 app
+        var FB_SDK_LOADED = false;
+
+        function loadFbSdk(){
+            return new Promise(function(resolve, reject){
+                if(FB_SDK_LOADED && window.FB){ resolve(); return; }
+                window.fbAsyncInit = function(){
+                    FB.init({
+                        appId: FB_APP_ID,
+                        cookie: true,
+                        xfbml: false,
+                        version: 'v18.0'
+                    });
+                    FB_SDK_LOADED = true;
+                    resolve();
+                };
+                if(document.getElementById('fb-jssdk')){ /* 이미 로드중 */ setTimeout(resolve, 1000); return; }
+                var script = document.createElement('script');
+                script.id = 'fb-jssdk';
+                script.async = true;
+                script.defer = true;
+                script.crossOrigin = 'anonymous';
+                script.src = 'https://connect.facebook.net/ko_KR/sdk.js';
+                script.onerror = function(){ reject(new Error('Facebook SDK 로드 실패')); };
+                document.head.appendChild(script);
+            });
+        }
+
+        window.connectFacebookOAuth = async function(){
+            try {
+                await loadFbSdk();
+            } catch(err){
+                alert('❌ Facebook SDK 로드 실패: ' + err.message + '\n\n네트워크 확인 후 다시 시도하세요.');
+                return;
+            }
+
+            FB.login(function(response){
+                if(!response.authResponse){
+                    alert('⚠ Facebook 로그인이 취소되었거나 권한이 거부되었습니다.');
+                    return;
+                }
+                fetchPagesAndInstagram(response.authResponse.accessToken);
+            }, {
+                scope: 'pages_show_list,pages_manage_posts,pages_read_engagement',
+                return_scopes: true
+            });
+        };
+
+        async function fetchPagesAndInstagram(userToken){
+            try {
+                // 1) 페이지 목록 + 각 페이지 토큰 가져오기
+                var r = await fetch('https://graph.facebook.com/v18.0/me/accounts?fields=id,name,access_token,instagram_business_account{id,username,name}&access_token=' + encodeURIComponent(userToken));
+                var d = await r.json();
+                if(d.error){ alert('❌ ' + d.error.message); return; }
+                if(!d.data || d.data.length === 0){
+                    alert('⚠ 관리 중인 Facebook 페이지가 없습니다.\n\n먼저 Facebook 페이지를 만들고 관리자로 추가해야 합니다.');
+                    return;
+                }
+
+                if(!settings.facebook) settings.facebook = {accounts: []};
+                if(!settings.facebook.accounts) settings.facebook.accounts = [];
+                if(!settings.instagram) settings.instagram = {accounts: []};
+                if(!settings.instagram.accounts) settings.instagram.accounts = [];
+
+                var fbAdded = 0, fbUpdated = 0;
+                var igAdded = 0, igUpdated = 0;
+                var noIg = [];
+
+                d.data.forEach(function(page){
+                    // Facebook 페이지 등록 (이미 있으면 토큰 갱신)
+                    var existingFb = settings.facebook.accounts.find(function(a){ return a.pageId === page.id; });
+                    if(existingFb){
+                        existingFb.pageToken = page.access_token;
+                        existingFb.name = page.name;
+                        fbUpdated++;
+                    } else {
+                        settings.facebook.accounts.push({
+                            id: generateAccountId(),
+                            name: page.name,
+                            pageId: page.id,
+                            pageToken: page.access_token
+                        });
+                        fbAdded++;
+                    }
+
+                    // Instagram 비즈니스 계정 자동 등록
+                    if(page.instagram_business_account && page.instagram_business_account.id){
+                        var igId = page.instagram_business_account.id;
+                        var igUser = page.instagram_business_account.username || '';
+                        var igName = page.instagram_business_account.name || ('@' + igUser);
+                        var existingIg = settings.instagram.accounts.find(function(a){ return a.businessAccountId === igId; });
+                        if(existingIg){
+                            existingIg.accessToken = page.access_token;
+                            existingIg.linkedPageId = page.id;
+                            if(igUser) existingIg.username = igUser;
+                            igUpdated++;
+                        } else {
+                            settings.instagram.accounts.push({
+                                id: generateAccountId(),
+                                name: igName,
+                                accessToken: page.access_token,
+                                businessAccountId: igId,
+                                linkedPageId: page.id,
+                                username: igUser
+                            });
+                            igAdded++;
+                        }
+                    }
+
+                    if(!page.instagram_business_account || !page.instagram_business_account.id){
+                        noIg.push(page.name);
+                    }
+
+                    // ★ 수동 등록된 IG 계정의 토큰도 linkedPageId 기준으로 자동 동기화
+                    settings.instagram.accounts.forEach(function(ig){
+                        if(ig.linkedPageId === page.id && ig.accessToken !== page.access_token){
+                            ig.accessToken = page.access_token;
+                            igUpdated++;
+                        }
+                    });
+                });
+
+                localStorage.setItem('snsSettings', JSON.stringify(settings));
+                renderAllChannels();
+
+                var msg = '🎉 Facebook 한 번에 연동 완료!\n\n';
+                msg += '📘 Facebook 페이지: 신규 ' + fbAdded + ' · 갱신 ' + fbUpdated + '\n';
+                msg += '📸 Instagram 계정: 신규 ' + igAdded + ' · 갱신 ' + igUpdated + '\n';
+                if(noIg.length > 0){
+                    msg += '\n⚠ Instagram 미연결 페이지:\n';
+                    msg += noIg.map(function(n){ return '  · ' + n; }).join('\n');
+                    msg += '\n\n💡 Instagram 비즈니스/크리에이터 계정을 Facebook 페이지에 연결하세요.';
+                }
+                alert(msg);
+            } catch(err){
+                alert('❌ 연동 중 오류: ' + err.message);
+            }
+        }
+
+        // ─── Facebook 페이지에서 Instagram 비즈니스 계정 자동 발견 + 등록 ───
+        window.autoConnectInstagramFromFacebook = async function(){
+            var fbAccounts = ((settings.facebook && settings.facebook.accounts) || [])
+                .filter(function(a){ return a.pageToken && a.pageId; });
+
+            if(fbAccounts.length === 0){
+                alert('⚠ 먼저 Facebook 페이지를 등록하세요.\n\nInstagram 비즈니스 계정은 Facebook 페이지에 연결되어 있어야 합니다.');
+                return;
+            }
+
+            if(!confirm('🔗 등록된 ' + fbAccounts.length + '개 Facebook 페이지에서 Instagram 비즈니스 계정을 자동으로 찾아 등록합니다.\n\n계속하시겠습니까?')) return;
+
+            if(!settings.instagram) settings.instagram = {accounts: []};
+            if(!settings.instagram.accounts) settings.instagram.accounts = [];
+
+            var added = 0;
+            var skipped = 0;
+            var errors = [];
+
+            for(var i = 0; i < fbAccounts.length; i++){
+                var fbAcc = fbAccounts[i];
+                try {
+                    var r = await fetch('https://graph.facebook.com/v18.0/' + encodeURIComponent(fbAcc.pageId) +
+                        '?fields=instagram_business_account{id,username,name,profile_picture_url,followers_count}&access_token=' +
+                        encodeURIComponent(fbAcc.pageToken));
+                    var d = await r.json();
+                    if(d.error){ errors.push(fbAcc.name + ': ' + d.error.message); continue; }
+
+                    if(!d.instagram_business_account || !d.instagram_business_account.id){
+                        errors.push(fbAcc.name + ': Instagram 비즈니스 계정이 연결되어 있지 않음');
+                        continue;
+                    }
+                    var igId = d.instagram_business_account.id;
+
+                    // 이미 등록된 계정인지 확인
+                    var exists = settings.instagram.accounts.some(function(a){ return a.businessAccountId === igId; });
+                    if(exists){ skipped++; continue; }
+
+                    settings.instagram.accounts.push({
+                        id: generateAccountId(),
+                        name: d.instagram_business_account.name || ('@' + (d.instagram_business_account.username || igId)),
+                        accessToken: fbAcc.pageToken,
+                        businessAccountId: igId,
+                        linkedPageId: fbAcc.pageId,
+                        username: d.instagram_business_account.username || ''
+                    });
+                    added++;
+                } catch(err){
+                    errors.push(fbAcc.name + ': ' + err.message);
+                }
+            }
+
+            localStorage.setItem('snsSettings', JSON.stringify(settings));
+            renderAllChannels();
+
+            var msg = '🔗 Instagram 자동 연결 결과\n\n';
+            msg += '✅ 신규 등록: ' + added + '개\n';
+            if(skipped > 0) msg += '↩ 이미 등록됨: ' + skipped + '개\n';
+            if(errors.length > 0) msg += '\n⚠ 연결 실패:\n' + errors.map(function(e){ return '  · ' + e; }).join('\n');
+            if(added === 0 && skipped === 0 && errors.length > 0){
+                msg += '\n\n💡 팁: Facebook 페이지 설정에서 Instagram 비즈니스/크리에이터 계정을 먼저 연결해야 합니다.';
+            }
+            alert(msg);
+        };
+
+        function renderAccountCard(chId, idx, acc){
+            var def = CHANNEL_DEFS[chId];
+            var hasToken = !!(acc.accessToken || acc.pageToken);
+            var meta = [];
+            if(chId === 'facebook' && acc.pageId) meta.push('Page ID: ' + acc.pageId);
+            if(chId === 'instagram'){
+                if(acc.username) meta.push('@' + acc.username.replace(/^@/, ''));
+                else if(acc.businessAccountId) meta.push('IG ID: ' + acc.businessAccountId);
+                if(acc.linkedPageId) meta.push('Page: ' + acc.linkedPageId);
+            }
+            if(chId === 'naver_blog' && acc.blogId) meta.push('Blog: ' + acc.blogId);
+            if(chId === 'naver_cafe' && acc.cafeId) meta.push('Cafe: ' + acc.cafeId);
+            if(chId === 'tiktok' && acc.openId) meta.push('OpenID: ' + acc.openId.slice(0, 12) + '...');
+
+            var html = '<div class="account-card" id="card-' + chId + '-' + idx + '">';
+            html += '<div class="account-header" onclick="toggleAccountCard(\'' + chId + '\',' + idx + ')">';
+            html += '<div class="account-status-dot ' + (hasToken ? 'connected' : 'disconnected') + '"></div>';
+            html += '<div style="flex:1">';
+            html += '<div class="account-name"><input type="text" value="' + escapeAttr(acc.name || (def.name + ' #' + (idx+1))) + '" onclick="event.stopPropagation()" onchange="updateAccountName(\'' + chId + '\',' + idx + ',this.value)"></div>';
+            if(meta.length > 0) html += '<div class="account-meta">' + meta.join(' · ') + '</div>';
+            html += '</div>';
+            html += '<span class="account-chevron">▼</span>';
+            html += '</div>';
+
+            html += '<div class="account-fields">';
+            html += '<div class="account-fields-grid">';
+            def.fields.forEach(function(field){
+                var val = acc[field.key] || '';
+                var inputId = 'fld-' + chId + '-' + idx + '-' + field.key;
+                html += '<div class="field-group' + (field.full ? ' full' : '') + '">';
+                html += '<label>' + field.label + '</label>';
+                if(field.type === 'password'){
+                    html += '<div class="pw-wrap">';
+                    html += '<input type="password" id="' + inputId + '" value="' + escapeAttr(val) + '" placeholder="' + escapeAttr(field.placeholder) + '" oninput="updateAccountField(\'' + chId + '\',' + idx + ',\'' + field.key + '\',this.value)">';
+                    html += '<button class="toggle-pw" onclick="togglePw(\'' + inputId + '\')">👁</button>';
+                    html += '</div>';
+                } else {
+                    html += '<input type="' + field.type + '" id="' + inputId + '" value="' + escapeAttr(val) + '" placeholder="' + escapeAttr(field.placeholder) + '" oninput="updateAccountField(\'' + chId + '\',' + idx + ',\'' + field.key + '\',this.value)">';
+                }
+                html += '</div>';
+            });
+            html += '</div>';
+
+            html += '<div class="acc-actions-bar">';
+            html += '<button class="acc-btn danger" onclick="removeAccount(\'' + chId + '\',' + idx + ')">🗑 삭제</button>';
+            html += '<button class="acc-btn secondary" onclick="saveAccount(\'' + chId + '\',' + idx + ')">💾 저장</button>';
+            html += '<button class="acc-btn primary" onclick="testAccount(\'' + chId + '\',' + idx + ')">🔍 연결 테스트</button>';
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
+
+            return html;
+        }
+
+        function escapeAttr(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+        function togglePw(id){
+            var el = document.getElementById(id);
+            if(el) el.type = el.type === 'password' ? 'text' : 'password';
+        }
+
+        function toggleAccountCard(chId, idx){
+            var card = document.getElementById('card-' + chId + '-' + idx);
+            if(card) card.classList.toggle('expanded');
+        }
+
+        function addAccount(chId){
+            if(!settings[chId]) settings[chId] = {accounts: []};
+            if(!settings[chId].accounts) settings[chId].accounts = [];
+            var def = CHANNEL_DEFS[chId];
+            settings[chId].accounts.push({
+                id: generateAccountId(),
+                name: def.name + ' ' + def.accountLabel + ' #' + (settings[chId].accounts.length + 1)
+            });
+            localStorage.setItem('snsSettings', JSON.stringify(settings));
+            renderAllChannels();
+            // 새로 추가된 카드 펼치기
+            setTimeout(function(){
+                var newIdx = settings[chId].accounts.length - 1;
+                var card = document.getElementById('card-' + chId + '-' + newIdx);
+                if(card) card.classList.add('expanded');
+            }, 50);
+            showToast('✅ ' + def.accountLabel + ' 추가됨');
+        }
+
+        function removeAccount(chId, idx){
+            var acc = settings[chId].accounts[idx];
+            if(!confirm('"' + (acc.name || '계정') + '"을(를) 삭제하시겠습니까?')) return;
+            settings[chId].accounts.splice(idx, 1);
+            localStorage.setItem('snsSettings', JSON.stringify(settings));
+            renderAllChannels();
+            showToast('삭제됨');
+        }
+
+        function updateAccountName(chId, idx, name){
+            if(settings[chId] && settings[chId].accounts[idx]){
+                settings[chId].accounts[idx].name = name;
+            }
+        }
+
+        function updateAccountField(chId, idx, fieldKey, value){
+            if(settings[chId] && settings[chId].accounts[idx]){
+                settings[chId].accounts[idx][fieldKey] = value;
+            }
+        }
+
+        function saveAccount(chId, idx){
+            // 토큰이 있으면 저장 시각 기록 (수칙 5 보강 - 만료 자동 정리)
+            var acc = settings[chId] && settings[chId].accounts && settings[chId].accounts[idx];
+            if(acc && (acc.accessToken || acc.pageToken)){
+                acc._savedAt = Date.now();
+            }
+            localStorage.setItem('snsSettings', JSON.stringify(settings));
+            renderAllChannels();
+            // 다시 펼침
+            setTimeout(function(){
+                var card = document.getElementById('card-' + chId + '-' + idx);
+                if(card) card.classList.add('expanded');
+            }, 50);
+            showToast('✅ 저장됨');
+        }
+
+        async function testAccount(chId, idx){
+            var acc = settings[chId].accounts[idx];
+            if(!acc) return;
+
+            if(chId === 'facebook'){
+                var token = acc.pageToken;
+                var pageId = acc.pageId;
+                if(!token){ alert('⚠️ Page Access Token을 입력하세요'); return; }
+                var report = '🔍 Facebook 연결 테스트\n계정: ' + (acc.name || '') + '\n\n';
+                try {
+                    var r = await fetch('https://graph.facebook.com/v18.0/me?fields=id,name&access_token=' + encodeURIComponent(token));
+                    var d = await r.json();
+                    if(d.error){ report += '❌ ' + d.error.message; }
+                    else {
+                        report += '✅ 토큰 유효\n페이지: ' + d.name + ' (ID: ' + d.id + ')\n';
+                        if(pageId){
+                            var r2 = await fetch('https://graph.facebook.com/v18.0/' + encodeURIComponent(pageId) + '?fields=id,name,fan_count&access_token=' + encodeURIComponent(token));
+                            var d2 = await r2.json();
+                            if(d2.error){ report += '⚠️ Page ID 확인 실패: ' + d2.error.message; }
+                            else { report += '✅ Page: ' + d2.name + ' (팬 ' + (d2.fan_count || 0) + '명)'; }
+                        }
+                    }
+                } catch(err){ report += '❌ ' + err.message; }
+                alert(report);
+            } else if(chId === 'instagram'){
+                var token = acc.accessToken;
+                var accountId = acc.businessAccountId;
+                var pageId = acc.linkedPageId;
+                if(!token){ alert('⚠️ Access Token을 입력하세요'); return; }
+                var report = '🔍 Instagram 연결 테스트\n계정: ' + (acc.name || '') + '\n\n';
+                try {
+                    // 1) Business Account ID 자동 발견 (Page ID 입력시)
+                    if(!accountId && pageId){
+                        report += '🔎 Page에서 Instagram 계정 검색중...\n';
+                        var rp = await fetch('https://graph.facebook.com/v18.0/' + encodeURIComponent(pageId) + '?fields=instagram_business_account{id,username}&access_token=' + encodeURIComponent(token));
+                        var dp = await rp.json();
+                        if(dp.error){ report += '❌ ' + dp.error.message; alert(report); return; }
+                        if(dp.instagram_business_account && dp.instagram_business_account.id){
+                            accountId = dp.instagram_business_account.id;
+                            settings[chId].accounts[idx].businessAccountId = accountId;
+                            if(dp.instagram_business_account.username){
+                                settings[chId].accounts[idx].username = dp.instagram_business_account.username;
+                            }
+                            localStorage.setItem('snsSettings', JSON.stringify(settings));
+                            report += '✅ 자동 발견: ID=' + accountId + '\n';
+                            renderAllChannels();
+                        } else {
+                            report += '❌ 이 Page에 Instagram 비즈니스 계정이 연결되어 있지 않습니다.\n';
+                            alert(report); return;
+                        }
+                    }
+                    if(!accountId){
+                        report += '⚠️ Business Account ID 또는 Page ID 중 하나는 입력해야 합니다.';
+                        alert(report); return;
+                    }
+                    // 2) IG 계정 정보 조회
+                    var r = await fetch('https://graph.facebook.com/v18.0/' + encodeURIComponent(accountId) + '?fields=id,username,name,followers_count,media_count&access_token=' + encodeURIComponent(token));
+                    var d = await r.json();
+                    if(d.error){
+                        report += '❌ ' + d.error.message;
+                    } else {
+                        report += '✅ 연결 성공\n';
+                        report += '· 계정: @' + (d.username || '?') + '\n';
+                        report += '· ID: ' + d.id + '\n';
+                        if(d.followers_count !== undefined) report += '· 팔로워: ' + d.followers_count + '\n';
+                        if(d.media_count !== undefined) report += '· 게시물 수: ' + d.media_count + '\n';
+                        report += '\n📌 발행시 Supabase Storage(sns-media 버킷)에 미디어가 업로드됩니다.';
+                    }
+                } catch(err){ report += '❌ ' + err.message; }
+                alert(report);
+            } else {
+                alert('✅ ' + acc.name + ' 설정 저장됨\n\n실제 연결 테스트는 해당 SNS 백엔드 연동 후 가능합니다.');
+            }
+        }
+
+        function saveAll(){
+            settings.general = {
+                lang: document.getElementById('genLang').value,
+                timezone: document.getElementById('genTimezone').value
+            };
+            settings.ai = {
+                model: document.getElementById('aiModel').value,
+                defaultImageModel: document.getElementById('aiDefaultImage').value,
+                defaultVideoModel: document.getElementById('aiDefaultVideo').value,
+                defaultAspect: document.getElementById('aiDefaultAspect').value
+            };
+            localStorage.setItem('snsSettings', JSON.stringify(settings));
+            showToast('✅ 전체 설정 저장 완료');
+        }
+
+        function exportSettings(){
+            var blob = new Blob([JSON.stringify(settings, null, 2)], {type: 'application/json'});
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'sns-settings-' + new Date().toISOString().slice(0,10) + '.json';
+            a.click();
+        }
+
+        function importSettings(input){
+            var file = input.files[0];
+            if(!file) return;
+            var reader = new FileReader();
+            reader.onload = function(e){
+                try {
+                    var data = JSON.parse(e.target.result);
+                    settings = migrateOldSettings(data);
+                    localStorage.setItem('snsSettings', JSON.stringify(settings));
+                    loadSettings();
+                    showToast('✅ 설정 가져옴');
+                } catch(err){ alert('❌ 잘못된 파일 형식'); }
+            };
+            reader.readAsText(file);
+        }
+
+        function clearAllData(){
+            if(!confirm('⚠️ 모든 데이터가 삭제됩니다. 계속하시겠습니까?')) return;
+            if(!confirm('정말로 모두 삭제하시겠습니까?')) return;
+            ['snsSettings','snsPosts','snsMedia','snsSchedules','aiWriterDrafts'].forEach(function(k){
+                localStorage.removeItem(k);
+            });
+            location.reload();
+        }
+
+        function showToast(msg){
+            var toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show';
+            setTimeout(function(){ toast.className = 'toast'; }, 2500);
+        }
+
+        // ─── 계정 정보 로드 ───
+        (function(){
+            if(window.SNSAuth){
+                var user = SNSAuth.getUser();
+                if(user){
+                    var name = (user.user_metadata && user.user_metadata.full_name) || user.email.split('@')[0];
+                    var email = user.email || '';
+                    var initial = (name || email).charAt(0).toUpperCase();
+                    document.getElementById('accountName').textContent = name;
+                    document.getElementById('accountEmail').textContent = email;
+                    document.getElementById('accountAvatar').textContent = initial;
+                }
+            }
+        })();
+
+        loadSettings();
+
+        // 만료 임박 토큰 알림 (수칙 5 보강)
+        (function checkExpiringTokens(){
+            if(!window.SNSSecureStorage) return;
+            var soon = window.SNSSecureStorage.getExpiringSoon();
+            if(soon.length === 0) return;
+            var banner = document.createElement('div');
+            banner.style.cssText = 'background:#fef3c7;border:1px solid #fbbf24;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#78350f';
+            banner.innerHTML = '⏰ <strong>토큰 만료 임박</strong>: ' +
+                soon.map(function(s){ return s.channel + '/' + s.account + ' (' + s.remainingMinutes + '분 남음)'; }).join(', ') +
+                '<br><span style="font-size:.78rem">만료되면 자동 삭제됩니다. 미리 갱신해주세요.</span>';
+            var content = document.querySelector('.content');
+            if(content && content.firstChild) content.insertBefore(banner, content.firstChild);
+        })();
+    </script>
+    <script>
+        if("serviceWorker" in navigator){ navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
+    </script>
+</body>
+</html>

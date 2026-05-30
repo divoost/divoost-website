@@ -35,10 +35,13 @@
                 <div class="sidebar-section"><div class="sidebar-section-title">글로벌 마켓</div><div style="padding:0 12px 12px;display:flex;gap:6px;flex-wrap:wrap"><span class="platform-badge active" style="background:#EE4D2D;color:#fff;border:none;font-size:10px;padding:3px 8px">Shopee</span><span class="platform-badge active" style="background:#0F146D;color:#fff;border:none;font-size:10px;padding:3px 8px">Lazada</span><span class="platform-badge active" style="background:#000;color:#fff;border:none;font-size:10px;padding:3px 8px">TikTok</span><span class="platform-badge active" style="background:#000;color:#fff;border:none;font-size:10px;padding:3px 8px">SHEIN</span><span class="platform-badge active" style="background:#FF9900;color:#fff;border:none;font-size:10px;padding:3px 8px">Amazon</span><span class="platform-badge active" style="background:#F05A28;color:#fff;border:none;font-size:10px;padding:3px 8px">Temu</span></div></div>
                 <div class="sidebar-section"><div class="sidebar-section-title">대시보드</div><a href="index.html" class="sidebar-link active"><span class="sidebar-link-icon">📊</span> 종합 현황</a><a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품</a><a href="trends.html" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a><a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a><a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 &amp; 리뷰</a><a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a></div>
                 <div class="sidebar-section"><div class="sidebar-section-title">관리</div><a href="ai-sourcing.html" class="sidebar-link"><span class="sidebar-link-icon">🤖</span> AI 소싱</a>
-                    <a href="admin.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a><a href="scraper.html" class="sidebar-link"><span class="sidebar-link-icon">🕷</span> 스크래퍼</a>
+                    <a href="admin.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a><a href="keyword-analysis.html" class="sidebar-link"><span class="sidebar-link-icon">🔑</span> 키워드 분석</a>
+                    <a href="listing.html" class="sidebar-link"><span class="sidebar-link-icon">📤</span> 자동 등록</a>
+                    <a href="scraper.html" class="sidebar-link"><span class="sidebar-link-icon">🕷</span> 스크래퍼</a>
                     <a href="db-view.html" class="sidebar-link"><span class="sidebar-link-icon">💾</span> DB 데이터</a>
                     <a href="live-search.html" class="sidebar-link"><span class="sidebar-link-icon">🔴</span> 실시간 검색</a></div>
-                <div class="sidebar-section"><div class="sidebar-section-title">바로가기</div><a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span> 메인 홈</a><a href="../ezcomet/index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> EZCOMET</a></div>
+                <div class="sidebar-section"><div class="sidebar-section-title">바로가기</div><a href="../sns-platform/index.html" class="sidebar-link"><span class="sidebar-link-icon">📱</span> SNS 플랫폼</a>
+                    <a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span> 메인 홈</a><a href="../ezcomet/index.html" class="sidebar-link"><span class="sidebar-link-icon">🏠</span> EZCOMET</a></div>
             </nav>
         </aside>
         <div class="main-content">
@@ -235,7 +238,9 @@
 
             // 쇼피/라자다/틱톡샵 검색
             var seaKW=[
-                {name:'Shopee',query:keyword+' shopee',country:'sg',key:'shopee'},
+                {name:'Shopee VN',query:keyword+' shopee vietnam',country:'vn',key:'shopee'},
+                {name:'Shopee ID',query:keyword+' shopee indonesia',country:'id',key:'shopee'},
+                {name:'Shopee TH',query:keyword+' shopee thailand',country:'th',key:'shopee'},
                 {name:'Lazada',query:keyword+' lazada',country:'sg',key:'lazada'},
                 {name:'TikTok Shop',query:keyword+' tiktok shop',country:'us',key:'tiktok'},
                 {name:'SHEIN',query:keyword+' shein',country:'us',key:'shein'},

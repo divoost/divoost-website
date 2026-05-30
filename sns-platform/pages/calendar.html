@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>콘텐츠 캘린더 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+        .cal-header h2{font-size:1.1rem}
+        .cal-nav{display:flex;gap:8px;align-items:center}
+        .cal-nav button{padding:6px 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:.8rem}
+        .cal-nav span{font-size:.9rem;font-weight:700;min-width:120px;text-align:center}
+        .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden}
+        .cal-day-header{padding:8px;text-align:center;font-size:.7rem;font-weight:600;color:#94a3b8;background:#f8fafc}
+        .cal-day{min-height:80px;padding:6px;border:1px solid #f1f5f9;cursor:pointer;transition:.2s;position:relative}
+        .cal-day:hover{background:#f8fafc}
+        .cal-day.today{background:rgba(59,130,246,.05);border-color:#3b82f6}
+        .cal-day.other{color:#cbd5e1}
+        .cal-date{font-size:.72rem;font-weight:600;margin-bottom:4px}
+        .cal-post{font-size:.6rem;padding:2px 4px;border-radius:3px;background:#3b82f6;color:#fff;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+        .cal-post.draft{background:#f59e0b}
+        .cal-post.scheduled{background:#8b5cf6}
+        .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+        .sum-card{background:#fff;border-radius:10px;padding:14px;text-align:center;border:1px solid #e2e8f0}
+        .sum-val{font-size:1.4rem;font-weight:800}
+        .sum-label{font-size:.7rem;color:#94a3b8;margin-top:2px}
+        @media(max-width:768px){.cal-day{min-height:50px}.summary{grid-template-columns:1fr 1fr}}
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link active"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">📅 콘텐츠 캘린더</div><div class="top-bar-sub">월별 콘텐츠 일정 관리</div></div></div><div class="top-bar-right"><button class="btn btn-primary" onclick="location.href='create.html'">✍️ 새 콘텐츠</button></div></header>
+            <div class="content">
+                <div class="summary" id="summary"></div>
+                <div class="cal-header">
+                    <h2 id="calTitle"></h2>
+                    <div class="cal-nav">
+                        <button onclick="changeMonth(-1)">◀ 이전</button>
+                        <span id="calMonth"></span>
+                        <button onclick="changeMonth(1)">다음 ▶</button>
+                    </div>
+                </div>
+                <div class="cal-grid" id="calGrid"></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
+        var currentDate=new Date();
+
+        function renderCalendar(){
+            var year=currentDate.getFullYear(),month=currentDate.getMonth();
+            document.getElementById('calMonth').textContent=year+'년 '+(month+1)+'월';
+            var posts=JSON.parse(localStorage.getItem('snsPosts')||'[]');
+            var schedules=JSON.parse(localStorage.getItem('snsSchedules')||'[]');
+
+            // Summary
+            var thisMonth=posts.filter(function(p){return p.date&&p.date.startsWith(year+'-'+String(month+1).padStart(2,'0'))});
+            var published=thisMonth.filter(function(p){return p.status==='published'}).length;
+            var drafts=thisMonth.filter(function(p){return p.status==='draft'}).length;
+            var scheduled=schedules.filter(function(s){return s.date&&s.date.startsWith(year+'-'+String(month+1).padStart(2,'0'))}).length;
+            document.getElementById('summary').innerHTML='<div class="sum-card"><div class="sum-val">'+thisMonth.length+'</div><div class="sum-label">이번 달 콘텐츠</div></div><div class="sum-card"><div class="sum-val" style="color:#10b981">'+published+'</div><div class="sum-label">발행됨</div></div><div class="sum-card"><div class="sum-val" style="color:#f59e0b">'+drafts+'</div><div class="sum-label">임시저장</div></div><div class="sum-card"><div class="sum-val" style="color:#8b5cf6">'+scheduled+'</div><div class="sum-label">예약</div></div>';
+
+            // Calendar
+            var firstDay=new Date(year,month,1).getDay();
+            var daysInMonth=new Date(year,month+1,0).getDate();
+            var today=new Date();
+            var html='';
+            ['일','월','화','수','목','금','토'].forEach(function(d){html+='<div class="cal-day-header">'+d+'</div>'});
+
+            for(var i=0;i<firstDay;i++){
+                var prevDay=new Date(year,month,0).getDate()-firstDay+i+1;
+                html+='<div class="cal-day other"><div class="cal-date">'+prevDay+'</div></div>';
+            }
+            for(var d=1;d<=daysInMonth;d++){
+                var dateStr=year+'-'+String(month+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+                var isToday=today.getFullYear()===year&&today.getMonth()===month&&today.getDate()===d;
+                var dayPosts=posts.filter(function(p){return p.date===dateStr});
+                var daySch=schedules.filter(function(s){return s.date===dateStr});
+                html+='<div class="cal-day'+(isToday?' today':'')+'"><div class="cal-date">'+d+'</div>';
+                dayPosts.forEach(function(p){html+='<div class="cal-post '+(p.status||'')+'">'+p.title.substring(0,10)+'</div>'});
+                daySch.forEach(function(s){html+='<div class="cal-post scheduled">⏰ '+s.time+'</div>'});
+                html+='</div>';
+            }
+            var remaining=7-((firstDay+daysInMonth)%7);
+            if(remaining<7){for(var r=1;r<=remaining;r++){html+='<div class="cal-day other"><div class="cal-date">'+r+'</div></div>'}}
+
+            document.getElementById('calGrid').innerHTML=html;
+        }
+
+        function changeMonth(dir){
+            currentDate.setMonth(currentDate.getMonth()+dir);
+            renderCalendar();
+        }
+
+        renderCalendar();
+    </script>
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script>
+        if("serviceWorker" in navigator){ navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
+    </script>
+</body>
+</html>

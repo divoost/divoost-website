@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <script>
+        // SNS 플랫폼 인증 콜백 감지 및 리다이렉트 (Supabase Site URL 미설정 시 fallback)
+        (function(){
+            var s = window.location.search, h = window.location.hash;
+            var hasAuthParam = /[?&](code|token|access_token|refresh_token|error|error_description|type)=/.test(s + '&' + h);
+            if(hasAuthParam){
+                var target = '/divoost-website/sns-platform/auth.html' + s + h;
+                window.location.replace(target);
+            }
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="EZCOMET - 멀티채널 이커머스 통합 운영 플랫폼. 주문, 재고, 송장, 물류를 하나로.">

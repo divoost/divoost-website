@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>분석 리포트 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        /* Period Selector */
+        .period-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+        .period-btn{padding:8px 18px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;font-size:.82rem;font-weight:600;cursor:pointer;transition:.2s}
+        .period-btn:hover{background:#f1f5f9}
+        .period-btn.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+        .period-bar .date-range{margin-left:auto;font-size:.78rem;color:#64748b;padding:8px 12px;background:#fff;border-radius:8px;border:1px solid #e2e8f0}
+
+        /* KPI Cards override for 6 columns */
+        .analytics-kpi{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:24px}
+        .analytics-kpi .kpi-card{position:relative;overflow:hidden}
+        .analytics-kpi .kpi-card .kpi-trend{font-size:.7rem;margin-top:4px;font-weight:600}
+        .analytics-kpi .kpi-card .kpi-trend.up{color:#10b981}
+        .analytics-kpi .kpi-card .kpi-trend.down{color:#ef4444}
+
+        /* Chart Area */
+        .chart-section{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px;margin-bottom:24px}
+        .chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+        .chart-header h3{font-size:.95rem;font-weight:700}
+        .chart-legend{display:flex;gap:16px;font-size:.72rem;color:#64748b}
+        .chart-legend span::before{content:'';display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:middle}
+        .chart-legend .leg-likes::before{background:#3b82f6}
+        .chart-legend .leg-comments::before{background:#10b981}
+        .chart-legend .leg-shares::before{background:#f59e0b}
+        .chart-legend .leg-views::before{background:#8b5cf6}
+        .chart-bars{display:flex;align-items:flex-end;gap:6px;height:200px;padding:0 4px}
+        .chart-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
+        .chart-col-bars{display:flex;gap:2px;align-items:flex-end;width:100%;height:100%;justify-content:center}
+        .chart-bar{width:25%;border-radius:3px 3px 0 0;min-height:2px;transition:height .4s ease;cursor:pointer;position:relative}
+        .chart-bar:hover{opacity:.8}
+        .chart-bar.bar-likes{background:linear-gradient(180deg,#3b82f6,#60a5fa)}
+        .chart-bar.bar-comments{background:linear-gradient(180deg,#10b981,#34d399)}
+        .chart-bar.bar-shares{background:linear-gradient(180deg,#f59e0b,#fbbf24)}
+        .chart-bar.bar-views{background:linear-gradient(180deg,#8b5cf6,#a78bfa)}
+        .chart-label{font-size:.65rem;color:#94a3b8;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center}
+        .chart-tooltip{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:4px 8px;border-radius:4px;font-size:.65rem;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s}
+        .chart-bar:hover .chart-tooltip{opacity:1}
+
+        /* Channel Breakdown Table */
+        .table-section{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;margin-bottom:24px}
+        .table-section h3{font-size:.95rem;font-weight:700;padding:16px 20px;border-bottom:1px solid #e2e8f0}
+        .data-table{width:100%;border-collapse:collapse;font-size:.8rem}
+        .data-table th{background:#f8fafc;padding:10px 16px;text-align:left;font-weight:600;font-size:.72rem;color:#64748b;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid #e2e8f0}
+        .data-table td{padding:10px 16px;border-bottom:1px solid #f1f5f9}
+        .data-table tr:last-child td{border-bottom:none}
+        .data-table tr:hover td{background:#f8fafc}
+        .data-table .ch-cell{display:flex;align-items:center;gap:8px;font-weight:600}
+        .data-table .rate-bar{width:60px;height:6px;background:#e2e8f0;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:6px}
+        .data-table .rate-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#3b82f6,#60a5fa)}
+
+        /* Top Posts */
+        .top-posts{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;margin-bottom:24px}
+        .top-posts h3{font-size:.95rem;font-weight:700;padding:16px 20px;border-bottom:1px solid #e2e8f0}
+        .top-post-item{display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid #f1f5f9}
+        .top-post-item:last-child{border-bottom:none}
+        .top-post-rank{width:28px;height:28px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;flex-shrink:0}
+        .top-post-rank.rank-1{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#fff}
+        .top-post-rank.rank-2{background:linear-gradient(135deg,#94a3b8,#cbd5e1);color:#fff}
+        .top-post-rank.rank-3{background:linear-gradient(135deg,#b45309,#d97706);color:#fff}
+        .top-post-info{flex:1;min-width:0}
+        .top-post-title{font-size:.85rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .top-post-meta{font-size:.7rem;color:#94a3b8;margin-top:2px}
+        .top-post-stats{display:flex;gap:14px;font-size:.75rem;color:#64748b;flex-shrink:0}
+
+        /* Export Button */
+        .export-section{display:flex;justify-content:flex-end;gap:8px;margin-bottom:24px}
+        .btn-export{padding:10px 20px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;font-size:.82rem;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px}
+        .btn-export:hover{background:#f1f5f9;border-color:#cbd5e1}
+        .btn-export.primary{background:#3b82f6;color:#fff;border-color:#3b82f6}
+        .btn-export.primary:hover{background:#2563eb}
+
+        .empty-state{text-align:center;padding:60px 20px;color:#94a3b8}
+        .empty-state .empty-icon{font-size:3rem;margin-bottom:12px}
+        .empty-state .empty-title{font-size:1rem;font-weight:600;margin-bottom:8px;color:#64748b}
+
+        @media(max-width:768px){
+            .analytics-kpi{grid-template-columns:repeat(3,1fr)}
+            .chart-bars{height:150px}
+            .data-table{font-size:.72rem}
+            .data-table th,.data-table td{padding:8px 10px}
+            .top-post-stats{flex-direction:column;gap:2px;font-size:.68rem}
+            .period-bar{flex-direction:column;align-items:stretch}
+            .period-bar .date-range{margin-left:0;text-align:center}
+            .export-section{flex-direction:column}
+        }
+        @media(max-width:480px){
+            .analytics-kpi{grid-template-columns:repeat(2,1fr)}
+            .chart-bars{height:120px;gap:3px}
+        }
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link active"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="menu-btn" id="menuBtn">☰</button>
+                    <div><div class="top-bar-title">📈 분석 리포트</div><div class="top-bar-sub">채널별 성과 분석</div></div>
+                </div>
+                <div class="top-bar-right">
+                    <button class="btn btn-primary" onclick="fetchInstagramInsights()" id="btnIgInsights" style="background:#ec4899;border-color:#ec4899">📸 Instagram 인사이트</button>
+                    <button class="btn btn-primary" onclick="generateSampleData()">🧪 샘플 데이터 생성</button>
+                </div>
+            </header>
+            <div class="content">
+                <!-- Instagram Insights Panel -->
+                <div id="igInsightsPanel" style="display:none;background:linear-gradient(135deg,#fce7f3,#fef3c7);border:1px solid #f9a8d4;border-radius:14px;padding:18px;margin-bottom:18px">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+                        <h3 style="font-size:1rem;margin:0;color:#be185d">📸 Instagram 인사이트 (실시간)</h3>
+                        <button onclick="document.getElementById('igInsightsPanel').style.display='none'" style="background:none;border:none;color:#94a3b8;font-size:18px;cursor:pointer">×</button>
+                    </div>
+                    <div id="igInsightsContent"></div>
+                </div>
+
+                <!-- Period Selector -->
+                <div class="period-bar">
+                    <button class="period-btn active" data-period="daily" onclick="setPeriod('daily')">일간</button>
+                    <button class="period-btn" data-period="weekly" onclick="setPeriod('weekly')">주간</button>
+                    <button class="period-btn" data-period="monthly" onclick="setPeriod('monthly')">월간</button>
+                    <div class="date-range" id="dateRange">-</div>
+                </div>
+
+                <!-- KPI Summary -->
+                <div class="analytics-kpi" id="kpiArea">
+                    <div class="kpi-card"><div class="kpi-icon">📝</div><div class="kpi-value" id="kTotal">0</div><div class="kpi-label">총 포스팅</div><div class="kpi-trend up" id="kTotalTrend">-</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">❤️</div><div class="kpi-value" id="kLikes">0</div><div class="kpi-label">총 좋아요</div><div class="kpi-trend up" id="kLikesTrend">-</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">💬</div><div class="kpi-value" id="kComments">0</div><div class="kpi-label">총 댓글</div><div class="kpi-trend up" id="kCommentsTrend">-</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">🔄</div><div class="kpi-value" id="kShares">0</div><div class="kpi-label">총 공유</div><div class="kpi-trend up" id="kSharesTrend">-</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">👁</div><div class="kpi-value" id="kViews">0</div><div class="kpi-label">총 조회수</div><div class="kpi-trend up" id="kViewsTrend">-</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">📊</div><div class="kpi-value" id="kRate">0%</div><div class="kpi-label">참여율</div><div class="kpi-trend up" id="kRateTrend">-</div></div>
+                </div>
+
+                <!-- Engagement Chart -->
+                <div class="chart-section">
+                    <div class="chart-header">
+                        <h3>📊 인터렉션 추이</h3>
+                        <div class="chart-legend">
+                            <span class="leg-likes">좋아요</span>
+                            <span class="leg-comments">댓글</span>
+                            <span class="leg-shares">공유</span>
+                            <span class="leg-views">조회수</span>
+                        </div>
+                    </div>
+                    <div class="chart-bars" id="chartArea"></div>
+                </div>
+
+                <!-- Channel Breakdown Table -->
+                <div class="table-section">
+                    <h3>📡 채널별 성과 분석</h3>
+                    <div style="overflow-x:auto">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>채널</th>
+                                    <th>포스팅</th>
+                                    <th>좋아요</th>
+                                    <th>댓글</th>
+                                    <th>공유</th>
+                                    <th>조회수</th>
+                                    <th>참여율</th>
+                                </tr>
+                            </thead>
+                            <tbody id="channelTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Top Posts -->
+                <div class="top-posts">
+                    <h3>🏆 인기 콘텐츠 TOP 5</h3>
+                    <div id="topPostsList"></div>
+                </div>
+
+                <!-- Export -->
+                <div class="export-section">
+                    <button class="btn-export" onclick="exportCSV()">📄 CSV 다운로드</button>
+                    <button class="btn-export primary" onclick="exportReport()">📊 리포트 내보내기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
+
+        var currentPeriod='daily';
+        var channelMeta={
+            facebook:{icon:'📘',name:'Facebook',color:'#1877F2'},
+            tiktok:{icon:'🎵',name:'TikTok',color:'#000'},
+            instagram:{icon:'📸',name:'Instagram',color:'#E4405F'},
+            naver_blog:{icon:'📗',name:'네이버 블로그',color:'#03C75A'},
+            naver_cafe:{icon:'☕',name:'네이버 카페',color:'#03C75A'},
+            xiaohongshu:{icon:'📕',name:'샤오홍수',color:'#FF2442'},
+            douyin:{icon:'🎬',name:'도우인',color:'#000'}
+        };
+
+        function getPosts(){return JSON.parse(localStorage.getItem('snsPosts')||'[]')}
+
+        function formatNum(n){
+            if(n>=1000000)return (n/1000000).toFixed(1)+'M';
+            if(n>=1000)return (n/1000).toFixed(1)+'K';
+            return n.toString();
+        }
+
+        function setPeriod(p){
+            currentPeriod=p;
+            document.querySelectorAll('.period-btn').forEach(function(btn){
+                btn.classList.toggle('active',btn.getAttribute('data-period')===p);
+            });
+            renderAll();
+        }
+
+        function getDateRange(){
+            var now=new Date();
+            var start=new Date();
+            var labels=[];
+            if(currentPeriod==='daily'){
+                start.setDate(now.getDate()-6);
+                for(var i=0;i<7;i++){
+                    var d=new Date(start);d.setDate(start.getDate()+i);
+                    labels.push({key:d.toISOString().slice(0,10),label:(d.getMonth()+1)+'/'+ d.getDate()});
+                }
+            }else if(currentPeriod==='weekly'){
+                start.setDate(now.getDate()-27);
+                for(var i=0;i<4;i++){
+                    var ws=new Date(start);ws.setDate(start.getDate()+i*7);
+                    var we=new Date(ws);we.setDate(ws.getDate()+6);
+                    labels.push({key:'w'+i,start:new Date(ws),end:new Date(we),label:(ws.getMonth()+1)+'/'+ws.getDate()+'~'+(we.getMonth()+1)+'/'+we.getDate()});
+                }
+            }else{
+                start.setMonth(now.getMonth()-5);
+                for(var i=0;i<6;i++){
+                    var m=new Date(start.getFullYear(),start.getMonth()+i,1);
+                    labels.push({key:m.getFullYear()+'-'+String(m.getMonth()+1).padStart(2,'0'),label:(m.getMonth()+1)+'월',month:m.getMonth(),year:m.getFullYear()});
+                }
+            }
+            return labels;
+        }
+
+        function filterPostsByDate(posts,rangeItem){
+            return posts.filter(function(p){
+                if(!p.date)return false;
+                var pd=new Date(p.date);
+                if(currentPeriod==='daily'){
+                    return p.date===rangeItem.key;
+                }else if(currentPeriod==='weekly'){
+                    return pd>=rangeItem.start&&pd<=rangeItem.end;
+                }else{
+                    return pd.getMonth()===rangeItem.month&&pd.getFullYear()===rangeItem.year;
+                }
+            });
+        }
+
+        function calcEngagementRate(likes,comments,shares,views){
+            if(!views||views===0)return 0;
+            return ((likes+comments+shares)/views*100);
+        }
+
+        function renderAll(){
+            var posts=getPosts();
+            var ranges=getDateRange();
+
+            // Date range label
+            if(ranges.length>0){
+                document.getElementById('dateRange').textContent=ranges[0].label+' ~ '+ranges[ranges.length-1].label;
+            }
+
+            // Gather period data
+            var periodData=ranges.map(function(r){
+                var fp=filterPostsByDate(posts,r);
+                var likes=fp.reduce(function(s,p){return s+(p.likes||0)},0);
+                var comments=fp.reduce(function(s,p){return s+(p.comments||0)},0);
+                var shares=fp.reduce(function(s,p){return s+(p.shares||0)},0);
+                var views=fp.reduce(function(s,p){return s+(p.views||0)},0);
+                return {label:r.label,count:fp.length,likes:likes,comments:comments,shares:shares,views:views};
+            });
+
+            // KPI Totals
+            var totalPosts=posts.length;
+            var totalLikes=posts.reduce(function(s,p){return s+(p.likes||0)},0);
+            var totalComments=posts.reduce(function(s,p){return s+(p.comments||0)},0);
+            var totalShares=posts.reduce(function(s,p){return s+(p.shares||0)},0);
+            var totalViews=posts.reduce(function(s,p){return s+(p.views||0)},0);
+            var engRate=calcEngagementRate(totalLikes,totalComments,totalShares,totalViews);
+
+            document.getElementById('kTotal').textContent=formatNum(totalPosts);
+            document.getElementById('kLikes').textContent=formatNum(totalLikes);
+            document.getElementById('kComments').textContent=formatNum(totalComments);
+            document.getElementById('kShares').textContent=formatNum(totalShares);
+            document.getElementById('kViews').textContent=formatNum(totalViews);
+            document.getElementById('kRate').textContent=engRate.toFixed(1)+'%';
+
+            // Trends (compare first half vs second half of period data)
+            var half=Math.floor(periodData.length/2);
+            function trendCalc(field){
+                var first=0,second=0;
+                periodData.forEach(function(d,i){
+                    if(i<half)first+=d[field];else second+=d[field];
+                });
+                if(first===0)return second>0?'+100%':'-';
+                var pct=((second-first)/first*100).toFixed(0);
+                return (pct>=0?'+':'')+pct+'%';
+            }
+            function trendClass(field){
+                var first=0,second=0;
+                periodData.forEach(function(d,i){
+                    if(i<half)first+=d[field];else second+=d[field];
+                });
+                return second>=first?'up':'down';
+            }
+            ['Total:count','Likes:likes','Comments:comments','Shares:shares','Views:views'].forEach(function(pair){
+                var parts=pair.split(':');
+                var el=document.getElementById('k'+parts[0]+'Trend');
+                if(el){el.textContent=trendCalc(parts[1]);el.className='kpi-trend '+trendClass(parts[1]);}
+            });
+            var rEl=document.getElementById('kRateTrend');
+            if(rEl){rEl.textContent=engRate>0?'활성':'데이터 없음';rEl.className='kpi-trend '+(engRate>0?'up':'');}
+
+            // Chart
+            renderChart(periodData);
+
+            // Channel breakdown
+            renderChannelTable(posts);
+
+            // Top posts
+            renderTopPosts(posts);
+        }
+
+        function renderChart(periodData){
+            var maxVal=1;
+            periodData.forEach(function(d){
+                maxVal=Math.max(maxVal,d.likes,d.comments,d.shares);
+            });
+            // Views on separate scale since they're much larger
+            var maxViews=Math.max(1,Math.max.apply(null,periodData.map(function(d){return d.views})));
+
+            var html='';
+            periodData.forEach(function(d){
+                var hLikes=Math.max(2,d.likes/maxVal*100);
+                var hComments=Math.max(2,d.comments/maxVal*100);
+                var hShares=Math.max(2,d.shares/maxVal*100);
+                var hViews=Math.max(2,d.views/maxViews*100);
+                html+='<div class="chart-col">';
+                html+='<div class="chart-col-bars">';
+                html+='<div class="chart-bar bar-likes" style="height:'+hLikes+'%"><div class="chart-tooltip">좋아요 '+formatNum(d.likes)+'</div></div>';
+                html+='<div class="chart-bar bar-comments" style="height:'+hComments+'%"><div class="chart-tooltip">댓글 '+formatNum(d.comments)+'</div></div>';
+                html+='<div class="chart-bar bar-shares" style="height:'+hShares+'%"><div class="chart-tooltip">공유 '+formatNum(d.shares)+'</div></div>';
+                html+='<div class="chart-bar bar-views" style="height:'+hViews+'%"><div class="chart-tooltip">조회수 '+formatNum(d.views)+'</div></div>';
+                html+='</div>';
+                html+='<div class="chart-label">'+d.label+'</div>';
+                html+='</div>';
+            });
+            document.getElementById('chartArea').innerHTML=html||'<div class="empty-state"><div class="empty-icon">📊</div><div class="empty-title">데이터가 없습니다</div></div>';
+        }
+
+        function renderChannelTable(posts){
+            var channels={};
+            posts.forEach(function(p){
+                (p.channels||[]).forEach(function(ch){
+                    if(!channels[ch])channels[ch]={posts:0,likes:0,comments:0,shares:0,views:0};
+                    channels[ch].posts++;
+                    channels[ch].likes+=(p.likes||0);
+                    channels[ch].comments+=(p.comments||0);
+                    channels[ch].shares+=(p.shares||0);
+                    channels[ch].views+=(p.views||0);
+                });
+            });
+
+            var keys=Object.keys(channels);
+            if(keys.length===0){
+                document.getElementById('channelTable').innerHTML='<tr><td colspan="7" style="text-align:center;padding:40px;color:#94a3b8">채널 데이터가 없습니다</td></tr>';
+                return;
+            }
+
+            // Sort by total engagement
+            keys.sort(function(a,b){
+                var ea=channels[a].likes+channels[a].comments+channels[a].shares;
+                var eb=channels[b].likes+channels[b].comments+channels[b].shares;
+                return eb-ea;
+            });
+
+            var maxRate=0;
+            keys.forEach(function(ch){
+                var c=channels[ch];
+                var rate=calcEngagementRate(c.likes,c.comments,c.shares,c.views);
+                if(rate>maxRate)maxRate=rate;
+            });
+
+            var html='';
+            keys.forEach(function(ch){
+                var c=channels[ch];
+                var meta=channelMeta[ch]||{icon:'📱',name:ch,color:'#64748b'};
+                var rate=calcEngagementRate(c.likes,c.comments,c.shares,c.views);
+                var barWidth=maxRate>0?(rate/maxRate*100):0;
+                html+='<tr>';
+                html+='<td><div class="ch-cell"><span style="font-size:1.1rem">'+meta.icon+'</span> '+meta.name+'</div></td>';
+                html+='<td><strong>'+c.posts+'</strong></td>';
+                html+='<td>'+formatNum(c.likes)+'</td>';
+                html+='<td>'+formatNum(c.comments)+'</td>';
+                html+='<td>'+formatNum(c.shares)+'</td>';
+                html+='<td>'+formatNum(c.views)+'</td>';
+                html+='<td><span class="rate-bar"><span class="rate-bar-fill" style="width:'+barWidth+'%"></span></span>'+rate.toFixed(1)+'%</td>';
+                html+='</tr>';
+            });
+            document.getElementById('channelTable').innerHTML=html;
+        }
+
+        function renderTopPosts(posts){
+            var sorted=posts.slice().sort(function(a,b){
+                var ea=(a.likes||0)+(a.comments||0)+(a.shares||0)+(a.views||0);
+                var eb=(b.likes||0)+(b.comments||0)+(b.shares||0)+(b.views||0);
+                return eb-ea;
+            }).slice(0,5);
+
+            if(sorted.length===0){
+                document.getElementById('topPostsList').innerHTML='<div class="empty-state"><div class="empty-icon">🏆</div><div class="empty-title">콘텐츠가 없습니다</div></div>';
+                return;
+            }
+
+            var html='';
+            sorted.forEach(function(p,i){
+                var rankClass=i<3?'rank-'+(i+1):'';
+                var chNames=(p.channels||[]).map(function(c){return (channelMeta[c]||{icon:''}).icon}).join(' ');
+                html+='<div class="top-post-item">';
+                html+='<div class="top-post-rank '+rankClass+'">'+(i+1)+'</div>';
+                html+='<div class="top-post-info"><div class="top-post-title">'+(p.title||'제목 없음')+'</div><div class="top-post-meta">'+chNames+' &middot; '+(p.date||'날짜 없음')+'</div></div>';
+                html+='<div class="top-post-stats"><span>❤️ '+formatNum(p.likes||0)+'</span><span>💬 '+formatNum(p.comments||0)+'</span><span>🔄 '+formatNum(p.shares||0)+'</span><span>👁 '+formatNum(p.views||0)+'</span></div>';
+                html+='</div>';
+            });
+            document.getElementById('topPostsList').innerHTML=html;
+        }
+
+        function exportCSV(){
+            var posts=getPosts();
+            if(posts.length===0){alert('내보낼 데이터가 없습니다.');return;}
+            var rows=[['제목','채널','상태','좋아요','댓글','공유','조회수','날짜']];
+            posts.forEach(function(p){
+                rows.push(['"'+(p.title||'')+'"',(p.channels||[]).join(';'),p.status||'',p.likes||0,p.comments||0,p.shares||0,p.views||0,p.date||'']);
+            });
+            var csv=rows.map(function(r){return r.join(',')}).join('\n');
+            var bom='﻿';
+            var blob=new Blob([bom+csv],{type:'text/csv;charset=utf-8;'});
+            var url=URL.createObjectURL(blob);
+            var a=document.createElement('a');
+            a.href=url;a.download='sns_analytics_'+new Date().toISOString().slice(0,10)+'.csv';
+            document.body.appendChild(a);a.click();document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function exportReport(){
+            var posts=getPosts();
+            if(posts.length===0){alert('내보낼 데이터가 없습니다.');return;}
+            var totalLikes=posts.reduce(function(s,p){return s+(p.likes||0)},0);
+            var totalComments=posts.reduce(function(s,p){return s+(p.comments||0)},0);
+            var totalShares=posts.reduce(function(s,p){return s+(p.shares||0)},0);
+            var totalViews=posts.reduce(function(s,p){return s+(p.views||0)},0);
+            var rate=calcEngagementRate(totalLikes,totalComments,totalShares,totalViews);
+
+            var report='SNS 분석 리포트\n';
+            report+='생성일: '+new Date().toLocaleDateString('ko-KR')+'\n';
+            report+='=====================================\n\n';
+            report+='[종합 요약]\n';
+            report+='총 포스팅: '+posts.length+'개\n';
+            report+='총 좋아요: '+totalLikes+'\n';
+            report+='총 댓글: '+totalComments+'\n';
+            report+='총 공유: '+totalShares+'\n';
+            report+='총 조회수: '+totalViews+'\n';
+            report+='참여율: '+rate.toFixed(1)+'%\n\n';
+
+            report+='[채널별 성과]\n';
+            var channels={};
+            posts.forEach(function(p){
+                (p.channels||[]).forEach(function(ch){
+                    if(!channels[ch])channels[ch]={posts:0,likes:0,comments:0,shares:0,views:0};
+                    channels[ch].posts++;
+                    channels[ch].likes+=(p.likes||0);
+                    channels[ch].comments+=(p.comments||0);
+                    channels[ch].shares+=(p.shares||0);
+                    channels[ch].views+=(p.views||0);
+                });
+            });
+            Object.keys(channels).forEach(function(ch){
+                var c=channels[ch];
+                var meta=channelMeta[ch]||{name:ch};
+                report+=meta.name+': 포스팅 '+c.posts+'개 | 좋아요 '+c.likes+' | 댓글 '+c.comments+' | 공유 '+c.shares+' | 조회수 '+c.views+'\n';
+            });
+
+            report+='\n[인기 콘텐츠 TOP 5]\n';
+            posts.slice().sort(function(a,b){
+                return ((b.likes||0)+(b.comments||0)+(b.shares||0)+(b.views||0))-((a.likes||0)+(a.comments||0)+(a.shares||0)+(a.views||0));
+            }).slice(0,5).forEach(function(p,i){
+                report+=(i+1)+'. '+(p.title||'제목 없음')+' (좋아요:'+(p.likes||0)+', 댓글:'+(p.comments||0)+', 조회수:'+(p.views||0)+')\n';
+            });
+
+            var blob=new Blob(['﻿'+report],{type:'text/plain;charset=utf-8;'});
+            var url=URL.createObjectURL(blob);
+            var a=document.createElement('a');
+            a.href=url;a.download='sns_report_'+new Date().toISOString().slice(0,10)+'.txt';
+            document.body.appendChild(a);a.click();document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            alert('📊 리포트가 다운로드되었습니다.');
+        }
+
+        function generateSampleData(){
+            var existingPosts=getPosts();
+            var titles=['여름 신상품 출시 안내','건강한 아침식사 레시피 공유','2026 트렌드 분석 리포트','고객 후기 모음 시리즈','주말 프로모션 이벤트','브랜드 스토리텔링','제품 사용 가이드 영상','시즌 할인 이벤트 안내','라이프스타일 콘텐츠','인플루언서 콜라보 소식'];
+            var allChannels=['facebook','tiktok','instagram','naver_blog','naver_cafe','xiaohongshu','douyin'];
+            var newPosts=[];
+            for(var i=0;i<10;i++){
+                var numCh=Math.floor(Math.random()*3)+1;
+                var chSet=[];
+                while(chSet.length<numCh){var c=allChannels[Math.floor(Math.random()*allChannels.length)];if(chSet.indexOf(c)===-1)chSet.push(c);}
+                var d=new Date();d.setDate(d.getDate()-Math.floor(Math.random()*30));
+                newPosts.push({
+                    id:'sample_'+Date.now()+'_'+i,
+                    title:titles[i],
+                    content:titles[i]+' - 자동 생성된 샘플 콘텐츠입니다.',
+                    channels:chSet,
+                    status:'published',
+                    date:d.toISOString().slice(0,10),
+                    likes:Math.floor(Math.random()*500)+50,
+                    comments:Math.floor(Math.random()*100)+10,
+                    shares:Math.floor(Math.random()*80)+5,
+                    views:Math.floor(Math.random()*5000)+500
+                });
+            }
+            localStorage.setItem('snsPosts',JSON.stringify(existingPosts.concat(newPosts)));
+            alert('🧪 샘플 데이터 10개가 생성되었습니다.');
+            renderAll();
+        }
+
+        // ─── Instagram Insights ───
+        window.fetchInstagramInsights = async function(){
+            var btn = document.getElementById('btnIgInsights');
+            btn.disabled = true;
+            btn.textContent = '⏳ 가져오는 중...';
+
+            var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+            var igAccounts = ((settings.instagram && settings.instagram.accounts) || [])
+                .filter(function(a){ return a.accessToken && a.businessAccountId; });
+
+            if(igAccounts.length === 0){
+                btn.disabled = false;
+                btn.textContent = '📸 Instagram 인사이트';
+                alert('⚠ 연결된 Instagram 비즈니스 계정이 없습니다.\n설정 페이지에서 등록하세요.');
+                return;
+            }
+
+            var html = '';
+            for(var i = 0; i < igAccounts.length; i++){
+                var acc = igAccounts[i];
+                try {
+                    // 1) 계정 레벨 인사이트 (reach, profile_views, accounts_engaged)
+                    var since = Math.floor((Date.now() - 28*86400000) / 1000);
+                    var until = Math.floor(Date.now() / 1000);
+                    var accUrl = 'https://graph.facebook.com/v18.0/' + acc.businessAccountId +
+                        '/insights?metric=reach,profile_views,accounts_engaged&period=day&since=' + since + '&until=' + until +
+                        '&access_token=' + encodeURIComponent(acc.accessToken);
+                    var ar = await fetch(accUrl);
+                    var ad = await ar.json();
+
+                    // 2) 최근 게시물별 인사이트
+                    var mUrl = 'https://graph.facebook.com/v18.0/' + acc.businessAccountId +
+                        '/media?fields=id,caption,media_type,permalink,timestamp,like_count,comments_count,insights.metric(reach,impressions,engagement)&limit=10&access_token=' + encodeURIComponent(acc.accessToken);
+                    var mr = await fetch(mUrl);
+                    var md = await mr.json();
+
+                    html += '<div style="background:#fff;border-radius:10px;padding:14px;margin-bottom:12px">';
+                    html += '<div style="font-weight:700;color:#be185d;margin-bottom:8px">@' + (acc.username || acc.businessAccountId) + ' · ' + escapeHtml(acc.name || '') + '</div>';
+
+                    if(ad.error){
+                        html += '<div style="color:#dc2626;font-size:.82rem">❌ 계정 인사이트: ' + ad.error.message + '</div>';
+                    } else if(ad.data){
+                        var sums = {};
+                        ad.data.forEach(function(metric){
+                            sums[metric.name] = (metric.values || []).reduce(function(s, v){ return s + (v.value || 0); }, 0);
+                        });
+                        html += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px">';
+                        html += '<div style="background:#fef3c7;padding:10px;border-radius:8px;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:#92400e">' + (sums.reach || 0).toLocaleString() + '</div><div style="font-size:.7rem;color:#92400e">28일 도달</div></div>';
+                        html += '<div style="background:#fce7f3;padding:10px;border-radius:8px;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:#be185d">' + (sums.profile_views || 0).toLocaleString() + '</div><div style="font-size:.7rem;color:#be185d">프로필 조회</div></div>';
+                        html += '<div style="background:#dcfce7;padding:10px;border-radius:8px;text-align:center"><div style="font-size:1.3rem;font-weight:800;color:#166534">' + (sums.accounts_engaged || 0).toLocaleString() + '</div><div style="font-size:.7rem;color:#166534">참여 계정</div></div>';
+                        html += '</div>';
+                    }
+
+                    if(md.error){
+                        html += '<div style="color:#dc2626;font-size:.82rem">❌ 미디어: ' + md.error.message + '</div>';
+                    } else if(md.data && md.data.length > 0){
+                        html += '<div style="font-size:.78rem;font-weight:700;margin-bottom:6px">최근 게시물 TOP 10</div>';
+                        html += '<div style="overflow-x:auto"><table style="width:100%;font-size:.74rem;border-collapse:collapse">';
+                        html += '<tr style="background:#f8fafc;text-align:left"><th style="padding:6px">유형</th><th style="padding:6px">캡션</th><th style="padding:6px;text-align:right">👁 도달</th><th style="padding:6px;text-align:right">📊 노출</th><th style="padding:6px;text-align:right">❤</th><th style="padding:6px;text-align:right">💬</th><th style="padding:6px">링크</th></tr>';
+                        md.data.forEach(function(media){
+                            var ins = {};
+                            if(media.insights && media.insights.data){
+                                media.insights.data.forEach(function(m){ ins[m.name] = (m.values && m.values[0]) ? m.values[0].value : 0; });
+                            }
+                            var typeBadge = media.media_type === 'VIDEO' ? '🎬' : (media.media_type === 'CAROUSEL_ALBUM' ? '🖼×N' : '🖼');
+                            html += '<tr style="border-bottom:1px solid #f1f5f9">';
+                            html += '<td style="padding:6px">' + typeBadge + '</td>';
+                            html += '<td style="padding:6px">' + escapeHtml((media.caption || '').substring(0, 40)) + (media.caption && media.caption.length > 40 ? '...' : '') + '</td>';
+                            html += '<td style="padding:6px;text-align:right">' + (ins.reach || 0).toLocaleString() + '</td>';
+                            html += '<td style="padding:6px;text-align:right">' + (ins.impressions || 0).toLocaleString() + '</td>';
+                            html += '<td style="padding:6px;text-align:right">' + (media.like_count || 0) + '</td>';
+                            html += '<td style="padding:6px;text-align:right">' + (media.comments_count || 0) + '</td>';
+                            html += '<td style="padding:6px"><a href="' + media.permalink + '" target="_blank" style="color:#3b82f6">🔗</a></td>';
+                            html += '</tr>';
+                        });
+                        html += '</table></div>';
+                    } else {
+                        html += '<div style="color:#94a3b8;font-size:.82rem">📭 게시물이 없습니다.</div>';
+                    }
+                    html += '</div>';
+                } catch(err){
+                    html += '<div style="color:#dc2626">❌ ' + escapeHtml(acc.name) + ': ' + err.message + '</div>';
+                }
+            }
+
+            document.getElementById('igInsightsContent').innerHTML = html;
+            document.getElementById('igInsightsPanel').style.display = 'block';
+            btn.disabled = false;
+            btn.textContent = '📸 Instagram 인사이트';
+        };
+
+        function escapeHtml(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+        renderAll();
+    </script>
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script>
+        if("serviceWorker" in navigator){ navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
+    </script>
+</body>
+</html>

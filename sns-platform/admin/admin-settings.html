@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자 설정 | 관리자</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        body{background:#f1f5f9}
+        .admin-bar{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;padding:8px 24px;font-size:.78rem;font-weight:600;text-align:center}
+        .admin-bar a{color:#fef2f2;margin-left:10px}
+        .sidebar{background:#0f172a !important}.sidebar-logo .logo-text{color:#fff !important}.sidebar-logo .logo-text small{color:#fca5a5 !important}.nav-title{color:#94a3b8 !important}.nav-link{color:#cbd5e1 !important}.nav-link:hover{background:rgba(255,255,255,.06) !important;color:#fff !important}.nav-link.active{background:rgba(220,38,38,.2) !important;color:#fca5a5 !important}
+
+        .card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:24px;margin-bottom:16px}
+        .card h2{font-size:1rem;margin-bottom:14px}
+
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+        .form-group{display:flex;flex-direction:column;gap:5px}
+        .form-group.full{grid-column:1/-1}
+        .form-group label{font-size:.74rem;font-weight:600;color:#64748b}
+        .form-group input,.form-group select,.form-group textarea{padding:10px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.85rem;font-family:inherit}
+
+        .toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #f1f5f9}
+        .toggle-row:last-child{border-bottom:none}
+        .toggle-info h4{font-size:.88rem;font-weight:700;margin-bottom:4px}
+        .toggle-info p{font-size:.74rem;color:#64748b}
+        .switch{position:relative;width:46px;height:24px;background:#cbd5e1;border-radius:12px;cursor:pointer;transition:.2s}
+        .switch.on{background:#10b981}
+        .switch::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;background:#fff;border-radius:50%;transition:.2s}
+        .switch.on::after{left:24px}
+
+        .admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .admin-card{padding:14px;border-radius:10px;background:#f8fafc;border:1px solid #e2e8f0;display:flex;align-items:center;gap:12px}
+        .admin-avatar{width:40px;height:40px;border-radius:50%;background:#dc2626;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700}
+        .admin-info{flex:1;min-width:0}
+        .admin-name{font-size:.86rem;font-weight:700}
+        .admin-role{font-size:.7rem;color:#94a3b8}
+
+        .btn-save{padding:10px 24px;border-radius:8px;border:none;background:#10b981;color:#fff;font-weight:700;cursor:pointer;font-size:.85rem}
+        .btn-add{padding:8px 16px;border-radius:8px;border:1px dashed #3b82f6;background:#fff;color:#3b82f6;font-size:.78rem;font-weight:600;cursor:pointer}
+    </style>
+</head>
+<body>
+    <div class="admin-bar">🛡 관리자 → <a href="../index.html">사용자 대시보드로</a></div>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">🛡</div><div class="logo-text">관리자 콘솔<small>DIVOOST SNS Admin</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">개요</div><a href="index.html" class="nav-link"><span>🏠</span> 관리자 대시보드</a></div>
+                <div class="nav-section"><div class="nav-title">회원 관리</div><a href="users.html" class="nav-link"><span>👥</span> 회원 목록</a><a href="subscriptions.html" class="nav-link"><span>💳</span> 구독 관리</a><a href="user-activity.html" class="nav-link"><span>📊</span> 활동 로그</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 운영</div><a href="content-moderation.html" class="nav-link"><span>📝</span> 콘텐츠 검토</a><a href="reports.html" class="nav-link"><span>🚨</span> 신고/제재</a></div>
+                <div class="nav-section"><div class="nav-title">시스템 운영</div><a href="api-monitor.html" class="nav-link"><span>📡</span> API 사용량</a><a href="system-health.html" class="nav-link"><span>💚</span> 시스템 상태</a><a href="notifications.html" class="nav-link"><span>🔔</span> 공지 관리</a></div>
+                <div class="nav-section"><div class="nav-title">설정</div><a href="admin-settings.html" class="nav-link active"><span>⚙️</span> 관리자 설정</a><a href="audit-log.html" class="nav-link"><span>📜</span> 감사 로그</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">⚙️ 관리자 설정</div><div class="top-bar-sub">시스템 전반 정책 및 권한 관리</div></div></div></header>
+            <div class="content">
+
+                <div class="card">
+                    <h2>🏢 서비스 정보</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>서비스 이름</label>
+                            <input type="text" value="DIVOOST SNS 콘텐츠 플랫폼">
+                        </div>
+                        <div class="form-group">
+                            <label>서비스 도메인</label>
+                            <input type="text" value="divoost.github.io">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>운영자 이메일</label>
+                            <input type="email" value="ezwebpia001@gmail.com">
+                        </div>
+                        <div class="form-group">
+                            <label>고객센터 이메일</label>
+                            <input type="email" value="support@divoost.com">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>🔐 보안 정책</h2>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>2단계 인증 (2FA) 필수</h4>
+                            <p>관리자 로그인 시 이메일 OTP 인증 필수</p>
+                        </div>
+                        <div class="switch on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>IP 화이트리스트</h4>
+                            <p>지정된 IP에서만 관리자 페이지 접근 허용</p>
+                        </div>
+                        <div class="switch" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>비밀번호 정기 변경 알림</h4>
+                            <p>90일마다 사용자에게 비밀번호 변경 권고</p>
+                        </div>
+                        <div class="switch on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>의심 활동 자동 차단</h4>
+                            <p>비밀번호 5회 오류 시 계정 30분 잠금</p>
+                        </div>
+                        <div class="switch on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>📊 사용량 한도 (전역 정책)</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>체험 플랜 - 1일 발행 한도</label>
+                            <input type="number" value="5">
+                        </div>
+                        <div class="form-group">
+                            <label>PRO 플랜 - 1일 발행 한도</label>
+                            <input type="number" value="100">
+                        </div>
+                        <div class="form-group">
+                            <label>Enterprise - 1일 발행 한도</label>
+                            <input type="number" value="500">
+                        </div>
+                        <div class="form-group">
+                            <label>체험 플랜 - 연결 가능 SNS 수</label>
+                            <input type="number" value="2">
+                        </div>
+                        <div class="form-group">
+                            <label>PRO 플랜 - 연결 가능 SNS 수</label>
+                            <input type="number" value="10">
+                        </div>
+                        <div class="form-group">
+                            <label>Enterprise - 연결 가능 SNS 수</label>
+                            <input type="number" value="50">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>👨‍💼 관리자 계정</h2>
+                    <div class="admin-grid">
+                        <div class="admin-card">
+                            <div class="admin-avatar">D</div>
+                            <div class="admin-info">
+                                <div class="admin-name">divoost-admin</div>
+                                <div class="admin-role">최고 관리자 (Super Admin)</div>
+                            </div>
+                        </div>
+                        <div class="admin-card">
+                            <div class="admin-avatar" style="background:#3b82f6">K</div>
+                            <div class="admin-info">
+                                <div class="admin-name">kai-operator</div>
+                                <div class="admin-role">운영 관리자</div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-add" style="margin-top:14px">+ 관리자 추가</button>
+                </div>
+
+                <div class="card">
+                    <h2>🤖 AI 자동화 정책</h2>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>AI 자동 콘텐츠 검수</h4>
+                            <p>발행 전 모든 콘텐츠를 AI가 자동 검토</p>
+                        </div>
+                        <div class="switch on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>스팸 자동 차단</h4>
+                            <p>AI 위험도 90% 이상 콘텐츠 자동 차단</p>
+                        </div>
+                        <div class="switch on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                    <div class="toggle-row">
+                        <div class="toggle-info">
+                            <h4>이미지 부적절 콘텐츠 감지</h4>
+                            <p>음란/폭력 이미지 자동 차단</p>
+                        </div>
+                        <div class="switch on" onclick="this.classList.toggle('on')"></div>
+                    </div>
+                </div>
+
+                <div style="display:flex;justify-content:flex-end;padding:16px 0">
+                    <button class="btn-save">💾 전체 설정 저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/supabase-admin.js"></script>
+    <script>
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+        (async function(){ await SNSAdmin.requireAdmin(); })();
+    </script>
+</body>
+</html>

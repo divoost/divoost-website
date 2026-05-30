@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지 관리 | 관리자</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        body{background:#f1f5f9}
+        .admin-bar{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;padding:8px 24px;font-size:.78rem;font-weight:600;text-align:center}
+        .admin-bar a{color:#fef2f2;margin-left:10px}
+        .sidebar{background:#0f172a !important}.sidebar-logo .logo-text{color:#fff !important}.sidebar-logo .logo-text small{color:#fca5a5 !important}.nav-title{color:#94a3b8 !important}.nav-link{color:#cbd5e1 !important}.nav-link:hover{background:rgba(255,255,255,.06) !important;color:#fff !important}.nav-link.active{background:rgba(220,38,38,.2) !important;color:#fca5a5 !important}
+
+        .card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
+        .card h2{font-size:1rem;margin-bottom:14px}
+
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+        .form-group{display:flex;flex-direction:column;gap:5px}
+        .form-group.full{grid-column:1/-1}
+        .form-group label{font-size:.74rem;font-weight:600;color:#64748b}
+        .form-group input,.form-group select,.form-group textarea{padding:9px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.85rem;font-family:inherit}
+        .form-group textarea{min-height:120px;resize:vertical}
+
+        .target-chip-group{display:flex;gap:8px;flex-wrap:wrap}
+        .target-chip{padding:7px 14px;border-radius:20px;border:2px solid #e2e8f0;background:#fff;font-size:.78rem;cursor:pointer;font-weight:600;user-select:none}
+        .target-chip.active{border-color:#3b82f6;background:rgba(59,130,246,.08);color:#1e40af}
+
+        .btn-action{padding:10px 24px;border-radius:8px;border:none;font-weight:700;font-size:.85rem;cursor:pointer}
+        .btn-send{background:#3b82f6;color:#fff}
+        .btn-draft{background:#f1f5f9;color:#475569}
+
+        .notice-list{margin-top:14px}
+        .notice-item{padding:14px;border-radius:10px;background:#f8fafc;margin-bottom:8px;border:1px solid #e2e8f0}
+        .notice-item-header{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+        .notice-tag{font-size:.66rem;padding:2px 8px;border-radius:6px;font-weight:700}
+        .notice-tag.공지{background:#dbeafe;color:#1e40af}
+        .notice-tag.업데이트{background:#dcfce7;color:#15803d}
+        .notice-tag.긴급{background:#fee2e2;color:#b91c1c}
+        .notice-tag.이벤트{background:#fef3c7;color:#92400e}
+        .notice-title{font-weight:700;flex:1}
+        .notice-meta{font-size:.7rem;color:#94a3b8}
+        .notice-body{font-size:.82rem;color:#475569;line-height:1.6}
+    </style>
+</head>
+<body>
+    <div class="admin-bar">🛡 관리자 전용 페이지 → <a href="../index.html">사용자 대시보드로</a></div>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">🛡</div><div class="logo-text">관리자 콘솔<small>DIVOOST SNS Admin</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">개요</div><a href="index.html" class="nav-link"><span>🏠</span> 관리자 대시보드</a></div>
+                <div class="nav-section"><div class="nav-title">회원 관리</div><a href="users.html" class="nav-link"><span>👥</span> 회원 목록</a><a href="subscriptions.html" class="nav-link"><span>💳</span> 구독 관리</a><a href="user-activity.html" class="nav-link"><span>📊</span> 활동 로그</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 운영</div><a href="content-moderation.html" class="nav-link"><span>📝</span> 콘텐츠 검토</a><a href="reports.html" class="nav-link"><span>🚨</span> 신고/제재</a></div>
+                <div class="nav-section"><div class="nav-title">시스템 운영</div><a href="api-monitor.html" class="nav-link"><span>📡</span> API 사용량</a><a href="system-health.html" class="nav-link"><span>💚</span> 시스템 상태</a><a href="notifications.html" class="nav-link active"><span>🔔</span> 공지 관리</a></div>
+                <div class="nav-section"><div class="nav-title">설정</div><a href="admin-settings.html" class="nav-link"><span>⚙️</span> 관리자 설정</a><a href="audit-log.html" class="nav-link"><span>📜</span> 감사 로그</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">🔔 공지 관리</div><div class="top-bar-sub">사용자 공지사항 작성 및 발송</div></div></div></header>
+            <div class="content">
+
+                <div class="card">
+                    <h2>📝 새 공지 작성</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>유형</label>
+                            <select id="noticeType">
+                                <option value="공지">공지</option>
+                                <option value="업데이트">업데이트</option>
+                                <option value="이벤트">이벤트</option>
+                                <option value="긴급">긴급</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>발송 시간</label>
+                            <input type="datetime-local" id="noticeTime">
+                        </div>
+                    </div>
+                    <div class="form-group full">
+                        <label>제목</label>
+                        <input type="text" id="noticeTitle" placeholder="예: 5월 신규 기능 안내">
+                    </div>
+                    <div class="form-group full">
+                        <label>내용</label>
+                        <textarea id="noticeBody" placeholder="공지 내용 입력 (마크다운 지원)..."></textarea>
+                    </div>
+                    <div class="form-group full">
+                        <label>발송 대상</label>
+                        <div class="target-chip-group" id="targetChips">
+                            <span class="target-chip active" data-target="all" onclick="toggleTarget(this)">전체 회원</span>
+                            <span class="target-chip" data-target="trial" onclick="toggleTarget(this)">체험 플랜</span>
+                            <span class="target-chip" data-target="pro" onclick="toggleTarget(this)">PRO 플랜</span>
+                            <span class="target-chip" data-target="enterprise" onclick="toggleTarget(this)">Enterprise</span>
+                            <span class="target-chip" data-target="active" onclick="toggleTarget(this)">활성 회원</span>
+                            <span class="target-chip" data-target="inactive" onclick="toggleTarget(this)">미활성 회원</span>
+                        </div>
+                    </div>
+                    <div class="form-group full">
+                        <label>발송 채널</label>
+                        <div class="target-chip-group">
+                            <span class="target-chip active">📢 인앱 공지</span>
+                            <span class="target-chip">📧 이메일</span>
+                            <span class="target-chip">📱 푸시 알림</span>
+                        </div>
+                    </div>
+                    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
+                        <button class="btn-action btn-draft" onclick="saveDraft()">💾 임시저장</button>
+                        <button class="btn-action btn-send" onclick="sendNotice()">📤 발송</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>📜 최근 발송 공지</h2>
+                    <div class="notice-list">
+                        <div class="notice-item">
+                            <div class="notice-item-header">
+                                <span class="notice-tag 업데이트">업데이트</span>
+                                <span class="notice-title">멀티 계정 지원 기능 추가</span>
+                                <span class="notice-meta">2026.05.28 · 1,234명 발송</span>
+                            </div>
+                            <div class="notice-body">하나의 SNS에 여러 계정을 등록할 수 있게 되었습니다. 설정 페이지에서 추가하세요.</div>
+                        </div>
+                        <div class="notice-item">
+                            <div class="notice-item-header">
+                                <span class="notice-tag 공지">공지</span>
+                                <span class="notice-title">서비스 점검 안내 (5/30 02:00~04:00)</span>
+                                <span class="notice-meta">2026.05.27 · 1,234명 발송</span>
+                            </div>
+                            <div class="notice-body">시스템 안정성 향상을 위한 정기 점검이 진행됩니다.</div>
+                        </div>
+                        <div class="notice-item">
+                            <div class="notice-item-header">
+                                <span class="notice-tag 이벤트">이벤트</span>
+                                <span class="notice-title">PRO 플랜 50% 할인 이벤트</span>
+                                <span class="notice-meta">2026.05.25 · 856명 발송</span>
+                            </div>
+                            <div class="notice-body">5월 한정 PRO 플랜 50% 할인! 더 많은 SNS 계정을 연결하세요.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/supabase-admin.js"></script>
+    <script>
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+        function toggleTarget(el){ el.classList.toggle('active'); }
+        function saveDraft(){
+            localStorage.setItem('noticeDraft', JSON.stringify({
+                type: document.getElementById('noticeType').value,
+                title: document.getElementById('noticeTitle').value,
+                body: document.getElementById('noticeBody').value
+            }));
+            alert('💾 임시저장 완료');
+        }
+        async function sendNotice(){
+            var title = document.getElementById('noticeTitle').value.trim();
+            var body = document.getElementById('noticeBody').value.trim();
+            var type = document.getElementById('noticeType').value;
+            if(!title || !body){ alert('⚠️ 제목과 내용을 입력하세요'); return; }
+
+            // 활성화된 첫 타겟 칩 찾기
+            var targetChip = document.querySelector('#targetChips .target-chip.active');
+            var targetPlan = targetChip ? targetChip.dataset.target : 'all';
+
+            if(!confirm('📤 공지를 발송합니다.\n\n대상: ' + targetPlan + '\n제목: ' + title + '\n\n계속하시겠습니까?')) return;
+
+            var result = await SNSAdmin.sendNotice({
+                type: type,
+                title: title,
+                body: body,
+                targetPlan: targetPlan
+            });
+            if(result.ok){
+                alert('✅ 공지가 저장되었습니다.\n\n사용자 인앱 알림에 표시됩니다.\n이메일/푸시 발송은 백엔드 이메일 서비스 연동 후 자동화됩니다.');
+                document.getElementById('noticeTitle').value = '';
+                document.getElementById('noticeBody').value = '';
+                loadRecentNotices();
+            } else {
+                alert('❌ 발송 실패: ' + (result.data && result.data.message || ''));
+            }
+        }
+
+        async function loadRecentNotices(){
+            try {
+                var notices = await SNSAdmin.listNotices(5);
+                if(notices.length === 0) return;
+                var list = document.querySelector('.notice-list');
+                if(!list) return;
+                list.innerHTML = notices.map(function(n){
+                    var date = n.sent_at ? new Date(n.sent_at).toISOString().slice(0,10).replace(/-/g,'.') : '';
+                    return '<div class="notice-item">' +
+                        '<div class="notice-item-header">' +
+                            '<span class="notice-tag ' + (n.type === 'general' ? '공지' : (n.type === 'update' ? '업데이트' : (n.type === 'urgent' ? '긴급' : '이벤트'))) + '">' + (n.type === 'general' ? '공지' : (n.type === 'update' ? '업데이트' : (n.type === 'urgent' ? '긴급' : '이벤트'))) + '</span>' +
+                            '<span class="notice-title">' + n.title + '</span>' +
+                            '<span class="notice-meta">' + date + ' · ' + (n.sent_to_count || 0) + '명 발송</span>' +
+                        '</div>' +
+                        '<div class="notice-body">' + n.body + '</div>' +
+                    '</div>';
+                }).join('');
+            } catch(err){
+                console.error('공지 로딩 실패:', err);
+            }
+        }
+
+        (async function(){
+            var ok = await SNSAdmin.requireAdmin();
+            if(!ok) return;
+            // 임시저장 복원
+            var draft = JSON.parse(localStorage.getItem('noticeDraft') || 'null');
+            if(draft){
+                if(draft.type) document.getElementById('noticeType').value = draft.type;
+                if(draft.title) document.getElementById('noticeTitle').value = draft.title;
+                if(draft.body) document.getElementById('noticeBody').value = draft.body;
+            }
+            await loadRecentNotices();
+        })();
+    </script>
+</body>
+</html>

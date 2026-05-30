@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="manifest.json">
+    <title>로그인 / 회원가입 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Inter','Pretendard',-apple-system,sans-serif;background:linear-gradient(135deg,#eef2ff 0%,#e0f2fe 50%,#ecfdf5 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;color:#0f172a;-webkit-font-smoothing:antialiased}
+        .auth-container{width:100%;max-width:440px}
+        .auth-logo{text-align:center;margin-bottom:24px}
+        .auth-logo-icon{font-size:48px;margin-bottom:8px}
+        .auth-logo-title{font-size:24px;font-weight:800;color:#0f172a;letter-spacing:-.02em}
+        .auth-logo-sub{font-size:13px;color:#64748b;margin-top:4px}
+
+        .auth-card{background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(15,23,42,.08);padding:32px;border:1px solid #e2e8f0}
+
+        .auth-tabs{display:flex;gap:4px;background:#f1f5f9;border-radius:10px;padding:4px;margin-bottom:24px}
+        .auth-tab{flex:1;padding:10px;border:none;background:transparent;font-size:14px;font-weight:600;color:#64748b;cursor:pointer;border-radius:8px;transition:.2s}
+        .auth-tab.active{background:#fff;color:#0f172a;box-shadow:0 2px 4px rgba(0,0,0,.04)}
+
+        .form-group{margin-bottom:14px}
+        .form-group label{display:block;font-size:12px;font-weight:600;color:#475569;margin-bottom:6px}
+        .form-group input{width:100%;padding:12px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;font-family:inherit;transition:border-color .2s,box-shadow .2s}
+        .form-group input:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+        .form-group .input-wrap{position:relative}
+        .form-group .toggle-pw{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:#94a3b8;font-size:16px;padding:4px}
+        .form-group .toggle-pw:hover{color:#475569}
+
+        .pw-strength{margin-top:6px;display:flex;gap:3px;height:4px}
+        .pw-strength-bar{flex:1;background:#e2e8f0;border-radius:2px;transition:background .2s}
+        .pw-strength-bar.weak{background:#ef4444}
+        .pw-strength-bar.medium{background:#f59e0b}
+        .pw-strength-bar.strong{background:#10b981}
+        .pw-strength-text{font-size:11px;color:#94a3b8;margin-top:4px;font-weight:600}
+
+        .form-row{display:flex;justify-content:space-between;align-items:center;margin:8px 0 18px;font-size:12.5px}
+        .checkbox-label{display:flex;align-items:center;gap:6px;color:#64748b;cursor:pointer;user-select:none}
+        .checkbox-label input{margin:0;cursor:pointer}
+        .forgot-link{color:#3b82f6;text-decoration:none;font-weight:600}
+        .forgot-link:hover{text-decoration:underline}
+
+        .btn-submit{width:100%;padding:13px;border-radius:10px;border:none;background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:8px}
+        .btn-submit:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(59,130,246,.3)}
+        .btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
+        .spinner{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
+        .btn-submit.loading .spinner{display:inline-block}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        .divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:#94a3b8;font-size:12px;font-weight:600}
+        .divider::before,.divider::after{content:'';flex:1;height:1px;background:#e2e8f0}
+
+        .social-btn{width:100%;padding:11px;border-radius:10px;border:1px solid #e2e8f0;background:#fff;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;color:#0f172a;transition:.2s;margin-bottom:8px}
+        .social-btn:hover{background:#f8fafc;border-color:#cbd5e1}
+        .social-btn .ico{font-size:16px}
+
+        .auth-footer{text-align:center;font-size:12.5px;color:#64748b;margin-top:18px}
+        .auth-footer a{color:#3b82f6;font-weight:700;text-decoration:none}
+
+        .alert{padding:11px 14px;border-radius:10px;font-size:13px;margin-bottom:14px;display:flex;align-items:flex-start;gap:8px;font-weight:500}
+        .alert.error{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}
+        .alert.success{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
+        .alert.info{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
+
+        .pane{display:none}
+        .pane.active{display:block}
+
+        .verify-icon{font-size:64px;text-align:center;margin-bottom:16px}
+        .verify-title{font-size:18px;font-weight:700;text-align:center;margin-bottom:10px}
+        .verify-text{font-size:13px;color:#475569;text-align:center;line-height:1.6;margin-bottom:8px}
+        .verify-email{font-weight:700;color:#3b82f6;font-size:14px;display:block;margin:10px 0}
+        .resend-btn{background:none;border:none;color:#3b82f6;font-weight:600;cursor:pointer;padding:6px 12px;font-size:12px;text-decoration:underline}
+
+        .terms-text{font-size:11px;color:#94a3b8;text-align:center;line-height:1.6;margin-top:14px}
+        .terms-text a{color:#3b82f6;text-decoration:none}
+
+        @media(max-width:480px){
+            .auth-card{padding:24px 20px}
+            .auth-logo-title{font-size:20px}
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-logo">
+            <div class="auth-logo-icon">📱</div>
+            <div class="auth-logo-title">SNS 콘텐츠 플랫폼</div>
+            <div class="auth-logo-sub">7개 SNS 채널 통합 관리 자동화</div>
+        </div>
+
+        <div class="auth-card">
+            <!-- Tabs -->
+            <div class="auth-tabs" id="authTabs">
+                <button class="auth-tab active" data-pane="login" onclick="switchTab('login')">로그인</button>
+                <button class="auth-tab" data-pane="signup" onclick="switchTab('signup')">회원가입</button>
+            </div>
+
+            <!-- Alert area -->
+            <div id="alertArea"></div>
+
+            <!-- LOGIN PANE -->
+            <div class="pane active" id="pane-login">
+                <div class="form-group">
+                    <label>이메일</label>
+                    <input type="email" id="loginEmail" placeholder="your@email.com" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label>비밀번호</label>
+                    <div class="input-wrap">
+                        <input type="password" id="loginPassword" placeholder="비밀번호" autocomplete="current-password">
+                        <button class="toggle-pw" onclick="togglePw('loginPassword')">👁</button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label class="checkbox-label"><input type="checkbox" id="rememberMe" checked> 로그인 상태 유지</label>
+                    <a class="forgot-link" onclick="forgotPassword()">비밀번호 찾기</a>
+                </div>
+                <button class="btn-submit" id="btnLogin" onclick="handleLogin()">
+                    <div class="spinner"></div>
+                    <span>로그인</span>
+                </button>
+            </div>
+
+            <!-- SIGNUP PANE -->
+            <div class="pane" id="pane-signup">
+                <div class="form-group">
+                    <label>이름 (선택)</label>
+                    <input type="text" id="signupName" placeholder="홍길동" autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label>이메일</label>
+                    <input type="email" id="signupEmail" placeholder="your@email.com" autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label>비밀번호</label>
+                    <div class="input-wrap">
+                        <input type="password" id="signupPassword" placeholder="6자 이상" autocomplete="new-password" oninput="checkPwStrength()">
+                        <button class="toggle-pw" onclick="togglePw('signupPassword')">👁</button>
+                    </div>
+                    <div class="pw-strength">
+                        <div class="pw-strength-bar" id="pwBar1"></div>
+                        <div class="pw-strength-bar" id="pwBar2"></div>
+                        <div class="pw-strength-bar" id="pwBar3"></div>
+                        <div class="pw-strength-bar" id="pwBar4"></div>
+                    </div>
+                    <div class="pw-strength-text" id="pwStrengthText">비밀번호 강도</div>
+                </div>
+                <div class="form-group">
+                    <label>비밀번호 확인</label>
+                    <div class="input-wrap">
+                        <input type="password" id="signupPasswordConfirm" placeholder="비밀번호 재입력" autocomplete="new-password">
+                        <button class="toggle-pw" onclick="togglePw('signupPasswordConfirm')">👁</button>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label class="checkbox-label"><input type="checkbox" id="agreeTerms"> <span>이용약관 및 개인정보처리방침에 동의합니다</span></label>
+                </div>
+                <button class="btn-submit" id="btnSignup" onclick="handleSignup()">
+                    <div class="spinner"></div>
+                    <span>회원가입</span>
+                </button>
+            </div>
+
+            <!-- VERIFY EMAIL PANE -->
+            <div class="pane" id="pane-verify">
+                <div class="verify-icon">📧</div>
+                <div class="verify-title">이메일 인증을 진행해주세요</div>
+                <div class="verify-text">
+                    가입하신 이메일로 인증 링크를 전송했습니다.<br>
+                    메일함을 확인하고 링크를 클릭해주세요.
+                </div>
+                <span class="verify-email" id="verifyEmailAddr">your@email.com</span>
+                <div class="verify-text">
+                    인증을 완료하면 곧바로 모든 기능을 사용하실 수 있습니다.
+                </div>
+                <div style="text-align:center;margin-top:18px">
+                    <button class="resend-btn" onclick="resendVerification()">📤 인증 메일 재발송</button>
+                </div>
+                <div style="text-align:center;margin-top:14px">
+                    <button class="btn-submit" onclick="switchTab('login')" style="background:#f1f5f9;color:#475569">로그인 화면으로</button>
+                </div>
+            </div>
+
+            <!-- FORGOT PASSWORD PANE -->
+            <div class="pane" id="pane-forgot">
+                <div class="verify-icon">🔐</div>
+                <div class="verify-title">비밀번호 재설정</div>
+                <div class="verify-text" style="margin-bottom:18px">가입하신 이메일을 입력하시면<br>비밀번호 재설정 링크를 전송해드립니다.</div>
+                <div class="form-group">
+                    <label>이메일</label>
+                    <input type="email" id="forgotEmail" placeholder="your@email.com">
+                </div>
+                <button class="btn-submit" id="btnForgot" onclick="handleForgot()">
+                    <div class="spinner"></div>
+                    <span>재설정 메일 보내기</span>
+                </button>
+                <div style="text-align:center;margin-top:14px">
+                    <button class="resend-btn" onclick="switchTab('login')">로그인 화면으로 돌아가기</button>
+                </div>
+            </div>
+
+            <!-- Social Login (only on login/signup) -->
+            <div id="socialSection">
+                <div class="divider">또는</div>
+                <button class="social-btn" onclick="showSocialAlert('Google')"><span class="ico">🔵</span> Google로 계속하기</button>
+                <button class="social-btn" onclick="showSocialAlert('Kakao')"><span class="ico">💬</span> 카카오로 계속하기</button>
+            </div>
+
+            <div class="auth-footer" id="authFooter">
+                <span id="footerText">계정이 없으신가요?</span>
+                <a onclick="switchTab('signup')" id="footerLink">회원가입</a>
+            </div>
+
+            <div class="terms-text">
+                계속 진행하시면 <a href="#">이용약관</a> 및 <a href="#">개인정보처리방침</a>에 동의하는 것으로 간주됩니다.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ─── Supabase Auth Config ───
+        var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
+        var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
+        var REDIRECT_URL = window.location.origin + window.location.pathname.replace('auth.html', 'pages/settings.html');
+
+        // ─── Already logged in? Redirect ───
+        var existingSession = JSON.parse(localStorage.getItem('snsAuthSession') || 'null');
+        if(existingSession && existingSession.access_token){
+            // verify expiry
+            if(existingSession.expires_at && existingSession.expires_at * 1000 > Date.now()){
+                window.location.href = REDIRECT_URL;
+            } else {
+                localStorage.removeItem('snsAuthSession');
+            }
+        }
+
+        // ─── Tab switching ───
+        function switchTab(name){
+            document.querySelectorAll('.pane').forEach(function(p){ p.classList.remove('active'); });
+            document.querySelectorAll('.auth-tab').forEach(function(t){ t.classList.remove('active'); });
+
+            var pane = document.getElementById('pane-' + name);
+            if(pane) pane.classList.add('active');
+
+            var tab = document.querySelector('.auth-tab[data-pane="' + name + '"]');
+            if(tab) tab.classList.add('active');
+
+            // Hide tabs and social on verify/forgot
+            var isFlow = (name === 'verify' || name === 'forgot');
+            document.getElementById('authTabs').style.display = isFlow ? 'none' : 'flex';
+            document.getElementById('socialSection').style.display = isFlow ? 'none' : 'block';
+
+            // Update footer
+            var footerText = document.getElementById('footerText');
+            var footerLink = document.getElementById('footerLink');
+            if(name === 'login'){
+                footerText.textContent = '계정이 없으신가요?';
+                footerLink.textContent = '회원가입';
+                footerLink.onclick = function(){ switchTab('signup'); };
+                document.getElementById('authFooter').style.display = 'block';
+            } else if(name === 'signup'){
+                footerText.textContent = '이미 가입하셨나요?';
+                footerLink.textContent = '로그인';
+                footerLink.onclick = function(){ switchTab('login'); };
+                document.getElementById('authFooter').style.display = 'block';
+            } else {
+                document.getElementById('authFooter').style.display = 'none';
+            }
+
+            clearAlert();
+        }
+
+        // ─── Toggle password visibility ───
+        function togglePw(id){
+            var el = document.getElementById(id);
+            el.type = el.type === 'password' ? 'text' : 'password';
+        }
+
+        // ─── Password strength ───
+        function checkPwStrength(){
+            var pw = document.getElementById('signupPassword').value;
+            var score = 0;
+            if(pw.length >= 6) score++;
+            if(pw.length >= 10) score++;
+            if(/[A-Z]/.test(pw) || /[!@#$%^&*]/.test(pw)) score++;
+            if(/[0-9]/.test(pw) && (/[A-Z]/.test(pw) || /[!@#$%^&*]/.test(pw))) score++;
+
+            var bars = [
+                document.getElementById('pwBar1'),
+                document.getElementById('pwBar2'),
+                document.getElementById('pwBar3'),
+                document.getElementById('pwBar4')
+            ];
+            bars.forEach(function(b,i){
+                b.className = 'pw-strength-bar';
+                if(i < score){
+                    if(score <= 1) b.classList.add('weak');
+                    else if(score <= 2) b.classList.add('medium');
+                    else b.classList.add('strong');
+                }
+            });
+            var txt = document.getElementById('pwStrengthText');
+            if(pw.length === 0){ txt.textContent = '비밀번호 강도'; txt.style.color = '#94a3b8'; }
+            else if(score <= 1){ txt.textContent = '⚠ 약함 - 더 복잡하게 만드세요'; txt.style.color = '#ef4444'; }
+            else if(score <= 2){ txt.textContent = '🟡 보통'; txt.style.color = '#f59e0b'; }
+            else { txt.textContent = '✓ 강력'; txt.style.color = '#10b981'; }
+        }
+
+        // ─── Alerts ───
+        function showAlert(message, type){
+            var icon = type === 'error' ? '❌' : (type === 'success' ? '✅' : 'ℹ️');
+            document.getElementById('alertArea').innerHTML =
+                '<div class="alert ' + type + '"><span>' + icon + '</span><span>' + message + '</span></div>';
+        }
+        function clearAlert(){ document.getElementById('alertArea').innerHTML = ''; }
+
+        // ─── Spinner state ───
+        function setLoading(btnId, loading){
+            var btn = document.getElementById(btnId);
+            if(loading){ btn.classList.add('loading'); btn.disabled = true; }
+            else { btn.classList.remove('loading'); btn.disabled = false; }
+        }
+
+        // ─── Supabase Auth REST ───
+        async function supabaseAuth(endpoint, body, queryParams){
+            var url = SUPABASE_URL + '/auth/v1/' + endpoint;
+            if(queryParams) url += '?' + queryParams;
+            try {
+                var res = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+                var data = await res.json();
+                return {ok: res.ok, status: res.status, data: data};
+            } catch(err){
+                return {ok: false, status: 0, data: {msg: err.message}};
+            }
+        }
+
+        // ─── Signup ───
+        async function handleSignup(){
+            clearAlert();
+            var name = document.getElementById('signupName').value.trim();
+            var email = document.getElementById('signupEmail').value.trim();
+            var password = document.getElementById('signupPassword').value;
+            var passwordConfirm = document.getElementById('signupPasswordConfirm').value;
+            var agreed = document.getElementById('agreeTerms').checked;
+
+            if(!email){ showAlert('이메일을 입력해주세요', 'error'); return; }
+            if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showAlert('올바른 이메일 형식이 아닙니다', 'error'); return; }
+            if(password.length < 6){ showAlert('비밀번호는 6자 이상이어야 합니다', 'error'); return; }
+            if(password !== passwordConfirm){ showAlert('비밀번호가 일치하지 않습니다', 'error'); return; }
+            if(!agreed){ showAlert('이용약관에 동의해주세요', 'error'); return; }
+
+            setLoading('btnSignup', true);
+
+            var result = await supabaseAuth('signup', {
+                email: email,
+                password: password,
+                data: {full_name: name}
+            }, 'redirect_to=' + encodeURIComponent(REDIRECT_URL));
+
+            setLoading('btnSignup', false);
+
+            if(result.ok){
+                // Save partial profile locally
+                localStorage.setItem('snsAuthPendingEmail', email);
+                if(name) localStorage.setItem('snsAuthName', name);
+
+                // Check if email confirmation required (session is null until confirmed)
+                if(result.data.user && !result.data.session){
+                    document.getElementById('verifyEmailAddr').textContent = email;
+                    switchTab('verify');
+                } else if(result.data.session){
+                    // Auto-confirmed (email confirmation disabled in Supabase)
+                    saveSession(result.data.session, result.data.user);
+                    showAlert('회원가입 성공! 잠시 후 이동합니다.', 'success');
+                    setTimeout(function(){ window.location.href = REDIRECT_URL; }, 1000);
+                } else {
+                    document.getElementById('verifyEmailAddr').textContent = email;
+                    switchTab('verify');
+                }
+            } else {
+                var errMsg = (result.data && (result.data.msg || result.data.message || result.data.error_description)) || '회원가입 실패';
+                if(errMsg.indexOf('already registered') > -1 || errMsg.indexOf('User already') > -1){
+                    errMsg = '이미 가입된 이메일입니다. 로그인해주세요.';
+                }
+                showAlert(errMsg, 'error');
+            }
+        }
+
+        // ─── Login ───
+        async function handleLogin(){
+            clearAlert();
+            var email = document.getElementById('loginEmail').value.trim();
+            var password = document.getElementById('loginPassword').value;
+
+            if(!email){ showAlert('이메일을 입력해주세요', 'error'); return; }
+            if(!password){ showAlert('비밀번호를 입력해주세요', 'error'); return; }
+
+            setLoading('btnLogin', true);
+
+            var result = await supabaseAuth('token', {
+                email: email,
+                password: password
+            }, 'grant_type=password');
+
+            setLoading('btnLogin', false);
+
+            if(result.ok && result.data.access_token){
+                saveSession(result.data, result.data.user);
+                // 로그인 활동 로그 (background)
+                try {
+                    fetch(SUPABASE_URL + '/rest/v1/activity_logs', {
+                        method: 'POST',
+                        headers: {
+                            'apikey': SUPABASE_KEY,
+                            'Authorization': 'Bearer ' + result.data.access_token,
+                            'Content-Type': 'application/json',
+                            'Prefer': 'return=minimal'
+                        },
+                        body: JSON.stringify({
+                            user_id: result.data.user.id,
+                            user_email: result.data.user.email,
+                            action_type: 'LOGIN',
+                            action_detail: '로그인 성공',
+                            user_agent: navigator.userAgent
+                        })
+                    });
+                } catch(e){}
+                showAlert('로그인 성공! 이동 중...', 'success');
+                setTimeout(function(){ window.location.href = REDIRECT_URL; }, 800);
+            } else {
+                var errMsg = (result.data && (result.data.error_description || result.data.msg || result.data.message)) || '로그인 실패';
+                if(errMsg.indexOf('Invalid login') > -1 || errMsg.indexOf('credentials') > -1){
+                    errMsg = '이메일 또는 비밀번호가 일치하지 않습니다';
+                }
+                if(errMsg.indexOf('Email not confirmed') > -1){
+                    errMsg = '이메일 인증이 완료되지 않았습니다. 메일함을 확인해주세요.';
+                    document.getElementById('verifyEmailAddr').textContent = email;
+                    setTimeout(function(){ switchTab('verify'); }, 1500);
+                }
+                showAlert(errMsg, 'error');
+            }
+        }
+
+        // ─── Resend verification ───
+        async function resendVerification(){
+            var email = localStorage.getItem('snsAuthPendingEmail') || document.getElementById('verifyEmailAddr').textContent;
+            if(!email || email === 'your@email.com'){ showAlert('재발송할 이메일이 없습니다', 'error'); return; }
+
+            var result = await supabaseAuth('resend', {
+                type: 'signup',
+                email: email
+            }, 'redirect_to=' + encodeURIComponent(REDIRECT_URL));
+
+            if(result.ok){
+                showAlert('인증 메일이 재발송되었습니다. 메일함을 확인해주세요.', 'success');
+            } else {
+                showAlert('재발송 실패. 잠시 후 다시 시도해주세요.', 'error');
+            }
+        }
+
+        // ─── Forgot password ───
+        function forgotPassword(){ switchTab('forgot'); }
+
+        async function handleForgot(){
+            clearAlert();
+            var email = document.getElementById('forgotEmail').value.trim();
+            if(!email){ showAlert('이메일을 입력해주세요', 'error'); return; }
+            if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showAlert('올바른 이메일 형식이 아닙니다', 'error'); return; }
+
+            setLoading('btnForgot', true);
+            var result = await supabaseAuth('recover', {
+                email: email
+            }, 'redirect_to=' + encodeURIComponent(REDIRECT_URL));
+            setLoading('btnForgot', false);
+
+            if(result.ok){
+                showAlert('재설정 링크를 이메일로 보냈습니다. 메일함을 확인해주세요.', 'success');
+            } else {
+                showAlert('전송 실패. 이메일을 확인해주세요.', 'error');
+            }
+        }
+
+        // ─── Social (placeholder) ───
+        function showSocialAlert(provider){
+            showAlert(provider + ' 로그인은 준비 중입니다. 이메일 회원가입을 이용해주세요.', 'info');
+        }
+
+        // ─── Save session ───
+        function saveSession(session, user){
+            var saveData = {
+                access_token: session.access_token,
+                refresh_token: session.refresh_token,
+                expires_at: session.expires_at || (Math.floor(Date.now()/1000) + (session.expires_in || 3600)),
+                user: user || session.user
+            };
+            localStorage.setItem('snsAuthSession', JSON.stringify(saveData));
+            if(saveData.user && saveData.user.email){
+                localStorage.setItem('snsAuthEmail', saveData.user.email);
+            }
+            localStorage.removeItem('snsAuthPendingEmail');
+        }
+
+        // ─── Handle email verification callback (hash params from Supabase redirect) ───
+        function handleAuthCallback(){
+            var hash = window.location.hash.substring(1);
+            if(!hash) return;
+            var params = {};
+            hash.split('&').forEach(function(pair){
+                var parts = pair.split('=');
+                if(parts[0]) params[parts[0]] = decodeURIComponent(parts[1] || '');
+            });
+            if(params.access_token){
+                // Email verified - save session and redirect
+                var session = {
+                    access_token: params.access_token,
+                    refresh_token: params.refresh_token,
+                    expires_at: Math.floor(Date.now()/1000) + parseInt(params.expires_in || '3600'),
+                    user: null
+                };
+                // Fetch user info
+                fetch(SUPABASE_URL + '/auth/v1/user', {
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': 'Bearer ' + params.access_token
+                    }
+                }).then(function(r){ return r.json(); }).then(function(user){
+                    session.user = user;
+                    saveSession(session, user);
+                    showAlert('이메일 인증 완료! 잠시 후 이동합니다.', 'success');
+                    setTimeout(function(){ window.location.href = REDIRECT_URL; }, 1200);
+                }).catch(function(){
+                    saveSession(session, null);
+                    showAlert('인증 완료! 이동합니다.', 'success');
+                    setTimeout(function(){ window.location.href = REDIRECT_URL; }, 1200);
+                });
+            }
+        }
+
+        // Run callback handler on load
+        handleAuthCallback();
+
+        // Enter key to submit
+        document.getElementById('loginPassword').addEventListener('keypress', function(e){
+            if(e.key === 'Enter') handleLogin();
+        });
+        document.getElementById('signupPasswordConfirm').addEventListener('keypress', function(e){
+            if(e.key === 'Enter') handleSignup();
+        });
+    </script>
+    <script>
+        if("serviceWorker" in navigator){ navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
+    </script>
+</body>
+</html>

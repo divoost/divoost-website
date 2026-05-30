@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="manifest.json">
+    <title>SNS 콘텐츠 플랫폼 | DIVOOST</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/sns.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div class="logo-icon">📱</div>
+                <div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div>
+            </div>
+            <div class="sidebar-profile" onclick="location.href='pages/settings.html'">
+                <div class="profile-avatar">D</div>
+                <div class="profile-info">
+                    <div class="profile-email">divoost@user.com</div>
+                    <div class="profile-plan">체험플랜 사용 중</div>
+                </div>
+                <div class="profile-arrow">▼</div>
+            </div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="index.html" class="nav-link active"><span>🏠</span> 종합 현황</a><a href="pages/calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="pages/create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="pages/ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="pages/media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="pages/templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="pages/publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="pages/schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="pages/history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="pages/engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="pages/listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="pages/analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="pages/settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="pages/billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="pages/safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
+            </nav>
+        </aside>
+
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="menu-btn" id="menuBtn">☰</button>
+                    <div>
+                        <div class="top-bar-title">🏠 홈</div>
+                        <div class="top-bar-sub">나의 플랜 정보 및 콘텐츠 운영 현황을 확인할 수 있는 페이지입니다</div>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <button class="top-bar-icon-btn" title="알림">🔔</button>
+                    <button class="top-bar-btn" onclick="location.href='pages/settings.html'">사용에 어려운 점이 있나요? <span style="font-size:10px">▼</span></button>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- Promo Banner -->
+                <div class="promo-banner">
+                    <div class="promo-banner-left">
+                        <span class="promo-banner-tag">(신규유저 필수) SNS 채널 연동</span>
+                        <span class="promo-banner-text">SNS 채널 연동 가이드와 함께 쉽게 7개 채널을 연동할 수 있어요. 지금 바로 시작해 볼까요?</span>
+                    </div>
+                    <button class="promo-banner-btn" onclick="location.href='pages/settings.html'">🔗 채널 연동하기</button>
+                </div>
+
+                <!-- SNS 바로가기 -->
+                <div class="section-title" style="margin-top:16px">🔗 내 SNS 바로가기</div>
+                <div id="snsShortcuts" class="sns-shortcuts">
+                    <div style="grid-column:1/-1;text-align:center;padding:20px;color:#94a3b8;font-size:.85rem">불러오는 중...</div>
+                </div>
+
+                <style>
+                    .sns-shortcuts{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-bottom:24px}
+                    .sns-shortcut{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:10px;transition:.18s;cursor:pointer;text-decoration:none;color:inherit}
+                    .sns-shortcut:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.08);border-color:#bfdbfe}
+                    .sns-shortcut-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+                    .sns-shortcut-info{flex:1;min-width:0}
+                    .sns-shortcut-name{font-size:.85rem;font-weight:700;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+                    .sns-shortcut-platform{font-size:.7rem;color:#94a3b8;margin-top:2px}
+                    .sns-shortcut-arrow{color:#cbd5e1;font-size:14px}
+                    .sns-shortcut-empty{background:#f8fafc;border:1px dashed #cbd5e1;color:#94a3b8;justify-content:center;font-size:.82rem;padding:18px}
+                    .sns-shortcut-empty:hover{background:#eff6ff;border-color:#3b82f6;color:#3b82f6}
+                    @media(max-width:768px){.sns-shortcuts{grid-template-columns:1fr 1fr}.sns-shortcut{padding:10px 12px}}
+                    @media(max-width:480px){.sns-shortcuts{grid-template-columns:1fr}}
+                </style>
+
+                <!-- 3-column Cards -->
+                <div class="dashboard-cards">
+                    <!-- 체험 플랜 -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title">🎁 체험 플랜</div>
+                        </div>
+                        <div class="plan-card-body">DIVOOST SNS 플랫폼의 모든 서비스를 경험해 볼 수 있는 체험 플랜을 이용 중입니다.</div>
+                        <div class="plan-date-badge" id="planDaysLeft">30일 이용가능</div>
+                        <div class="plan-date" id="planPeriod">26.05.28 - 26.06.27</div>
+                        <button class="plan-btn" onclick="location.href='pages/settings.html'">플랜 이용하기 ›</button>
+                    </div>
+
+                    <!-- 공지사항 -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title">📋 공지사항</div>
+                            <button class="dash-card-action">+</button>
+                        </div>
+                        <ul class="notice-list">
+                            <li class="notice-item"><span class="notice-tag">공지</span><span class="notice-text">SNS 채널 7개 (FB/IG/TT 등) 통합 관리 기능 출시</span><span class="notice-date">05.28</span></li>
+                            <li class="notice-item"><span class="notice-tag">공지</span><span class="notice-text">AI 작성기 다중 플랫폼 동시 생성 지원</span><span class="notice-date">05.27</span></li>
+                            <li class="notice-item"><span class="notice-tag">업데이트</span><span class="notice-text">이미지/동영상 옵션 추가 (크기, 비율, 프레임)</span><span class="notice-date">05.27</span></li>
+                            <li class="notice-item"><span class="notice-tag">신규</span><span class="notice-text">설정 페이지에서 API 키 통합 관리 가능</span><span class="notice-date">05.27</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- 자주하는 질문 -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <div class="dash-card-title">❓ 자주하는 질문</div>
+                        </div>
+                        <div class="faq-body">DIVOOST SNS 콘텐츠 플랫폼에 대해서 운영자님들께서 가장 자주 하시는 질문을 모두 모았습니다.</div>
+                        <a class="faq-btn" href="#">자주하는 질문 보기 ›</a>
+                    </div>
+                </div>
+
+                <!-- TODAY / TOTAL Stats -->
+                <div class="stats-row">
+                    <div class="stats-section">
+                        <div class="stats-section-title"><span class="star">⭐</span> TODAY</div>
+                        <div class="stats-section-sub">오늘 발행/예약된 콘텐츠 수를 확인해봐요.</div>
+
+                        <div class="stats-block">
+                            <div class="stats-block-title">오늘 발행 콘텐츠 수</div>
+                            <div class="stats-row-item">
+                                <div class="stats-row-label">오늘 발행</div>
+                                <div class="stats-row-value" id="todayCount">0 건</div>
+                            </div>
+                        </div>
+
+                        <div class="stats-block">
+                            <div class="stats-block-title">오늘 채널별 발행 수</div>
+                            <table class="channel-table" id="todayChannelTable">
+                                <tr><td class="ch-name-cell">📘 Facebook</td><td class="ch-value-cell disconnected"> 미연동 채널</td><td class="ch-name-cell">📸 Instagram</td><td class="ch-value-cell disconnected"> 미연동 채널</td></tr>
+                                <tr><td class="ch-name-cell">🎵 TikTok</td><td class="ch-value-cell disconnected"> 미연동 채널</td><td class="ch-name-cell">📗 네이버 블로그</td><td class="ch-value-cell disconnected"> 미연동 채널</td></tr>
+                                <tr><td class="ch-name-cell">☕ 네이버 카페</td><td class="ch-value-cell disconnected"> 미연동 채널</td><td class="ch-name-cell">📕 샤오홍수</td><td class="ch-value-cell disconnected"> 미연동 채널</td></tr>
+                                <tr><td class="ch-name-cell">🎬 도우인</td><td class="ch-value-cell disconnected"> 미연동 채널</td><td class="ch-name-cell">전체</td><td class="ch-value-cell">0 건</td></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="stats-section">
+                        <div class="stats-section-title"><span class="flag">🚩</span> TOTAL</div>
+                        <div class="stats-section-sub">나의 전체 발행 콘텐츠 수를 확인해봐요.</div>
+
+                        <div class="stats-block">
+                            <div class="stats-block-title">전체 발행 콘텐츠 수</div>
+                            <div class="stats-row-item">
+                                <div class="stats-row-label">전체 발행</div>
+                                <div class="stats-row-value" id="totalCount">0 건</div>
+                            </div>
+                        </div>
+
+                        <div class="stats-block">
+                            <div class="stats-block-title">전체 채널별 발행 수</div>
+                            <table class="channel-table" id="totalChannelTable">
+                                <tr><td class="ch-name-cell">📘 Facebook</td><td class="ch-value-cell disconnected"> 미연동 채널</td><td class="ch-name-cell">📸 Instagram</td><td class="ch-value-cell disconnected"> 미연동 채널</td></tr>
+                                <tr><td class="ch-name-cell">🎵 TikTok</td><td class="ch-value-cell disconnected"> 미연동 채널</td><td class="ch-name-cell">📗 네이버 블로그</td><td class="ch-value-cell disconnected"> 미연동 채널</td></tr>
+                                <tr><td class="ch-name-cell">☕ 네이버 카페</td><td class="ch-value-cell disconnected"> 미연동 채널</td><td class="ch-name-cell">📕 샤오홍수</td><td class="ch-value-cell disconnected"> 미연동 채널</td></tr>
+                                <tr><td class="ch-name-cell">🎬 도우인</td><td class="ch-value-cell disconnected"> 미연동 채널</td><td class="ch-name-cell">전체</td><td class="ch-value-cell" id="totalTableTotal">0 건</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="section-title">📊 통합 KPI</div>
+                <div class="kpi-row">
+                    <div class="kpi-card"><div class="kpi-icon">📝</div><div class="kpi-value" id="kpi-posts">0</div><div class="kpi-label">이번 주 포스팅</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">❤️</div><div class="kpi-value" id="kpi-likes">0</div><div class="kpi-label">총 좋아요</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">💬</div><div class="kpi-value" id="kpi-comments">0</div><div class="kpi-label">총 댓글</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">🔄</div><div class="kpi-value" id="kpi-shares">0</div><div class="kpi-label">총 공유</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">👁</div><div class="kpi-value" id="kpi-views">0</div><div class="kpi-label">총 조회수</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">📱</div><div class="kpi-value" id="kpi-channels">0</div><div class="kpi-label">연결 채널</div></div>
+                </div>
+
+                <!-- Recent Posts -->
+                <div class="section-title">📝 최근 콘텐츠</div>
+                <div id="recentPosts" class="post-list">
+                    <div style="text-align:center;color:#94a3b8;padding:40px">
+                        <div style="font-size:3rem;margin-bottom:12px">✍️</div>
+                        <div style="font-size:1rem;font-weight:600;margin-bottom:8px;color:#475569">첫 콘텐츠를 만들어보세요</div>
+                        <div style="font-size:.85rem;margin-bottom:16px">AI가 키워드 기반으로 콘텐츠를 자동 생성합니다</div>
+                        <button class="btn btn-primary" onclick="location.href='pages/create.html'">✍️ 콘텐츠 만들기</button>
+                    </div>
+                </div>
+
+                <!-- Weekly Engagement -->
+                <div class="section-title">📈 주간 인터렉션</div>
+                <div class="engagement-grid">
+                    <div class="eng-card"><div class="eng-day">월</div><div class="eng-bar" style="height:20%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day">화</div><div class="eng-bar" style="height:40%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day">수</div><div class="eng-bar" style="height:60%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day">목</div><div class="eng-bar" style="height:35%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day">금</div><div class="eng-bar" style="height:80%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day">토</div><div class="eng-bar" style="height:50%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day">일</div><div class="eng-bar" style="height:30%"></div><div class="eng-val">-</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('menuBtn').onclick = function(){
+            document.getElementById('sidebar').classList.toggle('open');
+        };
+
+        var CHANNEL_INFO = {
+            facebook: {name: '📘 Facebook', icon: '📘', bg: '#e7f0ff', urlOf: function(a){ return a.pageId ? 'https://www.facebook.com/' + a.pageId : 'https://www.facebook.com/'; }},
+            instagram: {name: '📸 Instagram', icon: '📸', bg: '#fce7f3', urlOf: function(a){ return a.username ? 'https://www.instagram.com/' + a.username.replace(/^@/, '') + '/' : 'https://www.instagram.com/'; }},
+            tiktok: {name: '🎵 TikTok', icon: '🎵', bg: '#f0f0f0', urlOf: function(a){ return a.username ? 'https://www.tiktok.com/@' + a.username.replace(/^@/, '') : 'https://www.tiktok.com/'; }},
+            naver_blog: {name: '📗 네이버 블로그', icon: '📗', bg: '#dcfce7', urlOf: function(a){ return a.blogId ? 'https://blog.naver.com/' + a.blogId : 'https://blog.naver.com/'; }},
+            naver_cafe: {name: '☕ 네이버 카페', icon: '☕', bg: '#fef3c7', urlOf: function(a){ return a.cafeId ? 'https://cafe.naver.com/ca-fe/cafes/' + a.cafeId : 'https://cafe.naver.com/'; }},
+            xiaohongshu: {name: '📕 샤오홍수', icon: '📕', bg: '#fee2e2', urlOf: function(){ return 'https://www.xiaohongshu.com/'; }},
+            douyin: {name: '🎬 도우인', icon: '🎬', bg: '#f3e8ff', urlOf: function(){ return 'https://www.douyin.com/'; }}
+        };
+
+        function renderSnsShortcuts(){
+            var container = document.getElementById('snsShortcuts');
+            if(!container) return;
+            var html = '';
+            var hasAny = false;
+            Object.keys(CHANNEL_INFO).forEach(function(chId){
+                var info = CHANNEL_INFO[chId];
+                var ch = settings[chId] || {};
+                var accounts = ch.accounts || [];
+                accounts.forEach(function(acc){
+                    var hasCred = acc.accessToken || acc.pageToken;
+                    if(!hasCred) return;
+                    hasAny = true;
+                    var url = info.urlOf(acc);
+                    var platformLabel = info.name.replace(/^\S+\s/, '');
+                    html += '<a class="sns-shortcut" href="' + url + '" target="_blank" rel="noopener">' +
+                        '<div class="sns-shortcut-icon" style="background:' + info.bg + '">' + info.icon + '</div>' +
+                        '<div class="sns-shortcut-info">' +
+                            '<div class="sns-shortcut-name">' + escapeHtml(acc.name || platformLabel) + '</div>' +
+                            '<div class="sns-shortcut-platform">' + platformLabel + '</div>' +
+                        '</div>' +
+                        '<span class="sns-shortcut-arrow">↗</span>' +
+                    '</a>';
+                });
+            });
+            if(!hasAny){
+                html = '<a class="sns-shortcut sns-shortcut-empty" href="pages/settings.html">+ 설정에서 SNS 계정을 등록하면 여기에 바로가기가 표시됩니다</a>';
+            }
+            container.innerHTML = html;
+        }
+
+        function escapeHtml(s){ var d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+
+        // Load data
+        var posts = JSON.parse(localStorage.getItem('snsPosts') || '[]');
+        var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+
+        // Channel connection count (멀티 계정 형식 지원)
+        function channelHasConnectedAccount(ch){
+            var s = settings[ch] || {};
+            if(s.accounts && s.accounts.length > 0){
+                return s.accounts.some(function(a){ return (a.accessToken && a.accessToken.trim()) || (a.pageToken && a.pageToken.trim()); });
+            }
+            // 옛 형식
+            return Object.keys(s).some(function(k){ return typeof s[k] === 'string' && s[k].trim() !== ''; });
+        }
+        var connectedChannels = 0;
+        Object.keys(CHANNEL_INFO).forEach(function(ch){
+            if(channelHasConnectedAccount(ch)) connectedChannels++;
+        });
+        document.getElementById('kpi-channels').textContent = connectedChannels;
+        renderSnsShortcuts();
+
+        // KPIs
+        document.getElementById('kpi-posts').textContent = posts.length;
+        var totalLikes = posts.reduce(function(s,p){ return s + (p.likes||0); }, 0);
+        var totalComments = posts.reduce(function(s,p){ return s + (p.comments||0); }, 0);
+        var totalShares = posts.reduce(function(s,p){ return s + (p.shares||0); }, 0);
+        var totalViews = posts.reduce(function(s,p){ return s + (p.views||0); }, 0);
+        document.getElementById('kpi-likes').textContent = totalLikes.toLocaleString();
+        document.getElementById('kpi-comments').textContent = totalComments.toLocaleString();
+        document.getElementById('kpi-shares').textContent = totalShares.toLocaleString();
+        document.getElementById('kpi-views').textContent = totalViews.toLocaleString();
+
+        // Today count
+        var today = new Date().toISOString().slice(0,10);
+        var todayPosts = posts.filter(function(p){ return p.date === today; });
+        document.getElementById('todayCount').textContent = todayPosts.length + ' 건';
+
+        // Total count
+        document.getElementById('totalCount').textContent = posts.length + ' 건';
+        document.getElementById('totalTableTotal').textContent = posts.length + ' 건';
+
+        // Update channel tables based on connection status
+        function updateChannelTable(tableId, filterToday){
+            var rows = document.querySelectorAll('#' + tableId + ' td.ch-value-cell.disconnected');
+            var channelsByOrder = ['facebook','instagram','tiktok','naver_blog','naver_cafe','xiaohongshu','douyin'];
+            channelsByOrder.forEach(function(ch, i){
+                var cells = document.querySelectorAll('#' + tableId + ' td.ch-value-cell');
+                if(!cells[i]) return;
+                var connected = channelHasConnectedAccount(ch);
+                var src = filterToday ? todayPosts : posts;
+                var count = src.filter(function(p){ return p.channels && p.channels.indexOf(ch) > -1; }).length;
+                if(connected){
+                    cells[i].className = 'ch-value-cell connected';
+                    cells[i].textContent = count + ' 건';
+                } else {
+                    cells[i].className = 'ch-value-cell disconnected';
+                    cells[i].textContent = ' 미연동 채널';
+                }
+            });
+        }
+        updateChannelTable('todayChannelTable', true);
+        updateChannelTable('totalChannelTable', false);
+
+        // Recent posts
+        if(posts.length > 0){
+            var html = '';
+            posts.slice(0,5).forEach(function(p){
+                var channels = (p.channels || []).map(function(c){ return (CHANNEL_INFO[c] && CHANNEL_INFO[c].name) || c; }).join(', ');
+                html += '<div class="post-item"><div class="post-thumb">' + (p.image ? '<img src="' + p.image + '">' : '📝') + '</div>' +
+                    '<div class="post-info"><div class="post-title">' + p.title + '</div>' +
+                    '<div class="post-meta">' + channels + ' · ' + (p.date || '') + '</div></div>' +
+                    '<div class="post-stats"><span>❤️ ' + (p.likes||0) + '</span><span>💬 ' + (p.comments||0) + '</span><span>👁 ' + (p.views||0) + '</span></div></div>';
+            });
+            document.getElementById('recentPosts').innerHTML = html;
+        }
+
+        // Weekly engagement (last 7 days)
+        var weekDays = ['일','월','화','수','목','금','토'];
+        var weekEngagement = [0,0,0,0,0,0,0];
+        posts.forEach(function(p){
+            if(!p.date) return;
+            var d = new Date(p.date);
+            var daysAgo = Math.floor((Date.now() - d.getTime()) / (1000*60*60*24));
+            if(daysAgo < 7){
+                var dow = d.getDay();
+                weekEngagement[dow] += (p.likes||0) + (p.comments||0) + (p.shares||0);
+            }
+        });
+        var maxEng = Math.max.apply(null, weekEngagement) || 1;
+        var engCards = document.querySelectorAll('.engagement-grid .eng-card');
+        var orderMap = [1,2,3,4,5,6,0]; // Mon-Sun
+        orderMap.forEach(function(dow, idx){
+            if(!engCards[idx]) return;
+            var val = weekEngagement[dow];
+            var bar = engCards[idx].querySelector('.eng-bar');
+            var valEl = engCards[idx].querySelector('.eng-val');
+            var pct = (val / maxEng) * 90 + 5;
+            if(bar) bar.style.height = pct + '%';
+            if(valEl) valEl.textContent = val || '-';
+        });
+
+        // Plan date (mock - 30 days from session start)
+        var planStart = new Date();
+        var planEnd = new Date();
+        planEnd.setDate(planEnd.getDate() + 30);
+        function fmt(d){ return d.toISOString().slice(2,10).replace(/-/g,'.'); }
+        document.getElementById('planPeriod').textContent = fmt(planStart) + ' - ' + fmt(planEnd);
+    </script>
+    <script src="js/secure-storage.js"></script>
+    <script src="js/auth-guard.js"></script>
+    <script>
+        if("serviceWorker" in navigator){ navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
+    </script>
+</body>
+</html>

@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>포스팅 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .pub-card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
+        .pub-card h2{font-size:1rem;margin-bottom:12px}
+
+        /* 플랫폼 그룹 */
+        .platform-group{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:12px;transition:.2s}
+        .platform-group.active{background:#eff6ff;border-color:#3b82f6}
+        .platform-group-header{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
+        .platform-checkbox{width:18px;height:18px;border-radius:4px;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff}
+        .platform-checkbox.checked{background:#3b82f6;border-color:#3b82f6;color:#fff}
+        .platform-checkbox.partial{background:#dbeafe;border-color:#3b82f6;color:#3b82f6}
+        .platform-icon{font-size:22px}
+        .platform-name{font-weight:700;font-size:.9rem;flex:1}
+        .platform-count{font-size:.72rem;padding:3px 10px;border-radius:12px;font-weight:600;background:#e2e8f0;color:#475569}
+        .platform-count.has-selected{background:#3b82f6;color:#fff}
+        .platform-chevron{color:#94a3b8;transition:transform .2s}
+        .platform-group.expanded .platform-chevron{transform:rotate(180deg)}
+
+        .platform-accounts{display:none;margin-top:12px;padding-top:12px;border-top:1px solid #e2e8f0;padding-left:28px}
+        .platform-group.expanded .platform-accounts{display:block}
+        .account-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:.15s;margin-bottom:4px}
+        .account-item:hover{background:#fff}
+        .account-item.selected{background:#fff;border:1px solid #3b82f6}
+        .acc-checkbox{width:16px;height:16px;border-radius:4px;border:2px solid #cbd5e1;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#fff;font-size:11px}
+        .acc-checkbox.checked{background:#3b82f6;border-color:#3b82f6;color:#fff}
+        .acc-info{flex:1;min-width:0}
+        .acc-name{font-size:.82rem;font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .acc-meta{font-size:.68rem;color:#94a3b8;margin-top:1px}
+        .acc-status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+        .acc-status-dot.connected{background:#10b981}
+        .acc-status-dot.disconnected{background:#cbd5e1}
+
+        .no-accounts{padding:12px;text-align:center;color:#94a3b8;font-size:.78rem;background:#fff;border-radius:8px;border:1px dashed #e2e8f0}
+        .no-accounts a{color:#3b82f6;font-weight:600;text-decoration:none}
+
+        .quick-pub{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
+        .quick-pub textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #e2e8f0;min-height:120px;font-family:inherit;font-size:.88rem;resize:vertical}
+
+        .summary-bar{background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;margin:14px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+        .summary-count{font-size:.85rem;font-weight:700;color:#1e40af}
+        .summary-list{font-size:.74rem;color:#475569;flex:1}
+
+        .btn-publish{padding:12px 32px;border-radius:10px;border:none;background:#10b981;color:#fff;font-weight:700;cursor:pointer;font-size:.92rem;transition:.2s}
+        .btn-publish:hover{background:#059669}
+        .btn-publish:disabled{background:#cbd5e1;cursor:not-allowed}
+
+        .media-upload{margin-bottom:14px;padding:12px;background:#faf5ff;border:1px solid #e9d5ff;border-radius:10px}
+        .media-upload-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+        .media-upload-btn{padding:8px 14px;background:#fff;border:1px dashed #d8b4fe;border-radius:8px;font-size:.78rem;font-weight:600;color:#9333ea;cursor:pointer;display:flex;align-items:center;gap:6px}
+        .attached-media{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+        .attached-item{position:relative;width:60px;height:60px;border-radius:6px;overflow:hidden;border:1px solid #e9d5ff;background:#fff}
+        .attached-item img{width:100%;height:100%;object-fit:cover}
+        .attached-item .remove-x{position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;border:none;font-size:9px;cursor:pointer}
+
+        .post-log{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:14px;margin-bottom:16px;max-height:300px;overflow-y:auto;font-family:Menlo,Monaco,monospace;font-size:.74rem}
+        .post-log:empty{display:none}
+        .log-entry{padding:4px 0;line-height:1.6}
+        .log-entry.success{color:#10b981}
+        .log-entry.error{color:#f87171}
+        .log-entry.info{color:#94a3b8}
+
+        .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:400px}
+        .toast.show{opacity:1;transform:translateY(0)}
+
+        @media(max-width:768px){
+            .pub-card,.quick-pub{padding:14px}
+            .pub-card h2{font-size:.92rem}
+            .platform-name{font-size:.85rem}
+            .platform-count{font-size:.66rem;padding:2px 8px}
+            .acc-name{font-size:.78rem}
+            .summary-bar{flex-direction:column;align-items:stretch;padding:12px}
+            .btn-publish{width:100%;padding:14px;font-size:.9rem}
+            .toast{bottom:12px;right:12px;left:12px;max-width:none}
+            .media-upload-btn{font-size:.74rem;padding:10px 12px}
+            .attached-item{width:56px;height:56px}
+            .quick-pub textarea{min-height:100px;font-size:16px}
+        }
+    </style>
+</head>
+<body data-require-auth="true">
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>🏠</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link active"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">🚀 포스팅</div><div class="top-bar-sub">플랫폼 × 계정 그룹핑으로 선택 발행</div></div></div></header>
+            <div class="content">
+
+                <!-- 빠른 포스팅 -->
+                <div class="quick-pub">
+                    <h2 style="font-size:1rem;margin-bottom:12px">⚡ 빠른 포스팅</h2>
+                    <textarea id="quickContent" placeholder="여기에 발행할 내용을 입력하세요..."></textarea>
+
+                    <!-- 미디어 첨부 -->
+                    <div class="media-upload">
+                        <div class="media-upload-row">
+                            <label class="media-upload-btn">
+                                <input type="file" accept="image/*" multiple onchange="uploadMedia(this,'image')" style="display:none">
+                                🖼️ 이미지 첨부
+                            </label>
+                            <label class="media-upload-btn">
+                                <input type="file" accept="video/*" multiple onchange="uploadMedia(this,'video')" style="display:none">
+                                🎬 동영상 첨부
+                            </label>
+                            <span id="mediaCountLabel" style="font-size:.72rem;color:#9333ea;font-weight:600">첨부 0개</span>
+                        </div>
+                        <div class="attached-media" id="attachedMedia"></div>
+                    </div>
+
+                    <!-- Instagram 발행 옵션 -->
+                    <div style="margin-top:10px;padding:10px 12px;background:#fce7f3;border:1px solid #f9a8d4;border-radius:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                        <span style="font-size:.78rem;font-weight:700;color:#be185d">📸 Instagram 발행 형식:</span>
+                        <label style="font-size:.76rem;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="radio" name="igPostType" value="feed" checked> 피드 (이미지/Reels)</label>
+                        <label style="font-size:.76rem;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="radio" name="igPostType" value="stories"> 스토리</label>
+                        <span style="font-size:.68rem;color:#9d174d">※ 스토리는 24시간 후 자동 소멸</span>
+                    </div>
+                </div>
+
+                <!-- 플랫폼 × 계정 그룹핑 -->
+                <div class="pub-card">
+                    <h2>🎯 발행 대상 선택 (플랫폼 → 계정)</h2>
+                    <p style="font-size:.78rem;color:#64748b;margin-bottom:14px">플랫폼을 클릭하여 펼친 후, 발행할 계정을 개별 선택하세요.</p>
+                    <div id="platformGroups"></div>
+                </div>
+
+                <!-- 발행 요약 + 버튼 -->
+                <div class="summary-bar" id="summaryBar" style="display:none">
+                    <div>
+                        <div class="summary-count"><span id="selectedCount">0</span>개 계정 선택됨</div>
+                        <div class="summary-list" id="selectedList"></div>
+                    </div>
+                    <button class="btn-publish" onclick="publishToSelected()">🚀 선택한 대상에 발행</button>
+                </div>
+
+                <!-- 로그 -->
+                <div class="post-log" id="postLog"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+
+        // ─── 채널 정의 ───
+        var CHANNEL_DEFS = {
+            facebook: {name:'Facebook', icon:'📘', accountLabel:'페이지', tokenField:'pageToken'},
+            tiktok: {name:'TikTok', icon:'🎵', accountLabel:'계정', tokenField:'accessToken'},
+            instagram: {name:'Instagram', icon:'📸', accountLabel:'계정', tokenField:'accessToken'},
+            naver_blog: {name:'네이버 블로그', icon:'📗', accountLabel:'블로그', tokenField:'accessToken'},
+            naver_cafe: {name:'네이버 카페', icon:'☕', accountLabel:'카페', tokenField:'accessToken'},
+            xiaohongshu: {name:'샤오홍수', icon:'📕', accountLabel:'계정', tokenField:'accessToken'},
+            douyin: {name:'도우인', icon:'🎬', accountLabel:'계정', tokenField:'accessToken'}
+        };
+
+        // ─── 상태 ───
+        var selectedAccounts = {}; // {chId: [accId, accId, ...]}
+        var attachedMedia = [];
+        var settings = null;
+
+        function getSettings(){
+            if(!settings){
+                settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+            }
+            return settings;
+        }
+
+        function isAccountConnected(chId, account){
+            var def = CHANNEL_DEFS[chId];
+            if(!def || !account) return false;
+            return !!(account[def.tokenField] && account[def.tokenField].trim());
+        }
+
+        // ─── 플랫폼 그룹 렌더링 ───
+        function renderPlatformGroups(){
+            var s = getSettings();
+            var container = document.getElementById('platformGroups');
+            var html = '';
+
+            Object.keys(CHANNEL_DEFS).forEach(function(chId){
+                var def = CHANNEL_DEFS[chId];
+                var accounts = (s[chId] && s[chId].accounts) || [];
+                var connectedAccounts = accounts.filter(function(a){ return isAccountConnected(chId, a); });
+                var selectedInPlatform = selectedAccounts[chId] || [];
+
+                // 체크박스 상태: 0=none, partial, all
+                var checkState = 'none';
+                if(selectedInPlatform.length > 0){
+                    checkState = selectedInPlatform.length === connectedAccounts.length ? 'all' : 'partial';
+                }
+
+                html += '<div class="platform-group ' + (selectedInPlatform.length > 0 ? 'active' : '') + '" id="group-' + chId + '">';
+                html += '<div class="platform-group-header" onclick="togglePlatformExpand(\'' + chId + '\')">';
+                html += '<div class="platform-checkbox ' + (checkState === 'all' ? 'checked' : (checkState === 'partial' ? 'partial' : '')) + '" onclick="event.stopPropagation();togglePlatformAll(\'' + chId + '\')">' +
+                    (checkState === 'all' ? '✓' : (checkState === 'partial' ? '−' : '')) +
+                '</div>';
+                html += '<span class="platform-icon">' + def.icon + '</span>';
+                html += '<span class="platform-name">' + def.name + '</span>';
+                html += '<span class="platform-count ' + (selectedInPlatform.length > 0 ? 'has-selected' : '') + '">';
+                if(selectedInPlatform.length > 0){
+                    html += selectedInPlatform.length + '/' + connectedAccounts.length + ' 선택';
+                } else {
+                    html += accounts.length + '개 ' + def.accountLabel;
+                }
+                html += '</span>';
+                html += '<span class="platform-chevron">▼</span>';
+                html += '</div>';
+
+                // 계정 목록
+                html += '<div class="platform-accounts">';
+                if(accounts.length === 0){
+                    html += '<div class="no-accounts">아직 등록된 ' + def.accountLabel + '가 없습니다. <a href="settings.html">설정 페이지</a>에서 추가하세요.</div>';
+                } else {
+                    accounts.forEach(function(acc){
+                        var connected = isAccountConnected(chId, acc);
+                        var isSelected = selectedInPlatform.indexOf(acc.id) > -1;
+                        var meta = [];
+                        if(chId === 'facebook' && acc.pageId) meta.push('Page ' + acc.pageId);
+                        if(chId === 'instagram'){
+                            if(acc.username) meta.push('@' + acc.username.replace(/^@/, ''));
+                            else if(acc.businessAccountId) meta.push('IG ' + acc.businessAccountId.slice(-8));
+                        }
+                        if(chId === 'naver_blog' && acc.blogId) meta.push('Blog ' + acc.blogId);
+
+                        html += '<div class="account-item ' + (isSelected ? 'selected' : '') + '" onclick="toggleAccount(\'' + chId + '\',\'' + acc.id + '\')">';
+                        html += '<div class="acc-checkbox ' + (isSelected ? 'checked' : '') + '">' + (isSelected ? '✓' : '') + '</div>';
+                        html += '<div class="acc-status-dot ' + (connected ? 'connected' : 'disconnected') + '"></div>';
+                        html += '<div class="acc-info">';
+                        html += '<div class="acc-name">' + escapeHtml(acc.name || '이름 없음') + '</div>';
+                        if(meta.length > 0) html += '<div class="acc-meta">' + meta.join(' · ') + (connected ? '' : ' · ⚠ 미연결') + '</div>';
+                        else if(!connected) html += '<div class="acc-meta">⚠ 토큰 미등록</div>';
+                        html += '</div>';
+                        html += '</div>';
+                    });
+                }
+                html += '</div>';
+                html += '</div>';
+            });
+
+            container.innerHTML = html;
+            updateSummary();
+        }
+
+        window.togglePlatformExpand = function(chId){
+            var group = document.getElementById('group-' + chId);
+            if(group) group.classList.toggle('expanded');
+        };
+
+        window.togglePlatformAll = function(chId){
+            var s = getSettings();
+            var accounts = (s[chId] && s[chId].accounts) || [];
+            var connectedAccounts = accounts.filter(function(a){ return isAccountConnected(chId, a); });
+            var current = selectedAccounts[chId] || [];
+
+            if(current.length === connectedAccounts.length && current.length > 0){
+                // 전체 선택 → 모두 해제
+                selectedAccounts[chId] = [];
+            } else {
+                // 일부 또는 미선택 → 연결된 모든 계정 선택
+                selectedAccounts[chId] = connectedAccounts.map(function(a){ return a.id; });
+            }
+            renderPlatformGroups();
+        };
+
+        window.toggleAccount = function(chId, accId){
+            if(!selectedAccounts[chId]) selectedAccounts[chId] = [];
+            var idx = selectedAccounts[chId].indexOf(accId);
+            if(idx > -1){
+                selectedAccounts[chId].splice(idx, 1);
+            } else {
+                // 연결 확인
+                var s = getSettings();
+                var acc = ((s[chId] && s[chId].accounts) || []).find(function(a){ return a.id === accId; });
+                if(!isAccountConnected(chId, acc)){
+                    showToast('⚠ 토큰이 등록되지 않은 계정입니다. 설정에서 먼저 토큰을 입력하세요.');
+                    return;
+                }
+                selectedAccounts[chId].push(accId);
+            }
+            renderPlatformGroups();
+            // 펼친 상태 유지
+            setTimeout(function(){
+                var group = document.getElementById('group-' + chId);
+                if(group) group.classList.add('expanded');
+            }, 10);
+        };
+
+        function updateSummary(){
+            var total = 0;
+            var labels = [];
+            var s = getSettings();
+            Object.keys(selectedAccounts).forEach(function(chId){
+                var ids = selectedAccounts[chId] || [];
+                if(ids.length === 0) return;
+                total += ids.length;
+                var def = CHANNEL_DEFS[chId];
+                var accounts = (s[chId] && s[chId].accounts) || [];
+                var names = ids.map(function(id){
+                    var acc = accounts.find(function(a){ return a.id === id; });
+                    return acc ? acc.name : id;
+                });
+                labels.push(def.icon + ' ' + def.name + ': ' + names.join(', '));
+            });
+
+            var bar = document.getElementById('summaryBar');
+            if(total === 0){
+                bar.style.display = 'none';
+            } else {
+                bar.style.display = 'flex';
+                document.getElementById('selectedCount').textContent = total;
+                document.getElementById('selectedList').innerHTML = labels.join(' · ');
+            }
+        }
+
+        // ─── 미디어 업로드 ───
+        window.uploadMedia = function(input, type){
+            var files = input.files;
+            if(!files || files.length === 0) return;
+            Array.from(files).forEach(function(f){
+                if(f.size > 50 * 1024 * 1024){
+                    showToast('⚠ ' + f.name + ': 50MB 초과 생략');
+                    return;
+                }
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    attachedMedia.push({
+                        id: Date.now().toString() + Math.random().toString(36).slice(2,5),
+                        name: f.name, type: type, mimeType: f.type, size: f.size,
+                        data: e.target.result
+                    });
+                    renderAttachedMedia();
+                };
+                reader.readAsDataURL(f);
+            });
+            input.value = '';
+        };
+
+        function renderAttachedMedia(){
+            document.getElementById('mediaCountLabel').textContent = '첨부 ' + attachedMedia.length + '개';
+            document.getElementById('attachedMedia').innerHTML = attachedMedia.map(function(m, idx){
+                var thumb;
+                if(m.type === 'image' && m.data){
+                    thumb = '<img src="' + m.data + '">';
+                } else {
+                    thumb = '<div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:1.5rem">🎬</div>';
+                }
+                return '<div class="attached-item" title="' + escapeAttr(m.name) + '">' +
+                    thumb +
+                    '<button class="remove-x" onclick="removeMedia(' + idx + ')">×</button>' +
+                '</div>';
+            }).join('');
+        }
+
+        window.removeMedia = function(idx){
+            attachedMedia.splice(idx, 1);
+            renderAttachedMedia();
+        };
+
+        // ─── 발행 ───
+        window.publishToSelected = async function(){
+            var content = document.getElementById('quickContent').value.trim();
+            if(!content){ alert('⚠ 내용을 입력하세요'); return; }
+
+            var totalAccounts = 0;
+            Object.keys(selectedAccounts).forEach(function(ch){ totalAccounts += (selectedAccounts[ch] || []).length; });
+            if(totalAccounts === 0){ alert('⚠ 발행 대상을 선택하세요'); return; }
+
+            if(!confirm('🚀 ' + totalAccounts + '개 계정에 실제 발행됩니다.\n\n계속하시겠습니까?')) return;
+
+            log('━━━━━━━━━━━━━━━━━━', 'info');
+            log('📤 발행 시작 (' + totalAccounts + '개 계정)', 'info');
+
+            var s = getSettings();
+            var successCount = 0;
+            var failCount = 0;
+            var publishedTo = [];
+
+            for(var chId in selectedAccounts){
+                var ids = selectedAccounts[chId] || [];
+                var accounts = (s[chId] && s[chId].accounts) || [];
+
+                for(var i = 0; i < ids.length; i++){
+                    var acc = accounts.find(function(a){ return a.id === ids[i]; });
+                    if(!acc) continue;
+
+                    log('→ ' + CHANNEL_DEFS[chId].name + ' / ' + acc.name + ' 발행중...', 'info');
+                    var result = await publishToAccount(chId, acc, content);
+                    if(result.ok){
+                        successCount++;
+                        log('  ✅ ' + result.message, 'success');
+                        publishedTo.push({channel: chId, accountId: acc.id, accountName: acc.name, postId: result.postId, url: result.url});
+                    } else {
+                        failCount++;
+                        log('  ❌ ' + result.message, 'error');
+                    }
+                }
+            }
+
+            log('━━━━━━━━━━━━━━━━━━', 'info');
+            log('✅ 성공 ' + successCount + ' · ❌ 실패 ' + failCount, successCount > 0 ? 'success' : 'error');
+
+            // 발행 이력 저장
+            var posts = JSON.parse(localStorage.getItem('snsPosts') || '[]');
+            posts.unshift({
+                id: Date.now().toString(),
+                title: content.substring(0, 30),
+                content: content,
+                channels: Object.keys(selectedAccounts).filter(function(c){ return (selectedAccounts[c]||[]).length > 0; }),
+                publishedTo: publishedTo,
+                status: 'published',
+                date: new Date().toISOString().slice(0,10),
+                time: new Date().toTimeString().slice(0,5),
+                likes:0, comments:0, shares:0, views:0,
+                createdAt: new Date().toISOString(),
+                attachedMediaCount: attachedMedia.length
+            });
+            localStorage.setItem('snsPosts', JSON.stringify(posts));
+
+            alert('🚀 발행 완료!\n\n✅ 성공: ' + successCount + '개\n❌ 실패: ' + failCount + '개\n\n자세한 결과는 로그를 확인하세요.');
+
+            if(successCount > 0){
+                document.getElementById('quickContent').value = '';
+                attachedMedia = [];
+                renderAttachedMedia();
+            }
+        };
+
+        async function publishToAccount(chId, acc, content){
+            if(chId === 'facebook'){
+                return await publishToFacebook(acc, content);
+            } else if(chId === 'instagram'){
+                return await publishToInstagram(acc, content);
+            } else {
+                return {ok: false, message: chId + ': 백엔드 연동 필요'};
+            }
+        }
+
+        // ─── Supabase Storage 업로드 (Instagram용 공개 URL 확보) ───
+        var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
+        var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
+
+        function getSupabaseToken(){
+            try {
+                var s = JSON.parse(localStorage.getItem('snsAuthSession') || 'null');
+                return s ? s.access_token : null;
+            } catch(e){ return null; }
+        }
+        function getSupabaseUserId(){
+            try {
+                var s = JSON.parse(localStorage.getItem('snsAuthSession') || 'null');
+                return s && s.user ? s.user.id : 'anonymous';
+            } catch(e){ return 'anonymous'; }
+        }
+
+        async function uploadMediaToStorage(media){
+            // data URI → Blob 변환
+            var blobRes = await fetch(media.data);
+            var blob = await blobRes.blob();
+
+            var userId = getSupabaseUserId();
+            var token = getSupabaseToken();
+            if(!token) throw new Error('로그인 정보가 없습니다. 다시 로그인하세요.');
+
+            var ext = (media.name.split('.').pop() || (media.type === 'video' ? 'mp4' : 'jpg')).toLowerCase();
+            var fname = userId + '/' + Date.now() + '_' + Math.random().toString(36).slice(2,8) + '.' + ext;
+            var uploadUrl = SUPABASE_URL + '/storage/v1/object/sns-media/' + fname;
+
+            var r = await fetch(uploadUrl, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'apikey': SUPABASE_KEY,
+                    'Content-Type': blob.type || 'application/octet-stream',
+                    'x-upsert': 'true'
+                },
+                body: blob
+            });
+            if(!r.ok){
+                var errTxt = await r.text();
+                throw new Error('Storage 업로드 실패: ' + errTxt.slice(0, 200));
+            }
+            return SUPABASE_URL + '/storage/v1/object/public/sns-media/' + fname;
+        }
+
+        function getIgPostType(){
+            var radios = document.getElementsByName('igPostType');
+            for(var i = 0; i < radios.length; i++){
+                if(radios[i].checked) return radios[i].value;
+            }
+            return 'feed';
+        }
+
+        async function publishToInstagram(acc, content){
+            var token = acc.accessToken;
+            var igId = acc.businessAccountId;
+            if(!token || !igId) return {ok: false, message: 'Access Token / Business Account ID 누락'};
+
+            var images = attachedMedia.filter(function(m){ return m.type === 'image'; });
+            var videos = attachedMedia.filter(function(m){ return m.type === 'video'; });
+
+            if(images.length === 0 && videos.length === 0){
+                return {ok: false, message: 'Instagram은 이미지/동영상이 필수입니다'};
+            }
+
+            var postType = getIgPostType();
+            var apiBase = 'https://graph.facebook.com/v18.0/';
+
+            try {
+                var mediaUrls = [];
+                log('  ↑ Storage 업로드 중...', 'info');
+                if(videos.length > 0){
+                    mediaUrls.push({type: 'video', url: await uploadMediaToStorage(videos[0])});
+                } else {
+                    var limit = postType === 'stories' ? 1 : 10;
+                    for(var i = 0; i < Math.min(images.length, limit); i++){
+                        mediaUrls.push({type: 'image', url: await uploadMediaToStorage(images[i])});
+                    }
+                }
+
+                // STORIES 모드
+                if(postType === 'stories'){
+                    var body = new URLSearchParams();
+                    body.append('media_type', 'STORIES');
+                    if(mediaUrls[0].type === 'video'){
+                        body.append('video_url', mediaUrls[0].url);
+                    } else {
+                        body.append('image_url', mediaUrls[0].url);
+                    }
+                    body.append('access_token', token);
+                    var r = await fetch(apiBase + igId + '/media', {method:'POST', body: body});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: 'Story 컨테이너 실패: ' + d.error.message};
+
+                    if(mediaUrls[0].type === 'video'){
+                        log('  ⏳ Story 비디오 처리 대기...', 'info');
+                        var ready = await waitForContainerReady(d.id, token);
+                        if(!ready.ok) return {ok: false, message: ready.message};
+                    }
+                    var pub = await publishIgContainer(igId, d.id, token);
+                    if(pub.ok) pub.message = '📸 Story 발행 (24시간 노출, ID: ' + pub.postId + ')';
+                    return pub;
+                }
+
+                // FEED 모드
+                // 1) 단일 비디오 (Reels)
+                if(videos.length > 0){
+                    var body = new URLSearchParams();
+                    body.append('media_type', 'REELS');
+                    body.append('video_url', mediaUrls[0].url);
+                    body.append('caption', content);
+                    body.append('access_token', token);
+                    var r = await fetch(apiBase + igId + '/media', {method:'POST', body: body});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: 'Container 생성 실패: ' + d.error.message};
+                    var containerId = d.id;
+
+                    log('  ⏳ Instagram 비디오 처리 대기...', 'info');
+                    var ready = await waitForContainerReady(containerId, token);
+                    if(!ready.ok) return {ok: false, message: ready.message};
+
+                    return await publishIgContainer(igId, containerId, token);
+                }
+
+                // 2) 단일 이미지
+                if(mediaUrls.length === 1){
+                    var body = new URLSearchParams();
+                    body.append('image_url', mediaUrls[0].url);
+                    body.append('caption', content);
+                    body.append('access_token', token);
+                    var r = await fetch(apiBase + igId + '/media', {method:'POST', body: body});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: 'Container 생성 실패: ' + d.error.message};
+                    return await publishIgContainer(igId, d.id, token);
+                }
+
+                // 3) 캐러셀 (2~10개 이미지)
+                var childIds = [];
+                for(var j = 0; j < mediaUrls.length; j++){
+                    var body = new URLSearchParams();
+                    body.append('image_url', mediaUrls[j].url);
+                    body.append('is_carousel_item', 'true');
+                    body.append('access_token', token);
+                    var r = await fetch(apiBase + igId + '/media', {method:'POST', body: body});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: '캐러셀 자식 ' + (j+1) + ' 실패: ' + d.error.message};
+                    childIds.push(d.id);
+                }
+                var body = new URLSearchParams();
+                body.append('media_type', 'CAROUSEL');
+                body.append('children', childIds.join(','));
+                body.append('caption', content);
+                body.append('access_token', token);
+                var r = await fetch(apiBase + igId + '/media', {method:'POST', body: body});
+                var d = await r.json();
+                if(d.error) return {ok: false, message: '캐러셀 컨테이너 실패: ' + d.error.message};
+                return await publishIgContainer(igId, d.id, token);
+            } catch(err){
+                return {ok: false, message: err.message};
+            }
+        }
+
+        async function waitForContainerReady(containerId, token){
+            var maxAttempts = 20; // 약 60초
+            for(var i = 0; i < maxAttempts; i++){
+                var r = await fetch('https://graph.facebook.com/v18.0/' + containerId + '?fields=status_code,status&access_token=' + encodeURIComponent(token));
+                var d = await r.json();
+                if(d.error) return {ok: false, message: '상태 확인 실패: ' + d.error.message};
+                if(d.status_code === 'FINISHED') return {ok: true};
+                if(d.status_code === 'ERROR') return {ok: false, message: 'Instagram 처리 실패: ' + (d.status || 'ERROR')};
+                await new Promise(function(res){ setTimeout(res, 3000); });
+            }
+            return {ok: false, message: '처리 시간 초과 (60초)'};
+        }
+
+        async function publishIgContainer(igId, containerId, token){
+            var body = new URLSearchParams();
+            body.append('creation_id', containerId);
+            body.append('access_token', token);
+            var r = await fetch('https://graph.facebook.com/v18.0/' + igId + '/media_publish', {method:'POST', body: body});
+            var d = await r.json();
+            if(d.error) return {ok: false, message: '발행 실패: ' + d.error.message};
+            return {ok: true, message: 'Instagram 발행 (ID: ' + d.id + ')', postId: d.id, url: 'https://www.instagram.com/p/' + d.id};
+        }
+
+        async function publishToFacebook(acc, content){
+            var token = acc.pageToken;
+            var pageId = acc.pageId;
+            if(!token || !pageId) return {ok: false, message: 'Token/PageID 누락'};
+
+            try {
+                var images = attachedMedia.filter(function(m){ return m.type === 'image'; });
+                var videos = attachedMedia.filter(function(m){ return m.type === 'video'; });
+
+                if(videos.length > 0){
+                    var video = videos[0];
+                    var blobRes = await fetch(video.data);
+                    var blob = await blobRes.blob();
+                    var fd = new FormData();
+                    fd.append('source', blob, video.name);
+                    fd.append('description', content);
+                    fd.append('access_token', token);
+                    var r = await fetch('https://graph-video.facebook.com/v18.0/' + pageId + '/videos', {method:'POST', body:fd});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: d.error.message};
+                    return {ok: true, message: '동영상 발행 (Post ID: ' + d.id + ')', postId: d.id, url: 'https://facebook.com/' + d.id};
+                } else if(images.length === 1){
+                    var img = images[0];
+                    var blobRes = await fetch(img.data);
+                    var blob = await blobRes.blob();
+                    var fd = new FormData();
+                    fd.append('source', blob, img.name);
+                    fd.append('message', content);
+                    fd.append('access_token', token);
+                    var r = await fetch('https://graph.facebook.com/v18.0/' + pageId + '/photos', {method:'POST', body:fd});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: d.error.message};
+                    return {ok: true, message: '이미지 발행 (Post ID: ' + (d.post_id || d.id) + ')', postId: d.post_id || d.id, url: 'https://facebook.com/' + (d.post_id || d.id)};
+                } else {
+                    var url = 'https://graph.facebook.com/v18.0/' + pageId + '/feed';
+                    var body = new URLSearchParams();
+                    body.append('message', content);
+                    body.append('access_token', token);
+                    var r = await fetch(url, {method:'POST', headers:{'Content-Type':'application/x-www-form-urlencoded'}, body:body.toString()});
+                    var d = await r.json();
+                    if(d.error) return {ok: false, message: d.error.message};
+                    return {ok: true, message: '텍스트 발행 (Post ID: ' + d.id + ')', postId: d.id, url: 'https://facebook.com/' + d.id};
+                }
+            } catch(err){
+                return {ok: false, message: err.message};
+            }
+        }
+
+        function log(msg, type){
+            var logEl = document.getElementById('postLog');
+            var entry = document.createElement('div');
+            entry.className = 'log-entry ' + (type || 'info');
+            entry.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+            logEl.appendChild(entry);
+            logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        function showToast(msg){
+            var toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast show';
+            setTimeout(function(){ toast.className = 'toast'; }, 2500);
+        }
+
+        function escapeHtml(s){
+            var div = document.createElement('div');
+            div.textContent = s || '';
+            return div.innerHTML;
+        }
+        function escapeAttr(s){ return (s||'').replace(/"/g,'&quot;'); }
+
+        // 초기화
+        renderPlatformGroups();
+    </script>
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/ai-gateway.js"></script>
+    <script>
+        if("serviceWorker" in navigator){ navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
+    </script>
+</body>
+</html>
