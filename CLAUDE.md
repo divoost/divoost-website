@@ -109,6 +109,8 @@
 | [`docs/instagram-setup.md`](docs/instagram-setup.md) | Instagram 연동 가이드 | SNS 연동 |
 | [`docs/storage-bucket.sql`](docs/storage-bucket.sql) | 미디어 Storage 정책 | 파일 업로드 |
 | [`docs/email-schema.sql`](docs/email-schema.sql) | 이메일 시스템 스키마 | 알림/이메일 |
+| [`sns-platform/js/secure-storage.js`](sns-platform/js/secure-storage.js) | 토큰 만료/스윕 유틸 | SNS 토큰 저장 |
+| [`.env.example`](/.env.example) | 환경변수 템플릿 (Supabase/AI/PG/SNS) | 배포 / 신규 환경 |
 
 ---
 

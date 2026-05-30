@@ -359,6 +359,7 @@
         function fmt(d){ return d.toISOString().slice(2,10).replace(/-/g,'.'); }
         document.getElementById('planPeriod').textContent = fmt(planStart) + ' - ' + fmt(planEnd);
     </script>
+    <script src="js/secure-storage.js"></script>
     <script src="js/auth-guard.js"></script>
     <script>
         if("serviceWorker" in navigator){ navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }

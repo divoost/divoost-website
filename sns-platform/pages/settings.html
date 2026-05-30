@@ -87,6 +87,7 @@
     </style>
 </head>
 <body data-require-auth="true">
+    <script src="../js/secure-storage.js"></script>
     <script src="../js/auth-guard.js"></script>
     <script src="../js/ai-gateway.js"></script>
     <div class="app-layout">
@@ -747,6 +748,11 @@
         }
 
         function saveAccount(chId, idx){
+            // 토큰이 있으면 저장 시각 기록 (수칙 5 보강 - 만료 자동 정리)
+            var acc = settings[chId] && settings[chId].accounts && settings[chId].accounts[idx];
+            if(acc && (acc.accessToken || acc.pageToken)){
+                acc._savedAt = Date.now();
+            }
             localStorage.setItem('snsSettings', JSON.stringify(settings));
             renderAllChannels();
             // 다시 펼침
@@ -903,6 +909,20 @@
         })();
 
         loadSettings();
+
+        // 만료 임박 토큰 알림 (수칙 5 보강)
+        (function checkExpiringTokens(){
+            if(!window.SNSSecureStorage) return;
+            var soon = window.SNSSecureStorage.getExpiringSoon();
+            if(soon.length === 0) return;
+            var banner = document.createElement('div');
+            banner.style.cssText = 'background:#fef3c7;border:1px solid #fbbf24;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#78350f';
+            banner.innerHTML = '⏰ <strong>토큰 만료 임박</strong>: ' +
+                soon.map(function(s){ return s.channel + '/' + s.account + ' (' + s.remainingMinutes + '분 남음)'; }).join(', ') +
+                '<br><span style="font-size:.78rem">만료되면 자동 삭제됩니다. 미리 갱신해주세요.</span>';
+            var content = document.querySelector('.content');
+            if(content && content.firstChild) content.insertBefore(banner, content.firstChild);
+        })();
     </script>
     <script>
         if("serviceWorker" in navigator){ navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
