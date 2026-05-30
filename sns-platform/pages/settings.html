@@ -651,9 +651,26 @@
                     showResultModal({ kind:'warn', title:'Facebook 로그인 취소', text:'로그인이 취소되었거나 권한이 거부되었습니다.', skipReauth:true });
                     return;
                 }
+                // 부여된 권한 확인 - Instagram 권한이 없으면 미리 경고
+                var granted = (response.authResponse.grantedScopes || '').split(',');
+                var igMissing = granted.indexOf('instagram_basic') === -1;
+                if(igMissing){
+                    showResultModal({
+                        kind:'warn',
+                        title:'Instagram 권한 누락',
+                        text:'Facebook 로그인은 성공했지만 Instagram 권한(instagram_basic)이 부여되지 않았습니다.\n\nFacebook 페이지만 등록되며, Instagram 계정은 자동으로 추가되지 않습니다.\n\n다시 로그인할 때 [편집] 버튼을 눌러 Instagram 권한도 함께 허용해주세요.',
+                        skipReauth:true,
+                        footer: [
+                            { label:'🔗 다시 로그인 (IG 권한 포함)', type:'reauth', action: function(){ closeResultModal(); connectFacebookOAuth(); } },
+                            { label:'페이지만 등록 진행', type:'primary', action: function(){ closeResultModal(); fetchPagesAndInstagram(response.authResponse.accessToken); } },
+                            { label:'취소', type:'ghost', action: closeResultModal }
+                        ]
+                    });
+                    return;
+                }
                 fetchPagesAndInstagram(response.authResponse.accessToken);
             }, {
-                scope: 'pages_show_list,pages_manage_posts,pages_read_engagement',
+                scope: 'pages_show_list,pages_manage_posts,pages_read_engagement,instagram_basic,instagram_content_publish,instagram_manage_insights,business_management',
                 return_scopes: true
             });
         };
