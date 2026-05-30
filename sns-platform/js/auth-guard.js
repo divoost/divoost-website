@@ -239,10 +239,17 @@
         SUPABASE_KEY: SUPABASE_KEY
     };
 
-    // 페이지 로드 후 관리자 버튼 자동 주입
+    // 페이지 로드 후 관리자 버튼 자동 주입 + 만료 토큰 스윕
     document.addEventListener('DOMContentLoaded', function(){
         if(getSession()){
             setTimeout(injectAdminButton, 100);
+        }
+        // SNS 토큰 만료 스윕 (XSS 노출창 축소, 안전 수칙 5 보강)
+        if(window.SNSSecureStorage){
+            var removed = window.SNSSecureStorage.sweepExpired();
+            if(removed.length > 0){
+                console.warn('[SecureStorage] 만료된 SNS 토큰 ' + removed.length + '개 자동 삭제:', removed);
+            }
         }
     });
 
