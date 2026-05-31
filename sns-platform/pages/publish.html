@@ -451,6 +451,8 @@
                 return await publishToFacebook(acc, content);
             } else if(chId === 'instagram'){
                 return await publishToInstagram(acc, content);
+            } else if(chId === 'tiktok'){
+                return await publishToTikTok(acc, content);
             } else {
                 return {ok: false, message: chId + ': 백엔드 연동 필요'};
             }
@@ -712,6 +714,118 @@
                     if(d.error) return {ok: false, message: d.error.message};
                     return {ok: true, message: '텍스트 발행 (Post ID: ' + d.id + ')', postId: d.id, url: 'https://facebook.com/' + d.id};
                 }
+            } catch(err){
+                return {ok: false, message: err.message};
+            }
+        }
+
+        // ─── TikTok Content Posting API ───
+        // 흐름: 1) init (upload URL 받기) → 2) PUT 영상 업로드 → 3) status polling
+        // 참고: https://developers.tiktok.com/doc/content-posting-api-upload-video
+        async function publishToTikTok(acc, content){
+            var token = acc.accessToken;
+            var openId = acc.openId;
+            if(!token) return {ok: false, message: 'Access Token 누락'};
+
+            var videos = attachedMedia.filter(function(m){ return m.type === 'video'; });
+            if(videos.length === 0){
+                return {ok: false, message: 'TikTok 은 영상이 필수입니다. 영상을 첨부해주세요.'};
+            }
+            var video = videos[0];
+
+            try {
+                // 1) 영상 blob 준비
+                log('  [TikTok] 영상 데이터 준비 중...');
+                var blobRes = await fetch(video.data);
+                var blob = await blobRes.blob();
+                var videoSize = blob.size;
+                if(videoSize > 4 * 1024 * 1024 * 1024){
+                    return {ok: false, message: '영상 크기가 4GB 를 초과합니다 (현재: ' + (videoSize / 1024 / 1024).toFixed(1) + 'MB)'};
+                }
+
+                // 2) init - upload URL 발급 요청
+                log('  [TikTok] 업로드 URL 발급 요청 중...');
+                var initBody = {
+                    post_info: {
+                        title: content.substring(0, 150) || 'New post',
+                        privacy_level: 'SELF_ONLY', // 안전 기본값. UI 옵션으로 추후 노출
+                        disable_duet: false,
+                        disable_comment: false,
+                        disable_stitch: false
+                    },
+                    source_info: {
+                        source: 'FILE_UPLOAD',
+                        video_size: videoSize,
+                        chunk_size: videoSize, // 단일 chunk
+                        total_chunk_count: 1
+                    }
+                };
+                var initRes = await fetch('https://open.tiktokapis.com/v2/post/publish/video/init/', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + token,
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    },
+                    body: JSON.stringify(initBody)
+                });
+                var initData = await initRes.json();
+                if(initData.error && initData.error.code !== 'ok'){
+                    return {ok: false, message: 'init 실패: ' + initData.error.message};
+                }
+                if(!initData.data || !initData.data.upload_url || !initData.data.publish_id){
+                    return {ok: false, message: 'init 응답에 upload_url/publish_id 없음'};
+                }
+                var uploadUrl = initData.data.upload_url;
+                var publishId = initData.data.publish_id;
+
+                // 3) PUT 으로 영상 업로드
+                log('  [TikTok] 영상 업로드 중... (' + (videoSize / 1024 / 1024).toFixed(1) + 'MB)');
+                var uploadRes = await fetch(uploadUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': video.mime || 'video/mp4',
+                        'Content-Range': 'bytes 0-' + (videoSize - 1) + '/' + videoSize
+                    },
+                    body: blob
+                });
+                if(!uploadRes.ok){
+                    return {ok: false, message: '업로드 실패: HTTP ' + uploadRes.status};
+                }
+
+                // 4) status polling (TikTok 이 게시 처리 완료할 때까지)
+                log('  [TikTok] 게시 처리 대기 중...');
+                var statusUrl = 'https://open.tiktokapis.com/v2/post/publish/status/fetch/';
+                var maxAttempts = 30; // 5초 간격 × 30 = 최대 2.5분 대기
+                for(var i = 0; i < maxAttempts; i++){
+                    await new Promise(function(r){ setTimeout(r, 5000); });
+                    var stRes = await fetch(statusUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer ' + token,
+                            'Content-Type': 'application/json; charset=UTF-8'
+                        },
+                        body: JSON.stringify({publish_id: publishId})
+                    });
+                    var stData = await stRes.json();
+                    if(stData.error && stData.error.code !== 'ok'){
+                        return {ok: false, message: 'status 조회 실패: ' + stData.error.message};
+                    }
+                    var status = stData.data && stData.data.status;
+                    log('  [TikTok] 상태: ' + (status || 'unknown') + ' (' + (i+1) + '/' + maxAttempts + ')');
+                    if(status === 'PUBLISH_COMPLETE'){
+                        var url = stData.data.publicaly_available_post_id
+                            ? 'https://www.tiktok.com/@' + (openId || '') + '/video/' + stData.data.publicaly_available_post_id[0]
+                            : '';
+                        return {ok: true, message: 'TikTok 발행 완료 (publish_id: ' + publishId + ')', postId: publishId, url: url};
+                    }
+                    if(status === 'FAILED'){
+                        var reason = stData.data && stData.data.fail_reason;
+                        return {ok: false, message: 'TikTok 게시 실패: ' + (reason || 'unknown')};
+                    }
+                    // PROCESSING_UPLOAD, PROCESSING_DOWNLOAD 등은 계속 polling
+                }
+                // timeout
+                return {ok: false, message: 'TikTok 게시 처리 시간 초과 (publish_id: ' + publishId + ' 로 직접 확인 필요)'};
             } catch(err){
                 return {ok: false, message: err.message};
             }

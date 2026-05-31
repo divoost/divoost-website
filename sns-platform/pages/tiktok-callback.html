@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok 연동 처리 중...</title>
+    <style>
+        body{margin:0;font-family:'Inter',-apple-system,sans-serif;background:linear-gradient(135deg,#000,#1a1a1a);min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;padding:20px}
+        .card{background:#1e1e1e;border:1px solid #333;border-radius:16px;padding:32px;max-width:480px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+        .logo{width:64px;height:64px;border-radius:16px;background:linear-gradient(135deg,#ff0050,#00f2ea);display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 20px}
+        h1{font-size:20px;font-weight:700;margin:0 0 8px}
+        .sub{font-size:13px;color:#94a3b8;margin-bottom:24px}
+        .spinner{width:36px;height:36px;border:3px solid #333;border-top-color:#ff0050;border-radius:50%;margin:24px auto;animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .status{font-size:13px;color:#cbd5e1;line-height:1.6;margin-top:16px;padding:14px;background:#0f0f0f;border-radius:10px;border:1px solid #2a2a2a;text-align:left;font-family:monospace;max-height:200px;overflow-y:auto;word-break:break-all}
+        .status.error{border-color:#dc2626;color:#fca5a5}
+        .status.ok{border-color:#16a34a;color:#86efac}
+        .btn{display:inline-block;padding:10px 24px;border-radius:10px;background:linear-gradient(135deg,#ff0050,#00f2ea);color:#fff;font-weight:600;text-decoration:none;margin-top:20px;border:none;cursor:pointer;font-size:14px}
+        .btn:hover{opacity:.9}
+        .btn.secondary{background:#333;color:#cbd5e1}
+        .btn-row{display:flex;gap:8px;justify-content:center;margin-top:20px}
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="logo">🎵</div>
+        <h1 id="title">TikTok 연동 처리 중...</h1>
+        <div class="sub" id="subtitle">잠시만 기다려주세요.</div>
+        <div class="spinner" id="spinner"></div>
+        <div class="status" id="status"></div>
+        <div id="actions"></div>
+    </div>
+
+    <script src="../js/secure-storage.js"></script>
+    <script>
+    (async function(){
+        var titleEl = document.getElementById('title');
+        var subtitleEl = document.getElementById('subtitle');
+        var statusEl = document.getElementById('status');
+        var spinnerEl = document.getElementById('spinner');
+        var actionsEl = document.getElementById('actions');
+
+        function log(msg){
+            statusEl.innerHTML += '[' + new Date().toLocaleTimeString('ko-KR') + '] ' + msg + '<br>';
+        }
+        function fail(title, msg){
+            titleEl.textContent = title;
+            subtitleEl.textContent = '연동에 실패했습니다.';
+            spinnerEl.style.display = 'none';
+            statusEl.className = 'status error';
+            log('❌ ' + msg);
+            actionsEl.innerHTML = '<div class="btn-row">' +
+                '<button class="btn" onclick="window.close()">창 닫기</button>' +
+                '<a class="btn secondary" href="settings.html">설정으로 돌아가기</a>' +
+                '</div>';
+        }
+        function ok(title, msg){
+            titleEl.textContent = title;
+            subtitleEl.textContent = '연동이 완료되었습니다.';
+            spinnerEl.style.display = 'none';
+            statusEl.className = 'status ok';
+            log('✅ ' + msg);
+            actionsEl.innerHTML = '<div class="btn-row">' +
+                '<a class="btn" href="settings.html">설정 페이지로 이동</a>' +
+                '</div>';
+            // 3초 후 자동 이동 (parent window가 있으면 그쪽으로 메시지)
+            setTimeout(function(){
+                if(window.opener){
+                    window.opener.postMessage({type:'tiktok-oauth-complete', success:true}, location.origin);
+                    window.close();
+                } else {
+                    location.href = 'settings.html';
+                }
+            }, 3000);
+        }
+
+        // 1) URL parameter 파싱
+        var params = new URLSearchParams(location.search);
+        var code = params.get('code');
+        var state = params.get('state');
+        var err = params.get('error');
+        var errDesc = params.get('error_description');
+
+        if(err){
+            fail('TikTok 로그인 거부됨', err + (errDesc ? ': ' + decodeURIComponent(errDesc) : ''));
+            return;
+        }
+        if(!code){
+            fail('잘못된 요청', 'authorization code 가 없습니다. TikTok 로그인을 정상적으로 완료했는지 확인하세요.');
+            return;
+        }
+
+        // 2) CSRF 방어: state 검증
+        var savedState = sessionStorage.getItem('tiktok_oauth_state');
+        if(!state || state !== savedState){
+            fail('보안 검증 실패', 'state 파라미터가 일치하지 않습니다 (CSRF 의심). 다시 로그인해주세요.');
+            return;
+        }
+        sessionStorage.removeItem('tiktok_oauth_state');
+
+        log('🔑 Authorization code 수신');
+        log('🔄 액세스 토큰 교환 중...');
+
+        // 3) Edge Function 호출 (code → access_token 교환)
+        // ⚠ TikTok client_secret 은 서버에서만 사용 (Edge Function 환경변수)
+        var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
+        var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
+        var FUNCTION_URL = SUPABASE_URL + '/functions/v1/tiktok-oauth-exchange';
+
+        try {
+            var r = await fetch(FUNCTION_URL, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + SUPABASE_KEY,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    code: code,
+                    redirect_uri: location.origin + location.pathname
+                })
+            });
+            var data = await r.json();
+
+            if(!r.ok || data.error){
+                fail('토큰 교환 실패', data.error || data.message || ('HTTP ' + r.status));
+                return;
+            }
+            if(!data.access_token || !data.open_id){
+                fail('응답 형식 오류', '액세스 토큰 또는 open_id 가 응답에 없습니다.');
+                return;
+            }
+
+            log('✅ 액세스 토큰 발급 완료');
+            log('Open ID: ' + data.open_id.substring(0, 16) + '...');
+            log('만료까지: ' + Math.round((data.expires_in || 0) / 86400) + '일');
+
+            // 4) settings 에 저장
+            var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+            if(!settings.tiktok) settings.tiktok = {accounts: []};
+            if(!settings.tiktok.accounts) settings.tiktok.accounts = [];
+
+            // 동일 open_id 이미 있으면 토큰 갱신, 없으면 신규 추가
+            var existing = settings.tiktok.accounts.find(function(a){ return a.openId === data.open_id; });
+            var nowMs = Date.now();
+            var expiresAt = nowMs + ((data.expires_in || 86400) * 1000);
+
+            if(existing){
+                existing.accessToken = data.access_token;
+                existing.refreshToken = data.refresh_token || existing.refreshToken;
+                existing._savedAt = nowMs;
+                existing._expiresAt = expiresAt;
+                if(data.scope) existing.scope = data.scope;
+                log('🔄 기존 계정 토큰 갱신: ' + (existing.name || 'TikTok 계정'));
+            } else {
+                settings.tiktok.accounts.push({
+                    id: 'acc_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+                    name: 'TikTok 계정 ' + (settings.tiktok.accounts.length + 1),
+                    openId: data.open_id,
+                    accessToken: data.access_token,
+                    refreshToken: data.refresh_token || '',
+                    scope: data.scope || '',
+                    _savedAt: nowMs,
+                    _expiresAt: expiresAt
+                });
+                log('➕ 신규 계정 등록');
+            }
+            localStorage.setItem('snsSettings', JSON.stringify(settings));
+
+            ok('TikTok 연동 완료', '계정이 저장되었습니다. 잠시 후 설정 페이지로 이동합니다...');
+        } catch(e){
+            fail('네트워크 오류', e.message);
+        }
+    })();
+    </script>
+</body>
+</html>
