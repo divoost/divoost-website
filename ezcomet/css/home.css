@@ -672,3 +672,207 @@
     .for-card-title { font-size: var(--text-lg); }
     .for-card-desc { font-size: var(--text-xs); }
 }
+
+/* ====================================================
+   Slide 2 - HUBONTRADE 디자인 (Dashboard mockup 포함)
+   ==================================================== */
+.hero-slide.slide-hubontrade .hero-container-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1280px;
+}
+@media (max-width: 1024px) {
+    .hero-slide.slide-hubontrade .hero-container-2col {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+/* HUB ON TRADE 브랜드 표기 (H/O/T 노랑 강조) */
+.hero-slide.slide-hubontrade .hero-brand-line {
+    display: block;
+    font-family: var(--font-display, 'Inter', sans-serif);
+    font-size: clamp(20px, 2.4vw, 28px);
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: rgba(255,255,255,.65);
+    margin-bottom: 18px;
+    text-transform: uppercase;
+}
+.hero-slide.slide-hubontrade .hero-brand-line .brand-hot-letter {
+    color: #FCD34D;
+    text-shadow: 0 2px 12px rgba(252, 211, 77, .5);
+    font-size: 1.15em;
+}
+
+/* 좌측 텍스트 정렬 */
+.hero-slide.slide-hubontrade .hero-content {
+    text-align: left;
+}
+.hero-slide.slide-hubontrade .hero-title {
+    font-size: clamp(28px, 4.5vw, 48px);
+    line-height: 1.2;
+    margin-bottom: 22px;
+}
+.hero-slide.slide-hubontrade .hero-title-line {
+    display: block;
+}
+.hero-slide.slide-hubontrade .hero-title-line.accent {
+    color: #FCD34D;
+}
+.hero-slide.slide-hubontrade .hero-subtitle {
+    color: rgba(255,255,255,.75);
+    margin-bottom: 28px;
+    line-height: 1.7;
+    max-width: 520px;
+}
+.hero-slide.slide-hubontrade .hero-cta {
+    margin-bottom: 40px;
+    justify-content: flex-start;
+}
+
+/* Trust + Stats */
+.hero-slide.slide-hubontrade .hero-trust-block {
+    padding-top: 28px;
+    border-top: 1px solid rgba(255,255,255,.15);
+}
+.hero-slide.slide-hubontrade .hero-trust-label {
+    color: rgba(255,255,255,.6);
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+.hero-slide.slide-hubontrade .hero-stats {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+.hero-slide.slide-hubontrade .stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+}
+.hero-slide.slide-hubontrade .stat-label {
+    font-size: 12px;
+    color: rgba(255,255,255,.6);
+    margin-top: 6px;
+}
+
+/* Dashboard mockup */
+.hero-slide.slide-hubontrade .hero-dashboard {
+    background: rgba(15, 23, 42, .65);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.35);
+}
+.hero-slide.slide-hubontrade .dashboard-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,.04);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.hero-slide.slide-hubontrade .dashboard-dots {
+    display: flex;
+    gap: 6px;
+}
+.hero-slide.slide-hubontrade .dashboard-dots span {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: rgba(255,255,255,.25);
+}
+.hero-slide.slide-hubontrade .dashboard-dots span:nth-child(1) { background: #FF5F57; }
+.hero-slide.slide-hubontrade .dashboard-dots span:nth-child(2) { background: #FEBC2E; }
+.hero-slide.slide-hubontrade .dashboard-dots span:nth-child(3) { background: #28C840; }
+.hero-slide.slide-hubontrade .dashboard-title {
+    font-size: 12px;
+    color: rgba(255,255,255,.7);
+    font-weight: 600;
+}
+.hero-slide.slide-hubontrade .dashboard-body {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 0;
+    min-height: 320px;
+}
+.hero-slide.slide-hubontrade .dash-sidebar {
+    padding: 16px 12px;
+    background: rgba(255,255,255,.02);
+    border-right: 1px solid rgba(255,255,255,.06);
+}
+.hero-slide.slide-hubontrade .dash-menu-item {
+    padding: 8px 12px;
+    color: rgba(255,255,255,.5);
+    font-size: 12px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+}
+.hero-slide.slide-hubontrade .dash-menu-item.active {
+    background: rgba(59,130,246,.15);
+    color: #93c5fd;
+}
+.hero-slide.slide-hubontrade .dash-main { padding: 16px; }
+.hero-slide.slide-hubontrade .dash-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+}
+.hero-slide.slide-hubontrade .dash-card {
+    padding: 12px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 8px;
+}
+.hero-slide.slide-hubontrade .dash-card-label {
+    font-size: 10px;
+    color: rgba(255,255,255,.5);
+    margin-bottom: 4px;
+}
+.hero-slide.slide-hubontrade .dash-card-value {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 2px;
+}
+.hero-slide.slide-hubontrade .dash-card-trend {
+    font-size: 10px;
+    color: rgba(255,255,255,.5);
+}
+.hero-slide.slide-hubontrade .dash-card-trend.up { color: #34d399; }
+.hero-slide.slide-hubontrade .dash-chart {
+    padding: 12px;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 8px;
+}
+.hero-slide.slide-hubontrade .dash-chart-title {
+    font-size: 11px;
+    color: rgba(255,255,255,.6);
+    margin-bottom: 10px;
+}
+.hero-slide.slide-hubontrade .dash-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 80px;
+}
+.hero-slide.slide-hubontrade .dash-bars .bar {
+    flex: 1;
+    background: rgba(96,165,250,.4);
+    border-radius: 4px 4px 0 0;
+    min-height: 8px;
+}
+.hero-slide.slide-hubontrade .dash-bars .bar.active {
+    background: #60a5fa;
+    box-shadow: 0 0 14px rgba(96,165,250,.6);
+}
+
+/* Slide 2 활성 시 hero-trust-block 등장 애니메이션 */
+.hero-slide.slide-hubontrade.active .hero-trust-block { animation: heroSlideIn 0.7s ease-out 0.85s both; }
+.hero-slide.slide-hubontrade.active .hero-visual { animation: heroSlideIn 0.8s ease-out 0.4s both; }
+.hero-slide.slide-hubontrade.active .hero-brand-line { animation: heroSlideIn 0.6s ease-out 0.1s both; }
