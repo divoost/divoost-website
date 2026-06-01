@@ -17,10 +17,9 @@
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(135deg, #0a0f2c 0%, #0d1b3e 30%, #111d42 60%, #0b1228 100%),
-        radial-gradient(ellipse at 20% 50%, rgba(59, 130, 246, 0.12), transparent 60%),
-        radial-gradient(ellipse at 80% 20%, rgba(99, 102, 241, 0.1), transparent 50%),
-        radial-gradient(ellipse at 60% 80%, rgba(14, 165, 233, 0.08), transparent 50%);
+        linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #1E40AF 100%),
+        radial-gradient(ellipse at 15% 20%, rgba(255, 255, 255, 0.18), transparent 45%),
+        radial-gradient(ellipse at 85% 80%, rgba(96, 165, 250, 0.4), transparent 50%);
     z-index: 0;
 }
 
@@ -28,8 +27,8 @@
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
     background-size: 60px 60px;
     z-index: 1;
     mask-image: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.6) 20%, transparent 75%);
@@ -81,14 +80,15 @@
 .hero-badge {
     display: inline-block;
     padding: 10px 20px;
-    background: rgba(99, 102, 241, 0.15);
-    border: 1px solid rgba(99, 102, 241, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: var(--radius-full);
-    color: #a5b4fc;
+    color: #ffffff;
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.05em;
     margin-bottom: var(--space-xl);
+    backdrop-filter: blur(8px);
 }
 
 .hero-title {
@@ -106,10 +106,7 @@
 }
 
 .hero-title-line.accent {
-    background: linear-gradient(135deg, #6366f1, #06b6d4, #3b82f6);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #FCD34D;
 }
 
 .hero-subtitle {
@@ -170,8 +167,8 @@
 }
 
 .hero-dot.active {
-    background: #06b6d4;
-    border-color: #06b6d4;
+    background: #FCD34D;
+    border-color: #FCD34D;
     transform: scale(1.2);
 }
 
@@ -186,7 +183,7 @@
 .hero-progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #6366f1, #06b6d4);
+    background: linear-gradient(90deg, #FCD34D, #FBBF24);
     border-radius: 3px;
     transition: width 0.1s linear;
 }
@@ -427,7 +424,7 @@
 
 /* --- COMPETITOR COMPARISON SECTION --- */
 .section-comparison {
-    background: linear-gradient(135deg, #0a0f2c 0%, #0d1b3e 40%, #111d42 70%, #0b1228 100%);
+    background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #1E40AF 100%);
     color: #ffffff;
 }
 
@@ -511,7 +508,7 @@
 }
 
 .cta-banner {
-    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 30%, #1e3a5f 60%, #0f172a 100%);
+    background: linear-gradient(135deg, #2563EB 0%, #1E40AF 50%, #1E3A8A 100%);
     border-radius: var(--radius-xl);
     padding: 80px var(--space-2xl);
     text-align: center;

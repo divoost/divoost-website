@@ -10,15 +10,17 @@
    CSS Variables
    ============================================================ */
 :root {
-  /* Colors */
-  --color-primary: #2563EB;
-  --color-primary-dark: #1D4ED8;
-  --color-primary-light: #3B82F6;
+  /* Colors - EZ TRADE HUB 톤 통일 (Bright Blue + Red + Yellow accent) */
+  --color-primary: #3B82F6;
+  --color-primary-dark: #2563EB;
+  --color-primary-light: #60A5FA;
+  --color-primary-darker: #1E40AF;
   --color-secondary: #0F172A;
-  --color-accent: #06B6D4;
-  --color-accent-dark: #0891B2;
-  --color-gradient: linear-gradient(135deg, #2563EB, #06B6D4);
-  --color-gradient-hover: linear-gradient(135deg, #1D4ED8, #0891B2);
+  --color-accent: #EF4444;
+  --color-accent-dark: #DC2626;
+  --color-accent-yellow: #FCD34D;
+  --color-gradient: linear-gradient(135deg, #3B82F6, #2563EB, #1E40AF);
+  --color-gradient-hover: linear-gradient(135deg, #2563EB, #1E40AF, #1E3A8A);
   --color-success: #10B981;
   --color-warning: #F59E0B;
   --color-danger: #EF4444;

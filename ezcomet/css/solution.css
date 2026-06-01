@@ -18,7 +18,7 @@
 .page-hero-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #1E40AF 100%);
   z-index: 0;
 }
 

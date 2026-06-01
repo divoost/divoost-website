@@ -8,7 +8,7 @@
    ========================================= */
 .page-hero {
     padding: calc(var(--space-4xl) + 20px) 0 var(--space-3xl);
-    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -207,7 +207,7 @@
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
 }
 
-.product-card-thumb.cat-electronics { background: linear-gradient(135deg, #2563EB, #06B6D4); }
+.product-card-thumb.cat-electronics { background: linear-gradient(135deg, #3B82F6, #1E40AF); }
 .product-card-thumb.cat-home { background: linear-gradient(135deg, #059669, #34D399); }
 .product-card-thumb.cat-fashion { background: linear-gradient(135deg, #7C3AED, #EC4899); }
 .product-card-thumb.cat-beauty { background: linear-gradient(135deg, #EC4899, #F472B6); }
@@ -615,7 +615,7 @@
    CTA SECTION
    ========================================= */
 .cta-section {
-    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
     padding: var(--space-4xl) 0;
     text-align: center;
     position: relative;
