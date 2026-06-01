@@ -34,6 +34,58 @@
             "stat1": "Sàn liên kết",
             "stat2": "Tỷ lệ hoạt động",
             "stat3": "Giảm khối lượng việc"
+        },
+        "s3": {
+            "badge": "FULFILLMENT TOÀN CẦU",
+            "title1": "Giao hàng trong nước & quốc tế,",
+            "title2": "Fulfillment trọn gói",
+            "title3": "Trong một hệ thống duy nhất",
+            "subtitle": "Từ giao hàng nội địa đến chặng cuối ở nước ngoài — fulfillment tích hợp để bạn tập trung bán hàng, không lo vận chuyển",
+            "ctaPrimary": "Xem hệ thống logistics",
+            "ctaSecondary": "Liên hệ giao hàng"
+        },
+        "s4": {
+            "badge": "SOURCING THÔNG MINH",
+            "title1": "Chưa có hàng để bán?",
+            "title2": "Sourcing toàn cầu",
+            "title3": "Tìm cho bạn sản phẩm có lãi",
+            "subtitle": "Từ sourcing B2B toàn cầu đến tính biên lợi nhuận tự động — kiểm chứng lợi nhuận trước khi nhập hàng",
+            "ctaPrimary": "Bắt đầu sourcing",
+            "ctaSecondary": "Dùng thử công cụ biên lợi nhuận"
+        },
+        "s5": {
+            "badge": "DÀNH CHO NHÀ BÁN TOÀN CẦU",
+            "title1": "Chỉ dành cho nhà bán Hàn Quốc?",
+            "title2": "Không.",
+            "title3": "Nền tảng cho nhà bán toàn cầu",
+            "subtitle": "Nhà bán Hàn Quốc hay quốc tế — nền tảng xuất nhập khẩu toàn cầu duy nhất ai cũng có thể dùng",
+            "ctaPrimary": "Bắt đầu ngay",
+            "ctaSecondary": "Giới thiệu dịch vụ"
+        }
+    },
+    "sec": {
+        "why": {
+            "badge": "TẠI SAO CHỌN HUBONTRADE",
+            "title": "Điều các nền tảng khác không có",
+            "desc": "Tính năng khác biệt giúp thiết lập chuẩn mới cho bán hàng toàn cầu"
+        },
+        "platforms": {
+            "badge": "SÀN ĐƯỢC HỖ TRỢ",
+            "title": "Từ trong nước đến toàn cầu — kết nối mọi sàn lớn",
+            "desc": "Đăng sản phẩm một lần, bán đồng thời mọi sàn"
+        },
+        "comparison": {
+            "badge": "SO SÁNH",
+            "title": "HUBONTRADE vs đối thủ",
+            "desc": "So sánh tính năng cốt lõi"
+        },
+        "features": {
+            "badge": "TÍNH NĂNG CHÍNH",
+            "title": "Tính năng cốt lõi dành cho nhà bán"
+        },
+        "foryou": {
+            "badge": "DÀNH CHO BẠN",
+            "title": "Đặc biệt phù hợp với bạn nếu..."
         }
     }
 }
