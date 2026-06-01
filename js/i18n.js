@@ -5,26 +5,11 @@ const TRANSLATIONS = {
     zh: null
 };
 
-// lang/ 폴더는 i18n.js 와 동일한 부모(루트)에 위치
-// 따라서 i18n.js 위치를 기준으로 상대 경로를 계산
-function getLangBasePath() {
-    var scripts = document.getElementsByTagName('script');
-    for (var i = 0; i < scripts.length; i++) {
-        var src = scripts[i].src || '';
-        if (src.indexOf('i18n.js') >= 0) {
-            // js/i18n.js 가 있는 디렉토리의 상위(=루트) + /lang/
-            return src.replace(/js\/i18n\.js.*$/, 'lang/');
-        }
-    }
-    return 'lang/';
-}
-var LANG_BASE = getLangBasePath();
-
 const EMBEDDED_TRANSLATIONS_URL = {
-    ko: LANG_BASE + 'ko.json',
-    vi: LANG_BASE + 'vi.json',
-    en: LANG_BASE + 'en.json',
-    zh: LANG_BASE + 'zh.json'
+    ko: 'lang/ko.json',
+    vi: 'lang/vi.json',
+    en: 'lang/en.json',
+    zh: 'lang/zh.json'
 };
 
 let currentLang = 'ko';
@@ -89,7 +74,7 @@ async function switchLanguage(lang) {
 
     document.documentElement.lang = lang;
 
-    localStorage.setItem('hubontrade_lang', lang);
+    localStorage.setItem('ezcomet_lang', lang);
 
     applyTranslations(translations);
 
@@ -99,7 +84,7 @@ async function switchLanguage(lang) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const savedLang = localStorage.getItem('hubontrade_lang') || 'ko';
+    const savedLang = localStorage.getItem('ezcomet_lang') || 'ko';
 
     const translations = await loadTranslation(savedLang);
     if (translations) {
