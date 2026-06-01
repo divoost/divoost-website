@@ -166,15 +166,18 @@
         });
     }
 
-    // ─── Language toggle (ko / zh) ───
+    // ─── Language toggle (en / zh) - 영어 기본 + 중국어 토글 ───
     var langButtons = document.querySelectorAll('[data-lang-switch]');
-    var current = localStorage.getItem('eth_lang') || 'ko';
+    var current = localStorage.getItem('eth_lang') || 'en';
     function applyLang(lang) {
-        document.documentElement.lang = lang;
-        document.querySelectorAll('[data-ko]').forEach(function(el) {
-            var ko = el.getAttribute('data-ko');
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        // 텍스트 노드 교체: data-en 이 있는 요소는 영어 기본, data-zh 가 있으면 중국어로 토글
+        document.querySelectorAll('[data-en]').forEach(function(el) {
+            var en = el.getAttribute('data-en');
             var zh = el.getAttribute('data-zh');
-            el.textContent = lang === 'zh' && zh ? zh : ko;
+            // innerHTML 사용: 일부 텍스트에 <br>, <span> 등 포함 가능
+            if (lang === 'zh' && zh) el.innerHTML = zh;
+            else el.innerHTML = en;
         });
         langButtons.forEach(function(b) {
             b.classList.toggle('active', b.getAttribute('data-lang-switch') === lang);
