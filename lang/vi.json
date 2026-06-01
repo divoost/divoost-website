@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "EZCOMET - Nền tảng Quản lý Thương mại Điện tử Đa kênh"
+    "title": "HUBONTRADE - Nền tảng Quản lý Thương mại Điện tử Đa kênh"
   },
   "nav": {
     "solutions": "Giải pháp",
@@ -28,7 +28,7 @@
   "solutions": {
     "label": "GIẢI PHÁP",
     "title": "Quản lý tất cả trên một nền tảng",
-    "subtitle": "Hợp nhất việc quản lý sàn TMĐT phân tán với EZCOMET. OMS, ERP và phân tích dữ liệu tất cả trong một.",
+    "subtitle": "Hợp nhất việc quản lý sàn TMĐT phân tán với HUBONTRADE. OMS, ERP và phân tích dữ liệu tất cả trong một.",
     "card1Title": "Quản lý Đơn hàng Tích hợp (OMS)",
     "card1Desc": "Xem và xử lý đơn hàng từ tất cả các sàn trên một màn hình. Tự động hóa thu thập đơn, cập nhật trạng thái và quản lý khiếu nại.",
     "card1Item1": "Tự động thu thập đơn đa sàn",
@@ -140,10 +140,10 @@
   "cases": {
     "label": "CASE STUDY",
     "title": "Câu chuyện Thành công",
-    "subtitle": "Những câu chuyện thực từ doanh nghiệp đã phát triển cùng EZCOMET.",
+    "subtitle": "Những câu chuyện thực từ doanh nghiệp đã phát triển cùng HUBONTRADE.",
     "tag1": "Thời trang",
     "case1Title": "Công ty A: Giảm 70% thời gian xử lý đơn",
-    "case1Desc": "Xử lý hơn 500 đơn/ngày trên 5 sàn, Công ty A đã giảm 70% thời gian xử lý đơn và loại bỏ tình trạng bán quá tồn kho sau khi sử dụng EZCOMET.",
+    "case1Desc": "Xử lý hơn 500 đơn/ngày trên 5 sàn, Công ty A đã giảm 70% thời gian xử lý đơn và loại bỏ tình trạng bán quá tồn kho sau khi sử dụng HUBONTRADE.",
     "metric1": "Tiết kiệm thời gian",
     "metric2": "Tỷ lệ bán quá tồn",
     "tag2": "Làm đẹp/Mỹ phẩm",
@@ -153,7 +153,7 @@
     "metric4": "Doanh thu quốc tế",
     "tag3": "Thực phẩm",
     "case3Title": "Công ty C: Độ chính xác tồn kho 99,8%",
-    "case3Desc": "Quản lý tồn kho thủ công trên 7 sàn, Công ty C đạt độ chính xác 99,8% với đồng bộ thời gian thực của EZCOMET, tiết kiệm 5 triệu ₩/tháng.",
+    "case3Desc": "Quản lý tồn kho thủ công trên 7 sàn, Công ty C đạt độ chính xác 99,8% với đồng bộ thời gian thực của HUBONTRADE, tiết kiệm 5 triệu ₩/tháng.",
     "metric5": "Độ chính xác tồn kho",
     "metric6": "Tiết kiệm chi phí/tháng"
   },
@@ -174,7 +174,7 @@
     "watch": "Xem ngay"
   },
   "cta": {
-    "title": "Cách mạng hóa vận hành TMĐT với EZCOMET ngay hôm nay",
+    "title": "Cách mạng hóa vận hành TMĐT với HUBONTRADE ngay hôm nay",
     "subtitle": "Dùng thử 14 ngày miễn phí. Không cần thẻ tín dụng. Hủy bất cứ lúc nào."
   },
   "contact": {

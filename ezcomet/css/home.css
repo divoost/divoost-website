@@ -1,5 +1,5 @@
 /* =========================================
-   EZCOMET Home Page Styles
+   HUBONTRADE Home Page Styles
    Page-specific styles for index.html
    ========================================= */
 
@@ -223,7 +223,7 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- WHY EZCOMET SECTION --- */
+/* --- WHY HUBONTRADE SECTION --- */
 .section-why { background: var(--bg-light); }
 .section-header { margin-bottom: var(--space-3xl); }
 .section-header .section-desc { margin-left: auto; margin-right: auto; }
