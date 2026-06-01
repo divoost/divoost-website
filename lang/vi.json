@@ -1,91 +1,60 @@
 {
-    "meta": {
-        "title": "HUBONTRADE | Nền tảng Xuất nhập khẩu Xuyên biên giới Toàn cầu"
-    },
+    "meta": { "title": "HUBONTRADE | Nền tảng Xuất nhập khẩu Xuyên biên giới Toàn cầu" },
     "nav": {
-        "home": "Trang chủ",
-        "solution": "Giải pháp",
-        "features": "Tính năng",
-        "service": "Dịch vụ",
-        "market": "Thị trường",
-        "pricing": "Bảng giá",
-        "case": "Khách hàng",
-        "resources": "Tài nguyên",
-        "tracker": "Sourcing Tracker",
-        "contact": "Liên hệ"
+        "home": "Trang chủ", "solution": "Giải pháp", "features": "Tính năng", "service": "Dịch vụ",
+        "market": "Thị trường", "pricing": "Bảng giá", "case": "Khách hàng", "resources": "Tài nguyên",
+        "tracker": "Sourcing Tracker", "contact": "Liên hệ"
     },
     "hero": {
         "s1": {
             "badge": "NỀN TẢNG XUẤT NHẬP KHẨU TOÀN CẦU",
-            "title1": "Thương mại không biên giới,",
-            "title2": "Không giới hạn hướng đi",
-            "title3": "HUBONTRADE kết nối tất cả",
+            "title1": "Thương mại không biên giới,", "title2": "Không giới hạn hướng đi", "title3": "HUBONTRADE kết nối tất cả",
             "subtitle": "Từ bất cứ đâu đến bất cứ đâu — toàn bộ quy trình xuất nhập khẩu toàn cầu trên một nền tảng",
-            "ctaPrimary": "Bắt đầu miễn phí",
-            "ctaSecondary": "Xem dịch vụ"
+            "ctaPrimary": "Bắt đầu miễn phí", "ctaSecondary": "Xem dịch vụ"
         },
         "s2": {
-            "title1": "Tất cả các sàn",
-            "title2": "Quản lý hợp nhất",
-            "title3": "Đăng sản phẩm một lần — bán khắp nơi",
-            "ctaPrimary": "Dùng thử miễn phí",
-            "ctaSecondary": "Yêu cầu tư vấn 1:1",
+            "title1": "Tất cả các sàn", "title2": "Quản lý hợp nhất", "title3": "Đăng sản phẩm một lần — bán khắp nơi",
+            "ctaPrimary": "Dùng thử miễn phí", "ctaSecondary": "Yêu cầu tư vấn 1:1",
             "trust": "Hàng nghìn nhà bán tin chọn HUBONTRADE",
-            "stat1": "Sàn liên kết",
-            "stat2": "Tỷ lệ hoạt động",
-            "stat3": "Giảm khối lượng việc"
+            "stat1": "Sàn liên kết", "stat2": "Tỷ lệ hoạt động", "stat3": "Giảm khối lượng việc"
         },
         "s3": {
             "badge": "FULFILLMENT TOÀN CẦU",
-            "title1": "Giao hàng trong nước & quốc tế,",
-            "title2": "Fulfillment trọn gói",
-            "title3": "Trong một hệ thống duy nhất",
+            "title1": "Giao hàng trong nước & quốc tế,", "title2": "Fulfillment trọn gói", "title3": "Trong một hệ thống duy nhất",
             "subtitle": "Từ giao hàng nội địa đến chặng cuối ở nước ngoài — fulfillment tích hợp để bạn tập trung bán hàng, không lo vận chuyển",
-            "ctaPrimary": "Xem hệ thống logistics",
-            "ctaSecondary": "Liên hệ giao hàng"
+            "ctaPrimary": "Xem hệ thống logistics", "ctaSecondary": "Liên hệ giao hàng"
         },
         "s4": {
             "badge": "SOURCING THÔNG MINH",
-            "title1": "Chưa có hàng để bán?",
-            "title2": "Sourcing toàn cầu",
-            "title3": "Tìm cho bạn sản phẩm có lãi",
+            "title1": "Chưa có hàng để bán?", "title2": "Sourcing toàn cầu", "title3": "Tìm cho bạn sản phẩm có lãi",
             "subtitle": "Từ sourcing B2B toàn cầu đến tính biên lợi nhuận tự động — kiểm chứng lợi nhuận trước khi nhập hàng",
-            "ctaPrimary": "Bắt đầu sourcing",
-            "ctaSecondary": "Dùng thử công cụ biên lợi nhuận"
+            "ctaPrimary": "Bắt đầu sourcing", "ctaSecondary": "Dùng thử công cụ biên lợi nhuận"
         },
         "s5": {
             "badge": "DÀNH CHO NHÀ BÁN TOÀN CẦU",
-            "title1": "Chỉ dành cho nhà bán Hàn Quốc?",
-            "title2": "Không.",
-            "title3": "Nền tảng cho nhà bán toàn cầu",
+            "title1": "Chỉ dành cho nhà bán Hàn Quốc?", "title2": "Không.", "title3": "Nền tảng cho nhà bán toàn cầu",
             "subtitle": "Nhà bán Hàn Quốc hay quốc tế — nền tảng xuất nhập khẩu toàn cầu duy nhất ai cũng có thể dùng",
-            "ctaPrimary": "Bắt đầu ngay",
-            "ctaSecondary": "Giới thiệu dịch vụ"
+            "ctaPrimary": "Bắt đầu ngay", "ctaSecondary": "Giới thiệu dịch vụ"
         }
     },
     "sec": {
         "why": {
-            "badge": "TẠI SAO CHỌN HUBONTRADE",
-            "title": "Điều các nền tảng khác không có",
-            "desc": "Tính năng khác biệt giúp thiết lập chuẩn mới cho bán hàng toàn cầu"
+            "badge": "TẠI SAO CHỌN HUBONTRADE", "title": "Điều các nền tảng khác không có",
+            "desc": "Tính năng khác biệt giúp thiết lập chuẩn mới cho bán hàng toàn cầu",
+            "c1": { "title": "Xuất nhập khẩu hai chiều toàn cầu", "desc": "Không chỉ Hàn Quốc→nước ngoài, mà còn nước ngoài→Hàn Quốc, Trung Quốc→Mỹ và mọi hướng giao dịch xuyên biên giới" },
+            "c2": { "title": "Tự động khai báo xuất khẩu & hải quan", "desc": "Tự động tạo tờ khai xuất khẩu, mua hộ thông quan nhập khẩu — hệ thống xử lý chứng từ phức tạp" },
+            "c3": { "title": "Hợp nhất Fulfillment nội địa & quốc tế", "desc": "Giao hàng trong nước và quốc tế, dịch vụ fulfillment — quản lý tập trung trong một hệ thống" },
+            "c4": { "title": "Mở cho nhà bán nước ngoài", "desc": "Không chỉ dành cho doanh nghiệp Hàn Quốc. Nền tảng toàn cầu duy nhất ai cũng có thể dùng từ bất kỳ đâu" },
+            "c5": { "title": "Đối tác bằng xuất khẩu của Chính phủ", "desc": "Đối tác bằng xuất khẩu được Chính phủ chứng nhận. Khởi đầu không gánh nặng chi phí thông qua chương trình hỗ trợ" },
+            "c6": { "title": "Tự động hóa bằng AI", "desc": "AI gợi ý tiêu đề/từ khóa sản phẩm, ánh xạ danh mục, dịch đa ngôn ngữ, đề xuất giá" }
         },
-        "platforms": {
-            "badge": "SÀN ĐƯỢC HỖ TRỢ",
-            "title": "Từ trong nước đến toàn cầu — kết nối mọi sàn lớn",
-            "desc": "Đăng sản phẩm một lần, bán đồng thời mọi sàn"
-        },
-        "comparison": {
-            "badge": "SO SÁNH",
-            "title": "HUBONTRADE vs đối thủ",
-            "desc": "So sánh tính năng cốt lõi"
-        },
-        "features": {
-            "badge": "TÍNH NĂNG CHÍNH",
-            "title": "Tính năng cốt lõi dành cho nhà bán"
-        },
-        "foryou": {
-            "badge": "DÀNH CHO BẠN",
-            "title": "Đặc biệt phù hợp với bạn nếu..."
-        }
+        "platforms": { "badge": "SÀN ĐƯỢC HỖ TRỢ", "title": "Từ trong nước đến toàn cầu — kết nối mọi sàn lớn", "desc": "Đăng sản phẩm một lần, bán đồng thời mọi sàn" },
+        "comparison": { "badge": "SO SÁNH", "title": "HUBONTRADE vs đối thủ", "desc": "So sánh tính năng cốt lõi" },
+        "features": { "badge": "TÍNH NĂNG CHÍNH", "title": "Tính năng cốt lõi dành cho nhà bán" },
+        "foryou": { "badge": "DÀNH CHO BẠN", "title": "Đặc biệt phù hợp với bạn nếu..." }
+    },
+    "footer": {
+        "tagline": "Nền tảng Thương mại điện tử Xuyên biên giới Đông Nam Á",
+        "h": { "pages": "Trang", "tools": "Sourcing · Công cụ", "support": "Hỗ trợ" }
     }
 }
