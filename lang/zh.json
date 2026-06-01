@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "EZCOMET - 多渠道电商一体化运营平台"
+    "title": "HUBONTRADE - 多渠道电商一体化运营平台"
   },
   "nav": {
     "solutions": "解决方案",
@@ -28,7 +28,7 @@
   "solutions": {
     "label": "解决方案",
     "title": "一个平台管理一切",
-    "subtitle": "用EZCOMET整合分散的电商平台管理。OMS、ERP和数据分析一体化。",
+    "subtitle": "用HUBONTRADE整合分散的电商平台管理。OMS、ERP和数据分析一体化。",
     "card1Title": "统一订单管理 (OMS)",
     "card1Desc": "在一个界面查看和处理所有平台的订单。自动化订单采集、状态更新和售后管理。",
     "card1Item1": "多平台订单自动采集",
@@ -140,20 +140,20 @@
   "cases": {
     "label": "案例",
     "title": "客户成功案例",
-    "subtitle": "与EZCOMET一起成长的企业的真实故事。",
+    "subtitle": "与HUBONTRADE一起成长的企业的真实故事。",
     "tag1": "时尚/服装",
     "case1Title": "A公司：订单处理时间缩短70%",
-    "case1Desc": "在5个平台日处理500+订单的A公司，使用EZCOMET后订单处理时间缩短70%，超卖率降至0%。",
+    "case1Desc": "在5个平台日处理500+订单的A公司，使用HUBONTRADE后订单处理时间缩短70%，超卖率降至0%。",
     "metric1": "处理时间缩短",
     "metric2": "超卖率",
     "tag2": "美妆/化妆品",
     "case2Title": "B公司：3个月完成全球扩张",
-    "case2Desc": "此前仅在韩国国内运营的B公司，通过EZCOMET的全球平台对接功能，3个月内完成Shopee、Lazada扩张，海外营收占比达30%。",
+    "case2Desc": "此前仅在韩国国内运营的B公司，通过HUBONTRADE的全球平台对接功能，3个月内完成Shopee、Lazada扩张，海外营收占比达30%。",
     "metric3": "全球扩张",
     "metric4": "海外营收占比",
     "tag3": "食品",
     "case3Title": "C公司：库存准确率达99.8%",
-    "case3Desc": "在7个平台手动管理库存的C公司，通过EZCOMET实时库存同步实现99.8%准确率，每月节省500万韩元人工成本。",
+    "case3Desc": "在7个平台手动管理库存的C公司，通过HUBONTRADE实时库存同步实现99.8%准确率，每月节省500万韩元人工成本。",
     "metric5": "库存准确率",
     "metric6": "月度成本节省"
   },
@@ -174,7 +174,7 @@
     "watch": "立即观看"
   },
   "cta": {
-    "title": "立即用EZCOMET革新您的电商运营",
+    "title": "立即用HUBONTRADE革新您的电商运营",
     "subtitle": "14天免费试用。无需信用卡。随时取消。"
   },
   "contact": {

@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "EZCOMET - Multi-Channel E-Commerce Operations Platform"
+    "title": "HUBONTRADE - Multi-Channel E-Commerce Operations Platform"
   },
   "nav": {
     "solutions": "Solutions",
@@ -28,7 +28,7 @@
   "solutions": {
     "label": "SOLUTIONS",
     "title": "Manage Everything in One Platform",
-    "subtitle": "Consolidate your scattered marketplace management with EZCOMET. OMS, ERP, and data analytics all-in-one.",
+    "subtitle": "Consolidate your scattered marketplace management with HUBONTRADE. OMS, ERP, and data analytics all-in-one.",
     "card1Title": "Unified Order Management (OMS)",
     "card1Desc": "View and process orders from all marketplaces in a single screen. Automate order collection, status updates, and claims management.",
     "card1Item1": "Multi-market order auto-collection",
@@ -140,20 +140,20 @@
   "cases": {
     "label": "CASE STUDIES",
     "title": "Customer Success Stories",
-    "subtitle": "Real stories from businesses that grew with EZCOMET.",
+    "subtitle": "Real stories from businesses that grew with HUBONTRADE.",
     "tag1": "Fashion/Apparel",
     "case1Title": "Company A: 70% Reduction in Order Processing Time",
-    "case1Desc": "Processing 500+ daily orders across 5 marketplaces, Company A reduced order processing time by 70% and eliminated overselling after adopting EZCOMET.",
+    "case1Desc": "Processing 500+ daily orders across 5 marketplaces, Company A reduced order processing time by 70% and eliminated overselling after adopting HUBONTRADE.",
     "metric1": "Processing Time Saved",
     "metric2": "Overselling Rate",
     "tag2": "Beauty/Cosmetics",
     "case2Title": "Company B: Global Expansion in 3 Months",
-    "case2Desc": "Previously operating only in domestic markets, Company B completed Shopee and Lazada expansion in 3 months using EZCOMET's global integration, achieving 30% international revenue.",
+    "case2Desc": "Previously operating only in domestic markets, Company B completed Shopee and Lazada expansion in 3 months using HUBONTRADE's global integration, achieving 30% international revenue.",
     "metric3": "Global Expansion",
     "metric4": "International Revenue",
     "tag3": "Food & Beverage",
     "case3Title": "Company C: 99.8% Inventory Accuracy",
-    "case3Desc": "Managing inventory manually across 7 marketplaces, Company C achieved 99.8% inventory accuracy with EZCOMET's real-time sync, saving ₩5M monthly in labor costs.",
+    "case3Desc": "Managing inventory manually across 7 marketplaces, Company C achieved 99.8% inventory accuracy with HUBONTRADE's real-time sync, saving ₩5M monthly in labor costs.",
     "metric5": "Inventory Accuracy",
     "metric6": "Monthly Cost Savings"
   },
@@ -174,7 +174,7 @@
     "watch": "Watch Now"
   },
   "cta": {
-    "title": "Transform Your E-Commerce Operations with EZCOMET",
+    "title": "Transform Your E-Commerce Operations with HUBONTRADE",
     "subtitle": "14-day free trial. No credit card required. Cancel anytime."
   },
   "contact": {

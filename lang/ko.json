@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "EZCOMET - 멀티채널 이커머스 통합 운영 플랫폼"
+    "title": "HUBONTRADE - 멀티채널 이커머스 통합 운영 플랫폼"
   },
   "nav": {
     "solutions": "솔루션",
@@ -20,7 +20,7 @@
     "subtitle": "쿠팡, 네이버, 지마켓부터 Shopee, Lazada, TikTok Shop까지. 주문, 재고, 송장, 물류, 데이터 분석을 한 곳에서 관리하세요.",
     "ctaTrial": "무료 체험 시작",
     "ctaConsult": "1:1 상담 신청",
-    "trust": "이미 많은 셀러가 EZCOMET을 신뢰합니다",
+    "trust": "이미 많은 셀러가 HUBONTRADE를 신뢰합니다",
     "stat1": "연동 마켓",
     "stat2": "가동률",
     "stat3": "업무 시간 절감"
@@ -28,7 +28,7 @@
   "solutions": {
     "label": "SOLUTIONS",
     "title": "하나의 플랫폼으로 모든 것을 관리",
-    "subtitle": "분산된 마켓 관리를 EZCOMET 하나로 통합하세요. OMS, ERP, 데이터 분석까지 올인원으로 제공합니다.",
+    "subtitle": "분산된 마켓 관리를 HUBONTRADE 하나로 통합하세요. OMS, ERP, 데이터 분석까지 올인원으로 제공합니다.",
     "card1Title": "통합 주문관리 (OMS)",
     "card1Desc": "모든 마켓의 주문을 한 화면에서 확인하고 처리합니다. 주문 수집, 상태 변경, 클레임 관리를 자동화하세요.",
     "card1Item1": "멀티마켓 주문 자동 수집",
@@ -140,20 +140,20 @@
   "cases": {
     "label": "CASE STUDIES",
     "title": "고객 성공 사례",
-    "subtitle": "EZCOMET과 함께 성장한 기업들의 실제 이야기를 확인하세요.",
+    "subtitle": "HUBONTRADE과 함께 성장한 기업들의 실제 이야기를 확인하세요.",
     "tag1": "패션/의류",
     "case1Title": "A사: 주문 처리 시간 70% 단축",
-    "case1Desc": "5개 마켓에서 하루 500건 이상의 주문을 처리하던 A사는 EZCOMET 도입 후 주문 처리 시간을 70% 단축하고, 과매도 발생률을 0%로 줄였습니다.",
+    "case1Desc": "5개 마켓에서 하루 500건 이상의 주문을 처리하던 A사는 HUBONTRADE 도입 후 주문 처리 시간을 70% 단축하고, 과매도 발생률을 0%로 줄였습니다.",
     "metric1": "처리 시간 단축",
     "metric2": "과매도 발생",
     "tag2": "뷰티/화장품",
     "case2Title": "B사: 글로벌 마켓 확장 3개월 완료",
-    "case2Desc": "국내 마켓만 운영하던 B사는 EZCOMET의 글로벌 마켓 연동 기능을 통해 Shopee, Lazada 진출을 3개월 만에 완료하고 해외 매출 비중 30%를 달성했습니다.",
+    "case2Desc": "국내 마켓만 운영하던 B사는 HUBONTRADE의 글로벌 마켓 연동 기능을 통해 Shopee, Lazada 진출을 3개월 만에 완료하고 해외 매출 비중 30%를 달성했습니다.",
     "metric3": "글로벌 진출",
     "metric4": "해외 매출 비중",
     "tag3": "식품",
     "case3Title": "C사: 재고 정확도 99.8% 달성",
-    "case3Desc": "7개 마켓의 재고를 수동 관리하던 C사는 EZCOMET의 실시간 재고 동기화로 재고 정확도 99.8%를 달성하고, 월 인건비 500만원을 절감했습니다.",
+    "case3Desc": "7개 마켓의 재고를 수동 관리하던 C사는 HUBONTRADE의 실시간 재고 동기화로 재고 정확도 99.8%를 달성하고, 월 인건비 500만원을 절감했습니다.",
     "metric5": "재고 정확도",
     "metric6": "월 비용 절감"
   },
@@ -174,7 +174,7 @@
     "watch": "시청하기"
   },
   "cta": {
-    "title": "지금 EZCOMET으로 이커머스 운영을 혁신하세요",
+    "title": "지금 HUBONTRADE으로 이커머스 운영을 혁신하세요",
     "subtitle": "14일 무료 체험. 신용카드 불필요. 언제든 해지 가능."
   },
   "contact": {

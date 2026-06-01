@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const plan = contactForm.plan.value;
             const message = contactForm.message.value;
 
-            const subject = encodeURIComponent(`[EZCOMET Inquiry] ${company || name}`);
+            const subject = encodeURIComponent(`[HUBONTRADE Inquiry] ${company || name}`);
             const body = encodeURIComponent(
                 `Name: ${name}\n` +
                 `Email: ${email}\n` +
@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 `Message:\n${message}`
             );
 
-            window.location.href = `mailto:support@ezcomet.io?subject=${subject}&body=${body}`;
+            window.location.href = `mailto:support@hubontrade.com?subject=${subject}&body=${body}`;
         });
 
         const trialBtn = document.getElementById('trialBtn');
@@ -136,15 +136,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 const email = contactForm.email.value;
                 const company = contactForm.company.value;
 
-                const subject = encodeURIComponent(`[EZCOMET Free Trial] ${company || name}`);
+                const subject = encodeURIComponent(`[HUBONTRADE Free Trial] ${company || name}`);
                 const body = encodeURIComponent(
                     `Name: ${name}\n` +
                     `Email: ${email}\n` +
                     `Company: ${company}\n\n` +
-                    `I would like to start a free trial of EZCOMET.`
+                    `I would like to start a free trial of HUBONTRADE.`
                 );
 
-                window.location.href = `mailto:support@ezcomet.io?subject=${subject}&body=${body}`;
+                window.location.href = `mailto:support@hubontrade.com?subject=${subject}&body=${body}`;
             });
         }
     }
