@@ -89,7 +89,7 @@ async function switchLanguage(lang) {
 
     document.documentElement.lang = lang;
 
-    localStorage.setItem('hubontrade_lang', lang);
+    localStorage.setItem('ezcomet_lang', lang);
 
     applyTranslations(translations);
 
@@ -99,7 +99,7 @@ async function switchLanguage(lang) {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-    const savedLang = localStorage.getItem('hubontrade_lang') || 'ko';
+    const savedLang = localStorage.getItem('ezcomet_lang') || 'ko';
 
     const translations = await loadTranslation(savedLang);
     if (translations) {

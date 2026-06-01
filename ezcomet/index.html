@@ -7,7 +7,7 @@
             var s = window.location.search, h = window.location.hash;
             var hasAuthParam = /[?&](code|token|access_token|refresh_token|error|error_description|type)=/.test(s + '&' + h);
             if(hasAuthParam){
-                var target = '/divoost-website/sns-platform/auth.html' + s + h;
+                var target = '../sns-platform/auth.html' + s + h;
                 window.location.replace(target);
             }
         })();
@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%233B82F6'/><text x='16' y='22' font-size='16' font-weight='bold' text-anchor='middle' fill='%23FCD34D'>H</text></svg>">
 </head>
 <body>
@@ -40,8 +40,8 @@
                     <li><a href="#pricing" class="nav-link" data-i18n="nav.pricing">가격</a></li>
                     <li><a href="#cases" class="nav-link" data-i18n="nav.cases">사례</a></li>
                     <li><a href="#resources" class="nav-link" data-i18n="nav.resources">자료실</a></li>
-                    <li><a href="dashboard/index.html" class="nav-link">소싱트래커</a></li>
-                    <li><a href="ezcomet/index.html" class="nav-link">HUBONTRADE</a></li>
+                    <li><a href="../dashboard/index.html" class="nav-link">소싱트래커</a></li>
+                    <li><a href="index.html" class="nav-link">HUBONTRADE</a></li>
                 </ul>
             </nav>
 
@@ -74,8 +74,8 @@
                 <li><a href="#pricing" data-i18n="nav.pricing">가격</a></li>
                 <li><a href="#cases" data-i18n="nav.cases">사례</a></li>
                 <li><a href="#resources" data-i18n="nav.resources">자료실</a></li>
-                <li><a href="dashboard/index.html">소싱트래커</a></li>
-                <li><a href="ezcomet/index.html">HUBONTRADE</a></li>
+                <li><a href="../dashboard/index.html">소싱트래커</a></li>
+                <li><a href="index.html">HUBONTRADE</a></li>
             </ul>
             <div class="mobile-cta">
                 <a href="#contact" class="btn btn-primary" data-i18n="hero.ctaTrial">무료 체험 시작</a>
@@ -762,10 +762,10 @@
                     <div class="footer-col">
                         <h4>서비스</h4>
                         <ul>
-                            <li><a href="ezcomet/index.html">HUBONTRADE</a></li>
-                            <li><a href="dashboard/index.html">소싱트래커</a></li>
-                            <li><a href="dashboard/admin.html">상품 관리</a></li>
-                            <li><a href="ezcomet/1688-coupang-guide.html">1688 소싱 가이드</a></li>
+                            <li><a href="index.html">HUBONTRADE</a></li>
+                            <li><a href="../dashboard/index.html">소싱트래커</a></li>
+                            <li><a href="../dashboard/admin.html">상품 관리</a></li>
+                            <li><a href="1688-coupang-guide.html">1688 소싱 가이드</a></li>
                         </ul>
                     </div>
                 </div>
@@ -781,7 +781,7 @@
         </div>
     </footer>
 
-    <script src="js/i18n.js"></script>
-    <script src="js/main.js"></script>
+    <script src="../js/i18n.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>
