@@ -797,6 +797,9 @@
                 if(chId === 'instagram'){
                     html += '<button class="btn-add-account" style="border-color:#ec4899;color:#ec4899;background:#fdf2f8;margin-top:6px" onclick="autoConnectInstagramFromFacebook()">⚡ Facebook 페이지에서 Instagram 자동 연결 (선택형)</button>';
                 }
+                if(chId === 'tiktok'){
+                    html += '<button class="btn-add-account" style="border-color:#000;color:#fff;background:linear-gradient(135deg,#000,#1a1a1a);margin-top:6px" onclick="connectTikTokOAuth()">🎵 TikTok 계정으로 한 번에 연동 (OAuth)</button>';
+                }
                 html += '<div class="guide-text">📌 ' + def.guide + '</div>';
                 html += '</div>';
             });
@@ -914,6 +917,68 @@
                 return_scopes: true
             });
         };
+
+        // ─── TikTok OAuth 연동 ───
+        // TikTok 개발자 콘솔에서 발급받은 Client Key (Client Secret 은 Edge Function에만)
+        var TIKTOK_CLIENT_KEY = ''; // ← 마스터가 콘솔에서 발급받은 Client Key 입력
+        var TIKTOK_REDIRECT_URI = location.origin + '/divoost-website/sns-platform/pages/tiktok-callback.html';
+
+        window.connectTikTokOAuth = function(){
+            if(!TIKTOK_CLIENT_KEY){
+                showResultModal({
+                    kind:'warn',
+                    title:'TikTok Client Key 미설정',
+                    text:'TikTok 개발자 콘솔에서 Client Key 를 발급받은 후 settings.html 파일의 TIKTOK_CLIENT_KEY 값을 설정해주세요.\n\n자세한 방법은 docs/tiktok-setup.md 참고.',
+                    skipReauth: true,
+                    footer: [
+                        { label:'📖 TikTok 개발자 콘솔 열기', type:'reauth', action: function(){ window.open('https://developers.tiktok.com/apps', '_blank'); } },
+                        { label:'닫기', type:'ghost', action: closeResultModal }
+                    ]
+                });
+                return;
+            }
+
+            // CSRF 방어용 state 생성
+            var state = 'st_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+            sessionStorage.setItem('tiktok_oauth_state', state);
+
+            // TikTok OAuth Authorization URL
+            var authUrl = 'https://www.tiktok.com/v2/auth/authorize/?' +
+                'client_key=' + encodeURIComponent(TIKTOK_CLIENT_KEY) +
+                '&scope=' + encodeURIComponent('user.info.basic,video.publish,video.upload') +
+                '&response_type=code' +
+                '&redirect_uri=' + encodeURIComponent(TIKTOK_REDIRECT_URI) +
+                '&state=' + encodeURIComponent(state);
+
+            // 팝업으로 열기 (callback이 postMessage 로 알림)
+            var popup = window.open(authUrl, 'tiktok-oauth', 'width=520,height=720,resizable=yes,scrollbars=yes');
+            if(!popup){
+                showResultModal({ kind:'warn', title:'팝업 차단됨', text:'브라우저가 팝업을 차단했습니다. 팝업 허용 후 다시 시도해주세요.', skipReauth: true });
+            }
+        };
+
+        // callback 페이지에서 보내는 메시지 수신
+        window.addEventListener('message', function(e){
+            if(e.origin !== location.origin) return;
+            if(e.data && e.data.type === 'tiktok-oauth-complete'){
+                if(e.data.success){
+                    loadSettings(); // 갱신된 settings 다시 로드 + render
+                    showResultModal({
+                        kind:'success',
+                        title:'TikTok 연동 완료',
+                        text:'TikTok 계정이 등록되었습니다.',
+                        skipReauth: true
+                    });
+                } else {
+                    showResultModal({
+                        kind:'error',
+                        title:'TikTok 연동 실패',
+                        text: e.data.error || '알 수 없는 오류',
+                        skipReauth: true
+                    });
+                }
+            }
+        });
 
         async function fetchPagesAndInstagram(userToken){
             try {

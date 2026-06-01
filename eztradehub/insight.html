@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EZ TRADE HUB 인사이트 - 중국·동남아 시장 트렌드, 채널 가이드, 진출 노하우">
+    <title>인사이트 INSIGHT | EZ TRADE HUB</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        @media (max-width:1024px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width:600px) { .blog-grid { grid-template-columns: 1fr; } }
+        .blog-card {
+            background: #fff; border: 1px solid var(--border-light); border-radius: var(--radius-lg);
+            overflow: hidden; transition: all .2s; display: flex; flex-direction: column;
+        }
+        .blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+        .blog-thumb { aspect-ratio: 16/9; background: linear-gradient(135deg, var(--primary), var(--primary-light)); display:flex; align-items:center; justify-content:center; font-size:42px; color: var(--accent); }
+        .blog-body { padding: 24px; flex: 1; display:flex; flex-direction:column; }
+        .blog-meta { display: flex; gap: 8px; font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+        .blog-cat { padding: 2px 10px; background: rgba(201,163,92,.12); color: var(--accent-dark); border-radius: var(--radius-pill); font-weight: 700; }
+        .blog-card h3 { font-size: 18px; line-height: 1.4; margin-bottom: 10px; }
+        .blog-card p { font-size: 13px; color: var(--text-secondary); line-height: 1.6; flex: 1; }
+        .blog-more { margin-top: 14px; color: var(--primary); font-weight: 700; font-size: 13px; display: inline-flex; gap: 4px; }
+        .cat-tabs { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 36px; }
+        .cat-tab { padding: 8px 18px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; color: var(--text-secondary); cursor: pointer; transition: all .15s; }
+        .cat-tab.active, .cat-tab:hover { background: var(--primary); color: var(--text-on-dark); border-color: var(--primary); }
+    </style>
+</head>
+<body>
+
+<header class="nav"><div class="container nav-inner">
+    <a href="index.html" class="nav-logo"><div class="nav-logo-mark">EZ</div><span>TRADE HUB</span></a>
+    <nav class="nav-menu">
+        <div class="nav-item"><a href="#" class="nav-link">구축 SOLUTION <span class="chev">▾</span></a><div class="nav-dropdown"><a href="solutions/homepage.html">홈페이지 구축</a><a href="solutions/shopping.html">쇼핑몰 구축</a><a href="solutions/app.html">앱 구축</a></div></div>
+        <div class="nav-item"><a href="#" class="nav-link">마케팅 MARKETING <span class="chev">▾</span></a><div class="nav-dropdown"><a href="marketing/online.html">온라인 마케팅</a><a href="marketing/influencer.html">인플루언서(왕홍)</a><a href="marketing/content.html">콘텐츠(숏폼)</a><a href="marketing/live.html">라이브 방송</a></div></div>
+        <a href="results.html" class="nav-link">성과 RESULTS</a><a href="about.html" class="nav-link">회사소개 ABOUT</a><a href="insight.html" class="nav-link active">인사이트 INSIGHT</a>
+    </nav>
+    <div class="nav-right">
+        <div class="nav-lang"><button data-lang-switch="ko" class="active">한국어</button><span>·</span><button data-lang-switch="zh">中文</button></div>
+        <a href="contact.html" class="nav-cta">상담신청 →</a>
+        <button class="nav-burger" aria-label="메뉴"><span></span><span></span><span></span></button>
+    </div>
+</div><div class="nav-mobile">
+    <div class="nav-mobile-section">구축</div><a href="solutions/homepage.html" class="sub">홈페이지</a><a href="solutions/shopping.html" class="sub">쇼핑몰</a><a href="solutions/app.html" class="sub">앱</a>
+    <div class="nav-mobile-section">마케팅</div><a href="marketing/online.html" class="sub">온라인</a><a href="marketing/influencer.html" class="sub">인플루언서</a><a href="marketing/content.html" class="sub">콘텐츠</a><a href="marketing/live.html" class="sub">라이브</a>
+    <div class="nav-mobile-section">기타</div><a href="results.html">성과</a><a href="about.html">회사소개</a><a href="insight.html">인사이트</a><a href="contact.html">상담신청 →</a>
+</div></header>
+
+<section class="hero" style="min-height:auto; padding: calc(var(--nav-height) + 80px) 0 80px;">
+    <div class="container hero-inner">
+        <div class="hero-eyebrow"><span class="dot"></span>INSIGHT · 인사이트</div>
+        <h1 class="h-display">중국·동남아 진출, <span class="accent">현장의 답</span>.</h1>
+        <p class="lead">우리가 실제 진출을 도우며 쌓은 트렌드·노하우·가이드를 매주 새롭게.</p>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="cat-tabs reveal">
+            <button class="cat-tab active">전체</button>
+            <button class="cat-tab">중국 시장</button>
+            <button class="cat-tab">동남아 시장</button>
+            <button class="cat-tab">왕홍 / KOL</button>
+            <button class="cat-tab">라이브 커머스</button>
+            <button class="cat-tab">광고법 / PIPL</button>
+            <button class="cat-tab">구축 가이드</button>
+        </div>
+        <div class="blog-grid">
+            <article class="blog-card reveal"><div class="blog-thumb">📕</div><div class="blog-body">
+                <div class="blog-meta"><span class="blog-cat">중국 시장</span><span>2026.05.30</span></div>
+                <h3>2026년 샤오홍슈 알고리즘 변화 - 키워드 SEO가 절반</h3>
+                <p>최근 6개월간 샤오홍슈 노출 알고리즘이 어떻게 변했는지, KOC 운영자가 반드시 알아야 할 5가지 핵심 변화.</p>
+                <span class="blog-more">읽기 →</span>
+            </div></article>
+            <article class="blog-card reveal"><div class="blog-thumb">🎵</div><div class="blog-body">
+                <div class="blog-meta"><span class="blog-cat">동남아 시장</span><span>2026.05.24</span></div>
+                <h3>TikTok Shop 동남아 GMV Max — 베트남 사례 분석</h3>
+                <p>VN 시장에서 TikTok Shop GMV Max가 어떻게 작동하는지, 3개 한국 브랜드의 실제 ROAS 데이터로 분석.</p>
+                <span class="blog-more">읽기 →</span>
+            </div></article>
+            <article class="blog-card reveal"><div class="blog-thumb">⭐</div><div class="blog-body">
+                <div class="blog-meta"><span class="blog-cat">왕홍 / KOL</span><span>2026.05.18</span></div>
+                <h3>KOL · KOC 믹스 황금 비율 - 1 : 10 : 50 법칙</h3>
+                <p>대형 KOL 1명 + 중형 10명 + KOC 50명 운영이 왜 가장 효율적인지, 5개 카테고리 캠페인 데이터로 증명.</p>
+                <span class="blog-more">읽기 →</span>
+            </div></article>
+            <article class="blog-card reveal"><div class="blog-thumb">🔴</div><div class="blog-body">
+                <div class="blog-meta"><span class="blog-cat">라이브 커머스</span><span>2026.05.12</span></div>
+                <h3>도우인 라이브 첫 방송, 시청자 0명에서 1만명까지</h3>
+                <p>신규 브랜드 도우인 라이브 첫 3개월. 어떤 광고·콘텐츠·시간대로 시청자를 만들어냈는지 단계별 공개.</p>
+                <span class="blog-more">읽기 →</span>
+            </div></article>
+            <article class="blog-card reveal"><div class="blog-thumb">⚖️</div><div class="blog-body">
+                <div class="blog-meta"><span class="blog-cat">광고법 / PIPL</span><span>2026.05.05</span></div>
+                <h3>중국 광고법 금지 표현 100선 - 2026 업데이트</h3>
+                <p>"最", "第一", "国家级" 등 절대 표현 외에도 자주 적발되는 표현들. PIPL 개인정보 동의 양식 샘플 포함.</p>
+                <span class="blog-more">읽기 →</span>
+            </div></article>
+            <article class="blog-card reveal"><div class="blog-thumb">🛒</div><div class="blog-body">
+                <div class="blog-meta"><span class="blog-cat">구축 가이드</span><span>2026.04.28</span></div>
+                <h3>ICP 비안 완벽 가이드 - 신청부터 승인까지 30일</h3>
+                <p>한국 법인이 중국 호스팅에 ICP 비안을 신청할 때 필요한 서류, 자주 거절되는 사유, 시간 단축 노하우.</p>
+                <span class="blog-more">읽기 →</span>
+            </div></article>
+            <article class="blog-card reveal"><div class="blog-thumb">💚</div><div class="blog-body">
+                <div class="blog-meta"><span class="blog-cat">중국 시장</span><span>2026.04.20</span></div>
+                <h3>위챗 미니프로그램 vs 네이티브 앱 - 무엇을 먼저?</h3>
+                <p>중국 진출 신규 브랜드가 첫 디지털 자산으로 무엇을 만들어야 할까? 비용·운영·전환률을 모두 비교.</p>
+                <span class="blog-more">읽기 →</span>
+            </div></article>
+            <article class="blog-card reveal"><div class="blog-thumb">📊</div><div class="blog-body">
+                <div class="blog-meta"><span class="blog-cat">동남아 시장</span><span>2026.04.14</span></div>
+                <h3>Shopee vs Lazada - 한국 브랜드의 6개국 매출 분석</h3>
+                <p>같은 브랜드를 두 플랫폼에 동시 입점한 결과. 카테고리·국가별 어디가 유리한지 실 데이터 공개.</p>
+                <span class="blog-more">읽기 →</span>
+            </div></article>
+            <article class="blog-card reveal"><div class="blog-thumb">🎬</div><div class="blog-body">
+                <div class="blog-meta"><span class="blog-cat">왕홍 / KOL</span><span>2026.04.06</span></div>
+                <h3>샤오홍슈 KOC 50명 동시 운영 — 실전 운영 매뉴얼</h3>
+                <p>KOC 다량 운영의 핵심은 일정·검수·정산 자동화. 우리가 쓰는 운영 도구·템플릿·체크리스트 공유.</p>
+                <span class="blog-more">읽기 →</span>
+            </div></article>
+        </div>
+        <div style="text-align:center; margin-top:48px;">
+            <button class="btn btn-outline btn-lg">더 보기</button>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section"><div class="inner reveal">
+    <h2 class="h-1">최신 인사이트, <span style="color:var(--accent);">월 1회 메일</span>로.</h2>
+    <p class="lead">중국·동남아 진출 핵심 트렌드만 큐레이션해서 보내드립니다. 광고 X.</p>
+    <form style="display:flex; gap:8px; max-width:480px; margin: 24px auto 0;" onsubmit="alert('구독 신청이 접수되었습니다.'); return false;">
+        <input type="email" required placeholder="email@company.com" style="flex:1; padding:14px 18px; border-radius:var(--radius-md); border:0; font-size:14px;">
+        <button type="submit" class="btn btn-primary">구독하기</button>
+    </form>
+</div></section>
+
+<footer><div class="container"><div class="footer-grid">
+    <div class="footer-brand"><div class="nav-logo"><div class="nav-logo-mark">EZ</div><span>TRADE HUB</span></div><p>중국·동남아 진출 기업의 BUILD · MARKET · SELL 통합 파트너.</p><div class="footer-contact"><div><strong>운영사</strong> 山东易吉企业管理有限公司</div><div><strong>이메일</strong> hello@eztradehub.com</div></div></div>
+    <div><h5>SOLUTION</h5><ul><li><a href="solutions/homepage.html">홈페이지</a></li><li><a href="solutions/shopping.html">쇼핑몰</a></li><li><a href="solutions/app.html">앱</a></li></ul></div>
+    <div><h5>MARKETING</h5><ul><li><a href="marketing/online.html">온라인</a></li><li><a href="marketing/influencer.html">인플루언서</a></li><li><a href="marketing/content.html">콘텐츠</a></li><li><a href="marketing/live.html">라이브</a></li></ul></div>
+    <div><h5>COMPANY</h5><ul><li><a href="about.html">회사소개</a></li><li><a href="results.html">성과</a></li><li><a href="insight.html">인사이트</a></li><li><a href="contact.html">상담</a></li></ul></div>
+</div><div class="footer-bottom"><div>© 2026 EZ TRADE HUB. All rights reserved.</div><div class="footer-social"><a href="#">💬</a><a href="#">📕</a><a href="#">🎵</a><a href="#">in</a></div></div></div></footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
