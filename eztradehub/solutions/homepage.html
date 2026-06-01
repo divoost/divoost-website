@@ -1,20 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="중국·동남아에서 빠르게 작동하는 글로벌 기업 홈페이지 구축 - ICP 비안, 위챗 연동, 바이두 SEO">
-    <title>홈페이지 구축 | EZ TRADE HUB</title>
+    <meta name="description" content="China · SEA optimized website build — ICP filing, WeChat integration, Baidu SEO included">
+    <title>Website Build | EZ TRADE HUB</title>
     <link rel="stylesheet" href="../css/main.css">
     <style>
-        /* 상세 프로세스 (dialog circle 스타일) */
-        .proc-detail-step {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 64px;
-            align-items: center;
-            margin-bottom: 96px;
-        }
+        .proc-detail-step { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-bottom: 96px; }
         .proc-detail-step:last-child { margin-bottom: 0; }
         .proc-detail-step.reverse { direction: rtl; }
         .proc-detail-step.reverse > * { direction: ltr; }
@@ -23,80 +16,23 @@
             .proc-detail-step.reverse > * { direction: ltr; }
         }
         .proc-text { padding: 0 24px; }
-        .proc-text-icon {
-            width: 64px; height: 64px;
-            border: 1.5px solid var(--border);
-            border-radius: 14px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 28px; color: var(--primary-dark);
-            margin-bottom: 24px;
-        }
-        .proc-text .step-tag {
-            color: var(--accent); font-weight: 800;
-            font-size: 13px; letter-spacing: .15em; margin-bottom: 6px;
-            display: block;
-        }
+        .proc-text-icon { width: 64px; height: 64px; border: 1.5px solid var(--border); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--primary-dark); margin-bottom: 24px; }
+        .proc-text .step-tag { color: var(--accent); font-weight: 800; font-size: 13px; letter-spacing: .15em; margin-bottom: 6px; display: block; }
         .proc-text.violet .step-tag { color: var(--primary-dark); }
-        .proc-text .step-title {
-            font-family: var(--font-heading);
-            font-size: 30px; font-weight: 800;
-            line-height: 1.2; color: var(--text); margin-bottom: 18px;
-        }
-        .proc-text .step-divider {
-            width: 60%; height: 1px; background: var(--border); margin: 0 0 18px;
-        }
-        .proc-text .step-desc {
-            color: var(--text-secondary); line-height: 1.7; font-size: 15px;
-            margin-bottom: 24px; white-space: pre-line;
-        }
-        .proc-text .step-link {
-            display: inline-flex; align-items: center; gap: 10px;
-            padding: 12px 22px;
-            border: 1.5px solid var(--border);
-            border-radius: var(--radius-pill);
-            font-weight: 700; font-size: 13px;
-            color: var(--text);
-            transition: all .15s;
-        }
+        .proc-text .step-title { font-family: var(--font-heading); font-size: 30px; font-weight: 800; line-height: 1.2; color: var(--text); margin-bottom: 18px; }
+        .proc-text .step-divider { width: 60%; height: 1px; background: var(--border); margin: 0 0 18px; }
+        .proc-text .step-desc { color: var(--text-secondary); line-height: 1.7; font-size: 15px; margin-bottom: 24px; white-space: pre-line; }
+        .proc-text .step-link { display: inline-flex; align-items: center; gap: 10px; padding: 12px 22px; border: 1.5px solid var(--border); border-radius: var(--radius-pill); font-weight: 700; font-size: 13px; color: var(--text); transition: all .15s; }
         .proc-text .step-link:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
         .proc-text .step-link .arrow { transition: transform .15s; }
         .proc-text .step-link:hover .arrow { transform: translateX(4px); }
-
-        .proc-circle {
-            position: relative;
-            aspect-ratio: 1;
-            max-width: 480px;
-            margin: 0 auto;
-        }
-        .proc-circle::before {
-            content: ""; position: absolute; inset: 0;
-            border-radius: 50%;
-            background: radial-gradient(circle at 40% 40%, var(--c-light), var(--c-main));
-            box-shadow: 0 30px 80px var(--c-shadow);
-        }
+        .proc-circle { position: relative; aspect-ratio: 1; max-width: 480px; margin: 0 auto; }
+        .proc-circle::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle at 40% 40%, var(--c-light), var(--c-main)); box-shadow: 0 30px 80px var(--c-shadow); }
         .proc-circle.coral { --c-main: #EF4444; --c-light: #F87171; --c-shadow: rgba(239,68,68,.30); }
         .proc-circle.violet { --c-main: #3B82F6; --c-light: #60A5FA; --c-shadow: rgba(59,130,246,.30); }
-        .proc-circle .ring {
-            position: absolute; inset: -8%;
-            border-radius: 50%;
-            border: 1px dashed var(--c-main);
-            opacity: .35;
-        }
-        .proc-circle .ring-2 {
-            position: absolute; inset: -18%;
-            border-radius: 50%;
-            border: 1px solid var(--c-main);
-            opacity: .12;
-        }
-        .proc-card {
-            position: absolute;
-            background: #fff;
-            border-radius: var(--radius-md);
-            padding: 16px 18px;
-            box-shadow: 0 18px 40px rgba(15,23,42,.10);
-            min-width: 280px;
-            max-width: 90%;
-        }
+        .proc-circle .ring { position: absolute; inset: -8%; border-radius: 50%; border: 1px dashed var(--c-main); opacity: .35; }
+        .proc-circle .ring-2 { position: absolute; inset: -18%; border-radius: 50%; border: 1px solid var(--c-main); opacity: .12; }
+        .proc-card { position: absolute; background: #fff; border-radius: var(--radius-md); padding: 16px 18px; box-shadow: 0 18px 40px rgba(15,23,42,.10); min-width: 280px; max-width: 90%; }
         .proc-card.top { top: 18%; left: -10%; }
         .proc-card.bottom { bottom: 16%; right: -10%; }
         @media (max-width: 700px) {
@@ -105,41 +41,17 @@
             .proc-circle { aspect-ratio: auto; }
             .proc-circle .ring, .proc-circle .ring-2 { display: none; }
         }
-        .proc-card .head {
-            display: flex; align-items: center; gap: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border-light);
-            margin-bottom: 10px;
-        }
-        .proc-card .head .avatar {
-            width: 32px; height: 32px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 14px; color: #fff;
-            flex-shrink: 0;
-        }
+        .proc-card .head { display: flex; align-items: center; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border-light); margin-bottom: 10px; }
+        .proc-card .head .avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #fff; flex-shrink: 0; }
         .proc-card .head .avatar.customer { background: var(--accent); }
         .proc-card .head .avatar.us { background: var(--primary-dark); font-weight: 800; }
         .proc-card .head .name { font-weight: 800; font-size: 13px; flex: 1; }
         .proc-card .head .role { font-size: 11px; color: var(--primary-dark); font-weight: 700; }
         .proc-card .title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.4; }
         .proc-card .body { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
-
-        /* Work/Outputs 배지 */
         .proc-meta { display: grid; gap: 10px; margin-bottom: 22px; }
-        .proc-meta-row {
-            display: flex; gap: 12px; align-items: flex-start;
-            background: var(--surface);
-            border-radius: var(--radius-md);
-            padding: 12px 14px;
-        }
-        .proc-meta-label {
-            display: inline-flex; align-items: center; justify-content: center;
-            min-width: 64px; padding: 4px 10px;
-            background: #10B981; color: #fff;
-            border-radius: var(--radius-pill);
-            font-size: 11px; font-weight: 800; letter-spacing: .05em;
-            flex-shrink: 0;
-        }
+        .proc-meta-row { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border-radius: var(--radius-md); padding: 12px 14px; }
+        .proc-meta-label { display: inline-flex; align-items: center; justify-content: center; min-width: 64px; padding: 4px 10px; background: #10B981; color: #fff; border-radius: var(--radius-pill); font-size: 11px; font-weight: 800; letter-spacing: .05em; flex-shrink: 0; }
         .proc-meta-label.outputs { background: #6366F1; }
         .proc-meta-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; padding-top: 4px; }
     </style>
@@ -150,45 +62,38 @@
     <div class="container nav-inner">
         <a href="../index.html" class="nav-logo"><div class="nav-logo-mark">EZ</div><span>TRADE HUB</span></a>
         <nav class="nav-menu">
-            <div class="nav-item"><a href="#" class="nav-link">구축 SOLUTION <span class="chev">▾</span></a><div class="nav-dropdown">
-                <a href="homepage.html">홈페이지 구축</a>
-                <a href="shopping.html">쇼핑몰 구축</a>
-                <a href="app.html">앱 구축</a>
+            <div class="nav-item"><a href="#" class="nav-link"><span data-en="Solutions" data-zh="解决方案">Solutions</span> <span class="chev">▾</span></a><div class="nav-dropdown">
+                <a href="homepage.html" data-en="Website Build" data-zh="网站建设">Website Build</a><a href="shopping.html" data-en="E-Commerce Build" data-zh="商城搭建">E-Commerce Build</a><a href="app.html" data-en="App Build" data-zh="APP开发">App Build</a>
             </div></div>
-            <div class="nav-item"><a href="#" class="nav-link">마케팅 MARKETING <span class="chev">▾</span></a><div class="nav-dropdown">
-                <a href="../marketing/online.html">온라인 마케팅</a>
-                <a href="../marketing/influencer.html">인플루언서(왕홍)</a>
-                <a href="../marketing/content.html">콘텐츠(숏폼)</a>
-                <a href="../marketing/live.html">라이브 방송</a>
+            <div class="nav-item"><a href="#" class="nav-link"><span data-en="Marketing" data-zh="营销服务">Marketing</span> <span class="chev">▾</span></a><div class="nav-dropdown">
+                <a href="../marketing/online.html" data-en="Online Marketing" data-zh="在线营销">Online Marketing</a><a href="../marketing/influencer.html" data-en="Influencer (KOL)" data-zh="网红营销">Influencer (KOL)</a><a href="../marketing/content.html" data-en="Content" data-zh="短视频内容">Content</a><a href="../marketing/live.html" data-en="Live Commerce" data-zh="直播带货">Live Commerce</a>
             </div></div>
-            <a href="../results.html" class="nav-link">성과 RESULTS</a>
-            <a href="../about.html" class="nav-link">회사소개 ABOUT</a>
-            
+            <a href="../results.html" class="nav-link" data-en="Results" data-zh="案例成果">Results</a><a href="../about.html" class="nav-link" data-en="About" data-zh="关于我们">About</a>
         </nav>
         <div class="nav-right">
-            <div class="nav-lang"><button data-lang-switch="ko" class="active">한국어</button><span>·</span><button data-lang-switch="zh">中文</button></div>
-            <a href="../contact.html" class="nav-cta">상담신청 →</a>
-            <button class="nav-burger" aria-label="메뉴"><span></span><span></span><span></span></button>
+            <div class="nav-lang"><button data-lang-switch="en" class="active">EN</button><span>·</span><button data-lang-switch="zh">中文</button></div>
+            <a href="../contact.html" class="nav-cta" data-en="Contact →" data-zh="联系我们 →">Contact →</a>
+            <button class="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
         </div>
     </div>
     <div class="nav-mobile">
-        <div class="nav-mobile-section">구축</div>
-        <a href="homepage.html" class="sub">홈페이지 구축</a><a href="shopping.html" class="sub">쇼핑몰 구축</a><a href="app.html" class="sub">앱 구축</a>
-        <div class="nav-mobile-section">마케팅</div>
-        <a href="../marketing/online.html" class="sub">온라인</a><a href="../marketing/influencer.html" class="sub">인플루언서</a><a href="../marketing/content.html" class="sub">콘텐츠</a><a href="../marketing/live.html" class="sub">라이브</a>
-        <div class="nav-mobile-section">기타</div>
-        <a href="../results.html">성과</a><a href="../about.html">회사소개</a><a href="../contact.html">상담신청 →</a>
+        <div class="nav-mobile-section" data-en="Solutions" data-zh="解决方案">Solutions</div>
+        <a href="homepage.html" class="sub" data-en="Website" data-zh="网站">Website</a><a href="shopping.html" class="sub" data-en="E-Commerce" data-zh="商城">E-Commerce</a><a href="app.html" class="sub" data-en="App" data-zh="APP">App</a>
+        <div class="nav-mobile-section" data-en="Marketing" data-zh="营销服务">Marketing</div>
+        <a href="../marketing/online.html" class="sub" data-en="Online" data-zh="在线">Online</a><a href="../marketing/influencer.html" class="sub" data-en="Influencer" data-zh="网红">Influencer</a><a href="../marketing/content.html" class="sub" data-en="Content" data-zh="内容">Content</a><a href="../marketing/live.html" class="sub" data-en="Live" data-zh="直播">Live</a>
+        <div class="nav-mobile-section" data-en="Company" data-zh="公司">Company</div>
+        <a href="../results.html" data-en="Results" data-zh="案例成果">Results</a><a href="../about.html" data-en="About" data-zh="关于我们">About</a><a href="../contact.html" data-en="Contact →" data-zh="联系我们 →">Contact →</a>
     </div>
 </header>
 
 <section class="hero" style="min-height:auto; padding: calc(var(--nav-height) + 80px) 0 80px;">
     <div class="container hero-inner">
-        <div class="hero-eyebrow"><span class="dot"></span>BUILD · 홈페이지 구축</div>
-        <h1 class="h-display">중국에서도 <span class="accent">3초 안에</span> 열리는<br>글로벌 기업 홈페이지.</h1>
-        <p class="lead">ICP 비안·중국 호스팅·위챗 연동·바이두 SEO까지 — 중국·동남아 진출 기업이 필요한 모든 것을 한 번에.</p>
+        <div class="hero-eyebrow"><span class="dot"></span><span data-en="BUILD · WEBSITE" data-zh="搭建 · 网站">BUILD · WEBSITE</span></div>
+        <h1 class="h-display" data-en="A global corporate website<br>that loads in <span class='accent'>under 3 seconds</span><br>even in China." data-zh="即使在中国境内<br>也能在<span class='accent'>3 秒内加载</span>的<br>全球企业网站。">A global corporate website<br>that loads in <span class="accent">under 3 seconds</span><br>even in China.</h1>
+        <p class="lead" data-en="ICP filing · China hosting · WeChat integration · Baidu SEO — everything brands need for China & SEA expansion, in one delivery." data-zh="ICP 备案 · 中国托管 · 微信对接 · 百度 SEO — 进入中国与东南亚所需一站搞定。">ICP filing · China hosting · WeChat integration · Baidu SEO — everything brands need for China & SEA expansion, in one delivery.</p>
         <div class="hero-cta">
-            <a href="../contact.html" class="btn btn-primary btn-lg btn-arrow">무료 견적 받기</a>
-            <a href="#compare" class="btn btn-outline-light btn-lg">일반 외주와 비교</a>
+            <a href="../contact.html" class="btn btn-primary btn-lg btn-arrow" data-en="Get Free Quote" data-zh="免费报价">Get Free Quote</a>
+            <a href="#compare" class="btn btn-outline-light btn-lg" data-en="Compare vs Agencies" data-zh="对比普通外包">Compare vs Agencies</a>
         </div>
     </div>
 </section>
@@ -196,13 +101,13 @@
 <section class="section bg-surface">
     <div class="container">
         <div class="section-header reveal">
-            <div class="eyebrow">WHO NEEDS THIS</div>
-            <h2 class="h-1">어떤 기업에게 필요한가요?</h2>
+            <div class="eyebrow" data-en="WHO NEEDS THIS" data-zh="适用对象">WHO NEEDS THIS</div>
+            <h2 class="h-1" data-en="Who is this for?" data-zh="适合哪些企业？">Who is this for?</h2>
         </div>
         <div class="service-grid cols-3">
-            <article class="service-card reveal"><div class="icon">🌏</div><h3 class="h-4">중국 및 동남아 진출 신규 기업</h3><p>중국·동남아 시장 첫 진출 시 ICP 비안·결제·접속속도 등 로컬과 다른 인프라가 필요한 기업.</p></article>
-            <article class="service-card reveal"><div class="icon">🐢</div><h3 class="h-4">기존 사이트가 느린 기업</h3><p>중국 내 접속 속도가 5초 이상이거나 일부 페이지가 차단되는 사이트.</p></article>
-            <article class="service-card reveal"><div class="icon">🔄</div><h3 class="h-4">리뉴얼·다국어 확장</h3><p>기존 사이트를 중국어(간체)·동남아 다국어로 확장하려는 기업.</p></article>
+            <article class="service-card reveal"><div class="icon">🌏</div><h3 class="h-4" data-en="New China / SEA entrants" data-zh="新进入中国 / 东南亚的企业">New China / SEA entrants</h3><p data-en="Brands entering China & SEA for the first time — need infrastructure (ICP, payments, speed) different from home market." data-zh="首次进入中国与东南亚市场的品牌 — 需要与本国市场不同的基础设施（ICP、支付、速度）。">Brands entering China & SEA for the first time — need infrastructure (ICP, payments, speed) different from home market.</p></article>
+            <article class="service-card reveal"><div class="icon">🐢</div><h3 class="h-4" data-en="Slow existing sites" data-zh="现有网站速度慢">Slow existing sites</h3><p data-en="Sites taking 5+ seconds to load in China, or with some pages blocked." data-zh="在中国境内加载超过 5 秒，或部分页面被屏蔽的网站。">Sites taking 5+ seconds to load in China, or with some pages blocked.</p></article>
+            <article class="service-card reveal"><div class="icon">🔄</div><h3 class="h-4" data-en="Renewal · Multilingual expansion" data-zh="改版 · 多语言扩展">Renewal · Multilingual expansion</h3><p data-en="Brands extending existing sites into Simplified Chinese + SEA languages." data-zh="希望将现有网站扩展为中文简体 + 东南亚多语种的品牌。">Brands extending existing sites into Simplified Chinese + SEA languages.</p></article>
         </div>
     </div>
 </section>
@@ -210,14 +115,14 @@
 <section class="section">
     <div class="container">
         <div class="section-header reveal">
-            <div class="eyebrow">PROVIDED SCOPE</div>
-            <h2 class="h-1">기획부터 운영까지 <span class="text-accent">한 팀이 책임</span>.</h2>
+            <div class="eyebrow" data-en="PROVIDED SCOPE" data-zh="服务范围">PROVIDED SCOPE</div>
+            <h2 class="h-1" data-en="From planning to operations —<br><span class='text-accent'>one team owns it all</span>." data-zh="从策划到运营 —<br><span class='text-accent'>一个团队全程负责</span>。">From planning to operations —<br><span class="text-accent">one team owns it all</span>.</h2>
         </div>
         <div class="service-grid cols-4">
-            <article class="service-card reveal"><div class="icon">🎨</div><h3 class="h-4">기획·디자인</h3><p>IA·와이어프레임·UX 시나리오·메인 디자인 시안 (글로벌 디자이너 협업)</p></article>
-            <article class="service-card reveal"><div class="icon">⚙️</div><h3 class="h-4">퍼블·개발</h3><p>반응형 HTML/CSS/JS · 다국어 i18n · CMS · 폼·뉴스레터 연동</p></article>
-            <article class="service-card reveal"><div class="icon">☁️</div><h3 class="h-4">중국 호스팅·ICP 비안</h3><p>중국·홍콩 리전 호스팅, ICP 비안(備案) 신청 대행, 글로벌 CDN 구성</p></article>
-            <article class="service-card reveal"><div class="icon">🔧</div><h3 class="h-4">유지보수</h3><p>월 정기 점검·콘텐츠 업데이트·보안 패치·성과 리포트 (옵션 패키지)</p></article>
+            <article class="service-card reveal"><div class="icon">🎨</div><h3 class="h-4" data-en="Planning · Design" data-zh="策划 · 设计">Planning · Design</h3><p data-en="IA · wireframes · UX scenarios · main design mockups (global designer collaboration)" data-zh="信息架构 · 线框图 · UX 场景 · 主页设计稿（全球设计师协作）">IA · wireframes · UX scenarios · main design mockups (global designer collaboration)</p></article>
+            <article class="service-card reveal"><div class="icon">⚙️</div><h3 class="h-4" data-en="Develop · Frontend" data-zh="开发 · 前端">Develop · Frontend</h3><p data-en="Responsive HTML/CSS/JS · i18n · CMS · forms · newsletter integration" data-zh="响应式 HTML/CSS/JS · 多语言 · CMS · 表单 · 邮件订阅集成">Responsive HTML/CSS/JS · i18n · CMS · forms · newsletter integration</p></article>
+            <article class="service-card reveal"><div class="icon">☁️</div><h3 class="h-4" data-en="China Hosting · ICP Filing" data-zh="中国托管 · ICP 备案">China Hosting · ICP Filing</h3><p data-en="China / Hong Kong region hosting · ICP filing service · global CDN setup" data-zh="中国 / 香港区域托管 · ICP 备案代办 · 全球 CDN 配置">China / Hong Kong region hosting · ICP filing service · global CDN setup</p></article>
+            <article class="service-card reveal"><div class="icon">🔧</div><h3 class="h-4" data-en="Maintenance" data-zh="维护">Maintenance</h3><p data-en="Monthly checkup · content updates · security patches · performance reports (optional package)" data-zh="月度检查 · 内容更新 · 安全补丁 · 业绩报告（可选套餐）">Monthly checkup · content updates · security patches · performance reports (optional package)</p></article>
         </div>
     </div>
 </section>
@@ -225,22 +130,22 @@
 <section id="compare" class="section bg-surface">
     <div class="container">
         <div class="section-header reveal">
-            <div class="eyebrow">COMPARISON</div>
-            <h2 class="h-1">일반 외주 vs <span class="text-accent">EZ TRADE HUB</span></h2>
+            <div class="eyebrow" data-en="COMPARISON" data-zh="对比">COMPARISON</div>
+            <h2 class="h-1" data-en="Generic Agency vs <span class='text-accent'>EZ TRADE HUB</span>" data-zh="普通外包 vs <span class='text-accent'>EZ TRADE HUB</span>">Generic Agency vs EZ TRADE HUB</h2>
         </div>
         <div class="reveal" style="overflow-x:auto;">
             <table class="compare-table">
                 <thead>
-                    <tr><th style="width:30%;">항목</th><th>일반 외주 제작사</th><th class="us">EZ TRADE HUB</th></tr>
+                    <tr><th style="width:30%;" data-en="Item" data-zh="项目">Item</th><th data-en="Generic Agency" data-zh="普通外包">Generic Agency</th><th class="us">EZ TRADE HUB</th></tr>
                 </thead>
                 <tbody>
-                    <tr><td class="row-label">중국 내 접속 속도</td><td class="them">고려하지 않음 · 5~15초 로딩</td><td class="us">중국·홍콩 CDN · 3초 이내 보장</td></tr>
-                    <tr><td class="row-label">ICP 비안(備案)</td><td class="them">"알아서 하세요" · 미지원</td><td class="us">신청 대행 (필요 서류 안내·관청 제출)</td></tr>
-                    <tr><td class="row-label">차단 외부 리소스</td><td class="them">구글 폰트·유튜브 그대로 사용 → 중국 차단</td><td class="us">중국 호환 대체 (자체 호스팅·중국 CDN)</td></tr>
-                    <tr><td class="row-label">위챗 공식계정 연동</td><td class="them">미지원</td><td class="us">QR·공유·미니프로그램 연동 기본 제공</td></tr>
-                    <tr><td class="row-label">중국어 카피</td><td class="them">기계 직역 → 어색한 표현</td><td class="us">현지 카피라이터 별도 작업 · 광고법 검수</td></tr>
-                    <tr><td class="row-label">바이두 SEO</td><td class="them">구글 SEO만 적용</td><td class="us">바이두 메타·사이트맵·구조화 데이터</td></tr>
-                    <tr><td class="row-label">오픈 후 운영</td><td class="them">납품 후 끝</td><td class="us">월 운영 / 마케팅 연계 가능</td></tr>
+                    <tr><td class="row-label" data-en="China loading speed" data-zh="中国加载速度">China loading speed</td><td class="them" data-en="Not considered · 5~15s load" data-zh="未考虑 · 5~15秒加载">Not considered · 5~15s load</td><td class="us" data-en="China / HK CDN · sub-3s guaranteed" data-zh="中国 / 香港 CDN · 保证 3 秒内">China / HK CDN · sub-3s guaranteed</td></tr>
+                    <tr><td class="row-label" data-en="ICP Filing" data-zh="ICP 备案">ICP Filing</td><td class="them" data-en="\"Handle it yourself\" · not supported" data-zh="\"自己处理\" · 不支持">"Handle it yourself" · not supported</td><td class="us" data-en="Filing service (documents · government submission)" data-zh="备案代办（资料 · 政府提交）">Filing service (documents · government submission)</td></tr>
+                    <tr><td class="row-label" data-en="Blocked external assets" data-zh="被屏蔽的外部资源">Blocked external assets</td><td class="them" data-en="Google Fonts · YouTube as-is → blocked in China" data-zh="Google Fonts · YouTube 直接使用 → 中国屏蔽">Google Fonts · YouTube as-is → blocked in China</td><td class="us" data-en="China-compatible substitutes (self-hosted · China CDN)" data-zh="兼容中国的替代方案（自托管 · 中国 CDN）">China-compatible substitutes (self-hosted · China CDN)</td></tr>
+                    <tr><td class="row-label" data-en="WeChat Official integration" data-zh="微信公众号对接">WeChat Official integration</td><td class="them" data-en="Not supported" data-zh="不支持">Not supported</td><td class="us" data-en="QR · sharing · Mini Program integration default" data-zh="QR · 分享 · 小程序对接 默认提供">QR · sharing · Mini Program integration default</td></tr>
+                    <tr><td class="row-label" data-en="Chinese copy" data-zh="中文文案">Chinese copy</td><td class="them" data-en="Machine translation → awkward" data-zh="机器翻译 → 表达生硬">Machine translation → awkward</td><td class="us" data-en="Local copywriter dedicated · ad-law review" data-zh="本土文案专人撰写 · 广告法审核">Local copywriter dedicated · ad-law review</td></tr>
+                    <tr><td class="row-label" data-en="Baidu SEO" data-zh="百度 SEO">Baidu SEO</td><td class="them" data-en="Google SEO only" data-zh="仅 Google SEO">Google SEO only</td><td class="us" data-en="Baidu meta · sitemap · structured data" data-zh="百度 meta · sitemap · 结构化数据">Baidu meta · sitemap · structured data</td></tr>
+                    <tr><td class="row-label" data-en="Post-launch" data-zh="上线之后">Post-launch</td><td class="them" data-en="Ends at delivery" data-zh="交付即结束">Ends at delivery</td><td class="us" data-en="Monthly operations · marketing integration available" data-zh="月度运营 · 营销联动可选">Monthly operations · marketing integration available</td></tr>
                 </tbody>
             </table>
         </div>
@@ -250,16 +155,16 @@
 <section class="section">
     <div class="container">
         <div class="section-header reveal">
-            <div class="eyebrow">CHINA-SPECIFIC</div>
-            <h2 class="h-1">중국 특화 <span class="text-accent">필수 요소</span> 7가지.</h2>
+            <div class="eyebrow" data-en="CHINA-SPECIFIC" data-zh="中国特定">CHINA-SPECIFIC</div>
+            <h2 class="h-1" data-en="China-specific <span class='text-accent'>7 essentials</span>." data-zh="中国特定<span class='text-accent'>7 项必备</span>。">China-specific 7 essentials.</h2>
         </div>
         <div class="service-grid cols-3">
-            <article class="service-card reveal"><div class="icon">🚀</div><h3 class="h-4">중국 접속 속도</h3><p>중국/홍콩 리전 또는 글로벌 CDN으로 3초 이내 로딩 보장.</p></article>
-            <article class="service-card reveal"><div class="icon">📝</div><h3 class="h-4">ICP 비안 대행</h3><p>중국 서버 사용 시 필수인 비안(備案) 신청 절차 안내·대행.</p></article>
-            <article class="service-card reveal"><div class="icon">💬</div><h3 class="h-4">위챗 연동</h3><p>공식계정 QR, 위챗 공유 메타태그, 미니프로그램 호환.</p></article>
-            <article class="service-card reveal"><div class="icon">🚫</div><h3 class="h-4">차단 리소스 제거</h3><p>구글 폰트·YouTube·Facebook SDK 등 차단 자원 미사용.</p></article>
-            <article class="service-card reveal"><div class="icon">🔍</div><h3 class="h-4">바이두 SEO</h3><p>바이두 검색 등록·메타·사이트맵·중국어 키워드 최적화.</p></article>
-            <article class="service-card reveal"><div class="icon">📜</div><h3 class="h-4">광고법 컴플라이언스</h3><p>중국 광고법상 절대 표현(最·第一·国家级) 자동 검수.</p></article>
+            <article class="service-card reveal"><div class="icon">🚀</div><h3 class="h-4" data-en="China loading speed" data-zh="中国加载速度">China loading speed</h3><p data-en="Sub-3s loading via China/HK region or global CDN guaranteed." data-zh="通过中国 / 香港区域或全球 CDN 保证 3 秒内加载。">Sub-3s loading via China/HK region or global CDN guaranteed.</p></article>
+            <article class="service-card reveal"><div class="icon">📝</div><h3 class="h-4" data-en="ICP Filing Service" data-zh="ICP 备案代办">ICP Filing Service</h3><p data-en="Required for China servers — we guide and handle the filing process." data-zh="使用中国服务器必备 — 我们指导并代办备案流程。">Required for China servers — we guide and handle the filing process.</p></article>
+            <article class="service-card reveal"><div class="icon">💬</div><h3 class="h-4" data-en="WeChat Integration" data-zh="微信对接">WeChat Integration</h3><p data-en="Official Account QR, WeChat sharing meta tags, Mini Program compatibility." data-zh="公众号 QR、微信分享元标签、小程序兼容。">Official Account QR, WeChat sharing meta tags, Mini Program compatibility.</p></article>
+            <article class="service-card reveal"><div class="icon">🚫</div><h3 class="h-4" data-en="Blocked Asset Removal" data-zh="屏蔽资源移除">Blocked Asset Removal</h3><p data-en="No Google Fonts, YouTube, Facebook SDK, or other blocked resources." data-zh="不使用 Google Fonts、YouTube、Facebook SDK 等被屏蔽资源。">No Google Fonts, YouTube, Facebook SDK, or other blocked resources.</p></article>
+            <article class="service-card reveal"><div class="icon">🔍</div><h3 class="h-4" data-en="Baidu SEO" data-zh="百度 SEO">Baidu SEO</h3><p data-en="Baidu search registration · meta · sitemap · Chinese keyword optimization." data-zh="百度搜索登记 · meta · sitemap · 中文关键词优化。">Baidu search registration · meta · sitemap · Chinese keyword optimization.</p></article>
+            <article class="service-card reveal"><div class="icon">📜</div><h3 class="h-4" data-en="Ad-Law Compliance" data-zh="广告法合规">Ad-Law Compliance</h3><p data-en="Auto-check of China ad-law banned absolute claims (最 · 第一 · 国家级 etc.)." data-zh="自动检测中国广告法禁用的绝对化表述（最 · 第一 · 国家级 等）。">Auto-check of China ad-law banned absolute claims (最 · 第一 · 国家级 etc.).</p></article>
         </div>
     </div>
 </section>
@@ -267,17 +172,17 @@
 <section class="section bg-surface">
     <div class="container">
         <div class="section-header reveal">
-            <div class="eyebrow">PROCESS</div>
-            <h2 class="h-1">투명한 <span class="text-accent">주 단위 진행</span>.</h2>
+            <div class="eyebrow" data-en="PROCESS" data-zh="流程">PROCESS</div>
+            <h2 class="h-1" data-en="Transparent <span class='text-accent'>weekly progress</span>." data-zh="透明的<span class='text-accent'>周进度</span>。">Transparent weekly progress.</h2>
         </div>
         <div class="process-timeline">
-            <div class="process-step reveal"><div class="step-num">STEP 01</div><h4>상담·견적</h4><p>전화·방문상담</p></div>
-            <div class="process-step reveal"><div class="step-num">STEP 02</div><h4>준비·기획</h4><p>요구사항·자료</p></div>
-            <div class="process-step reveal"><div class="step-num">STEP 03</div><h4>디자인</h4><p>메인·서브 시안</p></div>
-            <div class="process-step reveal"><div class="step-num">STEP 04</div><h4>퍼블리싱</h4><p>반응형·다국어</p></div>
-            <div class="process-step reveal"><div class="step-num">STEP 05</div><h4>프로그래밍</h4><p>CMS·기능 구현</p></div>
-            <div class="process-step reveal"><div class="step-num">STEP 06</div><h4>테스트·오픈</h4><p>비안·바이두</p></div>
-            <div class="process-step reveal"><div class="step-num">STEP 07</div><h4>유지보수</h4><p>3년 무상 지원</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 01</div><h4 data-en="Consult · Quote" data-zh="咨询 · 报价">Consult · Quote</h4><p data-en="Call & video consultation" data-zh="电话与视频咨询">Call & video consultation</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 02</div><h4 data-en="Prep · Planning" data-zh="准备 · 策划">Prep · Planning</h4><p data-en="Requirements · assets" data-zh="需求 · 资料">Requirements · assets</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 03</div><h4 data-en="Design" data-zh="设计">Design</h4><p data-en="Main / sub mockups" data-zh="主页 / 子页设计稿">Main / sub mockups</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 04</div><h4 data-en="Publishing" data-zh="前端制作">Publishing</h4><p data-en="Responsive · multilingual" data-zh="响应式 · 多语言">Responsive · multilingual</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 05</div><h4 data-en="Programming" data-zh="编程">Programming</h4><p data-en="CMS · feature build" data-zh="CMS · 功能实现">CMS · feature build</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 06</div><h4 data-en="Test · Launch" data-zh="测试 · 上线">Test · Launch</h4><p data-en="ICP · Baidu" data-zh="ICP · 百度">ICP · Baidu</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 07</div><h4 data-en="Maintenance" data-zh="维护">Maintenance</h4><p data-en="3-year free support" data-zh="3 年免费支持">3-year free support</p></div>
         </div>
     </div>
 </section>
@@ -286,218 +191,246 @@
 <section class="section">
     <div class="container">
         <div class="section-header reveal">
-            <div class="eyebrow">DETAILED PROCESS</div>
-            <h2 class="h-1">고객의 요구사항을 <span class="text-accent">체계적인 절차</span>에 따라<br>완성도 높은 맞춤형 홈페이지로 제작합니다.</h2>
+            <div class="eyebrow" data-en="DETAILED PROCESS" data-zh="详细流程">DETAILED PROCESS</div>
+            <h2 class="h-1" data-en="Following <span class='text-accent'>a systematic procedure</span><br>to deliver a complete custom website." data-zh="按照<span class='text-accent'>系统化的流程</span><br>交付完成度高的定制网站。">Following <span class="text-accent">a systematic procedure</span><br>to deliver a complete custom website.</h2>
         </div>
 
-        <!-- STEP 01: 상담 및 견적 -->
+        <!-- STEP 01 -->
         <div class="proc-detail-step reveal">
             <div class="proc-text">
                 <div class="proc-text-icon">📋</div>
                 <span class="step-tag">STEP 01 · CONSULTING</span>
-                <h3 class="step-title">상담 및 견적 단계</h3>
+                <h3 class="step-title" data-en="Consultation & Quote" data-zh="咨询与报价">Consultation & Quote</h3>
                 <div class="step-divider"></div>
-                <p class="step-desc">고객님께서 의뢰하신 내용을 기반으로 전문 컨설턴트의 분석 및 상담을 통해서 제작 범위를 조율합니다.
+                <p class="step-desc" data-en="Our specialist consultants analyze your inquiry and align the scope of work through consultation.
 
-고객님께서는 전화·이메일 상담과 무료 화상 상담을 받으실 수 있습니다.</p>
+You can request phone, email, or free video consultation." data-zh="我们的专业顾问根据您的咨询内容进行分析，通过沟通对齐工作范围。
+
+您可以申请电话、邮件或免费视频咨询。">Our specialist consultants analyze your inquiry and align the scope of work through consultation.
+
+You can request phone, email, or free video consultation.</p>
                 <div class="proc-meta">
-                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">전화상담 → 화상상담 → 요구사항 인터뷰·범위협의 → 고객 제출 자료 분석 → 제안 및 견적서 제출</span></div>
-                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">견적서 · (가)제안서 · 계약서(계약 진행 시)</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text" data-en="Phone consultation → Video consultation → Requirements interview → Client material analysis → Proposal and quote submission" data-zh="电话咨询 → 视频咨询 → 需求访谈 → 客户资料分析 → 提案与报价提交">Phone consultation → Video consultation → Requirements interview → Client material analysis → Proposal and quote submission</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text" data-en="Quote · (Pre-)Proposal · Contract (if proceeding)" data-zh="报价单 · (预)提案 · 合同（如签约）">Quote · (Pre-)Proposal · Contract (if proceeding)</span></div>
                 </div>
-                <a href="../contact.html" class="step-link">견적 신청 바로가기 <span class="arrow">→</span></a>
+                <a href="../contact.html" class="step-link" data-en="Request a Quote <span class='arrow'>→</span>" data-zh="申请报价 <span class='arrow'>→</span>">Request a Quote <span class="arrow">→</span></a>
             </div>
             <div class="proc-circle coral">
                 <div class="ring"></div><div class="ring-2"></div>
                 <div class="proc-card top">
                     <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
-                    <div class="title">EZ TRADE HUB로 견적문의 또는 전화로 상담을 신청합니다.</div>
-                    <div class="body">원하시는 디자인 컨셉과 기능을 상담하시고 화상 상담도 받아보세요!</div>
+                    <div class="title" data-en="Submit inquiry via EZ TRADE HUB site or phone." data-zh="通过 EZ TRADE HUB 网站或电话提交咨询。">Submit inquiry via EZ TRADE HUB site or phone.</div>
+                    <div class="body" data-en="Talk about design concepts and features — video consultation available!" data-zh="可咨询设计理念与功能 — 还可申请视频咨询！">Talk about design concepts and features — video consultation available!</div>
                 </div>
                 <div class="proc-card bottom">
-                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">컨설턴트</div></div>
-                    <div class="title">전문 컨설턴트의 전화상담 및 화상상담을 진행합니다.</div>
-                    <div class="body">상담 진행을 통해 제작 범위를 조율하고, 견적서를 전송해드립니다.</div>
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role" data-en="Consultant" data-zh="顾问">Consultant</div></div>
+                    <div class="title" data-en="Specialist consultant runs phone and video consultations." data-zh="专业顾问进行电话与视频咨询。">Specialist consultant runs phone and video consultations.</div>
+                    <div class="body" data-en="Aligns scope of work during consultation and sends you a quote." data-zh="在咨询中对齐工作范围并发送报价。">Aligns scope of work during consultation and sends you a quote.</div>
                 </div>
             </div>
         </div>
 
-        <!-- STEP 02: 준비 -->
+        <!-- STEP 02 -->
         <div class="proc-detail-step reverse reveal">
             <div class="proc-text violet">
                 <div class="proc-text-icon">💡</div>
                 <span class="step-tag">STEP 02 · PREPARATION</span>
-                <h3 class="step-title">준비 단계</h3>
+                <h3 class="step-title" data-en="Preparation" data-zh="准备阶段">Preparation</h3>
                 <div class="step-divider"></div>
-                <p class="step-desc">계약 이후에는 도메인, 자료, 홈페이지 구성안 등 있는 자료부터 EZ TRADE HUB의 관리 시스템에 자료를 업로드해주시면 됩니다.
+                <p class="step-desc" data-en="After contract, upload available materials (domain, brand assets, website structure ideas) to EZ TRADE HUB's management system.
 
-프로젝트 매니저가 담당자를 배정 후 홈페이지 제작이 시작됩니다.</p>
+After PM assigns specialists, website build begins." data-zh="签约后，将可用资料（域名、品牌素材、网站结构构想）上传至 EZ TRADE HUB 管理系统。
+
+PM 分配专人后开始网站搭建。">After contract, upload available materials (domain, brand assets, website structure ideas) to EZ TRADE HUB's management system.
+
+After PM assigns specialists, website build begins.</p>
                 <div class="proc-meta">
-                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">프로젝트 인터뷰 → 요구사항 분석 → 자료 전달 → 팀장회의·일정 수립</span></div>
-                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">요구사항 명세서 · 프로젝트 일정표 · 담당자 배정 안내</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text" data-en="Project interview → Requirements analysis → Material handover → Team-lead meeting · timeline" data-zh="项目访谈 → 需求分析 → 资料交付 → 组长会议 · 排期">Project interview → Requirements analysis → Material handover → Team-lead meeting · timeline</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text" data-en="Requirements spec · Project timeline · Specialist assignment notice" data-zh="需求规格书 · 项目排期 · 专人指派通知">Requirements spec · Project timeline · Specialist assignment notice</span></div>
                 </div>
             </div>
             <div class="proc-circle violet">
                 <div class="ring"></div><div class="ring-2"></div>
                 <div class="proc-card top">
                     <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
-                    <div class="title">홈페이지 제작에 필요한 자료를 업로드합니다.</div>
-                    <div class="body">홈페이지 제작에 필요한 자료와 홈페이지 구성안 등 준비된 것부터 관리 시스템에 업로드합니다.</div>
+                    <div class="title" data-en="Upload required materials for website build." data-zh="上传网站搭建所需资料。">Upload required materials for website build.</div>
+                    <div class="body" data-en="Upload prepared materials and website structure ideas to the management system." data-zh="将准备好的资料和网站结构想法上传至管理系统。">Upload prepared materials and website structure ideas to the management system.</div>
                 </div>
                 <div class="proc-card bottom">
-                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">PM(프로젝트매니저)</div></div>
-                    <div class="title">홈페이지 제작 일정 수립.</div>
-                    <div class="body">각 분야별 팀장회의를 통해서 일정을 수립하고 프로젝트에 각 담당자를 배정합니다.</div>
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">PM</div></div>
+                    <div class="title" data-en="Build timeline planning." data-zh="搭建排期制定。">Build timeline planning.</div>
+                    <div class="body" data-en="Team-lead meetings finalize the schedule and assign specialists per area." data-zh="通过组长会议确定排期并按领域分配专人。">Team-lead meetings finalize the schedule and assign specialists per area.</div>
                 </div>
             </div>
         </div>
 
-        <!-- STEP 03: 디자인 -->
+        <!-- STEP 03 -->
         <div class="proc-detail-step reveal">
             <div class="proc-text">
                 <div class="proc-text-icon">🎨</div>
                 <span class="step-tag">STEP 03 · DESIGN</span>
-                <h3 class="step-title">디자인 단계</h3>
+                <h3 class="step-title" data-en="Design" data-zh="设计阶段">Design</h3>
                 <div class="step-divider"></div>
-                <p class="step-desc">홈페이지의 디자인, 설계 그리고 개발에 필요한 디자인 구성 요소를 통합 제작합니다.
+                <p class="step-desc" data-en="Integrated production of design, layout, and component assets needed for website development.
 
-디자인 시안 작업 시 요구하시는 내용을 적용하여 진행하며, 중국 광고법 컴플라이언스도 사전 검수합니다.</p>
+Design mockups reflect your requests; we also pre-check China ad-law compliance." data-zh="集成制作网站设计、设计稿、开发所需的设计要素。
+
+设计稿反映您的需求；我们还会预先检查中国广告法合规。">Integrated production of design, layout, and component assets needed for website development.
+
+Design mockups reflect your requests; we also pre-check China ad-law compliance.</p>
                 <div class="proc-meta">
-                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">아이덴티티·로고 검토 → 컬러·타이포그래피·바주얼 요소 → 메인 시안 → 서브 시안 → 콘텐츠 페이지 디자인</span></div>
-                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">디자인 가이드 · 메인·서브 시안 디자인 소스</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text" data-en="Identity · logo review → Color · typography · visual elements → Main mockup → Sub mockups → Content page design" data-zh="标识 · logo 审查 → 色彩 · 字体 · 视觉要素 → 主页设计稿 → 子页设计稿 → 内容页面设计">Identity · logo review → Color · typography · visual elements → Main mockup → Sub mockups → Content page design</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text" data-en="Design guide · Main / sub mockup design source" data-zh="设计指南 · 主页 / 子页设计稿源文件">Design guide · Main / sub mockup design source</span></div>
                 </div>
             </div>
             <div class="proc-circle coral">
                 <div class="ring"></div><div class="ring-2"></div>
                 <div class="proc-card top">
                     <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
-                    <div class="title">작업 시안을 확인 후 관리 시스템에 피드백을 입력합니다.</div>
-                    <div class="body">디자인 시안 작업은 고객님의 요청사항을 반영하여 고객님의 확인 후 최종 결정됩니다.</div>
+                    <div class="title" data-en="Review mockups and input feedback to the management system." data-zh="查阅设计稿后在管理系统输入反馈。">Review mockups and input feedback to the management system.</div>
+                    <div class="body" data-en="Design mockup work reflects client requests and is finalized after client confirmation." data-zh="设计稿工作反映客户需求，经客户确认后最终决定。">Design mockup work reflects client requests and is finalized after client confirmation.</div>
                 </div>
                 <div class="proc-card bottom">
-                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">디자이너</div></div>
-                    <div class="title">고객님의 제작 의도를 반영해 디자인 시안 작업을 진행합니다.</div>
-                    <div class="body">고객님의 의견을 반영하여 디자인 작업을 진행하고 확인 요청을 드립니다.</div>
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role" data-en="Designer" data-zh="设计师">Designer</div></div>
+                    <div class="title" data-en="Reflects your production intent in design mockup work." data-zh="将您的制作意图反映在设计稿工作中。">Reflects your production intent in design mockup work.</div>
+                    <div class="body" data-en="We progress design work reflecting client opinions and send confirmation requests." data-zh="反映客户意见推进设计工作并发送确认请求。">We progress design work reflecting client opinions and send confirmation requests.</div>
                 </div>
             </div>
         </div>
 
-        <!-- STEP 04: 퍼블리싱 -->
+        <!-- STEP 04 -->
         <div class="proc-detail-step reverse reveal">
             <div class="proc-text violet">
                 <div class="proc-text-icon">💻</div>
                 <span class="step-tag">STEP 04 · PUBLISHING</span>
-                <h3 class="step-title">퍼블리싱 단계</h3>
+                <h3 class="step-title" data-en="Publishing" data-zh="前端制作">Publishing</h3>
                 <div class="step-divider"></div>
-                <p class="step-desc">퍼블리싱 작업에서 홈페이지의 동적인 요소가 구현됩니다. EZ TRADE HUB는 메인 비주얼 이미지 전환 효과, 동영상 삽입 및 스크립트를 이용한 다양한 기능을 지원합니다.
+                <p class="step-desc" data-en="In publishing, we implement the dynamic elements of the website. EZ TRADE HUB supports various features like main visual image transitions, video embedding, and script-driven interactions.
 
-퍼블리싱은 사용자 화면에 최적화하여 표시 되는 반응형 웹 코딩 작업을 진행합니다.</p>
+Publishing optimizes responsive web coding for user-screen display." data-zh="前端制作阶段实现网站的动态元素。EZ TRADE HUB 支持主视觉图像切换效果、视频嵌入及脚本驱动的多种功能。
+
+前端制作进行针对用户屏幕优化显示的响应式 Web 编码。">In publishing, we implement the dynamic elements of the website. EZ TRADE HUB supports various features like main visual image transitions, video embedding, and script-driven interactions.
+
+Publishing optimizes responsive web coding for user-screen display.</p>
                 <div class="proc-meta">
-                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">화면 요소별 확정 → 레이아웃 구성 → 메인비주얼 퍼블리싱 → 콘텐츠 퍼블리싱 → 반응형 · 웹 표준 검수</span></div>
-                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">퍼블리싱 가이드 · 퍼블리싱 소스</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text" data-en="Element finalization → Layout build → Main visual publishing → Content publishing → Responsive · web-standard review" data-zh="元素确定 → 布局搭建 → 主视觉前端制作 → 内容前端制作 → 响应式 · Web 标准审查">Element finalization → Layout build → Main visual publishing → Content publishing → Responsive · web-standard review</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text" data-en="Publishing guide · Publishing source" data-zh="前端制作指南 · 前端源代码">Publishing guide · Publishing source</span></div>
                 </div>
             </div>
             <div class="proc-circle violet">
                 <div class="ring"></div><div class="ring-2"></div>
                 <div class="proc-card top">
                     <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
-                    <div class="title">퍼블리싱된 화면을 확인 후 수정 사항을 요청합니다.</div>
-                    <div class="body">모든 페이지별로 확인 후 수정사항을 관리 시스템에 입력합니다.</div>
+                    <div class="title" data-en="Check the published screen and request edits." data-zh="检查前端制作完成的页面并请求修改。">Check the published screen and request edits.</div>
+                    <div class="body" data-en="Check every page and input edit requests to the management system." data-zh="逐页检查并在管理系统输入修改需求。">Check every page and input edit requests to the management system.</div>
                 </div>
                 <div class="proc-card bottom">
-                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">퍼블리셔</div></div>
-                    <div class="title">스크립트 및 동영상 등을 적용한 퍼블리싱 작업을 진행합니다.</div>
-                    <div class="body">디자인 작업 결과물로 HTML 문서화 코딩 작업을 진행합니다.</div>
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role" data-en="Publisher" data-zh="前端工程师">Publisher</div></div>
+                    <div class="title" data-en="Performs publishing with scripts and video integration." data-zh="进行包含脚本与视频集成的前端制作。">Performs publishing with scripts and video integration.</div>
+                    <div class="body" data-en="HTML documentation coding based on design results." data-zh="基于设计成果进行 HTML 文档化编码。">HTML documentation coding based on design results.</div>
                 </div>
             </div>
         </div>
 
-        <!-- STEP 05: 프로그래밍 -->
+        <!-- STEP 05 -->
         <div class="proc-detail-step reveal">
             <div class="proc-text">
                 <div class="proc-text-icon">⚙️</div>
                 <span class="step-tag">STEP 05 · PROGRAMMING</span>
-                <h3 class="step-title">프로그래밍 단계</h3>
+                <h3 class="step-title" data-en="Programming" data-zh="编程阶段">Programming</h3>
                 <div class="step-divider"></div>
-                <p class="step-desc">HTML5 문서로 퍼블리싱된 페이지에 프로그램 기능부분을 구현하고 관리자 페이지와 홈페이지 내의 프로그램 작업을 완료합니다.
+                <p class="step-desc" data-en="Implements program features on HTML5-published pages, completes admin pages and in-site programming.
 
-프로그램 작업 완료 후, 관리자 매뉴얼을 업로드해드립니다.</p>
+After programming, we upload an admin manual." data-zh="在 HTML5 前端制作的页面上实现程序功能，完成后台页面与网站内编程。
+
+编程完成后我们会上传后台管理手册。">Implements program features on HTML5-published pages, completes admin pages and in-site programming.
+
+After programming, we upload an admin manual.</p>
                 <div class="proc-meta">
-                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">DB 설계 → 화면 설계 기반 프로그램 구현 → 외부 API 연동 (위챗·바이두) → 관리자 기능 구현 → 개발자 테스트</span></div>
-                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">ERD 및 구현 스크립트 · 관리자 매뉴얼 · 개발 환경 가이드 · 프로그램 소스</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text" data-en="DB design → Screen-based program build → External API integration (WeChat · Baidu) → Admin feature build → Developer testing" data-zh="数据库设计 → 基于页面的程序实现 → 外部 API 对接（微信 · 百度）→ 后台功能实现 → 开发者测试">DB design → Screen-based program build → External API integration (WeChat · Baidu) → Admin feature build → Developer testing</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text" data-en="ERD & implementation script · Admin manual · Dev environment guide · Program source" data-zh="ERD 及实现脚本 · 后台管理手册 · 开发环境指南 · 程序源代码">ERD & implementation script · Admin manual · Dev environment guide · Program source</span></div>
                 </div>
             </div>
             <div class="proc-circle coral">
                 <div class="ring"></div><div class="ring-2"></div>
                 <div class="proc-card top">
                     <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
-                    <div class="title">홈페이지의 모든 사항과 기능을 체크합니다.</div>
-                    <div class="body">개발 서버에서 작업된 홈페이지를 전체적으로 확인 후 수정사항을 관리 시스템에 입력합니다.</div>
+                    <div class="title" data-en="Check all website features and functions." data-zh="检查网站的所有事项与功能。">Check all website features and functions.</div>
+                    <div class="body" data-en="Check the website on the dev server thoroughly and input edits to the management system." data-zh="在开发服务器上全面检查网站后在管理系统输入修改。">Check the website on the dev server thoroughly and input edits to the management system.</div>
                 </div>
                 <div class="proc-card bottom">
-                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">프로그래머</div></div>
-                    <div class="title">고객 홈페이지에 최적화된 프로그램 기능을 구현합니다.</div>
-                    <div class="body">계약 내용을 기초로 프로그램 개발 완료 후 개발자 테스트를 진행합니다.</div>
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role" data-en="Programmer" data-zh="程序员">Programmer</div></div>
+                    <div class="title" data-en="Implements optimized program features for your website." data-zh="为您的网站实现优化的程序功能。">Implements optimized program features for your website.</div>
+                    <div class="body" data-en="After program development based on contract, we run developer testing." data-zh="基于合同进行程序开发完成后开展开发者测试。">After program development based on contract, we run developer testing.</div>
                 </div>
             </div>
         </div>
 
-        <!-- STEP 06: 테스트 및 오픈 -->
+        <!-- STEP 06 -->
         <div class="proc-detail-step reverse reveal">
             <div class="proc-text violet">
                 <div class="proc-text-icon">🚀</div>
                 <span class="step-tag">STEP 06 · LAUNCH</span>
-                <h3 class="step-title">테스트 및 오픈 단계</h3>
+                <h3 class="step-title" data-en="Test & Launch" data-zh="测试与上线">Test & Launch</h3>
                 <div class="step-divider"></div>
-                <p class="step-desc">최종 요청사항이 반영된 홈페이지를 개발자 테스트 후 통합 테스트를 진행합니다.
+                <p class="step-desc" data-en="After developer tests reflect final requests, we run integrated testing.
 
-테스트가 완료되면 오픈은 바로 가능하며, ICP 비안·바이두 등록·중국 호스팅 이관까지 일괄 대행합니다.</p>
+When tests pass, launch is immediate — and we also handle ICP filing, Baidu registration, and China hosting migration." data-zh="开发者测试反映最终需求后进行综合测试。
+
+测试通过后即可上线，我们还代办 ICP 备案、百度收录、中国托管迁移。">After developer tests reflect final requests, we run integrated testing.
+
+When tests pass, launch is immediate — and we also handle ICP filing, Baidu registration, and China hosting migration.</p>
                 <div class="proc-meta">
-                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">통합 테스트 → 도메인 연결 → 중국 호스팅 이관 → 최종 테스트 → ICP 비안·바이두 SEO 등록 → 프로젝트 종료</span></div>
-                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">검수 확인서 · 오픈 보고서 · ICP 비안 등록 증명</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text" data-en="Integrated test → Domain connection → China hosting migration → Final test → ICP filing · Baidu SEO registration → Project closure" data-zh="综合测试 → 域名连接 → 中国托管迁移 → 最终测试 → ICP 备案 · 百度 SEO 收录 → 项目结项">Integrated test → Domain connection → China hosting migration → Final test → ICP filing · Baidu SEO registration → Project closure</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text" data-en="Acceptance certificate · Launch report · ICP filing certificate" data-zh="验收证书 · 上线报告 · ICP 备案凭证">Acceptance certificate · Launch report · ICP filing certificate</span></div>
                 </div>
             </div>
             <div class="proc-circle violet">
                 <div class="ring"></div><div class="ring-2"></div>
                 <div class="proc-card top">
                     <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
-                    <div class="title">제작된 홈페이지를 통합 테스트 후 오픈 요청을 합니다.</div>
-                    <div class="body">오픈 전에 고객님께서 최종 테스트를 해주시고 이상이 없는 경우 오픈 요청을 합니다.</div>
+                    <div class="title" data-en="Request launch after integrated testing." data-zh="完成综合测试后请求上线。">Request launch after integrated testing.</div>
+                    <div class="body" data-en="Run final tests before launch, and request launch if no issues found." data-zh="上线前进行最终测试，无异常后请求上线。">Run final tests before launch, and request launch if no issues found.</div>
                 </div>
                 <div class="proc-card bottom">
-                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">PM & 프로그래머</div></div>
-                    <div class="title">홈페이지 오픈을 진행합니다.</div>
-                    <div class="body">운영 서버로 이전하여 실제 도메인을 연결 후 오픈합니다.</div>
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role" data-en="PM & Programmer" data-zh="PM 与程序员">PM & Programmer</div></div>
+                    <div class="title" data-en="Launch the website." data-zh="启动上线。">Launch the website.</div>
+                    <div class="body" data-en="Migrate to production server, connect actual domain, and launch." data-zh="迁移至生产服务器，连接真实域名并上线。">Migrate to production server, connect actual domain, and launch.</div>
                 </div>
             </div>
         </div>
 
-        <!-- STEP 07: 유지보수 -->
+        <!-- STEP 07 -->
         <div class="proc-detail-step reveal">
             <div class="proc-text">
                 <div class="proc-text-icon">🛠️</div>
                 <span class="step-tag">STEP 07 · MAINTENANCE</span>
-                <h3 class="step-title">유지보수 단계</h3>
+                <h3 class="step-title" data-en="Maintenance" data-zh="维护阶段">Maintenance</h3>
                 <div class="step-divider"></div>
-                <p class="step-desc">사실 홈페이지 제작은 운영을 위한 준비 과정이었습니다.
+                <p class="step-desc" data-en="In fact, website build was preparation for operations.
 
-EZ TRADE HUB는 유지보수 전담팀을 운영하여 고객님 홈페이지의 데이터를 안전하게 관리해드립니다.</p>
+EZ TRADE HUB operates a dedicated maintenance team to safely manage your website data." data-zh="其实网站搭建是为了运营的准备过程。
+
+EZ TRADE HUB 设有专门的维护团队，安全管理客户网站数据。">In fact, website build was preparation for operations.
+
+EZ TRADE HUB operates a dedicated maintenance team to safely manage your website data.</p>
                 <div class="proc-meta">
-                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">정기 보안 패치 · 콘텐츠 업데이트 · 무상 유지보수 (텍스트 수정·이미지 교체·프로그램 오류) · 성과 리포트</span></div>
-                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">월간 유지보수 리포트 · 백업 데이터 · SLA 응답 시간 보장</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text" data-en="Regular security patches · Content updates · Free maintenance (text edits · image swaps · program bugs) · Performance reports" data-zh="定期安全补丁 · 内容更新 · 免费维护（文本修改 · 图片替换 · 程序 bug）· 业绩报告">Regular security patches · Content updates · Free maintenance (text edits · image swaps · program bugs) · Performance reports</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text" data-en="Monthly maintenance report · Backup data · SLA response time guarantee" data-zh="月度维护报告 · 备份数据 · SLA 响应时间保证">Monthly maintenance report · Backup data · SLA response time guarantee</span></div>
                 </div>
-                <a href="../contact.html" class="step-link">유지보수 서비스 바로가기 <span class="arrow">→</span></a>
+                <a href="../contact.html" class="step-link" data-en="See Maintenance Service <span class='arrow'>→</span>" data-zh="查看维护服务 <span class='arrow'>→</span>">See Maintenance Service <span class="arrow">→</span></a>
             </div>
             <div class="proc-circle coral">
                 <div class="ring"></div><div class="ring-2"></div>
                 <div class="proc-card top">
                     <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
-                    <div class="title">홈페이지 운영에 필요한 요청 사항을 관리 시스템에 입력해주세요!</div>
-                    <div class="body">간단한 텍스트 수정, 이미지 교체, 프로그램 오류는 무상으로 지원해드립니다.</div>
+                    <div class="title" data-en="Enter ops requests into the management system!" data-zh="将运营需求录入管理系统！">Enter ops requests into the management system!</div>
+                    <div class="body" data-en="Simple text edits, image swaps, and program bugs are supported for free." data-zh="简单的文本修改、图片替换、程序 bug 我们免费支持。">Simple text edits, image swaps, and program bugs are supported for free.</div>
                 </div>
                 <div class="proc-card bottom">
-                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">유지보수</div></div>
-                    <div class="title">홈페이지 신규 제작 시 3년간 무상 유지보수를 제공합니다.</div>
-                    <div class="body">무상 유지보수 접수 건은 접수 순서에 따른 빠른 처리를 원칙으로 서비스하고 있습니다.</div>
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role" data-en="Maintenance" data-zh="维护">Maintenance</div></div>
+                    <div class="title" data-en="3 years of free maintenance for new website builds." data-zh="新建网站提供 3 年免费维护。">3 years of free maintenance for new website builds.</div>
+                    <div class="body" data-en="Free maintenance requests are processed in order of receipt — fast turnaround." data-zh="免费维护申请按接收顺序处理 — 快速响应。">Free maintenance requests are processed in order of receipt — fast turnaround.</div>
                 </div>
             </div>
         </div>
@@ -508,24 +441,24 @@ EZ TRADE HUB는 유지보수 전담팀을 운영하여 고객님 홈페이지의
     <div class="container">
         <div class="section-header reveal">
             <div class="eyebrow">FAQ</div>
-            <h2 class="h-1">자주 묻는 질문</h2>
+            <h2 class="h-1" data-en="Frequently asked questions" data-zh="常见问题">Frequently asked questions</h2>
         </div>
         <div style="max-width:820px; margin:0 auto;">
-            <details class="reveal" style="margin-bottom:14px; padding:20px 24px; background:var(--surface); border-radius:var(--radius-md);"><summary style="cursor:pointer; font-weight:700;">ICP 비안은 얼마나 걸리나요?</summary><p style="margin-top:12px; color:var(--text-secondary);">통상 15~30일 소요. 회사 등록증·법인장 인감·도메인 명의 확인 등 서류 협조가 필요합니다. 산둥이지 중국 본사가 직접 신청 대행합니다.</p></details>
-            <details class="reveal" style="margin-bottom:14px; padding:20px 24px; background:var(--surface); border-radius:var(--radius-md);"><summary style="cursor:pointer; font-weight:700;">중국 서버 없이 글로벌 CDN만으로 충분한가요?</summary><p style="margin-top:12px; color:var(--text-secondary);">CDN으로 어느 정도 개선되지만 일부 페이지(미디어·결제)는 중국 내 서버가 더 안정적입니다. 트래픽 규모와 비즈니스 모델에 따라 권장 구성을 안내드립니다.</p></details>
-            <details class="reveal" style="margin-bottom:14px; padding:20px 24px; background:var(--surface); border-radius:var(--radius-md);"><summary style="cursor:pointer; font-weight:700;">기존 사이트를 중국어로 번역만 하면 안 되나요?</summary><p style="margin-top:12px; color:var(--text-secondary);">번역만으로는 부족합니다. 중국 사용자가 익숙한 정보 밀도·결제 UX·SNS 연결·광고법 표현이 글로벌과 크게 다릅니다. 현지화된 카피·디자인이 매출 전환률에 직접 영향을 줍니다.</p></details>
-            <details class="reveal" style="margin-bottom:14px; padding:20px 24px; background:var(--surface); border-radius:var(--radius-md);"><summary style="cursor:pointer; font-weight:700;">유지보수 비용은?</summary><p style="margin-top:12px; color:var(--text-secondary);">월 정기 점검·콘텐츠 업데이트 패키지 (월 50~150만원 수준), 또는 시간제 운영 선택 가능. 마케팅과 함께 진행 시 패키지 할인이 적용됩니다.</p></details>
+            <details class="reveal" style="margin-bottom:14px; padding:20px 24px; background:var(--surface); border-radius:var(--radius-md);"><summary style="cursor:pointer; font-weight:700;" data-en="How long does ICP filing take?" data-zh="ICP 备案需要多久？">How long does ICP filing take?</summary><p style="margin-top:12px; color:var(--text-secondary);" data-en="Typically 15~30 days. We need cooperation with company registration certificate, official seal, and domain ownership verification. Our Shandong Yiji China HQ handles the filing directly." data-zh="通常需要 15~30 天。需要公司营业执照、公章、域名所有权确认等资料配合。山东易吉中国总部直接代办申请。">Typically 15~30 days. We need cooperation with company registration certificate, official seal, and domain ownership verification. Our Shandong Yiji China HQ handles the filing directly.</p></details>
+            <details class="reveal" style="margin-bottom:14px; padding:20px 24px; background:var(--surface); border-radius:var(--radius-md);"><summary style="cursor:pointer; font-weight:700;" data-en="Is global CDN sufficient without China hosting?" data-zh="不用中国服务器，仅用全球 CDN 可以吗？">Is global CDN sufficient without China hosting?</summary><p style="margin-top:12px; color:var(--text-secondary);" data-en="CDN improves things to a degree, but some pages (media, payments) are more stable with in-China servers. We recommend the right setup based on traffic and business model." data-zh="CDN 在一定程度上有改善，但部分页面（媒体、支付）使用中国境内服务器更稳定。我们根据流量与业务模型推荐合适的方案。">CDN improves things to a degree, but some pages (media, payments) are more stable with in-China servers. We recommend the right setup based on traffic and business model.</p></details>
+            <details class="reveal" style="margin-bottom:14px; padding:20px 24px; background:var(--surface); border-radius:var(--radius-md);"><summary style="cursor:pointer; font-weight:700;" data-en="Can we just translate an existing site to Chinese?" data-zh="只把现有网站翻译成中文行吗？">Can we just translate an existing site to Chinese?</summary><p style="margin-top:12px; color:var(--text-secondary);" data-en="Translation alone isn't enough. China users expect very different information density, payment UX, SNS integration, and ad-law-compliant copy. Localized copy and design directly impact conversion." data-zh="仅翻译远远不够。中国用户对信息密度、支付体验、SNS 联动、广告法合规表述有非常不同的期待。本土化的文案与设计直接影响转化率。">Translation alone isn't enough. China users expect very different information density, payment UX, SNS integration, and ad-law-compliant copy. Localized copy and design directly impact conversion.</p></details>
+            <details class="reveal" style="margin-bottom:14px; padding:20px 24px; background:var(--surface); border-radius:var(--radius-md);"><summary style="cursor:pointer; font-weight:700;" data-en="What about maintenance cost?" data-zh="维护费用如何？">What about maintenance cost?</summary><p style="margin-top:12px; color:var(--text-secondary);" data-en="Monthly maintenance + content update packages (around $500~$1,500/mo), or per-hour ops available. Package discounts apply when combined with marketing." data-zh="月度维护 + 内容更新套餐（约 $500~$1,500/月），或按小时运营。与营销联动可享套餐折扣。">Monthly maintenance + content update packages (around $500~$1,500/mo), or per-hour ops available. Package discounts apply when combined with marketing.</p></details>
         </div>
     </div>
 </section>
 
 <section class="cta-section">
     <div class="inner reveal">
-        <h2 class="h-1">홈페이지 구축, <span style="color:#FCD34D;">무료 견적</span>받으세요.</h2>
-        <p class="lead">1영업일 이내 상세 견적과 사례 자료를 보내드립니다.</p>
+        <h2 class="h-1" data-en="Request a <span style='color:#FCD34D;'>free website quote</span>." data-zh="申请<span style='color:#FCD34D;'>免费网站报价</span>。">Request a <span style="color:#FCD34D;">free website quote</span>.</h2>
+        <p class="lead" data-en="We send a detailed quote and case studies within 1 business day." data-zh="1 个工作日内发送详细报价与案例资料。">We send a detailed quote and case studies within 1 business day.</p>
         <div class="btns">
-            <a href="../contact.html" class="btn btn-primary btn-lg btn-arrow">상담 신청</a>
-            <a href="../contact.html#proposal" class="btn btn-outline-light btn-lg">제안서 받기</a>
+            <a href="../contact.html" class="btn btn-primary btn-lg btn-arrow" data-en="Request Consultation" data-zh="申请咨询">Request Consultation</a>
+            <a href="../contact.html#proposal" class="btn btn-outline-light btn-lg" data-en="Get Proposal" data-zh="获取提案">Get Proposal</a>
         </div>
     </div>
 </section>
@@ -535,12 +468,12 @@ EZ TRADE HUB는 유지보수 전담팀을 운영하여 고객님 홈페이지의
         <div class="footer-grid">
             <div class="footer-brand">
                 <div class="nav-logo"><div class="nav-logo-mark">EZ</div><span>TRADE HUB</span></div>
-                <p>중국·동남아 진출 기업의 BUILD · MARKET · SELL 통합 파트너.</p>
-                <div class="footer-contact"><div><strong>운영사</strong> 山东易吉企业管理有限公司</div><div><strong>이메일</strong> shandongyiji_88@163.com</div></div>
+                <p data-en="The integrated BUILD · MARKET · SELL partner for brands expanding into China & Southeast Asia." data-zh="为进入中国与东南亚市场的品牌提供搭建 · 营销 · 销售一体化合作。">The integrated BUILD · MARKET · SELL partner for brands expanding into China & Southeast Asia.</p>
+                <div class="footer-contact"><div><strong data-en="Operated by" data-zh="运营公司">Operated by</strong> 山东易吉企业管理有限公司</div><div><strong data-en="Email" data-zh="邮箱">Email</strong> shandongyiji_88@163.com</div></div>
             </div>
-            <div><h5>SOLUTION</h5><ul><li><a href="homepage.html">홈페이지 구축</a></li><li><a href="shopping.html">쇼핑몰 구축</a></li><li><a href="app.html">앱 구축</a></li></ul></div>
-            <div><h5>MARKETING</h5><ul><li><a href="../marketing/online.html">온라인 마케팅</a></li><li><a href="../marketing/influencer.html">인플루언서</a></li><li><a href="../marketing/content.html">콘텐츠</a></li><li><a href="../marketing/live.html">라이브</a></li></ul></div>
-            <div><h5>COMPANY</h5><ul><li><a href="../about.html">회사소개</a></li><li><a href="../results.html">성과</a></li><li></li><li><a href="../contact.html">상담</a></li></ul></div>
+            <div><h5 data-en="SOLUTION" data-zh="解决方案">SOLUTION</h5><ul><li><a href="homepage.html" data-en="Website" data-zh="网站">Website</a></li><li><a href="shopping.html" data-en="E-Commerce" data-zh="商城">E-Commerce</a></li><li><a href="app.html" data-en="App" data-zh="APP">App</a></li></ul></div>
+            <div><h5 data-en="MARKETING" data-zh="营销">MARKETING</h5><ul><li><a href="../marketing/online.html" data-en="Online" data-zh="在线">Online</a></li><li><a href="../marketing/influencer.html" data-en="Influencer" data-zh="网红">Influencer</a></li><li><a href="../marketing/content.html" data-en="Content" data-zh="短视频">Content</a></li><li><a href="../marketing/live.html" data-en="Live" data-zh="直播">Live</a></li></ul></div>
+            <div><h5 data-en="COMPANY" data-zh="公司">COMPANY</h5><ul><li><a href="../about.html" data-en="About" data-zh="关于我们">About</a></li><li><a href="../results.html" data-en="Results" data-zh="案例成果">Results</a></li><li><a href="../contact.html" data-en="Contact" data-zh="联系">Contact</a></li></ul></div>
         </div>
         <div class="footer-bottom">
             <div>© 2000 山东易吉企业管理有限公司 EZ TRADE HUB. All rights reserved.</div>
