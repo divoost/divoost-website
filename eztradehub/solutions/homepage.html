@@ -6,6 +6,143 @@
     <meta name="description" content="중국·동남아에서 빠르게 작동하는 글로벌 기업 홈페이지 구축 - ICP 비안, 위챗 연동, 바이두 SEO">
     <title>홈페이지 구축 | EZ TRADE HUB</title>
     <link rel="stylesheet" href="../css/main.css">
+    <style>
+        /* 상세 프로세스 (dialog circle 스타일) */
+        .proc-detail-step {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+            margin-bottom: 96px;
+        }
+        .proc-detail-step:last-child { margin-bottom: 0; }
+        .proc-detail-step.reverse { direction: rtl; }
+        .proc-detail-step.reverse > * { direction: ltr; }
+        @media (max-width: 900px) {
+            .proc-detail-step, .proc-detail-step.reverse { grid-template-columns: 1fr; direction: ltr; gap: 40px; }
+            .proc-detail-step.reverse > * { direction: ltr; }
+        }
+        .proc-text { padding: 0 24px; }
+        .proc-text-icon {
+            width: 64px; height: 64px;
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; color: var(--primary-dark);
+            margin-bottom: 24px;
+        }
+        .proc-text .step-tag {
+            color: var(--accent); font-weight: 800;
+            font-size: 13px; letter-spacing: .15em; margin-bottom: 6px;
+            display: block;
+        }
+        .proc-text.violet .step-tag { color: var(--primary-dark); }
+        .proc-text .step-title {
+            font-family: var(--font-heading);
+            font-size: 30px; font-weight: 800;
+            line-height: 1.2; color: var(--text); margin-bottom: 18px;
+        }
+        .proc-text .step-divider {
+            width: 60%; height: 1px; background: var(--border); margin: 0 0 18px;
+        }
+        .proc-text .step-desc {
+            color: var(--text-secondary); line-height: 1.7; font-size: 15px;
+            margin-bottom: 24px; white-space: pre-line;
+        }
+        .proc-text .step-link {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 12px 22px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-pill);
+            font-weight: 700; font-size: 13px;
+            color: var(--text);
+            transition: all .15s;
+        }
+        .proc-text .step-link:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .proc-text .step-link .arrow { transition: transform .15s; }
+        .proc-text .step-link:hover .arrow { transform: translateX(4px); }
+
+        .proc-circle {
+            position: relative;
+            aspect-ratio: 1;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        .proc-circle::before {
+            content: ""; position: absolute; inset: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 40%, var(--c-light), var(--c-main));
+            box-shadow: 0 30px 80px var(--c-shadow);
+        }
+        .proc-circle.coral { --c-main: #EF4444; --c-light: #F87171; --c-shadow: rgba(239,68,68,.30); }
+        .proc-circle.violet { --c-main: #2563EB; --c-light: #6366F1; --c-shadow: rgba(37,99,235,.30); }
+        .proc-circle .ring {
+            position: absolute; inset: -8%;
+            border-radius: 50%;
+            border: 1px dashed var(--c-main);
+            opacity: .35;
+        }
+        .proc-circle .ring-2 {
+            position: absolute; inset: -18%;
+            border-radius: 50%;
+            border: 1px solid var(--c-main);
+            opacity: .12;
+        }
+        .proc-card {
+            position: absolute;
+            background: #fff;
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+            box-shadow: 0 18px 40px rgba(15,23,42,.10);
+            min-width: 280px;
+            max-width: 90%;
+        }
+        .proc-card.top { top: 18%; left: -10%; }
+        .proc-card.bottom { bottom: 16%; right: -10%; }
+        @media (max-width: 700px) {
+            .proc-card { position: relative; top: auto; left: auto; right: auto; bottom: auto; margin: 12px auto; }
+            .proc-circle::before { display: none; }
+            .proc-circle { aspect-ratio: auto; }
+            .proc-circle .ring, .proc-circle .ring-2 { display: none; }
+        }
+        .proc-card .head {
+            display: flex; align-items: center; gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 10px;
+        }
+        .proc-card .head .avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 14px; color: #fff;
+            flex-shrink: 0;
+        }
+        .proc-card .head .avatar.customer { background: var(--accent); }
+        .proc-card .head .avatar.us { background: var(--primary-dark); font-weight: 800; }
+        .proc-card .head .name { font-weight: 800; font-size: 13px; flex: 1; }
+        .proc-card .head .role { font-size: 11px; color: var(--primary-dark); font-weight: 700; }
+        .proc-card .title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.4; }
+        .proc-card .body { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+        /* Work/Outputs 배지 */
+        .proc-meta { display: grid; gap: 10px; margin-bottom: 22px; }
+        .proc-meta-row {
+            display: flex; gap: 12px; align-items: flex-start;
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            padding: 12px 14px;
+        }
+        .proc-meta-label {
+            display: inline-flex; align-items: center; justify-content: center;
+            min-width: 64px; padding: 4px 10px;
+            background: #10B981; color: #fff;
+            border-radius: var(--radius-pill);
+            font-size: 11px; font-weight: 800; letter-spacing: .05em;
+            flex-shrink: 0;
+        }
+        .proc-meta-label.outputs { background: #6366F1; }
+        .proc-meta-text { font-size: 13px; color: var(--text-secondary); line-height: 1.5; padding-top: 4px; }
+    </style>
 </head>
 <body>
 
@@ -134,11 +271,235 @@
             <h2 class="h-1">투명한 <span class="text-accent">주 단위 진행</span>.</h2>
         </div>
         <div class="process-timeline">
-            <div class="process-step reveal"><div class="step-num">STEP 01</div><h4>요구사항·기획</h4><p>1~2주 · IA·와이어·콘텐츠 협의</p></div>
-            <div class="process-step reveal"><div class="step-num">STEP 02</div><h4>디자인</h4><p>2~3주 · 메인·서브 시안·중국어 카피</p></div>
-            <div class="process-step reveal"><div class="step-num">STEP 03</div><h4>퍼블·개발</h4><p>2~3주 · 반응형·CMS·다국어</p></div>
-            <div class="process-step reveal"><div class="step-num">STEP 04</div><h4>콘텐츠·QA</h4><p>1~2주 · 광고법 검수·테스트</p></div>
-            <div class="process-step reveal"><div class="step-num">STEP 05</div><h4>오픈·운영</h4><p>상시 · 비안·바이두 등록·성과 추적</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 01</div><h4>상담·견적</h4><p>전화·방문상담</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 02</div><h4>준비·기획</h4><p>요구사항·자료</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 03</div><h4>디자인</h4><p>메인·서브 시안</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 04</div><h4>퍼블리싱</h4><p>반응형·다국어</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 05</div><h4>프로그래밍</h4><p>CMS·기능 구현</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 06</div><h4>테스트·오픈</h4><p>비안·바이두</p></div>
+            <div class="process-step reveal"><div class="step-num">STEP 07</div><h4>유지보수</h4><p>3년 무상 지원</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- 상세 7단계 프로세스 (dialog circle) -->
+<section class="section">
+    <div class="container">
+        <div class="section-header reveal">
+            <div class="eyebrow">DETAILED PROCESS</div>
+            <h2 class="h-1">고객의 요구사항을 <span class="text-accent">체계적인 절차</span>에 따라<br>완성도 높은 맞춤형 홈페이지로 제작합니다.</h2>
+        </div>
+
+        <!-- STEP 01: 상담 및 견적 -->
+        <div class="proc-detail-step reveal">
+            <div class="proc-text">
+                <div class="proc-text-icon">📋</div>
+                <span class="step-tag">STEP 01 · CONSULTING</span>
+                <h3 class="step-title">상담 및 견적 단계</h3>
+                <div class="step-divider"></div>
+                <p class="step-desc">고객님께서 의뢰하신 내용을 기반으로 전문 컨설턴트의 분석 및 상담을 통해서 제작 범위를 조율합니다.
+
+고객님께서는 전화·이메일 상담과 무료 화상 상담을 받으실 수 있습니다.</p>
+                <div class="proc-meta">
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">전화상담 → 화상상담 → 요구사항 인터뷰·범위협의 → 고객 제출 자료 분석 → 제안 및 견적서 제출</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">견적서 · (가)제안서 · 계약서(계약 진행 시)</span></div>
+                </div>
+                <a href="../contact.html" class="step-link">견적 신청 바로가기 <span class="arrow">→</span></a>
+            </div>
+            <div class="proc-circle coral">
+                <div class="ring"></div><div class="ring-2"></div>
+                <div class="proc-card top">
+                    <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
+                    <div class="title">EZ TRADE HUB로 견적문의 또는 전화로 상담을 신청합니다.</div>
+                    <div class="body">원하시는 디자인 컨셉과 기능을 상담하시고 화상 상담도 받아보세요!</div>
+                </div>
+                <div class="proc-card bottom">
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">컨설턴트</div></div>
+                    <div class="title">전문 컨설턴트의 전화상담 및 화상상담을 진행합니다.</div>
+                    <div class="body">상담 진행을 통해 제작 범위를 조율하고, 견적서를 전송해드립니다.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 02: 준비 -->
+        <div class="proc-detail-step reverse reveal">
+            <div class="proc-text violet">
+                <div class="proc-text-icon">💡</div>
+                <span class="step-tag">STEP 02 · PREPARATION</span>
+                <h3 class="step-title">준비 단계</h3>
+                <div class="step-divider"></div>
+                <p class="step-desc">계약 이후에는 도메인, 자료, 홈페이지 구성안 등 있는 자료부터 EZ TRADE HUB의 관리 시스템에 자료를 업로드해주시면 됩니다.
+
+프로젝트 매니저가 담당자를 배정 후 홈페이지 제작이 시작됩니다.</p>
+                <div class="proc-meta">
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">프로젝트 인터뷰 → 요구사항 분석 → 자료 전달 → 팀장회의·일정 수립</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">요구사항 명세서 · 프로젝트 일정표 · 담당자 배정 안내</span></div>
+                </div>
+            </div>
+            <div class="proc-circle violet">
+                <div class="ring"></div><div class="ring-2"></div>
+                <div class="proc-card top">
+                    <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
+                    <div class="title">홈페이지 제작에 필요한 자료를 업로드합니다.</div>
+                    <div class="body">홈페이지 제작에 필요한 자료와 홈페이지 구성안 등 준비된 것부터 관리 시스템에 업로드합니다.</div>
+                </div>
+                <div class="proc-card bottom">
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">PM(프로젝트매니저)</div></div>
+                    <div class="title">홈페이지 제작 일정 수립.</div>
+                    <div class="body">각 분야별 팀장회의를 통해서 일정을 수립하고 프로젝트에 각 담당자를 배정합니다.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 03: 디자인 -->
+        <div class="proc-detail-step reveal">
+            <div class="proc-text">
+                <div class="proc-text-icon">🎨</div>
+                <span class="step-tag">STEP 03 · DESIGN</span>
+                <h3 class="step-title">디자인 단계</h3>
+                <div class="step-divider"></div>
+                <p class="step-desc">홈페이지의 디자인, 설계 그리고 개발에 필요한 디자인 구성 요소를 통합 제작합니다.
+
+디자인 시안 작업 시 요구하시는 내용을 적용하여 진행하며, 중국 광고법 컴플라이언스도 사전 검수합니다.</p>
+                <div class="proc-meta">
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">아이덴티티·로고 검토 → 컬러·타이포그래피·바주얼 요소 → 메인 시안 → 서브 시안 → 콘텐츠 페이지 디자인</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">디자인 가이드 · 메인·서브 시안 디자인 소스</span></div>
+                </div>
+            </div>
+            <div class="proc-circle coral">
+                <div class="ring"></div><div class="ring-2"></div>
+                <div class="proc-card top">
+                    <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
+                    <div class="title">작업 시안을 확인 후 관리 시스템에 피드백을 입력합니다.</div>
+                    <div class="body">디자인 시안 작업은 고객님의 요청사항을 반영하여 고객님의 확인 후 최종 결정됩니다.</div>
+                </div>
+                <div class="proc-card bottom">
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">디자이너</div></div>
+                    <div class="title">고객님의 제작 의도를 반영해 디자인 시안 작업을 진행합니다.</div>
+                    <div class="body">고객님의 의견을 반영하여 디자인 작업을 진행하고 확인 요청을 드립니다.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 04: 퍼블리싱 -->
+        <div class="proc-detail-step reverse reveal">
+            <div class="proc-text violet">
+                <div class="proc-text-icon">💻</div>
+                <span class="step-tag">STEP 04 · PUBLISHING</span>
+                <h3 class="step-title">퍼블리싱 단계</h3>
+                <div class="step-divider"></div>
+                <p class="step-desc">퍼블리싱 작업에서 홈페이지의 동적인 요소가 구현됩니다. EZ TRADE HUB는 메인 비주얼 이미지 전환 효과, 동영상 삽입 및 스크립트를 이용한 다양한 기능을 지원합니다.
+
+퍼블리싱은 사용자 화면에 최적화하여 표시 되는 반응형 웹 코딩 작업을 진행합니다.</p>
+                <div class="proc-meta">
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">화면 요소별 확정 → 레이아웃 구성 → 메인비주얼 퍼블리싱 → 콘텐츠 퍼블리싱 → 반응형 · 웹 표준 검수</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">퍼블리싱 가이드 · 퍼블리싱 소스</span></div>
+                </div>
+            </div>
+            <div class="proc-circle violet">
+                <div class="ring"></div><div class="ring-2"></div>
+                <div class="proc-card top">
+                    <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
+                    <div class="title">퍼블리싱된 화면을 확인 후 수정 사항을 요청합니다.</div>
+                    <div class="body">모든 페이지별로 확인 후 수정사항을 관리 시스템에 입력합니다.</div>
+                </div>
+                <div class="proc-card bottom">
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">퍼블리셔</div></div>
+                    <div class="title">스크립트 및 동영상 등을 적용한 퍼블리싱 작업을 진행합니다.</div>
+                    <div class="body">디자인 작업 결과물로 HTML 문서화 코딩 작업을 진행합니다.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 05: 프로그래밍 -->
+        <div class="proc-detail-step reveal">
+            <div class="proc-text">
+                <div class="proc-text-icon">⚙️</div>
+                <span class="step-tag">STEP 05 · PROGRAMMING</span>
+                <h3 class="step-title">프로그래밍 단계</h3>
+                <div class="step-divider"></div>
+                <p class="step-desc">HTML5 문서로 퍼블리싱된 페이지에 프로그램 기능부분을 구현하고 관리자 페이지와 홈페이지 내의 프로그램 작업을 완료합니다.
+
+프로그램 작업 완료 후, 관리자 매뉴얼을 업로드해드립니다.</p>
+                <div class="proc-meta">
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">DB 설계 → 화면 설계 기반 프로그램 구현 → 외부 API 연동 (위챗·바이두) → 관리자 기능 구현 → 개발자 테스트</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">ERD 및 구현 스크립트 · 관리자 매뉴얼 · 개발 환경 가이드 · 프로그램 소스</span></div>
+                </div>
+            </div>
+            <div class="proc-circle coral">
+                <div class="ring"></div><div class="ring-2"></div>
+                <div class="proc-card top">
+                    <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
+                    <div class="title">홈페이지의 모든 사항과 기능을 체크합니다.</div>
+                    <div class="body">개발 서버에서 작업된 홈페이지를 전체적으로 확인 후 수정사항을 관리 시스템에 입력합니다.</div>
+                </div>
+                <div class="proc-card bottom">
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">프로그래머</div></div>
+                    <div class="title">고객 홈페이지에 최적화된 프로그램 기능을 구현합니다.</div>
+                    <div class="body">계약 내용을 기초로 프로그램 개발 완료 후 개발자 테스트를 진행합니다.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 06: 테스트 및 오픈 -->
+        <div class="proc-detail-step reverse reveal">
+            <div class="proc-text violet">
+                <div class="proc-text-icon">🚀</div>
+                <span class="step-tag">STEP 06 · LAUNCH</span>
+                <h3 class="step-title">테스트 및 오픈 단계</h3>
+                <div class="step-divider"></div>
+                <p class="step-desc">최종 요청사항이 반영된 홈페이지를 개발자 테스트 후 통합 테스트를 진행합니다.
+
+테스트가 완료되면 오픈은 바로 가능하며, ICP 비안·바이두 등록·중국 호스팅 이관까지 일괄 대행합니다.</p>
+                <div class="proc-meta">
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">통합 테스트 → 도메인 연결 → 중국 호스팅 이관 → 최종 테스트 → ICP 비안·바이두 SEO 등록 → 프로젝트 종료</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">검수 확인서 · 오픈 보고서 · ICP 비안 등록 증명</span></div>
+                </div>
+            </div>
+            <div class="proc-circle violet">
+                <div class="ring"></div><div class="ring-2"></div>
+                <div class="proc-card top">
+                    <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
+                    <div class="title">제작된 홈페이지를 통합 테스트 후 오픈 요청을 합니다.</div>
+                    <div class="body">오픈 전에 고객님께서 최종 테스트를 해주시고 이상이 없는 경우 오픈 요청을 합니다.</div>
+                </div>
+                <div class="proc-card bottom">
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">PM & 프로그래머</div></div>
+                    <div class="title">홈페이지 오픈을 진행합니다.</div>
+                    <div class="body">운영 서버로 이전하여 실제 도메인을 연결 후 오픈합니다.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 07: 유지보수 -->
+        <div class="proc-detail-step reveal">
+            <div class="proc-text">
+                <div class="proc-text-icon">🛠️</div>
+                <span class="step-tag">STEP 07 · MAINTENANCE</span>
+                <h3 class="step-title">유지보수 단계</h3>
+                <div class="step-divider"></div>
+                <p class="step-desc">사실 홈페이지 제작은 운영을 위한 준비 과정이었습니다.
+
+EZ TRADE HUB는 유지보수 전담팀을 운영하여 고객님 홈페이지의 데이터를 안전하게 관리해드립니다.</p>
+                <div class="proc-meta">
+                    <div class="proc-meta-row"><span class="proc-meta-label">Work</span><span class="proc-meta-text">정기 보안 패치 · 콘텐츠 업데이트 · 무상 유지보수 (텍스트 수정·이미지 교체·프로그램 오류) · 성과 리포트</span></div>
+                    <div class="proc-meta-row"><span class="proc-meta-label outputs">Outputs</span><span class="proc-meta-text">월간 유지보수 리포트 · 백업 데이터 · SLA 응답 시간 보장</span></div>
+                </div>
+                <a href="../contact.html" class="step-link">유지보수 서비스 바로가기 <span class="arrow">→</span></a>
+            </div>
+            <div class="proc-circle coral">
+                <div class="ring"></div><div class="ring-2"></div>
+                <div class="proc-card top">
+                    <div class="head"><div class="avatar customer">👤</div><div class="name">Customer</div></div>
+                    <div class="title">홈페이지 운영에 필요한 요청 사항을 관리 시스템에 입력해주세요!</div>
+                    <div class="body">간단한 텍스트 수정, 이미지 교체, 프로그램 오류는 무상으로 지원해드립니다.</div>
+                </div>
+                <div class="proc-card bottom">
+                    <div class="head"><div class="avatar us">EZ</div><div class="name">EZ TRADE HUB</div><div class="role">유지보수</div></div>
+                    <div class="title">홈페이지 신규 제작 시 3년간 무상 유지보수를 제공합니다.</div>
+                    <div class="body">무상 유지보수 접수 건은 접수 순서에 따른 빠른 처리를 원칙으로 서비스하고 있습니다.</div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -183,7 +544,7 @@
         </div>
         <div class="footer-bottom">
             <div>© 2000 山东易吉企业管理有限公司 EZ TRADE HUB. All rights reserved.</div>
-            <div class="footer-social"><a href="#">💬</a><a href="#">📕</a><a href="#">🎵</a><a href="#">in</a></div>
+            <div class="footer-social"><a href="https://mp.weixin.qq.com/s/e6Z6wJoaMMnQPTNITTG02g" target="_blank" rel="noopener">💬</a><a href="#">📕</a><a href="#">🎵</a><a href="#">in</a></div>
         </div>
     </div>
 </footer>
