@@ -32,17 +32,27 @@
             </a>
 
             <nav class="nav" id="navDesktop">
-                <a href="index.html" class="nav-link active">홈</a>
-                <a href="solution.html" class="nav-link">솔루션</a>
-                <a href="features.html" class="nav-link">기능</a>
-                <a href="service.html" class="nav-link">서비스</a>
-                <a href="market.html" class="nav-link">시장</a>
-                <a href="pricing.html" class="nav-link">요금제</a>
-                <a href="case.html" class="nav-link">사례</a>
-                <a href="resources.html" class="nav-link">리소스</a>
-                <a href="dashboard/index.html" class="nav-link">소싱트래커</a>
-                <a href="contact.html" class="nav-link">문의</a>
+                <a href="index.html" class="nav-link active" data-i18n="nav.home">홈</a>
+                <a href="solution.html" class="nav-link" data-i18n="nav.solution">솔루션</a>
+                <a href="features.html" class="nav-link" data-i18n="nav.features">기능</a>
+                <a href="service.html" class="nav-link" data-i18n="nav.service">서비스</a>
+                <a href="market.html" class="nav-link" data-i18n="nav.market">시장</a>
+                <a href="pricing.html" class="nav-link" data-i18n="nav.pricing">요금제</a>
+                <a href="case.html" class="nav-link" data-i18n="nav.case">사례</a>
+                <a href="resources.html" class="nav-link" data-i18n="nav.resources">리소스</a>
+                <a href="dashboard/index.html" class="nav-link" data-i18n="nav.tracker">소싱트래커</a>
+                <a href="contact.html" class="nav-link" data-i18n="nav.contact">문의</a>
             </nav>
+
+            <div class="lang-switcher" style="display:flex;align-items:center;gap:6px;margin-left:auto;padding:0 16px;">
+                <button class="lang-btn active" data-lang="ko" style="background:none;border:none;color:rgba(255,255,255,.6);font-size:12px;font-weight:700;cursor:pointer;padding:4px 6px;font-family:inherit;letter-spacing:.05em;">KO</button>
+                <span style="color:rgba(255,255,255,.2);font-size:11px;">|</span>
+                <button class="lang-btn" data-lang="en" style="background:none;border:none;color:rgba(255,255,255,.4);font-size:12px;font-weight:700;cursor:pointer;padding:4px 6px;font-family:inherit;letter-spacing:.05em;">EN</button>
+                <span style="color:rgba(255,255,255,.2);font-size:11px;">|</span>
+                <button class="lang-btn" data-lang="zh" style="background:none;border:none;color:rgba(255,255,255,.4);font-size:12px;font-weight:700;cursor:pointer;padding:4px 6px;font-family:inherit;letter-spacing:.05em;">CH</button>
+                <span style="color:rgba(255,255,255,.2);font-size:11px;">|</span>
+                <button class="lang-btn" data-lang="vi" style="background:none;border:none;color:rgba(255,255,255,.4);font-size:12px;font-weight:700;cursor:pointer;padding:4px 6px;font-family:inherit;letter-spacing:.05em;">VN</button>
+            </div>
 
             <button class="menu-toggle" id="mobileToggle" aria-label="메뉴 열기">
                 <span></span>
@@ -64,16 +74,16 @@
             <!-- Slide 1 -->
             <div class="hero-slide active">
                 <div class="hero-container">
-                    <div class="hero-badge">글로벌 수출입 올인원 플랫폼</div>
+                    <div class="hero-badge" data-i18n="hero.s1.badge">글로벌 수출입 올인원 플랫폼</div>
                     <h1 class="hero-title">
-                        <span class="hero-title-line">국경 없는 커머스,</span>
-                        <span class="hero-title-line">방향 없는 제한</span>
-                        <span class="hero-title-line accent">HUBONTRADE가 연결합니다</span>
+                        <span class="hero-title-line" data-i18n="hero.s1.title1">국경 없는 커머스,</span>
+                        <span class="hero-title-line" data-i18n="hero.s1.title2">방향 없는 제한</span>
+                        <span class="hero-title-line accent" data-i18n="hero.s1.title3">HUBONTRADE가 연결합니다</span>
                     </h1>
-                    <p class="hero-subtitle">어디서든 어디로든, 글로벌 수출입 전 과정을 하나의 플랫폼에서</p>
+                    <p class="hero-subtitle" data-i18n="hero.s1.subtitle">어디서든 어디로든, 글로벌 수출입 전 과정을 하나의 플랫폼에서</p>
                     <div class="hero-cta">
-                        <a href="contact.html" class="btn btn-primary btn-lg">무료로 시작하기</a>
-                        <a href="service.html" class="btn btn-secondary btn-lg">서비스 둘러보기</a>
+                        <a href="contact.html" class="btn btn-primary btn-lg" data-i18n="hero.s1.ctaPrimary">무료로 시작하기</a>
+                        <a href="service.html" class="btn btn-secondary btn-lg" data-i18n="hero.s1.ctaSecondary">서비스 둘러보기</a>
                     </div>
                 </div>
             </div>
@@ -88,24 +98,24 @@
                             <span class="brand-hot-letter">T</span>RADE
                         </div>
                         <h1 class="hero-title">
-                            <span class="hero-title-line">모든 마켓플레이스를</span>
-                            <span class="hero-title-line">하나로 통합 관리</span>
-                            <span class="hero-title-line accent">어디든 한 번에 상품등록</span>
+                            <span class="hero-title-line" data-i18n="hero.s2.title1">모든 마켓플레이스를</span>
+                            <span class="hero-title-line" data-i18n="hero.s2.title2">하나로 통합 관리</span>
+                            <span class="hero-title-line accent" data-i18n="hero.s2.title3">어디든 한 번에 상품등록</span>
                         </h1>
                         <p class="hero-subtitle">
                             쿠팡, 네이버, 지마켓부터 Shopee, Lazada, TikTok Shop까지.<br>
                             주문, 재고, 송장, 물류, 데이터 분석을 한 곳에서 관리하세요.
                         </p>
                         <div class="hero-cta">
-                            <a href="contact.html" class="btn btn-primary btn-lg">무료 체험 시작</a>
-                            <a href="contact.html" class="btn btn-secondary btn-lg">1:1 상담 신청</a>
+                            <a href="contact.html" class="btn btn-primary btn-lg" data-i18n="hero.s2.ctaPrimary">무료 체험 시작</a>
+                            <a href="contact.html" class="btn btn-secondary btn-lg" data-i18n="hero.s2.ctaSecondary">1:1 상담 신청</a>
                         </div>
                         <div class="hero-trust-block">
-                            <div class="hero-trust-label">이미 많은 셀러가 HUBONTRADE를 신뢰합니다</div>
+                            <div class="hero-trust-label" data-i18n="hero.s2.trust">이미 많은 셀러가 HUBONTRADE를 신뢰합니다</div>
                             <div class="hero-stats">
-                                <div class="stat"><div class="stat-number">10+</div><div class="stat-label">연동 마켓</div></div>
-                                <div class="stat"><div class="stat-number">99.9%</div><div class="stat-label">가동률</div></div>
-                                <div class="stat"><div class="stat-number">50%</div><div class="stat-label">업무 시간 절감</div></div>
+                                <div class="stat"><div class="stat-number">10+</div><div class="stat-label" data-i18n="hero.s2.stat1">연동 마켓</div></div>
+                                <div class="stat"><div class="stat-number">99.9%</div><div class="stat-label" data-i18n="hero.s2.stat2">가동률</div></div>
+                                <div class="stat"><div class="stat-number">50%</div><div class="stat-label" data-i18n="hero.s2.stat3">업무 시간 절감</div></div>
                             </div>
                         </div>
                     </div>
@@ -514,5 +524,6 @@
     </footer>
 
     <script src="js/common.js"></script>
+    <script src="js/i18n.js"></script>
 </body>
 </html>
