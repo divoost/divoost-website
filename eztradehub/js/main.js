@@ -90,12 +90,13 @@
         }
     });
 
-    // ─── Contact form (메인 + 문의 페이지 공통) ───
+    // ─── Contact form: mailto 발송 (정적 사이트용 - 백엔드 없이 이메일로 받기) ───
     var form = document.getElementById('contactForm');
     if (form) {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             var fd = new FormData(form);
+            // 다중 선택 (service[], market[]) 묶기
             var data = {};
             fd.forEach(function(v, k) {
                 if (data[k]) {
@@ -103,7 +104,49 @@
                     else data[k] = [data[k], v];
                 } else { data[k] = v; }
             });
-            // 데모: localStorage 저장 + 안내 (실서비스는 백엔드 / 이메일 / DB 연동)
+
+            function pick(k) {
+                var v = data[k];
+                if (v == null) return '-';
+                return Array.isArray(v) ? v.join(', ') : String(v);
+            }
+
+            // 이메일 본문 구성
+            var lines = [
+                '※ EZ TRADE HUB 상담 신청 ※',
+                '',
+                '■ 신청자 정보',
+                '이름: ' + pick('name'),
+                '기업명: ' + pick('company'),
+                '연락처: ' + pick('phone'),
+                '이메일: ' + pick('email'),
+                '',
+                '■ 관심 서비스',
+                pick('service'),
+                '',
+                '■ 진출 희망 시장',
+                pick('market'),
+                '',
+                '■ 예상 예산',
+                pick('budget'),
+                '',
+                '■ 유입 경로',
+                pick('source'),
+                '',
+                '■ 문의 내용',
+                pick('message'),
+                '',
+                '────────────────',
+                '접수 시각: ' + new Date().toLocaleString('ko-KR')
+            ];
+            var body = lines.join('\n');
+            var subject = '[EZ TRADE HUB 상담신청] ' + pick('company') + ' / ' + pick('name');
+
+            var mailto = 'mailto:shandongyiji_88@163.com'
+                + '?subject=' + encodeURIComponent(subject)
+                + '&body=' + encodeURIComponent(body);
+
+            // 로그 백업 (브라우저 종료 시에도 추적 가능하게)
             try {
                 var inquiries = JSON.parse(localStorage.getItem('eztradehub_inquiries') || '[]');
                 inquiries.push({ ts: new Date().toISOString(), data: data });
@@ -111,12 +154,15 @@
             } catch (err) {
                 console.warn('localStorage save failed:', err);
             }
+
+            // 이메일 클라이언트 실행
+            window.location.href = mailto;
+
             var msg = form.querySelector('.form-msg');
             if (msg) {
                 msg.style.display = 'block';
-                msg.textContent = '✅ 상담신청이 접수되었습니다. 1영업일 이내에 연락드리겠습니다.';
+                msg.textContent = '✅ 이메일 클라이언트가 열렸습니다. 발송 버튼을 눌러 상담신청을 완료해 주세요. (자동으로 열리지 않으면 shandongyiji_88@163.com 으로 직접 보내주세요)';
             }
-            form.reset();
         });
     }
 

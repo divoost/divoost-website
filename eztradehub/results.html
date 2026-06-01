@@ -16,10 +16,35 @@
         .case-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
         .case-thumb {
             aspect-ratio: 16/10;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             display: flex; align-items: center; justify-content: center;
-            font-size: 48px; color: #fff;
+            position: relative; overflow: hidden;
+            color: #fff;
         }
+        .case-thumb::before { content:""; position:absolute; inset:0; background-size:cover; background-position:center; }
+        .case-thumb.beauty::before     { background:
+            linear-gradient(135deg, rgba(236,72,153,.85), rgba(139,92,246,.85)),
+            radial-gradient(circle at 30% 30%, #fbcfe8, transparent 50%); }
+        .case-thumb.food::before       { background:
+            linear-gradient(135deg, rgba(245,158,11,.85), rgba(239,68,68,.85)),
+            radial-gradient(circle at 70% 30%, #fde68a, transparent 50%); }
+        .case-thumb.fashion::before    { background:
+            linear-gradient(135deg, rgba(99,102,241,.85), rgba(14,165,233,.85)),
+            radial-gradient(circle at 30% 70%, #bae6fd, transparent 50%); }
+        .case-thumb.baby::before       { background:
+            linear-gradient(135deg, rgba(20,184,166,.85), rgba(34,197,94,.85)),
+            radial-gradient(circle at 70% 70%, #bbf7d0, transparent 50%); }
+        .case-thumb.tech::before       { background:
+            linear-gradient(135deg, rgba(30,58,138,.9), rgba(59,130,246,.85)),
+            radial-gradient(circle at 50% 30%, #93c5fd, transparent 50%); }
+        .case-thumb.health::before     { background:
+            linear-gradient(135deg, rgba(132,204,22,.85), rgba(16,185,129,.85)),
+            radial-gradient(circle at 30% 30%, #d9f99d, transparent 50%); }
+        .case-thumb-inner {
+            position: relative; z-index: 1; text-align: center;
+            padding: 20px;
+        }
+        .case-thumb-inner .emo { font-size: 56px; filter: drop-shadow(0 6px 12px rgba(0,0,0,.25)); }
+        .case-thumb-inner .cat { display: block; margin-top: 6px; font-size: 12px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; opacity: .9; }
         .case-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
         .case-meta { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
         .case-tag { padding: 3px 10px; background: var(--surface); border-radius: var(--radius-pill); font-size: 11px; font-weight: 700; color: var(--text-muted); }
@@ -40,7 +65,7 @@
     <nav class="nav-menu">
         <div class="nav-item"><a href="#" class="nav-link">구축 SOLUTION <span class="chev">▾</span></a><div class="nav-dropdown"><a href="solutions/homepage.html">홈페이지 구축</a><a href="solutions/shopping.html">쇼핑몰 구축</a><a href="solutions/app.html">앱 구축</a></div></div>
         <div class="nav-item"><a href="#" class="nav-link">마케팅 MARKETING <span class="chev">▾</span></a><div class="nav-dropdown"><a href="marketing/online.html">온라인 마케팅</a><a href="marketing/influencer.html">인플루언서(왕홍)</a><a href="marketing/content.html">콘텐츠(숏폼)</a><a href="marketing/live.html">라이브 방송</a></div></div>
-        <a href="results.html" class="nav-link active">성과 RESULTS</a><a href="about.html" class="nav-link">회사소개 ABOUT</a><a href="insight.html" class="nav-link">인사이트 INSIGHT</a>
+        <a href="results.html" class="nav-link active">성과 RESULTS</a><a href="about.html" class="nav-link">회사소개 ABOUT</a>
     </nav>
     <div class="nav-right">
         <div class="nav-lang"><button data-lang-switch="ko" class="active">한국어</button><span>·</span><button data-lang-switch="zh">中文</button></div>
@@ -50,7 +75,7 @@
 </div><div class="nav-mobile">
     <div class="nav-mobile-section">구축</div><a href="solutions/homepage.html" class="sub">홈페이지</a><a href="solutions/shopping.html" class="sub">쇼핑몰</a><a href="solutions/app.html" class="sub">앱</a>
     <div class="nav-mobile-section">마케팅</div><a href="marketing/online.html" class="sub">온라인</a><a href="marketing/influencer.html" class="sub">인플루언서</a><a href="marketing/content.html" class="sub">콘텐츠</a><a href="marketing/live.html" class="sub">라이브</a>
-    <div class="nav-mobile-section">기타</div><a href="results.html">성과</a><a href="about.html">회사소개</a><a href="insight.html">인사이트</a><a href="contact.html">상담신청 →</a>
+    <div class="nav-mobile-section">기타</div><a href="results.html">성과</a><a href="about.html">회사소개</a><a href="contact.html">상담신청 →</a>
 </div></header>
 
 <section class="hero" style="min-height:auto; padding: calc(var(--nav-height) + 80px) 0 80px;">
@@ -81,11 +106,11 @@
         <div class="section-header reveal"><div class="eyebrow">CASE STUDIES</div><h2 class="h-1"><span class="text-accent">실제 매출 성장</span> 케이스.</h2></div>
         <div class="case-grid">
             <article class="case-card reveal">
-                <div class="case-thumb">💄</div>
+                <div class="case-thumb beauty"><div class="case-thumb-inner"><div class="emo">💄</div><span class="cat">BEAUTY · CHINA</span></div></div>
                 <div class="case-body">
                     <div class="case-meta"><span class="case-tag industry">뷰티</span><span class="case-tag channel">샤오홍슈 + 도우인</span></div>
                     <h3>K-뷰티 브랜드 A · 중국 진출 6개월</h3>
-                    <p>한국 뷰티 신생 브랜드의 중국 진출 풀 패키지: 쇼핑몰 + 샤오홍슈/도우인 KOC 캠페인 + 라이브 커머스 3회.</p>
+                    <p>K-뷰티 신생 브랜드의 중국 진출 풀 패키지: 쇼핑몰 + 샤오홍슈/도우인 KOC 캠페인 + 라이브 커머스 3회.</p>
                     <div class="case-metrics">
                         <div class="case-metric"><div class="num">+312%</div><div class="label">월매출 성장</div></div>
                         <div class="case-metric"><div class="num">¥1.2M+</div><div class="label">캠페인 매출</div></div>
@@ -94,10 +119,10 @@
                 </div>
             </article>
             <article class="case-card reveal">
-                <div class="case-thumb">🍱</div>
+                <div class="case-thumb food"><div class="case-thumb-inner"><div class="emo">🍱</div><span class="cat">F&B · SEA</span></div></div>
                 <div class="case-body">
                     <div class="case-meta"><span class="case-tag industry">식품</span><span class="case-tag channel">TikTok Shop SEA</span></div>
-                    <h3>한국 식품 브랜드 B · 동남아 4개국</h3>
+                    <h3>F&B 브랜드 B · 동남아 4개국</h3>
                     <p>VN·TH·ID·PH 동시 진출: Shopee/Lazada 쇼핑몰 + TikTok Live 12회 + 현지 KOL 18명 캠페인.</p>
                     <div class="case-metrics">
                         <div class="case-metric"><div class="num">$185K</div><div class="label">3개월 GMV</div></div>
@@ -107,7 +132,7 @@
                 </div>
             </article>
             <article class="case-card reveal">
-                <div class="case-thumb">👕</div>
+                <div class="case-thumb fashion"><div class="case-thumb-inner"><div class="emo">👕</div><span class="cat">FASHION · CHINA</span></div></div>
                 <div class="case-body">
                     <div class="case-meta"><span class="case-tag industry">패션</span><span class="case-tag channel">위챗 + 도우인</span></div>
                     <h3>D2C 패션 브랜드 C · 중국 B2C</h3>
@@ -120,7 +145,7 @@
                 </div>
             </article>
             <article class="case-card reveal">
-                <div class="case-thumb">🍼</div>
+                <div class="case-thumb baby"><div class="case-thumb-inner"><div class="emo">🍼</div><span class="cat">BABY · CHINA</span></div></div>
                 <div class="case-body">
                     <div class="case-meta"><span class="case-tag industry">유아·육아</span><span class="case-tag channel">바이두 SEO + 샤오홍슈</span></div>
                     <h3>유아용품 브랜드 D · 중국 B2C</h3>
@@ -133,7 +158,7 @@
                 </div>
             </article>
             <article class="case-card reveal">
-                <div class="case-thumb">⚡</div>
+                <div class="case-thumb tech"><div class="case-thumb-inner"><div class="emo">⚡</div><span class="cat">TECH · SEA</span></div></div>
                 <div class="case-body">
                     <div class="case-meta"><span class="case-tag industry">전자기기</span><span class="case-tag channel">동남아 TikTok</span></div>
                     <h3>스마트 가전 브랜드 E · SEA</h3>
@@ -146,10 +171,10 @@
                 </div>
             </article>
             <article class="case-card reveal">
-                <div class="case-thumb">🌿</div>
+                <div class="case-thumb health"><div class="case-thumb-inner"><div class="emo">🌿</div><span class="cat">WELLNESS · CHINA</span></div></div>
                 <div class="case-body">
                     <div class="case-meta"><span class="case-tag industry">건강식품</span><span class="case-tag channel">왕홍 라이브</span></div>
-                    <h3>한국 건강식품 브랜드 F · 중국</h3>
+                    <h3>건강식품 브랜드 F · 중국</h3>
                     <p>중형 왕홍 5명 + 도우인 라이브 4회 (1회당 평균 3시간) 캠페인. 광고법 자체 검수 100% 통과.</p>
                     <div class="case-metrics">
                         <div class="case-metric"><div class="num">¥1.8M</div><div class="label">캠페인 매출</div></div>
@@ -166,14 +191,14 @@
     <div class="container">
         <div class="perf-flow reveal">
             <div class="section-header" style="margin-bottom:24px;">
-                <div class="eyebrow dark">PERFORMANCE BILLING</div>
-                <h2 class="h-1">선마케팅·<span style="color:#FCD34D;">후정산 모델</span> (선택)</h2>
-                <p class="lead">대형 캠페인은 매출 성과 발생 후 정산하는 모델로도 진행 가능합니다.</p>
+                <div class="eyebrow dark">MILESTONE-BASED OPERATION</div>
+                <h2 class="h-1">단계별 <span style="color:#FCD34D;">KPI 마일스톤</span> 운영.</h2>
+                <p class="lead">한 번에 큰 계약이 아닌, 단계별 성과를 확인하며 함께 진행합니다.</p>
             </div>
             <div class="perf-steps" style="grid-template-columns: repeat(3, 1fr);">
-                <div class="perf-step"><div class="num">1</div><h4>제안·계약</h4><p>목표 KPI·정산 조건 명확화</p></div>
-                <div class="perf-step"><div class="num">2</div><h4>선마케팅</h4><p>당사 비용으로 캠페인 집행</p></div>
-                <div class="perf-step"><div class="num">3</div><h4>매출 발생 후 정산</h4><p>실제 매출 기준 RS 또는 fee</p></div>
+                <div class="perf-step"><div class="num">1</div><h4>1단계 · 시범 캠페인</h4><p>소규모 진단 · 시장 반응 데이터 확보</p></div>
+                <div class="perf-step"><div class="num">2</div><h4>2단계 · 성과 검증</h4><p>KPI 달성 시 본 캠페인 확장</p></div>
+                <div class="perf-step"><div class="num">3</div><h4>3단계 · Scale-up</h4><p>채널·예산 확대 · 매출 성장 가속</p></div>
             </div>
         </div>
     </div>
@@ -186,10 +211,10 @@
 </div></section>
 
 <footer><div class="container"><div class="footer-grid">
-    <div class="footer-brand"><div class="nav-logo"><div class="nav-logo-mark">EZ</div><span>TRADE HUB</span></div><p>중국·동남아 진출 기업의 BUILD · MARKET · SELL 통합 파트너.</p><div class="footer-contact"><div><strong>운영사</strong> 山东易吉企业管理有限公司</div><div><strong>이메일</strong> hello@eztradehub.com</div></div></div>
+    <div class="footer-brand"><div class="nav-logo"><div class="nav-logo-mark">EZ</div><span>TRADE HUB</span></div><p>중국·동남아 진출 기업의 BUILD · MARKET · SELL 통합 파트너.</p><div class="footer-contact"><div><strong>운영사</strong> 山东易吉企业管理有限公司</div><div><strong>이메일</strong> shandongyiji_88@163.com</div></div></div>
     <div><h5>SOLUTION</h5><ul><li><a href="solutions/homepage.html">홈페이지</a></li><li><a href="solutions/shopping.html">쇼핑몰</a></li><li><a href="solutions/app.html">앱</a></li></ul></div>
     <div><h5>MARKETING</h5><ul><li><a href="marketing/online.html">온라인</a></li><li><a href="marketing/influencer.html">인플루언서</a></li><li><a href="marketing/content.html">콘텐츠</a></li><li><a href="marketing/live.html">라이브</a></li></ul></div>
-    <div><h5>COMPANY</h5><ul><li><a href="about.html">회사소개</a></li><li><a href="results.html">성과</a></li><li><a href="insight.html">인사이트</a></li><li><a href="contact.html">상담</a></li></ul></div>
+    <div><h5>COMPANY</h5><ul><li><a href="about.html">회사소개</a></li><li><a href="results.html">성과</a></li><li></li><li><a href="contact.html">상담</a></li></ul></div>
 </div><div class="footer-bottom"><div>© 2026 EZ TRADE HUB. All rights reserved.</div><div class="footer-social"><a href="#">💬</a><a href="#">📕</a><a href="#">🎵</a><a href="#">in</a></div></div></div></footer>
 
 <script src="js/main.js"></script>
