@@ -18,7 +18,7 @@
 .page-hero-bg {
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #0F172A 100%);
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #1E40AF 100%);
   z-index: 0;
 }
 
@@ -106,7 +106,7 @@
 
 /* Gradient Variations for Image Placeholders */
 .gradient-1 {
-  background: linear-gradient(135deg, #2563EB 0%, #06B6D4 100%);
+  background: linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%);
 }
 
 .gradient-2 {
@@ -126,11 +126,11 @@
 }
 
 .gradient-6 {
-  background: linear-gradient(135deg, #0F172A 0%, #2563EB 100%);
+  background: linear-gradient(135deg, #2563EB 0%, #1E40AF 100%);
 }
 
 .gradient-7 {
-  background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
 }
 
 /* Feature Text */

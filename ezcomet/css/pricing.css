@@ -119,7 +119,7 @@
 .pricing-card-popular {
     border: 2px solid transparent;
     background-image: linear-gradient(var(--bg-white), var(--bg-white)),
-                      linear-gradient(135deg, #2563EB, #06B6D4);
+                      linear-gradient(135deg, #3B82F6, #1E40AF);
     background-origin: border-box;
     background-clip: padding-box, border-box;
     transform: scale(1.05);
