@@ -34,6 +34,58 @@
             "stat1": "对接渠道",
             "stat2": "运行稳定率",
             "stat3": "工作量减少"
+        },
+        "s3": {
+            "badge": "全球履约",
+            "title1": "国内配送，跨境配送",
+            "title2": "履约一站式",
+            "title3": "在同一系统中完成",
+            "subtitle": "从国内出库到海外本地配送 — 集成化履约让您专注销售，无需操心物流",
+            "ctaPrimary": "查看物流系统",
+            "ctaSecondary": "配送咨询"
+        },
+        "s4": {
+            "badge": "智能选品",
+            "title1": "没有可卖的商品？",
+            "title2": "用全球选品",
+            "title3": "为您找到能赚钱的商品",
+            "subtitle": "从 B2B 全球选品到国内外利润自动计算 — 投入前先核实盈利能力",
+            "ctaPrimary": "开始选品",
+            "ctaSecondary": "试用利润工具"
+        },
+        "s5": {
+            "badge": "面向全球卖家",
+            "title1": "只服务韩国卖家？",
+            "title2": "不",
+            "title3": "为全球卖家打造的平台",
+            "subtitle": "韩国卖家、海外卖家 — 任何人都能使用的唯一全球进出口平台",
+            "ctaPrimary": "立即开始",
+            "ctaSecondary": "服务介绍"
+        }
+    },
+    "sec": {
+        "why": {
+            "badge": "选择 HUBONTRADE 的理由",
+            "title": "其他平台没有的能力",
+            "desc": "用差异化功能为全球销售设立新标准"
+        },
+        "platforms": {
+            "badge": "支持的平台",
+            "title": "从本土到全球，主要市场全对接",
+            "desc": "一次上传，全平台同步铺货"
+        },
+        "comparison": {
+            "badge": "对比",
+            "title": "HUBONTRADE 与同行对比",
+            "desc": "核心差异化功能对比"
+        },
+        "features": {
+            "badge": "核心功能",
+            "title": "为卖家打造的关键功能"
+        },
+        "foryou": {
+            "badge": "推荐给您",
+            "title": "推荐给这些人群"
         }
     }
 }

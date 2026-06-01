@@ -34,6 +34,58 @@
             "stat1": "Connected Marketplaces",
             "stat2": "Uptime",
             "stat3": "Workload Reduced"
+        },
+        "s3": {
+            "badge": "GLOBAL FULFILLMENT",
+            "title1": "Domestic & Cross-Border Shipping,",
+            "title2": "Full Fulfillment",
+            "title3": "On One System",
+            "subtitle": "From local dispatch to international last-mile — integrated fulfillment so you can focus on selling, not shipping",
+            "ctaPrimary": "See Logistics System",
+            "ctaSecondary": "Shipping Inquiry"
+        },
+        "s4": {
+            "badge": "SMART SOURCING",
+            "title1": "No Products to Sell?",
+            "title2": "Find Winners With Global Sourcing",
+            "title3": "We Find Profitable Products For You",
+            "subtitle": "From B2B global sourcing to automatic margin calculation — verify profitability before you commit",
+            "ctaPrimary": "Start Sourcing",
+            "ctaSecondary": "Try Margin Tool"
+        },
+        "s5": {
+            "badge": "FOR GLOBAL SELLERS",
+            "title1": "Korean Sellers Only?",
+            "title2": "No.",
+            "title3": "A Platform For Sellers Worldwide",
+            "subtitle": "Whether you sell from Korea or anywhere else — the only global export/import platform built for everyone",
+            "ctaPrimary": "Get Started",
+            "ctaSecondary": "Service Overview"
+        }
+    },
+    "sec": {
+        "why": {
+            "badge": "WHY HUBONTRADE",
+            "title": "What Other Platforms Don't Have",
+            "desc": "Differentiated features that set a new standard for global selling"
+        },
+        "platforms": {
+            "badge": "SUPPORTED PLATFORMS",
+            "title": "From Local to Global — Major Marketplace Integrations",
+            "desc": "List once, sell on all marketplaces simultaneously"
+        },
+        "comparison": {
+            "badge": "COMPARISON",
+            "title": "HUBONTRADE vs Competitors",
+            "desc": "Key feature comparison"
+        },
+        "features": {
+            "badge": "KEY FEATURES",
+            "title": "Core Features Built For Sellers"
+        },
+        "foryou": {
+            "badge": "FOR YOU",
+            "title": "Recommended For You"
         }
     }
 }
