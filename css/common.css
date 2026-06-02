@@ -266,8 +266,31 @@ p {
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
-  gap: var(--space-xs);
+  gap: 2px;
   margin-left: auto;
+}
+
+.nav-link {
+  padding: 6px 8px !important;
+  font-size: 13px !important;
+}
+
+/* 베트남어/중국어 등 긴 메뉴 자동 축소 */
+body.lang-vi .nav-link,
+body.lang-zh .nav-link,
+body.lang-en .nav-link {
+  padding: 5px 6px !important;
+  font-size: 12.5px !important;
+}
+body.lang-vi .lang-switcher,
+body.lang-zh .lang-switcher,
+body.lang-en .lang-switcher {
+  padding: 0 8px !important;
+}
+body.lang-vi .logo,
+body.lang-zh .logo,
+body.lang-en .logo {
+  margin-right: 16px !important;
 }
 
 @media (max-width: 1024px) {
