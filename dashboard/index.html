@@ -714,18 +714,34 @@
         }
 
         var PLATFORMS = [
-            { key:'coupang', name:'쿠팡', icon:'🚀', source:'api', tagId:'tag-coupang', countId:'v-coupang-count' },
-            { key:'1688', name:'1688', icon:'🏭', source:'crawl', tagId:'tag-1688', countId:'v-1688-count' },
-            { key:'taobao', name:'타오바오', icon:'🛒', source:'crawl', tagId:'tag-taobao', countId:'v-taobao-count' },
-            { key:'gmarket', name:'지마켓', icon:'🟢', source:'todo', tagId:'tag-gmarket', countId:'v-gmarket-count' },
-            { key:'naver', name:'네이버', icon:'🟩', source:'todo', tagId:'tag-naver', countId:'v-naver-count' },
-            { key:'shopee', name:'Shopee', icon:'🛍', source:'todo', tagId:'tag-shopee', countId:'v-shopee-count' },
-            { key:'lazada', name:'Lazada', icon:'🏬', source:'todo', tagId:'tag-lazada', countId:'v-lazada-count' },
-            { key:'tiktok', name:'TikTok Shop', icon:'🎵', source:'todo', tagId:'tag-tiktok', countId:'v-tiktok-count' },
-            { key:'shein', name:'SHEIN', icon:'👗', source:'todo', tagId:'tag-shein', countId:'v-shein-count' },
-            { key:'amazon', name:'Amazon', icon:'📦', source:'todo', tagId:'tag-amazon', countId:'v-amazon-count' },
-            { key:'temu', name:'Temu', icon:'🏷', source:'todo', tagId:'tag-temu', countId:'v-temu-count' }
+            { key:'coupang', name:'쿠팡', icon:'🚀', source:'api', sourceLabel:'API', tagId:'tag-coupang', countId:'v-coupang-count' },
+            { key:'gmarket', name:'지마켓', icon:'🟢', source:'crawl', sourceLabel:'크롤링', tagId:'tag-gmarket', countId:'v-gmarket-count' },
+            { key:'naver', name:'네이버', icon:'🟩', source:'crawl', sourceLabel:'크롤링', tagId:'tag-naver', countId:'v-naver-count' },
+            { key:'1688', name:'1688', icon:'🏭', source:'todo', sourceLabel:'개발 예정', tagId:'tag-1688', countId:'v-1688-count' },
+            { key:'taobao', name:'타오바오', icon:'🛒', source:'todo', sourceLabel:'개발 예정', tagId:'tag-taobao', countId:'v-taobao-count' },
+            { key:'shopee', name:'Shopee', icon:'🛍', source:'todo', sourceLabel:'개발 예정', tagId:'tag-shopee', countId:'v-shopee-count' },
+            { key:'lazada', name:'Lazada', icon:'🏬', source:'todo', sourceLabel:'개발 예정', tagId:'tag-lazada', countId:'v-lazada-count' },
+            { key:'tiktok', name:'TikTok Shop', icon:'🎵', source:'todo', sourceLabel:'개발 예정', tagId:'tag-tiktok', countId:'v-tiktok-count' },
+            { key:'shein', name:'SHEIN', icon:'👗', source:'todo', sourceLabel:'개발 예정', tagId:'tag-shein', countId:'v-shein-count' },
+            { key:'amazon', name:'Amazon', icon:'📦', source:'todo', sourceLabel:'개발 예정', tagId:'tag-amazon', countId:'v-amazon-count' },
+            { key:'temu', name:'Temu', icon:'🏷', source:'todo', sourceLabel:'개발 예정', tagId:'tag-temu', countId:'v-temu-count' }
         ];
+
+        // ─── 크롤러 호출 (Gmarket, Naver) ───
+        async function crawlerCall(crawlerSource, keyword){
+            var res = await fetch(SUPABASE_URL + '/functions/v1/marketplace-crawler', {
+                method:'POST',
+                headers:{
+                    'Authorization':'Bearer ' + session.access_token,
+                    'apikey':SUPABASE_KEY,
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({ source: crawlerSource, keyword: keyword })
+            });
+            var data = await res.json();
+            if(!res.ok || data.error) throw new Error(data.error || 'crawler error');
+            return data.products || [];
+        }
 
         window.aiSearchAll = async function(){
             var kw = document.getElementById('hubKeyword').value.trim();
@@ -755,40 +771,52 @@
 
             var allResults = {};
 
-            try {
-                var coupangProducts = await searchCoupang(kw);
-                allResults.coupang = coupangProducts.map(function(p){
-                    return {
-                        name: p.productName,
-                        image: p.productImage,
-                        price: p.productPrice,
-                        url: p.productUrl,
-                        meta: p.isRocket ? '🚀 로켓배송' : ''
-                    };
-                });
-                var c = document.getElementById('v-coupang-count'); if(c) c.textContent = coupangProducts.length;
-                var tag = document.getElementById('tag-coupang'); if(tag){ tag.textContent = 'API 연동'; tag.className = 'data-tag tag-live'; }
-            } catch(e) {
-                allResults.coupang = [];
-                var c2 = document.getElementById('v-coupang-count'); if(c2) c2.textContent = '0';
-                var tg = document.getElementById('tag-coupang'); if(tg){ tg.textContent = 'API 오류'; tg.className = 'data-tag tag-sample'; }
+            // ─ 병렬 검색 (쿠팡 API + Gmarket 크롤링 + 네이버 크롤링) ─
+            var tasks = [
+                searchCoupang(kw).then(function(arr){
+                    allResults.coupang = arr.map(function(p){
+                        return { name: p.productName, image: p.productImage, price: p.productPrice, url: p.productUrl, meta: p.isRocket ? '🚀 로켓배송' : '' };
+                    });
+                    setCount('coupang', arr.length, 'API 연동', 'tag-live');
+                }).catch(function(e){
+                    allResults.coupang = [];
+                    setCount('coupang', 0, 'API 오류', 'tag-sample');
+                }),
+                crawlerCall('gmarket-search', kw).then(function(arr){
+                    allResults.gmarket = arr;
+                    setCount('gmarket', arr.length, '크롤링', 'tag-scrape');
+                }).catch(function(e){
+                    allResults.gmarket = [];
+                    setCount('gmarket', 0, '크롤링 오류', 'tag-sample');
+                }),
+                crawlerCall('naver-search', kw).then(function(arr){
+                    allResults.naver = arr;
+                    setCount('naver', arr.length, '크롤링', 'tag-scrape');
+                }).catch(function(e){
+                    allResults.naver = [];
+                    setCount('naver', 0, '크롤링 오류', 'tag-sample');
+                })
+            ];
+
+            function setCount(key, count, label, cls){
+                var c = document.getElementById('v-' + key + '-count'); if(c) c.textContent = count;
+                var tag = document.getElementById('tag-' + key); if(tag){ tag.textContent = label; tag.className = 'data-tag ' + cls; }
             }
 
+            await Promise.all(tasks);
+
+            // 미연동 플랫폼은 빈 결과 + 라벨
             PLATFORMS.forEach(function(p){
-                if(p.key === 'coupang') return;
-                var c = document.getElementById(p.countId); if(c) c.textContent = '0';
-                var tag = document.getElementById(p.tagId);
-                if(tag){
-                    if(p.source === 'crawl'){ tag.textContent = '크롤러 필요'; tag.className = 'data-tag tag-sample'; }
-                    else { tag.textContent = 'API 필요'; tag.className = 'data-tag tag-sample'; }
+                if(p.source === 'todo'){
+                    setCount(p.key, 0, '개발 필요', 'tag-sample');
+                    allResults[p.key] = [];
                 }
-                allResults[p.key] = [];
             });
 
             var html = '';
             PLATFORMS.forEach(function(p){
                 var products = allResults[p.key] || [];
-                if(products.length === 0 && p.key !== 'coupang') return;
+                if(products.length === 0 && p.source === 'todo') return;
 
                 html += '<div style="margin-bottom:24px">';
                 html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #F1F5F9">';
@@ -797,10 +825,11 @@
                 html += '<span style="font-size:.72rem;color:#64748B">'+products.length+'개</span>';
                 if(p.source === 'api') html += '<span style="font-size:.65rem;padding:1px 8px;background:#D1FAE5;color:#065F46;border-radius:8px;font-weight:600">API</span>';
                 else if(p.source === 'crawl') html += '<span style="font-size:.65rem;padding:1px 8px;background:#F3E8FF;color:#6B21A8;border-radius:8px;font-weight:600">크롤링</span>';
+                else html += '<span style="font-size:.65rem;padding:1px 8px;background:#FEF3C7;color:#92400E;border-radius:8px;font-weight:600">개발 필요</span>';
                 html += '</div>';
 
                 if(products.length === 0){
-                    html += '<div style="color:#94A3B8;font-size:.78rem;padding:12px;text-align:center;background:#F8FAFC;border-radius:8px">결과 없음 (백엔드 개발 필요)</div>';
+                    html += '<div style="color:#94A3B8;font-size:.78rem;padding:12px;text-align:center;background:#F8FAFC;border-radius:8px">' + (p.source==='todo' ? '⚠ 백엔드 미개발 - API 또는 크롤러 추가 필요' : '결과 없음') + '</div>';
                 } else {
                     html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px">';
                     products.slice(0, 18).forEach(function(item){
