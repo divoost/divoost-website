@@ -64,8 +64,8 @@ h1,h2,h3,h4,h5 { font-family: var(--font-heading); font-weight: 700; line-height
 /* Sidebar */
 .sidebar {
   width: var(--sidebar-width);
-  background: var(--bg-dark);
-  color: var(--text-white);
+  background: #FFFFFF;
+  color: var(--text-primary);
   position: fixed;
   top: 0;
   left: 0;
@@ -74,11 +74,12 @@ h1,h2,h3,h4,h5 { font-family: var(--font-heading); font-weight: 700; line-height
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  border-right: 1px solid var(--border);
 }
 
 .sidebar-logo {
   padding: 20px 24px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-bottom: 1px solid var(--border-light);
   display: flex;
   align-items: center;
   gap: 10px;
@@ -96,6 +97,7 @@ h1,h2,h3,h4,h5 { font-family: var(--font-heading); font-weight: 700; line-height
   font-family: var(--font-heading);
   font-size: 16px;
   font-weight: 700;
+  color: var(--text-primary);
 }
 
 .sidebar-logo-text small {
@@ -110,7 +112,7 @@ h1,h2,h3,h4,h5 { font-family: var(--font-heading); font-weight: 700; line-height
 .sidebar-section { margin-bottom: 24px; }
 .sidebar-section-title {
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--text-muted);
@@ -126,19 +128,21 @@ h1,h2,h3,h4,h5 { font-family: var(--font-heading); font-weight: 700; line-height
   border-radius: var(--radius-md);
   font-size: 13px;
   font-weight: 500;
-  color: var(--text-muted);
+  color: var(--text-secondary);
   transition: all 0.2s;
   margin-bottom: 2px;
+  text-decoration: none;
 }
 
 .sidebar-link:hover {
-  background: rgba(255,255,255,0.06);
-  color: var(--text-white);
+  background: #F1F5F9;
+  color: var(--primary);
 }
 
 .sidebar-link.active {
-  background: rgba(37,99,235,0.2);
-  color: var(--primary-light);
+  background: rgba(37,99,235,0.10);
+  color: var(--primary);
+  font-weight: 600;
 }
 
 .sidebar-link-icon { font-size: 18px; width: 24px; text-align: center; }
