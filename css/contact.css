@@ -179,7 +179,30 @@
 }
 
 /* =========================================
-   MAP PLACEHOLDER
+   MAP EMBED
+   ========================================= */
+.map-embed {
+    margin-top: var(--space-lg);
+}
+.map-embed iframe {
+    display: block;
+    width: 100%;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+}
+.map-link-naver {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: #3B82F6;
+    text-decoration: none;
+}
+.map-link-naver:hover {
+    text-decoration: underline;
+}
+
+/* =========================================
+   MAP PLACEHOLDER (legacy)
    ========================================= */
 .map-placeholder {
     width: 100%;
