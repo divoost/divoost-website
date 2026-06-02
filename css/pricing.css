@@ -63,7 +63,17 @@
     transition: transform var(--transition-base);
 }
 
+.pricing-toggle.active {
+    background: #3B82F6;
+}
+
+.pricing-toggle.active .pricing-toggle-slider {
+    transform: translateX(26px);
+}
+
 .pricing-toggle-label {
+    cursor: pointer;
+    user-select: none;
     font-size: var(--text-sm);
     font-weight: 600;
     color: var(--text-muted);
