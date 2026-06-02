@@ -79,7 +79,7 @@
     </div>
     <script>
         document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
-        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
+        var SCRAPER_KEY=''/* 🔴 ScraperAPI 키 노출 사고로 제거됨. 키 회전 후 Edge Function에서 사용 */;
 
         function loadSavedKeywords(){
             var kws=JSON.parse(localStorage.getItem('listenKeywords')||'[]');

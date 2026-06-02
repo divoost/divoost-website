@@ -92,7 +92,7 @@
         </div>
     </div>
     <script>
-        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
+        var SCRAPER_KEY=''/* 🔴 ScraperAPI 키 노출 사고로 제거됨. 키 회전 후 Edge Function에서 사용 */;
 
         async function searchGoogle(query,country){
             var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(query)+'&country='+(country||'kr')+'&num=20';
