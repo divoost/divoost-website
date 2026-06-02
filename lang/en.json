@@ -174,5 +174,43 @@
         "subtitle": "Experience all features with 30-day free trial",
         "primary": "Start Free Trial",
         "secondary": "Request 1:1 Consultation"
+    },
+    "pages": {
+        "solution": {
+            "heroTitle": "Export, Import, Sourcing — All on One Platform",
+            "heroDesc": "Solve every step of global commerce with HUBONTRADE’s unified solution"
+        },
+        "features": {
+            "heroTitle": "Powerful Features Built for Sellers",
+            "heroDesc": "Core features that simplify the complexity of global selling"
+        },
+        "service": {
+            "heroTitle": "We Handle Everything in <span class=\"gradient-text\">Global Selling</span>",
+            "heroDesc": "Discover the expert services HUBONTRADE provides"
+        },
+        "market": {
+            "heroTitle": "From Local to Global, <span class=\"gradient-text\">Major Marketplace Integrations</span>",
+            "heroDesc": "Manage local & overseas marketplaces in one HUBONTRADE"
+        },
+        "pricing": {
+            "heroTitle": "Simple, Fair Pricing",
+            "heroDesc": "Pick the plan that fits your business scale"
+        },
+        "case": {
+            "heroTitle": "Success Stories",
+            "heroDesc": "Stories of brands that grew global markets with HUBONTRADE"
+        },
+        "resources": {
+            "heroTitle": "Resource Center",
+            "heroDesc": "Everything you need for global e-commerce"
+        },
+        "contact": {
+            "heroTitle": "Get in Touch",
+            "heroDesc": "Reach out anytime with questions about global market entry"
+        },
+        "guide": {
+            "heroTitle": "1688 Sourcing → <span class=\"gradient-text\">Coupang Selling</span> Complete Guide",
+            "heroDesc": "From high-margin product picks to finding direct-shipping suppliers — everything about 1688"
+        }
     }
 }

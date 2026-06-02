@@ -174,5 +174,43 @@
         "subtitle": "30 天免费体验所有功能",
         "primary": "免费试用",
         "secondary": "申请 1:1 咨询"
+    },
+    "pages": {
+        "solution": {
+            "heroTitle": "出口、进口、选品 — 一站式平台",
+            "heroDesc": "使用 HUBONTRADE 一体化解决方案搞定全球电商的每一个环节"
+        },
+        "features": {
+            "heroTitle": "为卖家打造的强大功能",
+            "heroDesc": "让复杂的全球销售变得简单的 HUBONTRADE 核心功能"
+        },
+        "service": {
+            "heroTitle": "我们<span class=\"gradient-text\">代办全球销售</span>的一切",
+            "heroDesc": "了解 HUBONTRADE 提供的专业服务"
+        },
+        "market": {
+            "heroTitle": "从本土到全球，<span class=\"gradient-text\">主要市场全对接</span>",
+            "heroDesc": "用一个 HUBONTRADE 统一管理国内外市场"
+        },
+        "pricing": {
+            "heroTitle": "合理的价格方案",
+            "heroDesc": "选择适合您业务规模的最佳方案"
+        },
+        "case": {
+            "heroTitle": "成功案例",
+            "heroDesc": "与 HUBONTRADE 一起开拓全球市场的品牌故事"
+        },
+        "resources": {
+            "heroTitle": "资源中心",
+            "heroDesc": "提供全球电商所需的全部信息"
+        },
+        "contact": {
+            "heroTitle": "联系我们",
+            "heroDesc": "关于开拓全球市场的任何疑问，请随时联系我们"
+        },
+        "guide": {
+            "heroTitle": "1688 选品 → <span class=\"gradient-text\">Coupang 销售</span>完全指南",
+            "heroDesc": "从高利润推荐商品到寻找直邮店铺 — 1688 选品的全部知识"
+        }
     }
 }
