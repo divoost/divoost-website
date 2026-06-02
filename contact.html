@@ -67,111 +67,111 @@
             <div class="contact-layout">
                 <!-- Left: Contact Form -->
                 <div class="contact-form-wrap fade-in-up">
-                    <h2 class="contact-form-heading">문의 양식</h2>
+                    <h2 class="contact-form-heading" data-i18n="pages.contact.form.title">문의 양식</h2>
                     <form class="contact-form" onsubmit="return false;">
                         <div class="form-group">
-                            <label class="form-label" for="company">회사명</label>
+                            <label class="form-label" for="company" data-i18n="pages.contact.form.company">회사명</label>
                             <input type="text" id="company" class="form-input" placeholder="회사명을 입력하세요">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="name">담당자명</label>
+                            <label class="form-label" for="name" data-i18n="pages.contact.form.name">담당자명</label>
                             <input type="text" id="name" class="form-input" placeholder="담당자명을 입력하세요">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="email">이메일</label>
+                            <label class="form-label" for="email" data-i18n="pages.contact.form.email">이메일</label>
                             <input type="email" id="email" class="form-input" placeholder="이메일 주소를 입력하세요">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="phone">연락처</label>
+                            <label class="form-label" for="phone" data-i18n="pages.contact.form.phone">연락처</label>
                             <input type="tel" id="phone" class="form-input" placeholder="연락처를 입력하세요">
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="service">관심 서비스</label>
+                            <label class="form-label" for="service" data-i18n="pages.contact.form.service">관심 서비스</label>
                             <select id="service" class="form-select">
-                                <option value="" disabled selected>관심 서비스를 선택하세요</option>
-                                <option value="platform">플랫폼 입점</option>
-                                <option value="logistics">물류 & 풀필먼트</option>
-                                <option value="marketing">마케팅</option>
-                                <option value="live">라이브커머스</option>
-                                <option value="consulting">종합 컨설팅</option>
-                                <option value="other">기타</option>
+                                <option value="" disabled selected data-i18n="pages.contact.form.servicePlaceholder">관심 서비스를 선택하세요</option>
+                                <option value="platform" data-i18n="pages.contact.form.opt.platform">플랫폼 입점</option>
+                                <option value="logistics" data-i18n="pages.contact.form.opt.logistics">물류 & 풀필먼트</option>
+                                <option value="marketing" data-i18n="pages.contact.form.opt.marketing">마케팅</option>
+                                <option value="live" data-i18n="pages.contact.form.opt.live">라이브커머스</option>
+                                <option value="consulting" data-i18n="pages.contact.form.opt.consulting">종합 컨설팅</option>
+                                <option value="other" data-i18n="pages.contact.form.opt.other">기타</option>
                             </select>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label">진출 희망 국가</label>
+                            <label class="form-label" data-i18n="pages.contact.form.country">진출 희망 국가</label>
                             <div class="checkbox-group">
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="country" value="vietnam">
                                     <span class="checkbox-custom"></span>
-                                    <span class="checkbox-text">베트남</span>
+                                    <span class="checkbox-text" data-i18n="pages.contact.form.cc.vietnam">베트남</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="country" value="thailand">
                                     <span class="checkbox-custom"></span>
-                                    <span class="checkbox-text">태국</span>
+                                    <span class="checkbox-text" data-i18n="pages.contact.form.cc.thailand">태국</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="country" value="indonesia">
                                     <span class="checkbox-custom"></span>
-                                    <span class="checkbox-text">인도네시아</span>
+                                    <span class="checkbox-text" data-i18n="pages.contact.form.cc.indonesia">인도네시아</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="country" value="philippines">
                                     <span class="checkbox-custom"></span>
-                                    <span class="checkbox-text">필리핀</span>
+                                    <span class="checkbox-text" data-i18n="pages.contact.form.cc.philippines">필리핀</span>
                                 </label>
                                 <label class="checkbox-item">
                                     <input type="checkbox" name="country" value="malaysia">
                                     <span class="checkbox-custom"></span>
-                                    <span class="checkbox-text">말레이시아</span>
+                                    <span class="checkbox-text" data-i18n="pages.contact.form.cc.malaysia">말레이시아</span>
                                 </label>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="form-label" for="message">문의 내용</label>
+                            <label class="form-label" for="message" data-i18n="pages.contact.form.message">문의 내용</label>
                             <textarea id="message" class="form-textarea" placeholder="문의 내용을 입력하세요"></textarea>
                         </div>
 
-                        <button type="submit" class="btn btn-primary btn-lg contact-submit-btn">문의 보내기</button>
+                        <button type="submit" class="btn btn-primary btn-lg contact-submit-btn" data-i18n="pages.contact.form.submit">문의 보내기</button>
                     </form>
                 </div>
 
                 <!-- Right: Contact Info -->
                 <div class="contact-info-wrap fade-in-up">
-                    <h2 class="contact-info-heading">연락처 정보</h2>
+                    <h2 class="contact-info-heading" data-i18n="pages.contact.info.title">연락처 정보</h2>
                     <div class="contact-info-list">
                         <div class="contact-info-item">
                             <span class="contact-info-icon">📍</span>
                             <div>
-                                <h4 class="contact-info-label">주소</h4>
-                                <p class="contact-info-value">서울 영등포구 영등포로 116, 대라빌딩 3층</p>
+                                <h4 class="contact-info-label" data-i18n="pages.contact.info.addrLabel">주소</h4>
+                                <p class="contact-info-value" data-i18n="pages.contact.info.addrValue">서울 영등포구 영등포로 116, 대라빌딩 3층</p>
                             </div>
                         </div>
                         <div class="contact-info-item">
                             <span class="contact-info-icon">📞</span>
                             <div>
-                                <h4 class="contact-info-label">전화</h4>
+                                <h4 class="contact-info-label" data-i18n="pages.contact.info.phoneLabel">전화</h4>
                                 <p class="contact-info-value">1660-2318</p>
                             </div>
                         </div>
                         <div class="contact-info-item">
                             <span class="contact-info-icon">✉️</span>
                             <div>
-                                <h4 class="contact-info-label">이메일</h4>
+                                <h4 class="contact-info-label" data-i18n="pages.contact.info.emailLabel">이메일</h4>
                                 <p class="contact-info-value">contact@drapin.com</p>
                             </div>
                         </div>
                         <div class="contact-info-item">
                             <span class="contact-info-icon">⏰</span>
                             <div>
-                                <h4 class="contact-info-label">운영시간</h4>
-                                <p class="contact-info-value">평일 09:00 - 18:00 (KST)</p>
+                                <h4 class="contact-info-label" data-i18n="pages.contact.info.hoursLabel">운영시간</h4>
+                                <p class="contact-info-value" data-i18n="pages.contact.info.hoursValue">평일 09:00 - 18:00 (KST)</p>
                             </div>
                         </div>
                     </div>
@@ -184,7 +184,7 @@
                             loading="lazy" referrerpolicy="no-referrer-when-downgrade"
                             title="대라빌딩 위치"></iframe>
                         <a href="https://map.naver.com/p/search/서울%20영등포구%20영등포로%20116%20대라빌딩"
-                           target="_blank" rel="noopener" class="map-link-naver">네이버 지도에서 보기 →</a>
+                           target="_blank" rel="noopener" class="map-link-naver" data-i18n="pages.contact.info.mapLink">네이버 지도에서 보기 →</a>
                     </div>
                 </div>
             </div>
@@ -196,23 +196,23 @@
         <div class="container">
             <div class="section-header text-center">
                 <span class="section-badge">QUICK CONTACT</span>
-                <h2 class="section-title">빠른 문의 방법</h2>
+                <h2 class="section-title" data-i18n="pages.contact.quick.title">빠른 문의 방법</h2>
             </div>
             <div class="quick-contact-grid">
                 <div class="quick-contact-card fade-in-up">
                     <span class="quick-contact-icon">💬</span>
-                    <h3 class="quick-contact-title">카카오톡 상담</h3>
-                    <p class="quick-contact-desc">실시간 채팅 상담 (평일 09-18시)</p>
+                    <h3 class="quick-contact-title" data-i18n="pages.contact.quick.kakao.title">카카오톡 상담</h3>
+                    <p class="quick-contact-desc" data-i18n="pages.contact.quick.kakao.desc">실시간 채팅 상담 (평일 09-18시)</p>
                 </div>
                 <div class="quick-contact-card fade-in-up">
                     <span class="quick-contact-icon">📞</span>
-                    <h3 class="quick-contact-title">전화 상담</h3>
-                    <p class="quick-contact-desc">1660-2318 (평일 09-18시)</p>
+                    <h3 class="quick-contact-title" data-i18n="pages.contact.quick.phone.title">전화 상담</h3>
+                    <p class="quick-contact-desc" data-i18n="pages.contact.quick.phone.desc">1660-2318 (평일 09-18시)</p>
                 </div>
                 <div class="quick-contact-card fade-in-up">
                     <span class="quick-contact-icon">📧</span>
-                    <h3 class="quick-contact-title">이메일 문의</h3>
-                    <p class="quick-contact-desc">contact@drapin.com (24시간 접수)</p>
+                    <h3 class="quick-contact-title" data-i18n="pages.contact.quick.email.title">이메일 문의</h3>
+                    <p class="quick-contact-desc" data-i18n="pages.contact.quick.email.desc">contact@drapin.com (24시간 접수)</p>
                 </div>
             </div>
         </div>
@@ -222,16 +222,16 @@
     <section class="section office-section fade-in-up">
         <div class="container text-center">
             <span class="section-badge">OFFICE</span>
-            <h2 class="section-title">찾아오시는 길</h2>
-            <p class="section-desc">서울 영등포구 영등포로 116, 대라빌딩 3층</p>
+            <h2 class="section-title" data-i18n="pages.contact.office.title">찾아오시는 길</h2>
+            <p class="section-desc" data-i18n="pages.contact.office.desc">서울 영등포구 영등포로 116, 대라빌딩 3층</p>
             <div class="office-details">
                 <div class="office-detail-item">
                     <span class="office-detail-icon">🚇</span>
-                    <p class="office-detail-text">영등포구청역 6번 출구 도보 6분 · 문래역 3번 출구 도보 6분</p>
+                    <p class="office-detail-text" data-i18n="pages.contact.office.subway">영등포구청역 6번 출구 도보 6분 · 문래역 3번 출구 도보 6분</p>
                 </div>
                 <div class="office-detail-item">
                     <span class="office-detail-icon">🅿️</span>
-                    <p class="office-detail-text">주차장이 협소하니 가급적 대중교통 이용 부탁드립니다</p>
+                    <p class="office-detail-text" data-i18n="pages.contact.office.parking">주차장이 협소하니 가급적 대중교통 이용 부탁드립니다</p>
                 </div>
             </div>
         </div>
@@ -245,7 +245,7 @@
                     <a href="index.html" class="logo">
                         <img src="assets/hubongtrade-logo-bottom.png" alt="HubOnTrade" class="logo-img logo-img-footer">
                     </a>
-                    <p>글로벌 크로스보더 이커머스 전문 플랫폼</p>
+                    <p data-i18n="footer.tagline">글로벌 크로스보더 이커머스 전문 플랫폼</p>
                 </div>
 
                 <div class="footer-col">
