@@ -172,13 +172,24 @@
                 <div class="verify-icon">📧</div>
                 <div class="verify-title">이메일 인증을 진행해주세요</div>
                 <div class="verify-text">
-                    가입하신 이메일로 인증 링크를 전송했습니다.<br>
-                    메일함을 확인하고 링크를 클릭해주세요.
+                    가입하신 이메일로 <strong>6자리 인증번호</strong>를 전송했습니다.<br>
+                    메일함을 확인하고 아래에 입력해주세요.
                 </div>
                 <span class="verify-email" id="verifyEmailAddr">your@email.com</span>
-                <div class="verify-text">
-                    인증을 완료하면 곧바로 모든 기능을 사용하실 수 있습니다.
+
+                <div class="form-group" style="margin-top:18px">
+                    <label>인증번호 6자리</label>
+                    <input type="text" id="verifyOtp" placeholder="123456" inputmode="numeric" pattern="[0-9]*" maxlength="6"
+                           autocomplete="one-time-code"
+                           style="text-align:center;font-size:24px;letter-spacing:8px;font-weight:700;font-family:monospace">
                 </div>
+
+                <button class="btn-submit" id="btnVerify" onclick="handleVerifyOtp()">인증하고 시작하기</button>
+
+                <div class="verify-text" style="margin-top:10px;font-size:12px;color:#94a3b8">
+                    또는 메일에 포함된 <strong>인증 링크</strong>를 클릭하셔도 됩니다.
+                </div>
+
                 <div style="text-align:center;margin-top:18px">
                     <button class="resend-btn" onclick="resendVerification()">📤 인증 메일 재발송</button>
                 </div>
@@ -471,6 +482,49 @@
             }
         }
 
+        // ─── Verify OTP (이메일로 받은 6자리 코드로 인증) ───
+        async function handleVerifyOtp(){
+            clearAlert();
+            var email = localStorage.getItem('snsAuthPendingEmail') || document.getElementById('verifyEmailAddr').textContent;
+            var token = document.getElementById('verifyOtp').value.trim();
+
+            if(!email || email === 'your@email.com'){
+                showAlert('인증할 이메일이 없습니다. 다시 회원가입해주세요.', 'error');
+                return;
+            }
+            if(!/^[0-9]{6}$/.test(token)){
+                showAlert('6자리 숫자 인증번호를 입력해주세요', 'error');
+                return;
+            }
+
+            setLoading('btnVerify', true);
+
+            // Supabase verify OTP endpoint
+            var result = await supabaseAuth('verify', {
+                type: 'signup',
+                email: email,
+                token: token
+            });
+
+            setLoading('btnVerify', false);
+
+            if(result.ok && result.data.access_token){
+                // 인증 성공 → 자동 로그인
+                saveSession(result.data, result.data.user);
+                showAlert('이메일 인증 완료! 잠시 후 이동합니다.', 'success');
+                localStorage.removeItem('snsAuthPendingEmail');
+                setTimeout(function(){ window.location.href = REDIRECT_URL; }, 1000);
+            } else {
+                var errMsg = (result.data && (result.data.error_description || result.data.msg || result.data.message)) || '인증 실패';
+                if(errMsg.indexOf('expired') > -1 || errMsg.indexOf('Token') > -1){
+                    errMsg = '인증번호가 만료되었거나 올바르지 않습니다. 재발송 후 다시 시도해주세요.';
+                } else if(errMsg.indexOf('invalid') > -1 || errMsg.indexOf('Invalid') > -1){
+                    errMsg = '인증번호가 일치하지 않습니다. 다시 확인해주세요.';
+                }
+                showAlert(errMsg, 'error');
+            }
+        }
+
         // ─── Forgot password ───
         function forgotPassword(){ switchTab('forgot'); }
 
@@ -558,6 +612,14 @@
         });
         document.getElementById('signupPasswordConfirm').addEventListener('keypress', function(e){
             if(e.key === 'Enter') handleSignup();
+        });
+        document.getElementById('verifyOtp').addEventListener('keypress', function(e){
+            if(e.key === 'Enter') handleVerifyOtp();
+        });
+        // 숫자만 허용
+        document.getElementById('verifyOtp').addEventListener('input', function(e){
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6);
+            if(this.value.length === 6) handleVerifyOtp();
         });
     </script>
     <script>
