@@ -91,104 +91,101 @@
                         <div class="hero-mockup">
                             <div class="mockup-header">
                                 <div class="mockup-dots"><span></span><span></span><span></span></div>
-                                <span class="mockup-title">Cross-Border Trade Map · Live</span>
+                                <span class="mockup-title">Cross-Border Trade Map</span>
                                 <span class="mockup-live"><span class="live-dot"></span>LIVE</span>
                             </div>
                             <div class="mockup-body worldmap-body">
                                 <div class="worldmap-stage">
-                                    <svg class="worldmap-svg" viewBox="0 0 800 380" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <svg class="worldmap-svg" viewBox="0 0 480 200" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                         <defs>
                                             <radialGradient id="glow" cx="50%" cy="50%" r="50%">
                                                 <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.9"/>
                                                 <stop offset="100%" stop-color="#60a5fa" stop-opacity="0"/>
                                             </radialGradient>
-                                            <linearGradient id="arc" x1="0%" y1="0%" x2="100%" y2="0%">
-                                                <stop offset="0%" stop-color="#FCD34D" stop-opacity="0"/>
-                                                <stop offset="50%" stop-color="#FCD34D" stop-opacity="1"/>
+                                            <radialGradient id="glowKr" cx="50%" cy="50%" r="50%">
+                                                <stop offset="0%" stop-color="#FCD34D" stop-opacity="0.95"/>
                                                 <stop offset="100%" stop-color="#FCD34D" stop-opacity="0"/>
-                                            </linearGradient>
+                                            </radialGradient>
                                         </defs>
 
                                         <!-- 위경도 그리드 -->
-                                        <g stroke="rgba(96,165,250,0.08)" stroke-width="0.6" fill="none">
-                                            <line x1="0" y1="95" x2="800" y2="95"/>
-                                            <line x1="0" y1="190" x2="800" y2="190"/>
-                                            <line x1="0" y1="285" x2="800" y2="285"/>
-                                            <line x1="160" y1="0" x2="160" y2="380"/>
-                                            <line x1="320" y1="0" x2="320" y2="380"/>
-                                            <line x1="480" y1="0" x2="480" y2="380"/>
-                                            <line x1="640" y1="0" x2="640" y2="380"/>
+                                        <g stroke="rgba(96,165,250,0.10)" stroke-width="0.5" fill="none">
+                                            <line x1="0" y1="50" x2="480" y2="50"/>
+                                            <line x1="0" y1="100" x2="480" y2="100"/>
+                                            <line x1="0" y1="150" x2="480" y2="150"/>
+                                            <line x1="96" y1="0" x2="96" y2="200"/>
+                                            <line x1="192" y1="0" x2="192" y2="200"/>
+                                            <line x1="288" y1="0" x2="288" y2="200"/>
+                                            <line x1="384" y1="0" x2="384" y2="200"/>
                                         </g>
 
-                                        <!-- 대륙 실루엣 (단순화) -->
-                                        <g fill="rgba(148,184,255,0.22)" stroke="rgba(148,184,255,0.45)" stroke-width="0.8">
+                                        <!-- 대륙 (점선 윤곽 + fill) -->
+                                        <g fill="rgba(96,165,250,0.18)" stroke="rgba(147,197,253,0.55)" stroke-width="0.8">
                                             <!-- North America -->
-                                            <path d="M60,90 L120,70 L180,80 L210,110 L195,160 L155,200 L130,210 L95,195 L70,160 L55,125 Z"/>
+                                            <path d="M30,55 L65,42 L100,50 L115,68 L108,95 L88,115 L65,118 L45,105 L32,82 Z"/>
                                             <!-- South America -->
-                                            <path d="M170,220 L200,215 L220,250 L210,300 L185,330 L165,310 L155,265 Z"/>
+                                            <path d="M90,130 L105,128 L115,150 L108,175 L92,180 L82,160 L82,142 Z"/>
                                             <!-- Europe -->
-                                            <path d="M380,90 L430,80 L460,95 L455,130 L430,150 L395,145 L375,120 Z"/>
+                                            <path d="M220,52 L250,46 L268,55 L262,72 L245,80 L228,75 L218,65 Z"/>
                                             <!-- Africa -->
-                                            <path d="M395,160 L450,155 L470,200 L460,260 L435,300 L410,295 L390,250 L385,200 Z"/>
+                                            <path d="M232,88 L258,85 L272,108 L268,140 L250,160 L232,155 L222,130 L222,108 Z"/>
                                             <!-- Asia -->
-                                            <path d="M470,80 L580,70 L660,90 L700,130 L680,170 L620,180 L560,170 L500,155 L475,125 Z"/>
+                                            <path d="M275,48 L340,40 L385,52 L405,70 L390,92 L355,100 L320,92 L290,82 L275,68 Z"/>
                                             <!-- SE Asia -->
-                                            <path d="M620,190 L660,185 L680,210 L660,240 L630,235 L615,215 Z"/>
+                                            <path d="M365,108 L388,105 L400,122 L385,138 L370,132 L362,118 Z"/>
                                             <!-- Australia -->
-                                            <path d="M660,275 L720,270 L740,295 L720,320 L675,315 L660,295 Z"/>
+                                            <path d="M385,150 L420,148 L435,162 L420,178 L390,175 L382,162 Z"/>
                                         </g>
 
-                                        <!-- 연결 호 (KR→US, CN→SEA, JP→KR) -->
-                                        <g fill="none" stroke="url(#arc)" stroke-width="1.6" stroke-linecap="round">
-                                            <path d="M620,135 Q400,30 160,140" class="arc-line arc-1"/>
-                                            <path d="M580,140 Q620,165 640,210" class="arc-line arc-2"/>
-                                            <path d="M660,130 Q640,130 620,135" class="arc-line arc-3"/>
+                                        <!-- 연결 호 (KR→US, JP→KR, CN→SEA) -->
+                                        <g fill="none" stroke-linecap="round">
+                                            <path d="M370,72 Q230,12 78,80" stroke="#FCD34D" stroke-width="1.4" class="arc-line arc-1" opacity="0.9"/>
+                                            <path d="M395,68 Q380,68 372,72" stroke="#FCD34D" stroke-width="1.4" class="arc-line arc-2" opacity="0.9"/>
+                                            <path d="M340,80 Q360,95 380,118" stroke="#FCD34D" stroke-width="1.4" class="arc-line arc-3" opacity="0.9"/>
                                         </g>
 
-                                        <!-- 노드 (글로우 + 펄스) -->
+                                        <!-- 노드 -->
                                         <g>
-                                            <!-- KR -->
-                                            <circle cx="620" cy="135" r="18" fill="url(#glow)"/>
-                                            <circle cx="620" cy="135" r="4" fill="#FCD34D" class="node-pulse"/>
-                                            <text x="620" y="118" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">KR</text>
                                             <!-- US -->
-                                            <circle cx="160" cy="140" r="18" fill="url(#glow)"/>
-                                            <circle cx="160" cy="140" r="4" fill="#60a5fa" class="node-pulse delay-1"/>
-                                            <text x="160" y="123" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">US</text>
+                                            <circle cx="78" cy="80" r="14" fill="url(#glow)"/>
+                                            <circle cx="78" cy="80" r="3.5" fill="#60a5fa" class="node-pulse delay-1"/>
+                                            <text x="78" y="68" text-anchor="middle" fill="#fff" font-size="9" font-weight="800" letter-spacing="0.5">US</text>
+                                            <!-- EU -->
+                                            <circle cx="245" cy="62" r="11" fill="url(#glow)"/>
+                                            <circle cx="245" cy="62" r="3" fill="#60a5fa" class="node-pulse delay-2"/>
+                                            <text x="245" y="50" text-anchor="middle" fill="#fff" font-size="9" font-weight="800">EU</text>
                                             <!-- CN -->
-                                            <circle cx="580" cy="140" r="16" fill="url(#glow)"/>
-                                            <circle cx="580" cy="140" r="3.5" fill="#60a5fa" class="node-pulse delay-2"/>
-                                            <text x="580" y="160" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">CN</text>
+                                            <circle cx="340" cy="80" r="12" fill="url(#glow)"/>
+                                            <circle cx="340" cy="80" r="3" fill="#60a5fa" class="node-pulse delay-3"/>
+                                            <text x="340" y="100" text-anchor="middle" fill="#fff" font-size="9" font-weight="800">CN</text>
+                                            <!-- KR (강조) -->
+                                            <circle cx="370" cy="72" r="16" fill="url(#glowKr)"/>
+                                            <circle cx="370" cy="72" r="4" fill="#FCD34D" class="node-pulse"/>
+                                            <text x="370" y="60" text-anchor="middle" fill="#FCD34D" font-size="10" font-weight="800">KR</text>
                                             <!-- JP -->
-                                            <circle cx="660" cy="130" r="14" fill="url(#glow)"/>
-                                            <circle cx="660" cy="130" r="3" fill="#60a5fa" class="node-pulse delay-3"/>
-                                            <text x="678" y="125" fill="#fff" font-size="10" font-weight="700">JP</text>
-                                            <!-- SEA / VN -->
-                                            <circle cx="640" cy="210" r="14" fill="url(#glow)"/>
-                                            <circle cx="640" cy="210" r="3" fill="#60a5fa" class="node-pulse delay-4"/>
-                                            <text x="640" y="230" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">SEA</text>
-                                            <!-- EU (보조) -->
-                                            <circle cx="420" cy="115" r="10" fill="url(#glow)"/>
-                                            <circle cx="420" cy="115" r="2.5" fill="#94c8ff" class="node-pulse delay-5"/>
+                                            <circle cx="395" cy="68" r="11" fill="url(#glow)"/>
+                                            <circle cx="395" cy="68" r="3" fill="#60a5fa" class="node-pulse delay-4"/>
+                                            <text x="408" y="62" fill="#fff" font-size="9" font-weight="800">JP</text>
+                                            <!-- SEA -->
+                                            <circle cx="380" cy="118" r="11" fill="url(#glow)"/>
+                                            <circle cx="380" cy="118" r="3" fill="#60a5fa" class="node-pulse delay-5"/>
+                                            <text x="380" y="138" text-anchor="middle" fill="#fff" font-size="9" font-weight="800">SEA</text>
                                         </g>
                                     </svg>
                                 </div>
 
                                 <div class="flow-routes-pro">
                                     <div class="flow-route-pro">
-                                        <div class="route-pair"><span class="route-chip">KR</span><span class="route-arrow-svg">→</span><span class="route-chip">US</span></div>
-                                        <div class="route-meta">전자제품 · 24h 평균</div>
-                                        <div class="route-val">+₩12.4M</div>
+                                        <span class="route-pair"><span class="route-chip">KR</span><span class="route-arrow-svg">→</span><span class="route-chip">US</span></span>
+                                        <span class="route-val">+₩12.4M</span>
                                     </div>
                                     <div class="flow-route-pro">
-                                        <div class="route-pair"><span class="route-chip">CN</span><span class="route-arrow-svg">→</span><span class="route-chip">SEA</span></div>
-                                        <div class="route-meta">패션 · 24h 평균</div>
-                                        <div class="route-val">+¥8.2M</div>
+                                        <span class="route-pair"><span class="route-chip">CN</span><span class="route-arrow-svg">→</span><span class="route-chip">SEA</span></span>
+                                        <span class="route-val">+¥8.2M</span>
                                     </div>
                                     <div class="flow-route-pro">
-                                        <div class="route-pair"><span class="route-chip">JP</span><span class="route-arrow-svg">→</span><span class="route-chip">KR</span></div>
-                                        <div class="route-meta">뷰티 · 24h 평균</div>
-                                        <div class="route-val">+¥3.1M</div>
+                                        <span class="route-pair"><span class="route-chip">JP</span><span class="route-arrow-svg">→</span><span class="route-chip">KR</span></span>
+                                        <span class="route-val">+¥3.1M</span>
                                     </div>
                                 </div>
                             </div>
