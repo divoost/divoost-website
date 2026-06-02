@@ -445,11 +445,166 @@
         },
         "service": {
             "heroTitle": "We Handle Everything in <span class=\"gradient-text\">Global Selling</span>",
-            "heroDesc": "Discover the expert services HUBONTRADE provides"
+            "heroDesc": "Discover the expert services HUBONTRADE provides",
+            "cats": {
+                "title": "Our Service Areas",
+                "c1": {
+                    "title": "Marketplace Operations",
+                    "desc": "Listing and operations on local & overseas marketplaces",
+                    "l1": "Listing & detail page creation",
+                    "l2": "Pricing strategy & promotion management",
+                    "l3": "Review management & CS response",
+                    "l4": "Sales analytics & operations reports"
+                },
+                "c2": {
+                    "title": "Import/Export Logistics",
+                    "desc": "Manage local & overseas logistics in one system",
+                    "l1": "Export declaration & customs brokerage",
+                    "l2": "International shipping & local fulfillment",
+                    "l3": "Import customs & proxy purchase delivery",
+                    "l4": "Returns & exchanges handling"
+                },
+                "c3": {
+                    "title": "Product Sourcing",
+                    "desc": "Discover high-margin products from global suppliers",
+                    "l1": "B2B global product sourcing",
+                    "l2": "Sample ordering & quality inspection",
+                    "l3": "Margin analysis & profitability simulation",
+                    "l4": "OEM/ODM manufacturing matching"
+                },
+                "c4": {
+                    "title": "Marketing Services",
+                    "desc": "Maximize sales with platform-tailored marketing",
+                    "l1": "Shopee/TikTok Shop promotion management",
+                    "l2": "Keyword ads & performance marketing",
+                    "l3": "Local influencer marketing",
+                    "l4": "Live commerce planning & operations"
+                }
+            },
+            "types": {
+                "title": "Services Tailored to Seller Types",
+                "t1": {
+                    "title": "Domestic Sellers (Export)",
+                    "desc": "Businesses exporting Korean products overseas",
+                    "l1": "Export declaration automation",
+                    "l2": "Overseas platform onboarding & operations",
+                    "l3": "International logistics & fulfillment",
+                    "l4": "Local marketing"
+                },
+                "t2": {
+                    "title": "Overseas Sellers (Import/Reverse Direct)",
+                    "desc": "Sell overseas products to Korea or other countries",
+                    "l1": "Import customs automation",
+                    "l2": "Korean platform onboarding & operations",
+                    "l3": "Domestic fulfillment",
+                    "l4": "Proxy purchase system"
+                },
+                "t3": {
+                    "title": "Dropshipping & Proxy Purchase",
+                    "desc": "Run online sales without inventory",
+                    "l1": "Global product sourcing",
+                    "l2": "Automatic margin calculation",
+                    "l3": "Automatic order processing",
+                    "l4": "Customs automation"
+                }
+            },
+            "support": {
+                "title": "Backed by Dedicated Managers",
+                "desc": "More than a tool. Dedicated managers help design your growth.",
+                "f1": "1:1 dedicated manager",
+                "f2": "Weekly sales analysis reports",
+                "f3": "24/7 chat & email support"
+            },
+            "ctaBox": {
+                "title": "Which Service Do You <span class=\"gradient-text\">Need?</span>",
+                "desc": "Get the best service recommendation for your business type",
+                "btn": "Request Free Consultation"
+            }
         },
         "market": {
             "heroTitle": "From Local to Global, <span class=\"gradient-text\">Major Marketplace Integrations</span>",
-            "heroDesc": "Manage local & overseas marketplaces in one HUBONTRADE"
+            "heroDesc": "Manage local & overseas marketplaces in one HUBONTRADE",
+            "s1": {
+                "title": "Supported <span class=\"gradient-text\">Marketplaces</span>",
+                "korea": "Domestic Marketplaces",
+                "global": "Global Marketplaces"
+            },
+            "mp": {
+                "coupang": "Rocket Delivery, IOR support",
+                "naver": "Korea's largest search portal integration",
+                "gmarket": "Global selling supported",
+                "11st": "SK-affiliated general marketplace",
+                "wemakeprice": "Deal-focused marketplace",
+                "interpark": "General shopping mall",
+                "auction": "Open marketplace",
+                "shopeeTag": "Largest in SE Asia",
+                "shopeeDesc": "Vietnam, Philippines, Singapore, Malaysia, Thailand, Indonesia",
+                "lazadaTag": "Alibaba Group",
+                "lazadaDesc": "6 SE Asian countries",
+                "tiktokTag": "Live-commerce leader",
+                "tiktokDesc": "5 SE Asian countries",
+                "amazonTag": "World's largest",
+                "amazonDesc": "USA, Japan, Europe, etc.",
+                "tikiTag": "Vietnam local",
+                "tikiDesc": "Local Vietnamese marketplace",
+                "aliTag": "Global selling",
+                "aliDesc": "Global selling",
+                "qoo10Tag": "Asian open marketplace",
+                "qoo10Desc": "Japan, Singapore",
+                "tokoTag": "Largest in Indonesia",
+                "tokoDesc": "Indonesia"
+            },
+            "tag": {
+                "orders": "Orders",
+                "inv": "Inventory Sync",
+                "track": "Auto Tracking",
+                "listing": "Listing",
+                "cs": "CS"
+            },
+            "s2": {
+                "title": "<span class=\"gradient-text\">Per-Marketplace Integration Details</span>",
+                "colMarket": "Marketplace",
+                "colListing": "Listing",
+                "colOrders": "Orders",
+                "colInv": "Inventory",
+                "colTrack": "Tracking",
+                "colCS": "CS",
+                "colMarketing": "Marketing",
+                "colLive": "Live Commerce"
+            },
+            "excl": {
+                "title": "<span class=\"gradient-text\">Integrations</span> Only on HUBONTRADE",
+                "c1": {
+                    "title": "Coupang IOR (Importer of Record)",
+                    "desc": "Overseas companies can sell directly on Coupang without a Korean entity — an exclusive service no competitor offers."
+                },
+                "b1": "Exclusive Service",
+                "c2": {
+                    "title": "KOSME/GoBizKorea API Integration",
+                    "desc": "Direct integration with government export support programs — auto-report performance and unified program management."
+                },
+                "b2": "Government Integration",
+                "c3": {
+                    "title": "Export Declaration Automation (uTradeHub)",
+                    "desc": "Direct integration with Korea Customs export system — auto-issue export declarations and origin certificates."
+                },
+                "b3": "Automation"
+            },
+            "custom": {
+                "title": "Custom Shops <span class=\"gradient-text\">Also Supported</span>",
+                "desc": "Unified management of both open marketplaces and your own shop",
+                "shopify": "Global custom shop platform",
+                "woo": "WordPress-based shop",
+                "cafe24": "Korea's leading shop solution",
+                "api": "Custom Shop API",
+                "apiDesc": "Custom API integration supported"
+            },
+            "ctaBox": {
+                "title": "Connect Your Marketplaces to <span class=\"gradient-text\">HUBONTRADE</span>",
+                "desc": "Experience marketplace integrations free",
+                "btn1": "Start Integration",
+                "btn2": "1:1 Consultation"
+            }
         },
         "pricing": {
             "heroTitle": "Simple, Fair Pricing",

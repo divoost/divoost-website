@@ -445,11 +445,166 @@
         },
         "service": {
             "heroTitle": "Chúng tôi <span class=\"gradient-text\">đảm nhận mọi việc</span> trong bán hàng toàn cầu",
-            "heroDesc": "Khám phá các dịch vụ chuyên nghiệp HUBONTRADE cung cấp"
+            "heroDesc": "Khám phá các dịch vụ chuyên nghiệp HUBONTRADE cung cấp",
+            "cats": {
+                "title": "Lĩnh vực dịch vụ chuyên môn",
+                "c1": {
+                    "title": "Vận hành sàn",
+                    "desc": "Đăng sản phẩm và vận hành trên các sàn trong & ngoài nước",
+                    "l1": "Đăng sản phẩm & thiết kế trang chi tiết",
+                    "l2": "Chiến lược giá & vận hành khuyến mãi",
+                    "l3": "Quản lý đánh giá & xử lý CS",
+                    "l4": "Phân tích doanh số & báo cáo vận hành"
+                },
+                "c2": {
+                    "title": "Dịch vụ logistics XNK",
+                    "desc": "Quản lý logistics trong & ngoài nước trong một hệ thống",
+                    "l1": "Khai báo xuất khẩu & dịch vụ thông quan",
+                    "l2": "Vận chuyển quốc tế & fulfillment bản địa",
+                    "l3": "Thông quan nhập khẩu & giao hàng mua hộ",
+                    "l4": "Xử lý trả/đổi hàng"
+                },
+                "c3": {
+                    "title": "Dịch vụ Sourcing",
+                    "desc": "Tìm sản phẩm biên cao từ nhà cung cấp toàn cầu",
+                    "l1": "Sourcing sản phẩm B2B toàn cầu",
+                    "l2": "Đặt mẫu & kiểm tra chất lượng",
+                    "l3": "Phân tích biên & mô phỏng lợi nhuận",
+                    "l4": "Kết nối sản xuất OEM/ODM"
+                },
+                "c4": {
+                    "title": "Dịch vụ Marketing",
+                    "desc": "Tối đa doanh số với marketing tùy chỉnh theo sàn",
+                    "l1": "Quản lý khuyến mãi Shopee/TikTok Shop",
+                    "l2": "Quảng cáo từ khóa & marketing hiệu suất",
+                    "l3": "Marketing influencer bản địa",
+                    "l4": "Lên kế hoạch & vận hành live commerce"
+                }
+            },
+            "types": {
+                "title": "Dịch vụ tùy theo loại nhà bán",
+                "t1": {
+                    "title": "Nhà bán nội địa (Xuất khẩu)",
+                    "desc": "Doanh nghiệp xuất khẩu sản phẩm Hàn Quốc ra nước ngoài",
+                    "l1": "Tự động khai báo xuất khẩu",
+                    "l2": "Onboard & vận hành sàn nước ngoài",
+                    "l3": "Logistics quốc tế & fulfillment",
+                    "l4": "Marketing bản địa"
+                },
+                "t2": {
+                    "title": "Nhà bán nước ngoài (Nhập/Reverse)",
+                    "desc": "Bán sản phẩm nước ngoài vào Hàn Quốc hoặc nước khác",
+                    "l1": "Tự động thông quan nhập khẩu",
+                    "l2": "Onboard & vận hành sàn Hàn",
+                    "l3": "Fulfillment nội địa",
+                    "l4": "Hệ thống mua hộ"
+                },
+                "t3": {
+                    "title": "Dropship & Mua hộ",
+                    "desc": "Vận hành kinh doanh online không cần tồn kho",
+                    "l1": "Sourcing sản phẩm toàn cầu",
+                    "l2": "Tự động tính biên",
+                    "l3": "Xử lý đơn tự động",
+                    "l4": "Tự động thông quan"
+                }
+            },
+            "support": {
+                "title": "Cùng quản lý chuyên trách",
+                "desc": "Không chỉ là công cụ. Quản lý chuyên trách cùng bạn thiết kế tăng trưởng.",
+                "f1": "Quản lý chuyên trách 1:1",
+                "f2": "Báo cáo phân tích doanh số hàng tuần",
+                "f3": "Hỗ trợ chat & email 24/7"
+            },
+            "ctaBox": {
+                "title": "Bạn cần dịch vụ <span class=\"gradient-text\">nào?</span>",
+                "desc": "Nhận đề xuất dịch vụ phù hợp nhất cho loại hình doanh nghiệp",
+                "btn": "Yêu cầu tư vấn miễn phí"
+            }
         },
         "market": {
             "heroTitle": "Từ trong nước đến toàn cầu, <span class=\"gradient-text\">tích hợp các sàn lớn</span>",
-            "heroDesc": "Quản lý sàn trong nước & quốc tế chỉ với HUBONTRADE"
+            "heroDesc": "Quản lý sàn trong nước & quốc tế chỉ với HUBONTRADE",
+            "s1": {
+                "title": "<span class=\"gradient-text\">Sàn</span> được hỗ trợ",
+                "korea": "Sàn nội địa",
+                "global": "Sàn toàn cầu"
+            },
+            "mp": {
+                "coupang": "Giao siêu tốc, hỗ trợ IOR",
+                "naver": "Tích hợp cổng tìm kiếm lớn nhất Hàn Quốc",
+                "gmarket": "Hỗ trợ bán hàng toàn cầu",
+                "11st": "Sàn tổng hợp của SK",
+                "wemakeprice": "Sàn tập trung deal giá tốt",
+                "interpark": "Trung tâm mua sắm tổng hợp",
+                "auction": "Sàn mở",
+                "shopeeTag": "Lớn nhất Đông Nam Á",
+                "shopeeDesc": "Việt Nam, Philippines, Singapore, Malaysia, Thái Lan, Indonesia",
+                "lazadaTag": "Tập đoàn Alibaba",
+                "lazadaDesc": "6 nước Đông Nam Á",
+                "tiktokTag": "Đứng đầu live commerce",
+                "tiktokDesc": "5 nước Đông Nam Á",
+                "amazonTag": "Lớn nhất thế giới",
+                "amazonDesc": "Mỹ, Nhật, châu Âu…",
+                "tikiTag": "Sàn bản địa Việt Nam",
+                "tikiDesc": "Sàn bản địa Việt Nam",
+                "aliTag": "Bán hàng toàn cầu",
+                "aliDesc": "Bán hàng toàn cầu",
+                "qoo10Tag": "Sàn mở châu Á",
+                "qoo10Desc": "Nhật, Singapore",
+                "tokoTag": "Lớn nhất Indonesia",
+                "tokoDesc": "Indonesia"
+            },
+            "tag": {
+                "orders": "Thu thập đơn",
+                "inv": "Đồng bộ tồn",
+                "track": "Tự động vận đơn",
+                "listing": "Đăng sản phẩm",
+                "cs": "CS"
+            },
+            "s2": {
+                "title": "<span class=\"gradient-text\">Chi tiết tích hợp</span> theo sàn",
+                "colMarket": "Sàn",
+                "colListing": "Đăng SP",
+                "colOrders": "Thu đơn",
+                "colInv": "Tồn kho",
+                "colTrack": "Vận đơn",
+                "colCS": "Tích hợp CS",
+                "colMarketing": "Marketing",
+                "colLive": "Live commerce"
+            },
+            "excl": {
+                "title": "<span class=\"gradient-text\">Tích hợp</span> chỉ có ở HUBONTRADE",
+                "c1": {
+                    "title": "Coupang IOR (Đại lý nhập khẩu)",
+                    "desc": "Doanh nghiệp nước ngoài bán trực tiếp trên Coupang mà không cần pháp nhân Hàn Quốc — dịch vụ độc quyền không đối thủ nào có."
+                },
+                "b1": "Dịch vụ độc quyền",
+                "c2": {
+                    "title": "Tích hợp API KOSME/GoBizKorea",
+                    "desc": "Tích hợp trực tiếp với chương trình hỗ trợ xuất khẩu của chính phủ — tự động báo cáo và quản lý hợp nhất."
+                },
+                "b2": "Tích hợp chính phủ",
+                "c3": {
+                    "title": "Tự động khai báo xuất khẩu (uTradeHub)",
+                    "desc": "Tích hợp trực tiếp với hệ thống khai báo xuất khẩu Hải quan Hàn Quốc — tự phát hành tờ khai và C/O."
+                },
+                "b3": "Tự động hóa"
+            },
+            "custom": {
+                "title": "<span class=\"gradient-text\">Hỗ trợ</span> cả shop riêng",
+                "desc": "Quản lý hợp nhất cả sàn mở và shop riêng của bạn",
+                "shopify": "Nền tảng shop riêng toàn cầu",
+                "woo": "Shop dựa trên WordPress",
+                "cafe24": "Giải pháp shop hàng đầu Hàn Quốc",
+                "api": "API shop riêng",
+                "apiDesc": "Hỗ trợ tích hợp API tùy chỉnh"
+            },
+            "ctaBox": {
+                "title": "Kết nối sàn của bạn với <span class=\"gradient-text\">HUBONTRADE</span>",
+                "desc": "Trải nghiệm tích hợp sàn miễn phí",
+                "btn1": "Bắt đầu tích hợp",
+                "btn2": "Tư vấn 1:1"
+            }
         },
         "pricing": {
             "heroTitle": "Bảng giá hợp lý",

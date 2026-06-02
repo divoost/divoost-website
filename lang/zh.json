@@ -445,11 +445,166 @@
         },
         "service": {
             "heroTitle": "我们<span class=\"gradient-text\">代办全球销售</span>的一切",
-            "heroDesc": "了解 HUBONTRADE 提供的专业服务"
+            "heroDesc": "了解 HUBONTRADE 提供的专业服务",
+            "cats": {
+                "title": "专业服务领域",
+                "c1": {
+                    "title": "市场运营代办",
+                    "desc": "国内外市场商品上架与运营代办",
+                    "l1": "商品上架与详情页制作",
+                    "l2": "定价策略与促销运营",
+                    "l3": "客户评价管理与客服响应",
+                    "l4": "销售分析与运营报表"
+                },
+                "c2": {
+                    "title": "进出口物流服务",
+                    "desc": "用一个系统管理国内外物流",
+                    "l1": "出口报关与通关代办",
+                    "l2": "国际物流与本地仓储",
+                    "l3": "进口通关与代购配送",
+                    "l4": "退换货处理"
+                },
+                "c3": {
+                    "title": "商品选品服务",
+                    "desc": "从全球供应商发掘高利润商品",
+                    "l1": "B2B 全球商品选品",
+                    "l2": "样品订购与质量检测",
+                    "l3": "利润分析与盈利模拟",
+                    "l4": "OEM/ODM 制造对接"
+                },
+                "c4": {
+                    "title": "营销服务",
+                    "desc": "通过各平台定制营销最大化销售",
+                    "l1": "Shopee/TikTok Shop 促销运营",
+                    "l2": "关键词广告与效果营销",
+                    "l3": "本地网红营销",
+                    "l4": "直播电商策划与运营"
+                }
+            },
+            "types": {
+                "title": "按卖家类型定制服务",
+                "t1": {
+                    "title": "国内卖家 (出口)",
+                    "desc": "希望将韩国商品销往海外的企业",
+                    "l1": "出口报关自动化",
+                    "l2": "海外平台入驻与运营",
+                    "l3": "国际物流与仓储",
+                    "l4": "本地营销"
+                },
+                "t2": {
+                    "title": "海外卖家 (进口/逆向直购)",
+                    "desc": "将海外商品销往韩国或他国",
+                    "l1": "进口通关自动化",
+                    "l2": "国内平台入驻与运营",
+                    "l3": "国内仓储",
+                    "l4": "代购系统"
+                },
+                "t3": {
+                    "title": "代销与代购",
+                    "desc": "无库存运营在线销售业务",
+                    "l1": "全球商品选品",
+                    "l2": "利润自动计算",
+                    "l3": "订单自动处理",
+                    "l4": "通关自动化"
+                }
+            },
+            "support": {
+                "title": "由专属经理陪伴",
+                "desc": "不止是工具。专属经理与您共同设计成长路径。",
+                "f1": "1:1 专属经理",
+                "f2": "周销售分析报表",
+                "f3": "24/7 在线 & 邮件支持"
+            },
+            "ctaBox": {
+                "title": "您需要哪种<span class=\"gradient-text\">服务?</span>",
+                "desc": "根据您的业务类型获取最佳服务推荐",
+                "btn": "申请免费咨询"
+            }
         },
         "market": {
             "heroTitle": "从本土到全球，<span class=\"gradient-text\">主要市场全对接</span>",
-            "heroDesc": "用一个 HUBONTRADE 统一管理国内外市场"
+            "heroDesc": "用一个 HUBONTRADE 统一管理国内外市场",
+            "s1": {
+                "title": "可对接的<span class=\"gradient-text\">市场</span>",
+                "korea": "国内市场",
+                "global": "全球市场"
+            },
+            "mp": {
+                "coupang": "火箭配送、支持 IOR",
+                "naver": "韩国最大搜索门户对接",
+                "gmarket": "支持全球销售",
+                "11st": "SK 集团综合市场",
+                "wemakeprice": "特价为主的市场",
+                "interpark": "综合购物商城",
+                "auction": "开放市场",
+                "shopeeTag": "东南亚最大",
+                "shopeeDesc": "越南、菲律宾、新加坡、马来西亚、泰国、印尼",
+                "lazadaTag": "阿里巴巴集团",
+                "lazadaDesc": "东南亚 6 国",
+                "tiktokTag": "直播电商强者",
+                "tiktokDesc": "东南亚 5 国",
+                "amazonTag": "全球最大",
+                "amazonDesc": "美国、日本、欧洲等",
+                "tikiTag": "越南本土",
+                "tikiDesc": "越南本土市场",
+                "aliTag": "全球销售",
+                "aliDesc": "全球销售",
+                "qoo10Tag": "亚洲开放市场",
+                "qoo10Desc": "日本、新加坡",
+                "tokoTag": "印尼最大",
+                "tokoDesc": "印度尼西亚"
+            },
+            "tag": {
+                "orders": "订单采集",
+                "inv": "库存同步",
+                "track": "自动运单",
+                "listing": "商品上架",
+                "cs": "客服"
+            },
+            "s2": {
+                "title": "各市场<span class=\"gradient-text\">对接功能详情</span>",
+                "colMarket": "市场",
+                "colListing": "商品上架",
+                "colOrders": "订单采集",
+                "colInv": "库存同步",
+                "colTrack": "自动运单",
+                "colCS": "客服对接",
+                "colMarketing": "营销",
+                "colLive": "直播电商"
+            },
+            "excl": {
+                "title": "仅 HUBONTRADE 支持的<span class=\"gradient-text\">对接</span>",
+                "c1": {
+                    "title": "Coupang IOR (代理进口商)",
+                    "desc": "海外企业无需韩国法人即可在 Coupang 直接销售 — 竞争对手未提供的独家服务。"
+                },
+                "b1": "独家服务",
+                "c2": {
+                    "title": "中小风险投资公团/GoBizKorea API 对接",
+                    "desc": "与政府出口支持项目直接对接 — 自动报告出口业绩,统一管理项目。"
+                },
+                "b2": "政府对接",
+                "c3": {
+                    "title": "出口报关自动化 (uTradeHub)",
+                    "desc": "与海关出口申报系统直接对接 — 自动开具出口报关单、原产地证书。"
+                },
+                "b3": "自动化"
+            },
+            "custom": {
+                "title": "自有商城也<span class=\"gradient-text\">可对接</span>",
+                "desc": "不仅是公开市场,自有商城也可统一管理",
+                "shopify": "全球自有商城平台",
+                "woo": "基于 WordPress 的商城",
+                "cafe24": "韩国代表性商城方案",
+                "api": "自有商城 API",
+                "apiDesc": "支持自定义 API 对接"
+            },
+            "ctaBox": {
+                "title": "将您正在使用的市场<span class=\"gradient-text\">接入 HUBONTRADE</span>",
+                "desc": "通过免费试用亲身体验市场对接",
+                "btn1": "开始对接",
+                "btn2": "1:1 咨询"
+            }
         },
         "pricing": {
             "heroTitle": "合理的价格方案",
