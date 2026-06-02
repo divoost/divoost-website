@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="css/mobile-fix.css">
     <style>
         /* ---- Layout ---- */
-        .listing-hero{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:16px;padding:28px;margin-bottom:20px}
-        .listing-hero h1{font-size:1.4rem;color:#e2e8f0;margin-bottom:6px}
-        .listing-hero p{font-size:.82rem;color:#94a3b8;margin-bottom:0}
+        .listing-hero{background:#FFFFFF;border-radius:16px;padding:28px;margin-bottom:20px}
+        .listing-hero h1{font-size:1.4rem;color:#0F172A;margin-bottom:6px}
+        .listing-hero p{font-size:.82rem;color:#64748B;margin-bottom:0}
         .listing-grid{display:grid;grid-template-columns:340px 1fr;gap:20px}
         .listing-sidebar-panel{display:flex;flex-direction:column;gap:16px}
 
@@ -28,21 +28,21 @@
         .ps-item-info{flex:1;min-width:0}
         .ps-item-name{font-size:.78rem;font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
         .ps-item-price{font-size:.85rem;font-weight:800;color:#e42528;margin-top:2px}
-        .ps-item-platform{font-size:.65rem;color:#94a3b8}
+        .ps-item-platform{font-size:.65rem;color:#64748B}
         .ps-check{width:20px;height:20px;border-radius:4px;border:2px solid #e2e8f0;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;color:#fff;transition:all .15s}
         .ps-item.selected .ps-check{background:#3b82f6;border-color:#3b82f6}
-        .ps-empty{text-align:center;padding:30px 10px;color:#94a3b8;font-size:.82rem}
+        .ps-empty{text-align:center;padding:30px 10px;color:#64748B;font-size:.82rem}
         .ps-search{width:100%;padding:8px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:.82rem;margin-bottom:8px}
         .ps-search:focus{border-color:#3b82f6;outline:none}
 
         /* ---- Marketplace Selector ---- */
         .mp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
         .mp-btn{padding:12px;border-radius:10px;border:2px solid #e2e8f0;background:#fff;cursor:pointer;text-align:center;transition:all .15s;position:relative}
-        .mp-btn:hover{border-color:#94a3b8}
+        .mp-btn:hover{border-color:#64748B}
         .mp-btn.selected{border-color:var(--mp-color,#3b82f6);background:color-mix(in srgb,var(--mp-color,#3b82f6) 6%,white)}
         .mp-btn .mp-icon{font-size:1.3rem;margin-bottom:4px}
         .mp-btn .mp-name{font-size:.78rem;font-weight:700;color:#0f172a}
-        .mp-btn .mp-sub{font-size:.62rem;color:#94a3b8}
+        .mp-btn .mp-sub{font-size:.62rem;color:#64748B}
         .mp-btn.selected .mp-check{position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:50%;background:var(--mp-color,#3b82f6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.6rem}
 
         /* ---- Form ---- */
@@ -55,7 +55,7 @@
         .form-field input,.form-field select,.form-field textarea{padding:10px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:.85rem;color:#0f172a;background:#fff;font-family:inherit}
         .form-field input:focus,.form-field select:focus,.form-field textarea:focus{border-color:#3b82f6;outline:none}
         .form-field textarea{resize:vertical;min-height:80px}
-        .form-hint{font-size:.65rem;color:#94a3b8;margin-top:2px}
+        .form-hint{font-size:.65rem;color:#64748B;margin-top:2px}
 
         /* ---- AI Suggestion ---- */
         .ai-suggest-btn{padding:4px 10px;border-radius:6px;border:none;background:linear-gradient(135deg,#8b5cf6,#3b82f6);color:#fff;font-size:.68rem;font-weight:600;cursor:pointer;white-space:nowrap}
@@ -81,12 +81,12 @@
         .img-gallery-item img{width:100%;height:100%;object-fit:cover}
         .img-gallery-item.primary{border-color:#3b82f6}
         .img-gallery-item .primary-badge{position:absolute;bottom:0;left:0;right:0;background:rgba(59,130,246,.9);color:#fff;font-size:.55rem;text-align:center;padding:1px 0;font-weight:600}
-        .img-placeholder{width:72px;height:72px;border-radius:8px;border:2px dashed #d1d5db;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#94a3b8;cursor:pointer}
+        .img-placeholder{width:72px;height:72px;border-radius:8px;border:2px dashed #d1d5db;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#64748B;cursor:pointer}
 
         /* ---- Tags / Keywords ---- */
         .tags-wrap{display:flex;flex-wrap:wrap;gap:6px}
         .tag-chip{padding:4px 10px;border-radius:20px;font-size:.72rem;font-weight:600;background:#f1f5f9;color:#475569;display:flex;align-items:center;gap:4px}
-        .tag-chip .tag-remove{cursor:pointer;color:#94a3b8;font-size:.8rem}
+        .tag-chip .tag-remove{cursor:pointer;color:#64748B;font-size:.8rem}
         .tag-chip .tag-remove:hover{color:#ef4444}
         .tag-input-wrap{display:flex;gap:6px;margin-top:8px}
         .tag-input{flex:1;padding:6px 10px;border:1px solid #e2e8f0;border-radius:6px;font-size:.78rem}
@@ -125,20 +125,20 @@
         .history-item .h-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
         .history-item .h-info{flex:1;min-width:0}
         .history-item .h-name{font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-        .history-item .h-meta{font-size:.68rem;color:#94a3b8}
+        .history-item .h-meta{font-size:.68rem;color:#64748B}
         .history-item .h-status{padding:3px 8px;border-radius:4px;font-size:.62rem;font-weight:600}
         .h-status-success{background:rgba(16,185,129,.1);color:#059669}
         .h-status-draft{background:rgba(245,158,11,.1);color:#d97706}
         .h-status-failed{background:rgba(239,68,68,.1);color:#dc2626}
 
         /* ---- Bulk mode ---- */
-        .bulk-bar{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:12px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;color:#e2e8f0;display:none}
+        .bulk-bar{background:#FFFFFF;border-radius:12px;padding:14px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;color:#0F172A;display:none}
         .bulk-bar.active{display:flex}
         .bulk-bar .bulk-count{font-size:.9rem;font-weight:700}
         .bulk-bar .bulk-actions{display:flex;gap:8px}
         .bulk-bar .bulk-btn{padding:8px 16px;border-radius:8px;border:none;font-size:.78rem;font-weight:600;cursor:pointer}
         .bulk-bar .bulk-list-btn{background:#3b82f6;color:#fff}
-        .bulk-bar .bulk-clear-btn{background:rgba(255,255,255,.1);color:#94a3b8}
+        .bulk-bar .bulk-clear-btn{background:rgba(255,255,255,.1);color:#64748B}
 
         /* ---- Shipping config ---- */
         .shipping-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
@@ -152,7 +152,7 @@
 
         /* ---- Tabs ---- */
         .tab-bar{display:flex;gap:4px;margin-bottom:16px;border-bottom:2px solid #f1f5f9;padding-bottom:0}
-        .tab-btn{padding:10px 18px;font-size:.82rem;font-weight:600;color:#94a3b8;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
+        .tab-btn{padding:10px 18px;font-size:.82rem;font-weight:600;color:#64748B;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s}
         .tab-btn:hover{color:#475569}
         .tab-btn.active{color:#3b82f6;border-bottom-color:#3b82f6}
         .tab-content{display:none}
@@ -220,7 +220,7 @@
                     </div>
                 </div>
                 <div class="top-bar-right">
-                    <span style="font-size:.75rem;color:#94a3b8" id="historyCount">등록 이력: 0건</span>
+                    <span style="font-size:.75rem;color:#64748B" id="historyCount">등록 이력: 0건</span>
                 </div>
             </header>
 
@@ -245,7 +245,7 @@
                     <div class="listing-sidebar-panel">
                         <!-- Product Selector -->
                         <div class="l-panel">
-                            <div class="l-panel-header">📦 상품 선택 <span style="margin-left:auto;font-size:.68rem;color:#94a3b8" id="productSourceLabel">crawlProducts</span></div>
+                            <div class="l-panel-header">📦 상품 선택 <span style="margin-left:auto;font-size:.68rem;color:#64748B" id="productSourceLabel">crawlProducts</span></div>
                             <div class="l-panel-body">
                                 <input type="text" class="ps-search" id="productSearch" placeholder="상품명 검색..." oninput="filterProducts()">
                                 <div class="product-selector" id="productList">
@@ -290,7 +290,7 @@
 
                         <!-- Listing History -->
                         <div class="l-panel">
-                            <div class="l-panel-header">📜 등록 이력 <button style="margin-left:auto;padding:3px 8px;border-radius:4px;border:1px solid #e2e8f0;background:#fff;font-size:.65rem;color:#94a3b8;cursor:pointer" onclick="clearHistory()">전체 삭제</button></div>
+                            <div class="l-panel-header">📜 등록 이력 <button style="margin-left:auto;padding:3px 8px;border-radius:4px;border:1px solid #e2e8f0;background:#fff;font-size:.65rem;color:#64748B;cursor:pointer" onclick="clearHistory()">전체 삭제</button></div>
                             <div class="l-panel-body">
                                 <div class="history-list" id="historyList">
                                     <div class="ps-empty">등록 이력이 없습니다.</div>
@@ -311,7 +311,7 @@
                         <!-- TAB: Form -->
                         <div class="tab-content active" id="tab-form">
                             <div class="l-panel">
-                                <div class="l-panel-header">✏️ 리스팅 정보 입력 <span style="margin-left:auto;font-size:.72rem;color:#94a3b8" id="selectedMpLabel">마켓을 선택하세요</span></div>
+                                <div class="l-panel-header">✏️ 리스팅 정보 입력 <span style="margin-left:auto;font-size:.72rem;color:#64748B" id="selectedMpLabel">마켓을 선택하세요</span></div>
                                 <div class="l-panel-body">
                                     <!-- Product Name -->
                                     <div class="form-section">
@@ -500,7 +500,7 @@
                         <!-- TAB: Bulk -->
                         <div class="tab-content" id="tab-bulk">
                             <div class="l-panel">
-                                <div class="l-panel-header">📦 벌크 리스팅 <span style="margin-left:auto;font-size:.72rem;color:#94a3b8">여러 상품을 한번에 등록</span></div>
+                                <div class="l-panel-header">📦 벌크 리스팅 <span style="margin-left:auto;font-size:.72rem;color:#64748B">여러 상품을 한번에 등록</span></div>
                                 <div class="l-panel-body">
                                     <p style="font-size:.82rem;color:#64748b;margin-bottom:16px">왼쪽 상품 목록에서 여러 상품을 선택(체크)한 후, 아래 마켓을 지정하면 일괄 등록할 수 있습니다.</p>
                                     <div style="margin-bottom:16px">
@@ -890,7 +890,7 @@
         document.getElementById('titleSuggestionText').innerHTML =
             '<div style="font-size:.72rem;color:#8b5cf6;font-weight:600;margin-bottom:4px">🤖 AI ' + config.name + ' SEO 최적화 제안:</div>' +
             '<div style="font-weight:600;color:#0f172a">' + esc(suggestions[currentMarketplace]) + '</div>' +
-            '<div style="font-size:.68rem;color:#94a3b8;margin-top:4px">' + config.titleTip + '</div>';
+            '<div style="font-size:.68rem;color:#64748B;margin-top:4px">' + config.titleTip + '</div>';
     }
 
     function applyTitleSuggestion() {
@@ -1098,7 +1098,7 @@
                 '<span style="color:#e42528;font-weight:700;width:60px">₩' + (p.price || 0).toLocaleString() + '</span>' +
                 '<span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#0f172a;font-weight:500">' + esc(p.name || '') + '</span>' +
                 '<span style="color:#10b981;font-weight:700;width:70px;text-align:right">→ ₩' + sellPrice.toLocaleString() + '</span>' +
-                '<span style="color:#94a3b8;cursor:pointer;font-size:.9rem" onclick="removeBulkItem(' + idx + ')">×</span>' +
+                '<span style="color:#64748B;cursor:pointer;font-size:.9rem" onclick="removeBulkItem(' + idx + ')">×</span>' +
                 '</div>';
         }).join('');
     }
