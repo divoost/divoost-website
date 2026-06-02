@@ -56,11 +56,11 @@
     <section class="section section-pricing fade-in-up">
         <div class="container">
             <div class="pricing-toggle-wrap">
-                <span class="pricing-toggle-label active">월간</span>
-                <div class="pricing-toggle">
+                <span class="pricing-toggle-label active" data-billing="monthly">월간</span>
+                <div class="pricing-toggle" id="billingToggle" role="switch" aria-checked="false" tabindex="0">
                     <div class="pricing-toggle-slider"></div>
                 </div>
-                <span class="pricing-toggle-label">연간</span>
+                <span class="pricing-toggle-label" data-billing="yearly">연간</span>
                 <span class="pricing-discount-badge">20% 할인</span>
             </div>
 
@@ -101,8 +101,10 @@
                 </div>
 
                 <!-- 그로스 (가운데 - BEST) -->
-                <div class="pricing-card pricing-card-popular fade-in-up">
-                    <div class="popular-badge">🏆 1만 명 이상의 셀러가 선택했어요!</div>
+                <div class="pricing-card pricing-card-popular fade-in-up"
+                     data-monthly="60000" data-yearly="48000"
+                     data-original-monthly="99000" data-original-yearly="79000"
+                     data-discount-monthly="44" data-discount-yearly="55">
                     <div class="pricing-card-header">
                         <div class="pricing-card-icon">⭐</div>
                         <h3 class="pricing-plan-name">그로스</h3>
@@ -128,7 +130,7 @@
                             <li><span class="check">&#10003;</span> 상품 등록 <strong>월 300개</strong></li>
                             <li><span class="check">&#10003;</span> 일괄 번역 <strong>일/100회</strong></li>
                             <li><span class="check">&#10003;</span> AI 상품 소싱 <strong>일/100회</strong></li>
-                            <li><span class="check">&#10003;</span> 주문 관리 + 퍼센티 어플</li>
+                            <li><span class="check">&#10003;</span> 주문 관리 통합</li>
                             <li><span class="check">&#10003;</span> 고객 문의 관리 기능</li>
                             <li><span class="check">&#10003;</span> 이미지 번역 <strong>무제한</strong></li>
                             <li><span class="check">&#10003;</span> AI 이미지 에디터</li>
@@ -146,7 +148,10 @@
                 </div>
 
                 <!-- 엔터프라이즈 (오른쪽) -->
-                <div class="pricing-card fade-in-up">
+                <div class="pricing-card fade-in-up"
+                     data-monthly="150000" data-yearly="120000"
+                     data-original-monthly="300000" data-original-yearly="240000"
+                     data-discount-monthly="50" data-discount-yearly="60">
                     <div class="pricing-card-header">
                         <div class="pricing-card-icon">🚀</div>
                         <h3 class="pricing-plan-name">엔터프라이즈</h3>
@@ -317,5 +322,57 @@
     </footer>
 
     <script src="js/common.js"></script>
+    <script>
+        (function () {
+            var toggle = document.getElementById('billingToggle');
+            if (!toggle) return;
+
+            var labelMonthly = document.querySelector('[data-billing="monthly"]');
+            var labelYearly = document.querySelector('[data-billing="yearly"]');
+            var cards = document.querySelectorAll('.pricing-card[data-monthly]');
+
+            function formatKRW(n) {
+                return Number(n).toLocaleString('ko-KR');
+            }
+
+            function applyBilling(mode) {
+                var isYearly = mode === 'yearly';
+                toggle.classList.toggle('active', isYearly);
+                toggle.setAttribute('aria-checked', isYearly ? 'true' : 'false');
+                if (labelMonthly) labelMonthly.classList.toggle('active', !isYearly);
+                if (labelYearly) labelYearly.classList.toggle('active', isYearly);
+
+                for (var i = 0; i < cards.length; i++) {
+                    var card = cards[i];
+                    var price = isYearly ? card.getAttribute('data-yearly') : card.getAttribute('data-monthly');
+                    var original = isYearly ? card.getAttribute('data-original-yearly') : card.getAttribute('data-original-monthly');
+                    var discount = isYearly ? card.getAttribute('data-discount-yearly') : card.getAttribute('data-discount-monthly');
+
+                    var amountEl = card.querySelector('.pricing-amount');
+                    var unitEl = card.querySelector('.pricing-unit');
+                    var originalEl = card.querySelector('.pricing-original');
+                    var discountEl = card.querySelector('.pricing-discount-row .pricing-discount-badge');
+
+                    if (amountEl && price) amountEl.textContent = formatKRW(price);
+                    if (unitEl) unitEl.textContent = isYearly ? '원 / 월 (연간)' : '원 / 월';
+                    if (originalEl && original) originalEl.textContent = formatKRW(original) + '원';
+                    if (discountEl && discount) discountEl.textContent = discount + '% 할인';
+                }
+            }
+
+            toggle.addEventListener('click', function () {
+                var next = toggle.classList.contains('active') ? 'monthly' : 'yearly';
+                applyBilling(next);
+            });
+            toggle.addEventListener('keydown', function (e) {
+                if (e.key === ' ' || e.key === 'Enter') {
+                    e.preventDefault();
+                    toggle.click();
+                }
+            });
+            if (labelMonthly) labelMonthly.addEventListener('click', function () { applyBilling('monthly'); });
+            if (labelYearly) labelYearly.addEventListener('click', function () { applyBilling('yearly'); });
+        })();
+    </script>
 </body>
 </html>
