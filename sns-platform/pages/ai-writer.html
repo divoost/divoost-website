@@ -150,6 +150,10 @@
             </header>
 
             <div class="content">
+                <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                    ⚠️ 개발 필요: 현재 텍스트 생성은 실제 LLM이 아닌 클라이언트 측 템플릿 기반입니다.<br>
+                    필요 작업: Edge Function (ai-generate-text) + OpenAI/Anthropic API 키 + AIGateway.generateText() 호출 + 크레딧 차감 (이미지/영상은 이미 백엔드 연동됨)
+                </div>
                 <!-- Topic / Keyword Input -->
                 <div class="writer-box">
                     <h2>📝 주제 및 키워드</h2>
