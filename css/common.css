@@ -577,11 +577,26 @@ p {
 .footer-brand .logo {
   margin-bottom: var(--space-md);
   margin-right: 0;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  text-decoration: none;
 }
-.footer-brand .logo-img {
-  height: 72px;
+.footer-brand .logo:hover,
+.footer-brand .logo:focus,
+.footer-brand .logo:active {
+  background: transparent !important;
+  outline: none !important;
 }
-.footer-brand .logo-img-footer { height: 72px; }
+.footer-brand .logo-img,
+.footer-brand .logo-img-footer {
+  height: 58px;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
 
 .footer-brand p {
   color: var(--text-muted);
