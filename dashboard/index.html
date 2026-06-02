@@ -530,25 +530,121 @@
         try { var raw = localStorage.getItem('snsAuthSession'); if(raw) session = JSON.parse(raw); } catch(e){}
         if(session && session.expires_at && session.expires_at < Math.floor(Date.now()/1000)){ session = null; }
 
-        var SEASONAL = {
-            6: ['트레일러닝','마라톤바지','러닝백팩','rpm줄넘기','실내운동기구','스쿼트랙','턱걸이기구','인도어풋살화','남성볼링화','다이빙렌턴','부력슈트','잠수장비','스킨슈트','여자스포츠헤어밴드','작은어항','새우뜰채','이끼제거제','가재어항','부목','수영장청소기','슬림서랍장','모듈협탁','대리석테이블','투명테이블'],
-            7: ['마라톤','키즈클라이밍','휴대용버너','좌식자전거','요가크롭탑','오픈페이스','부력슈트','잠수장비','스킨슈트','수중총','수상스키슈트','알루미늄거치대','옥상어닝','캐노피설치','방수시트지','베개방수커버','낮은베개','에어매쉬매트','아기해먹','침대범퍼','임산부여름레깅스','반팔바디슈트','고양이창문해먹','탱키니'],
-            8: ['실내운동기구','스쿼트랙','턱걸이기구','실내철봉','가정용턱걸이','코르크요가매트','배달대행방수케이스','다이빙렌턴','부력슈트','수상스키슈트','프리다이빙용품','이끼제거제','햇빛좌욕기','건조기앵글','하드매트리스','농막하우스','캐노피설치','수면베개','무릎베개','대나무돗자리','라탄카페트','대나무자리','비치타월','후드타월']
-        };
+        // ════════════════════════════════════════════════════════
+        // 인기 키워드 — 쿠팡 베스트 카테고리에서 실시간 추출
+        // ════════════════════════════════════════════════════════
+        // ⚠ 정책: 가짜/샘플 데이터 절대 사용 X. 미연동 데이터 소스는 빈 상태 + 라벨 표시.
+        // 현재: 쿠팡 Partners API 베스트 카테고리만 작동.
+        // 추후: 네이버 DataLab API 키 받으면 추가 연동 예정.
 
-        var month = new Date().getMonth() + 1;
-        var monthsToShow = [];
-        for(var i=0;i<3;i++){ var m = ((month - 1 + i) % 12) + 1; monthsToShow.push(m); }
+        var COUPANG_CATEGORIES = [
+            { id: 1016, name: '가전디지털', icon: '💻' },
+            { id: 1010, name: '뷰티', icon: '💄' },
+            { id: 1017, name: '스포츠/레저', icon: '⚽' },
+            { id: 1001, name: '여성패션', icon: '👗' },
+            { id: 1014, name: '생활용품', icon: '🧴' },
+            { id: 1025, name: '헬스/건강식품', icon: '💊' }
+        ];
 
-        var groupsEl = document.getElementById('kwGroups');
-        if(groupsEl){
-            groupsEl.innerHTML = monthsToShow.map(function(m){
-                var kws = SEASONAL[m] || [];
-                return '<div><div class="kw-group-title">' + m + '월 인기 키워드</div><div>' +
-                    kws.map(function(k){ return '<span class="kw-chip" onclick="addKeyword(\''+k.replace(/'/g,"\\'")+'\')">'+k+'</span>'; }).join('') +
-                    '</div></div>';
-            }).join('');
+        // 상품명에서 키워드 추출
+        function extractKeyword(productName){
+            if(!productName) return null;
+            // 대괄호 제거: [브랜드명] 등
+            var name = productName.replace(/\[[^\]]*\]/g, '').trim();
+            // 영문/숫자만 있는 토큰 제거 후 한글 토큰 추출
+            var tokens = name.split(/[\s\/,\-\(\)]+/).filter(function(t){
+                return t.length >= 2 && /[가-힣]/.test(t) && !/^\d+$/.test(t);
+            });
+            if(tokens.length === 0) return null;
+            // 첫 2개 한글 토큰 합치기 (길이 4~10 권장)
+            var kw = tokens.slice(0, 2).join(' ');
+            if(kw.length > 14) kw = tokens[0];
+            return kw;
         }
+
+        async function searchCoupang(keyword){
+            if(!session) throw new Error('no session');
+            var res = await fetch(SUPABASE_URL + '/functions/v1/swift-function', {
+                method:'POST',
+                headers:{
+                    'Authorization':'Bearer ' + session.access_token,
+                    'apikey':SUPABASE_KEY,
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({ endpoint:'/products/search', method:'GET', query:{ keyword: keyword } })
+            });
+            var data = await res.json();
+            if(data.rCode !== '0') throw new Error(data.rMessage || data.error || 'API 오류');
+            return (data.data && data.data.productData) || [];
+        }
+
+        async function fetchCoupangBest(categoryId){
+            if(!session) throw new Error('no session');
+            var res = await fetch(SUPABASE_URL + '/functions/v1/swift-function', {
+                method:'POST',
+                headers:{
+                    'Authorization':'Bearer ' + session.access_token,
+                    'apikey':SUPABASE_KEY,
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({ endpoint:'/products/bestcategories/' + categoryId, method:'GET' })
+            });
+            var data = await res.json();
+            if(data.rCode !== '0') throw new Error(data.rMessage || data.error || 'API 오류');
+            return data.data || [];
+        }
+
+        // 트렌딩 키워드 렌더링 (페이지 로드 시)
+        async function loadTrendingKeywords(){
+            var groupsEl = document.getElementById('kwGroups');
+            if(!groupsEl) return;
+
+            if(!session){
+                groupsEl.innerHTML = '<div style="color:#94A3B8;font-size:.78rem;padding:12px;text-align:center">⚠️ 로그인 후 실시간 인기 키워드 로딩</div>';
+                return;
+            }
+
+            groupsEl.innerHTML = '<div style="color:#64748B;font-size:.78rem;padding:12px;text-align:center">🔄 쿠팡 베스트 카테고리에서 인기 키워드 추출 중...</div>';
+
+            // 6개 카테고리 병렬 호출
+            var promises = COUPANG_CATEGORIES.map(function(cat){
+                return fetchCoupangBest(cat.id).then(function(products){
+                    var keywords = [];
+                    var seen = {};
+                    products.forEach(function(p){
+                        var kw = extractKeyword(p.productName);
+                        if(kw && !seen[kw]){
+                            seen[kw] = true;
+                            keywords.push(kw);
+                        }
+                    });
+                    return { cat: cat, keywords: keywords.slice(0, 12) };
+                }).catch(function(err){
+                    return { cat: cat, keywords: [], error: err.message };
+                });
+            });
+
+            var results = await Promise.all(promises);
+
+            var html = results.map(function(r){
+                var c = r.cat;
+                if(r.error || r.keywords.length === 0){
+                    return '<div><div class="kw-group-title">' + c.icon + ' ' + c.name + '</div><div style="color:#94A3B8;font-size:.7rem">' + (r.error ? '⚠ ' + r.error : '데이터 없음') + '</div></div>';
+                }
+                return '<div><div class="kw-group-title">' + c.icon + ' ' + c.name + ' <span style="font-weight:400;text-transform:none;color:#94A3B8">— ' + r.keywords.length + '개</span></div><div>' +
+                    r.keywords.map(function(k){
+                        return '<span class="kw-chip" onclick="addKeyword(\'' + k.replace(/'/g, "\\'") + '\')">' + k + '</span>';
+                    }).join('') +
+                '</div></div>';
+            }).join('');
+
+            html += '<div style="grid-column:1/-1;padding-top:8px;border-top:1px dashed #E2E8F0;margin-top:4px"><div style="font-size:.68rem;color:#94A3B8">📡 쿠팡 Partners API "베스트 카테고리" 기반 실시간 추출 · 네이버 DataLab 추가 예정</div></div>';
+
+            groupsEl.innerHTML = html;
+        }
+
+        // 즉시 로드
+        loadTrendingKeywords();
 
         var currentPeriod = 3;
         var customStart = null, customEnd = null;
@@ -630,22 +726,6 @@
             { key:'amazon', name:'Amazon', icon:'📦', source:'todo', tagId:'tag-amazon', countId:'v-amazon-count' },
             { key:'temu', name:'Temu', icon:'🏷', source:'todo', tagId:'tag-temu', countId:'v-temu-count' }
         ];
-
-        async function searchCoupang(keyword){
-            if(!session) throw new Error('no session');
-            var res = await fetch(SUPABASE_URL + '/functions/v1/swift-function', {
-                method:'POST',
-                headers:{
-                    'Authorization':'Bearer ' + session.access_token,
-                    'apikey':SUPABASE_KEY,
-                    'Content-Type':'application/json'
-                },
-                body:JSON.stringify({ endpoint:'/products/search', method:'GET', query:{ keyword: keyword } })
-            });
-            var data = await res.json();
-            if(data.rCode !== '0') throw new Error(data.rMessage || data.error || 'API 오류');
-            return (data.data && data.data.productData) || [];
-        }
 
         window.aiSearchAll = async function(){
             var kw = document.getElementById('hubKeyword').value.trim();
