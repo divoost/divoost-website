@@ -740,6 +740,13 @@
             });
             var data = await res.json();
             if(!res.ok || data.error) throw new Error(data.error || 'crawler error');
+            // 결과 0이고 debug 있으면 콘솔에 출력
+            if((!data.products || data.products.length === 0) && data.debug){
+                console.warn('[' + crawlerSource + '] 결과 0 - debug:', data.debug);
+                // 디버그를 글로벌에 저장 (UI에서 노출용)
+                window.__crawlerDebug = window.__crawlerDebug || {};
+                window.__crawlerDebug[crawlerSource] = data.debug;
+            }
             return data.products || [];
         }
 
@@ -829,7 +836,17 @@
                 html += '</div>';
 
                 if(products.length === 0){
-                    html += '<div style="color:#94A3B8;font-size:.78rem;padding:12px;text-align:center;background:#F8FAFC;border-radius:8px">' + (p.source==='todo' ? '⚠ 백엔드 미개발 - API 또는 크롤러 추가 필요' : '결과 없음') + '</div>';
+                    var emptyMsg = '결과 없음';
+                    if(p.source === 'todo'){
+                        emptyMsg = '⚠ 백엔드 미개발 - API 또는 크롤러 추가 필요';
+                    } else if(p.source === 'crawl' && window.__crawlerDebug){
+                        var dbg = window.__crawlerDebug[p.key === 'gmarket' ? 'gmarket-search' : 'naver-search'];
+                        if(dbg){
+                            emptyMsg = '⚠ ' + (dbg.hint || '크롤링 차단됨');
+                            emptyMsg += ' (HTTP ' + dbg.httpStatus + ', HTML ' + (dbg.htmlLength||0) + 'B)';
+                        }
+                    }
+                    html += '<div style="color:#94A3B8;font-size:.78rem;padding:12px;text-align:center;background:#F8FAFC;border-radius:8px">' + emptyMsg + '</div>';
                 } else {
                     html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px">';
                     products.slice(0, 18).forEach(function(item){
