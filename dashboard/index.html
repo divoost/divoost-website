@@ -729,7 +729,7 @@
 
         // ─── 크롤러 호출 (Gmarket, Naver) ───
         async function crawlerCall(crawlerSource, keyword){
-            var res = await fetch(SUPABASE_URL + '/functions/v1/marketplace-crawler', {
+            var res = await fetch(SUPABASE_URL + '/functions/v1/quick-handler', {
                 method:'POST',
                 headers:{
                     'Authorization':'Bearer ' + session.access_token,
