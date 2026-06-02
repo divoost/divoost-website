@@ -1,34 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 110" role="img" aria-label="HubOnTrade">
-  <defs>
-    <linearGradient id="hBlue" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#3B82F6"/>
-      <stop offset="100%" stop-color="#1E3A8A"/>
-    </linearGradient>
-    <linearGradient id="arrowOrange" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#FB923C"/>
-      <stop offset="100%" stop-color="#F97316"/>
-    </linearGradient>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 110" role="img" aria-label="HubOnTrade">
+  <!-- H 마크 (이탤릭, 단색 블루) -->
+  <g transform="translate(0, 0)">
+    <!-- 왼쪽 슬랜트 기둥 -->
+    <path d="M22,8 L48,8 L42,76 L16,76 Z" fill="#1E40AF"/>
+    <!-- 오른쪽 슬랜트 기둥 -->
+    <path d="M58,8 L84,8 L78,76 L52,76 Z" fill="#1E40AF"/>
+    <!-- 가운데 가로 바 -->
+    <path d="M18,36 L82,36 L80,50 L16,50 Z" fill="#1E40AF"/>
 
-  <!-- 마크: 스타일라이즈된 H -->
-  <g transform="translate(118, 4)">
-    <!-- H 좌측 기둥 (살짝 기울어진 형태) -->
-    <path d="M6,4 L24,4 L30,8 L30,56 L24,60 L6,60 L0,56 L0,8 Z" fill="url(#hBlue)"/>
-    <!-- H 우측 기둥 -->
-    <path d="M52,4 L70,4 L76,8 L76,56 L70,60 L52,60 L46,56 L46,8 Z" fill="url(#hBlue)"/>
-    <!-- H 가운데 연결바 (살짝 곡선) -->
-    <path d="M0,28 L76,28 L76,38 L0,38 Z" fill="url(#hBlue)"/>
-
-    <!-- 오렌지 곡선 화살표 -->
-    <path d="M-6,52 Q14,50 30,38 Q50,22 78,12" fill="none" stroke="url(#arrowOrange)" stroke-width="6" stroke-linecap="round"/>
+    <!-- 오렌지 스윕 화살표 (H를 둘러쌈) -->
+    <path d="M-2,68 C12,76 30,80 50,72 C70,64 82,42 92,18"
+          fill="none" stroke="#F97316" stroke-width="7" stroke-linecap="round"/>
     <!-- 화살촉 -->
-    <path d="M68,6 L84,10 L74,22 Z" fill="#F97316"/>
+    <path d="M86,4 L104,12 L92,28 Z" fill="#F97316"/>
   </g>
 
   <!-- 텍스트: Hub On Trade -->
-  <g font-family="'Poppins', 'Inter', system-ui, sans-serif" font-weight="800" font-size="32" letter-spacing="-0.5">
-    <text x="46" y="100" fill="#0F172A">Hub</text>
-    <text x="119" y="100" fill="#F97316">On</text>
-    <text x="178" y="100" fill="#2563EB">Trade</text>
+  <g font-family="'Poppins', 'Inter', system-ui, sans-serif" font-weight="800" font-size="36" letter-spacing="-0.5">
+    <text x="116" y="60" fill="#0F172A">Hub</text>
+    <text x="198" y="60" fill="#F97316">On</text>
+    <text x="262" y="60" fill="#2563EB">Trade</text>
   </g>
 </svg>
