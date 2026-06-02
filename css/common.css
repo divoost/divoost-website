@@ -252,14 +252,28 @@ p {
 
 .logo-words {
   display: inline-flex;
-  align-items: baseline;
-  gap: 2px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
   font-size: 42px;
   line-height: 1;
+}
+.logo-words-row {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
 }
 .logo-words .lw-hub { color: #0F172A; }
 .logo-words .lw-on { color: #F97316; }
 .logo-words .lw-trade { color: #2563EB; }
+.logo-tagline {
+  font-size: 0.4em;
+  font-weight: 600;
+  color: #0F172A;
+  letter-spacing: 0;
+  white-space: nowrap;
+  line-height: 1;
+}
 
 /* 기존 호환 (혹시 남아있는 logo-img / logo span) */
 .logo-img {
@@ -597,7 +611,8 @@ p {
 .footer-brand .logo-words { font-size: 52px; }
 .footer-brand .logo-words .lw-hub,
 .footer-brand .logo-words .lw-on,
-.footer-brand .logo-words .lw-trade { color: #94A3B8; }
+.footer-brand .logo-words .lw-trade,
+.footer-brand .logo-tagline { color: #94A3B8; }
 .footer-brand .logo-img {
   height: 120px;
   opacity: 0.85;
