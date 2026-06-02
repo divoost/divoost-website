@@ -88,13 +88,26 @@
                     </div>
 
                     <!-- 기간 토글 -->
-                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap">
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap">
                         <span style="font-size:.78rem;color:#64748B;margin-right:4px;font-weight:600">인기 기간:</span>
                         <button class="period-btn active" data-days="3" onclick="setPeriod(3)">3일</button>
                         <button class="period-btn" data-days="7" onclick="setPeriod(7)">7일</button>
                         <button class="period-btn" data-days="15" onclick="setPeriod(15)">15일</button>
                         <button class="period-btn" data-days="30" onclick="setPeriod(30)">30일</button>
                         <button class="period-btn" data-days="0" onclick="setPeriod(0)">수동</button>
+                    </div>
+
+                    <!-- 수동 날짜 범위 (수동 클릭 시 표시) -->
+                    <div id="customDateRange" style="display:none;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:10px 14px;margin-bottom:14px;align-items:center;gap:10px;flex-wrap:wrap">
+                        <span style="font-size:.74rem;color:#64748B;font-weight:600">📅 기간 직접 선택:</span>
+                        <label style="font-size:.78rem;color:#0F172A">시작
+                            <input type="date" id="dateStart" style="margin-left:6px;padding:5px 8px;border:1px solid #E2E8F0;border-radius:6px;font-size:.78rem;color:#0F172A;background:#fff">
+                        </label>
+                        <span style="color:#94A3B8">~</span>
+                        <label style="font-size:.78rem;color:#0F172A">종료
+                            <input type="date" id="dateEnd" style="margin-left:6px;padding:5px 8px;border:1px solid #E2E8F0;border-radius:6px;font-size:.78rem;color:#0F172A;background:#fff">
+                        </label>
+                        <span id="dateRangeInfo" style="font-size:.7rem;color:#64748B;margin-left:auto"></span>
                     </div>
 
                     <!-- 인기 키워드 (월별) -->
@@ -538,12 +551,54 @@
         }
 
         var currentPeriod = 3;
+        var customStart = null, customEnd = null;
+
         window.setPeriod = function(days){
             currentPeriod = days;
             document.querySelectorAll('.period-btn').forEach(function(b){
                 b.classList.toggle('active', Number(b.dataset.days) === days);
             });
+            var rangeBox = document.getElementById('customDateRange');
+            if(days === 0){
+                rangeBox.style.display = 'flex';
+                // 기본값: 오늘 - 7일 ~ 오늘
+                var today = new Date(), past = new Date(Date.now() - 7*24*60*60*1000);
+                var startInput = document.getElementById('dateStart');
+                var endInput = document.getElementById('dateEnd');
+                if(!startInput.value) startInput.value = past.toISOString().slice(0,10);
+                if(!endInput.value) endInput.value = today.toISOString().slice(0,10);
+                updateDateRangeInfo();
+            } else {
+                rangeBox.style.display = 'none';
+            }
         };
+
+        function updateDateRangeInfo(){
+            var s = document.getElementById('dateStart').value;
+            var e = document.getElementById('dateEnd').value;
+            var info = document.getElementById('dateRangeInfo');
+            if(s && e){
+                customStart = s; customEnd = e;
+                var d1 = new Date(s), d2 = new Date(e);
+                var diff = Math.round((d2 - d1) / (24*60*60*1000));
+                if(diff < 0){
+                    info.textContent = '⚠ 종료일이 시작일보다 앞섭니다';
+                    info.style.color = '#DC2626';
+                } else {
+                    info.textContent = '총 ' + (diff + 1) + '일';
+                    info.style.color = '#64748B';
+                }
+            } else {
+                info.textContent = '';
+            }
+        }
+
+        // 날짜 변경 시 정보 갱신
+        document.addEventListener('change', function(e){
+            if(e.target && (e.target.id === 'dateStart' || e.target.id === 'dateEnd')){
+                updateDateRangeInfo();
+            }
+        });
 
         window.addKeyword = function(kw){
             var input = document.getElementById('hubKeyword');
@@ -604,7 +659,14 @@
             var resultsByPlatform = document.getElementById('aiResultByPlatform');
             var resultMeta = document.getElementById('aiResultMeta');
             resultsArea.style.display = 'block';
-            resultMeta.textContent = '"' + kw + '" · 기간 ' + (currentPeriod || '수동') + '일';
+            var periodLabel;
+            if(currentPeriod === 0){
+                if(customStart && customEnd) periodLabel = '수동 (' + customStart + ' ~ ' + customEnd + ')';
+                else periodLabel = '수동';
+            } else {
+                periodLabel = currentPeriod + '일';
+            }
+            resultMeta.textContent = '"' + kw + '" · 기간 ' + periodLabel;
             resultsByPlatform.innerHTML = '<div style="color:#64748B;font-size:.85rem;padding:14px">🔄 전 플랫폼 동시 검색 중...</div>';
 
             PLATFORMS.forEach(function(p){
