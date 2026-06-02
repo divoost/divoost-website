@@ -252,7 +252,7 @@ p {
 
 .logo-img {
   display: block;
-  height: 40px;
+  height: 56px;
   width: auto;
 }
 
@@ -267,7 +267,7 @@ p {
 
 @media (max-width: 1024px) {
   .logo { margin-right: 24px; }
-  .logo-img { height: 32px; }
+  .logo-img { height: 44px; }
 }
 
 .nav-link {
@@ -570,7 +570,7 @@ p {
   margin-right: 0;
 }
 .footer-brand .logo-img {
-  height: 44px;
+  height: 62px;
   opacity: 0.85;
 }
 
