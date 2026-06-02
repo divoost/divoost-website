@@ -171,7 +171,7 @@
 
         // ─── 쿠팡 API 호출 헬퍼 ───
         async function coupangCall(endpoint, opts = {}) {
-            const { data, error } = await supabase.functions.invoke('coupang-partners', {
+            const { data, error } = await supabase.functions.invoke('swift-function', {
                 body: {
                     endpoint,
                     method: opts.method || 'GET',
