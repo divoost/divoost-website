@@ -148,12 +148,8 @@
                         <tbody id="userTbody"></tbody>
                     </table>
                     <div class="pagination">
-                        <button class="page-btn">◀</button>
-                        <button class="page-btn active">1</button>
-                        <button class="page-btn">2</button>
-                        <button class="page-btn">3</button>
-                        <button class="page-btn">▶</button>
-                        <span style="margin-left:14px;color:#94a3b8">총 <strong id="totalCount">0</strong>명</span>
+                        <span style="color:#94a3b8">총 <strong id="totalCount">0</strong>명</span>
+                        <span style="margin-left:14px;color:#f59e0b;font-size:.72rem">⚠️ 페이지네이션 개발 필요 (현재 전체 표시)</span>
                     </div>
                 </div>
             </div>
@@ -321,7 +317,7 @@
             if(!selectedUser) return;
             var msg = prompt(selectedUser.email + '로 보낼 메시지:');
             if(msg){
-                alert('✅ 이메일 발송 기록됨\n\n실제 발송은 백엔드 이메일 서비스 (SendGrid, AWS SES 등) 연동 필요');
+                alert('⚠️ 개발 필요: 이메일 발송 백엔드 미연동\n\n필요 작업: Supabase Edge Function (send-email) + Resend/SendGrid API 키 설정\n현재는 감사 로그만 기록됩니다.');
                 SNSAdmin.logAdminAction({
                     action: 'EMAIL_SEND',
                     severity: 'info',

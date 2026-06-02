@@ -57,61 +57,30 @@
             <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">💳 구독 관리</div><div class="top-bar-sub">유료 구독자 및 결제 내역 관리</div></div></div></header>
             <div class="content">
 
+                <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                    ⚠️ 개발 필요: 결제/구독 관리자 화면은 아직 백엔드 미연동입니다. (필요한 작업: 토스페이먼츠/Stripe 웹훅 → payments/subscriptions 테이블 적재 + 집계 RPC 구현)
+                </div>
+
                 <div class="summary-row">
-                    <div class="summary-card"><div class="summary-val" style="color:#3b82f6">₩4,580,000</div><div class="summary-label">이번 달 매출 (MRR)</div></div>
-                    <div class="summary-card"><div class="summary-val" style="color:#10b981">156</div><div class="summary-label">유료 회원</div></div>
-                    <div class="summary-card"><div class="summary-val" style="color:#f59e0b">23</div><div class="summary-label">이번 달 신규</div></div>
-                    <div class="summary-card"><div class="summary-val" style="color:#ef4444">5</div><div class="summary-label">이탈/취소</div></div>
+                    <div class="summary-card"><div class="summary-val" style="color:#94a3b8">-</div><div class="summary-label">이번 달 매출 (MRR)</div></div>
+                    <div class="summary-card"><div class="summary-val" id="cPaidUsers" style="color:#94a3b8">-</div><div class="summary-label">유료 회원</div></div>
+                    <div class="summary-card"><div class="summary-val" style="color:#94a3b8">-</div><div class="summary-label">이번 달 신규</div></div>
+                    <div class="summary-card"><div class="summary-val" style="color:#94a3b8">-</div><div class="summary-label">이탈/취소</div></div>
                 </div>
 
                 <div class="card">
                     <h2>📦 플랜별 현황</h2>
-                    <div class="plan-grid">
-                        <div class="plan-card">
-                            <div class="plan-name">🎁 체험 플랜</div>
-                            <div class="plan-price">무료 <small>/ 30일</small></div>
-                            <div class="plan-stat"><span>현재 가입자</span><strong>89명</strong></div>
-                            <div class="plan-stat"><span>전환율</span><strong style="color:#10b981">17.3%</strong></div>
-                        </div>
-                        <div class="plan-card pro">
-                            <div class="plan-name">⭐ PRO 플랜</div>
-                            <div class="plan-price">₩29,000 <small>/ 월</small></div>
-                            <div class="plan-stat"><span>구독자</span><strong>132명</strong></div>
-                            <div class="plan-stat"><span>월 매출</span><strong>₩3,828,000</strong></div>
-                        </div>
-                        <div class="plan-card enterprise">
-                            <div class="plan-name">🏢 Enterprise</div>
-                            <div class="plan-price">₩149,000 <small>/ 월</small></div>
-                            <div class="plan-stat"><span>구독자</span><strong>24명</strong></div>
-                            <div class="plan-stat"><span>월 매출</span><strong>₩3,576,000</strong></div>
-                        </div>
-                    </div>
+                    <p style="color:#94a3b8;font-size:.84rem">데이터 없음 (plans/subscriptions 테이블 집계 미구현)</p>
                 </div>
 
                 <div class="card">
                     <h2>💰 최근 결제 내역</h2>
-                    <table class="table">
-                        <thead><tr><th>날짜</th><th>회원</th><th>플랜</th><th>금액</th><th>결제수단</th><th>상태</th></tr></thead>
-                        <tbody>
-                            <tr><td>2026-05-28</td><td>marketing@company.com</td><td><span class="pill pro">PRO</span></td><td>₩29,000</td><td>카드</td><td><span class="pill success">결제완료</span></td></tr>
-                            <tr><td>2026-05-28</td><td>shop@brand.com</td><td><span class="pill enterprise">Enterprise</span></td><td>₩149,000</td><td>카드</td><td><span class="pill success">결제완료</span></td></tr>
-                            <tr><td>2026-05-27</td><td>creator@studio.com</td><td><span class="pill pro">PRO</span></td><td>₩29,000</td><td>계좌이체</td><td><span class="pill success">결제완료</span></td></tr>
-                            <tr><td>2026-05-27</td><td>test@trial.com</td><td><span class="pill pro">PRO</span></td><td>₩29,000</td><td>카드</td><td><span class="pill danger">결제실패</span></td></tr>
-                            <tr><td>2026-05-26</td><td>business@corp.com</td><td><span class="pill enterprise">Enterprise</span></td><td>₩149,000</td><td>세금계산서</td><td><span class="pill warn">대기중</span></td></tr>
-                        </tbody>
-                    </table>
+                    <p style="color:#94a3b8;font-size:.84rem">데이터 없음 (payments 테이블 미연동)</p>
                 </div>
 
                 <div class="card">
                     <h2>📊 매출 추이 (최근 6개월)</h2>
-                    <div style="display:flex;gap:8px;align-items:flex-end;height:160px;padding:20px 0">
-                        <div style="flex:1;text-align:center"><div style="background:linear-gradient(180deg,#3b82f6,#60a5fa);height:40%;border-radius:6px 6px 0 0"></div><div style="font-size:.7rem;color:#94a3b8;margin-top:4px">12월</div></div>
-                        <div style="flex:1;text-align:center"><div style="background:linear-gradient(180deg,#3b82f6,#60a5fa);height:55%;border-radius:6px 6px 0 0"></div><div style="font-size:.7rem;color:#94a3b8;margin-top:4px">1월</div></div>
-                        <div style="flex:1;text-align:center"><div style="background:linear-gradient(180deg,#3b82f6,#60a5fa);height:60%;border-radius:6px 6px 0 0"></div><div style="font-size:.7rem;color:#94a3b8;margin-top:4px">2월</div></div>
-                        <div style="flex:1;text-align:center"><div style="background:linear-gradient(180deg,#3b82f6,#60a5fa);height:70%;border-radius:6px 6px 0 0"></div><div style="font-size:.7rem;color:#94a3b8;margin-top:4px">3월</div></div>
-                        <div style="flex:1;text-align:center"><div style="background:linear-gradient(180deg,#3b82f6,#60a5fa);height:85%;border-radius:6px 6px 0 0"></div><div style="font-size:.7rem;color:#94a3b8;margin-top:4px">4월</div></div>
-                        <div style="flex:1;text-align:center"><div style="background:linear-gradient(180deg,#3b82f6,#60a5fa);height:100%;border-radius:6px 6px 0 0"></div><div style="font-size:.7rem;color:#94a3b8;margin-top:4px;font-weight:700">5월</div></div>
-                    </div>
+                    <p style="color:#94a3b8;font-size:.84rem">데이터 없음 (월별 매출 집계 RPC 미구현)</p>
                 </div>
             </div>
         </div>
@@ -121,7 +90,17 @@
     <script src="../js/supabase-admin.js"></script>
     <script>
         document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
-        (async function(){ await SNSAdmin.requireAdmin(); })();
+        (async function(){
+            var ok = await SNSAdmin.requireAdmin();
+            if(!ok) return;
+            try {
+                var stats = await SNSAdmin.getUserStats();
+                if(stats && typeof stats.paid === 'number'){
+                    document.getElementById('cPaidUsers').textContent = stats.paid + '명';
+                    document.getElementById('cPaidUsers').style.color = '#10b981';
+                }
+            } catch(e){ console.error('stats load failed', e); }
+        })();
     </script>
 </body>
 </html>
