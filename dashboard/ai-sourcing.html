@@ -7,19 +7,19 @@
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/mobile-fix.css">
     <style>
-        .ai-search-box{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:16px;padding:32px;margin-bottom:24px;text-align:center}
-        .ai-search-box h1{font-size:1.5rem;color:#e2e8f0;margin-bottom:8px}
-        .ai-search-box p{font-size:.85rem;color:#94a3b8;margin-bottom:20px}
+        .ai-search-box{background:#FFFFFF;border-radius:16px;padding:32px;margin-bottom:24px;text-align:center}
+        .ai-search-box h1{font-size:1.5rem;color:#0F172A;margin-bottom:8px}
+        .ai-search-box p{font-size:.85rem;color:#64748B;margin-bottom:20px}
         .ai-input-wrap{display:flex;gap:8px;max-width:600px;margin:0 auto}
-        .ai-input{flex:1;padding:14px 18px;border-radius:10px;border:2px solid #334155;background:#0f172a;color:#e2e8f0;font-size:1rem}
+        .ai-input{flex:1;padding:14px 18px;border-radius:10px;border:2px solid #E2E8F0;background:#FFFFFF;color:#0F172A;font-size:1rem}
         .ai-input:focus{border-color:#3b82f6;outline:none}
         .ai-btn{padding:14px 28px;border-radius:10px;border:none;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;white-space:nowrap}
         .ai-btn:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(59,130,246,.4)}
         .ai-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
         .ai-credits{font-size:.72rem;color:#64748b;margin-top:8px}
-        .ai-progress{display:none;max-width:600px;margin:16px auto 0;background:#1e293b;border-radius:8px;overflow:hidden;height:6px}
+        .ai-progress{display:none;max-width:600px;margin:16px auto 0;background:#F8FAFC;border-radius:8px;overflow:hidden;height:6px}
         .ai-progress-bar{height:100%;background:linear-gradient(90deg,#3b82f6,#8b5cf6);width:0;transition:width .5s}
-        .ai-status{font-size:.78rem;color:#94a3b8;margin-top:8px;text-align:center}
+        .ai-status{font-size:.78rem;color:#64748B;margin-top:8px;text-align:center}
         .result-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:16px;margin-bottom:12px;display:flex;gap:14px;transition:all .2s;cursor:pointer}
         .result-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-2px)}
         .result-img{width:100px;height:100px;border-radius:8px;object-fit:cover;background:#f1f5f9;flex-shrink:0}
@@ -37,10 +37,10 @@
         .score-high{background:linear-gradient(135deg,#10b981,#059669)}
         .score-mid{background:linear-gradient(135deg,#f59e0b,#d97706)}
         .score-low{background:linear-gradient(135deg,#ef4444,#dc2626)}
-        .score-label{font-size:.65rem;color:#94a3b8;margin-top:4px}
+        .score-label{font-size:.65rem;color:#64748B;margin-top:4px}
         .result-bars{display:flex;gap:4px;margin-top:4px}
         .bar-item{flex:1;text-align:center}
-        .bar-label{font-size:.6rem;color:#94a3b8}
+        .bar-label{font-size:.6rem;color:#64748B}
         .bar-track{height:4px;background:#f1f5f9;border-radius:2px;margin-top:2px}
         .bar-fill{height:100%;border-radius:2px}
         .filters{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
@@ -229,7 +229,7 @@
                     '<div class="ai-score"><div class="score-circle '+scoreClass+'">'+p.ai.total+'</div><div class="score-label">AI점수</div></div>'+
                     '</div>';
             });
-            document.getElementById('results').innerHTML=html||'<div style="text-align:center;color:#94a3b8;padding:40px">결과 없음</div>';
+            document.getElementById('results').innerHTML=html||'<div style="text-align:center;color:#64748B;padding:40px">결과 없음</div>';
         }
 
         function filterResults(type){

@@ -23,10 +23,10 @@
         .p-card-body{padding:10px}
         .p-card-name{font-size:.8rem;font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
         .p-card-price{font-size:1rem;font-weight:800;color:#e42528;margin:4px 0}
-        .p-card-meta{display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8}
+        .p-card-meta{display:flex;justify-content:space-between;font-size:.7rem;color:#64748B}
         .p-card-tag{display:inline-block;padding:2px 6px;border-radius:3px;font-size:.65rem;font-weight:600;background:rgba(59,130,246,.1);color:#3b82f6}
         .p-table{width:100%;border-collapse:collapse}
-        .p-table th{padding:10px;text-align:left;font-size:.72rem;color:#94a3b8;font-weight:600;border-bottom:2px solid #e2e8f0;cursor:pointer}
+        .p-table th{padding:10px;text-align:left;font-size:.72rem;color:#64748B;font-weight:600;border-bottom:2px solid #e2e8f0;cursor:pointer}
         .p-table td{padding:8px 10px;border-bottom:1px solid #f1f5f9;font-size:.82rem}
         .p-table tr:hover td{background:#f8fafc}
         .p-table img{width:40px;height:40px;object-fit:cover;border-radius:4px}
@@ -96,11 +96,11 @@
             document.getElementById('gridView').innerHTML=page.map(function(p){
                 var price=p.currency==='CNY'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
                 var date=p.scraped_at?p.scraped_at.substring(0,10):'';
-                return '<div class="p-card" onclick="'+(p.url?"window.open('"+p.url.replace(/'/g,'')+"')":"")+'"><img src="'+(p.image||'')+'" onerror="this.outerHTML=\'<div style=&quot;padding:40px;text-align:center;color:#94a3b8;background:#f1f5f9;height:160px;display:flex;align-items:center;justify-content:center&quot;>📦</div>\'"><div class="p-card-body"><div class="p-card-name">'+(p.name||'')+'</div><div class="p-card-price">'+price+'</div><div class="p-card-meta"><span class="p-card-tag">'+(p.platform||'')+'</span><span>'+(p.review_count?'리뷰 '+p.review_count:'')+'</span></div><div class="p-card-meta"><span>'+date+'</span>'+(p.rating?'<span>⭐'+p.rating+'</span>':'')+'</div></div></div>';
-            }).join('')||'<div style="text-align:center;color:#94a3b8;padding:40px;grid-column:1/-1">데이터 없음 - 크롤링을 먼저 실행하세요</div>';
+                return '<div class="p-card" onclick="'+(p.url?"window.open('"+p.url.replace(/'/g,'')+"')":"")+'"><img src="'+(p.image||'')+'" onerror="this.outerHTML=\'<div style=&quot;padding:40px;text-align:center;color:#64748B;background:#f1f5f9;height:160px;display:flex;align-items:center;justify-content:center&quot;>📦</div>\'"><div class="p-card-body"><div class="p-card-name">'+(p.name||'')+'</div><div class="p-card-price">'+price+'</div><div class="p-card-meta"><span class="p-card-tag">'+(p.platform||'')+'</span><span>'+(p.review_count?'리뷰 '+p.review_count:'')+'</span></div><div class="p-card-meta"><span>'+date+'</span>'+(p.rating?'<span>⭐'+p.rating+'</span>':'')+'</div></div></div>';
+            }).join('')||'<div style="text-align:center;color:#64748B;padding:40px;grid-column:1/-1">데이터 없음 - 크롤링을 먼저 실행하세요</div>';
             document.getElementById('tableBody').innerHTML=page.map(function(p){
                 var price=p.currency==='CNY'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
-                return '<tr><td>'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📦\'">':'📦')+'</td><td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(p.name||'')+'</td><td style="font-weight:700;color:#e42528">'+price+'</td><td><span class="p-card-tag">'+(p.platform||'')+'</span></td><td>'+(p.review_count||'-')+'</td><td>'+(p.rating?'⭐'+p.rating:'-')+'</td><td style="font-size:.72rem;color:#94a3b8">'+(p.scraped_at?p.scraped_at.substring(0,10):'')+'</td><td>'+(p.url?'<a href="'+p.url+'" target="_blank" style="color:#3b82f6;font-size:.75rem">보기</a>':'')+'</td></tr>';
+                return '<tr><td>'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📦\'">':'📦')+'</td><td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(p.name||'')+'</td><td style="font-weight:700;color:#e42528">'+price+'</td><td><span class="p-card-tag">'+(p.platform||'')+'</span></td><td>'+(p.review_count||'-')+'</td><td>'+(p.rating?'⭐'+p.rating:'-')+'</td><td style="font-size:.72rem;color:#64748B">'+(p.scraped_at?p.scraped_at.substring(0,10):'')+'</td><td>'+(p.url?'<a href="'+p.url+'" target="_blank" style="color:#3b82f6;font-size:.75rem">보기</a>':'')+'</td></tr>';
             }).join('');
             var totalPages=Math.ceil(allProducts.length/PAGE_SIZE),ph='';
             for(var i=1;i<=totalPages;i++)ph+='<button class="page-btn'+(i===currentPage?' active':'')+'" onclick="goPage('+i+')">'+i+'</button>';

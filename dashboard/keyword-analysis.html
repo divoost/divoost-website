@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/mobile-fix.css">
     <style>
-        .kw-search{background:linear-gradient(135deg,#1e293b,#0f172a);border-radius:14px;padding:24px;margin-bottom:20px;text-align:center}
-        .kw-search h1{font-size:1.3rem;color:#e2e8f0;margin-bottom:8px}
-        .kw-search p{font-size:.82rem;color:#94a3b8;margin-bottom:16px}
+        .kw-search{background:#FFFFFF;border-radius:14px;padding:24px;margin-bottom:20px;text-align:center}
+        .kw-search h1{font-size:1.3rem;color:#0F172A;margin-bottom:8px}
+        .kw-search p{font-size:.82rem;color:#64748B;margin-bottom:16px}
         .kw-input-wrap{display:flex;gap:8px;max-width:500px;margin:0 auto}
-        .kw-input{flex:1;padding:12px 16px;border-radius:10px;border:2px solid #334155;background:#0f172a;color:#e2e8f0;font-size:.9rem}
+        .kw-input{flex:1;padding:12px 16px;border-radius:10px;border:2px solid #E2E8F0;background:#FFFFFF;color:#0F172A;font-size:.9rem}
         .kw-input:focus{border-color:#3b82f6;outline:none}
         .kw-btn{padding:12px 24px;border-radius:10px;border:none;background:#3b82f6;color:#fff;font-weight:700;cursor:pointer}
         .score-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
@@ -22,7 +22,7 @@
         .score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
         .score-item{background:#f8fafc;border-radius:10px;padding:14px;text-align:center;border:1px solid #e2e8f0}
         .score-item-val{font-size:1.4rem;font-weight:800}
-        .score-item-label{font-size:.7rem;color:#94a3b8;margin-top:4px}
+        .score-item-label{font-size:.7rem;color:#64748B;margin-top:4px}
         .score-item-bar{height:4px;border-radius:2px;margin-top:6px;background:#e2e8f0}
         .score-item-fill{height:100%;border-radius:2px}
         .grade-badge{display:inline-block;padding:4px 12px;border-radius:6px;font-size:.8rem;font-weight:700;margin-left:8px}
@@ -65,7 +65,7 @@
                 <div id="resultArea"></div>
                 <div style="margin-top:20px">
                     <div class="section-divider" style="font-size:.9rem;font-weight:700;margin-bottom:10px">📜 분석 이력</div>
-                    <div class="kw-history" id="kwHistory"><div style="text-align:center;color:#94a3b8;padding:20px">분석 이력이 없습니다</div></div>
+                    <div class="kw-history" id="kwHistory"><div style="text-align:center;color:#64748B;padding:20px">분석 이력이 없습니다</div></div>
                 </div>
             </div>
         </div>
@@ -77,7 +77,7 @@
         async function analyzeKeyword(){
             var kw=document.getElementById('kwInput').value.trim();
             if(!kw)return;
-            document.getElementById('resultArea').innerHTML='<div style="text-align:center;padding:40px;color:#94a3b8"><div style="font-size:2rem;margin-bottom:8px">🔍</div>"'+kw+'" 분석 중...</div>';
+            document.getElementById('resultArea').innerHTML='<div style="text-align:center;padding:40px;color:#64748B"><div style="font-size:2rem;margin-bottom:8px">🔍</div>"'+kw+'" 분석 중...</div>';
 
             try{
                 var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(kw)+'&country=kr&num=20';
@@ -119,7 +119,7 @@
                     html+='<div style="font-size:.85rem;font-weight:600;margin:16px 0 8px">🏆 TOP 상품</div>';
                     items.slice(0,5).forEach(function(it,i){
                         var price=it.extracted_price||0;if(typeof price==='string')price=parseInt(price.replace(/[^\d]/g,''))||0;
-                        html+='<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f1f5f9;cursor:pointer" onclick="window.open(\''+((it.link||'').replace(/'/g,'%27'))+'\')">'+(it.thumbnail?'<img src="'+it.thumbnail+'" style="width:44px;height:44px;object-fit:cover;border-radius:6px" onerror="this.style.display=\'none\'">':'')+'<div style="flex:1;min-width:0"><div style="font-size:.8rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(i+1)+'. '+(it.title||'')+'</div><div style="font-size:.82rem;color:#e42528;font-weight:700">₩'+price.toLocaleString()+' <span style="font-size:.68rem;color:#94a3b8">'+(it.source||'')+'</span></div></div></div>';
+                        html+='<div style="display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f1f5f9;cursor:pointer" onclick="window.open(\''+((it.link||'').replace(/'/g,'%27'))+'\')">'+(it.thumbnail?'<img src="'+it.thumbnail+'" style="width:44px;height:44px;object-fit:cover;border-radius:6px" onerror="this.style.display=\'none\'">':'')+'<div style="flex:1;min-width:0"><div style="font-size:.8rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(i+1)+'. '+(it.title||'')+'</div><div style="font-size:.82rem;color:#e42528;font-weight:700">₩'+price.toLocaleString()+' <span style="font-size:.68rem;color:#64748B">'+(it.source||'')+'</span></div></div></div>';
                     });
                 }
                 html+='</div>';
@@ -139,10 +139,10 @@
 
         function renderHistory(){
             var history=JSON.parse(localStorage.getItem('kwHistory')||'[]');
-            if(history.length===0){document.getElementById('kwHistory').innerHTML='<div style="text-align:center;color:#94a3b8;padding:20px">분석 이력이 없습니다</div>';return}
+            if(history.length===0){document.getElementById('kwHistory').innerHTML='<div style="text-align:center;color:#64748B;padding:20px">분석 이력이 없습니다</div>';return}
             document.getElementById('kwHistory').innerHTML=history.map(function(h){
                 var gradeClass=h.score>=75?'grade-strong':h.score>=60?'grade-buy':h.score>=45?'grade-hold':'grade-pass';
-                return '<div class="kw-history-item" onclick="document.getElementById(\'kwInput\').value=\''+h.keyword+'\';analyzeKeyword()"><div><span style="font-weight:600">'+h.keyword+'</span> <span class="grade-badge '+gradeClass+'" style="font-size:.65rem">'+h.grade+' '+h.score+'점</span></div><div style="font-size:.72rem;color:#94a3b8">'+h.products+'개 상품 · ₩'+h.avgPrice.toLocaleString()+' · '+h.date+'</div></div>';
+                return '<div class="kw-history-item" onclick="document.getElementById(\'kwInput\').value=\''+h.keyword+'\';analyzeKeyword()"><div><span style="font-weight:600">'+h.keyword+'</span> <span class="grade-badge '+gradeClass+'" style="font-size:.65rem">'+h.grade+' '+h.score+'점</span></div><div style="font-size:.72rem;color:#64748B">'+h.products+'개 상품 · ₩'+h.avgPrice.toLocaleString()+' · '+h.date+'</div></div>';
             }).join('');
         }
 
