@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 110" role="img" aria-label="HubOnTrade">
+  <defs>
+    <linearGradient id="hBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3B82F6"/>
+      <stop offset="100%" stop-color="#1E3A8A"/>
+    </linearGradient>
+    <linearGradient id="arrowOrange" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FB923C"/>
+      <stop offset="100%" stop-color="#F97316"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 마크: 스타일라이즈된 H -->
+  <g transform="translate(118, 4)">
+    <!-- H 좌측 기둥 (살짝 기울어진 형태) -->
+    <path d="M6,4 L24,4 L30,8 L30,56 L24,60 L6,60 L0,56 L0,8 Z" fill="url(#hBlue)"/>
+    <!-- H 우측 기둥 -->
+    <path d="M52,4 L70,4 L76,8 L76,56 L70,60 L52,60 L46,56 L46,8 Z" fill="url(#hBlue)"/>
+    <!-- H 가운데 연결바 (살짝 곡선) -->
+    <path d="M0,28 L76,28 L76,38 L0,38 Z" fill="url(#hBlue)"/>
+
+    <!-- 오렌지 곡선 화살표 -->
+    <path d="M-6,52 Q14,50 30,38 Q50,22 78,12" fill="none" stroke="url(#arrowOrange)" stroke-width="6" stroke-linecap="round"/>
+    <!-- 화살촉 -->
+    <path d="M68,6 L84,10 L74,22 Z" fill="#F97316"/>
+  </g>
+
+  <!-- 텍스트: Hub On Trade -->
+  <g font-family="'Poppins', 'Inter', system-ui, sans-serif" font-weight="800" font-size="32" letter-spacing="-0.5">
+    <text x="46" y="100" fill="#0F172A">Hub</text>
+    <text x="119" y="100" fill="#F97316">On</text>
+    <text x="178" y="100" fill="#2563EB">Trade</text>
+  </g>
+</svg>
