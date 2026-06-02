@@ -72,20 +72,50 @@
                 </div>
                 <div id="collectionLog" style="display:none;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-family:monospace;font-size:.78rem;color:#475569;max-height:200px;overflow-y:auto"><div style="color:#2563EB;font-weight:600;margin-bottom:6px">📡 수집 로그</div><div id="logContent"></div></div>
 
-                <!-- Coupang 빠른 검색 (Partners API 라이브) -->
-                <div id="coupangQuickWidget" style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:16px 20px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
-                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-                        <span style="font-size:18px">🛒</span>
-                        <strong style="color:#0F172A;font-size:.95rem">쿠팡 파트너스 빠른 검색</strong>
-                        <span id="cqStatus" style="font-size:.7rem;padding:2px 10px;border-radius:10px;background:#F1F5F9;color:#64748B;font-weight:600">대기</span>
-                        <a href="coupang-partners.html" style="margin-left:auto;font-size:.75rem;color:#2563EB;text-decoration:none;font-weight:600">전체 보기 →</a>
+                <!-- AI 통합 추천 검색 (전 플랫폼 동시 검색) -->
+                <div id="aiSearchHub" style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:20px 24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+                        <span style="font-size:20px">🤖</span>
+                        <strong style="color:#0F172A;font-size:1rem">오늘의 AI 추천 상품 검색</strong>
+                        <span id="hubStatus" style="font-size:.7rem;padding:2px 10px;border-radius:10px;background:#F1F5F9;color:#64748B;font-weight:600">대기</span>
                     </div>
-                    <div style="display:flex;gap:8px">
-                        <input id="cqKeyword" type="text" placeholder="검색 키워드 (예: 무선이어폰)" style="flex:1;padding:10px 14px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;color:#0F172A;font-size:.88rem;outline:none">
-                        <button id="cqBtn" onclick="coupangQuickSearch()" style="padding:10px 20px;background:#2563EB;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.88rem;font-weight:600">검색</button>
+                    <div style="color:#64748B;font-size:.78rem;margin-bottom:14px">키워드 입력 → 전 플랫폼(쿠팡 API · 1688/타오바오 크롤링 · 글로벌 마켓) 동시 검색</div>
+
+                    <!-- 검색바 + 기간 -->
+                    <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+                        <input id="hubKeyword" type="text" placeholder="검색 키워드 (예: 무선이어폰, 마라톤바지, 캠핑테이블)" style="flex:1;min-width:240px;padding:11px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;color:#0F172A;font-size:.92rem;outline:none">
+                        <button id="hubBtn" onclick="aiSearchAll()" style="padding:11px 24px;background:#2563EB;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.92rem;font-weight:700">🤖 AI 검색</button>
                     </div>
-                    <div id="cqResult" style="margin-top:14px;display:none;max-height:300px;overflow-y:auto"></div>
+
+                    <!-- 기간 토글 -->
+                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap">
+                        <span style="font-size:.78rem;color:#64748B;margin-right:4px;font-weight:600">인기 기간:</span>
+                        <button class="period-btn active" data-days="3" onclick="setPeriod(3)">3일</button>
+                        <button class="period-btn" data-days="7" onclick="setPeriod(7)">7일</button>
+                        <button class="period-btn" data-days="15" onclick="setPeriod(15)">15일</button>
+                        <button class="period-btn" data-days="30" onclick="setPeriod(30)">30일</button>
+                        <button class="period-btn" data-days="0" onclick="setPeriod(0)">수동</button>
+                    </div>
+
+                    <!-- 인기 키워드 (월별) -->
+                    <div id="trendingKeywords" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+                            <span style="font-size:14px">📅</span>
+                            <strong style="font-size:.82rem;color:#0F172A">시즌별 인기 키워드 추천</strong>
+                            <span style="font-size:.7rem;color:#64748B">— 클릭하면 검색에 추가</span>
+                        </div>
+                        <div id="kwGroups" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px"></div>
+                    </div>
                 </div>
+
+                <style>
+                    .period-btn { padding:6px 14px;background:#fff;border:1px solid #E2E8F0;border-radius:20px;color:#475569;font-size:.78rem;cursor:pointer;font-weight:600;transition:all .15s }
+                    .period-btn:hover { border-color:#2563EB;color:#2563EB }
+                    .period-btn.active { background:#2563EB;border-color:#2563EB;color:#fff }
+                    .kw-group-title { font-size:.74rem;color:#64748B;font-weight:700;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em }
+                    .kw-chip { display:inline-block;padding:4px 10px;margin:2px;background:#fff;border:1px solid #E2E8F0;border-radius:14px;font-size:.72rem;color:#334155;cursor:pointer;transition:all .12s }
+                    .kw-chip:hover { background:#EFF6FF;border-color:#3B82F6;color:#1D4ED8 }
+                </style>
                 <div class="platform-overview-grid">
                     <div class="platform-overview-card po-1688"><div class="po-logo">🏭</div><div class="po-info"><div class="po-name">1688</div><div class="po-sub">소싱</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-1688-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-1688">샘플</div></div>
                     <div class="platform-overview-card po-taobao"><div class="po-logo">🛒</div><div class="po-info"><div class="po-name">타오바오</div><div class="po-sub">소싱</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-taobao-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-taobao">샘플</div></div>
@@ -99,6 +129,17 @@
                     <div class="platform-overview-card" style="border-top:4px solid #FF9900"><div class="po-logo">📦</div><div class="po-info"><div class="po-name">Amazon</div><div class="po-sub">글로벌</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-amazon-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-amazon">샘플</div></div>
                     <div class="platform-overview-card" style="border-top:4px solid #F05A28"><div class="po-logo">🏷</div><div class="po-info"><div class="po-name">Temu</div><div class="po-sub">초저가</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-temu-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-temu">샘플</div></div>
                 </div>
+
+                <!-- AI 검색 결과 상품 그리드 (플랫폼별) -->
+                <div id="aiSearchResults" style="display:none;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:18px 22px;margin-top:16px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+                        <span style="font-size:18px">🛍</span>
+                        <strong style="color:#0F172A;font-size:.95rem">검색 결과 상품</strong>
+                        <span id="aiResultMeta" style="font-size:.74rem;color:#64748B;font-weight:600"></span>
+                    </div>
+                    <div id="aiResultByPlatform"></div>
+                </div>
+
                 <section id="overview"><div class="kpi-grid">
                     <div class="kpi-card kpi-total"><div class="kpi-header"><div class="kpi-icon">📦</div><span class="kpi-change up" id="kpi-total-change">-</span></div><div class="kpi-value" id="kpi-total-value">-</div><div class="kpi-label">수집 상품</div><div class="kpi-sub" id="kpi-total-sub">크롤링 버튼을 눌러주세요</div></div>
                     <div class="kpi-card kpi-recommend"><div class="kpi-header"><div class="kpi-icon">🎯</div><span class="kpi-change up">-</span></div><div class="kpi-value" id="kpi-rec-value">-</div><div class="kpi-label">추천 상품</div><div class="kpi-sub">크롤링 후 표시</div></div>
@@ -466,7 +507,9 @@
         });
     </script>
     <script>
-    // ── 쿠팡 파트너스 빠른 검색 위젯 ──
+    // ════════════════════════════════════════════════════════
+    // 종합 현황: 오늘의 AI 추천 상품 통합 검색
+    // ════════════════════════════════════════════════════════
     (function(){
         var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
         var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
@@ -474,70 +517,174 @@
         try { var raw = localStorage.getItem('snsAuthSession'); if(raw) session = JSON.parse(raw); } catch(e){}
         if(session && session.expires_at && session.expires_at < Math.floor(Date.now()/1000)){ session = null; }
 
-        var statusEl = document.getElementById('cqStatus');
-        var widgetEl = document.getElementById('coupangQuickWidget');
-        if(!widgetEl) return;
-        if(!session){
-            statusEl.textContent='로그인 필요';
-            statusEl.style.background='rgba(251,191,36,.2)';statusEl.style.color='#fcd34d';
-            var btn=document.getElementById('cqBtn'); if(btn){btn.disabled=true;btn.style.opacity='.5';btn.title='먼저 로그인';}
-            return;
-        }
-        statusEl.textContent='연결됨';
-        statusEl.style.background='rgba(52,211,153,.2)';statusEl.style.color='#6ee7b7';
-
-        window.coupangQuickSearch = async function(){
-            var kw = document.getElementById('cqKeyword').value.trim();
-            if(!kw) return alert('검색어를 입력하세요');
-            var result = document.getElementById('cqResult');
-            result.style.display='block';
-            result.innerHTML='<div style="color:#64748B;font-size:.8rem">🔍 검색 중...</div>';
-            try {
-                var res = await fetch(SUPABASE_URL + '/functions/v1/swift-function', {
-                    method:'POST',
-                    headers:{
-                        'Authorization':'Bearer ' + session.access_token,
-                        'apikey':SUPABASE_KEY,
-                        'Content-Type':'application/json'
-                    },
-                    body:JSON.stringify({endpoint:'/products/search', method:'GET', query:{keyword:kw}})
-                });
-                var data = await res.json();
-                if(data.rCode !== '0'){
-                    result.innerHTML='<div style="color:#fca5a5;font-size:.8rem">❌ ' + (data.rMessage||data.error||'API 오류') + '</div>';
-                    return;
-                }
-                var products = (data.data && data.data.productData) || [];
-                if(products.length === 0){
-                    result.innerHTML='<div style="color:#64748B;font-size:.8rem">결과 없음</div>';
-                    return;
-                }
-                var html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px">' +
-                    products.slice(0,12).map(function(p){
-                        var img = (p.productImage||'').replace(/"/g,'');
-                        var name = (p.productName||'').replace(/[<>"']/g,'');
-                        var price = Number(p.productPrice||0).toLocaleString('ko-KR');
-                        return '<a href="' + (p.productUrl||'#') + '" target="_blank" style="text-decoration:none;color:inherit">' +
-                            '<div style="background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:8px;transition:all .15s" onmouseover="this.style.borderColor=\'#2563EB\';this.style.transform=\'translateY(-1px)\'" onmouseout="this.style.borderColor=\'#E2E8F0\';this.style.transform=\'\'">' +
-                            (img?'<img src="'+img+'" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;margin-bottom:6px;background:#F8FAFC" loading="lazy" onerror="this.style.display=\'none\'">':'') +
-                            '<div style="font-size:.72rem;color:#334155;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.3;margin-bottom:5px;font-weight:500">' + name + '</div>' +
-                            '<div style="font-size:.85rem;color:#0F172A;font-weight:800">₩' + price + '</div>' +
-                            (p.isRocket?'<span style="display:inline-block;font-size:.6rem;padding:1px 6px;background:rgba(37,99,235,.10);color:#2563EB;border-radius:4px;margin-top:4px;font-weight:600">🚀 로켓</span>':'') +
-                            '</div></a>';
-                    }).join('') + '</div>';
-                result.innerHTML = html;
-
-                // 쿠팡 카드 카운트 업데이트
-                var cnt = document.getElementById('v-coupang-count');
-                if(cnt) cnt.textContent = products.length;
-            } catch(e) {
-                result.innerHTML='<div style="color:#fca5a5;font-size:.8rem">❌ ' + e.message + '</div>';
-            }
+        var SEASONAL = {
+            6: ['트레일러닝','마라톤바지','러닝백팩','rpm줄넘기','실내운동기구','스쿼트랙','턱걸이기구','인도어풋살화','남성볼링화','다이빙렌턴','부력슈트','잠수장비','스킨슈트','여자스포츠헤어밴드','작은어항','새우뜰채','이끼제거제','가재어항','부목','수영장청소기','슬림서랍장','모듈협탁','대리석테이블','투명테이블'],
+            7: ['마라톤','키즈클라이밍','휴대용버너','좌식자전거','요가크롭탑','오픈페이스','부력슈트','잠수장비','스킨슈트','수중총','수상스키슈트','알루미늄거치대','옥상어닝','캐노피설치','방수시트지','베개방수커버','낮은베개','에어매쉬매트','아기해먹','침대범퍼','임산부여름레깅스','반팔바디슈트','고양이창문해먹','탱키니'],
+            8: ['실내운동기구','스쿼트랙','턱걸이기구','실내철봉','가정용턱걸이','코르크요가매트','배달대행방수케이스','다이빙렌턴','부력슈트','수상스키슈트','프리다이빙용품','이끼제거제','햇빛좌욕기','건조기앵글','하드매트리스','농막하우스','캐노피설치','수면베개','무릎베개','대나무돗자리','라탄카페트','대나무자리','비치타월','후드타월']
         };
 
-        // Enter 키
-        var kwInput = document.getElementById('cqKeyword');
-        if(kwInput) kwInput.addEventListener('keypress', function(e){ if(e.key==='Enter') window.coupangQuickSearch(); });
+        var month = new Date().getMonth() + 1;
+        var monthsToShow = [];
+        for(var i=0;i<3;i++){ var m = ((month - 1 + i) % 12) + 1; monthsToShow.push(m); }
+
+        var groupsEl = document.getElementById('kwGroups');
+        if(groupsEl){
+            groupsEl.innerHTML = monthsToShow.map(function(m){
+                var kws = SEASONAL[m] || [];
+                return '<div><div class="kw-group-title">' + m + '월 인기 키워드</div><div>' +
+                    kws.map(function(k){ return '<span class="kw-chip" onclick="addKeyword(\''+k.replace(/'/g,"\\'")+'\')">'+k+'</span>'; }).join('') +
+                    '</div></div>';
+            }).join('');
+        }
+
+        var currentPeriod = 3;
+        window.setPeriod = function(days){
+            currentPeriod = days;
+            document.querySelectorAll('.period-btn').forEach(function(b){
+                b.classList.toggle('active', Number(b.dataset.days) === days);
+            });
+        };
+
+        window.addKeyword = function(kw){
+            var input = document.getElementById('hubKeyword');
+            input.value = kw;
+            input.focus();
+        };
+
+        var statusEl = document.getElementById('hubStatus');
+        if(!session){
+            statusEl.textContent = '로그인 필요';
+            statusEl.style.background = '#FEF3C7'; statusEl.style.color = '#92400E';
+            var btn = document.getElementById('hubBtn');
+            if(btn){ btn.disabled = true; btn.style.opacity = '.5'; btn.title = 'SNS 플랫폼에서 먼저 로그인'; }
+        } else {
+            statusEl.textContent = '연결됨';
+            statusEl.style.background = '#D1FAE5'; statusEl.style.color = '#065F46';
+        }
+
+        var PLATFORMS = [
+            { key:'coupang', name:'쿠팡', icon:'🚀', source:'api', tagId:'tag-coupang', countId:'v-coupang-count' },
+            { key:'1688', name:'1688', icon:'🏭', source:'crawl', tagId:'tag-1688', countId:'v-1688-count' },
+            { key:'taobao', name:'타오바오', icon:'🛒', source:'crawl', tagId:'tag-taobao', countId:'v-taobao-count' },
+            { key:'gmarket', name:'지마켓', icon:'🟢', source:'todo', tagId:'tag-gmarket', countId:'v-gmarket-count' },
+            { key:'naver', name:'네이버', icon:'🟩', source:'todo', tagId:'tag-naver', countId:'v-naver-count' },
+            { key:'shopee', name:'Shopee', icon:'🛍', source:'todo', tagId:'tag-shopee', countId:'v-shopee-count' },
+            { key:'lazada', name:'Lazada', icon:'🏬', source:'todo', tagId:'tag-lazada', countId:'v-lazada-count' },
+            { key:'tiktok', name:'TikTok Shop', icon:'🎵', source:'todo', tagId:'tag-tiktok', countId:'v-tiktok-count' },
+            { key:'shein', name:'SHEIN', icon:'👗', source:'todo', tagId:'tag-shein', countId:'v-shein-count' },
+            { key:'amazon', name:'Amazon', icon:'📦', source:'todo', tagId:'tag-amazon', countId:'v-amazon-count' },
+            { key:'temu', name:'Temu', icon:'🏷', source:'todo', tagId:'tag-temu', countId:'v-temu-count' }
+        ];
+
+        async function searchCoupang(keyword){
+            if(!session) throw new Error('no session');
+            var res = await fetch(SUPABASE_URL + '/functions/v1/swift-function', {
+                method:'POST',
+                headers:{
+                    'Authorization':'Bearer ' + session.access_token,
+                    'apikey':SUPABASE_KEY,
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({ endpoint:'/products/search', method:'GET', query:{ keyword: keyword } })
+            });
+            var data = await res.json();
+            if(data.rCode !== '0') throw new Error(data.rMessage || data.error || 'API 오류');
+            return (data.data && data.data.productData) || [];
+        }
+
+        window.aiSearchAll = async function(){
+            var kw = document.getElementById('hubKeyword').value.trim();
+            if(!kw) return alert('검색어를 입력하세요');
+            if(!session) return alert('로그인이 필요합니다.\nhttps://hubontrade.com/sns-platform/auth.html');
+
+            var btn = document.getElementById('hubBtn');
+            btn.disabled = true; btn.textContent = '🔄 검색 중...';
+
+            var resultsArea = document.getElementById('aiSearchResults');
+            var resultsByPlatform = document.getElementById('aiResultByPlatform');
+            var resultMeta = document.getElementById('aiResultMeta');
+            resultsArea.style.display = 'block';
+            resultMeta.textContent = '"' + kw + '" · 기간 ' + (currentPeriod || '수동') + '일';
+            resultsByPlatform.innerHTML = '<div style="color:#64748B;font-size:.85rem;padding:14px">🔄 전 플랫폼 동시 검색 중...</div>';
+
+            PLATFORMS.forEach(function(p){
+                var c = document.getElementById(p.countId); if(c) c.textContent = '...';
+            });
+
+            var allResults = {};
+
+            try {
+                var coupangProducts = await searchCoupang(kw);
+                allResults.coupang = coupangProducts.map(function(p){
+                    return {
+                        name: p.productName,
+                        image: p.productImage,
+                        price: p.productPrice,
+                        url: p.productUrl,
+                        meta: p.isRocket ? '🚀 로켓배송' : ''
+                    };
+                });
+                var c = document.getElementById('v-coupang-count'); if(c) c.textContent = coupangProducts.length;
+                var tag = document.getElementById('tag-coupang'); if(tag){ tag.textContent = 'API 연동'; tag.className = 'data-tag tag-live'; }
+            } catch(e) {
+                allResults.coupang = [];
+                var c2 = document.getElementById('v-coupang-count'); if(c2) c2.textContent = '0';
+                var tg = document.getElementById('tag-coupang'); if(tg){ tg.textContent = 'API 오류'; tg.className = 'data-tag tag-sample'; }
+            }
+
+            PLATFORMS.forEach(function(p){
+                if(p.key === 'coupang') return;
+                var c = document.getElementById(p.countId); if(c) c.textContent = '0';
+                var tag = document.getElementById(p.tagId);
+                if(tag){
+                    if(p.source === 'crawl'){ tag.textContent = '크롤러 필요'; tag.className = 'data-tag tag-sample'; }
+                    else { tag.textContent = 'API 필요'; tag.className = 'data-tag tag-sample'; }
+                }
+                allResults[p.key] = [];
+            });
+
+            var html = '';
+            PLATFORMS.forEach(function(p){
+                var products = allResults[p.key] || [];
+                if(products.length === 0 && p.key !== 'coupang') return;
+
+                html += '<div style="margin-bottom:24px">';
+                html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #F1F5F9">';
+                html += '<span style="font-size:16px">'+p.icon+'</span>';
+                html += '<strong style="font-size:.88rem;color:#0F172A">'+p.name+'</strong>';
+                html += '<span style="font-size:.72rem;color:#64748B">'+products.length+'개</span>';
+                if(p.source === 'api') html += '<span style="font-size:.65rem;padding:1px 8px;background:#D1FAE5;color:#065F46;border-radius:8px;font-weight:600">API</span>';
+                else if(p.source === 'crawl') html += '<span style="font-size:.65rem;padding:1px 8px;background:#F3E8FF;color:#6B21A8;border-radius:8px;font-weight:600">크롤링</span>';
+                html += '</div>';
+
+                if(products.length === 0){
+                    html += '<div style="color:#94A3B8;font-size:.78rem;padding:12px;text-align:center;background:#F8FAFC;border-radius:8px">결과 없음 (백엔드 개발 필요)</div>';
+                } else {
+                    html += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px">';
+                    products.slice(0, 18).forEach(function(item){
+                        var img = (item.image||'').replace(/"/g,'');
+                        var name = String(item.name||'').replace(/[<>"']/g,'');
+                        var price = Number(item.price||0).toLocaleString('ko-KR');
+                        var url = item.url || '#';
+                        html += '<a href="'+url+'" target="_blank" rel="noopener" style="text-decoration:none;color:inherit">';
+                        html += '<div style="background:#fff;border:1px solid #E2E8F0;border-radius:10px;padding:10px;transition:all .15s" onmouseover="this.style.borderColor=\'#2563EB\';this.style.transform=\'translateY(-1px)\';this.style.boxShadow=\'0 4px 12px rgba(37,99,235,.1)\'" onmouseout="this.style.borderColor=\'#E2E8F0\';this.style.transform=\'\';this.style.boxShadow=\'\'">';
+                        if(img) html += '<img src="'+img+'" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;margin-bottom:8px;background:#F8FAFC" loading="lazy" onerror="this.style.display=\'none\'">';
+                        html += '<div style="font-size:.74rem;color:#334155;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.3;margin-bottom:6px;font-weight:500;min-height:32px">'+name+'</div>';
+                        html += '<div style="font-size:.9rem;color:#0F172A;font-weight:800">₩'+price+'</div>';
+                        if(item.meta) html += '<div style="margin-top:5px;font-size:.65rem;color:#2563EB;font-weight:600">'+item.meta+'</div>';
+                        html += '</div></a>';
+                    });
+                    html += '</div>';
+                }
+                html += '</div>';
+            });
+            resultsByPlatform.innerHTML = html;
+
+            btn.disabled = false; btn.textContent = '🤖 AI 검색';
+        };
+
+        var kwInput = document.getElementById('hubKeyword');
+        if(kwInput) kwInput.addEventListener('keypress', function(e){ if(e.key==='Enter') window.aiSearchAll(); });
     })();
     </script>
 </body>
