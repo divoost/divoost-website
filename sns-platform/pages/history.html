@@ -88,7 +88,7 @@
                     });
                     publishedLinks+='</div>';
                 }
-                return '<div class="post-card"><div class="pc-img">'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📝\'">':'📝')+'</div><div class="pc-info"><div class="pc-title">'+p.title+'</div><div class="pc-content">'+(p.content||'').substring(0,80)+'</div><div class="pc-meta"><span class="pc-tag '+(p.status||'draft')+'">'+({'published':'✅ 발행','draft':'📝 임시','scheduled':'⏰ 예약'}[p.status]||p.status)+'</span><span style="color:#94a3b8">'+channels+'</span><span style="color:#94a3b8">'+(p.date||'')+'</span></div>'+publishedLinks+'<div class="pc-stats"><span>❤️ '+(p.likes||0)+'</span><span>💬 '+(p.comments||0)+'</span><span>🔄 '+(p.shares||0)+'</span><span>👁 '+(p.views||0)+'</span></div></div><div class="pc-actions"><button onclick="editPost(\''+p.id+'\')">✏️ 수정</button><button onclick="deletePost(\''+p.id+'\')">🗑 삭제</button><button onclick="simulateEngagement(\''+p.id+'\')">📊 시뮬레이션</button></div></div>';
+                return '<div class="post-card"><div class="pc-img">'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📝\'">':'📝')+'</div><div class="pc-info"><div class="pc-title">'+p.title+'</div><div class="pc-content">'+(p.content||'').substring(0,80)+'</div><div class="pc-meta"><span class="pc-tag '+(p.status||'draft')+'">'+({'published':'✅ 발행','draft':'📝 임시','scheduled':'⏰ 예약'}[p.status]||p.status)+'</span><span style="color:#94a3b8">'+channels+'</span><span style="color:#94a3b8">'+(p.date||'')+'</span></div>'+publishedLinks+'<div class="pc-stats"><span>❤️ '+(p.likes||0)+'</span><span>💬 '+(p.comments||0)+'</span><span>🔄 '+(p.shares||0)+'</span><span>👁 '+(p.views||0)+'</span></div></div><div class="pc-actions"><button onclick="editPost(\''+p.id+'\')">✏️ 수정</button><button onclick="deletePost(\''+p.id+'\')">🗑 삭제</button><button onclick="simulateEngagement(\''+p.id+'\')" title="실제 SNS API 연동 전 테스트용" style="background:#fef3c7;color:#92400e">📊 시뮬레이션 (개발용)</button></div></div>';
             }).join('');
         }
         function deletePost(id){
@@ -99,6 +99,7 @@
             render();
         }
         function simulateEngagement(id){
+            if(!confirm('⚠️ 개발 필요: 실제 SNS API에서 인터렉션을 가져오는 기능이 미구현되어 있습니다.\n\n필요 작업: Facebook/Instagram Graph API의 insights endpoint 호출 + posts 테이블 업데이트\n\n그 사이 임시 가짜 값을 추가합니다 (테스트용). 계속하시겠습니까?')) return;
             var posts=JSON.parse(localStorage.getItem('snsPosts')||'[]');
             var idx=posts.findIndex(function(p){return p.id===id});
             if(idx===-1)return;
@@ -108,7 +109,7 @@
             posts[idx].views=(posts[idx].views||0)+Math.floor(Math.random()*200)+50;
             localStorage.setItem('snsPosts',JSON.stringify(posts));
             render();
-            alert('📊 인터렉션 시뮬레이션 완료');
+            alert('📊 (테스트용) 가짜 인터렉션 값 추가됨');
         }
         function editPost(id){location.href='create.html?edit='+id}
         render();

@@ -85,96 +85,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>2026-05-28 15:42:33</td>
-                                <td><span class="severity critical">CRITICAL</span></td>
-                                <td class="actor">divoost-admin</td>
-                                <td>USER_SUSPEND</td>
-                                <td>spam@bad.com</td>
-                                <td>211.234.xxx.xx</td>
-                                <td><span class="severity success">SUCCESS</span></td>
-                            </tr>
-                            <tr>
-                                <td>2026-05-28 15:30:12</td>
-                                <td><span class="severity warn">WARN</span></td>
-                                <td class="actor">divoost-admin</td>
-                                <td>CONTENT_DELETE</td>
-                                <td>post_id: 123_456789</td>
-                                <td>211.234.xxx.xx</td>
-                                <td><span class="severity success">SUCCESS</span></td>
-                            </tr>
-                            <tr>
-                                <td>2026-05-28 14:23:55</td>
-                                <td><span class="severity info">INFO</span></td>
-                                <td class="actor">kai-operator</td>
-                                <td>NOTICE_SEND</td>
-                                <td>전체 회원 (1,234명)</td>
-                                <td>110.45.xxx.xx</td>
-                                <td><span class="severity success">SUCCESS</span></td>
-                            </tr>
-                            <tr>
-                                <td>2026-05-28 13:15:08</td>
-                                <td><span class="severity info">INFO</span></td>
-                                <td class="actor">divoost-admin</td>
-                                <td>SETTINGS_UPDATE</td>
-                                <td>PRO 플랜 1일 발행 한도: 80 → 100</td>
-                                <td>211.234.xxx.xx</td>
-                                <td><span class="severity success">SUCCESS</span></td>
-                            </tr>
-                            <tr>
-                                <td>2026-05-28 12:08:42</td>
-                                <td><span class="severity warn">WARN</span></td>
-                                <td class="actor">kai-operator</td>
-                                <td>REPORT_RESOLVE</td>
-                                <td>#REP-2026-0527-008</td>
-                                <td>110.45.xxx.xx</td>
-                                <td><span class="severity success">SUCCESS</span></td>
-                            </tr>
-                            <tr>
-                                <td>2026-05-28 11:00:00</td>
-                                <td><span class="severity info">INFO</span></td>
-                                <td class="actor">divoost-admin</td>
-                                <td>LOGIN</td>
-                                <td>관리자 로그인 (2FA 통과)</td>
-                                <td>211.234.xxx.xx</td>
-                                <td><span class="severity success">SUCCESS</span></td>
-                            </tr>
-                            <tr>
-                                <td>2026-05-28 10:55:31</td>
-                                <td><span class="severity critical">CRITICAL</span></td>
-                                <td class="actor">divoost-admin</td>
-                                <td>LOGIN_FAILED</td>
-                                <td>관리자 로그인 시도 (비밀번호 오류)</td>
-                                <td>175.116.xxx.xx</td>
-                                <td><span class="severity critical">FAILED</span></td>
-                            </tr>
-                            <tr>
-                                <td>2026-05-27 23:42:18</td>
-                                <td><span class="severity warn">WARN</span></td>
-                                <td class="actor">kai-operator</td>
-                                <td>API_KEY_ROTATE</td>
-                                <td>Supabase Service Role Key</td>
-                                <td>110.45.xxx.xx</td>
-                                <td><span class="severity success">SUCCESS</span></td>
-                            </tr>
-                            <tr>
-                                <td>2026-05-27 18:15:00</td>
-                                <td><span class="severity info">INFO</span></td>
-                                <td class="actor">divoost-admin</td>
-                                <td>USER_DATA_EXPORT</td>
-                                <td>CSV 내보내기 (1,234명)</td>
-                                <td>211.234.xxx.xx</td>
-                                <td><span class="severity success">SUCCESS</span></td>
-                            </tr>
-                            <tr>
-                                <td>2026-05-27 16:30:45</td>
-                                <td><span class="severity critical">CRITICAL</span></td>
-                                <td class="actor">divoost-admin</td>
-                                <td>USER_DELETE</td>
-                                <td>fake-divoost@user.com (사칭 계정)</td>
-                                <td>211.234.xxx.xx</td>
-                                <td><span class="severity success">SUCCESS</span></td>
-                            </tr>
+                            <tr><td colspan="7" style="padding:24px;text-align:center;color:#94a3b8">로딩 중...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -203,7 +114,11 @@
             try {
                 var logs = await SNSAdmin.listAuditLogs({limit: 100});
                 var tbody = document.querySelector('.log-table tbody');
-                if(!tbody || logs.length === 0) return;
+                if(!tbody) return;
+                if(!logs || logs.length === 0){
+                    tbody.innerHTML = '<tr><td colspan="7" style="padding:24px;text-align:center;color:#94a3b8">감사 로그가 없습니다.</td></tr>';
+                    return;
+                }
                 tbody.innerHTML = logs.map(function(log){
                     var t = log.created_at ? new Date(log.created_at).toISOString().slice(0,19).replace('T',' ') : '-';
                     var sevClass = log.severity || 'info';
@@ -222,6 +137,8 @@
                 }).join('');
             } catch(err){
                 console.error('Audit log load error:', err);
+                var tbody = document.querySelector('.log-table tbody');
+                if(tbody) tbody.innerHTML = '<tr><td colspan="7"><div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px;border-radius:8px;font-size:13px;font-weight:600;">⚠️ 개발 필요: audit_logs 테이블 없음 (필요한 작업: docs/supabase-admin-schema.sql의 audit_logs 테이블 생성)</div></td></tr>';
             }
         }
 

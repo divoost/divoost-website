@@ -59,107 +59,26 @@
             <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">📝 콘텐츠 검토</div><div class="top-bar-sub">AI 자동 감지 + 수동 검토</div></div></div></header>
             <div class="content">
 
+                <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                    ⚠️ 개발 필요: AI 콘텐츠 자동 검토는 백엔드 미구현 (필요한 작업: posts 테이블에 moderation_status 컬럼 + OpenAI Moderation API 연동 Edge Function + flagged_posts 테이블)
+                </div>
+
                 <div class="stat-row">
-                    <div class="stat-card"><div class="stat-val" style="color:#f59e0b">12</div><div class="stat-label">검토 대기</div></div>
-                    <div class="stat-card"><div class="stat-val" style="color:#10b981">2,341</div><div class="stat-label">승인됨</div></div>
-                    <div class="stat-card"><div class="stat-val" style="color:#dc2626">23</div><div class="stat-label">차단됨</div></div>
-                    <div class="stat-card"><div class="stat-val" style="color:#7c3aed">98.4%</div><div class="stat-label">AI 정확도</div></div>
+                    <div class="stat-card"><div class="stat-val" id="sPending" style="color:#94a3b8">-</div><div class="stat-label">검토 대기</div></div>
+                    <div class="stat-card"><div class="stat-val" id="sApproved" style="color:#94a3b8">-</div><div class="stat-label">승인됨 (전체 발행)</div></div>
+                    <div class="stat-card"><div class="stat-val" id="sBlocked" style="color:#94a3b8">-</div><div class="stat-label">차단됨</div></div>
+                    <div class="stat-card"><div class="stat-val" style="color:#94a3b8">-</div><div class="stat-label">AI 정확도</div></div>
                 </div>
 
                 <div class="card">
-                    <div class="filter-bar">
-                        <span class="f-chip active">전체</span>
-                        <span class="f-chip danger">🚨 위험 (3)</span>
-                        <span class="f-chip">⚠️ 주의 (9)</span>
-                        <span class="f-chip">✅ 정상</span>
-                        <span class="f-chip">📅 오늘</span>
-                    </div>
-
-                    <div class="content-item flagged">
-                        <div class="content-thumb">📝</div>
-                        <div class="content-body">
-                            <div class="content-header">
-                                <span class="content-user">spam@bad.com</span>
-                                <span class="content-platform">📘 Facebook</span>
-                                <span class="content-time">5분 전</span>
-                            </div>
-                            <div class="content-text">"💰💰 무료 비트코인 받으세요! 클릭만 하면 5000만원! 지금 바로 https://suspicious-link.com 에 접속하세요!!!"</div>
-                            <div class="content-flags">
-                                <span class="flag-tag">🚨 스팸 (95%)</span>
-                                <span class="flag-tag">🚨 피싱 의심</span>
-                                <span class="flag-tag">⚠️ 외부 링크</span>
-                            </div>
-                            <div class="content-actions">
-                                <button class="ca-btn reject">❌ 차단</button>
-                                <button class="ca-btn warn">⚠️ 경고 발송</button>
-                                <button class="ca-btn">👁 상세</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-item flagged">
-                        <div class="content-thumb">🖼</div>
-                        <div class="content-body">
-                            <div class="content-header">
-                                <span class="content-user">user@bad.com</span>
-                                <span class="content-platform">📸 Instagram</span>
-                                <span class="content-time">23분 전</span>
-                            </div>
-                            <div class="content-text">"광고 문구가 포함되어 있고 동일 콘텐츠가 100개 페이지에 동시 발행 시도됨"</div>
-                            <div class="content-flags">
-                                <span class="flag-tag">🚨 대량 발송</span>
-                                <span class="flag-tag">⚠️ 중복 콘텐츠</span>
-                            </div>
-                            <div class="content-actions">
-                                <button class="ca-btn approve">✅ 승인</button>
-                                <button class="ca-btn reject">❌ 차단</button>
-                                <button class="ca-btn">👁 상세</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-item">
-                        <div class="content-thumb">🎬</div>
-                        <div class="content-body">
-                            <div class="content-header">
-                                <span class="content-user">creator@studio.com</span>
-                                <span class="content-platform">🎵 TikTok</span>
-                                <span class="content-time">1시간 전</span>
-                            </div>
-                            <div class="content-text">"우리 새로 출시한 신상품 소개합니다! 30초 영상으로 핵심만 보여드려요. #신상품 #추천"</div>
-                            <div class="content-flags">
-                                <span class="flag-tag" style="background:#fef3c7;color:#92400e">⚠️ 광고성 (낮음)</span>
-                            </div>
-                            <div class="content-actions">
-                                <button class="ca-btn approve">✅ 승인</button>
-                                <button class="ca-btn">👁 상세</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="content-item">
-                        <div class="content-thumb">📝</div>
-                        <div class="content-body">
-                            <div class="content-header">
-                                <span class="content-user">marketing@company.com</span>
-                                <span class="content-platform">📘 Facebook</span>
-                                <span class="content-time">3시간 전</span>
-                            </div>
-                            <div class="content-text">"5월 신상품 출시 안내! 깨끗한 디자인과 합리적인 가격으로 만나보세요."</div>
-                            <div class="content-flags">
-                                <span class="flag-tag" style="background:#dcfce7;color:#15803d">✅ 안전</span>
-                            </div>
-                            <div class="content-actions">
-                                <button class="ca-btn approve">✅ 승인됨</button>
-                            </div>
-                        </div>
-                    </div>
+                    <h2>📝 검토 대상 콘텐츠</h2>
+                    <p style="color:#94a3b8;font-size:.84rem">데이터 없음 (콘텐츠 모더레이션 백엔드 미연동)</p>
                 </div>
 
                 <div class="card">
-                    <h2>🤖 자동 검토 규칙</h2>
+                    <h2>🤖 자동 검토 규칙 (계획)</h2>
                     <p style="font-size:.84rem;color:#475569;line-height:1.7">
-                        AI가 다음 항목을 자동으로 검사합니다:
+                        AI가 검사할 예정인 항목:
                         <br>• <strong>스팸/피싱</strong>: 의심스러운 URL, 과도한 이모지, 대문자 남용
                         <br>• <strong>욕설/혐오</strong>: 부적절한 언어 필터링
                         <br>• <strong>중복 콘텐츠</strong>: 동일/유사 콘텐츠 다중 발행
@@ -176,7 +95,17 @@
     <script src="../js/supabase-admin.js"></script>
     <script>
         document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
-        (async function(){ await SNSAdmin.requireAdmin(); })();
+        (async function(){
+            var ok = await SNSAdmin.requireAdmin();
+            if(!ok) return;
+            try {
+                var stats = await SNSAdmin.getPostStats();
+                if(stats){
+                    document.getElementById('sApproved').textContent = stats.published || 0;
+                    document.getElementById('sApproved').style.color = '#10b981';
+                }
+            } catch(e){ console.error(e); }
+        })();
     </script>
 </body>
 </html>

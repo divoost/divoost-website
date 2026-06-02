@@ -40,6 +40,9 @@
         <div class="main-content">
             <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">📋 콘텐츠 템플릿</div><div class="top-bar-sub">카테고리별 콘텐츠 템플릿</div></div></div></header>
             <div class="content">
+                <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                    ⚠️ 개발 필요: 아래는 기본 제공 템플릿(읽기 전용)입니다. 사용자 직접 작성/저장 기능 미구현 (필요 작업: user_templates 테이블 + RLS + CRUD UI)
+                </div>
                 <div class="filter-chips">
                     <span class="f-chip active" onclick="filterTemplates('all',this)">전체</span>
                     <span class="f-chip" onclick="filterTemplates('product',this)">🛍 상품 홍보</span>

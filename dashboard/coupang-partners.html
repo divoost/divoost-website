@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠팡 파트너스 | HUBONTRADE Dashboard</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        body { background: #0f172a; color: #e2e8f0; font-family: 'Inter', 'Noto Sans KR', sans-serif; margin: 0; }
+        .wrap { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+        h1 { font-size: 28px; margin: 0 0 8px; color: #fff; }
+        .sub { color: #94a3b8; font-size: 14px; margin-bottom: 28px; }
+        .nav-back { display: inline-block; color: #60a5fa; text-decoration: none; font-size: 13px; margin-bottom: 18px; }
+
+        .tabs { display: flex; gap: 4px; border-bottom: 1px solid rgba(255,255,255,.1); margin-bottom: 24px; flex-wrap: wrap; }
+        .tab { padding: 12px 20px; background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 14px; font-weight: 600; border-bottom: 2px solid transparent; font-family: inherit; }
+        .tab.active { color: #60a5fa; border-bottom-color: #60a5fa; }
+
+        .panel { display: none; }
+        .panel.active { display: block; }
+
+        .search-row { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .search-row input, .search-row select, .search-row button {
+            padding: 10px 14px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+            border-radius: 8px; color: #fff; font-size: 14px; font-family: inherit;
+        }
+        .search-row input { flex: 1; min-width: 200px; }
+        .search-row button { background: #3b82f6; border-color: #3b82f6; cursor: pointer; font-weight: 600; }
+        .search-row button:hover { background: #2563eb; }
+        .search-row button:disabled { opacity: .5; cursor: not-allowed; }
+
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+        .product-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 10px; overflow: hidden; transition: transform .15s; }
+        .product-card:hover { transform: translateY(-2px); border-color: #60a5fa; }
+        .product-card img { width: 100%; aspect-ratio: 1; object-fit: cover; background: #1e293b; }
+        .product-card .info { padding: 12px; }
+        .product-card .name { font-size: 13px; color: #fff; line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .product-card .price { font-size: 16px; font-weight: 800; color: #fbbf24; }
+        .product-card .commission { font-size: 11px; color: #34d399; margin-top: 4px; }
+        .product-card .rocket { display: inline-block; font-size: 10px; padding: 2px 6px; background: rgba(96,165,250,.2); color: #93c5fd; border-radius: 4px; margin-top: 6px; }
+        .product-card a { text-decoration: none; color: inherit; display: block; }
+
+        .alert { padding: 12px 14px; border-radius: 8px; margin: 12px 0; font-size: 13px; }
+        .alert-info { background: rgba(96,165,250,.15); border: 1px solid rgba(96,165,250,.35); color: #93c5fd; }
+        .alert-warn { background: rgba(251,191,36,.15); border: 1px solid rgba(251,191,36,.35); color: #fcd34d; }
+        .alert-err { background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.35); color: #fca5a5; }
+
+        .deeplink-area textarea { width: 100%; min-height: 120px; padding: 12px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; color: #fff; font-family: monospace; font-size: 13px; resize: vertical; box-sizing: border-box; }
+        .deeplink-result { margin-top: 16px; }
+        .deeplink-item { padding: 10px 14px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); border-radius: 8px; margin-bottom: 6px; font-size: 13px; word-break: break-all; }
+        .deeplink-item .short { color: #34d399; font-weight: 700; }
+
+        .report-table { width: 100%; border-collapse: collapse; margin-top: 14px; }
+        .report-table th, .report-table td { padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,.06); text-align: left; font-size: 13px; }
+        .report-table th { background: rgba(255,255,255,.04); color: #94a3b8; font-weight: 600; }
+
+        .loading { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.2); border-top-color: #60a5fa; border-radius: 50%; animation: spin .8s linear infinite; vertical-align: middle; margin-right: 6px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .key-status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; margin-left: 10px; }
+        .key-status.ok { background: rgba(52,211,153,.15); color: #6ee7b7; }
+        .key-status.err { background: rgba(239,68,68,.15); color: #fca5a5; }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <a href="index.html" class="nav-back">← 대시보드로 돌아가기</a>
+        <h1>🛒 쿠팡 파트너스 API
+            <span class="key-status" id="keyStatus">키 확인 중...</span>
+        </h1>
+        <div class="sub">상품 검색 · 딥링크 생성 · 리포트 조회 (HMAC 인증 Edge Function 경유)</div>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="search">상품 검색</button>
+            <button class="tab" data-tab="bestcat">베스트 카테고리</button>
+            <button class="tab" data-tab="goldbox">골드박스</button>
+            <button class="tab" data-tab="deeplink">딥링크 생성</button>
+            <button class="tab" data-tab="reports">리포트 조회</button>
+        </div>
+
+        <!-- 상품 검색 -->
+        <div class="panel active" id="panel-search">
+            <div class="search-row">
+                <input type="text" id="searchKeyword" placeholder="검색 키워드 (예: 에어팟, 무선이어폰)">
+                <select id="searchLimit">
+                    <option value="10">10개</option>
+                    <option value="20" selected>20개</option>
+                    <option value="50">50개</option>
+                </select>
+                <button id="btnSearch" onclick="doSearch()">검색</button>
+            </div>
+            <div id="searchResult"></div>
+        </div>
+
+        <!-- 베스트 카테고리 -->
+        <div class="panel" id="panel-bestcat">
+            <div class="search-row">
+                <select id="bestCatId">
+                    <option value="1001">여성패션</option>
+                    <option value="1002">남성패션</option>
+                    <option value="1010">뷰티</option>
+                    <option value="1011">출산/유아동</option>
+                    <option value="1012">식품</option>
+                    <option value="1013">주방용품</option>
+                    <option value="1014">생활용품</option>
+                    <option value="1015">홈인테리어</option>
+                    <option value="1016">가전디지털</option>
+                    <option value="1017">스포츠/레저</option>
+                    <option value="1018">자동차용품</option>
+                    <option value="1019">도서/음반/DVD</option>
+                    <option value="1020">완구/취미</option>
+                    <option value="1021">문구/오피스</option>
+                    <option value="1024">반려동물용품</option>
+                    <option value="1025">헬스/건강식품</option>
+                </select>
+                <button onclick="doBestCat()">조회</button>
+            </div>
+            <div id="bestCatResult"></div>
+        </div>
+
+        <!-- 골드박스 -->
+        <div class="panel" id="panel-goldbox">
+            <div class="search-row">
+                <button onclick="doGoldbox()">오늘의 골드박스 조회</button>
+                <span style="color:#94a3b8;font-size:12px;align-self:center">매일 오전 7:30 업데이트</span>
+            </div>
+            <div id="goldboxResult"></div>
+        </div>
+
+        <!-- 딥링크 -->
+        <div class="panel" id="panel-deeplink">
+            <div class="alert alert-info">쿠팡 URL을 한 줄에 하나씩 입력하면 파트너스 단축링크로 변환됩니다.</div>
+            <div class="deeplink-area">
+                <textarea id="deeplinkUrls" placeholder="https://www.coupang.com/np/products/...&#10;https://www.coupang.com/np/search?q=..."></textarea>
+                <div style="margin-top:10px"><button onclick="doDeeplink()">단축 URL 생성</button></div>
+                <div class="deeplink-result" id="deeplinkResult"></div>
+            </div>
+        </div>
+
+        <!-- 리포트 -->
+        <div class="panel" id="panel-reports">
+            <div class="search-row">
+                <select id="reportType">
+                    <option value="clicks">클릭</option>
+                    <option value="orders">주문</option>
+                    <option value="cancels">취소</option>
+                    <option value="commission">수익</option>
+                </select>
+                <input type="date" id="reportStart">
+                <input type="date" id="reportEnd">
+                <button onclick="doReport()">조회</button>
+                <span style="color:#94a3b8;font-size:12px;align-self:center">매일 오후 15:00 업데이트</span>
+            </div>
+            <div id="reportResult"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+        const SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
+        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        // 세션 확인
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) {
+            document.querySelector('.wrap').innerHTML = '<div class="alert alert-warn">⚠️ 로그인이 필요합니다. <a href="/sns-platform/auth.html" style="color:#60a5fa">로그인 페이지로 이동</a></div>';
+            throw new Error('No session');
+        }
+
+        // ─── 쿠팡 API 호출 헬퍼 ───
+        async function coupangCall(endpoint, opts = {}) {
+            const { data, error } = await supabase.functions.invoke('coupang-partners', {
+                body: {
+                    endpoint,
+                    method: opts.method || 'GET',
+                    query: opts.query,
+                    payload: opts.payload,
+                },
+            });
+            if (error) throw new Error(error.message || 'Edge Function 호출 실패');
+            return data;
+        }
+
+        // 키 상태 체크 (1회 빈 호출로 확인)
+        try {
+            const r = await coupangCall('/products/search', { query: { keyword: 'test', limit: 1 } });
+            if (r && r.rCode === '0') {
+                document.getElementById('keyStatus').textContent = '✓ 키 정상';
+                document.getElementById('keyStatus').className = 'key-status ok';
+            } else if (r && r.error) {
+                document.getElementById('keyStatus').textContent = '✗ ' + r.error;
+                document.getElementById('keyStatus').className = 'key-status err';
+            } else {
+                document.getElementById('keyStatus').textContent = '⚠ ' + (r?.message || '응답 확인');
+                document.getElementById('keyStatus').className = 'key-status err';
+            }
+        } catch (e) {
+            document.getElementById('keyStatus').textContent = '✗ ' + e.message;
+            document.getElementById('keyStatus').className = 'key-status err';
+        }
+
+        // ─── 탭 전환 ───
+        document.querySelectorAll('.tab').forEach(t => {
+            t.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+                document.querySelectorAll('.panel').forEach(x => x.classList.remove('active'));
+                t.classList.add('active');
+                document.getElementById('panel-' + t.dataset.tab).classList.add('active');
+            });
+        });
+
+        // ─── 상품 카드 렌더 ───
+        function renderProducts(products, target) {
+            if (!products || products.length === 0) {
+                target.innerHTML = '<div class="alert alert-warn">결과 없음</div>';
+                return;
+            }
+            const html = products.map(p => `
+                <a href="${p.productUrl || '#'}" target="_blank" rel="noopener">
+                    <div class="product-card">
+                        <img src="${p.productImage || ''}" alt="" loading="lazy" onerror="this.style.display='none'">
+                        <div class="info">
+                            <div class="name">${escape(p.productName || '-')}</div>
+                            <div class="price">₩${Number(p.productPrice || 0).toLocaleString('ko-KR')}</div>
+                            ${p.isRocket ? '<span class="rocket">🚀 로켓배송</span>' : ''}
+                            ${p.isFreeShipping ? '<span class="rocket">📦 무료배송</span>' : ''}
+                        </div>
+                    </div>
+                </a>
+            `).join('');
+            target.innerHTML = `<div class="product-grid">${html}</div>`;
+        }
+
+        function escape(s) {
+            return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+        }
+
+        function showLoading(target) {
+            target.innerHTML = '<div class="alert alert-info"><span class="loading"></span>조회 중...</div>';
+        }
+
+        function showError(target, msg) {
+            target.innerHTML = `<div class="alert alert-err">❌ ${escape(msg)}</div>`;
+        }
+
+        // ─── 액션 핸들러 ───
+        window.doSearch = async function() {
+            const kw = document.getElementById('searchKeyword').value.trim();
+            const limit = document.getElementById('searchLimit').value;
+            if (!kw) return alert('검색어를 입력하세요');
+            const target = document.getElementById('searchResult');
+            showLoading(target);
+            try {
+                const r = await coupangCall('/products/search', { query: { keyword: kw, limit } });
+                if (r.rCode !== '0') return showError(target, r.rMessage || r.message || 'API 오류');
+                renderProducts(r.data?.productData || [], target);
+            } catch (e) { showError(target, e.message); }
+        };
+
+        window.doBestCat = async function() {
+            const catId = document.getElementById('bestCatId').value;
+            const target = document.getElementById('bestCatResult');
+            showLoading(target);
+            try {
+                const r = await coupangCall(`/products/bestcategories/${catId}`, { query: { limit: 20 } });
+                if (r.rCode !== '0') return showError(target, r.rMessage || 'API 오류');
+                renderProducts(r.data || [], target);
+            } catch (e) { showError(target, e.message); }
+        };
+
+        window.doGoldbox = async function() {
+            const target = document.getElementById('goldboxResult');
+            showLoading(target);
+            try {
+                const r = await coupangCall('/products/goldbox');
+                if (r.rCode !== '0') return showError(target, r.rMessage || 'API 오류');
+                renderProducts(r.data || [], target);
+            } catch (e) { showError(target, e.message); }
+        };
+
+        window.doDeeplink = async function() {
+            const urls = document.getElementById('deeplinkUrls').value.split('\n').map(s => s.trim()).filter(Boolean);
+            if (urls.length === 0) return alert('URL을 입력하세요');
+            const target = document.getElementById('deeplinkResult');
+            showLoading(target);
+            try {
+                const r = await coupangCall('/deeplink', { method: 'POST', payload: { coupangUrls: urls } });
+                if (r.rCode !== '0') return showError(target, r.rMessage || 'API 오류');
+                const html = (r.data || []).map(d => `
+                    <div class="deeplink-item">
+                        <div style="color:#94a3b8;font-size:11px">${escape(d.originalUrl)}</div>
+                        <div class="short">→ <a href="${d.shortenUrl}" target="_blank" style="color:#34d399">${escape(d.shortenUrl)}</a></div>
+                    </div>
+                `).join('');
+                target.innerHTML = html;
+            } catch (e) { showError(target, e.message); }
+        };
+
+        window.doReport = async function() {
+            const type = document.getElementById('reportType').value;
+            const startDate = document.getElementById('reportStart').value.replace(/-/g, '');
+            const endDate = document.getElementById('reportEnd').value.replace(/-/g, '');
+            if (!startDate || !endDate) return alert('날짜를 선택하세요');
+            const target = document.getElementById('reportResult');
+            showLoading(target);
+            try {
+                const r = await coupangCall(`/reports/${type}`, { query: { startDate, endDate } });
+                if (r.rCode !== '0') return showError(target, r.rMessage || 'API 오류');
+                const rows = r.data || [];
+                if (rows.length === 0) return target.innerHTML = '<div class="alert alert-warn">데이터 없음</div>';
+                const keys = Object.keys(rows[0]);
+                const html = `<table class="report-table"><thead><tr>${keys.map(k => `<th>${k}</th>`).join('')}</tr></thead><tbody>${
+                    rows.map(row => `<tr>${keys.map(k => `<td>${escape(row[k])}</td>`).join('')}</tr>`).join('')
+                }</tbody></table>`;
+                target.innerHTML = html;
+            } catch (e) { showError(target, e.message); }
+        };
+
+        // 기본 날짜 (어제~오늘)
+        const today = new Date(), yest = new Date(today.getTime() - 86400000);
+        document.getElementById('reportEnd').value = today.toISOString().slice(0, 10);
+        document.getElementById('reportStart').value = yest.toISOString().slice(0, 10);
+    </script>
+</body>
+</html>

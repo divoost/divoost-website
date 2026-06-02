@@ -336,8 +336,8 @@
         }
 
         function upgradePlan(planId){
-            if(!confirm(planId.toUpperCase() + ' 플랜으로 업그레이드합니다.\n월간 자동 결제가 시작됩니다.\n\n계속하시겠습니까?')){ return; }
-            alert('💳 자동 결제 시스템(빌링키) 구축 중입니다.\n\n결제 요청이 접수되었습니다. 관리자가 처리 후 플랜이 변경됩니다.');
+            if(!confirm(planId.toUpperCase() + ' 플랜으로 업그레이드 요청을 보냅니다.\n\n⚠️ 개발 필요: 자동 결제 시스템(토스 빌링키) 미연동.\n현재는 요청만 접수되며 관리자가 수동 처리합니다.\n\n계속하시겠습니까?')){ return; }
+            alert('💳 ⚠️ 개발 필요: 자동 결제 시스템(빌링키) 미연동\n\n필요 작업: 토스페이먼츠 빌링키 SDK + Edge Function (toss-billing-create) + 정기결제 cron');
             // TODO: 토스 빌링키 발급 플로우 연동
         }
 
@@ -347,7 +347,7 @@
         }
 
         function contactSales(){
-            alert('📧 엔터프라이즈 문의\n\n이메일: enterprise@divoost.com\n전화: 1234-5678');
+            alert('📧 엔터프라이즈 문의\n\n이메일: ezwebpia001@gmail.com\n(전화 번호는 마스터 설정 후 등록 예정)');
         }
 
         // ─── 이력 ───

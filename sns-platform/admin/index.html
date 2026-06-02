@@ -149,30 +149,7 @@
                                 </tr>
                             </thead>
                             <tbody id="recentUsers">
-                                <tr>
-                                    <td>example@user.com</td>
-                                    <td>2026.05.28</td>
-                                    <td><span class="pill trial">체험</span></td>
-                                    <td><span class="pill active">활성</span></td>
-                                </tr>
-                                <tr>
-                                    <td>test1@gmail.com</td>
-                                    <td>2026.05.27</td>
-                                    <td><span class="pill pro">PRO</span></td>
-                                    <td><span class="pill active">활성</span></td>
-                                </tr>
-                                <tr>
-                                    <td>marketing@company.com</td>
-                                    <td>2026.05.26</td>
-                                    <td><span class="pill pro">PRO</span></td>
-                                    <td><span class="pill active">활성</span></td>
-                                </tr>
-                                <tr>
-                                    <td>shop@brand.com</td>
-                                    <td>2026.05.25</td>
-                                    <td><span class="pill trial">체험</span></td>
-                                    <td><span class="pill inactive">미인증</span></td>
-                                </tr>
+                                <tr><td colspan="4" style="text-align:center;padding:20px;color:#94a3b8">로딩 중...</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -210,45 +187,19 @@
                     <!-- 주간 발행량 -->
                     <div class="admin-card">
                         <h2>📈 주간 발행량 (전체 사용자)</h2>
-                        <div class="chart-bar" id="weeklyChart">
-                            <div class="chart-col"><div class="chart-bar-fill" style="height:30%"></div><div class="chart-day">월</div></div>
-                            <div class="chart-col"><div class="chart-bar-fill" style="height:55%"></div><div class="chart-day">화</div></div>
-                            <div class="chart-col"><div class="chart-bar-fill" style="height:80%"></div><div class="chart-day">수</div></div>
-                            <div class="chart-col"><div class="chart-bar-fill" style="height:65%"></div><div class="chart-day">목</div></div>
-                            <div class="chart-col"><div class="chart-bar-fill" style="height:90%"></div><div class="chart-day">금</div></div>
-                            <div class="chart-col"><div class="chart-bar-fill" style="height:45%"></div><div class="chart-day">토</div></div>
-                            <div class="chart-col"><div class="chart-bar-fill" style="height:35%"></div><div class="chart-day">일</div></div>
+                        <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                            ⚠️ 개발 필요: 일별 발행량 집계 미구현 (필요한 작업: posts 테이블에서 created_at 기준 GROUP BY day RPC)
                         </div>
-                        <div style="font-size:.74rem;color:#64748b;margin-top:8px">금요일이 가장 활발: 평균 90건/일</div>
+                        <p style="color:#94a3b8;font-size:.84rem">데이터 없음</p>
                     </div>
 
                     <!-- 시스템 상태 -->
                     <div class="admin-card">
                         <h2>💚 시스템 상태</h2>
-                        <div class="health-row">
-                            <span>Supabase Auth</span>
-                            <span class="health-status ok">정상</span>
+                        <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                            ⚠️ 개발 필요: 실시간 헬스체크 미연동 (system-health.html 참고)
                         </div>
-                        <div class="health-row">
-                            <span>Facebook API</span>
-                            <span class="health-status ok">정상</span>
-                        </div>
-                        <div class="health-row">
-                            <span>Instagram API</span>
-                            <span class="health-status ok">정상</span>
-                        </div>
-                        <div class="health-row">
-                            <span>TikTok API</span>
-                            <span class="health-status warn">제한적</span>
-                        </div>
-                        <div class="health-row">
-                            <span>GitHub Pages</span>
-                            <span class="health-status ok">정상</span>
-                        </div>
-                        <div class="health-row">
-                            <span>스토리지</span>
-                            <span class="health-status ok">12% 사용</span>
-                        </div>
+                        <p style="color:#94a3b8;font-size:.84rem">상태 정보 없음</p>
                     </div>
                 </div>
 
@@ -266,41 +217,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>14:23</td>
-                                <td>발행</td>
-                                <td>user@example.com</td>
-                                <td>Facebook 페이지 자동 포스팅</td>
-                                <td><span class="pill active">성공</span></td>
-                            </tr>
-                            <tr>
-                                <td>14:15</td>
-                                <td>회원가입</td>
-                                <td>new@user.com</td>
-                                <td>신규 회원 가입 (이메일 인증 완료)</td>
-                                <td><span class="pill active">완료</span></td>
-                            </tr>
-                            <tr>
-                                <td>13:58</td>
-                                <td>API</td>
-                                <td>user2@example.com</td>
-                                <td>Facebook 토큰 만료 임박 (5일)</td>
-                                <td><span class="pill trial">알림</span></td>
-                            </tr>
-                            <tr>
-                                <td>13:42</td>
-                                <td>발행</td>
-                                <td>shop@brand.com</td>
-                                <td>Instagram 발행 시도</td>
-                                <td><span class="pill inactive">실패</span></td>
-                            </tr>
-                            <tr>
-                                <td>13:30</td>
-                                <td>신고</td>
-                                <td>user3@example.com</td>
-                                <td>부적절한 콘텐츠 신고 접수</td>
-                                <td><span class="pill trial">검토중</span></td>
-                            </tr>
+                            <tr><td colspan="5" style="text-align:center;padding:20px;color:#94a3b8">로딩 중...</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -344,23 +261,30 @@
                             '<td><span class="pill ' + (u.plan||'trial') + '">' + (planNames[u.plan]||'체험') + '</span></td>' +
                             '<td><span class="pill ' + (u.status||'active') + '">' + (statusNames[u.status]||'활성') + '</span></td></tr>';
                     }).join('');
+                } else {
+                    document.getElementById('recentUsers').innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:#94a3b8">가입 회원이 없습니다.</td></tr>';
                 }
 
                 // 최근 활동 로그
-                var activities = await SNSAdmin.listActivities({limit: 10});
-                if(activities.length > 0){
-                    // 시스템 활동 테이블 찾아서 업데이트
-                    var sysTableBody = document.querySelectorAll('.admin-card table tbody');
-                    var systemTbody = sysTableBody[sysTableBody.length - 1];
+                var sysTableBody = document.querySelectorAll('.admin-card table tbody');
+                var systemTbody = sysTableBody[sysTableBody.length - 1];
+                try {
+                    var activities = await SNSAdmin.listActivities({limit: 10});
                     if(systemTbody){
-                        systemTbody.innerHTML = activities.slice(0,5).map(function(a){
-                            var t = a.created_at ? new Date(a.created_at).toTimeString().slice(0,5) : '-';
-                            return '<tr><td>' + t + '</td><td>' + (a.action_type || '-') + '</td>' +
-                                '<td>' + (a.user_email || '-') + '</td>' +
-                                '<td>' + (a.action_detail || '-') + '</td>' +
-                                '<td><span class="pill active">완료</span></td></tr>';
-                        }).join('');
+                        if(activities && activities.length > 0){
+                            systemTbody.innerHTML = activities.slice(0,5).map(function(a){
+                                var t = a.created_at ? new Date(a.created_at).toTimeString().slice(0,5) : '-';
+                                return '<tr><td>' + t + '</td><td>' + (a.action_type || '-') + '</td>' +
+                                    '<td>' + (a.user_email || '-') + '</td>' +
+                                    '<td>' + (a.action_detail || '-') + '</td>' +
+                                    '<td><span class="pill active">완료</span></td></tr>';
+                            }).join('');
+                        } else {
+                            systemTbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:#94a3b8">활동 로그가 없습니다.</td></tr>';
+                        }
                     }
+                } catch(actErr){
+                    if(systemTbody) systemTbody.innerHTML = '<tr><td colspan="5"><div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px;border-radius:8px;font-size:13px;font-weight:600;">⚠️ 개발 필요: user_activities 테이블 없음</div></td></tr>';
                 }
 
                 // 신고 건수
