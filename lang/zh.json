@@ -712,11 +712,129 @@
         },
         "resources": {
             "heroTitle": "资源中心",
-            "heroDesc": "提供全球电商所需的全部信息"
+            "heroDesc": "提供全球电商所需的全部信息",
+            "filter": {
+                "all": "全部",
+                "guide": "指南",
+                "report": "报告",
+                "blog": "博客",
+                "webinar": "网络研讨会"
+            },
+            "cat": {
+                "guide": "指南",
+                "report": "报告",
+                "blog": "博客",
+                "webinar": "网络研讨会"
+            },
+            "tag": {
+                "pdf": "PDF 指南",
+                "report": "报告",
+                "blog": "博客"
+            },
+            "c0": {
+                "title": "1688 选品 → Coupang 销售完整指南",
+                "desc": "TOP 9 高利润推荐商品、寻找直邮店铺方法、必备搜索关键词",
+                "tag": "NEW 指南",
+                "reading": "阅读时长: 10 分钟"
+            },
+            "c1": {
+                "title": "2024 东南亚电商市场进入指南",
+                "desc": "全面汇总东南亚 5 国市场现状、法规、消费者趋势的综合指南",
+                "reading": "阅读时长: 15 分钟"
+            },
+            "c2": {
+                "title": "越南电商市场分析报告 2024",
+                "desc": "专业分析越南电商市场最新趋势与机会的报告",
+                "reading": "32 页"
+            },
+            "c3": {
+                "title": "Shopee 入驻完全指南:新手 A 到 Z",
+                "desc": "从创建 Shopee 卖家账号到首单,逐步指导",
+                "reading": "阅读时长: 8 分钟"
+            },
+            "c4": {
+                "title": "用直播电商将东南亚销售提升 3 倍的方法",
+                "desc": "本地专家分享的直播电商成功策略",
+                "tag": "网络研讨会录像",
+                "reading": "45 分钟"
+            },
+            "c5": {
+                "title": "全面掌握东南亚物流与仓储",
+                "desc": "详细介绍国际配送、通关、当地物流中心使用方法",
+                "reading": "阅读时长: 12 分钟"
+            },
+            "c6": {
+                "title": "K-Beauty 东南亚出口趋势报告",
+                "desc": "分析韩国化妆品在东南亚的市场份额与成长潜力",
+                "reading": "28 页"
+            },
+            "nl": {
+                "title": "获取最新东南亚电商洞察",
+                "btn": "订阅",
+                "note": "每周二发送 · 可随时取消订阅"
+            }
         },
         "contact": {
             "heroTitle": "联系我们",
-            "heroDesc": "关于开拓全球市场的任何疑问，请随时联系我们"
+            "heroDesc": "关于开拓全球市场的任何疑问，请随时联系我们",
+            "form": {
+                "title": "咨询表单",
+                "company": "公司名",
+                "name": "联系人",
+                "email": "邮箱",
+                "phone": "电话",
+                "service": "感兴趣的服务",
+                "servicePlaceholder": "请选择感兴趣的服务",
+                "opt": {
+                    "platform": "平台入驻",
+                    "logistics": "物流与仓储",
+                    "marketing": "营销",
+                    "live": "直播电商",
+                    "consulting": "综合咨询",
+                    "other": "其他"
+                },
+                "country": "希望进入的国家",
+                "cc": {
+                    "vietnam": "越南",
+                    "thailand": "泰国",
+                    "indonesia": "印度尼西亚",
+                    "philippines": "菲律宾",
+                    "malaysia": "马来西亚"
+                },
+                "message": "咨询内容",
+                "submit": "提交咨询"
+            },
+            "info": {
+                "title": "联系方式",
+                "addrLabel": "地址",
+                "addrValue": "首尔永登浦区永登浦路 116 号大罗大厦 3 楼",
+                "phoneLabel": "电话",
+                "emailLabel": "邮箱",
+                "hoursLabel": "营业时间",
+                "hoursValue": "工作日 09:00 - 18:00 (KST)",
+                "mapLink": "在 Naver 地图查看 →"
+            },
+            "quick": {
+                "title": "快速联系方式",
+                "kakao": {
+                    "title": "KakaoTalk 咨询",
+                    "desc": "实时聊天咨询 (工作日 09-18 时)"
+                },
+                "phone": {
+                    "title": "电话咨询",
+                    "desc": "1660-2318 (工作日 09-18 时)"
+                },
+                "email": {
+                    "title": "邮件咨询",
+                    "desc": "contact@drapin.com (24 小时接收)"
+                }
+            },
+            "office": {
+                "title": "前来方法",
+                "desc": "首尔永登浦区永登浦路 116 号大罗大厦 3 楼",
+                "subway": "永登浦区厅站 6 号出口步行 6 分钟 · 文来站 3 号出口步行 6 分钟",
+                "parking": "停车位有限,请尽量使用公共交通"
+            }
         },
         "guide": {
             "heroTitle": "1688 选品 → <span class=\"gradient-text\">Coupang 销售</span>完全指南",

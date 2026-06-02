@@ -712,11 +712,129 @@
         },
         "resources": {
             "heroTitle": "Trung tâm Tài nguyên",
-            "heroDesc": "Cung cấp tất cả thông tin cần thiết cho TMĐT toàn cầu"
+            "heroDesc": "Cung cấp tất cả thông tin cần thiết cho TMĐT toàn cầu",
+            "filter": {
+                "all": "Tất cả",
+                "guide": "Hướng dẫn",
+                "report": "Báo cáo",
+                "blog": "Blog",
+                "webinar": "Webinar"
+            },
+            "cat": {
+                "guide": "Hướng dẫn",
+                "report": "Báo cáo",
+                "blog": "Blog",
+                "webinar": "Webinar"
+            },
+            "tag": {
+                "pdf": "Hướng dẫn PDF",
+                "report": "Báo cáo",
+                "blog": "Blog"
+            },
+            "c0": {
+                "title": "Hướng dẫn đầy đủ Sourcing 1688 → Bán Coupang",
+                "desc": "TOP 9 sản phẩm biên cao, cách tìm shop ship trực tiếp, từ khóa tìm kiếm cần thiết",
+                "tag": "Hướng dẫn MỚI",
+                "reading": "Thời gian đọc: 10 phút"
+            },
+            "c1": {
+                "title": "Hướng dẫn vào thị trường TMĐT Đông Nam Á 2024",
+                "desc": "Hướng dẫn tổng hợp tình hình, quy định, xu hướng tiêu dùng tại 5 nước Đông Nam Á",
+                "reading": "Thời gian đọc: 15 phút"
+            },
+            "c2": {
+                "title": "Báo cáo phân tích thị trường TMĐT Việt Nam 2024",
+                "desc": "Báo cáo chuyên gia phân tích xu hướng & cơ hội mới nhất thị trường TMĐT Việt Nam",
+                "reading": "32 trang"
+            },
+            "c3": {
+                "title": "Hướng dẫn onboard Shopee đầy đủ: A đến Z cho người mới",
+                "desc": "Hướng dẫn từng bước từ tạo tài khoản người bán Shopee đến đơn hàng đầu tiên",
+                "reading": "Thời gian đọc: 8 phút"
+            },
+            "c4": {
+                "title": "Cách x3 doanh số Đông Nam Á bằng live commerce",
+                "desc": "Chiến lược live commerce thành công từ chuyên gia bản địa",
+                "tag": "Bản ghi webinar",
+                "reading": "45 phút"
+            },
+            "c5": {
+                "title": "Làm chủ logistics & fulfillment Đông Nam Á",
+                "desc": "Hướng dẫn chi tiết vận chuyển quốc tế, thông quan, sử dụng trung tâm logistics bản địa",
+                "reading": "Thời gian đọc: 12 phút"
+            },
+            "c6": {
+                "title": "Báo cáo xu hướng xuất khẩu K-Beauty Đông Nam Á",
+                "desc": "Phân tích thị phần và tiềm năng tăng trưởng mỹ phẩm Hàn Quốc tại Đông Nam Á",
+                "reading": "28 trang"
+            },
+            "nl": {
+                "title": "Nhận thông tin mới nhất về TMĐT Đông Nam Á",
+                "btn": "Đăng ký",
+                "note": "Gửi mỗi thứ Ba · Có thể hủy bất cứ lúc nào"
+            }
         },
         "contact": {
             "heroTitle": "Liên hệ",
-            "heroDesc": "Liên hệ bất cứ lúc nào về việc mở rộng ra thị trường toàn cầu"
+            "heroDesc": "Liên hệ bất cứ lúc nào về việc mở rộng ra thị trường toàn cầu",
+            "form": {
+                "title": "Mẫu liên hệ",
+                "company": "Công ty",
+                "name": "Người liên hệ",
+                "email": "Email",
+                "phone": "Điện thoại",
+                "service": "Dịch vụ quan tâm",
+                "servicePlaceholder": "Chọn dịch vụ quan tâm",
+                "opt": {
+                    "platform": "Onboard sàn",
+                    "logistics": "Logistics & Fulfillment",
+                    "marketing": "Marketing",
+                    "live": "Live commerce",
+                    "consulting": "Tư vấn tổng hợp",
+                    "other": "Khác"
+                },
+                "country": "Quốc gia muốn vào",
+                "cc": {
+                    "vietnam": "Việt Nam",
+                    "thailand": "Thái Lan",
+                    "indonesia": "Indonesia",
+                    "philippines": "Philippines",
+                    "malaysia": "Malaysia"
+                },
+                "message": "Nội dung",
+                "submit": "Gửi liên hệ"
+            },
+            "info": {
+                "title": "Thông tin liên hệ",
+                "addrLabel": "Địa chỉ",
+                "addrValue": "Tầng 3, Tòa Daera, 116 Yeongdeungpo-ro, Yeongdeungpo-gu, Seoul",
+                "phoneLabel": "Điện thoại",
+                "emailLabel": "Email",
+                "hoursLabel": "Giờ làm việc",
+                "hoursValue": "Ngày trong tuần 09:00 - 18:00 (KST)",
+                "mapLink": "Xem trên Naver Maps →"
+            },
+            "quick": {
+                "title": "Liên hệ nhanh",
+                "kakao": {
+                    "title": "Tư vấn KakaoTalk",
+                    "desc": "Trò chuyện thời gian thực (T2-T6 09-18)"
+                },
+                "phone": {
+                    "title": "Tư vấn điện thoại",
+                    "desc": "1660-2318 (T2-T6 09-18)"
+                },
+                "email": {
+                    "title": "Liên hệ Email",
+                    "desc": "contact@drapin.com (nhận 24/7)"
+                }
+            },
+            "office": {
+                "title": "Cách đến văn phòng",
+                "desc": "Tầng 3, Tòa Daera, 116 Yeongdeungpo-ro, Yeongdeungpo-gu, Seoul",
+                "subway": "Đi bộ 6 phút từ ga Yeongdeungpo-gu Office cửa 6 · 6 phút từ ga Mullae cửa 3",
+                "parking": "Bãi đỗ xe hạn chế — vui lòng dùng phương tiện công cộng nếu có thể"
+            }
         },
         "guide": {
             "heroTitle": "Hướng dẫn đầy đủ 1688 Sourcing → <span class=\"gradient-text\">Bán Coupang</span>",

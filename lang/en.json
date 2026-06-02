@@ -712,11 +712,129 @@
         },
         "resources": {
             "heroTitle": "Resource Center",
-            "heroDesc": "Everything you need for global e-commerce"
+            "heroDesc": "Everything you need for global e-commerce",
+            "filter": {
+                "all": "All",
+                "guide": "Guides",
+                "report": "Reports",
+                "blog": "Blog",
+                "webinar": "Webinars"
+            },
+            "cat": {
+                "guide": "Guide",
+                "report": "Report",
+                "blog": "Blog",
+                "webinar": "Webinar"
+            },
+            "tag": {
+                "pdf": "PDF Guide",
+                "report": "Report",
+                "blog": "Blog"
+            },
+            "c0": {
+                "title": "1688 Sourcing → Coupang Selling: The Complete Guide",
+                "desc": "TOP 9 high-margin product picks, how to find direct-shipping shops, and key search keywords",
+                "tag": "NEW Guide",
+                "reading": "Read time: 10 min"
+            },
+            "c1": {
+                "title": "2024 SE Asia E-Commerce Market Entry Guide",
+                "desc": "Comprehensive guide covering market status, regulations, and consumer trends across 5 SE Asian countries",
+                "reading": "Read time: 15 min"
+            },
+            "c2": {
+                "title": "Vietnam E-Commerce Market Analysis Report 2024",
+                "desc": "Professional report analyzing latest trends and opportunities in Vietnam's e-commerce market",
+                "reading": "32 pages"
+            },
+            "c3": {
+                "title": "Shopee Onboarding Complete Guide: A to Z for Beginners",
+                "desc": "Step-by-step from creating a Shopee seller account to your first order",
+                "reading": "Read time: 8 min"
+            },
+            "c4": {
+                "title": "How to 3x SE Asia Sales with Live Commerce",
+                "desc": "Live commerce success strategies shared by local experts",
+                "tag": "Webinar Recording",
+                "reading": "45 min"
+            },
+            "c5": {
+                "title": "Mastering SE Asia Logistics & Fulfillment",
+                "desc": "Detailed guide on international shipping, customs, and using local logistics centers",
+                "reading": "Read time: 12 min"
+            },
+            "c6": {
+                "title": "K-Beauty SE Asia Export Trends Report",
+                "desc": "Analysis of Korean cosmetics market share and growth potential in SE Asia",
+                "reading": "28 pages"
+            },
+            "nl": {
+                "title": "Get the Latest SE Asia E-Commerce Insights",
+                "btn": "Subscribe",
+                "note": "Sent every Tuesday · Unsubscribe anytime"
+            }
         },
         "contact": {
             "heroTitle": "Get in Touch",
-            "heroDesc": "Reach out anytime with questions about global market entry"
+            "heroDesc": "Reach out anytime with questions about global market entry",
+            "form": {
+                "title": "Inquiry Form",
+                "company": "Company",
+                "name": "Contact Name",
+                "email": "Email",
+                "phone": "Phone",
+                "service": "Service of Interest",
+                "servicePlaceholder": "Select a service of interest",
+                "opt": {
+                    "platform": "Marketplace Onboarding",
+                    "logistics": "Logistics & Fulfillment",
+                    "marketing": "Marketing",
+                    "live": "Live Commerce",
+                    "consulting": "Comprehensive Consulting",
+                    "other": "Other"
+                },
+                "country": "Target Country",
+                "cc": {
+                    "vietnam": "Vietnam",
+                    "thailand": "Thailand",
+                    "indonesia": "Indonesia",
+                    "philippines": "Philippines",
+                    "malaysia": "Malaysia"
+                },
+                "message": "Message",
+                "submit": "Send Inquiry"
+            },
+            "info": {
+                "title": "Contact Information",
+                "addrLabel": "Address",
+                "addrValue": "3F Daera Bldg, 116 Yeongdeungpo-ro, Yeongdeungpo-gu, Seoul",
+                "phoneLabel": "Phone",
+                "emailLabel": "Email",
+                "hoursLabel": "Hours",
+                "hoursValue": "Weekdays 09:00 – 18:00 (KST)",
+                "mapLink": "View on Naver Maps →"
+            },
+            "quick": {
+                "title": "Quick Contact Options",
+                "kakao": {
+                    "title": "KakaoTalk Chat",
+                    "desc": "Real-time chat (weekdays 09-18)"
+                },
+                "phone": {
+                    "title": "Phone Consultation",
+                    "desc": "1660-2318 (weekdays 09-18)"
+                },
+                "email": {
+                    "title": "Email Inquiry",
+                    "desc": "contact@drapin.com (24/7 intake)"
+                }
+            },
+            "office": {
+                "title": "How to Find Us",
+                "desc": "3F Daera Bldg, 116 Yeongdeungpo-ro, Yeongdeungpo-gu, Seoul",
+                "subway": "6 min walk from Yeongdeungpo-gu Office Stn Exit 6 · 6 min from Mullae Stn Exit 3",
+                "parking": "Parking is limited — please use public transport when possible"
+            }
         },
         "guide": {
             "heroTitle": "1688 Sourcing → <span class=\"gradient-text\">Coupang Selling</span> Complete Guide",
