@@ -64,112 +64,52 @@
             <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">💚 시스템 상태</div><div class="top-bar-sub">서비스 가동 상태 및 인시던트 관리</div></div></div></header>
             <div class="content">
 
-                <div class="overall-status">
-                    <h2>💚 모든 시스템 정상</h2>
-                    <p>가동률 99.98% · 마지막 인시던트: 7일 전</p>
+                <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                    ⚠️ 개발 필요: 시스템 헬스체크 백엔드 미구현 (필요한 작업: Edge Function (health-check) + 외부 API ping 로직 + service_health 테이블 + cron schedule)
+                </div>
+
+                <div class="overall-status" style="background:linear-gradient(135deg,#94a3b8,#cbd5e1)">
+                    <h2>⚪ 상태 정보 없음</h2>
+                    <p>실시간 모니터링 백엔드 미연동</p>
                 </div>
 
                 <div class="card">
                     <h2>🔌 서비스별 상태</h2>
+                    <p style="color:#94a3b8;font-size:.84rem;margin-bottom:12px">아래는 모니터링 대상 서비스 목록입니다. 실시간 상태는 백엔드 연동 후 표시됩니다.</p>
                     <div class="service-grid">
                         <div class="service-card">
-                            <div class="service-header">
-                                <div class="service-icon">🌐</div>
-                                <div class="service-name">GitHub Pages</div>
-                                <div class="status-dot ok"></div>
-                            </div>
-                            <div class="service-stat"><span>응답 속도</span><strong>123ms</strong></div>
-                            <div class="service-stat"><span>가동률 (30일)</span><strong>100%</strong></div>
-                            <div class="uptime-chart">
-                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
-                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
-                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
-                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
-                            </div>
+                            <div class="service-header"><div class="service-icon">🌐</div><div class="service-name">GitHub Pages</div><div class="status-dot" style="background:#94a3b8"></div></div>
+                            <div class="service-stat"><span>상태</span><strong>미측정</strong></div>
                         </div>
-
                         <div class="service-card">
-                            <div class="service-header">
-                                <div class="service-icon">🔐</div>
-                                <div class="service-name">Supabase Auth</div>
-                                <div class="status-dot ok"></div>
-                            </div>
-                            <div class="service-stat"><span>응답 속도</span><strong>89ms</strong></div>
-                            <div class="service-stat"><span>가동률 (30일)</span><strong>99.99%</strong></div>
-                            <div class="uptime-chart">
-                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
-                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
-                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
-                                <div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar warn"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div><div class="uptime-bar"></div>
-                            </div>
+                            <div class="service-header"><div class="service-icon">🔐</div><div class="service-name">Supabase Auth</div><div class="status-dot" style="background:#94a3b8"></div></div>
+                            <div class="service-stat"><span>상태</span><strong>미측정</strong></div>
                         </div>
-
                         <div class="service-card">
-                            <div class="service-header">
-                                <div class="service-icon">📘</div>
-                                <div class="service-name">Facebook API</div>
-                                <div class="status-dot ok"></div>
-                            </div>
-                            <div class="service-stat"><span>응답 속도</span><strong>342ms</strong></div>
-                            <div class="service-stat"><span>가동률 (30일)</span><strong>99.95%</strong></div>
-                            <div class="service-stat"><span>오늘 호출</span><strong>1,234</strong></div>
+                            <div class="service-header"><div class="service-icon">📘</div><div class="service-name">Facebook API</div><div class="status-dot" style="background:#94a3b8"></div></div>
+                            <div class="service-stat"><span>상태</span><strong>미측정</strong></div>
                         </div>
-
                         <div class="service-card">
-                            <div class="service-header">
-                                <div class="service-icon">📸</div>
-                                <div class="service-name">Instagram API</div>
-                                <div class="status-dot ok"></div>
-                            </div>
-                            <div class="service-stat"><span>응답 속도</span><strong>421ms</strong></div>
-                            <div class="service-stat"><span>가동률 (30일)</span><strong>99.92%</strong></div>
-                            <div class="service-stat"><span>오늘 호출</span><strong>567</strong></div>
+                            <div class="service-header"><div class="service-icon">📸</div><div class="service-name">Instagram API</div><div class="status-dot" style="background:#94a3b8"></div></div>
+                            <div class="service-stat"><span>상태</span><strong>미측정</strong></div>
                         </div>
-
                         <div class="service-card">
-                            <div class="service-header">
-                                <div class="service-icon">🎵</div>
-                                <div class="service-name">TikTok API</div>
-                                <div class="status-dot warn"></div>
-                            </div>
-                            <div class="service-stat"><span>응답 속도</span><strong>1,234ms</strong></div>
-                            <div class="service-stat"><span>가동률 (30일)</span><strong>98.5%</strong></div>
-                            <div class="service-stat" style="color:#f59e0b"><span>주의: Rate Limit 임박</span></div>
+                            <div class="service-header"><div class="service-icon">🎵</div><div class="service-name">TikTok API</div><div class="status-dot" style="background:#94a3b8"></div></div>
+                            <div class="service-stat"><span>상태</span><strong>미측정</strong></div>
                         </div>
-
                         <div class="service-card">
-                            <div class="service-header">
-                                <div class="service-icon">📺</div>
-                                <div class="service-name">YouTube API</div>
-                                <div class="status-dot ok"></div>
-                            </div>
-                            <div class="service-stat"><span>응답 속도</span><strong>234ms</strong></div>
-                            <div class="service-stat"><span>가동률 (30일)</span><strong>100%</strong></div>
-                            <div class="service-stat"><span>할당량 잔여</span><strong>9,200 unit</strong></div>
+                            <div class="service-header"><div class="service-icon">📺</div><div class="service-name">YouTube API</div><div class="status-dot" style="background:#94a3b8"></div></div>
+                            <div class="service-stat"><span>상태</span><strong>미측정</strong></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
                     <h2>📜 최근 인시던트</h2>
-                    <div class="incident-list">
-                        <div class="incident-item resolved">
-                            <div class="incident-header">
-                                <span>✅</span>
-                                <span>[해결됨] Supabase Auth 일시적 지연</span>
-                            </div>
-                            <div class="incident-body">미국 동부 리전 일시적 지연. 평균 응답 시간 89ms → 320ms 로 증가. 자동 복구.</div>
-                            <div class="incident-time">2026-05-21 03:15 ~ 03:42 (27분 소요)</div>
-                        </div>
-                        <div class="incident-item resolved">
-                            <div class="incident-header">
-                                <span>✅</span>
-                                <span>[해결됨] Facebook Graph API v18 마이그레이션</span>
-                            </div>
-                            <div class="incident-body">v17에서 v18로 강제 업그레이드. 일부 엔드포인트 응답 형식 변경. 코드 패치 완료.</div>
-                            <div class="incident-time">2026-05-15 (계획된 작업)</div>
-                        </div>
+                    <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                        ⚠️ 개발 필요: incidents 테이블 미생성 (필요한 작업: incidents 테이블 + RLS + Postmortem 기록 시스템)
                     </div>
+                    <p style="color:#94a3b8;font-size:.84rem">데이터 없음</p>
                 </div>
             </div>
         </div>

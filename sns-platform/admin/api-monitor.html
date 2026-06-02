@@ -56,96 +56,69 @@
 
                 <div class="api-card">
                     <h2>📊 오늘의 API 사용량</h2>
-                    <div class="platform-row">
-                        <div class="platform-card">
-                            <div class="platform-card-header">
-                                <div class="platform-icon">📘</div>
-                                <div><div class="platform-name">Facebook</div><div style="font-size:.7rem;color:#94a3b8">Graph API</div></div>
-                            </div>
-                            <div class="usage-pct">23%</div>
-                            <div class="usage-bar"><div class="usage-bar-fill ok" style="width:23%"></div></div>
-                            <div class="usage-text"><span>46 / 200 호출</span><span>OK</span></div>
-                        </div>
-                        <div class="platform-card">
-                            <div class="platform-card-header">
-                                <div class="platform-icon">📸</div>
-                                <div><div class="platform-name">Instagram</div><div style="font-size:.7rem;color:#94a3b8">Graph API</div></div>
-                            </div>
-                            <div class="usage-pct">12%</div>
-                            <div class="usage-bar"><div class="usage-bar-fill ok" style="width:12%"></div></div>
-                            <div class="usage-text"><span>24 / 200 호출</span><span>OK</span></div>
-                        </div>
-                        <div class="platform-card">
-                            <div class="platform-card-header">
-                                <div class="platform-icon">🎵</div>
-                                <div><div class="platform-name">TikTok</div><div style="font-size:.7rem;color:#94a3b8">Content API</div></div>
-                            </div>
-                            <div class="usage-pct">68%</div>
-                            <div class="usage-bar"><div class="usage-bar-fill warn" style="width:68%"></div></div>
-                            <div class="usage-text"><span>680 / 1,000 호출</span><span>주의</span></div>
-                        </div>
-                        <div class="platform-card">
-                            <div class="platform-card-header">
-                                <div class="platform-icon">📺</div>
-                                <div><div class="platform-name">YouTube</div><div style="font-size:.7rem;color:#94a3b8">Data API v3</div></div>
-                            </div>
-                            <div class="usage-pct">8%</div>
-                            <div class="usage-bar"><div class="usage-bar-fill ok" style="width:8%"></div></div>
-                            <div class="usage-text"><span>800 / 10,000 unit</span><span>OK</span></div>
-                        </div>
-                        <div class="platform-card">
-                            <div class="platform-card-header">
-                                <div class="platform-icon">📗</div>
-                                <div><div class="platform-name">네이버 블로그</div><div style="font-size:.7rem;color:#94a3b8">Open API</div></div>
-                            </div>
-                            <div class="usage-pct">5%</div>
-                            <div class="usage-bar"><div class="usage-bar-fill ok" style="width:5%"></div></div>
-                            <div class="usage-text"><span>1,250 / 25,000 호출</span><span>OK</span></div>
-                        </div>
-                        <div class="platform-card">
-                            <div class="platform-card-header">
-                                <div class="platform-icon">🔐</div>
-                                <div><div class="platform-name">Supabase</div><div style="font-size:.7rem;color:#94a3b8">Auth + DB</div></div>
-                            </div>
-                            <div class="usage-pct">15%</div>
-                            <div class="usage-bar"><div class="usage-bar-fill ok" style="width:15%"></div></div>
-                            <div class="usage-text"><span>1.5 / 10 GB</span><span>OK</span></div>
-                        </div>
+                    <div id="apiUsageWrap">
+                        <p style="color:#94a3b8;font-size:.84rem">로딩 중...</p>
                     </div>
                 </div>
 
                 <div class="api-card">
                     <h2>📜 최근 API 호출 로그</h2>
-                    <table class="log-table">
-                        <thead>
-                            <tr><th>시간</th><th>플랫폼</th><th>사용자</th><th>엔드포인트</th><th>응답</th><th>지연</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr><td>15:32:45</td><td>📘 Facebook</td><td>user@example.com</td><td>/pageId/feed</td><td><span class="log-pill success">200 OK</span></td><td>342ms</td></tr>
-                            <tr><td>15:32:12</td><td>📸 Instagram</td><td>marketing@company.com</td><td>/me/media</td><td><span class="log-pill success">200 OK</span></td><td>521ms</td></tr>
-                            <tr><td>15:31:55</td><td>📘 Facebook</td><td>shop@brand.com</td><td>/pageId/photos</td><td><span class="log-pill error">400 Error</span></td><td>187ms</td></tr>
-                            <tr><td>15:31:23</td><td>🎵 TikTok</td><td>creator@studio.com</td><td>/video/upload</td><td><span class="log-pill warn">429 Rate</span></td><td>89ms</td></tr>
-                            <tr><td>15:30:48</td><td>📘 Facebook</td><td>user2@example.com</td><td>/me/accounts</td><td><span class="log-pill success">200 OK</span></td><td>231ms</td></tr>
-                        </tbody>
-                    </table>
+                    <div id="apiLogsWrap">
+                        <p style="color:#94a3b8;font-size:.84rem">로딩 중...</p>
+                    </div>
                 </div>
 
                 <div class="api-card">
                     <h2>⚠️ 한도 초과 알림</h2>
+                    <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                        ⚠️ 개발 필요: 자동 알림 시스템 미구현 (필요한 작업: pg_cron 또는 Edge Function 스케줄러 + 임계치 비교 + 이메일 발송)
+                    </div>
                     <p style="font-size:.84rem;color:#64748b;line-height:1.6">
-                        다음 조건 충족 시 자동 알림 발송:<br>
+                        예정 조건:<br>
                         • API 사용량 80% 도달 시<br>
                         • 1시간 내 에러율 10% 초과<br>
-                        • 특정 사용자가 1일 한도 초과<br>
-                        <br>
-                        <strong>📧 알림 수신처:</strong> ezwebpia001@gmail.com
+                        • 특정 사용자가 1일 한도 초과
                     </p>
                 </div>
             </div>
         </div>
     </div>
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/supabase-admin.js"></script>
     <script>
         document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
+
+        function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, function(c){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]; }); }
+
+        async function loadApiData(){
+            try {
+                var usage = await SNSAdmin.getApiUsage({});
+                var wrap = document.getElementById('apiUsageWrap');
+                var platforms = Object.keys(usage || {});
+                if(platforms.length === 0){
+                    wrap.innerHTML = '<div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;">⚠️ 개발 필요: api_usage_logs 테이블이 비어있거나 미생성 (필요 작업: api_usage_logs 테이블 생성 + 각 API 호출 시 logApiCall 호출)</div>';
+                } else {
+                    wrap.innerHTML = '<div class="platform-row">' + platforms.map(function(p){
+                        var u = usage[p];
+                        return '<div class="platform-card"><div class="platform-card-header"><div class="platform-icon">📡</div><div><div class="platform-name">' + escapeHtml(p) + '</div></div></div>' +
+                            '<div class="usage-pct">' + (u.count || 0) + '</div>' +
+                            '<div class="usage-text"><span>호출 수</span><span>에러: ' + (u.errors || 0) + '</span></div>' +
+                            '<div class="usage-text"><span>평균 지연</span><span>' + (u.avgLatency || 0) + 'ms</span></div></div>';
+                    }).join('') + '</div>';
+                }
+            } catch(err){
+                console.error('API 사용량 로딩 실패:', err);
+                document.getElementById('apiUsageWrap').innerHTML = '<div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;">⚠️ 개발 필요: api_usage_logs 테이블 미생성 (필요 작업: docs/supabase-admin-schema.sql 참고)</div>';
+            }
+            document.getElementById('apiLogsWrap').innerHTML = '<div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;">⚠️ 개발 필요: 상세 호출 로그 표시 미구현 (필요 작업: api_usage_logs 최근 100건 조회 RPC)</div>';
+        }
+
+        (async function(){
+            var ok = await SNSAdmin.requireAdmin();
+            if(!ok) return;
+            await loadApiData();
+        })();
     </script>
 </body>
 </html>
