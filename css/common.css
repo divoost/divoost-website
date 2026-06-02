@@ -240,6 +240,7 @@ p {
   color: var(--color-primary);
   letter-spacing: -0.02em;
   flex-shrink: 0;
+  margin-right: 56px;
 }
 
 .logo span {
@@ -249,12 +250,24 @@ p {
   background-clip: text;
 }
 
+.logo-img {
+  display: block;
+  height: 38px;
+  width: auto;
+}
+
 .nav {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
   gap: var(--space-xs);
+  margin-left: auto;
+}
+
+@media (max-width: 1024px) {
+  .logo { margin-right: 24px; }
+  .logo-img { height: 32px; }
 }
 
 .nav-link {
@@ -554,6 +567,11 @@ p {
 .footer-brand .logo {
   font-size: var(--text-2xl);
   margin-bottom: var(--space-md);
+  margin-right: 0;
+}
+.footer-brand .logo-img {
+  height: 44px;
+  opacity: 0.85;
 }
 
 .footer-brand p {
