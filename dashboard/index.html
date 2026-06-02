@@ -71,10 +71,25 @@
                     <div class="status-item"><span class="status-dot offline"></span>Temu 대기</div>
                 </div>
                 <div id="collectionLog" style="display:none;background:#0f172a;border:1px solid #334155;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-family:monospace;font-size:.78rem;color:#94a3b8;max-height:200px;overflow-y:auto"><div style="color:#3b82f6;font-weight:600;margin-bottom:6px">📡 수집 로그</div><div id="logContent"></div></div>
+
+                <!-- Coupang 빠른 검색 (Partners API 라이브) -->
+                <div id="coupangQuickWidget" style="background:linear-gradient(135deg,#1e293b,#0f172a);border:1px solid #3b82f6;border-radius:12px;padding:14px 18px;margin-bottom:16px">
+                    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                        <span style="font-size:18px">🛒</span>
+                        <strong style="color:#60a5fa;font-size:.92rem">쿠팡 파트너스 빠른 검색</strong>
+                        <span id="cqStatus" style="font-size:.7rem;padding:2px 8px;border-radius:10px;background:rgba(148,163,184,.2);color:#94a3b8">대기</span>
+                        <a href="coupang-partners.html" style="margin-left:auto;font-size:.72rem;color:#3b82f6;text-decoration:none">전체 보기 →</a>
+                    </div>
+                    <div style="display:flex;gap:8px">
+                        <input id="cqKeyword" type="text" placeholder="검색 키워드 (예: 무선이어폰)" style="flex:1;padding:8px 12px;background:rgba(255,255,255,.05);border:1px solid #334155;border-radius:6px;color:#e2e8f0;font-size:.85rem">
+                        <button id="cqBtn" onclick="coupangQuickSearch()" style="padding:8px 16px;background:#3b82f6;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:.85rem;font-weight:600">검색</button>
+                    </div>
+                    <div id="cqResult" style="margin-top:12px;display:none;max-height:300px;overflow-y:auto"></div>
+                </div>
                 <div class="platform-overview-grid">
                     <div class="platform-overview-card po-1688"><div class="po-logo">🏭</div><div class="po-info"><div class="po-name">1688</div><div class="po-sub">소싱</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-1688-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-1688">샘플</div></div>
                     <div class="platform-overview-card po-taobao"><div class="po-logo">🛒</div><div class="po-info"><div class="po-name">타오바오</div><div class="po-sub">소싱</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-taobao-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-taobao">샘플</div></div>
-                    <div class="platform-overview-card po-coupang"><div class="po-logo">🚀</div><div class="po-info"><div class="po-name">쿠팡</div><div class="po-sub">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-coupang-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-coupang">샘플</div></div>
+                    <a href="coupang-partners.html" class="platform-overview-card po-coupang" style="text-decoration:none;color:inherit;cursor:pointer" title="쿠팡 파트너스 API 페이지로 이동"><div class="po-logo">🚀</div><div class="po-info"><div class="po-name">쿠팡 <span style="font-size:.65rem;color:#3b82f6;font-weight:600">→ API</span></div><div class="po-sub">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-coupang-count">-</strong>개</div></div><div class="data-tag tag-live" id="tag-coupang">API 연동</div></a>
                     <div class="platform-overview-card po-gmarket"><div class="po-logo">🟢</div><div class="po-info"><div class="po-name">지마켓</div><div class="po-sub">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-gmarket-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-gmarket">샘플</div></div>
                     <div class="platform-overview-card po-naver"><div class="po-logo">🟩</div><div class="po-info"><div class="po-name">네이버</div><div class="po-sub">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-naver-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-naver">샘플</div></div>
                     <div class="platform-overview-card" style="border-top:4px solid #EE4D2D"><div class="po-logo">🛍</div><div class="po-info"><div class="po-name">Shopee</div><div class="po-sub">동남아</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-shopee-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-shopee">샘플</div></div>
@@ -449,6 +464,81 @@
             if(mb){mb.onclick=function(){sb.classList.toggle('open');ov.classList.toggle('active')}}
             if(ov){ov.onclick=function(){sb.classList.remove('open');ov.classList.remove('active')}}
         });
+    </script>
+    <script>
+    // ── 쿠팡 파트너스 빠른 검색 위젯 ──
+    (function(){
+        var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
+        var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
+        var session = null;
+        try { var raw = localStorage.getItem('snsAuthSession'); if(raw) session = JSON.parse(raw); } catch(e){}
+        if(session && session.expires_at && session.expires_at < Math.floor(Date.now()/1000)){ session = null; }
+
+        var statusEl = document.getElementById('cqStatus');
+        var widgetEl = document.getElementById('coupangQuickWidget');
+        if(!widgetEl) return;
+        if(!session){
+            statusEl.textContent='로그인 필요';
+            statusEl.style.background='rgba(251,191,36,.2)';statusEl.style.color='#fcd34d';
+            var btn=document.getElementById('cqBtn'); if(btn){btn.disabled=true;btn.style.opacity='.5';btn.title='먼저 로그인';}
+            return;
+        }
+        statusEl.textContent='연결됨';
+        statusEl.style.background='rgba(52,211,153,.2)';statusEl.style.color='#6ee7b7';
+
+        window.coupangQuickSearch = async function(){
+            var kw = document.getElementById('cqKeyword').value.trim();
+            if(!kw) return alert('검색어를 입력하세요');
+            var result = document.getElementById('cqResult');
+            result.style.display='block';
+            result.innerHTML='<div style="color:#94a3b8;font-size:.8rem">🔍 검색 중...</div>';
+            try {
+                var res = await fetch(SUPABASE_URL + '/functions/v1/swift-function', {
+                    method:'POST',
+                    headers:{
+                        'Authorization':'Bearer ' + session.access_token,
+                        'apikey':SUPABASE_KEY,
+                        'Content-Type':'application/json'
+                    },
+                    body:JSON.stringify({endpoint:'/products/search', method:'GET', query:{keyword:kw}})
+                });
+                var data = await res.json();
+                if(data.rCode !== '0'){
+                    result.innerHTML='<div style="color:#fca5a5;font-size:.8rem">❌ ' + (data.rMessage||data.error||'API 오류') + '</div>';
+                    return;
+                }
+                var products = (data.data && data.data.productData) || [];
+                if(products.length === 0){
+                    result.innerHTML='<div style="color:#94a3b8;font-size:.8rem">결과 없음</div>';
+                    return;
+                }
+                var html = '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px">' +
+                    products.slice(0,12).map(function(p){
+                        var img = (p.productImage||'').replace(/"/g,'');
+                        var name = (p.productName||'').replace(/[<>"']/g,'');
+                        var price = Number(p.productPrice||0).toLocaleString('ko-KR');
+                        return '<a href="' + (p.productUrl||'#') + '" target="_blank" style="text-decoration:none;color:inherit">' +
+                            '<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px">' +
+                            (img?'<img src="'+img+'" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;margin-bottom:6px" loading="lazy" onerror="this.style.display=\'none\'">':'') +
+                            '<div style="font-size:.7rem;color:#e2e8f0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.3;margin-bottom:4px">' + name + '</div>' +
+                            '<div style="font-size:.8rem;color:#fbbf24;font-weight:700">₩' + price + '</div>' +
+                            (p.isRocket?'<span style="display:inline-block;font-size:.6rem;padding:1px 4px;background:rgba(96,165,250,.2);color:#93c5fd;border-radius:3px;margin-top:3px">🚀</span>':'') +
+                            '</div></a>';
+                    }).join('') + '</div>';
+                result.innerHTML = html;
+
+                // 쿠팡 카드 카운트 업데이트
+                var cnt = document.getElementById('v-coupang-count');
+                if(cnt) cnt.textContent = products.length;
+            } catch(e) {
+                result.innerHTML='<div style="color:#fca5a5;font-size:.8rem">❌ ' + e.message + '</div>';
+            }
+        };
+
+        // Enter 키
+        var kwInput = document.getElementById('cqKeyword');
+        if(kwInput) kwInput.addEventListener('keypress', function(e){ if(e.key==='Enter') window.coupangQuickSearch(); });
+    })();
     </script>
 </body>
 </html>

@@ -83,8 +83,9 @@
             <div class="search-row">
                 <input type="text" id="searchKeyword" placeholder="검색 키워드 (예: 에어팟, 무선이어폰)">
                 <select id="searchLimit">
+                    <option value="">기본</option>
                     <option value="10">10개</option>
-                    <option value="20" selected>20개</option>
+                    <option value="30">30개</option>
                     <option value="50">50개</option>
                 </select>
                 <button id="btnSearch" onclick="doSearch()">검색</button>
@@ -268,7 +269,9 @@
             const target = document.getElementById('searchResult');
             showLoading(target);
             try {
-                const r = await coupangCall('/products/search', { query: { keyword: kw, limit } });
+                const q = { keyword: kw };
+                if (limit) q.limit = limit;
+                const r = await coupangCall('/products/search', { query: q });
                 if (r.rCode !== '0') return showError(target, r.rMessage || r.message || 'API 오류');
                 renderProducts(r.data?.productData || [], target);
             } catch (e) { showError(target, e.message); }
