@@ -197,7 +197,7 @@
         }
         .modal-info-label {
             font-size: 11px;
-            color: #94a3b8;
+            color: #64748B;
             font-weight: 600;
             margin-bottom: 4px;
         }
@@ -332,7 +332,7 @@
                     <label>📅 추천일 검색</label>
                     <div style="display:flex;gap:6px;align-items:center;">
                         <input type="date" id="dateFrom" title="시작일">
-                        <span style="color:#94a3b8;font-size:12px;">~</span>
+                        <span style="color:#64748B;font-size:12px;">~</span>
                         <input type="date" id="dateTo" title="종료일">
                     </div>
                     <div style="display:flex;gap:4px;">
@@ -658,7 +658,7 @@
             var pageItems = filteredProducts.slice(start, end);
 
             if (pageItems.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:#94a3b8">표시할 상품이 없습니다</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:#64748B">표시할 상품이 없습니다</td></tr>';
                 document.getElementById('tableFooterInfo').textContent = '총 0개 상품';
                 document.getElementById('pagination').innerHTML = '';
                 return;
