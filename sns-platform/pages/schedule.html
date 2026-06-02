@@ -45,6 +45,10 @@
         <div class="main-content">
             <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">⏰ 예약 발행</div><div class="top-bar-sub">콘텐츠 자동 발행 스케줄</div></div></div></header>
             <div class="content">
+                <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                    ⚠️ 개발 필요: 예약은 localStorage에 저장되지만 자동 발행이 안 됩니다.<br>
+                    필요 작업: scheduled_posts 테이블 + Supabase pg_cron / Edge Function (publish-scheduled) + Facebook/Instagram Graph API 호출 + 실패 재시도
+                </div>
                 <div class="schedule-form">
                     <h2>📅 새 예약 추가</h2>
                     <div class="form-row">
@@ -79,10 +83,11 @@
         }
 
         function suggestTime(){
+            // ⚠️ 개발 필요: 실제 AI 분석이 아닌 임의 추천 (사용자 과거 발행 데이터 + 채널별 최적 시간대 분석 필요)
             var times=['09:00','12:30','18:00','20:30','22:00'];
             var best=times[Math.floor(Math.random()*times.length)];
             document.getElementById('schTime').value=best;
-            alert('🤖 AI 추천 시간: '+best+'\n\n이 시간대에 인터렉션이 가장 활발합니다');
+            alert('⚠️ 개발 필요: AI 시간 추천 백엔드 미연동\n\n필요 작업: 사용자 과거 발행 인터렉션 데이터 분석 + 채널별 최적 시간대 RPC\n\n임시 추천: '+best);
         }
 
         function addSchedule(){

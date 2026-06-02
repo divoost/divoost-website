@@ -145,8 +145,12 @@
 
                 <div class="create-box">
                     <h2>✍️ 콘텐츠 생성</h2>
+                    <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                        ⚠️ 개발 필요: 아래 "AI 자동 생성"은 실제 LLM이 아닌 템플릿 기반 생성입니다.<br>
+                        필요 작업: ai-writer.html처럼 ai-gateway.js 연결 (OpenAI/Claude API) + 크레딧 차감 + 프롬프트 엔지니어링
+                    </div>
                     <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-                        <button class="ai-gen-btn" id="aiGenBtn" onclick="generateAI()">🤖 AI로 자동 생성</button>
+                        <button class="ai-gen-btn" id="aiGenBtn" onclick="generateAI()">🤖 템플릿 자동 생성 (개발 중)</button>
                         <span id="aiStatus" style="font-size:.78rem;color:#94a3b8"></span>
                     </div>
                     <div id="genProgress" class="gen-progress" style="display:none"></div>

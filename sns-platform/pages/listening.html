@@ -52,6 +52,10 @@
         <div class="main-content">
             <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">👂 소셜 리스닝</div><div class="top-bar-sub">브랜드/키워드 언급 실시간 모니터링</div></div></div></header>
             <div class="content">
+                <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                    ⚠️ 개발 필요: ScraperAPI 키가 클라이언트에 하드코딩되어 있어 노출 위험이 있습니다.<br>
+                    필요 작업: Supabase Edge Function (social-listening) 으로 이동 + SCRAPER_API_KEY 환경변수로 분리 + Rate limit + 사용량 카운팅
+                </div>
                 <div class="listen-box">
                     <h1>👂 소셜 리스닝</h1>
                     <p>브랜드명 또는 키워드를 입력하면 SNS에서의 언급을 모니터링합니다</p>
