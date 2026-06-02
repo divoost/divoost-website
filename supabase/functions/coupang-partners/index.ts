@@ -1,34 +1,26 @@
-// Supabase Edge Function: Coupang Partners API 프록시
+// Supabase Edge Function: Coupang Partners API 프록시 (단일 파일 버전)
 //
-// 보안 원칙:
-// - Secret Key는 Deno.env(Supabase Secrets)에만 저장 → 브라우저 절대 노출 X
-// - HMAC SHA256 서명 서버에서 생성
-// - 로그인된 사용자(JWT)만 호출 가능
-//
-// 호출 방법 (브라우저):
-//   supabase.functions.invoke('coupang-partners', {
-//     body: { endpoint: '/products/search', method: 'GET', query: { keyword: '에어팟', limit: 10 } }
-//   })
-//
-// 지원 endpoint (Coupang Partners API v1):
-//   GET  /products/search?keyword=&limit=
-//   GET  /products/bestcategories/{categoryId}?subId=&imageSize=
-//   GET  /products/goldbox
-//   GET  /products/coupangPL
-//   GET  /products/coupangPL/{brandId}
-//   GET  /products/reco?subId=&imageSize=
-//   GET  /reports/clicks?startDate=&endDate=&subId=
-//   GET  /reports/orders?startDate=&endDate=&subId=
-//   GET  /reports/cancels?startDate=&endDate=&subId=
-//   GET  /reports/commission?startDate=&endDate=&subId=
-//   GET  /reports/ads/{impression-click|orders|cancels|performance|commission}
-//   POST /deeplink   body: { coupangUrls: [...] }
+// 보안: Access/Secret Key는 Deno.env(Supabase Secrets)에만 저장
+//        HMAC SHA256 서명 서버에서 생성, JWT 인증 사용자만 호출 가능
 
 // @ts-ignore Deno
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 // @ts-ignore Deno
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-import { corsHeaders, handleCors } from "../_shared/cors.ts";
+
+// ─── CORS 헤더 (인라인) ───
+const corsHeaders = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
+};
+
+function handleCors(req: Request): Response | null {
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
+  return null;
+}
 
 // @ts-ignore Deno
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
@@ -42,17 +34,15 @@ const COUPANG_SECRET_KEY = Deno.env.get("COUPANG_SECRET_KEY") || "";
 const COUPANG_DOMAIN = "https://api-gateway.coupang.com";
 const COUPANG_BASE = "/v2/providers/affiliate_open_api/apis/openapi/v1";
 
-// ─── HMAC SHA256 서명 생성 (쿠팡 CEA 포맷) ───
+// ─── HMAC SHA256 서명 (쿠팡 CEA 포맷) ───
 async function generateHmacAuth(
   method: string,
   uri: string,
   secretKey: string,
   accessKey: string,
 ): Promise<string> {
-  // uri = path + (optional)?query
   const [path, query = ""] = uri.split("?");
 
-  // datetime: YYMMDDTHHMMSSZ (GMT)
   const now = new Date();
   const yy = String(now.getUTCFullYear()).slice(-2);
   const mm = String(now.getUTCMonth() + 1).padStart(2, "0");
@@ -64,7 +54,6 @@ async function generateHmacAuth(
 
   const message = datetime + method + path + query;
 
-  // HMAC-SHA256 via Web Crypto API
   const encoder = new TextEncoder();
   const key = await crypto.subtle.importKey(
     "raw",
@@ -81,18 +70,14 @@ async function generateHmacAuth(
   return `CEA algorithm=HmacSHA256, access-key=${accessKey}, signed-date=${datetime}, signature=${signature}`;
 }
 
-// ─── 허용 endpoint 화이트리스트 (SSRF 방어) ───
-const ALLOWED_PREFIXES = [
-  "/products/",
-  "/reports/",
-  "/deeplink",
-];
+// ─── 허용 endpoint (SSRF 방어) ───
+const ALLOWED_PREFIXES = ["/products/", "/reports/", "/deeplink"];
 
 function isAllowed(endpoint: string): boolean {
   return ALLOWED_PREFIXES.some((p) => endpoint.startsWith(p));
 }
 
-// ─── 쿼리 객체 → URL 쿼리스트링 (알파벳 정렬 X, 쿠팡은 순서 무관) ───
+// ─── 쿼리 객체 → URL 쿼리스트링 ───
 function buildQueryString(query?: Record<string, any>): string {
   if (!query) return "";
   const parts: string[] = [];
@@ -118,7 +103,7 @@ serve(async (req) => {
       );
     }
 
-    // ─── 1) 인증 검증 (JWT) ───
+    // 1) JWT 인증 검증
     const authHeader = req.headers.get("Authorization") || "";
     const token = authHeader.replace("Bearer ", "");
     if (!token) {
@@ -138,7 +123,7 @@ serve(async (req) => {
     }
     const userId = userData.user.id;
 
-    // ─── 2) Body 파싱 ───
+    // 2) Body 파싱
     const body = await req.json().catch(() => ({}));
     const endpoint = String(body.endpoint || "").trim();
     const method = String(body.method || "GET").toUpperCase();
@@ -164,14 +149,14 @@ serve(async (req) => {
       );
     }
 
-    // ─── 3) URI 조립 ───
+    // 3) URI 조립
     const queryString = method === "GET" ? buildQueryString(query) : "";
     const fullPath = COUPANG_BASE + endpoint + queryString;
 
-    // ─── 4) HMAC 서명 ───
+    // 4) HMAC 서명
     const authorization = await generateHmacAuth(method, fullPath, COUPANG_SECRET_KEY, COUPANG_ACCESS_KEY);
 
-    // ─── 5) 쿠팡 API 호출 ───
+    // 5) 쿠팡 API 호출
     const url = COUPANG_DOMAIN + fullPath;
     const headers: Record<string, string> = {
       "Authorization": authorization,
@@ -191,7 +176,7 @@ serve(async (req) => {
       upstreamData = { raw: upstreamText };
     }
 
-    // ─── 6) 호출 로그 (선택: api_usage_logs 테이블 있으면 기록) ───
+    // 6) 호출 로그 (선택)
     try {
       await supabase.from("api_usage_logs").insert({
         user_id: userId,
@@ -201,9 +186,7 @@ serve(async (req) => {
         status_code: upstream.status,
         success: upstream.ok,
       });
-    } catch {
-      // 테이블 없으면 무시
-    }
+    } catch {}
 
     return new Response(JSON.stringify(upstreamData), {
       status: upstream.status,
