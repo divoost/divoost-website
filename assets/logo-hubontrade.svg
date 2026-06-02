@@ -1,5 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 130" role="img" aria-label="HubOnTrade">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 130" role="img" aria-label="HubOnTrade">
   <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&amp;display=swap');</style>
     <linearGradient id="hubBlue" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#2563EB"/>
       <stop offset="100%" stop-color="#1E3A8A"/>
@@ -13,32 +14,23 @@
     </filter>
   </defs>
 
-  <!-- H 마크 (이탤릭/슬랜트, 깊은 블루) -->
+  <!-- H 마크 -->
   <g transform="translate(2, 4)" filter="url(#hubGlow)">
-    <!-- 왼쪽 슬랜트 기둥 (윗부분이 오른쪽으로 기울어짐) -->
     <path d="M30,6 L58,6 L46,82 L18,82 Z" fill="url(#hubBlue)" stroke="#1E3A8A" stroke-width="1.5" stroke-linejoin="round"/>
-    <!-- 오른쪽 슬랜트 기둥 -->
     <path d="M76,6 L104,6 L92,82 L64,82 Z" fill="url(#hubBlue)" stroke="#1E3A8A" stroke-width="1.5" stroke-linejoin="round"/>
-    <!-- 가운데 가로 바 (살짝 슬랜트) -->
     <path d="M24,38 L98,38 L94,56 L20,56 Z" fill="url(#hubBlue)" stroke="#1E3A8A" stroke-width="1.5" stroke-linejoin="round"/>
   </g>
 
-  <!-- 오렌지 스윕 화살표 (H 뒤로 지나 우상단으로) -->
+  <!-- 화살표 -->
   <g>
-    <!-- 메인 곡선: 좌하 → 우상 -->
-    <path d="M-4,76 C20,90 50,90 78,76 C100,64 116,40 124,18"
-          fill="none"
-          stroke="#F97316"
-          stroke-width="9"
-          stroke-linecap="round"/>
-    <!-- 화살촉 (우상단) -->
+    <path d="M-4,76 C20,90 50,90 78,76 C100,64 116,40 124,18" fill="none" stroke="#F97316" stroke-width="9" stroke-linecap="round"/>
     <path d="M116,2 L138,8 L124,28 Z" fill="#F97316"/>
   </g>
 
-  <!-- 텍스트: Hub On Trade (볼드, 약간 슬랜트) -->
-  <g font-family="'Poppins', 'Inter', system-ui, sans-serif" font-weight="800" font-size="38" letter-spacing="-1">
-    <text x="146" y="64" fill="#0F172A">Hub</text>
-    <text x="234" y="64" fill="#F97316">On</text>
-    <text x="300" y="64" fill="#2563EB">Trade</text>
+  <!-- 텍스트: textLength로 정확한 폭 고정 -->
+  <g font-family="Poppins, 'Noto Sans KR', Arial, sans-serif" font-weight="800" font-size="38">
+    <text x="150" y="64" fill="#0F172A" textLength="80" lengthAdjust="spacingAndGlyphs">Hub</text>
+    <text x="244" y="64" fill="#F97316" textLength="56" lengthAdjust="spacingAndGlyphs">On</text>
+    <text x="314" y="64" fill="#2563EB" textLength="120" lengthAdjust="spacingAndGlyphs">Trade</text>
   </g>
 </svg>
