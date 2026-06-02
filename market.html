@@ -20,16 +20,26 @@
             </a>
 
             <nav class="nav" id="navDesktop">
-                <a href="index.html" class="nav-link">홈</a>
-                <a href="solution.html" class="nav-link">솔루션</a>
-                <a href="features.html" class="nav-link">기능</a>
-                <a href="service.html" class="nav-link">서비스</a>
-                <a href="market.html" class="nav-link active">시장</a>
-                <a href="pricing.html" class="nav-link">요금제</a>
-                <a href="case.html" class="nav-link">사례</a>
-                <a href="resources.html" class="nav-link">리소스</a>
-                <a href="dashboard/index.html" class="nav-link">소싱트래커</a>
-                <a href="contact.html" class="nav-link">문의</a>            </nav>
+                <a href="index.html" class="nav-link" data-i18n="nav.home">홈</a>
+                <a href="solution.html" class="nav-link" data-i18n="nav.solution">솔루션</a>
+                <a href="features.html" class="nav-link" data-i18n="nav.features">기능</a>
+                <a href="service.html" class="nav-link" data-i18n="nav.service">서비스</a>
+                <a href="market.html" class="nav-link active" data-i18n="nav.market">시장</a>
+                <a href="pricing.html" class="nav-link" data-i18n="nav.pricing">요금제</a>
+                <a href="case.html" class="nav-link" data-i18n="nav.case">사례</a>
+                <a href="resources.html" class="nav-link" data-i18n="nav.resources">리소스</a>
+                <a href="dashboard/index.html" class="nav-link" data-i18n="nav.tracker">소싱트래커</a>
+                <a href="contact.html" class="nav-link" data-i18n="nav.contact">문의</a>            </nav>
+
+            <div class="lang-switcher" style="display:flex;align-items:center;gap:6px;margin-left:auto;padding:0 16px;">
+                <button class="lang-btn active" data-lang="ko" style="background:none;border:none;color:rgba(15,23,42,.65);font-size:12px;font-weight:700;cursor:pointer;padding:4px 6px;font-family:inherit;letter-spacing:.05em;">KO</button>
+                <span style="color:rgba(15,23,42,.2);font-size:11px;">|</span>
+                <button class="lang-btn" data-lang="en" style="background:none;border:none;color:rgba(15,23,42,.45);font-size:12px;font-weight:700;cursor:pointer;padding:4px 6px;font-family:inherit;letter-spacing:.05em;">EN</button>
+                <span style="color:rgba(15,23,42,.2);font-size:11px;">|</span>
+                <button class="lang-btn" data-lang="zh" style="background:none;border:none;color:rgba(15,23,42,.45);font-size:12px;font-weight:700;cursor:pointer;padding:4px 6px;font-family:inherit;letter-spacing:.05em;">CH</button>
+                <span style="color:rgba(15,23,42,.2);font-size:11px;">|</span>
+                <button class="lang-btn" data-lang="vi" style="background:none;border:none;color:rgba(15,23,42,.45);font-size:12px;font-weight:700;cursor:pointer;padding:4px 6px;font-family:inherit;letter-spacing:.05em;">VN</button>
+            </div>
 
             <button class="menu-toggle" id="mobileToggle" aria-label="메뉴 열기">
                 <span></span>
@@ -46,8 +56,8 @@
     <section class="page-hero fade-in-up">
         <div class="container text-center">
             <span class="section-badge">SUPPORTED MARKETS</span>
-            <h1 class="section-title">국내부터 글로벌까지, <span class="gradient-text">주요 마켓플레이스 연동</span></h1>
-            <p class="section-desc">HUBONTRADE 하나로 국내외 마켓플레이스를 통합 관리하세요</p>
+            <h1 class="section-title" data-i18n="pages.market.heroTitle">국내부터 글로벌까지, <span class="gradient-text">주요 마켓플레이스 연동</span></h1>
+            <p class="section-desc" data-i18n="pages.market.heroDesc">HUBONTRADE 하나로 국내외 마켓플레이스를 통합 관리하세요</p>
         </div>
     </section>
 
@@ -525,32 +535,32 @@
                 </div>
 
                 <div class="footer-col">
-                    <h4 class="footer-heading">페이지</h4>
+                    <h4 class="footer-heading" data-i18n="footer.h.pages">페이지</h4>
                     <ul class="footer-links">
-                        <li><a href="index.html">메인 홈</a></li>
-                        <li><a href="solution.html">솔루션</a></li>
-                        <li><a href="features.html">기능</a></li>
-                        <li><a href="service.html">서비스</a></li>
-                        <li><a href="market.html">시장</a></li>
-                        <li><a href="pricing.html">요금제</a></li>
+                        <li><a href="index.html" data-i18n="nav.home">메인 홈</a></li>
+                        <li><a href="solution.html" data-i18n="nav.solution">솔루션</a></li>
+                        <li><a href="features.html" data-i18n="nav.features">기능</a></li>
+                        <li><a href="service.html" data-i18n="nav.service">서비스</a></li>
+                        <li><a href="market.html" data-i18n="nav.market">시장</a></li>
+                        <li><a href="pricing.html" data-i18n="nav.pricing">요금제</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-col">
-                    <h4 class="footer-heading">소싱 · 도구</h4>
+                    <h4 class="footer-heading" data-i18n="footer.h.tools">소싱 · 도구</h4>
                     <ul class="footer-links">
-                        <li><a href="dashboard/index.html">소싱 트래커</a></li>
+                        <li><a href="dashboard/index.html" data-i18n="nav.tracker">소싱 트래커</a></li>
                         <li><a href="dashboard/admin.html">상품 관리</a></li>
                         <li><a href="1688-coupang-guide.html">1688 소싱 가이드</a></li>
                     </ul>
                 </div>
 
                 <div class="footer-col">
-                    <h4 class="footer-heading">고객 지원</h4>
+                    <h4 class="footer-heading" data-i18n="footer.h.support">고객 지원</h4>
                     <ul class="footer-links">
-                        <li><a href="case.html">사례</a></li>
-                        <li><a href="resources.html">리소스</a></li>
-                        <li><a href="contact.html">문의하기</a></li>
+                        <li><a href="case.html" data-i18n="nav.case">사례</a></li>
+                        <li><a href="resources.html" data-i18n="nav.resources">리소스</a></li>
+                        <li><a href="contact.html" data-i18n="nav.contact">문의하기</a></li>
                     </ul>
                 </div>
             </div>
@@ -562,5 +572,6 @@
     </footer>
 
     <script src="js/common.js"></script>
+    <script src="js/i18n.js"></script>
 </body>
 </html>

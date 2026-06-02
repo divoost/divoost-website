@@ -174,5 +174,43 @@
         "subtitle": "Trải nghiệm tất cả tính năng với gói dùng thử 30 ngày",
         "primary": "Dùng thử miễn phí",
         "secondary": "Yêu cầu tư vấn 1:1"
+    },
+    "pages": {
+        "solution": {
+            "heroTitle": "Xuất khẩu, Nhập khẩu, Sourcing — Trên một nền tảng",
+            "heroDesc": "Giải quyết toàn bộ quy trình thương mại toàn cầu với giải pháp tích hợp HUBONTRADE"
+        },
+        "features": {
+            "heroTitle": "Tính năng mạnh mẽ dành cho nhà bán",
+            "heroDesc": "Tính năng cốt lõi đơn giản hóa việc bán hàng toàn cầu phức tạp"
+        },
+        "service": {
+            "heroTitle": "Chúng tôi <span class=\"gradient-text\">đảm nhận mọi việc</span> trong bán hàng toàn cầu",
+            "heroDesc": "Khám phá các dịch vụ chuyên nghiệp HUBONTRADE cung cấp"
+        },
+        "market": {
+            "heroTitle": "Từ trong nước đến toàn cầu, <span class=\"gradient-text\">tích hợp các sàn lớn</span>",
+            "heroDesc": "Quản lý sàn trong nước & quốc tế chỉ với HUBONTRADE"
+        },
+        "pricing": {
+            "heroTitle": "Bảng giá hợp lý",
+            "heroDesc": "Chọn gói phù hợp với quy mô doanh nghiệp của bạn"
+        },
+        "case": {
+            "heroTitle": "Câu chuyện thành công",
+            "heroDesc": "Câu chuyện về các thương hiệu phát triển thị trường toàn cầu cùng HUBONTRADE"
+        },
+        "resources": {
+            "heroTitle": "Trung tâm Tài nguyên",
+            "heroDesc": "Cung cấp tất cả thông tin cần thiết cho TMĐT toàn cầu"
+        },
+        "contact": {
+            "heroTitle": "Liên hệ",
+            "heroDesc": "Liên hệ bất cứ lúc nào về việc mở rộng ra thị trường toàn cầu"
+        },
+        "guide": {
+            "heroTitle": "Hướng dẫn đầy đủ 1688 Sourcing → <span class=\"gradient-text\">Bán Coupang</span>",
+            "heroDesc": "Từ sản phẩm biên lợi nhuận cao đến tìm shop ship trực tiếp — tất tần tật về 1688"
+        }
     }
 }
