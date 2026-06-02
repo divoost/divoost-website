@@ -926,64 +926,117 @@
 .mockup-title { font-size: 12px; color: rgba(255,255,255,.7); font-weight: 600; }
 .mockup-body { padding: 20px; min-height: 320px; }
 
-/* ---------- Slide 1: Globe / Cross-border Flow ---------- */
-.globe-body { display: flex; flex-direction: column; gap: 14px; }
-.globe-stage {
-    position: relative;
-    height: 180px;
-    background: radial-gradient(circle at center, rgba(59,130,246,.18), transparent 65%);
-    border: 1px solid rgba(255,255,255,.06);
-    border-radius: 12px;
-}
-.globe-ring {
-    position: absolute;
-    top: 50%; left: 50%;
-    width: 140px; height: 140px;
-    border: 1px dashed rgba(96,165,250,.4);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    animation: globeSpin 18s linear infinite;
-}
-.globe-core {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 48px;
-    filter: drop-shadow(0 0 12px rgba(96,165,250,.6));
-}
-.flow-node {
-    position: absolute;
-    padding: 4px 10px;
-    background: rgba(15,23,42,.85);
-    border: 1px solid rgba(96,165,250,.4);
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 600;
-    color: #fff;
-    white-space: nowrap;
-    box-shadow: 0 4px 12px rgba(0,0,0,.25);
-}
-.node-kr { top: 12%; left: 50%; transform: translateX(-50%); }
-.node-us { top: 50%; right: 8%; transform: translateY(-50%); }
-.node-cn { bottom: 12%; left: 50%; transform: translateX(-50%); }
-.node-jp { top: 26%; right: 12%; }
-.node-vn { top: 50%; left: 8%; transform: translateY(-50%); }
-.flow-routes { display: flex; flex-direction: column; gap: 6px; }
-.flow-route {
-    display: grid;
-    grid-template-columns: 32px 18px 40px 1fr;
+/* ---------- Slide 1: World Map / Cross-border Flow (Pro) ---------- */
+.mockup-live {
+    margin-left: auto;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    background: rgba(255,255,255,.04);
-    border: 1px solid rgba(255,255,255,.06);
-    border-radius: 8px;
-    font-size: 12px;
-    color: rgba(255,255,255,.9);
+    gap: 6px;
+    padding: 3px 9px;
+    background: rgba(239,68,68,.15);
+    border: 1px solid rgba(239,68,68,.35);
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: #fca5a5;
 }
-.route-arrow { color: #60a5fa; text-align: center; font-weight: 700; }
-.route-val { text-align: right; color: #34d399; font-weight: 700; }
-@keyframes globeSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+.live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: #ef4444;
+    box-shadow: 0 0 8px #ef4444;
+    animation: livePulse 1.4s ease-in-out infinite;
+}
+@keyframes livePulse { 50% { opacity: .35; transform: scale(.85); } }
+
+.worldmap-body { display: flex; flex-direction: column; gap: 14px; }
+.worldmap-stage {
+    position: relative;
+    background:
+        radial-gradient(ellipse at 30% 40%, rgba(59,130,246,.18), transparent 60%),
+        radial-gradient(ellipse at 75% 70%, rgba(96,165,250,.14), transparent 55%),
+        linear-gradient(180deg, rgba(15,23,42,.6), rgba(15,23,42,.4));
+    border: 1px solid rgba(96,165,250,.18);
+    border-radius: 12px;
+    overflow: hidden;
+}
+.worldmap-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* SVG arc 라인 그리기 애니메이션 */
+.arc-line {
+    stroke-dasharray: 400;
+    stroke-dashoffset: 400;
+    animation: arcDraw 3.2s ease-in-out infinite;
+    filter: drop-shadow(0 0 4px rgba(252,211,77,.6));
+}
+.arc-2 { animation-delay: .8s; }
+.arc-3 { animation-delay: 1.6s; }
+@keyframes arcDraw {
+    0% { stroke-dashoffset: 400; }
+    35% { stroke-dashoffset: 0; }
+    70% { stroke-dashoffset: 0; opacity: 1; }
+    100% { stroke-dashoffset: -400; opacity: 0; }
+}
+
+/* 노드 펄스 */
+.node-pulse {
+    transform-origin: center;
+    transform-box: fill-box;
+    animation: nodePulse 2.4s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px currentColor);
+}
+.node-pulse.delay-1 { animation-delay: .3s; }
+.node-pulse.delay-2 { animation-delay: .6s; }
+.node-pulse.delay-3 { animation-delay: .9s; }
+.node-pulse.delay-4 { animation-delay: 1.2s; }
+.node-pulse.delay-5 { animation-delay: 1.5s; }
+@keyframes nodePulse {
+    0%, 100% { opacity: .6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+}
+
+/* Pro flow route 카드 */
+.flow-routes-pro { display: flex; flex-direction: column; gap: 8px; }
+.flow-route-pro {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+    border: 1px solid rgba(96,165,250,.18);
+    border-radius: 10px;
+}
+.route-pair { display: inline-flex; align-items: center; gap: 8px; }
+.route-chip {
+    padding: 3px 10px;
+    background: rgba(96,165,250,.18);
+    border: 1px solid rgba(96,165,250,.35);
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    color: #93c5fd;
+    letter-spacing: 0.04em;
+}
+.route-arrow-svg {
+    color: #FCD34D;
+    font-weight: 800;
+    font-size: 14px;
+}
+.route-meta {
+    font-size: 11px;
+    color: rgba(255,255,255,.55);
+}
+.flow-route-pro .route-val {
+    font-size: 14px;
+    font-weight: 800;
+    color: #34d399;
+    text-shadow: 0 0 12px rgba(52,211,153,.4);
+}
 
 /* ---------- Slide 3: Fulfillment Tracker ---------- */
 .track-body { display: flex; flex-direction: column; gap: 14px; }
@@ -1155,8 +1208,8 @@
 /* Mobile - 모킹업 컴팩트 */
 @media (max-width: 768px) {
     .mockup-body { padding: 14px; min-height: auto; }
-    .globe-stage { height: 140px; }
-    .globe-core { font-size: 36px; }
     .seller-grid, .product-card-row, .sellers-stats, .track-stats { grid-template-columns: 1fr 1fr; }
     .sellers-stats { grid-template-columns: repeat(3, 1fr); }
+    .route-meta { display: none; }
+    .flow-route-pro { grid-template-columns: auto 1fr auto; gap: 8px; padding: 8px 10px; }
 }
