@@ -231,16 +231,41 @@ p {
 }
 
 .logo {
-  display: flex;
+  display: flex !important;
   align-items: center;
-  gap: var(--space-sm);
-  font-family: var(--font-heading);
-  font-size: var(--text-xl);
+  gap: 14px;
+  font-family: 'Poppins', 'Noto Sans KR', system-ui, sans-serif;
   font-weight: 800;
-  color: var(--color-primary);
   letter-spacing: -0.02em;
   flex-shrink: 0;
   margin-right: 56px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.logo-mark {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  height: 80px;
+}
+
+.logo-words {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  font-size: 42px;
+  line-height: 1;
+}
+.logo-words .lw-hub { color: #0F172A; }
+.logo-words .lw-on { color: #F97316; }
+.logo-words .lw-trade { color: #2563EB; }
+
+/* 기존 호환 (혹시 남아있는 logo-img / logo span) */
+.logo-img {
+  display: block;
+  height: 96px;
+  width: auto;
 }
 
 .logo span {
@@ -248,12 +273,6 @@ p {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-.logo-img {
-  display: block;
-  height: 96px;
-  width: auto;
 }
 
 .nav {
@@ -267,7 +286,13 @@ p {
 
 @media (max-width: 1024px) {
   .logo { margin-right: 24px; }
+  .logo-mark { height: 60px; }
+  .logo-words { font-size: 32px; }
   .logo-img { height: 72px; }
+}
+@media (max-width: 640px) {
+  .logo-mark { height: 48px; }
+  .logo-words { font-size: 24px; }
 }
 
 .nav-link {
@@ -565,10 +590,14 @@ p {
 }
 
 .footer-brand .logo {
-  font-size: var(--text-2xl);
   margin-bottom: var(--space-md);
   margin-right: 0;
 }
+.footer-brand .logo-mark { height: 100px; opacity: 0.9; }
+.footer-brand .logo-words { font-size: 52px; }
+.footer-brand .logo-words .lw-hub,
+.footer-brand .logo-words .lw-on,
+.footer-brand .logo-words .lw-trade { color: #94A3B8; }
 .footer-brand .logo-img {
   height: 120px;
   opacity: 0.85;
