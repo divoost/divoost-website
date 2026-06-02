@@ -75,7 +75,7 @@
 
   /* Layout */
   --container-max: 1200px;
-  --header-height: 72px;
+  --header-height: 96px;
 
   /* Borders */
   --radius-sm: 6px;
@@ -252,7 +252,7 @@ p {
 
 .logo-img {
   display: block;
-  height: 56px;
+  height: 72px;
   width: auto;
 }
 
@@ -267,7 +267,7 @@ p {
 
 @media (max-width: 1024px) {
   .logo { margin-right: 24px; }
-  .logo-img { height: 44px; }
+  .logo-img { height: 56px; }
 }
 
 .nav-link {
@@ -570,7 +570,7 @@ p {
   margin-right: 0;
 }
 .footer-brand .logo-img {
-  height: 62px;
+  height: 80px;
   opacity: 0.85;
 }
 
@@ -828,7 +828,7 @@ p {
    ============================================================ */
 @media (max-width: 1024px) {
   :root {
-    --header-height: 64px;
+    --header-height: 76px;
   }
 
   .section {
