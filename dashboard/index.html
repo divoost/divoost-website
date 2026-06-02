@@ -234,7 +234,7 @@
         function updateBadge(s){var b=document.getElementById('dataSourceBadge');var l={sample:'📋 샘플 데이터',crawl:'🕷 스크래핑 데이터',live:'🔌 API 실시간'};b.textContent=l[s]||l.sample;b.className='data-source-badge '+s}
         function addLog(m){var l=document.getElementById('collectionLog'),c=document.getElementById('logContent');l.style.display='block';c.innerHTML+='<div>['+new Date().toLocaleTimeString('ko-KR')+'] '+m+'</div>';l.scrollTop=l.scrollHeight}
 
-        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
+        var SCRAPER_KEY=''/* 🔴 ScraperAPI 키 노출 사고로 제거됨. 키 회전 후 Edge Function에서 사용 */;
 
         async function searchProducts(keyword, country){
             var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(keyword)+'&country='+(country||'kr')+'&num=20';
@@ -604,10 +604,10 @@
                 return;
             }
 
-            groupsEl.innerHTML = '<div style="color:#64748B;font-size:.78rem;padding:12px;text-align:center">🔄 쿠팡 베스트 카테고리에서 인기 키워드 추출 중...</div>';
+            groupsEl.innerHTML = '<div style="color:#64748B;font-size:.78rem;padding:12px;text-align:center">🔄 쿠팡 + 네이버 베스트에서 인기 키워드 추출 중...</div>';
 
-            // 6개 카테고리 병렬 호출
-            var promises = COUPANG_CATEGORIES.map(function(cat){
+            // 쿠팡 6개 카테고리 + 네이버 트렌딩 병렬 호출
+            var coupangPromises = COUPANG_CATEGORIES.map(function(cat){
                 return fetchCoupangBest(cat.id).then(function(products){
                     var keywords = [];
                     var seen = {};
@@ -618,15 +618,34 @@
                             keywords.push(kw);
                         }
                     });
-                    return { cat: cat, keywords: keywords.slice(0, 12) };
+                    return { cat: cat, keywords: keywords.slice(0, 12), source: 'coupang' };
                 }).catch(function(err){
-                    return { cat: cat, keywords: [], error: err.message };
+                    return { cat: cat, keywords: [], error: err.message, source: 'coupang' };
                 });
             });
 
-            var results = await Promise.all(promises);
+            var naverPromise = fetch(SUPABASE_URL + '/functions/v1/quick-handler', {
+                method:'POST',
+                headers:{
+                    'Authorization':'Bearer ' + session.access_token,
+                    'apikey':SUPABASE_KEY,
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({ source: 'naver-trending' })
+            }).then(function(r){ return r.json(); }).then(function(data){
+                return (data.categories || []).map(function(c){
+                    return { cat: { name: c.name, icon: c.icon }, keywords: c.keywords || [], source: 'naver' };
+                });
+            }).catch(function(){ return []; });
 
-            var html = results.map(function(r){
+            var [coupangResults, naverResults] = await Promise.all([
+                Promise.all(coupangPromises),
+                naverPromise
+            ]);
+
+            // 쿠팡 그룹 렌더링
+            var html = '<div style="grid-column:1/-1;margin-bottom:6px"><div style="font-size:.7rem;color:#2563EB;font-weight:700">🛒 쿠팡 Partners API 기반</div></div>';
+            html += coupangResults.map(function(r){
                 var c = r.cat;
                 if(r.error || r.keywords.length === 0){
                     return '<div><div class="kw-group-title">' + c.icon + ' ' + c.name + '</div><div style="color:#94A3B8;font-size:.7rem">' + (r.error ? '⚠ ' + r.error : '데이터 없음') + '</div></div>';
@@ -638,7 +657,21 @@
                 '</div></div>';
             }).join('');
 
-            html += '<div style="grid-column:1/-1;padding-top:8px;border-top:1px dashed #E2E8F0;margin-top:4px"><div style="font-size:.68rem;color:#94A3B8">📡 쿠팡 Partners API "베스트 카테고리" 기반 실시간 추출 · 네이버 DataLab 추가 예정</div></div>';
+            // 네이버 그룹 렌더링
+            if(naverResults.length > 0){
+                html += '<div style="grid-column:1/-1;margin-top:14px;margin-bottom:6px"><div style="font-size:.7rem;color:#059669;font-weight:700">🟩 네이버 쇼핑 검색 API 기반</div></div>';
+                html += naverResults.map(function(r){
+                    var c = r.cat;
+                    if(r.keywords.length === 0) return '';
+                    return '<div><div class="kw-group-title">' + c.icon + ' ' + c.name + ' <span style="font-weight:400;text-transform:none;color:#94A3B8">— ' + r.keywords.length + '개</span></div><div>' +
+                        r.keywords.map(function(k){
+                            return '<span class="kw-chip" onclick="addKeyword(\'' + k.replace(/'/g, "\\'") + '\')">' + k + '</span>';
+                        }).join('') +
+                    '</div></div>';
+                }).join('');
+            }
+
+            html += '<div style="grid-column:1/-1;padding-top:10px;border-top:1px dashed #E2E8F0;margin-top:8px"><div style="font-size:.68rem;color:#94A3B8">📡 쿠팡 Partners API + 네이버 쇼핑 검색 API 기반 실시간 추출</div></div>';
 
             groupsEl.innerHTML = html;
         }

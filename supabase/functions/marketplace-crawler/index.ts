@@ -93,59 +93,186 @@ function parseGmarketBest(html: string): Product[] {
   return products;
 }
 
-// ─── Gmarket 키워드 검색 (모바일 페이지 + 다중 패턴) ───
+// ─── Gmarket 키워드 검색 (실제 Chrome 헤더 + 네이버 fallback) ───
 async function crawlGmarketSearch(keyword: string): Promise<{products: Product[], debug?: any}> {
-  // 모바일 사이트 우선 (JS 렌더링 부담 적음)
-  const url = `https://m.gmarket.co.kr/search?keyword=${encodeURIComponent(keyword)}`;
-  const res = await fetch(url, {
-    headers: {
-      "User-Agent": UA,
-      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-      "Accept-Language": "ko-KR,ko;q=0.9",
-      "Cache-Control": "no-cache",
-    },
-  });
-  if (!res.ok) throw new Error(`Gmarket fetch failed: ${res.status}`);
-  const html = await res.text();
-
-  const products: Product[] = [];
-
-  // 패턴 1: 모바일 카드 (li 기반)
-  const liRe = /<li[^>]*class="[^"]*(?:item|prdlst)[^"]*"[^>]*>([\s\S]*?)<\/li>/gi;
-  let m: RegExpExecArray | null;
-  while ((m = liRe.exec(html)) && products.length < 50) {
-    const block = m[1];
-    const name = extractText(block, /<(?:span|p|div)[^>]*class="[^"]*(?:tit|name|title)[^"]*"[^>]*>([\s\S]*?)<\//i);
-    const priceStr = extractText(block, /(\d{1,3}(?:,\d{3})+\s*원|\d+\s*원)/);
-    const imgMatch = block.match(/<img[^>]*(?:src|data-src|data-original)=["']([^"']+\.(?:jpg|jpeg|png|gif|webp)[^"']*)["']/i);
-    const urlMatch = block.match(/<a[^>]*href=["']([^"']+)["']/i);
-
-    if (name && priceStr) {
-      products.push({
-        name: clean(name),
-        image: imgMatch ? absoluteUrl(imgMatch[1], "https://m.gmarket.co.kr") : "",
-        price: parsePrice(priceStr),
-        url: urlMatch ? absoluteUrl(urlMatch[1], "https://m.gmarket.co.kr") : "",
-        platform: "gmarket",
-      });
-    }
+  // 옵션 1: 실제 Chrome 헤더로 모바일 사이트 시도
+  const mobileUrl = `https://m.gmarket.co.kr/search?keyword=${encodeURIComponent(keyword)}`;
+  let res: Response;
+  try {
+    res = await fetch(mobileUrl, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Sec-Ch-Ua": '"Google Chrome";v="120", "Chromium";v="120", "Not.A/Brand";v="24"',
+        "Sec-Ch-Ua-Mobile": "?0",
+        "Sec-Ch-Ua-Platform": '"macOS"',
+        "Sec-Fetch-Dest": "document",
+        "Sec-Fetch-Mode": "navigate",
+        "Sec-Fetch-Site": "none",
+        "Sec-Fetch-User": "?1",
+        "Upgrade-Insecure-Requests": "1",
+        "Referer": "https://www.google.com/",
+      },
+    });
+  } catch (e) {
+    res = new Response("", { status: 500 });
   }
 
-  // 디버그 (결과 0이면 응답 정보 반환)
-  if (products.length === 0) {
+  if (res.ok) {
+    const html = await res.text();
+    const products: Product[] = [];
+
+    // 다양한 카드 패턴 시도
+    const patterns = [
+      /<li[^>]*class="[^"]*(?:item|prdlst)[^"]*"[^>]*>([\s\S]*?)<\/li>/gi,
+      /<div[^>]*class="[^"]*(?:item|product|prd)[^"]*"[^>]*>([\s\S]*?)<\/div>\s*<\/div>/gi,
+    ];
+
+    for (const re of patterns) {
+      let m: RegExpExecArray | null;
+      while ((m = re.exec(html)) && products.length < 50) {
+        const block = m[1];
+        const name = extractText(block, /<(?:span|p|div|a)[^>]*class="[^"]*(?:tit|name|title|prdname)[^"]*"[^>]*>([\s\S]*?)<\/(?:span|p|div|a)>/i);
+        const priceStr = extractText(block, /(\d{1,3}(?:,\d{3})+\s*원|\d+\s*원)/);
+        const imgMatch = block.match(/<img[^>]*(?:src|data-src|data-original)=["']([^"']+\.(?:jpg|jpeg|png|gif|webp)[^"']*)["']/i);
+        const urlMatch = block.match(/<a[^>]*href=["']([^"']+)["']/i);
+
+        if (name && priceStr) {
+          products.push({
+            name: clean(name),
+            image: imgMatch ? absoluteUrl(imgMatch[1], "https://m.gmarket.co.kr") : "",
+            price: parsePrice(priceStr),
+            url: urlMatch ? absoluteUrl(urlMatch[1], "https://m.gmarket.co.kr") : "",
+            platform: "gmarket",
+          });
+        }
+      }
+      if (products.length > 0) break;
+    }
+
+    if (products.length > 0) return { products };
+  }
+
+  // 옵션 2: 직접 크롤링 실패 → 네이버 검색에서 지마켓 mall만 필터링
+  if (NAVER_CLIENT_ID && NAVER_CLIENT_SECRET) {
+    try {
+      const naverRes = await fetch(
+        `https://openapi.naver.com/v1/search/shop.json?query=${encodeURIComponent(keyword)}&display=100&sort=sim`,
+        {
+          headers: {
+            "X-Naver-Client-Id": NAVER_CLIENT_ID,
+            "X-Naver-Client-Secret": NAVER_CLIENT_SECRET,
+          },
+        },
+      );
+      if (naverRes.ok) {
+        const data = await naverRes.json();
+        const gmarketProducts: Product[] = (data.items || [])
+          .filter((item: any) => /지마켓|gmarket|G마켓/i.test(item.mallName || ""))
+          .slice(0, 40)
+          .map((item: any) => ({
+            name: String(item.title || "").replace(/<[^>]+>/g, ""),
+            image: item.image || "",
+            price: parsePrice(item.lprice || "0"),
+            url: item.link || "",
+            meta: "🟢 지마켓 (via 네이버)",
+            platform: "gmarket",
+          }));
+
+        if (gmarketProducts.length > 0) {
+          return { products: gmarketProducts };
+        }
+      }
+    } catch {}
+  }
+
+  // 모두 실패 - 디버그 정보 반환
+  return {
+    products: [],
+    debug: {
+      httpStatus: res.status,
+      hint: res.status === 403
+        ? "지마켓 봇 차단. 네이버 검색에서 지마켓 mall 결과도 없음."
+        : "Gmarket fetch 실패",
+    },
+  };
+}
+
+// ─── 네이버 인기 트렌딩 키워드 (카테고리별) ───
+async function fetchNaverTrendingKeywords(): Promise<{categories: any[], debug?: any}> {
+  if (!NAVER_CLIENT_ID || !NAVER_CLIENT_SECRET) {
     return {
-      products: [],
-      debug: {
-        httpStatus: res.status,
-        htmlLength: html.length,
-        contentType: res.headers.get("content-type"),
-        sample: html.slice(0, 500),
-        hint: "Gmarket이 봇 차단했거나 HTML 구조가 변경됨. ScraperAPI 같은 프록시 필요.",
-      },
+      categories: [],
+      debug: { hint: "NAVER_CLIENT_ID/SECRET 필요" },
     };
   }
-  return { products };
+
+  // 네이버 쇼핑 검색의 카테고리 키워드 (시즌 무관 안정적인 카테고리)
+  const categories = [
+    { id: "fashion", name: "패션", icon: "👗", query: "여성패션" },
+    { id: "beauty", name: "뷰티", icon: "💄", query: "스킨케어" },
+    { id: "digital", name: "디지털", icon: "💻", query: "노트북" },
+    { id: "sports", name: "스포츠/레저", icon: "⚽", query: "캠핑용품" },
+    { id: "food", name: "식품", icon: "🍎", query: "건강식품" },
+    { id: "home", name: "생활용품", icon: "🏠", query: "주방용품" },
+  ];
+
+  const results = await Promise.all(
+    categories.map(async (cat) => {
+      try {
+        const res = await fetch(
+          `https://openapi.naver.com/v1/search/shop.json?query=${encodeURIComponent(cat.query)}&display=30&sort=sim`,
+          {
+            headers: {
+              "X-Naver-Client-Id": NAVER_CLIENT_ID,
+              "X-Naver-Client-Secret": NAVER_CLIENT_SECRET,
+            },
+          },
+        );
+        if (!res.ok) return { ...cat, keywords: [], error: `${res.status}` };
+
+        const data = await res.json();
+        const items = data.items || [];
+
+        // 상품명에서 키워드 추출
+        const keywords: string[] = [];
+        const seen = new Set<string>();
+        for (const item of items) {
+          const name = String(item.title || "").replace(/<[^>]+>/g, "").trim();
+          const kw = extractNaverKeyword(name);
+          if (kw && !seen.has(kw)) {
+            seen.add(kw);
+            keywords.push(kw);
+            if (keywords.length >= 12) break;
+          }
+        }
+        return { ...cat, keywords };
+      } catch (e) {
+        return { ...cat, keywords: [], error: String(e) };
+      }
+    }),
+  );
+
+  return { categories: results };
 }
+
+function extractNaverKeyword(name: string): string | null {
+  if (!name) return null;
+  // 대괄호, 괄호 제거
+  let s = name.replace(/\[[^\]]*\]/g, "").replace(/\([^)]*\)/g, "").trim();
+  // 한글 토큰만 (2자 이상, 영어/숫자 단독 제외)
+  const tokens = s.split(/[\s\/,\-]+/).filter((t) =>
+    t.length >= 2 && /[가-힣]/.test(t) && !/^\d+$/.test(t)
+  );
+  if (tokens.length === 0) return null;
+  const kw = tokens.slice(0, 2).join(" ");
+  return kw.length > 14 ? tokens[0] : kw;
+}
+
 
 // ─── 네이버 쇼핑 검색 (공식 API + HTML 폴백) ───
 async function crawlNaverSearch(keyword: string): Promise<{products: Product[], debug?: any}> {
@@ -342,10 +469,19 @@ serve(async (req) => {
         debug = r.debug;
         break;
       }
+      case "naver-trending": {
+        const r = await fetchNaverTrendingKeywords();
+        // 키워드 그룹화 응답 (products는 비어있음)
+        return new Response(JSON.stringify({
+          source: "naver-trending",
+          categories: r.categories,
+          debug: r.debug,
+        }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }
       default:
         return new Response(JSON.stringify({
           error: `unknown source: ${source}`,
-          supportedSources: ["gmarket-best", "gmarket-search", "naver-search"]
+          supportedSources: ["gmarket-best", "gmarket-search", "naver-search", "naver-trending"]
         }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
