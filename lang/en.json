@@ -838,7 +838,121 @@
         },
         "guide": {
             "heroTitle": "1688 Sourcing → <span class=\"gradient-text\">Coupang Selling</span> Complete Guide",
-            "heroDesc": "From high-margin product picks to finding direct-shipping suppliers — everything about 1688"
+            "heroDesc": "From high-margin product picks to finding direct-shipping suppliers — everything about 1688",
+            "hero": {
+                "platform1688": "Alibaba 1688",
+                "platformCoupang": "Coupang"
+            },
+            "s1": {
+                "title": "<span class=\"gradient-text\">TOP 9 High-Margin Sourcing Picks</span>",
+                "desc": "Categories with high Coupang demand and solid margins when sourced from 1688"
+            },
+            "label": {
+                "unitPrice": "1688 Unit Price",
+                "coupangPrice": "Coupang Selling Price"
+            },
+            "p1": {
+                "cat": "Electronics Accessories",
+                "title": "Wireless Earbuds / Bluetooth Accessories",
+                "desc": "TWS earbuds, charging cables, phone cases, screen protectors. Light & small — cheap shipping. Easy to compete on Coupang Rocket."
+            },
+            "p2": {
+                "cat": "Kitchen",
+                "title": "Silicone Kitchenware / Storage",
+                "desc": "Silicone spatula sets, sealed containers, spice jars, dish racks, cutting boards. High repeat purchase, easy review build-up."
+            },
+            "p3": {
+                "cat": "Home Decor",
+                "title": "LED Mood Lights / Decor Items",
+                "desc": "LED lights, wall shelves, vases, cushion covers, rugs. SNS-friendly aesthetics drive high conversion. Easy seasonal refresh."
+            },
+            "p4": {
+                "cat": "Beauty Tools",
+                "title": "Makeup Brushes / Beauty Tools",
+                "desc": "Brush sets, lash curlers, silicone puffs, hair ties, clips. Ultra-light → minimal shipping. Bundles boost AOV."
+            },
+            "p5": {
+                "cat": "Fashion Accessories",
+                "title": "Bags / Socks / Fashion Accessories",
+                "desc": "Eco bags, crossbody bags, sock sets, hats, sunglasses. Fast-moving trends but 1688 keeps up. Bundle selling works well."
+            },
+            "p6": {
+                "cat": "Pets",
+                "title": "Pet Toys / Apparel / Supplies",
+                "desc": "Dog toys, pet clothing, feeders, carriers, cat scratchers. Steady demand from growing pet ownership. Reviews build loyalty."
+            },
+            "p7": {
+                "cat": "Baby/Kids",
+                "title": "Educational Toys / Kids Goods",
+                "desc": "Montessori materials, puzzles, silicone bibs, kids dishes, bath toys. KC certification required. Certification = competitive moat."
+            },
+            "p8": {
+                "cat": "Sports/Outdoor",
+                "title": "Home Workout / Camping Gear",
+                "desc": "Yoga mats, dumbbells, resistance bands, camp LED lanterns, hiking poles. Seasonal but home gym is year-round. Watch weight."
+            },
+            "p9": {
+                "cat": "Car Accessories",
+                "title": "Car Storage / Wash Supplies",
+                "desc": "Car organizers, phone holders, wash towels, fresheners, trunk boxes. Higher male buyer share, relatively less competition."
+            },
+            "s2": {
+                "title": "How to Find 1688 Shops With <span class=\"gradient-text\">Direct Shipping</span>",
+                "desc": "Step-by-step methods to find 1688 shops that ship directly to Korea without a forwarder"
+            },
+            "step1": {
+                "title": "跨境专供 (Cross-border Exclusive) Filter",
+                "desc": "After searching on 1688, click <strong>\"跨境专供\"</strong> in the top filter to show only products eligible for overseas direct shipping."
+            },
+            "step2": {
+                "title": "跨境专区 (Cross-border Zone)",
+                "desc": "<strong>kj.1688.com</strong> is 1688's cross-border portal. Listed suppliers have experience with overseas sellers and support direct shipping or small orders."
+            },
+            "step3": {
+                "title": "Ask Directly via AliWangWang (阿里旺旺)",
+                "desc": "Chat directly with the seller on the product page to confirm direct shipping to Korea. Use a translator if needed."
+            },
+            "step4": {
+                "title": "Shop Trust Checklist",
+                "desc": "After finding a direct-shipping shop, verify trustworthiness with the checklist below."
+            },
+            "cmp": {
+                "title": "Shipping Methods Compared"
+            },
+            "s3": {
+                "title": "Essential 1688 <span class=\"gradient-text\">Search Keywords</span>",
+                "desc": "A curated set of Chinese search keywords to precisely find products on 1688"
+            },
+            "kw": {
+                "electronics": "🎧 Electronics",
+                "home": "🏠 Home/Decor",
+                "beauty": "💄 Beauty/Fashion",
+                "kitchen": "🍳 Kitchen",
+                "pet": "🐾 Pets",
+                "filter": "🔑 Essential Filter Keywords"
+            },
+            "s4": {
+                "title": "Sourcing <span class=\"gradient-text\">Warnings & Key Tips</span>",
+                "desc": "Must-know items when sourcing from 1688 and selling on Coupang"
+            },
+            "tip1": {
+                "title": "Verify KC Certification"
+            },
+            "tip2": {
+                "title": "Always Order Samples First"
+            },
+            "tip3": {
+                "title": "Accurate Margin Calculation"
+            },
+            "tip4": {
+                "title": "Watch Out for IP Infringement"
+            },
+            "ctaBox": {
+                "title": "From 1688 Sourcing to Coupang Selling,<br>HUBONTRADE Has You Covered",
+                "desc": "Experience HUBONTRADE — one-stop sourcing, logistics, listing, and CS support",
+                "btn1": "Request Free Consultation",
+                "btn2": "View Services"
+            }
         }
     }
 }

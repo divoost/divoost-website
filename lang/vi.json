@@ -838,7 +838,121 @@
         },
         "guide": {
             "heroTitle": "Hướng dẫn đầy đủ 1688 Sourcing → <span class=\"gradient-text\">Bán Coupang</span>",
-            "heroDesc": "Từ sản phẩm biên lợi nhuận cao đến tìm shop ship trực tiếp — tất tần tật về 1688"
+            "heroDesc": "Từ sản phẩm biên lợi nhuận cao đến tìm shop ship trực tiếp — tất tần tật về 1688",
+            "hero": {
+                "platform1688": "Alibaba 1688",
+                "platformCoupang": "Coupang"
+            },
+            "s1": {
+                "title": "<span class=\"gradient-text\">TOP 9 sản phẩm sourcing biên cao</span>",
+                "desc": "Các nhóm sản phẩm có cầu cao trên Coupang và biên tốt khi nhập từ 1688"
+            },
+            "label": {
+                "unitPrice": "Giá 1688",
+                "coupangPrice": "Giá bán Coupang"
+            },
+            "p1": {
+                "cat": "Phụ kiện điện tử",
+                "title": "Tai nghe không dây / Phụ kiện Bluetooth",
+                "desc": "Tai nghe TWS, cáp sạc, ốp lưng, dán màn hình. Nhẹ & nhỏ — phí ship rẻ. Cạnh tranh tốt trên Coupang Rocket."
+            },
+            "p2": {
+                "cat": "Nhà bếp",
+                "title": "Đồ bếp silicone / Lưu trữ",
+                "desc": "Bộ thìa silicone, hộp kín, hũ gia vị, giá bát, thớt. Tỷ lệ mua lại cao, dễ tích đánh giá."
+            },
+            "p3": {
+                "cat": "Trang trí nhà",
+                "title": "Đèn LED mood / Đồ trang trí",
+                "desc": "Đèn LED, kệ tường, lọ hoa, vỏ gối, thảm. Hợp gu SNS, chuyển đổi cao. Dễ làm mới theo mùa."
+            },
+            "p4": {
+                "cat": "Dụng cụ làm đẹp",
+                "title": "Cọ trang điểm / Dụng cụ làm đẹp",
+                "desc": "Bộ cọ, kẹp mi, mút silicone, dây buộc tóc, kẹp. Siêu nhẹ → ship rẻ. Bộ combo tăng AOV."
+            },
+            "p5": {
+                "cat": "Phụ kiện thời trang",
+                "title": "Túi / Vớ / Phụ kiện thời trang",
+                "desc": "Túi eco, túi đeo chéo, bộ vớ, mũ, kính. Xu hướng nhanh nhưng 1688 cập nhật kịp. Bán theo combo hiệu quả."
+            },
+            "p6": {
+                "cat": "Thú cưng",
+                "title": "Đồ chơi / Quần áo / Đồ dùng thú cưng",
+                "desc": "Đồ chơi chó, quần áo thú cưng, bát ăn, balo, cào mèo. Cầu ổn định nhờ tăng nuôi thú. Đánh giá tạo khách trung thành."
+            },
+            "p7": {
+                "cat": "Bé / Trẻ em",
+                "title": "Đồ chơi giáo dục / Đồ trẻ em",
+                "desc": "Đồ Montessori, xếp hình, yếm silicone, bộ ăn trẻ em, đồ tắm. Bắt buộc chứng nhận KC — chứng nhận = rào cản."
+            },
+            "p8": {
+                "cat": "Thể thao/Outdoor",
+                "title": "Tập gym tại nhà / Đồ cắm trại",
+                "desc": "Thảm yoga, tạ, dây kháng lực, đèn lều LED, gậy leo núi. Có mùa nhưng tập tại nhà cả năm. Chú ý cân nặng."
+            },
+            "p9": {
+                "cat": "Phụ kiện ô tô",
+                "title": "Lưu trữ xe / Rửa xe",
+                "desc": "Hộp xe, giá đỡ điện thoại, khăn rửa xe, sáp thơm, hộp cốp. Tỷ lệ nam cao, cạnh tranh ít hơn."
+            },
+            "s2": {
+                "title": "Cách tìm shop 1688 <span class=\"gradient-text\">giao trực tiếp</span>",
+                "desc": "Các bước tìm shop 1688 giao trực tiếp đến Hàn Quốc, không cần forwarder"
+            },
+            "step1": {
+                "title": "Bộ lọc 跨境专供 (Chuyên xuyên biên giới)",
+                "desc": "Sau khi tìm trên 1688, nhấn <strong>\"跨境专供\"</strong> ở bộ lọc trên cùng để chỉ hiện sản phẩm hỗ trợ ship trực tiếp ra nước ngoài."
+            },
+            "step2": {
+                "title": "Khu vực 跨境专区 (Khu xuyên biên giới)",
+                "desc": "<strong>kj.1688.com</strong> là trang chuyên xuyên biên của 1688. Nhà cung cấp ở đây có kinh nghiệm với người bán nước ngoài, hỗ trợ ship trực tiếp/đơn nhỏ."
+            },
+            "step3": {
+                "title": "Hỏi trực tiếp qua AliWangWang (阿里旺旺)",
+                "desc": "Chat trực tiếp với người bán trên trang sản phẩm để xác nhận ship Hàn Quốc. Dùng công cụ dịch nếu cần."
+            },
+            "step4": {
+                "title": "Checklist tin cậy shop",
+                "desc": "Sau khi tìm thấy shop ship trực tiếp, hãy kiểm tra theo checklist dưới đây để xác nhận đáng tin."
+            },
+            "cmp": {
+                "title": "So sánh phương thức vận chuyển"
+            },
+            "s3": {
+                "title": "<span class=\"gradient-text\">Từ khóa tìm kiếm</span> 1688 thiết yếu",
+                "desc": "Bộ từ khóa tìm kiếm tiếng Trung được chọn lọc để tìm sản phẩm chính xác trên 1688"
+            },
+            "kw": {
+                "electronics": "🎧 Điện tử",
+                "home": "🏠 Đời sống / Nội thất",
+                "beauty": "💄 Làm đẹp / Thời trang",
+                "kitchen": "🍳 Đồ bếp",
+                "pet": "🐾 Thú cưng",
+                "filter": "🔑 Từ khóa lọc thiết yếu"
+            },
+            "s4": {
+                "title": "<span class=\"gradient-text\">Lưu ý & Mẹo</span> sourcing",
+                "desc": "Những điều bắt buộc biết khi sourcing từ 1688 và bán trên Coupang"
+            },
+            "tip1": {
+                "title": "Xác nhận chứng nhận KC"
+            },
+            "tip2": {
+                "title": "Luôn đặt mẫu trước"
+            },
+            "tip3": {
+                "title": "Tính biên lợi nhuận chính xác"
+            },
+            "tip4": {
+                "title": "Cẩn trọng vi phạm sở hữu trí tuệ"
+            },
+            "ctaBox": {
+                "title": "Từ sourcing 1688 đến bán Coupang,<br>HUBONTRADE đồng hành cùng bạn",
+                "desc": "Trải nghiệm HUBONTRADE — hỗ trợ một cửa sourcing, logistics, đăng sản phẩm và CS",
+                "btn1": "Yêu cầu tư vấn miễn phí",
+                "btn2": "Xem dịch vụ"
+            }
         }
     }
 }
