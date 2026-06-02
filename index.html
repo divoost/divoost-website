@@ -91,22 +91,105 @@
                         <div class="hero-mockup">
                             <div class="mockup-header">
                                 <div class="mockup-dots"><span></span><span></span><span></span></div>
-                                <span class="mockup-title">🌐 Cross-Border Flow</span>
+                                <span class="mockup-title">Cross-Border Trade Map · Live</span>
+                                <span class="mockup-live"><span class="live-dot"></span>LIVE</span>
                             </div>
-                            <div class="mockup-body globe-body">
-                                <div class="globe-stage">
-                                    <div class="globe-ring"></div>
-                                    <div class="globe-core">🌐</div>
-                                    <div class="flow-node node-kr">🇰🇷 KR</div>
-                                    <div class="flow-node node-us">🇺🇸 US</div>
-                                    <div class="flow-node node-cn">🇨🇳 CN</div>
-                                    <div class="flow-node node-jp">🇯🇵 JP</div>
-                                    <div class="flow-node node-vn">🇻🇳 VN</div>
+                            <div class="mockup-body worldmap-body">
+                                <div class="worldmap-stage">
+                                    <svg class="worldmap-svg" viewBox="0 0 800 380" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                        <defs>
+                                            <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+                                                <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.9"/>
+                                                <stop offset="100%" stop-color="#60a5fa" stop-opacity="0"/>
+                                            </radialGradient>
+                                            <linearGradient id="arc" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="0%" stop-color="#FCD34D" stop-opacity="0"/>
+                                                <stop offset="50%" stop-color="#FCD34D" stop-opacity="1"/>
+                                                <stop offset="100%" stop-color="#FCD34D" stop-opacity="0"/>
+                                            </linearGradient>
+                                        </defs>
+
+                                        <!-- 위경도 그리드 -->
+                                        <g stroke="rgba(96,165,250,0.08)" stroke-width="0.6" fill="none">
+                                            <line x1="0" y1="95" x2="800" y2="95"/>
+                                            <line x1="0" y1="190" x2="800" y2="190"/>
+                                            <line x1="0" y1="285" x2="800" y2="285"/>
+                                            <line x1="160" y1="0" x2="160" y2="380"/>
+                                            <line x1="320" y1="0" x2="320" y2="380"/>
+                                            <line x1="480" y1="0" x2="480" y2="380"/>
+                                            <line x1="640" y1="0" x2="640" y2="380"/>
+                                        </g>
+
+                                        <!-- 대륙 실루엣 (단순화) -->
+                                        <g fill="rgba(148,184,255,0.22)" stroke="rgba(148,184,255,0.45)" stroke-width="0.8">
+                                            <!-- North America -->
+                                            <path d="M60,90 L120,70 L180,80 L210,110 L195,160 L155,200 L130,210 L95,195 L70,160 L55,125 Z"/>
+                                            <!-- South America -->
+                                            <path d="M170,220 L200,215 L220,250 L210,300 L185,330 L165,310 L155,265 Z"/>
+                                            <!-- Europe -->
+                                            <path d="M380,90 L430,80 L460,95 L455,130 L430,150 L395,145 L375,120 Z"/>
+                                            <!-- Africa -->
+                                            <path d="M395,160 L450,155 L470,200 L460,260 L435,300 L410,295 L390,250 L385,200 Z"/>
+                                            <!-- Asia -->
+                                            <path d="M470,80 L580,70 L660,90 L700,130 L680,170 L620,180 L560,170 L500,155 L475,125 Z"/>
+                                            <!-- SE Asia -->
+                                            <path d="M620,190 L660,185 L680,210 L660,240 L630,235 L615,215 Z"/>
+                                            <!-- Australia -->
+                                            <path d="M660,275 L720,270 L740,295 L720,320 L675,315 L660,295 Z"/>
+                                        </g>
+
+                                        <!-- 연결 호 (KR→US, CN→SEA, JP→KR) -->
+                                        <g fill="none" stroke="url(#arc)" stroke-width="1.6" stroke-linecap="round">
+                                            <path d="M620,135 Q400,30 160,140" class="arc-line arc-1"/>
+                                            <path d="M580,140 Q620,165 640,210" class="arc-line arc-2"/>
+                                            <path d="M660,130 Q640,130 620,135" class="arc-line arc-3"/>
+                                        </g>
+
+                                        <!-- 노드 (글로우 + 펄스) -->
+                                        <g>
+                                            <!-- KR -->
+                                            <circle cx="620" cy="135" r="18" fill="url(#glow)"/>
+                                            <circle cx="620" cy="135" r="4" fill="#FCD34D" class="node-pulse"/>
+                                            <text x="620" y="118" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">KR</text>
+                                            <!-- US -->
+                                            <circle cx="160" cy="140" r="18" fill="url(#glow)"/>
+                                            <circle cx="160" cy="140" r="4" fill="#60a5fa" class="node-pulse delay-1"/>
+                                            <text x="160" y="123" text-anchor="middle" fill="#fff" font-size="11" font-weight="700">US</text>
+                                            <!-- CN -->
+                                            <circle cx="580" cy="140" r="16" fill="url(#glow)"/>
+                                            <circle cx="580" cy="140" r="3.5" fill="#60a5fa" class="node-pulse delay-2"/>
+                                            <text x="580" y="160" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">CN</text>
+                                            <!-- JP -->
+                                            <circle cx="660" cy="130" r="14" fill="url(#glow)"/>
+                                            <circle cx="660" cy="130" r="3" fill="#60a5fa" class="node-pulse delay-3"/>
+                                            <text x="678" y="125" fill="#fff" font-size="10" font-weight="700">JP</text>
+                                            <!-- SEA / VN -->
+                                            <circle cx="640" cy="210" r="14" fill="url(#glow)"/>
+                                            <circle cx="640" cy="210" r="3" fill="#60a5fa" class="node-pulse delay-4"/>
+                                            <text x="640" y="230" text-anchor="middle" fill="#fff" font-size="10" font-weight="700">SEA</text>
+                                            <!-- EU (보조) -->
+                                            <circle cx="420" cy="115" r="10" fill="url(#glow)"/>
+                                            <circle cx="420" cy="115" r="2.5" fill="#94c8ff" class="node-pulse delay-5"/>
+                                        </g>
+                                    </svg>
                                 </div>
-                                <div class="flow-routes">
-                                    <div class="flow-route"><span class="route-from">KR</span><span class="route-arrow">→</span><span class="route-to">US</span><span class="route-val">+₩12.4M</span></div>
-                                    <div class="flow-route"><span class="route-from">CN</span><span class="route-arrow">→</span><span class="route-to">SEA</span><span class="route-val">+¥8.2M</span></div>
-                                    <div class="flow-route"><span class="route-from">JP</span><span class="route-arrow">→</span><span class="route-to">KR</span><span class="route-val">+¥3.1M</span></div>
+
+                                <div class="flow-routes-pro">
+                                    <div class="flow-route-pro">
+                                        <div class="route-pair"><span class="route-chip">KR</span><span class="route-arrow-svg">→</span><span class="route-chip">US</span></div>
+                                        <div class="route-meta">전자제품 · 24h 평균</div>
+                                        <div class="route-val">+₩12.4M</div>
+                                    </div>
+                                    <div class="flow-route-pro">
+                                        <div class="route-pair"><span class="route-chip">CN</span><span class="route-arrow-svg">→</span><span class="route-chip">SEA</span></div>
+                                        <div class="route-meta">패션 · 24h 평균</div>
+                                        <div class="route-val">+¥8.2M</div>
+                                    </div>
+                                    <div class="flow-route-pro">
+                                        <div class="route-pair"><span class="route-chip">JP</span><span class="route-arrow-svg">→</span><span class="route-chip">KR</span></div>
+                                        <div class="route-meta">뷰티 · 24h 평균</div>
+                                        <div class="route-val">+¥3.1M</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
