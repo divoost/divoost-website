@@ -178,11 +178,270 @@
     "pages": {
         "solution": {
             "heroTitle": "Export, Import, Sourcing — All on One Platform",
-            "heroDesc": "Solve every step of global commerce with HUBONTRADE’s unified solution"
+            "heroDesc": "Solve every step of global commerce with HUBONTRADE’s unified solution",
+            "core": {
+                "title": "Three Core Solutions",
+                "c1": {
+                    "title": "Export Solution",
+                    "desc": "Sell local products on overseas marketplaces",
+                    "f1": "Multi-channel listing (Amazon, Shopee, Lazada, TikTok Shop)",
+                    "f2": "Auto-generate and submit export declarations",
+                    "f3": "Overseas fulfillment & international shipping integration",
+                    "f4": "Local marketing tool integration"
+                },
+                "c2": {
+                    "title": "Import Solution",
+                    "desc": "Sell overseas products in Korea and other markets",
+                    "f1": "Proxy purchase & customs automation",
+                    "f2": "Domestic marketplace listing (Coupang, Naver, Gmarket, 11st)",
+                    "f3": "Domestic fulfillment & delivery integration",
+                    "f4": "Auto-calculation of import duties & VAT"
+                },
+                "c3": {
+                    "title": "Global Sourcing Solution",
+                    "desc": "Discover winning products through B2B sourcing",
+                    "f1": "Global supplier database",
+                    "f2": "Automatic per-product margin simulation",
+                    "f3": "Sample ordering & quality inspection support",
+                    "f4": "Dropshipping/proxy purchase integration"
+                }
+            },
+            "oms": {
+                "title": "Sales Operations Automation — Handled by Systems, Not People",
+                "desc": "From order collection to tracking input, inventory sync, purchase orders, and CS — the system handles the repetition",
+                "c1": {
+                    "title": "Auto-Collect Orders from Marketplaces",
+                    "desc": "Automatically collect orders from local and overseas marketplaces in real time"
+                },
+                "c2": {
+                    "title": "Auto-Fill Tracking Numbers",
+                    "desc": "Auto-populate tracking numbers across marketplaces via carrier integration"
+                },
+                "c3": {
+                    "title": "Real-Time Inventory Sync",
+                    "desc": "Sync inventory across channels in real time to prevent stockouts"
+                },
+                "c4": {
+                    "title": "Auto-Generate Purchase Orders",
+                    "desc": "Auto-create supplier purchase orders based on inventory thresholds"
+                },
+                "c5": {
+                    "title": "Unified CS Management",
+                    "desc": "Manage inquiries from every marketplace in one place with multilingual auto-replies"
+                },
+                "c6": {
+                    "title": "ERP Integration & Logistics Automation",
+                    "desc": "Integrate via API with existing ERP and automate dispatch & returns"
+                }
+            },
+            "data": {
+                "title": "Data-Driven Brand Growth — Run on Numbers, Not Instinct",
+                "desc": "Integrated analytics across sales, ads, inventory, and CRM for data-driven decisions",
+                "c1": {
+                    "title": "Sales Analytics Dashboard",
+                    "desc": "Real-time sales trends by channel, product, and period"
+                },
+                "c2": {
+                    "title": "Ad Performance Analytics",
+                    "desc": "Unified monitoring of ROAS, CPM, CPC and other core ad metrics"
+                },
+                "c3": {
+                    "title": "AI Inventory Forecasting",
+                    "desc": "AI analyzes sales trends to predict optimal inventory levels"
+                },
+                "c4": {
+                    "title": "CRM Customer Management",
+                    "desc": "Personalized marketing based on customer purchase history and behavior"
+                },
+                "c5": {
+                    "title": "BI Dashboard",
+                    "desc": "Business intelligence dashboard for at-a-glance key metrics"
+                },
+                "c6": {
+                    "title": "Marketing ROI Analytics",
+                    "desc": "Accurately measure return on ad spend across marketing channels"
+                }
+            },
+            "diff": {
+                "title": "What Competitors Don't Have — Only on HUBONTRADE",
+                "badge": "No Competitor Offers This",
+                "c1": {
+                    "title": "Government Export Voucher Partner",
+                    "desc": "Officially designated government export voucher partner — use voucher budgets to access HUBONTRADE. No competitor holds this status."
+                },
+                "c2": {
+                    "title": "Coupang IOR (Importer of Record)",
+                    "desc": "Enable overseas companies to sell directly on Korean Coupang via IOR services — from importer registration to customs and selling, all in one stop."
+                },
+                "c3": {
+                    "title": "KOSME / GoBizKorea API Integration",
+                    "desc": "Direct API integration with KOSME's GoBizKorea to auto-register B2B export products and support buyer matching."
+                }
+            },
+            "process": {
+                "title": "Simple Start, Powerful Results",
+                "s1": {
+                    "title": "Sign Up & Connect Marketplaces",
+                    "desc": "Pick your platforms and connect accounts"
+                },
+                "s2": {
+                    "title": "List Products",
+                    "desc": "Bulk-list via Excel upload or one-by-one"
+                },
+                "s3": {
+                    "title": "Manage Orders & Shipping",
+                    "desc": "Manage every order and shipment from one dashboard"
+                },
+                "s4": {
+                    "title": "Settlement & Analytics",
+                    "desc": "Optimize profit with margin analysis and sales reports"
+                }
+            },
+            "comp": {
+                "title": "Only on HUBONTRADE",
+                "colFeature": "Feature",
+                "colOurs": "HUBONTRADE (Us)"
+            },
+            "ctaBox": {
+                "title": "Which Solution Do You Need?",
+                "desc": "Find the best solution for your business with a free consultation",
+                "btn": "Request Free Consultation"
+            }
         },
         "features": {
             "heroTitle": "Powerful Features Built for Sellers",
-            "heroDesc": "Core features that simplify the complexity of global selling"
+            "heroDesc": "Core features that simplify the complexity of global selling",
+            "sec1": {
+                "title": "Key Features"
+            },
+            "f1": {
+                "title": "Bulk Listing Across Marketplaces",
+                "desc": "List products across dozens of local and overseas platforms with a single Excel. AI auto-maps categories and recommends keywords & image tags to drastically reduce listing time.",
+                "li1": "Bulk listing across marketplaces (Amazon, Shopee, Lazada, TikTok Shop, Coupang, Naver, etc.)",
+                "li2": "AI-powered automatic category mapping per platform",
+                "li3": "AI keyword suggestions & auto-generated image tags",
+                "li4": "Bulk product editing & price sync",
+                "li5": "Auto image resizing & watermarking"
+            },
+            "f2": {
+                "title": "Order Management",
+                "desc": "Auto-collect orders from every marketplace and view statuses in one place. Maximize efficiency with bulk processing.",
+                "li1": "Auto-collect orders from all marketplaces (local & overseas)",
+                "li2": "Unified order status dashboard",
+                "li3": "Bulk order processing (confirm, ship, cancel)",
+                "li4": "Order history & statistical analysis"
+            },
+            "f3": {
+                "title": "Inventory Management",
+                "desc": "Sync multi-channel inventory in real time to prevent stockouts. AI analyzes sales trends to forecast optimal stock levels.",
+                "li1": "Real-time multi-channel inventory sync",
+                "li2": "Low-stock alerts (configurable thresholds)",
+                "li3": "AI inventory forecasting based on sales trends",
+                "li4": "Per-warehouse inventory dashboard"
+            },
+            "f4": {
+                "title": "Tracking & Shipping",
+                "desc": "Auto-fill tracking numbers and integrate with carriers in real time. Push delivery tracking updates to customers automatically.",
+                "li1": "Auto-fill tracking numbers (auto-pushed to each marketplace)",
+                "li2": "Carrier integrations (CJ, Hanjin, Korea Post, international carriers)",
+                "li3": "Real-time shipment tracking",
+                "li4": "Auto-notify on delivery completion"
+            },
+            "f5": {
+                "title": "Purchase Order Management",
+                "desc": "Auto-create purchase orders based on stock thresholds and manage suppliers systematically. View PO history and incoming stock at a glance.",
+                "li1": "Auto-generated purchase orders (threshold-based)",
+                "li2": "Supplier management & unit price comparison",
+                "li3": "PO history & incoming stock tracking",
+                "li4": "Auto-generate and send purchase orders"
+            },
+            "f6": {
+                "title": "Customer Service Management",
+                "desc": "Manage customer inquiries from every marketplace in one place. Auto-reply templates and multilingual support keep global CS efficient.",
+                "li1": "Unified collection of inquiries from each marketplace",
+                "li2": "FAQ-based auto-reply templates",
+                "li3": "Multilingual support via AI translation",
+                "li4": "CS handling status & response rate stats"
+            },
+            "f7": {
+                "title": "ERP Integration",
+                "desc": "Connect to existing ERP via API to auto-push accounting and tax data. Manage data uniformly without duplicate input.",
+                "li1": "API integration with existing ERPs (Ecount, Douzone, etc.)",
+                "li2": "Auto-transfer of accounting/tax data",
+                "li3": "Real-time sync of sales/purchase data",
+                "li4": "Automatic settlement data organization"
+            },
+            "f8": {
+                "title": "Logistics Automation",
+                "desc": "Automate dispatch and optimally assign carriers. The system handles returns and exchanges automatically.",
+                "li1": "Auto dispatch (ship instruction immediately on order confirmation)",
+                "li2": "Carrier auto-assignment (cost/region optimization)",
+                "li3": "Automated returns/exchanges handling",
+                "li4": "Unified local & overseas fulfillment management"
+            },
+            "f9": {
+                "title": "BI Analytics",
+                "desc": "Unified analysis of sales, ad ROAS, and CRM data. See brand growth metrics at a glance and decide with data.",
+                "li1": "Sales analysis (by channel, product, period)",
+                "li2": "Ad ROAS / CPM / CPC analysis",
+                "li3": "CRM customer analytics (purchase patterns, LTV)",
+                "li4": "Brand growth metrics dashboard"
+            },
+            "f10": {
+                "title": "AI-Powered Automation",
+                "desc": "AI suggests product names, keywords, categories, multilingual translations, and optimal prices — handling repetitive seller tasks.",
+                "li1": "AI product name / keyword suggestions (SEO-optimized)",
+                "li2": "AI automatic category mapping",
+                "li3": "AI multilingual translation (English, Thai, Vietnamese, etc.)",
+                "li4": "AI price recommendation (competitor-based)"
+            },
+            "f11": {
+                "title": "Export Declaration Automation",
+                "desc": "Auto-issue e-commerce export purchase confirmations and integrate with uTradeHub to automate every step. HS code auto-classification simplifies customs.",
+                "li1": "Auto-issued e-commerce export purchase confirmation",
+                "li2": "uTradeHub integration (auto-submit export declarations)",
+                "li3": "Automatic HS code classification",
+                "li4": "Auto-aggregation & reporting of export performance"
+            },
+            "f12": {
+                "title": "Global Margin Tool",
+                "desc": "Verify profitability up front with margin calculations that include FX, fees, ads, logistics, and customs. Compare net profit across platforms at a glance.",
+                "li1": "Includes FX / fees / ads / logistics / customs costs",
+                "li2": "Sale-price simulation to validate profitability up front",
+                "li3": "Per-platform net profit comparison",
+                "li4": "Real-time FX auto-update"
+            },
+            "dash": {
+                "title": "Everything at a Glance — Unified Dashboard",
+                "desc": "Real-time monitoring of sales, orders, inventory, and settlements across every platform on a single screen",
+                "s1": {
+                    "title": "Real-Time Sales",
+                    "desc": "Unified real-time sales aggregation across all platforms"
+                },
+                "s2": {
+                    "title": "Per-Platform Orders",
+                    "desc": "View order statuses across channels like Shopee, TikTok Shop at a glance"
+                },
+                "s3": {
+                    "title": "Unified Inventory",
+                    "desc": "Sync local & overseas warehouse stock in real time to prevent stockouts"
+                },
+                "s4": {
+                    "title": "Profitability Analytics",
+                    "desc": "Per-platform margin, fee, and logistics cost reports"
+                }
+            },
+            "comp": {
+                "title": "Here's What Changes With HUBONTRADE",
+                "col1": "Task",
+                "col2": "DIY Operation",
+                "col3": "HUBONTRADE"
+            },
+            "ctaBox": {
+                "title": "Try Every Feature Free",
+                "desc": "Experience every HUBONTRADE feature with a 14-day free trial",
+                "btn": "Start Free Trial"
+            }
         },
         "service": {
             "heroTitle": "We Handle Everything in <span class=\"gradient-text\">Global Selling</span>",

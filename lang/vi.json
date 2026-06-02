@@ -178,11 +178,270 @@
     "pages": {
         "solution": {
             "heroTitle": "Xuất khẩu, Nhập khẩu, Sourcing — Trên một nền tảng",
-            "heroDesc": "Giải quyết toàn bộ quy trình thương mại toàn cầu với giải pháp tích hợp HUBONTRADE"
+            "heroDesc": "Giải quyết toàn bộ quy trình thương mại toàn cầu với giải pháp tích hợp HUBONTRADE",
+            "core": {
+                "title": "Ba giải pháp cốt lõi",
+                "c1": {
+                    "title": "Giải pháp Xuất khẩu",
+                    "desc": "Bán sản phẩm nội địa trên các sàn nước ngoài",
+                    "f1": "Đăng sản phẩm đa kênh (Amazon, Shopee, Lazada, TikTok Shop)",
+                    "f2": "Tự động tạo và nộp tờ khai xuất khẩu",
+                    "f3": "Tích hợp fulfillment & vận chuyển quốc tế",
+                    "f4": "Tích hợp công cụ marketing bản địa"
+                },
+                "c2": {
+                    "title": "Giải pháp Nhập khẩu",
+                    "desc": "Bán sản phẩm nước ngoài tại Hàn Quốc và các thị trường khác",
+                    "f1": "Tự động hóa hệ thống mua hộ & thông quan",
+                    "f2": "Đăng đồng thời các sàn nội địa (Coupang, Naver, Gmarket, 11st)",
+                    "f3": "Tích hợp fulfillment & giao hàng nội địa",
+                    "f4": "Tự động tính thuế nhập khẩu & VAT"
+                },
+                "c3": {
+                    "title": "Giải pháp Sourcing Toàn cầu",
+                    "desc": "Tìm kiếm sản phẩm bán chạy qua sourcing B2B",
+                    "f1": "Cơ sở dữ liệu nhà cung cấp toàn cầu",
+                    "f2": "Mô phỏng biên lợi nhuận tự động theo sản phẩm",
+                    "f3": "Hỗ trợ đặt mẫu & kiểm tra chất lượng",
+                    "f4": "Tích hợp dropship/mua hộ"
+                }
+            },
+            "oms": {
+                "title": "Tự động hóa vận hành bán hàng — hệ thống xử lý, không phải con người",
+                "desc": "Từ thu thập đơn, nhập vận đơn, đồng bộ tồn kho, đặt hàng đến CS — hệ thống làm thay công việc lặp lại",
+                "c1": {
+                    "title": "Tự động thu thập đơn hàng",
+                    "desc": "Tự động thu thập đơn từ các sàn trong và ngoài nước theo thời gian thực"
+                },
+                "c2": {
+                    "title": "Tự động điền số vận đơn",
+                    "desc": "Tự động nhập số vận đơn vào từng sàn qua tích hợp đơn vị vận chuyển"
+                },
+                "c3": {
+                    "title": "Đồng bộ tồn kho thời gian thực",
+                    "desc": "Đồng bộ tồn kho đa kênh thời gian thực, tránh hết hàng"
+                },
+                "c4": {
+                    "title": "Tự động tạo đơn đặt hàng",
+                    "desc": "Tự động tạo đơn đặt hàng nhà cung cấp dựa trên ngưỡng tồn kho"
+                },
+                "c5": {
+                    "title": "Quản lý CS hợp nhất",
+                    "desc": "Quản lý mọi câu hỏi từ các sàn ở một nơi với trả lời tự động đa ngôn ngữ"
+                },
+                "c6": {
+                    "title": "Tích hợp ERP & Tự động hóa logistics",
+                    "desc": "Tích hợp API với ERP hiện có, tự động hóa xuất kho và xử lý trả hàng"
+                }
+            },
+            "data": {
+                "title": "Phát triển thương hiệu dựa trên dữ liệu — vận hành bằng con số, không phải cảm tính",
+                "desc": "Phân tích tích hợp doanh số, quảng cáo, tồn kho, CRM cho quyết định dựa trên dữ liệu",
+                "c1": {
+                    "title": "Bảng điều khiển phân tích doanh số",
+                    "desc": "Phân tích xu hướng doanh số theo kênh, sản phẩm, kỳ theo thời gian thực"
+                },
+                "c2": {
+                    "title": "Phân tích hiệu quả quảng cáo",
+                    "desc": "Theo dõi hợp nhất ROAS, CPM, CPC và các chỉ số quảng cáo cốt lõi"
+                },
+                "c3": {
+                    "title": "Dự báo tồn kho bằng AI",
+                    "desc": "AI phân tích xu hướng bán để dự báo mức tồn kho tối ưu"
+                },
+                "c4": {
+                    "title": "Quản lý khách hàng CRM",
+                    "desc": "Marketing cá nhân hóa dựa trên lịch sử mua và hành vi khách hàng"
+                },
+                "c5": {
+                    "title": "Bảng điều khiển BI",
+                    "desc": "Bảng BI nắm bắt chỉ số kinh doanh cốt lõi trong nháy mắt"
+                },
+                "c6": {
+                    "title": "Phân tích ROI marketing",
+                    "desc": "Đo lường chính xác ROI theo kênh marketing"
+                }
+            },
+            "diff": {
+                "title": "Điểm khác biệt chỉ HUBONTRADE có",
+                "badge": "Không đối thủ nào có",
+                "c1": {
+                    "title": "Đơn vị thực hiện Voucher Xuất khẩu Chính phủ",
+                    "desc": "Đơn vị chính thức thực hiện Voucher Xuất khẩu của Chính phủ — sử dụng ngân sách voucher để dùng HUBONTRADE. Không đối thủ nào có tư cách này."
+                },
+                "c2": {
+                    "title": "Coupang IOR (Importer of Record)",
+                    "desc": "Hỗ trợ doanh nghiệp nước ngoài bán trực tiếp trên Coupang Hàn Quốc thông qua dịch vụ IOR — từ đăng ký nhập khẩu, thông quan đến bán hàng."
+                },
+                "c3": {
+                    "title": "Tích hợp API KOSME / GoBizKorea",
+                    "desc": "Tích hợp API trực tiếp với GoBizKorea của KOSME để tự động đăng sản phẩm xuất khẩu B2B và hỗ trợ ghép cặp người mua."
+                }
+            },
+            "process": {
+                "title": "Khởi đầu đơn giản, kết quả mạnh mẽ",
+                "s1": {
+                    "title": "Đăng ký & Kết nối sàn",
+                    "desc": "Chọn nền tảng bán và kết nối tài khoản"
+                },
+                "s2": {
+                    "title": "Đăng sản phẩm",
+                    "desc": "Đăng hàng loạt bằng Excel hoặc từng sản phẩm"
+                },
+                "s3": {
+                    "title": "Quản lý đơn & vận chuyển",
+                    "desc": "Quản lý mọi đơn và vận chuyển từ một bảng điều khiển"
+                },
+                "s4": {
+                    "title": "Đối soát & Phân tích",
+                    "desc": "Tối ưu lợi nhuận với phân tích biên và báo cáo doanh số"
+                }
+            },
+            "comp": {
+                "title": "Chỉ có ở HUBONTRADE",
+                "colFeature": "Hạng mục",
+                "colOurs": "HUBONTRADE (chúng tôi)"
+            },
+            "ctaBox": {
+                "title": "Bạn cần giải pháp nào?",
+                "desc": "Tìm giải pháp phù hợp nhất cho doanh nghiệp với tư vấn miễn phí",
+                "btn": "Yêu cầu tư vấn miễn phí"
+            }
         },
         "features": {
             "heroTitle": "Tính năng mạnh mẽ dành cho nhà bán",
-            "heroDesc": "Tính năng cốt lõi đơn giản hóa việc bán hàng toàn cầu phức tạp"
+            "heroDesc": "Tính năng cốt lõi đơn giản hóa việc bán hàng toàn cầu phức tạp",
+            "sec1": {
+                "title": "Tính năng chính"
+            },
+            "f1": {
+                "title": "Đăng hàng loạt đa sàn",
+                "desc": "Đăng sản phẩm trên hàng chục sàn trong và ngoài nước với một file Excel. AI tự động ánh xạ danh mục và gợi ý từ khóa, tag ảnh, rút ngắn thời gian đăng.",
+                "li1": "Đăng hàng loạt đa sàn (Amazon, Shopee, Lazada, TikTok Shop, Coupang, Naver…)",
+                "li2": "Tự động ánh xạ danh mục theo nền tảng bằng AI",
+                "li3": "Gợi ý từ khóa AI & tự sinh tag ảnh",
+                "li4": "Sửa hàng loạt thông tin sản phẩm & đồng bộ giá",
+                "li5": "Tự động resize ảnh & gắn watermark"
+            },
+            "f2": {
+                "title": "Quản lý đơn hàng",
+                "desc": "Tự động thu thập đơn từ mọi sàn và xem trạng thái ở một nơi. Tối đa hiệu quả với xử lý hàng loạt.",
+                "li1": "Tự động thu đơn từ mọi sàn (trong & ngoài nước)",
+                "li2": "Bảng điều khiển trạng thái đơn hợp nhất",
+                "li3": "Xử lý đơn hàng loạt (xác nhận, gửi, hủy)",
+                "li4": "Lịch sử đơn & phân tích thống kê"
+            },
+            "f3": {
+                "title": "Quản lý tồn kho",
+                "desc": "Đồng bộ tồn kho đa kênh thời gian thực để tránh hết hàng. AI phân tích xu hướng bán để dự báo mức tồn tối ưu.",
+                "li1": "Đồng bộ tồn kho đa kênh thời gian thực",
+                "li2": "Cảnh báo sắp hết hàng (ngưỡng tùy chỉnh)",
+                "li3": "Dự báo tồn kho bằng AI dựa trên xu hướng bán",
+                "li4": "Bảng tồn kho theo từng kho"
+            },
+            "f4": {
+                "title": "Quản lý vận đơn",
+                "desc": "Tự động nhập số vận đơn và tích hợp đơn vị vận chuyển thời gian thực. Tự động gửi thông tin theo dõi đến khách.",
+                "li1": "Tự động nhập số vận đơn (gửi đến từng sàn)",
+                "li2": "Tích hợp đơn vị vận chuyển (CJ, Hanjin, bưu điện, các hãng quốc tế)",
+                "li3": "Theo dõi vận chuyển thời gian thực",
+                "li4": "Tự động thông báo khi giao xong"
+            },
+            "f5": {
+                "title": "Quản lý đặt hàng",
+                "desc": "Tự động tạo đơn đặt hàng dựa trên ngưỡng tồn và quản lý nhà cung cấp có hệ thống. Xem lịch sử PO và hàng nhập trong nháy mắt.",
+                "li1": "Tự sinh đơn đặt hàng (theo ngưỡng tồn)",
+                "li2": "Quản lý nhà cung cấp & so sánh đơn giá",
+                "li3": "Theo dõi lịch sử PO & hàng nhập",
+                "li4": "Tự sinh và gửi đơn đặt hàng"
+            },
+            "f6": {
+                "title": "Quản lý CS",
+                "desc": "Quản lý câu hỏi khách từ mọi sàn ở một nơi. Mẫu trả lời tự động và hỗ trợ đa ngôn ngữ giúp CS toàn cầu hiệu quả.",
+                "li1": "Thu thập & quản lý câu hỏi từ mỗi sàn",
+                "li2": "Mẫu trả lời tự động dựa trên FAQ",
+                "li3": "Hỗ trợ đa ngôn ngữ qua dịch AI",
+                "li4": "Trạng thái xử lý CS & thống kê tỉ lệ phản hồi"
+            },
+            "f7": {
+                "title": "Tích hợp ERP",
+                "desc": "Kết nối ERP hiện có qua API để tự động đẩy dữ liệu kế toán & thuế. Quản lý dữ liệu thống nhất, không nhập trùng.",
+                "li1": "Tích hợp API với ERP hiện có (Ecount, Douzone…)",
+                "li2": "Tự động chuyển dữ liệu kế toán/thuế",
+                "li3": "Đồng bộ dữ liệu bán/mua thời gian thực",
+                "li4": "Tự động sắp xếp dữ liệu đối soát"
+            },
+            "f8": {
+                "title": "Tự động hóa logistics",
+                "desc": "Tự động xuất kho và phân bổ vận chuyển tối ưu. Hệ thống cũng xử lý trả hàng và đổi hàng tự động.",
+                "li1": "Tự động xuất kho (lệnh ngay khi xác nhận đơn)",
+                "li2": "Tự động chọn đơn vị vận chuyển (tối ưu chi phí/khu vực)",
+                "li3": "Xử lý tự động trả/đổi hàng",
+                "li4": "Quản lý fulfillment trong & ngoài nước hợp nhất"
+            },
+            "f9": {
+                "title": "Phân tích BI",
+                "desc": "Phân tích thống nhất doanh số, ROAS quảng cáo và dữ liệu CRM. Nắm bắt chỉ số tăng trưởng thương hiệu trong nháy mắt.",
+                "li1": "Phân tích doanh số (theo kênh, sản phẩm, kỳ)",
+                "li2": "Phân tích ROAS/CPM/CPC quảng cáo",
+                "li3": "Phân tích khách hàng CRM (mẫu mua, LTV)",
+                "li4": "Bảng chỉ số tăng trưởng thương hiệu"
+            },
+            "f10": {
+                "title": "Tự động hóa bằng AI",
+                "desc": "AI gợi ý tên sản phẩm, từ khóa, danh mục, dịch đa ngôn ngữ và giá tối ưu — thay nhà bán làm việc lặp lại.",
+                "li1": "AI gợi ý tên/từ khóa sản phẩm (tối ưu SEO)",
+                "li2": "AI tự ánh xạ danh mục",
+                "li3": "Dịch đa ngôn ngữ bằng AI (Anh, Thái, Việt…)",
+                "li4": "AI gợi ý giá (dựa trên phân tích đối thủ)"
+            },
+            "f11": {
+                "title": "Tự động khai báo xuất khẩu",
+                "desc": "Tự động phát hành xác nhận mua xuất khẩu TMĐT và tích hợp với uTradeHub để tự động hóa toàn bộ khai báo. Tự phân loại mã HS giúp đơn giản hóa thông quan.",
+                "li1": "Tự phát hành xác nhận mua xuất khẩu TMĐT",
+                "li2": "Tích hợp uTradeHub (tự động nộp khai báo xuất khẩu)",
+                "li3": "Tự phân loại mã HS",
+                "li4": "Tự tổng hợp & báo cáo hiệu suất xuất khẩu"
+            },
+            "f12": {
+                "title": "Công cụ biên lợi nhuận toàn cầu",
+                "desc": "Xác minh khả năng sinh lời trước với tính biên lợi nhuận gồm tỷ giá, phí, quảng cáo, logistics, thông quan. So sánh lợi nhuận ròng giữa các sàn.",
+                "li1": "Bao gồm tỷ giá/phí/quảng cáo/logistics/thông quan",
+                "li2": "Mô phỏng giá bán để xác minh lợi nhuận trước",
+                "li3": "So sánh lợi nhuận ròng theo nền tảng",
+                "li4": "Tự động cập nhật tỷ giá thời gian thực"
+            },
+            "dash": {
+                "title": "Tất cả trong tầm mắt — Bảng điều khiển hợp nhất",
+                "desc": "Theo dõi thời gian thực doanh số, đơn, tồn kho, đối soát của mọi sàn trên một màn hình",
+                "s1": {
+                    "title": "Doanh số thời gian thực",
+                    "desc": "Tổng hợp doanh số thời gian thực trên mọi sàn"
+                },
+                "s2": {
+                    "title": "Đơn theo sàn",
+                    "desc": "Xem trạng thái đơn theo các kênh Shopee, TikTok Shop… trong nháy mắt"
+                },
+                "s3": {
+                    "title": "Tồn kho hợp nhất",
+                    "desc": "Đồng bộ tồn kho kho trong & ngoài nước thời gian thực để tránh hết hàng"
+                },
+                "s4": {
+                    "title": "Phân tích lợi nhuận",
+                    "desc": "Báo cáo biên lợi nhuận, phí, chi phí logistics theo từng sàn"
+                }
+            },
+            "comp": {
+                "title": "Khi dùng HUBONTRADE, đây là những gì thay đổi",
+                "col1": "Công việc",
+                "col2": "Tự vận hành",
+                "col3": "HUBONTRADE"
+            },
+            "ctaBox": {
+                "title": "Trải nghiệm mọi tính năng miễn phí",
+                "desc": "Trải nghiệm mọi tính năng HUBONTRADE với 14 ngày dùng thử miễn phí",
+                "btn": "Bắt đầu dùng thử miễn phí"
+            }
         },
         "service": {
             "heroTitle": "Chúng tôi <span class=\"gradient-text\">đảm nhận mọi việc</span> trong bán hàng toàn cầu",
