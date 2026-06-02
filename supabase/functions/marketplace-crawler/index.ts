@@ -29,8 +29,12 @@ const corsHeaders = {
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 // @ts-ignore Deno
 const SUPABASE_SERVICE_ROLE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+// @ts-ignore Deno
+const NAVER_CLIENT_ID = Deno.env.get("NAVER_CLIENT_ID") || "";
+// @ts-ignore Deno
+const NAVER_CLIENT_SECRET = Deno.env.get("NAVER_CLIENT_SECRET") || "";
 
-const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
+const UA = "Mozilla/5.0 (iPhone; CPU iPhone OS 16_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5 Mobile/15E148 Safari/604.1";
 
 interface Product {
   name: string;
@@ -89,43 +93,69 @@ function parseGmarketBest(html: string): Product[] {
   return products;
 }
 
-// ─── Gmarket 키워드 검색 ───
-async function crawlGmarketSearch(keyword: string): Promise<Product[]> {
-  const url = `https://browse.gmarket.co.kr/search?keyword=${encodeURIComponent(keyword)}`;
+// ─── Gmarket 키워드 검색 (모바일 페이지 + 다중 패턴) ───
+async function crawlGmarketSearch(keyword: string): Promise<{products: Product[], debug?: any}> {
+  // 모바일 사이트 우선 (JS 렌더링 부담 적음)
+  const url = `https://m.gmarket.co.kr/search?keyword=${encodeURIComponent(keyword)}`;
   const res = await fetch(url, {
-    headers: { "User-Agent": UA, "Accept-Language": "ko-KR,ko;q=0.9" },
+    headers: {
+      "User-Agent": UA,
+      "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+      "Accept-Language": "ko-KR,ko;q=0.9",
+      "Cache-Control": "no-cache",
+    },
   });
-  if (!res.ok) throw new Error(`Gmarket search failed: ${res.status}`);
+  if (!res.ok) throw new Error(`Gmarket fetch failed: ${res.status}`);
   const html = await res.text();
 
   const products: Product[] = [];
-  const cardRe = /<div[^>]*class="[^"]*box__item-container[^"]*"[^>]*>([\s\S]*?)<\/div>\s*<\/div>/gi;
+
+  // 패턴 1: 모바일 카드 (li 기반)
+  const liRe = /<li[^>]*class="[^"]*(?:item|prdlst)[^"]*"[^>]*>([\s\S]*?)<\/li>/gi;
   let m: RegExpExecArray | null;
-  let i = 0;
-  while ((m = cardRe.exec(html)) && i < 50) {
+  while ((m = liRe.exec(html)) && products.length < 50) {
     const block = m[1];
-    const name = extractText(block, /<span[^>]*class="[^"]*text__item[^"]*"[^>]*>([\s\S]*?)<\//i);
-    const priceStr = extractText(block, /<strong[^>]*class="[^"]*text__value[^"]*"[^>]*>([\s\S]*?)<\//i);
-    const imgMatch = block.match(/<img[^>]*src=["']([^"']+)["']/i);
+    const name = extractText(block, /<(?:span|p|div)[^>]*class="[^"]*(?:tit|name|title)[^"]*"[^>]*>([\s\S]*?)<\//i);
+    const priceStr = extractText(block, /(\d{1,3}(?:,\d{3})+\s*원|\d+\s*원)/);
+    const imgMatch = block.match(/<img[^>]*(?:src|data-src|data-original)=["']([^"']+\.(?:jpg|jpeg|png|gif|webp)[^"']*)["']/i);
     const urlMatch = block.match(/<a[^>]*href=["']([^"']+)["']/i);
 
     if (name && priceStr) {
       products.push({
         name: clean(name),
-        image: imgMatch ? imgMatch[1] : "",
+        image: imgMatch ? absoluteUrl(imgMatch[1], "https://m.gmarket.co.kr") : "",
         price: parsePrice(priceStr),
-        url: urlMatch ? absoluteUrl(urlMatch[1], "https://browse.gmarket.co.kr") : "",
+        url: urlMatch ? absoluteUrl(urlMatch[1], "https://m.gmarket.co.kr") : "",
         platform: "gmarket",
       });
     }
-    i++;
   }
-  return products;
+
+  // 디버그 (결과 0이면 응답 정보 반환)
+  if (products.length === 0) {
+    return {
+      products: [],
+      debug: {
+        httpStatus: res.status,
+        htmlLength: html.length,
+        contentType: res.headers.get("content-type"),
+        sample: html.slice(0, 500),
+        hint: "Gmarket이 봇 차단했거나 HTML 구조가 변경됨. ScraperAPI 같은 프록시 필요.",
+      },
+    };
+  }
+  return { products };
 }
 
-// ─── 네이버 쇼핑 검색 ───
-async function crawlNaverSearch(keyword: string): Promise<Product[]> {
-  const url = `https://search.shopping.naver.com/search/all?query=${encodeURIComponent(keyword)}`;
+// ─── 네이버 쇼핑 검색 (공식 API + HTML 폴백) ───
+async function crawlNaverSearch(keyword: string): Promise<{products: Product[], debug?: any}> {
+  // 옵션 1: 네이버 공식 검색 API (NAVER_CLIENT_ID/SECRET 설정 시)
+  if (NAVER_CLIENT_ID && NAVER_CLIENT_SECRET) {
+    return await searchNaverShopAPI(keyword);
+  }
+
+  // 옵션 2: HTML 크롤링 (백업)
+  const url = `https://msearch.shopping.naver.com/search/all?query=${encodeURIComponent(keyword)}`;
   const res = await fetch(url, {
     headers: {
       "User-Agent": UA,
@@ -136,19 +166,54 @@ async function crawlNaverSearch(keyword: string): Promise<Product[]> {
   if (!res.ok) throw new Error(`Naver fetch failed: ${res.status}`);
   const html = await res.text();
 
-  // 네이버는 __NEXT_DATA__ JSON에 상품 데이터 포함
   const jsonMatch = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
-  if (!jsonMatch) {
-    // Fallback: 카드 HTML 파싱
-    return parseNaverFromCards(html);
+  let products: Product[] = [];
+  if (jsonMatch) {
+    try {
+      const data = JSON.parse(jsonMatch[1]);
+      products = parseNaverFromJson(data);
+    } catch {}
+  }
+  if (products.length === 0) {
+    products = parseNaverFromCards(html);
   }
 
-  try {
-    const data = JSON.parse(jsonMatch[1]);
-    return parseNaverFromJson(data);
-  } catch {
-    return parseNaverFromCards(html);
+  if (products.length === 0) {
+    return {
+      products: [],
+      debug: {
+        httpStatus: res.status,
+        htmlLength: html.length,
+        contentType: res.headers.get("content-type"),
+        sample: html.slice(0, 500),
+        hint: "네이버 공식 API 키 설정 권장 (NAVER_CLIENT_ID, NAVER_CLIENT_SECRET). https://developers.naver.com/apps/",
+      },
+    };
   }
+  return { products };
+}
+
+// ─── 네이버 공식 쇼핑 검색 API ───
+async function searchNaverShopAPI(keyword: string): Promise<{products: Product[]}> {
+  const url = `https://openapi.naver.com/v1/search/shop.json?query=${encodeURIComponent(keyword)}&display=30&sort=sim`;
+  const res = await fetch(url, {
+    headers: {
+      "X-Naver-Client-Id": NAVER_CLIENT_ID,
+      "X-Naver-Client-Secret": NAVER_CLIENT_SECRET,
+    },
+  });
+  if (!res.ok) throw new Error(`Naver API error: ${res.status} ${await res.text()}`);
+  const data = await res.json();
+
+  const products: Product[] = (data.items || []).map((item: any) => ({
+    name: String(item.title || "").replace(/<[^>]+>/g, ""),
+    image: item.image || "",
+    price: parsePrice(item.lprice || "0"),
+    url: item.link || "",
+    meta: item.mallName ? "🏪 " + item.mallName : "",
+    platform: "naver",
+  }));
+  return { products };
 }
 
 function parseNaverFromJson(data: any): Product[] {
@@ -256,20 +321,27 @@ serve(async (req) => {
     const keyword = String(body.keyword || "").trim();
 
     let products: Product[] = [];
+    let debug: any = null;
     let usedSource = source;
 
     switch (source) {
       case "gmarket-best":
         products = await crawlGmarketBest();
         break;
-      case "gmarket-search":
+      case "gmarket-search": {
         if (!keyword) throw new Error("keyword required");
-        products = await crawlGmarketSearch(keyword);
+        const r = await crawlGmarketSearch(keyword);
+        products = r.products;
+        debug = r.debug;
         break;
-      case "naver-search":
+      }
+      case "naver-search": {
         if (!keyword) throw new Error("keyword required");
-        products = await crawlNaverSearch(keyword);
+        const r = await crawlNaverSearch(keyword);
+        products = r.products;
+        debug = r.debug;
         break;
+      }
       default:
         return new Response(JSON.stringify({
           error: `unknown source: ${source}`,
@@ -277,7 +349,6 @@ serve(async (req) => {
         }), { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    // 사용 로그 (선택)
     try {
       await supabase.from("api_usage_logs").insert({
         user_id: userData.user.id,
@@ -285,7 +356,7 @@ serve(async (req) => {
         endpoint: keyword || "best",
         method: "GET",
         status_code: 200,
-        success: true,
+        success: products.length > 0,
       });
     } catch {}
 
@@ -294,6 +365,7 @@ serve(async (req) => {
       keyword: keyword,
       count: products.length,
       products: products,
+      debug: debug,
     }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
   } catch (err) {
