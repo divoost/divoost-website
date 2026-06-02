@@ -58,6 +58,10 @@
             <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">⚙️ 관리자 설정</div><div class="top-bar-sub">시스템 전반 정책 및 권한 관리</div></div></div></header>
             <div class="content">
 
+                <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                    ⚠️ 개발 필요: 모든 설정 항목은 화면만 있고 저장 백엔드 미연동입니다. (필요한 작업: app_settings 테이블 + super_admin RLS + GET/UPDATE RPC)
+                </div>
+
                 <div class="card">
                     <h2>🏢 서비스 정보</h2>
                     <div class="form-row">
@@ -146,23 +150,13 @@
 
                 <div class="card">
                     <h2>👨‍💼 관리자 계정</h2>
-                    <div class="admin-grid">
-                        <div class="admin-card">
-                            <div class="admin-avatar">D</div>
-                            <div class="admin-info">
-                                <div class="admin-name">divoost-admin</div>
-                                <div class="admin-role">최고 관리자 (Super Admin)</div>
-                            </div>
-                        </div>
-                        <div class="admin-card">
-                            <div class="admin-avatar" style="background:#3b82f6">K</div>
-                            <div class="admin-info">
-                                <div class="admin-name">kai-operator</div>
-                                <div class="admin-role">운영 관리자</div>
-                            </div>
-                        </div>
+                    <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                        ⚠️ 개발 필요: profiles 테이블 role 컬럼 기반 관리자 목록 조회 미구현 (필요한 작업: super_admin/admin/operator role 조회 + 추가/삭제 RPC)
                     </div>
-                    <button class="btn-add" style="margin-top:14px">+ 관리자 추가</button>
+                    <div class="admin-grid" id="adminGrid">
+                        <p style="color:#94a3b8;font-size:.84rem">로딩 중...</p>
+                    </div>
+                    <button class="btn-add" style="margin-top:14px" disabled>+ 관리자 추가 (개발 필요)</button>
                 </div>
 
                 <div class="card">
@@ -201,7 +195,28 @@
     <script src="../js/supabase-admin.js"></script>
     <script>
         document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
-        (async function(){ await SNSAdmin.requireAdmin(); })();
+        (async function(){
+            var ok = await SNSAdmin.requireAdmin();
+            if(!ok) return;
+            // 현재 로그인한 관리자 정보 표시 (실제 데이터)
+            try {
+                var users = await SNSAdmin.listUsers();
+                var admins = (users || []).filter(function(u){ return u.role === 'super_admin' || u.role === 'admin' || u.role === 'operator'; });
+                var grid = document.getElementById('adminGrid');
+                if(admins.length === 0){
+                    grid.innerHTML = '<p style="color:#94a3b8;font-size:.84rem">관리자 계정 없음 (profiles.role 컬럼 필요)</p>';
+                    return;
+                }
+                grid.innerHTML = admins.map(function(a){
+                    var initial = (a.email || '?').charAt(0).toUpperCase();
+                    var roleName = a.role === 'super_admin' ? '최고 관리자 (Super Admin)' : (a.role === 'admin' ? '관리자' : '운영자');
+                    return '<div class="admin-card"><div class="admin-avatar">' + initial + '</div><div class="admin-info"><div class="admin-name">' + (a.email || '-') + '</div><div class="admin-role">' + roleName + '</div></div></div>';
+                }).join('');
+            } catch(err){
+                console.error('admin load err', err);
+                document.getElementById('adminGrid').innerHTML = '<p style="color:#94a3b8;font-size:.84rem">조회 실패</p>';
+            }
+        })();
     </script>
 </body>
 </html>
