@@ -608,11 +608,107 @@
         },
         "pricing": {
             "heroTitle": "Simple, Fair Pricing",
-            "heroDesc": "Pick the plan that fits your business scale"
+            "heroDesc": "Pick the plan that fits your business scale",
+            "billing": {
+                "monthly": "Monthly",
+                "yearly": "Yearly",
+                "discount": "20% off"
+            },
+            "starter": {
+                "name": "Starter",
+                "amount": "Free",
+                "unit": "  30 days",
+                "tax": "No credit card required",
+                "desc": "Try every core feature free for 30 days",
+                "btn": "Start Free Trial"
+            },
+            "growth": {
+                "name": "Growth",
+                "discount": "44% off",
+                "desc": "The most popular plan for growing sellers",
+                "btn": "Start Plan"
+            },
+            "ent": {
+                "name": "Enterprise",
+                "discount": "50% off",
+                "desc": "All features + dedicated manager for global expansion",
+                "btn": "Start Plan"
+            },
+            "faq": {
+                "title": "Frequently Asked Questions",
+                "q1": "What's the contract length?",
+                "a1": "Starting from 3 months minimum; annual contracts get a 20% discount.",
+                "q2": "Can I cancel mid-term?",
+                "a2": "Yes — cancel without penalty with 1 month's notice.",
+                "q3": "Are there additional fees?",
+                "a3": "Platform operating costs are included in the base fee; ad spend and logistics are billed at cost.",
+                "q4": "Can I switch plans?",
+                "a4": "Upgrade to a higher plan anytime — pay only the difference.",
+                "q5": "Is there a free trial?",
+                "a5": "We provide a 2-week free market analysis report and recommend the best plan based on it."
+            },
+            "ctaBox": {
+                "title": "Not sure which plan fits?",
+                "desc": "Get a free consultation",
+                "btn": "Get Free Consultation"
+            }
         },
         "case": {
             "heroTitle": "Success Stories",
-            "heroDesc": "Stories of brands that grew global markets with HUBONTRADE"
+            "heroDesc": "Stories of brands that grew global markets with HUBONTRADE",
+            "stats": {
+                "partners": "Partner Brands",
+                "growth": "Avg. Revenue Growth",
+                "awards": "Awards"
+            },
+            "c1": {
+                "industry": "Cosmetics/Skincare",
+                "market": "Vietnam, Thailand",
+                "title": "K-Beauty Brand A",
+                "challenge": "No SE Asia experience; difficulty understanding local regulations",
+                "solution": "Shopee onboarding + local influencer marketing",
+                "r1": "Reached KRW 300M monthly revenue in 6 months",
+                "r2": "Top 10 in Shopee Beauty category",
+                "quote": "\"Thanks to HUBONTRADE, complex overseas expansion became surprisingly easy.\""
+            },
+            "c2": {
+                "industry": "Health Supplements",
+                "market": "Indonesia",
+                "title": "Health Brand B",
+                "challenge": "Regulatory barriers like Halal certification; building local consumer trust",
+                "solution": "Local certification support + Tokopedia onboarding + live commerce",
+                "r1": "Halal certification cut by 3 months",
+                "r2": "500% revenue growth in 1 year",
+                "quote": "\"HUBONTRADE handled the entire complex certification process.\""
+            },
+            "c3": {
+                "industry": "Women's Apparel",
+                "market": "Philippines, Malaysia",
+                "title": "Fashion Brand C",
+                "challenge": "Different sizing systems; hard to read local fashion trends",
+                "solution": "Local sizing guide + TikTok Shop live",
+                "r1": "KRW 50M revenue per TikTok live",
+                "r2": "Return rate down 80%",
+                "quote": "\"We felt the power of live commerce. The HUBONTRADE team is the best.\""
+            },
+            "c4": {
+                "industry": "Smart Appliances",
+                "market": "Vietnam, Thailand, Indonesia",
+                "title": "Electronics Brand D",
+                "challenge": "Building after-sales system; localizing technical products",
+                "solution": "Onboard 3 countries simultaneously + connect local A/S partners",
+                "r1": "Successful simultaneous entry into 3 markets",
+                "r2": "Reached KRW 5B annual revenue",
+                "quote": "\"Entering 3 markets at once would've been impossible without HUBONTRADE.\""
+            },
+            "partners": {
+                "title": "Our Partners"
+            },
+            "ctaBox": {
+                "title": "Be the Next Success Story",
+                "desc": "Open up SE Asian markets with HUBONTRADE",
+                "btn": "Get Free Consultation"
+            }
         },
         "resources": {
             "heroTitle": "Resource Center",

@@ -608,11 +608,107 @@
         },
         "pricing": {
             "heroTitle": "Bảng giá hợp lý",
-            "heroDesc": "Chọn gói phù hợp với quy mô doanh nghiệp của bạn"
+            "heroDesc": "Chọn gói phù hợp với quy mô doanh nghiệp của bạn",
+            "billing": {
+                "monthly": "Hàng tháng",
+                "yearly": "Hàng năm",
+                "discount": "Giảm 20%"
+            },
+            "starter": {
+                "name": "Starter",
+                "amount": "Miễn phí",
+                "unit": "  30 ngày",
+                "tax": "Không cần thẻ tín dụng",
+                "desc": "Dùng thử mọi tính năng cốt lõi miễn phí 30 ngày",
+                "btn": "Bắt đầu dùng thử"
+            },
+            "growth": {
+                "name": "Growth",
+                "discount": "Giảm 44%",
+                "desc": "Gói phổ biến nhất cho nhà bán đang phát triển",
+                "btn": "Bắt đầu gói"
+            },
+            "ent": {
+                "name": "Enterprise",
+                "discount": "Giảm 50%",
+                "desc": "Mọi tính năng + quản lý chuyên trách để mở rộng toàn cầu",
+                "btn": "Bắt đầu gói"
+            },
+            "faq": {
+                "title": "Câu hỏi thường gặp",
+                "q1": "Thời hạn hợp đồng là bao lâu?",
+                "a1": "Tối thiểu 3 tháng; hợp đồng năm được giảm 20%.",
+                "q2": "Có thể hủy giữa chừng không?",
+                "a2": "Có — hủy không phí phạt khi báo trước 1 tháng.",
+                "q3": "Có phí phát sinh không?",
+                "a3": "Phí vận hành nền tảng đã gồm trong giá cơ bản; quảng cáo & logistics tính theo thực tế.",
+                "q4": "Có thể đổi gói không?",
+                "a4": "Nâng cấp gói bất cứ lúc nào — chỉ thanh toán phần chênh lệch.",
+                "q5": "Có dùng thử miễn phí không?",
+                "a5": "Cung cấp báo cáo phân tích thị trường miễn phí 2 tuần và đề xuất gói tốt nhất."
+            },
+            "ctaBox": {
+                "title": "Không chắc gói nào phù hợp?",
+                "desc": "Nhận tư vấn miễn phí",
+                "btn": "Nhận tư vấn miễn phí"
+            }
         },
         "case": {
             "heroTitle": "Câu chuyện thành công",
-            "heroDesc": "Câu chuyện về các thương hiệu phát triển thị trường toàn cầu cùng HUBONTRADE"
+            "heroDesc": "Câu chuyện về các thương hiệu phát triển thị trường toàn cầu cùng HUBONTRADE",
+            "stats": {
+                "partners": "Thương hiệu đối tác",
+                "growth": "Tăng trưởng doanh số trung bình",
+                "awards": "Giải thưởng"
+            },
+            "c1": {
+                "industry": "Mỹ phẩm/Skincare",
+                "market": "Việt Nam, Thái Lan",
+                "title": "Thương hiệu K-Beauty A",
+                "challenge": "Chưa có kinh nghiệm Đông Nam Á; khó nắm bắt quy định bản địa",
+                "solution": "Onboard Shopee + marketing influencer bản địa",
+                "r1": "Đạt 300 triệu KRW doanh số/tháng trong 6 tháng",
+                "r2": "Top 10 mục Beauty trên Shopee",
+                "quote": "\"Nhờ HUBONTRADE, việc mở rộng ra nước ngoài phức tạp trở nên dễ dàng đáng kinh ngạc.\""
+            },
+            "c2": {
+                "industry": "Thực phẩm chức năng",
+                "market": "Indonesia",
+                "title": "Thương hiệu thực phẩm B",
+                "challenge": "Rào cản pháp lý như chứng nhận Halal; xây dựng lòng tin người tiêu dùng",
+                "solution": "Hỗ trợ chứng nhận bản địa + onboard Tokopedia + live commerce",
+                "r1": "Rút ngắn 3 tháng cấp chứng nhận Halal",
+                "r2": "Doanh số tăng 500% trong 1 năm",
+                "quote": "\"HUBONTRADE đã giải quyết toàn bộ quy trình chứng nhận phức tạp.\""
+            },
+            "c3": {
+                "industry": "Thời trang nữ",
+                "market": "Philippines, Malaysia",
+                "title": "Thương hiệu thời trang C",
+                "challenge": "Hệ thống size khác; khó nắm bắt xu hướng thời trang bản địa",
+                "solution": "Xây hướng dẫn size bản địa + live TikTok Shop",
+                "r1": "50 triệu KRW/buổi live TikTok",
+                "r2": "Tỷ lệ hoàn hàng giảm 80%",
+                "quote": "\"Cảm nhận rõ sức mạnh của live commerce. Đội ngũ HUBONTRADE là tuyệt nhất.\""
+            },
+            "c4": {
+                "industry": "Đồ gia dụng thông minh",
+                "market": "Việt Nam, Thái Lan, Indonesia",
+                "title": "Thương hiệu điện tử D",
+                "challenge": "Xây hệ thống hậu mãi; bản địa hóa sản phẩm kỹ thuật",
+                "solution": "Onboard 3 nước đồng thời + kết nối đối tác hậu mãi bản địa",
+                "r1": "Vào thành công 3 thị trường cùng lúc",
+                "r2": "Đạt 5 tỷ KRW doanh số năm",
+                "quote": "\"Vào 3 thị trường cùng lúc sẽ là bất khả thi nếu không có HUBONTRADE.\""
+            },
+            "partners": {
+                "title": "Đối tác của chúng tôi"
+            },
+            "ctaBox": {
+                "title": "Trở thành câu chuyện thành công tiếp theo",
+                "desc": "Mở thị trường Đông Nam Á cùng HUBONTRADE",
+                "btn": "Nhận tư vấn miễn phí"
+            }
         },
         "resources": {
             "heroTitle": "Trung tâm Tài nguyên",
