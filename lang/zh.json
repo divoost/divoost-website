@@ -1,60 +1,178 @@
 {
-    "meta": { "title": "HUBONTRADE | 全球跨境进出口电商一体化平台" },
+    "meta": {
+        "title": "HUBONTRADE | 全球跨境进出口电商一体化平台"
+    },
     "nav": {
-        "home": "首页", "solution": "解决方案", "features": "功能", "service": "服务",
-        "market": "市场", "pricing": "价格", "case": "案例", "resources": "资源",
-        "tracker": "选品追踪", "contact": "联系"
+        "home": "首页",
+        "solution": "解决方案",
+        "features": "功能",
+        "service": "服务",
+        "market": "市场",
+        "pricing": "价格",
+        "case": "案例",
+        "resources": "资源",
+        "tracker": "选品追踪",
+        "contact": "联系"
     },
     "hero": {
         "s1": {
             "badge": "全球进出口一体化平台",
-            "title1": "无国界的电商,", "title2": "不设方向的限制", "title3": "由 HUBONTRADE 来连接",
+            "title1": "无国界的电商,",
+            "title2": "不设方向的限制",
+            "title3": "由 HUBONTRADE 来连接",
             "subtitle": "无论从哪里到哪里 — 全球进出口的所有环节都在一个平台",
-            "ctaPrimary": "免费开始", "ctaSecondary": "查看服务"
+            "ctaPrimary": "免费开始",
+            "ctaSecondary": "查看服务"
         },
         "s2": {
-            "title1": "所有市场", "title2": "一站式集成管理", "title3": "一次上传，全渠道铺货",
-            "ctaPrimary": "免费试用", "ctaSecondary": "申请 1:1 咨询",
+            "title1": "所有市场",
+            "title2": "一站式集成管理",
+            "title3": "一次上传，全渠道铺货",
+            "ctaPrimary": "免费试用",
+            "ctaSecondary": "申请 1:1 咨询",
             "trust": "众多卖家信赖 HUBONTRADE",
-            "stat1": "对接渠道", "stat2": "运行稳定率", "stat3": "工作量减少"
+            "stat1": "对接渠道",
+            "stat2": "运行稳定率",
+            "stat3": "工作量减少"
         },
         "s3": {
             "badge": "全球履约",
-            "title1": "国内配送，跨境配送", "title2": "履约一站式", "title3": "在同一系统中完成",
+            "title1": "国内配送，跨境配送",
+            "title2": "履约一站式",
+            "title3": "在同一系统中完成",
             "subtitle": "从国内出库到海外本地配送 — 集成化履约让您专注销售，无需操心物流",
-            "ctaPrimary": "查看物流系统", "ctaSecondary": "配送咨询"
+            "ctaPrimary": "查看物流系统",
+            "ctaSecondary": "配送咨询"
         },
         "s4": {
             "badge": "智能选品",
-            "title1": "没有可卖的商品？", "title2": "用全球选品", "title3": "为您找到能赚钱的商品",
+            "title1": "没有可卖的商品？",
+            "title2": "用全球选品",
+            "title3": "为您找到能赚钱的商品",
             "subtitle": "从 B2B 全球选品到国内外利润自动计算 — 投入前先核实盈利能力",
-            "ctaPrimary": "开始选品", "ctaSecondary": "试用利润工具"
+            "ctaPrimary": "开始选品",
+            "ctaSecondary": "试用利润工具"
         },
         "s5": {
             "badge": "面向全球卖家",
-            "title1": "只服务韩国卖家？", "title2": "不", "title3": "为全球卖家打造的平台",
+            "title1": "只服务韩国卖家？",
+            "title2": "不",
+            "title3": "为全球卖家打造的平台",
             "subtitle": "韩国卖家、海外卖家 — 任何人都能使用的唯一全球进出口平台",
-            "ctaPrimary": "立即开始", "ctaSecondary": "服务介绍"
+            "ctaPrimary": "立即开始",
+            "ctaSecondary": "服务介绍"
         }
     },
     "sec": {
         "why": {
-            "badge": "选择 HUBONTRADE 的理由", "title": "其他平台没有的能力",
+            "badge": "选择 HUBONTRADE 的理由",
+            "title": "其他平台没有的能力",
             "desc": "用差异化功能为全球销售设立新标准",
-            "c1": { "title": "全球双向进出口", "desc": "不仅韩国→海外出口，还支持海外→韩国进口、中国→美国等多方向跨境交易" },
-            "c2": { "title": "出口报关自动化", "desc": "出口申报单自动生成、进口代购通关 — 复杂的贸易单证由系统自动处理" },
-            "c3": { "title": "国内·海外履约整合", "desc": "国内配送与跨境配送、履约服务在同一系统中统一管理" },
-            "c4": { "title": "海外卖家也可使用", "desc": "并非只服务韩国企业。任何人在任何地方都能使用的全球平台" },
-            "c5": { "title": "政府出口券承接机构", "desc": "政府认证的出口券承接机构。借助政府扶持项目低成本起步" },
-            "c6": { "title": "AI 自动化", "desc": "AI 商品名·关键词推荐、AI 类目映射、AI 多语种翻译、AI 价格建议" }
+            "c1": {
+                "title": "全球双向进出口",
+                "desc": "不仅韩国→海外出口，还支持海外→韩国进口、中国→美国等多方向跨境交易"
+            },
+            "c2": {
+                "title": "出口报关自动化",
+                "desc": "出口申报单自动生成、进口代购通关 — 复杂的贸易单证由系统自动处理"
+            },
+            "c3": {
+                "title": "国内·海外履约整合",
+                "desc": "国内配送与跨境配送、履约服务在同一系统中统一管理"
+            },
+            "c4": {
+                "title": "海外卖家也可使用",
+                "desc": "并非只服务韩国企业。任何人在任何地方都能使用的全球平台"
+            },
+            "c5": {
+                "title": "政府出口券承接机构",
+                "desc": "政府认证的出口券承接机构。借助政府扶持项目低成本起步"
+            },
+            "c6": {
+                "title": "AI 自动化",
+                "desc": "AI 商品名·关键词推荐、AI 类目映射、AI 多语种翻译、AI 价格建议"
+            }
         },
-        "platforms": { "badge": "支持的平台", "title": "从本土到全球，主要市场全对接", "desc": "一次上传，全平台同步铺货" },
-        "comparison": { "badge": "对比", "title": "HUBONTRADE 与同行对比", "desc": "核心差异化功能对比" },
-        "features": { "badge": "核心功能", "title": "为卖家打造的关键功能" },
-        "foryou": { "badge": "推荐给您", "title": "推荐给这些人群" }
+        "platforms": {
+            "badge": "支持的平台",
+            "title": "从本土到全球，主要市场全对接",
+            "desc": "一次上传，全平台同步铺货"
+        },
+        "comparison": {
+            "badge": "对比",
+            "title": "HUBONTRADE 与同行对比",
+            "desc": "核心差异化功能对比"
+        },
+        "features": {
+            "badge": "核心功能",
+            "title": "为卖家打造的关键功能"
+        },
+        "foryou": {
+            "badge": "推荐给您",
+            "title": "推荐给这些人群"
+        }
     },
     "footer": {
         "tagline": "东南亚跨境电商专业平台",
-        "h": { "pages": "页面", "tools": "选品 · 工具", "support": "客户支持" }
+        "h": {
+            "pages": "页面",
+            "tools": "选品 · 工具",
+            "support": "客户支持"
+        }
+    },
+    "markets": {
+        "coupang": "Coupang",
+        "naver": "Naver Smart Store",
+        "gmarket": "Gmarket",
+        "eleven": "11st",
+        "wemakeprice": "WeMakePrice",
+        "interpark": "Interpark"
+    },
+    "features": {
+        "viewAll": "查看全部功能",
+        "c1": {
+            "title": "多渠道商品上传",
+            "desc": "Excel 上传一次，数十个平台同步上架"
+        },
+        "c2": {
+            "title": "全球·国内利润工具",
+            "desc": "自动计算汇率、手续费、运费 — 投入前先看真实利润"
+        },
+        "c3": {
+            "title": "履约一体化",
+            "desc": "国内与跨境物流在同一系统中管理"
+        },
+        "c4": {
+            "title": "进出口自动化",
+            "desc": "自动生成出口申报、进口通关单证"
+        },
+        "c5": {
+            "title": "B2B 全球选品",
+            "desc": "从全球供应方找到高利润商品"
+        },
+        "c6": {
+            "title": "营销联动",
+            "desc": "与 Shopee、TikTok Shop 等平台营销工具自动联动"
+        }
+    },
+    "foryou": {
+        "c1": {
+            "title": "韩国卖家",
+            "desc": "希望将国内商品卖向海外的企业与个人卖家。出口申报自动化与海外平台入驻一站搞定。"
+        },
+        "c2": {
+            "title": "海外卖家",
+            "desc": "在本国销售韩国商品，或寻找全球货源的海外卖家。多语种支持。"
+        },
+        "c3": {
+            "title": "代购·代销商",
+            "desc": "无库存运营、全球选品销售的代购与代销商。通关自动化支持。"
+        }
+    },
+    "cta": {
+        "title": "立即免费开始 HUBONTRADE",
+        "subtitle": "30 天免费体验所有功能",
+        "primary": "免费试用",
+        "secondary": "申请 1:1 咨询"
     }
 }

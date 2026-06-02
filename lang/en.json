@@ -1,60 +1,178 @@
 {
-    "meta": { "title": "HUBONTRADE | Global Cross-Border E-Commerce Platform" },
+    "meta": {
+        "title": "HUBONTRADE | Global Cross-Border E-Commerce Platform"
+    },
     "nav": {
-        "home": "Home", "solution": "Solutions", "features": "Features", "service": "Services",
-        "market": "Markets", "pricing": "Pricing", "case": "Cases", "resources": "Resources",
-        "tracker": "Sourcing Tracker", "contact": "Contact"
+        "home": "Home",
+        "solution": "Solutions",
+        "features": "Features",
+        "service": "Services",
+        "market": "Markets",
+        "pricing": "Pricing",
+        "case": "Cases",
+        "resources": "Resources",
+        "tracker": "Sourcing Tracker",
+        "contact": "Contact"
     },
     "hero": {
         "s1": {
             "badge": "GLOBAL ALL-IN-ONE EXPORT/IMPORT PLATFORM",
-            "title1": "Borderless Commerce,", "title2": "No Direction Limits", "title3": "HUBONTRADE Connects",
+            "title1": "Borderless Commerce,",
+            "title2": "No Direction Limits",
+            "title3": "HUBONTRADE Connects",
             "subtitle": "From anywhere to anywhere — the entire global export & import process on a single platform",
-            "ctaPrimary": "Start Free", "ctaSecondary": "Explore Services"
+            "ctaPrimary": "Start Free",
+            "ctaSecondary": "Explore Services"
         },
         "s2": {
-            "title1": "All Marketplaces", "title2": "Unified in One", "title3": "Register Products Once, Sell Everywhere",
-            "ctaPrimary": "Start Free Trial", "ctaSecondary": "Request 1:1 Consultation",
+            "title1": "All Marketplaces",
+            "title2": "Unified in One",
+            "title3": "Register Products Once, Sell Everywhere",
+            "ctaPrimary": "Start Free Trial",
+            "ctaSecondary": "Request 1:1 Consultation",
             "trust": "Trusted by thousands of sellers on HUBONTRADE",
-            "stat1": "Connected Marketplaces", "stat2": "Uptime", "stat3": "Workload Reduced"
+            "stat1": "Connected Marketplaces",
+            "stat2": "Uptime",
+            "stat3": "Workload Reduced"
         },
         "s3": {
             "badge": "GLOBAL FULFILLMENT",
-            "title1": "Domestic & Cross-Border Shipping,", "title2": "Full Fulfillment", "title3": "On One System",
+            "title1": "Domestic & Cross-Border Shipping,",
+            "title2": "Full Fulfillment",
+            "title3": "On One System",
             "subtitle": "From local dispatch to international last-mile — integrated fulfillment so you can focus on selling, not shipping",
-            "ctaPrimary": "See Logistics System", "ctaSecondary": "Shipping Inquiry"
+            "ctaPrimary": "See Logistics System",
+            "ctaSecondary": "Shipping Inquiry"
         },
         "s4": {
             "badge": "SMART SOURCING",
-            "title1": "No Products to Sell?", "title2": "Find Winners With Global Sourcing", "title3": "We Find Profitable Products For You",
+            "title1": "No Products to Sell?",
+            "title2": "Find Winners With Global Sourcing",
+            "title3": "We Find Profitable Products For You",
             "subtitle": "From B2B global sourcing to automatic margin calculation — verify profitability before you commit",
-            "ctaPrimary": "Start Sourcing", "ctaSecondary": "Try Margin Tool"
+            "ctaPrimary": "Start Sourcing",
+            "ctaSecondary": "Try Margin Tool"
         },
         "s5": {
             "badge": "FOR GLOBAL SELLERS",
-            "title1": "Korean Sellers Only?", "title2": "No.", "title3": "A Platform For Sellers Worldwide",
+            "title1": "Korean Sellers Only?",
+            "title2": "No.",
+            "title3": "A Platform For Sellers Worldwide",
             "subtitle": "Whether you sell from Korea or anywhere else — the only global export/import platform built for everyone",
-            "ctaPrimary": "Get Started", "ctaSecondary": "Service Overview"
+            "ctaPrimary": "Get Started",
+            "ctaSecondary": "Service Overview"
         }
     },
     "sec": {
         "why": {
-            "badge": "WHY HUBONTRADE", "title": "What Other Platforms Don't Have",
+            "badge": "WHY HUBONTRADE",
+            "title": "What Other Platforms Don't Have",
             "desc": "Differentiated features that set a new standard for global selling",
-            "c1": { "title": "Bidirectional Global Trade", "desc": "Not just Korea→Overseas exports — we support imports, China→US, and every cross-border direction" },
-            "c2": { "title": "Auto Customs & Export Declaration", "desc": "Auto-generated export declarations and proxy-purchase customs handling — complex trade documents handled automatically" },
-            "c3": { "title": "Unified Local & Global Fulfillment", "desc": "Domestic and cross-border delivery, plus fulfillment services — all managed in one system" },
-            "c4": { "title": "Open to Overseas Sellers", "desc": "Not limited to Korean companies. The only truly global platform anyone can use from anywhere" },
-            "c5": { "title": "Government Export Voucher Partner", "desc": "Government-certified export voucher provider. Start without cost burden through government support programs" },
-            "c6": { "title": "AI-Powered Automation", "desc": "AI product title/keyword recommendations, category mapping, multilingual translation, and pricing suggestions" }
+            "c1": {
+                "title": "Bidirectional Global Trade",
+                "desc": "Not just Korea→Overseas exports — we support imports, China→US, and every cross-border direction"
+            },
+            "c2": {
+                "title": "Auto Customs & Export Declaration",
+                "desc": "Auto-generated export declarations and proxy-purchase customs handling — complex trade documents handled automatically"
+            },
+            "c3": {
+                "title": "Unified Local & Global Fulfillment",
+                "desc": "Domestic and cross-border delivery, plus fulfillment services — all managed in one system"
+            },
+            "c4": {
+                "title": "Open to Overseas Sellers",
+                "desc": "Not limited to Korean companies. The only truly global platform anyone can use from anywhere"
+            },
+            "c5": {
+                "title": "Government Export Voucher Partner",
+                "desc": "Government-certified export voucher provider. Start without cost burden through government support programs"
+            },
+            "c6": {
+                "title": "AI-Powered Automation",
+                "desc": "AI product title/keyword recommendations, category mapping, multilingual translation, and pricing suggestions"
+            }
         },
-        "platforms": { "badge": "SUPPORTED PLATFORMS", "title": "From Local to Global — Major Marketplace Integrations", "desc": "List once, sell on all marketplaces simultaneously" },
-        "comparison": { "badge": "COMPARISON", "title": "HUBONTRADE vs Competitors", "desc": "Key feature comparison" },
-        "features": { "badge": "KEY FEATURES", "title": "Core Features Built For Sellers" },
-        "foryou": { "badge": "FOR YOU", "title": "Recommended For You" }
+        "platforms": {
+            "badge": "SUPPORTED PLATFORMS",
+            "title": "From Local to Global — Major Marketplace Integrations",
+            "desc": "List once, sell on all marketplaces simultaneously"
+        },
+        "comparison": {
+            "badge": "COMPARISON",
+            "title": "HUBONTRADE vs Competitors",
+            "desc": "Key feature comparison"
+        },
+        "features": {
+            "badge": "KEY FEATURES",
+            "title": "Core Features Built For Sellers"
+        },
+        "foryou": {
+            "badge": "FOR YOU",
+            "title": "Recommended For You"
+        }
     },
     "footer": {
         "tagline": "Southeast Asia Cross-Border E-Commerce Platform",
-        "h": { "pages": "Pages", "tools": "Sourcing · Tools", "support": "Support" }
+        "h": {
+            "pages": "Pages",
+            "tools": "Sourcing · Tools",
+            "support": "Support"
+        }
+    },
+    "markets": {
+        "coupang": "Coupang",
+        "naver": "Naver SmartStore",
+        "gmarket": "Gmarket",
+        "eleven": "11st",
+        "wemakeprice": "WeMakePrice",
+        "interpark": "Interpark"
+    },
+    "features": {
+        "viewAll": "View All Features",
+        "c1": {
+            "title": "Multi-Channel Listing",
+            "desc": "Upload Excel once — register products across dozens of platforms simultaneously"
+        },
+        "c2": {
+            "title": "Global & Local Margin Tool",
+            "desc": "Auto-calculate FX, fees, shipping — see real profit before you commit"
+        },
+        "c3": {
+            "title": "Unified Fulfillment",
+            "desc": "Manage domestic & international shipping from one system"
+        },
+        "c4": {
+            "title": "Export/Import Automation",
+            "desc": "Auto-generate export declarations and import customs documents"
+        },
+        "c5": {
+            "title": "B2B Global Sourcing",
+            "desc": "Find high-margin products from suppliers worldwide"
+        },
+        "c6": {
+            "title": "Marketing Integration",
+            "desc": "Auto-integrated with Shopee, TikTok Shop, and other platform marketing tools"
+        }
+    },
+    "foryou": {
+        "c1": {
+            "title": "Korean Sellers",
+            "desc": "Businesses & individual sellers exporting Korean products globally. Export declarations and marketplace listings — all in one."
+        },
+        "c2": {
+            "title": "Overseas Sellers",
+            "desc": "Overseas sellers selling Korean products domestically, or sourcing global products. Multilingual support."
+        },
+        "c3": {
+            "title": "Drop-shipping & Resellers",
+            "desc": "Drop-shippers and resellers sourcing global products without inventory. Customs automation included."
+        }
+    },
+    "cta": {
+        "title": "Start HUBONTRADE Free Today",
+        "subtitle": "Experience all features with 30-day free trial",
+        "primary": "Start Free Trial",
+        "secondary": "Request 1:1 Consultation"
     }
 }
