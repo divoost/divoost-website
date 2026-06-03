@@ -82,7 +82,43 @@
         .link-row a{padding:6px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;font-size:.76rem;color:#3b82f6;text-decoration:none;font-weight:600}
         .link-row a:hover{background:#eff6ff}
 
-        @media(max-width:768px){.platform-grid{grid-template-columns:1fr}}
+        /* 플랫폼 연동 설정 버튼 */
+        .platform-info{display:flex;flex-direction:column}
+        .platform-info ul{flex:1}
+        .platform-setup-btn{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:12px;padding:11px 14px;min-height:44px;border:none;border-radius:9px;font-size:.82rem;font-weight:700;color:#fff;cursor:pointer;transition:.2s;font-family:inherit}
+        .platform-info.safe .platform-setup-btn{background:linear-gradient(135deg,#16a34a,#15803d)}
+        .platform-info.caution .platform-setup-btn{background:linear-gradient(135deg,#d97706,#b45309)}
+        .platform-info.warning .platform-setup-btn{background:linear-gradient(135deg,#dc2626,#b91c1c)}
+        .platform-setup-btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+        .platform-setup-btn:active{transform:translateY(0)}
+
+        /* 연동 설정 모달 */
+        .setup-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:1000;padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+        .setup-overlay.open{display:flex;align-items:flex-start;justify-content:center}
+        .setup-modal{background:#fff;border-radius:16px;max-width:560px;width:100%;margin:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:setupIn .2s ease}
+        @keyframes setupIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+        .setup-head{padding:18px 22px;border-bottom:1px solid #f1f5f9;display:flex;align-items:center;gap:10px;position:sticky;top:0;background:#fff;border-radius:16px 16px 0 0;z-index:2}
+        .setup-head h3{font-size:1.05rem;font-weight:800;flex:1;color:#0f172a}
+        .setup-close{width:38px;height:38px;border:none;background:#f1f5f9;border-radius:50%;font-size:1.1rem;cursor:pointer;color:#475569;flex-shrink:0;line-height:1}
+        .setup-close:hover{background:#e2e8f0}
+        .setup-body{padding:20px 22px}
+        .setup-badge{display:inline-block;padding:3px 10px;border-radius:10px;font-size:.7rem;font-weight:700;margin-bottom:14px}
+        .setup-badge.safe{background:#dcfce7;color:#15803d}
+        .setup-badge.caution{background:#fef3c7;color:#92400e}
+        .setup-badge.warning{background:#fee2e2;color:#b91c1c}
+        .setup-prep{background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:.8rem;line-height:1.6;color:#334155}
+        .setup-prep strong{color:#0f172a}
+        .setup-steps{counter-reset:sstep;list-style:none;padding:0;margin:0}
+        .setup-steps>li{counter-increment:sstep;position:relative;padding:0 0 16px 42px;font-size:.84rem;line-height:1.6;color:#334155}
+        .setup-steps>li::before{content:counter(sstep);position:absolute;left:0;top:-2px;width:28px;height:28px;background:#3b82f6;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
+        .setup-steps>li:not(:last-child)::after{content:'';position:absolute;left:13px;top:28px;bottom:2px;width:2px;background:#e2e8f0}
+        .setup-steps b{color:#0f172a}
+        .setup-steps code{background:#f1f5f9;padding:2px 6px;border-radius:5px;font-size:.76rem;color:#7c3aed;word-break:break-all}
+        .setup-note{padding:12px 14px;border-radius:10px;font-size:.78rem;line-height:1.6;margin-top:10px}
+        .setup-note.warn{background:#fef2f2;border:1px solid #fca5a5;color:#7f1d1d}
+        .setup-note.tip{background:#eff6ff;border:1px solid #bfdbfe;color:#1e3a8a}
+
+        @media(max-width:768px){.platform-grid{grid-template-columns:1fr}.setup-overlay{padding:0}.setup-modal{border-radius:0;min-height:100%}.setup-head{border-radius:0}}
     </style>
 </head>
 <body>
@@ -151,6 +187,7 @@
                                 <li>인사이트(통계) 조회 가능</li>
                                 <li><strong>주의</strong>: 1일 50건 권장 한도</li>
                             </ul>
+                            <button class="platform-setup-btn" onclick="openSetup('facebook')">🔗 연동 설정 방법</button>
                         </div>
 
                         <div class="platform-info safe">
@@ -163,6 +200,7 @@
                                 <li>Reels, Stories 지원</li>
                                 <li><strong>주의</strong>: 개인 계정은 불가</li>
                             </ul>
+                            <button class="platform-setup-btn" onclick="openSetup('instagram')">🔗 연동 설정 방법</button>
                         </div>
 
                         <div class="platform-info safe">
@@ -174,6 +212,7 @@
                                 <li>발행 빈도 제한 있음</li>
                                 <li>커뮤니티 가이드라인 준수</li>
                             </ul>
+                            <button class="platform-setup-btn" onclick="openSetup('tiktok')">🔗 연동 설정 방법</button>
                         </div>
 
                         <div class="platform-info caution">
@@ -185,6 +224,7 @@
                                 <li>실제 발행은 사용자 직접 수행</li>
                                 <li>크롤링/스크래핑은 약관 위반</li>
                             </ul>
+                            <button class="platform-setup-btn" onclick="openSetup('naverblog')">🔗 연동 설정 방법</button>
                         </div>
 
                         <div class="platform-info warning">
@@ -196,6 +236,7 @@
                                 <li><strong>권장</strong>: 콘텐츠 초안 작성만</li>
                                 <li>발행은 반드시 수동으로</li>
                             </ul>
+                            <button class="platform-setup-btn" onclick="openSetup('navercafe')">⚠️ 연동 안내</button>
                         </div>
 
                         <div class="platform-info caution">
@@ -206,6 +247,7 @@
                                 <li>콘텐츠 사전 검열 통과 필수</li>
                                 <li>개인 계정 자동화 불가</li>
                             </ul>
+                            <button class="platform-setup-btn" onclick="openSetup('xiaohongshu')">🔗 연동 설정 방법</button>
                         </div>
 
                         <div class="platform-info caution">
@@ -216,6 +258,7 @@
                                 <li>영상 콘텐츠만 가능</li>
                                 <li>해외 사용자 제약 많음</li>
                             </ul>
+                            <button class="platform-setup-btn" onclick="openSetup('douyin')">🔗 연동 설정 방법</button>
                         </div>
 
                         <div class="platform-info safe">
@@ -226,6 +269,7 @@
                                 <li>영상 업로드 가능 (1일 6건)</li>
                                 <li>제목/설명/태그 자동화 가능</li>
                             </ul>
+                            <button class="platform-setup-btn" onclick="openSetup('youtube')">🔗 연동 설정 방법</button>
                         </div>
                     </div>
                 </div>
@@ -532,6 +576,17 @@
         </div>
     </div>
 
+    <!-- 플랫폼 연동 설정 모달 -->
+    <div class="setup-overlay" id="setupOverlay" onclick="if(event.target===this)closeSetup()">
+        <div class="setup-modal" role="dialog" aria-modal="true" aria-labelledby="setupTitle">
+            <div class="setup-head">
+                <h3 id="setupTitle">연동 설정</h3>
+                <button class="setup-close" onclick="closeSetup()" aria-label="닫기">✕</button>
+            </div>
+            <div class="setup-body" id="setupBody"></div>
+        </div>
+    </div>
+
     <script>
         document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
 
@@ -542,6 +597,156 @@
                 var target = document.querySelector(this.getAttribute('href'));
                 if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
             });
+        });
+
+        // ─── 플랫폼별 연동 설정 가이드 (최신 방식 기준) ───
+        var SERVICE_DOMAIN = 'hubontrade.com';
+        var PLATFORM_SETUP = {
+            facebook: {
+                title: '📘 Facebook 연동 설정',
+                badge: 'safe', badgeText: '합법 · 공식 Graph API v18',
+                prep: '본인 소유 <strong>Facebook 페이지</strong> + <strong>Meta 비즈니스 계정</strong> (개인 프로필만으로는 불가)',
+                steps: [
+                    '<b>Facebook 페이지 만들기</b> — 개인 프로필이 아닌 <b>비즈니스 페이지</b>가 필요합니다. 이미 있으면 건너뛰세요.',
+                    '<b>Meta 개발자 앱 생성</b> — <a class="setup-link" href="https://developers.facebook.com/apps" target="_blank" rel="noopener">developers.facebook.com ↗</a> → "앱 만들기" → 유형 <b>비즈니스</b> 선택',
+                    '<b>앱 기본 설정</b> (설정 ▸ 기본) — 앱 도메인 <code>hubontrade.com</code>, 개인정보처리방침 URL <code>https://hubontrade.com/sns-platform/privacy.html</code>, 데이터 삭제 URL 입력 후 저장',
+                    '<b>Facebook 로그인 제품 추가</b> (제품 ▸ Facebook 로그인 ▸ 설정) — <b>JavaScript SDK 허용 도메인</b> <code>https://hubontrade.com</code>, <b>유효한 OAuth 리디렉션 URI</b> <code>https://hubontrade.com/sns-platform/pages/settings.html</code> 입력',
+                    '<b>권한 추가</b> — pages_show_list, pages_read_engagement, pages_manage_posts, instagram_basic 등 (앱 검수 대상)',
+                    '<b>앱 검수 + 라이브 전환</b> — 일반 회원에게 서비스하려면 App Review 통과 후 상단 "게시(Live)"로 전환',
+                    '<b>서비스에서 연동</b> — 우리 <b>설정</b> 페이지의 <b>"Facebook 연동"</b> 클릭 → 본인 계정 로그인 → 관리할 페이지 선택 → 완료 🎉'
+                ],
+                notes: [
+                    { type:'warn', html:'⚠️ <b>가장 흔한 에러</b> "알 수 없는 JSSDK 호스트 도메인" → 4단계의 <b>JavaScript SDK 허용 도메인</b> 미등록이 원인입니다. 반드시 <code>https://</code> 를 포함해 입력하세요.' },
+                    { type:'tip', html:'💡 최신 <b>Graph API v18.0</b> 기준입니다. 예전 "토큰 직접 발급" 같은 구버전 방식은 더 이상 권장되지 않습니다.' }
+                ]
+            },
+            instagram: {
+                title: '📸 Instagram 연동 설정',
+                badge: 'safe', badgeText: '합법 · Facebook Graph API 경유',
+                prep: '<strong>Instagram 비즈니스/크리에이터 계정</strong> + 그 계정과 <strong>연결된 Facebook 페이지</strong> (개인 계정 불가)',
+                steps: [
+                    '<b>프로페셔널 계정으로 전환</b> — Instagram 앱 ▸ 설정 ▸ 계정 ▸ 비즈니스/크리에이터 계정으로 전환',
+                    '<b>Facebook 페이지에 연결</b> — Instagram 설정에서 본인 Facebook 페이지와 연결',
+                    '<b>Meta 앱에 권한 추가</b> — 위 Facebook 앱을 그대로 사용. 권한에 <code>instagram_basic</code>, <code>instagram_content_publish</code> 추가',
+                    '<b>서비스에서 연동</b> — 설정 페이지에서 <b>"Facebook 연동"</b>을 하면 연결된 Instagram이 <b>자동으로 함께 등록</b>됩니다.'
+                ],
+                notes: [
+                    { type:'tip', html:'💡 Instagram은 독립 API가 아니라 <b>Facebook Graph API 경유</b>입니다. 그래서 Facebook 연동만 하면 인스타도 같이 잡힙니다.' },
+                    { type:'warn', html:'⚠️ 이미지/영상이 <b>반드시 있어야</b> 발행됩니다(텍스트만 불가). 1일 <b>25건</b> 한도.' }
+                ]
+            },
+            tiktok: {
+                title: '🎵 TikTok 연동 설정',
+                badge: 'safe', badgeText: '합법 · Content Posting API',
+                prep: '<strong>TikTok 비즈니스 계정</strong> + <strong>TikTok for Developers 앱 승인</strong>',
+                steps: [
+                    '<b>비즈니스 계정 전환</b> — TikTok 앱 ▸ 설정 ▸ 계정 ▸ 비즈니스 계정으로 전환',
+                    '<b>개발자 앱 등록</b> — <a class="setup-link" href="https://developers.tiktok.com" target="_blank" rel="noopener">developers.tiktok.com ↗</a> 에서 앱 생성',
+                    '<b>제품 추가</b> — <b>Login Kit</b> + <b>Content Posting API</b> 추가',
+                    '<b>리디렉션 URI 등록</b> — <code>https://hubontrade.com/sns-platform/pages/tiktok-callback.html</code>',
+                    '<b>앱 심사 제출</b> — Content Posting API는 TikTok 심사 통과가 필요합니다(수일 소요)',
+                    '<b>서비스에서 연동</b> — 설정 페이지의 <b>"TikTok 연동"</b> 클릭 → 로그인 → 권한 허용'
+                ],
+                notes: [
+                    { type:'warn', html:'⚠️ <b>영상만</b> 발행 가능하고 발행 빈도 제한이 있습니다. 심사 전에는 등록된 테스트 계정만 동작합니다.' }
+                ]
+            },
+            naverblog: {
+                title: '📗 네이버 블로그 연동 설정',
+                badge: 'caution', badgeText: '회색 · 공식 API 불완전',
+                prep: '네이버 계정 + <strong>네이버 개발자센터 애플리케이션</strong>',
+                steps: [
+                    '<b>개발자 앱 등록</b> — <a class="setup-link" href="https://developers.naver.com" target="_blank" rel="noopener">developers.naver.com ↗</a> ▸ 애플리케이션 등록',
+                    '<b>네이버 로그인 + 블로그 API 사용 설정</b>',
+                    '<b>Callback URL 등록</b> — 서비스 콜백 주소 입력',
+                    '<b>서비스에서 연동</b> — 설정 페이지에서 <b>"네이버 연동"</b> 클릭 → 로그인'
+                ],
+                notes: [
+                    { type:'warn', html:'⚠️ 네이버 블로그 공식 API는 <b>글쓰기 일부만</b> 지원하며 불완전합니다. <b>콘텐츠 초안 작성 도구</b>로만 쓰고 실제 발행은 직접 하시길 권장합니다. 크롤링/스크래핑은 약관 위반입니다.' }
+                ]
+            },
+            navercafe: {
+                title: '☕ 네이버 카페 연동 안내',
+                badge: 'warning', badgeText: '위반 · 자동 발행 금지',
+                prep: '',
+                steps: [],
+                notes: [
+                    { type:'warn', html:'🚫 네이버 카페는 <b>자동 글쓰기를 운영원칙으로 명시 금지</b>합니다. 적발 시 카페 활동이 정지될 수 있어, 본 서비스는 카페 <b>자동 발행을 지원하지 않습니다.</b>' },
+                    { type:'tip', html:'✅ 대신 <b>콘텐츠 초안 작성</b>까지만 도와드립니다. 작성한 글은 <b>반드시 직접 수동으로</b> 카페에 올려주세요.' }
+                ]
+            },
+            xiaohongshu: {
+                title: '📕 샤오홍수(小红书) 연동 설정',
+                badge: 'caution', badgeText: '조건부 · 중국 사업자 필요',
+                prep: '<strong>중국 사업자등록증</strong> + 샤오홍수 Open Platform 입점',
+                steps: [
+                    '<b>기업(企业) 계정 준비</b> — 중국 사업자등록증 기반 비즈니스 계정',
+                    '<b>Open Platform 입점 신청</b> — open.xiaohongshu.com 에서 신청',
+                    '<b>콘텐츠 사전 검열 정책 동의</b>',
+                    '<b>승인 후 서비스에서 연동</b>'
+                ],
+                notes: [
+                    { type:'warn', html:'⚠️ <b>개인 계정 자동화는 불가</b>합니다. 중국 사업자등록증이 없으면 연동할 수 없으며, 콘텐츠 사전 검열 통과가 필수입니다.' }
+                ]
+            },
+            douyin: {
+                title: '🎬 도우인(抖音) 연동 설정',
+                badge: 'caution', badgeText: '조건부 · 중국 인증 필요',
+                prep: '<strong>중국 사업자/개인 실명 인증</strong> + 도우인 开放平台',
+                steps: [
+                    '<b>비즈니스 계정 + 실명 인증</b>',
+                    '<b>开放平台 앱 등록</b> — open.douyin.com 에서 앱 생성',
+                    '<b>영상 발행 권한 신청</b>',
+                    '<b>승인 후 서비스에서 연동</b>'
+                ],
+                notes: [
+                    { type:'warn', html:'⚠️ <b>영상만</b> 가능하며 해외 사용자 제약이 많습니다. 중국 내 실명/사업자 인증이 필요합니다.' }
+                ]
+            },
+            youtube: {
+                title: '📺 YouTube 연동 설정',
+                badge: 'safe', badgeText: '합법 · YouTube Data API v3',
+                prep: 'Google 계정 + <strong>YouTube 채널</strong> + Google Cloud 프로젝트',
+                steps: [
+                    '<b>Google Cloud 프로젝트 생성</b> — <a class="setup-link" href="https://console.cloud.google.com" target="_blank" rel="noopener">console.cloud.google.com ↗</a>',
+                    '<b>YouTube Data API v3 사용 설정</b> — API 라이브러리에서 활성화',
+                    '<b>OAuth 동의 화면 구성</b> — 앱 이름·로고 + 개인정보처리방침 URL <code>https://hubontrade.com/sns-platform/privacy.html</code> 입력',
+                    '<b>OAuth 클라이언트 ID 생성</b> — 승인된 리디렉션 URI 등록',
+                    '<b>서비스에서 연동</b> — 설정 페이지의 <b>"YouTube 연동"</b> 클릭 → Google 로그인'
+                ],
+                notes: [
+                    { type:'tip', html:'💡 일일 할당량 10,000 unit. 영상 업로드는 1건당 약 1,600 unit 소모 → 1일 약 6건.' },
+                    { type:'warn', html:'⚠️ OAuth 동의 화면이 "테스트" 상태면 등록된 테스터만 가능합니다. 정식 운영은 Google 검증이 필요합니다.' }
+                ]
+            }
+        };
+
+        function openSetup(key){
+            var d = PLATFORM_SETUP[key];
+            if(!d){ return; }
+            document.getElementById('setupTitle').textContent = d.title;
+            var html = '<span class="setup-badge ' + d.badge + '">' + d.badgeText + '</span>';
+            if(d.prep){ html += '<div class="setup-prep">📋 <strong>준비물:</strong> ' + d.prep + '</div>'; }
+            if(d.steps && d.steps.length){
+                html += '<ol class="setup-steps">';
+                for(var i=0;i<d.steps.length;i++){ html += '<li>' + d.steps[i] + '</li>'; }
+                html += '</ol>';
+            }
+            if(d.notes){
+                for(var j=0;j<d.notes.length;j++){ html += '<div class="setup-note ' + d.notes[j].type + '">' + d.notes[j].html + '</div>'; }
+            }
+            document.getElementById('setupBody').innerHTML = html;
+            document.getElementById('setupOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSetup(){
+            document.getElementById('setupOverlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', function(e){
+            if(e.key === 'Escape'){ closeSetup(); }
         });
     </script>
     <script src="../js/secure-storage.js"></script>
