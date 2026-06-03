@@ -93,6 +93,42 @@ function parseGmarketBest(html: string): Product[] {
   return products;
 }
 
+// ─── 네이버 검색 1회로 여러 mall 동시 가져오기 (효율적) ───
+async function searchNaverMultiMall(keyword: string): Promise<{byMall: Record<string, Product[]>}> {
+  if (!NAVER_CLIENT_ID || !NAVER_CLIENT_SECRET) {
+    return { byMall: {} };
+  }
+
+  // 최대 100개 받아서 mall별로 분류
+  const res = await fetch(
+    `https://openapi.naver.com/v1/search/shop.json?query=${encodeURIComponent(keyword)}&display=100&sort=sim`,
+    {
+      headers: {
+        "X-Naver-Client-Id": NAVER_CLIENT_ID,
+        "X-Naver-Client-Secret": NAVER_CLIENT_SECRET,
+      },
+    },
+  );
+  if (!res.ok) return { byMall: {} };
+  const data = await res.json();
+
+  const byMall: Record<string, Product[]> = {};
+  for (const item of data.items || []) {
+    const mall = String(item.mallName || "").toLowerCase().trim();
+    if (!mall) continue;
+    if (!byMall[mall]) byMall[mall] = [];
+    byMall[mall].push({
+      name: String(item.title || "").replace(/<[^>]+>/g, ""),
+      image: item.image || "",
+      price: parsePrice(item.lprice || "0"),
+      url: item.link || "",
+      meta: "🏪 " + item.mallName,
+      platform: mall,
+    });
+  }
+  return { byMall };
+}
+
 // ─── Gmarket 키워드 검색 (실제 Chrome 헤더 + 네이버 fallback) ───
 async function crawlGmarketSearch(keyword: string): Promise<{products: Product[], debug?: any}> {
   // 옵션 1: 실제 Chrome 헤더로 모바일 사이트 시도
@@ -154,7 +190,7 @@ async function crawlGmarketSearch(keyword: string): Promise<{products: Product[]
       if (products.length > 0) break;
     }
 
-    if (products.length > 0) return { products };
+    if (products.length > 0) return { products, usedMethod: "scraping" };
   }
 
   // 옵션 2: 직접 크롤링 실패 → 네이버 검색에서 지마켓 mall만 필터링
@@ -184,7 +220,7 @@ async function crawlGmarketSearch(keyword: string): Promise<{products: Product[]
           }));
 
         if (gmarketProducts.length > 0) {
-          return { products: gmarketProducts };
+          return { products: gmarketProducts, usedMethod: "naver-fallback" };
         }
       }
     } catch {}
@@ -202,7 +238,7 @@ async function crawlGmarketSearch(keyword: string): Promise<{products: Product[]
   };
 }
 
-// ─── 네이버 인기 트렌딩 키워드 (카테고리별) ───
+// ─── 네이버 인기 트렌딩 키워드 (확장된 카테고리) ───
 async function fetchNaverTrendingKeywords(): Promise<{categories: any[], debug?: any}> {
   if (!NAVER_CLIENT_ID || !NAVER_CLIENT_SECRET) {
     return {
@@ -211,14 +247,24 @@ async function fetchNaverTrendingKeywords(): Promise<{categories: any[], debug?:
     };
   }
 
-  // 네이버 쇼핑 검색의 카테고리 키워드 (시즌 무관 안정적인 카테고리)
+  // 실제 네이버 쇼핑 인기 카테고리 (한국 셀러 관심사 기반)
   const categories = [
-    { id: "fashion", name: "패션", icon: "👗", query: "여성패션" },
-    { id: "beauty", name: "뷰티", icon: "💄", query: "스킨케어" },
-    { id: "digital", name: "디지털", icon: "💻", query: "노트북" },
-    { id: "sports", name: "스포츠/레저", icon: "⚽", query: "캠핑용품" },
-    { id: "food", name: "식품", icon: "🍎", query: "건강식품" },
-    { id: "home", name: "생활용품", icon: "🏠", query: "주방용품" },
+    { id: "women", name: "여성패션", icon: "👗", query: "여성 인기" },
+    { id: "men", name: "남성패션", icon: "👔", query: "남성 인기" },
+    { id: "beauty", name: "뷰티", icon: "💄", query: "베스트 뷰티" },
+    { id: "kids", name: "출산/유아동", icon: "👶", query: "유아 베스트" },
+    { id: "digital", name: "디지털", icon: "💻", query: "전자제품 베스트" },
+    { id: "appliance", name: "가전", icon: "📺", query: "가전 베스트" },
+    { id: "sports", name: "스포츠", icon: "⚽", query: "스포츠 인기" },
+    { id: "outdoor", name: "아웃도어", icon: "🏕", query: "캠핑 베스트" },
+    { id: "food", name: "식품", icon: "🍎", query: "건강식품 인기" },
+    { id: "kitchen", name: "주방", icon: "🍳", query: "주방용품 인기" },
+    { id: "home", name: "홈인테리어", icon: "🏠", query: "인테리어 인기" },
+    { id: "pet", name: "반려동물", icon: "🐶", query: "강아지 용품" },
+    { id: "office", name: "문구/오피스", icon: "📎", query: "사무용품 인기" },
+    { id: "auto", name: "자동차용품", icon: "🚗", query: "차량용품 인기" },
+    { id: "books", name: "도서", icon: "📚", query: "베스트셀러" },
+    { id: "travel", name: "여행/취미", icon: "✈️", query: "여행용품 인기" },
   ];
 
   const results = await Promise.all(
@@ -275,10 +321,11 @@ function extractNaverKeyword(name: string): string | null {
 
 
 // ─── 네이버 쇼핑 검색 (공식 API + HTML 폴백) ───
-async function crawlNaverSearch(keyword: string): Promise<{products: Product[], debug?: any}> {
+async function crawlNaverSearch(keyword: string): Promise<{products: Product[], debug?: any, usedMethod?: string}> {
   // 옵션 1: 네이버 공식 검색 API (NAVER_CLIENT_ID/SECRET 설정 시)
   if (NAVER_CLIENT_ID && NAVER_CLIENT_SECRET) {
-    return await searchNaverShopAPI(keyword);
+    const r = await searchNaverShopAPI(keyword);
+    return { ...r, usedMethod: "api" };
   }
 
   // 옵션 2: HTML 크롤링 (백업)
@@ -308,6 +355,7 @@ async function crawlNaverSearch(keyword: string): Promise<{products: Product[], 
   if (products.length === 0) {
     return {
       products: [],
+      usedMethod: "html",
       debug: {
         httpStatus: res.status,
         htmlLength: html.length,
@@ -317,7 +365,7 @@ async function crawlNaverSearch(keyword: string): Promise<{products: Product[], 
       },
     };
   }
-  return { products };
+  return { products, usedMethod: "html" };
 }
 
 // ─── 네이버 공식 쇼핑 검색 API ───
@@ -449,6 +497,7 @@ serve(async (req) => {
 
     let products: Product[] = [];
     let debug: any = null;
+    let usedMethod: string | undefined = undefined;
     let usedSource = source;
 
     switch (source) {
@@ -460,6 +509,7 @@ serve(async (req) => {
         const r = await crawlGmarketSearch(keyword);
         products = r.products;
         debug = r.debug;
+        usedMethod = r.usedMethod;
         break;
       }
       case "naver-search": {
@@ -467,15 +517,24 @@ serve(async (req) => {
         const r = await crawlNaverSearch(keyword);
         products = r.products;
         debug = r.debug;
+        usedMethod = r.usedMethod;
         break;
       }
       case "naver-trending": {
         const r = await fetchNaverTrendingKeywords();
-        // 키워드 그룹화 응답 (products는 비어있음)
         return new Response(JSON.stringify({
           source: "naver-trending",
           categories: r.categories,
           debug: r.debug,
+        }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }
+      case "naver-multi-mall": {
+        if (!keyword) throw new Error("keyword required");
+        const r = await searchNaverMultiMall(keyword);
+        return new Response(JSON.stringify({
+          source: "naver-multi-mall",
+          keyword: keyword,
+          byMall: r.byMall,
         }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
       }
       default:
@@ -501,6 +560,7 @@ serve(async (req) => {
       keyword: keyword,
       count: products.length,
       products: products,
+      usedMethod: usedMethod,  // 'api' / 'scraping' / 'naver-fallback' / 'html'
       debug: debug,
     }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
