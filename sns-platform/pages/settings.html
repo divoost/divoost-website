@@ -793,9 +793,11 @@
                 }
                 if(chId === 'facebook'){
                     html += '<button class="btn-add-account" style="border-color:#1877f2;color:#1877f2;background:#e7f0ff;margin-top:6px" onclick="connectFacebookOAuth()">🔗 Facebook 계정으로 한 번에 연동 (선택형)</button>';
+                    html += '<button class="btn-add-account" style="border-color:#94a3b8;color:#475569;margin-top:6px" onclick="openSetupWizard(\'facebook\')">📘 Facebook 설정 방법 보기</button>';
                 }
                 if(chId === 'instagram'){
                     html += '<button class="btn-add-account" style="border-color:#ec4899;color:#ec4899;background:#fdf2f8;margin-top:6px" onclick="autoConnectInstagramFromFacebook()">⚡ Facebook 페이지에서 Instagram 자동 연결 (선택형)</button>';
+                    html += '<button class="btn-add-account" style="border-color:#94a3b8;color:#475569;margin-top:6px" onclick="openSetupWizard(\'instagram\')">📸 Instagram 설정 방법 보기</button>';
                 }
                 if(chId === 'tiktok'){
                     html += '<button class="btn-add-account" style="border-color:#000;color:#fff;background:linear-gradient(135deg,#000,#1a1a1a);margin-top:6px" onclick="connectTikTokOAuth()">🎵 TikTok 계정으로 한 번에 연동 (OAuth)</button>';
@@ -1608,5 +1610,118 @@
     <script>
         if("serviceWorker" in navigator){ navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
     </script>
+    <!-- ─── SNS 연동 설정 위저드 (단계별 모달) ─── -->
+    <style>
+        .wz-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:2000;padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+        .wz-overlay.open{display:flex;align-items:flex-start;justify-content:center}
+        .wz-modal{background:#fff;border-radius:16px;max-width:440px;width:100%;margin:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;animation:wzIn .2s ease}
+        @keyframes wzIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+        .wz-head{padding:18px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f1f5f9}
+        .wz-head h3{font-size:1.05rem;font-weight:800;flex:1;color:#0f172a;margin:0}
+        .wz-close{width:34px;height:34px;border:none;background:#f1f5f9;border-radius:50%;font-size:1rem;cursor:pointer;color:#475569;flex-shrink:0;line-height:1}
+        .wz-close:hover{background:#e2e8f0}
+        .wz-dots{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 0 2px}
+        .wz-dot{width:11px;height:11px;border-radius:50%;background:#e2e8f0;transition:.2s}
+        .wz-dot.done{background:#3b82f6}
+        .wz-dot.cur{background:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.2)}
+        .wz-count{text-align:center;font-size:.74rem;color:#94a3b8;font-weight:600;margin-bottom:4px}
+        .wz-body{padding:6px 24px 16px;text-align:center}
+        .wz-icon{font-size:2.4rem;margin:6px 0 10px}
+        .wz-step-title{font-size:1.02rem;font-weight:800;color:#0f172a;margin-bottom:12px}
+        .wz-step-body{font-size:.88rem;line-height:1.7;color:#334155;text-align:left;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px}
+        .wz-step-body b{color:#0f172a}
+        .wz-tip{margin-top:10px;font-size:.8rem;line-height:1.6;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:9px;padding:10px 12px;text-align:left}
+        .wz-foot{display:flex;gap:8px;padding:8px 20px 20px}
+        .wz-btn{flex:1;padding:13px;min-height:48px;border-radius:10px;font-size:.88rem;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:.15s}
+        .wz-btn.prev{background:#f1f5f9;color:#475569}
+        .wz-btn.prev:disabled{opacity:.4;cursor:default}
+        .wz-btn.next{background:#3b82f6;color:#fff}
+        .wz-btn.next:hover{background:#2563eb}
+        .wz-btn.action{background:linear-gradient(135deg,#1877f2,#0d5fd6);color:#fff;flex:1.6}
+        .wz-btn.action:hover{filter:brightness(1.06)}
+        @media(max-width:480px){.wz-overlay{padding:0}.wz-modal{border-radius:0;min-height:100%}}
+    </style>
+    <div class="wz-overlay" id="wzOverlay" onclick="if(event.target===this)closeWizard()">
+        <div class="wz-modal" role="dialog" aria-modal="true" aria-labelledby="wzTitle">
+            <div class="wz-head"><h3 id="wzTitle">연동 설정</h3><button class="wz-close" onclick="closeWizard()" aria-label="닫기">✕</button></div>
+            <div class="wz-count" id="wzCount"></div>
+            <div class="wz-dots" id="wzDots"></div>
+            <div class="wz-body" id="wzBody"></div>
+            <div class="wz-foot" id="wzFoot"></div>
+        </div>
+    </div>
+    <script>
+        // ─── SNS 연동 설정 위저드 데이터 (최신 방식) ───
+        var SETUP_WIZARD = {
+            facebook: {
+                title: '📘 Facebook 연동 설정',
+                steps: [
+                    { icon:'📄', title:'1. 비즈니스 페이지 준비', body:'개인 프로필이 아닌 <b>Facebook 비즈니스 페이지</b>가 필요합니다. 없으시면 <b>facebook.com/pages/create</b> 에서 무료로 만드세요.', tip:'개인 계정만으로는 연동이 불가능합니다.' },
+                    { icon:'🔑', title:'2. 페이지 관리자 권한 확인', body:'연동할 페이지의 <b>관리자(또는 편집자)</b> 권한이 있어야 합니다. 페이지 설정 ▸ 페이지 역할에서 확인하세요.' },
+                    { icon:'🔗', title:'3. 한 번에 연동하기', body:'아래 <b>[지금 Facebook 연동하기]</b> 버튼을 누르고 → Facebook 로그인 → 권한 허용 → <b>관리할 페이지 선택</b> 순서로 진행합니다.' },
+                    { icon:'✅', title:'4. 완료', body:'선택한 페이지가 등록됩니다. 페이지에 <b>Instagram 비즈니스 계정</b>이 연결돼 있으면 인스타도 <b>자동으로 함께 등록</b>됩니다.', tip:'"알 수 없는 JSSDK 호스트 도메인" 에러가 나면 운영자에게 문의하세요 (앱 도메인 설정 문제).' }
+                ],
+                action: { label:'⚡ 지금 Facebook 연동하기', fn:'connectFacebookOAuth' }
+            },
+            instagram: {
+                title: '📸 Instagram 연동 설정',
+                steps: [
+                    { icon:'🔄', title:'1. 프로페셔널 계정으로 전환', body:'Instagram 앱 ▸ 설정 ▸ 계정 ▸ <b>비즈니스 또는 크리에이터 계정</b>으로 전환하세요.', tip:'개인 계정은 API 연동이 불가합니다.' },
+                    { icon:'🔗', title:'2. Facebook 페이지에 연결', body:'Instagram을 본인 <b>Facebook 페이지</b>와 연결하세요. (Instagram 설정 ▸ 연결된 계정, 또는 Facebook 페이지 설정 ▸ 연결된 계정)', tip:'이 연결이 없으면 인스타가 목록에 나타나지 않습니다.' },
+                    { icon:'⚡', title:'3. Facebook 연동으로 자동 등록', body:'Instagram은 <b>Facebook을 통해(Graph API 경유)</b> 연동됩니다. 아래 버튼으로 Facebook 연동을 하면, 연결된 인스타가 <b>자동으로 등록</b>됩니다.' },
+                    { icon:'✅', title:'4. 완료', body:'<b>이미지·영상</b>이 포함된 콘텐츠를 인스타로 발행할 수 있습니다.', tip:'텍스트만으로는 발행 불가, 1일 25건 한도 (Meta 정책).' }
+                ],
+                action: { label:'⚡ Facebook으로 연동 (IG 자동 포함)', fn:'connectFacebookOAuth' }
+            }
+        };
+
+        var WZ = { key: null, idx: 0 };
+
+        function renderWizard(){
+            var d = SETUP_WIZARD[WZ.key];
+            if(!d){ return; }
+            document.getElementById('wzTitle').textContent = d.title;
+            document.getElementById('wzCount').textContent = (WZ.idx + 1) + ' / ' + d.steps.length + ' 단계';
+            var dots = '', i;
+            for(i = 0; i < d.steps.length; i++){
+                var cls = i < WZ.idx ? 'done' : (i === WZ.idx ? 'cur' : '');
+                dots += '<span class="wz-dot ' + cls + '"></span>';
+            }
+            document.getElementById('wzDots').innerHTML = dots;
+
+            var s = d.steps[WZ.idx];
+            var body = '<div class="wz-icon">' + s.icon + '</div><div class="wz-step-title">' + s.title + '</div><div class="wz-step-body">' + s.body + '</div>';
+            if(s.tip){ body += '<div class="wz-tip">⚠ ' + s.tip + '</div>'; }
+            document.getElementById('wzBody').innerHTML = body;
+
+            var last = WZ.idx === d.steps.length - 1;
+            var foot = '<button class="wz-btn prev" onclick="wizardPrev()"' + (WZ.idx === 0 ? ' disabled' : '') + '>← 이전</button>';
+            foot += last
+                ? '<button class="wz-btn action" onclick="wizardAction()">' + d.action.label + '</button>'
+                : '<button class="wz-btn next" onclick="wizardNext()">다음 →</button>';
+            document.getElementById('wzFoot').innerHTML = foot;
+        }
+
+        function openSetupWizard(key){
+            if(!SETUP_WIZARD[key]){ return; }
+            WZ.key = key; WZ.idx = 0;
+            renderWizard();
+            document.getElementById('wzOverlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function wizardNext(){ var d = SETUP_WIZARD[WZ.key]; if(d && WZ.idx < d.steps.length - 1){ WZ.idx++; renderWizard(); } }
+        function wizardPrev(){ if(WZ.idx > 0){ WZ.idx--; renderWizard(); } }
+        function closeWizard(){ document.getElementById('wzOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+        function wizardAction(){
+            var d = SETUP_WIZARD[WZ.key];
+            closeWizard();
+            if(d && typeof window[d.action.fn] === 'function'){ window[d.action.fn](); }
+        }
+        document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ closeWizard(); } });
+    </script>
+
+    <script src="../js/i18n-auto.js"></script>
+    <script src="../js/i18n-common.js"></script>
+    <script src="../js/i18n.js"></script>
 </body>
 </html>
