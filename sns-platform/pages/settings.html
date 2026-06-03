@@ -801,6 +801,7 @@
                 }
                 if(chId === 'tiktok'){
                     html += '<button class="btn-add-account" style="border-color:#000;color:#fff;background:linear-gradient(135deg,#000,#1a1a1a);margin-top:6px" onclick="connectTikTokOAuth()">🎵 TikTok 계정으로 한 번에 연동 (OAuth)</button>';
+                    html += '<button class="btn-add-account" style="border-color:#94a3b8;color:#475569;margin-top:6px" onclick="openSetupWizard(\'tiktok\')">🎵 TikTok 설정 방법 보기</button>';
                 }
                 html += '<div class="guide-text">📌 ' + def.guide + '</div>';
                 html += '</div>';
@@ -923,7 +924,9 @@
         // ─── TikTok OAuth 연동 ───
         // TikTok 개발자 콘솔에서 발급받은 Client Key (Client Secret 은 Edge Function에만)
         var TIKTOK_CLIENT_KEY = ''; // ← 마스터가 콘솔에서 발급받은 Client Key 입력
-        var TIKTOK_REDIRECT_URI = location.origin + '/divoost-website/sns-platform/pages/tiktok-callback.html';
+        // redirect URI: 현재 settings.html 위치 기준으로 같은 폴더의 tiktok-callback.html 자동 계산
+        // (하드코딩 경로 제거 → 커스텀 도메인/서브경로 어디서든 콜백과 정확히 일치)
+        var TIKTOK_REDIRECT_URI = location.origin + location.pathname.replace(/[^/]*$/, 'tiktok-callback.html');
 
         window.connectTikTokOAuth = function(){
             if(!TIKTOK_CLIENT_KEY){
@@ -1672,6 +1675,17 @@
                     { icon:'✅', title:'4. 완료', body:'<b>이미지·영상</b>이 포함된 콘텐츠를 인스타로 발행할 수 있습니다.', tip:'텍스트만으로는 발행 불가, 1일 25건 한도 (Meta 정책).' }
                 ],
                 action: { label:'⚡ Facebook으로 연동 (IG 자동 포함)', fn:'connectFacebookOAuth' }
+            },
+            tiktok: {
+                title: '🎵 TikTok 연동 설정',
+                steps: [
+                    { icon:'🔄', title:'1. 비즈니스 계정으로 전환', body:'TikTok 앱 ▸ 설정 및 개인정보 ▸ 계정 ▸ <b>비즈니스 계정으로 전환</b>하세요.', tip:'개인 계정은 Content Posting API 연동이 제한됩니다.' },
+                    { icon:'🧩', title:'2. 개발자 앱 등록', body:'<b>developers.tiktok.com</b> ▸ 앱 생성 ▸ 제품에 <b>Login Kit</b> 와 <b>Content Posting API</b> 추가.', tip:'Client Key·Client Secret 이 발급됩니다.' },
+                    { icon:'🔗', title:'3. 리디렉션 URI 등록', body:'앱 설정의 Redirect URI 에 아래 주소를 <b>정확히</b> 등록하세요:<br><b>https://hubontrade.com/sns-platform/pages/tiktok-callback.html</b>' },
+                    { icon:'🛡', title:'4. 심사 + 키 설정', body:'Content Posting API는 <b>TikTok 심사</b>가 필요합니다(수일 소요). 발급받은 <b>Client Key</b>는 운영자에게 전달, <b>Client Secret</b>은 서버(Edge Function)에만 보관합니다.', tip:'Client Secret 은 절대 화면/코드에 노출하지 마세요.' },
+                    { icon:'✅', title:'5. 연동하기', body:'설정이 끝나면 아래 <b>[TikTok 연동하기]</b> 버튼으로 로그인 → 권한 허용 → 완료. <b>영상만</b> 발행 가능합니다.' }
+                ],
+                action: { label:'🎵 TikTok 연동하기', fn:'connectTikTokOAuth' }
             }
         };
 
