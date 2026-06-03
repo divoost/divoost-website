@@ -52,6 +52,23 @@
             </header>
 
             <div class="content">
+                <!-- 설정 안내 (최상단) -->
+                <div class="setup-intro">
+                    <div class="setup-intro-text">
+                        <h3>👋 처음 오셨나요? 먼저 연동 설정부터 해주세요</h3>
+                        <p>SNS 채널을 연결하면 Facebook·Instagram·TikTok 등 7개 플랫폼에 한 번에 발행하고 AI로 콘텐츠를 만들 수 있어요.<br>설정 페이지에서 내 계정을 안전하게 연동하고, 막히는 부분은 단계별 가이드를 확인하세요.</p>
+                    </div>
+                    <button class="setup-intro-btn" onclick="location.href='pages/settings.html'">⚙️ 설정하러 가기</button>
+                </div>
+                <style>
+                    .setup-intro{background:linear-gradient(135deg,#1e40af,#7c3aed);color:#fff;border-radius:14px;padding:20px 22px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+                    .setup-intro-text h3{font-size:1.05rem;font-weight:800;margin-bottom:6px}
+                    .setup-intro-text p{font-size:.84rem;line-height:1.6;opacity:.95}
+                    .setup-intro-btn{background:#fff;color:#1e40af;border:none;border-radius:10px;padding:13px 22px;font-size:.9rem;font-weight:800;cursor:pointer;white-space:nowrap;min-height:48px;flex-shrink:0;transition:.18s;font-family:inherit}
+                    .setup-intro-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.2)}
+                    @media(max-width:600px){.setup-intro{flex-direction:column;align-items:stretch;text-align:center}.setup-intro-btn{width:100%}}
+                </style>
+
                 <!-- Promo Banner -->
                 <div class="promo-banner">
                     <div class="promo-banner-left">
