@@ -22,7 +22,14 @@
     var current = (saved && LANGS.indexOf(saved) > -1) ? saved : 'ko';
 
     function dictFor(lang){
-        return (window.I18N_DICT && window.I18N_DICT[lang]) || {};
+        // 공통 사전(window.I18N_COMMON: 사이드바/메뉴 등) + 페이지 사전(window.I18N_DICT) 병합
+        // 같은 키는 페이지 사전이 공통을 덮어씀
+        var common = (window.I18N_COMMON && window.I18N_COMMON[lang]) || {};
+        var page = (window.I18N_DICT && window.I18N_DICT[lang]) || {};
+        var out = {}, k;
+        for(k in common){ if(common.hasOwnProperty(k)){ out[k] = common[k]; } }
+        for(k in page){ if(page.hasOwnProperty(k)){ out[k] = page[k]; } }
+        return out;
     }
 
     function t(key){

@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
     <link rel="manifest" href="manifest.json">
-    <title>SNS 콘텐츠 플랫폼 | DIVOOST</title>
+    <title data-i18n="doc_title">SNS 콘텐츠 플랫폼 | DIVOOST</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/sns.css">
 </head>
@@ -17,22 +17,22 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-logo">
                 <div class="logo-icon">📱</div>
-                <div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div>
+                <div class="logo-text" data-i18n-html="sb_brand">SNS 콘텐츠<small>자동화 플랫폼</small></div>
             </div>
             <div class="sidebar-profile" onclick="location.href='pages/settings.html'">
                 <div class="profile-avatar">D</div>
                 <div class="profile-info">
                     <div class="profile-email">divoost@user.com</div>
-                    <div class="profile-plan">체험플랜 사용 중</div>
+                    <div class="profile-plan" data-i18n="profile_plan_trial">체험플랜 사용 중</div>
                 </div>
                 <div class="profile-arrow">▼</div>
             </div>
             <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="index.html" class="nav-link active"><span>🏠</span> 종합 현황</a><a href="pages/calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="pages/create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="pages/ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="pages/media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="pages/templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
-                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="pages/publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="pages/schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="pages/history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
-                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="pages/engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="pages/listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="pages/analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
-                <div class="nav-section"><div class="nav-title">시스템</div><a href="pages/settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="pages/billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="pages/safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
+                <div class="nav-section"><div class="nav-title" data-i18n="nav_title_dashboard">대시보드</div><a href="index.html" class="nav-link active"><span>🏠</span> <span data-i18n="nav_home">종합 현황</span></a><a href="pages/calendar.html" class="nav-link"><span>📅</span> <span data-i18n="nav_calendar">캘린더</span></a></div>
+                <div class="nav-section"><div class="nav-title" data-i18n="nav_title_content">콘텐츠 생성</div><a href="pages/create.html" class="nav-link"><span>✍️</span> <span data-i18n="nav_create">콘텐츠 만들기</span></a><a href="pages/ai-writer.html" class="nav-link"><span>🤖</span> <span data-i18n="nav_ai">AI 작성기</span></a><a href="pages/media.html" class="nav-link"><span>🖼</span> <span data-i18n="nav_media">미디어</span></a><a href="pages/templates.html" class="nav-link"><span>📋</span> <span data-i18n="nav_templates">템플릿</span></a></div>
+                <div class="nav-section"><div class="nav-title" data-i18n="nav_title_posting">포스팅 관리</div><a href="pages/publish.html" class="nav-link"><span>🚀</span> <span data-i18n="nav_publish">포스팅</span></a><a href="pages/schedule.html" class="nav-link"><span>⏰</span> <span data-i18n="nav_schedule">예약 발행</span></a><a href="pages/history.html" class="nav-link"><span>📜</span> <span data-i18n="nav_history">발행 이력</span></a></div>
+                <div class="nav-section"><div class="nav-title" data-i18n="nav_title_interaction">인터렉션</div><a href="pages/engagement.html" class="nav-link"><span>💬</span> <span data-i18n="nav_engagement">댓글/반응</span></a><a href="pages/listening.html" class="nav-link"><span>👂</span> <span data-i18n="nav_listening">소셜 리스닝</span></a><a href="pages/analytics.html" class="nav-link"><span>📈</span> <span data-i18n="nav_analytics">분석 리포트</span></a></div>
+                <div class="nav-section"><div class="nav-title" data-i18n="nav_title_system">시스템</div><a href="pages/settings.html" class="nav-link"><span>⚙️</span> <span data-i18n="nav_settings">설정</span></a><a href="pages/billing.html" class="nav-link"><span>💳</span> <span data-i18n="nav_billing">요금제/크레딧</span></a><a href="pages/safety-guide.html" class="nav-link"><span>⚠️</span> <span data-i18n="nav_guide">운영 가이드</span></a></div>
             </nav>
         </aside>
 
@@ -41,13 +41,18 @@
                 <div class="top-bar-left">
                     <button class="menu-btn" id="menuBtn">☰</button>
                     <div>
-                        <div class="top-bar-title">🏠 홈</div>
-                        <div class="top-bar-sub">나의 플랜 정보 및 콘텐츠 운영 현황을 확인할 수 있는 페이지입니다</div>
+                        <div class="top-bar-title" data-i18n="tb_title">🏠 홈</div>
+                        <div class="top-bar-sub" data-i18n="tb_sub">나의 플랜 정보 및 콘텐츠 운영 현황을 확인할 수 있는 페이지입니다</div>
                     </div>
                 </div>
                 <div class="top-bar-right">
-                    <button class="top-bar-icon-btn" title="알림">🔔</button>
-                    <button class="top-bar-btn" onclick="location.href='pages/settings.html'">사용에 어려운 점이 있나요? <span style="font-size:10px">▼</span></button>
+                    <select id="langSelect" class="lang-select" onchange="I18N.setLang(this.value)" aria-label="Language">
+                        <option value="ko">🇰🇷 한국어</option>
+                        <option value="en">🇺🇸 English</option>
+                        <option value="vi">🇻🇳 Tiếng Việt</option>
+                    </select>
+                    <button class="top-bar-icon-btn" data-i18n-title="tb_alarm" title="알림">🔔</button>
+                    <button class="top-bar-btn" onclick="location.href='pages/settings.html'"><span data-i18n="help_btn">사용에 어려운 점이 있나요?</span> <span style="font-size:10px">▼</span></button>
                 </div>
             </header>
 
@@ -55,10 +60,10 @@
                 <!-- 설정 안내 (최상단) -->
                 <div class="setup-intro">
                     <div class="setup-intro-text">
-                        <h3>👋 처음 오셨나요? 먼저 연동 설정부터 해주세요</h3>
-                        <p>SNS 채널을 연결하면 Facebook·Instagram·TikTok 등 7개 플랫폼에 한 번에 발행하고 AI로 콘텐츠를 만들 수 있어요.<br>설정 페이지에서 내 계정을 안전하게 연동하고, 막히는 부분은 단계별 가이드를 확인하세요.</p>
+                        <h3 data-i18n="setup_intro_title">👋 처음 오셨나요? 먼저 연동 설정부터 해주세요</h3>
+                        <p data-i18n-html="setup_intro_text">SNS 채널을 연결하면 Facebook·Instagram·TikTok 등 7개 플랫폼에 한 번에 발행하고 AI로 콘텐츠를 만들 수 있어요.<br>설정 페이지에서 내 계정을 안전하게 연동하고, 막히는 부분은 단계별 가이드를 확인하세요.</p>
                     </div>
-                    <button class="setup-intro-btn" onclick="location.href='pages/settings.html'">⚙️ 설정하러 가기</button>
+                    <button class="setup-intro-btn" onclick="location.href='pages/settings.html'" data-i18n="setup_intro_btn">⚙️ 설정하러 가기</button>
                 </div>
                 <style>
                     .setup-intro{background:linear-gradient(135deg,#1e40af,#7c3aed);color:#fff;border-radius:14px;padding:20px 22px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
@@ -67,21 +72,23 @@
                     .setup-intro-btn{background:#fff;color:#1e40af;border:none;border-radius:10px;padding:13px 22px;font-size:.9rem;font-weight:800;cursor:pointer;white-space:nowrap;min-height:48px;flex-shrink:0;transition:.18s;font-family:inherit}
                     .setup-intro-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.2)}
                     @media(max-width:600px){.setup-intro{flex-direction:column;align-items:stretch;text-align:center}.setup-intro-btn{width:100%}}
+                    .lang-select{padding:7px 10px;min-height:38px;border:1px solid #e2e8f0;border-radius:8px;background:#fff;color:#334155;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+                    .lang-select:focus{outline:none;border-color:#3b82f6}
                 </style>
 
                 <!-- Promo Banner -->
                 <div class="promo-banner">
                     <div class="promo-banner-left">
-                        <span class="promo-banner-tag">(신규유저 필수) SNS 채널 연동</span>
-                        <span class="promo-banner-text">SNS 채널 연동 가이드와 함께 쉽게 7개 채널을 연동할 수 있어요. 지금 바로 시작해 볼까요?</span>
+                        <span class="promo-banner-tag" data-i18n="promo_tag">(신규유저 필수) SNS 채널 연동</span>
+                        <span class="promo-banner-text" data-i18n="promo_text">SNS 채널 연동 가이드와 함께 쉽게 7개 채널을 연동할 수 있어요. 지금 바로 시작해 볼까요?</span>
                     </div>
-                    <button class="promo-banner-btn" onclick="location.href='pages/settings.html'">🔗 채널 연동하기</button>
+                    <button class="promo-banner-btn" onclick="location.href='pages/settings.html'" data-i18n="promo_btn">🔗 채널 연동하기</button>
                 </div>
 
                 <!-- SNS 바로가기 -->
-                <div class="section-title" style="margin-top:16px">🔗 내 SNS 바로가기</div>
+                <div class="section-title" style="margin-top:16px" data-i18n="shortcuts_title">🔗 내 SNS 바로가기</div>
                 <div id="snsShortcuts" class="sns-shortcuts">
-                    <div style="grid-column:1/-1;text-align:center;padding:20px;color:#94a3b8;font-size:.85rem">불러오는 중...</div>
+                    <div style="grid-column:1/-1;text-align:center;padding:20px;color:#94a3b8;font-size:.85rem" data-i18n="loading">불러오는 중...</div>
                 </div>
 
                 <style>
@@ -104,35 +111,35 @@
                     <!-- 체험 플랜 -->
                     <div class="dash-card">
                         <div class="dash-card-header">
-                            <div class="dash-card-title">🎁 체험 플랜</div>
+                            <div class="dash-card-title" data-i18n="card_trial_title">🎁 체험 플랜</div>
                         </div>
-                        <div class="plan-card-body">DIVOOST SNS 플랫폼의 모든 서비스를 경험해 볼 수 있는 체험 플랜을 이용 중입니다.</div>
+                        <div class="plan-card-body" data-i18n="card_trial_body">DIVOOST SNS 플랫폼의 모든 서비스를 경험해 볼 수 있는 체험 플랜을 이용 중입니다.</div>
                         <div class="plan-date-badge" id="planDaysLeft">30일 이용가능</div>
                         <div class="plan-date" id="planPeriod">26.05.28 - 26.06.27</div>
-                        <button class="plan-btn" onclick="location.href='pages/settings.html'">플랜 이용하기 ›</button>
+                        <button class="plan-btn" onclick="location.href='pages/settings.html'" data-i18n="card_trial_btn">플랜 이용하기 ›</button>
                     </div>
 
                     <!-- 공지사항 -->
                     <div class="dash-card">
                         <div class="dash-card-header">
-                            <div class="dash-card-title">📋 공지사항</div>
+                            <div class="dash-card-title" data-i18n="card_notice_title">📋 공지사항</div>
                             <button class="dash-card-action">+</button>
                         </div>
                         <ul class="notice-list">
-                            <li class="notice-item"><span class="notice-tag">공지</span><span class="notice-text">SNS 채널 7개 (FB/IG/TT 등) 통합 관리 기능 출시</span><span class="notice-date">05.28</span></li>
-                            <li class="notice-item"><span class="notice-tag">공지</span><span class="notice-text">AI 작성기 다중 플랫폼 동시 생성 지원</span><span class="notice-date">05.27</span></li>
-                            <li class="notice-item"><span class="notice-tag">업데이트</span><span class="notice-text">이미지/동영상 옵션 추가 (크기, 비율, 프레임)</span><span class="notice-date">05.27</span></li>
-                            <li class="notice-item"><span class="notice-tag">신규</span><span class="notice-text">설정 페이지에서 API 키 통합 관리 가능</span><span class="notice-date">05.27</span></li>
+                            <li class="notice-item"><span class="notice-tag" data-i18n="tag_notice">공지</span><span class="notice-text" data-i18n="notice1">SNS 채널 7개 (FB/IG/TT 등) 통합 관리 기능 출시</span><span class="notice-date">05.28</span></li>
+                            <li class="notice-item"><span class="notice-tag" data-i18n="tag_notice">공지</span><span class="notice-text" data-i18n="notice2">AI 작성기 다중 플랫폼 동시 생성 지원</span><span class="notice-date">05.27</span></li>
+                            <li class="notice-item"><span class="notice-tag" data-i18n="tag_update">업데이트</span><span class="notice-text" data-i18n="notice3">이미지/동영상 옵션 추가 (크기, 비율, 프레임)</span><span class="notice-date">05.27</span></li>
+                            <li class="notice-item"><span class="notice-tag" data-i18n="tag_new">신규</span><span class="notice-text" data-i18n="notice4">설정 페이지에서 API 키 통합 관리 가능</span><span class="notice-date">05.27</span></li>
                         </ul>
                     </div>
 
                     <!-- 자주하는 질문 -->
                     <div class="dash-card">
                         <div class="dash-card-header">
-                            <div class="dash-card-title">❓ 자주하는 질문</div>
+                            <div class="dash-card-title" data-i18n="card_faq_title">❓ 자주하는 질문</div>
                         </div>
-                        <div class="faq-body">DIVOOST SNS 콘텐츠 플랫폼에 대해서 운영자님들께서 가장 자주 하시는 질문을 모두 모았습니다.</div>
-                        <a class="faq-btn" href="#">자주하는 질문 보기 ›</a>
+                        <div class="faq-body" data-i18n="card_faq_body">DIVOOST SNS 콘텐츠 플랫폼에 대해서 운영자님들께서 가장 자주 하시는 질문을 모두 모았습니다.</div>
+                        <a class="faq-btn" href="#" data-i18n="card_faq_btn">자주하는 질문 보기 ›</a>
                     </div>
                 </div>
 
@@ -140,18 +147,18 @@
                 <div class="stats-row">
                     <div class="stats-section">
                         <div class="stats-section-title"><span class="star">⭐</span> TODAY</div>
-                        <div class="stats-section-sub">오늘 발행/예약된 콘텐츠 수를 확인해봐요.</div>
+                        <div class="stats-section-sub" data-i18n="today_sub">오늘 발행/예약된 콘텐츠 수를 확인해봐요.</div>
 
                         <div class="stats-block">
-                            <div class="stats-block-title">오늘 발행 콘텐츠 수</div>
+                            <div class="stats-block-title" data-i18n="today_count_title">오늘 발행 콘텐츠 수</div>
                             <div class="stats-row-item">
-                                <div class="stats-row-label">오늘 발행</div>
+                                <div class="stats-row-label" data-i18n="today_publish">오늘 발행</div>
                                 <div class="stats-row-value" id="todayCount">0 건</div>
                             </div>
                         </div>
 
                         <div class="stats-block">
-                            <div class="stats-block-title">오늘 채널별 발행 수</div>
+                            <div class="stats-block-title" data-i18n="today_channel_title">오늘 채널별 발행 수</div>
                             <table class="channel-table" id="todayChannelTable">
                                 <tr><td class="ch-name-cell">📘 Facebook</td><td class="ch-value-cell disconnected"> 미연동 채널</td><td class="ch-name-cell">📸 Instagram</td><td class="ch-value-cell disconnected"> 미연동 채널</td></tr>
                                 <tr><td class="ch-name-cell">🎵 TikTok</td><td class="ch-value-cell disconnected"> 미연동 채널</td><td class="ch-name-cell">📗 네이버 블로그</td><td class="ch-value-cell disconnected"> 미연동 채널</td></tr>
@@ -163,18 +170,18 @@
 
                     <div class="stats-section">
                         <div class="stats-section-title"><span class="flag">🚩</span> TOTAL</div>
-                        <div class="stats-section-sub">나의 전체 발행 콘텐츠 수를 확인해봐요.</div>
+                        <div class="stats-section-sub" data-i18n="total_sub">나의 전체 발행 콘텐츠 수를 확인해봐요.</div>
 
                         <div class="stats-block">
-                            <div class="stats-block-title">전체 발행 콘텐츠 수</div>
+                            <div class="stats-block-title" data-i18n="total_count_title">전체 발행 콘텐츠 수</div>
                             <div class="stats-row-item">
-                                <div class="stats-row-label">전체 발행</div>
+                                <div class="stats-row-label" data-i18n="total_publish">전체 발행</div>
                                 <div class="stats-row-value" id="totalCount">0 건</div>
                             </div>
                         </div>
 
                         <div class="stats-block">
-                            <div class="stats-block-title">전체 채널별 발행 수</div>
+                            <div class="stats-block-title" data-i18n="total_channel_title">전체 채널별 발행 수</div>
                             <table class="channel-table" id="totalChannelTable">
                                 <tr><td class="ch-name-cell">📘 Facebook</td><td class="ch-value-cell disconnected"> 미연동 채널</td><td class="ch-name-cell">📸 Instagram</td><td class="ch-value-cell disconnected"> 미연동 채널</td></tr>
                                 <tr><td class="ch-name-cell">🎵 TikTok</td><td class="ch-value-cell disconnected"> 미연동 채널</td><td class="ch-name-cell">📗 네이버 블로그</td><td class="ch-value-cell disconnected"> 미연동 채널</td></tr>
@@ -186,41 +193,109 @@
                 </div>
 
                 <!-- KPI Cards -->
-                <div class="section-title">📊 통합 KPI</div>
+                <div class="section-title" data-i18n="kpi_title">📊 통합 KPI</div>
                 <div class="kpi-row">
-                    <div class="kpi-card"><div class="kpi-icon">📝</div><div class="kpi-value" id="kpi-posts">0</div><div class="kpi-label">이번 주 포스팅</div></div>
-                    <div class="kpi-card"><div class="kpi-icon">❤️</div><div class="kpi-value" id="kpi-likes">0</div><div class="kpi-label">총 좋아요</div></div>
-                    <div class="kpi-card"><div class="kpi-icon">💬</div><div class="kpi-value" id="kpi-comments">0</div><div class="kpi-label">총 댓글</div></div>
-                    <div class="kpi-card"><div class="kpi-icon">🔄</div><div class="kpi-value" id="kpi-shares">0</div><div class="kpi-label">총 공유</div></div>
-                    <div class="kpi-card"><div class="kpi-icon">👁</div><div class="kpi-value" id="kpi-views">0</div><div class="kpi-label">총 조회수</div></div>
-                    <div class="kpi-card"><div class="kpi-icon">📱</div><div class="kpi-value" id="kpi-channels">0</div><div class="kpi-label">연결 채널</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">📝</div><div class="kpi-value" id="kpi-posts">0</div><div class="kpi-label" data-i18n="kpi_posts">이번 주 포스팅</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">❤️</div><div class="kpi-value" id="kpi-likes">0</div><div class="kpi-label" data-i18n="kpi_likes">총 좋아요</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">💬</div><div class="kpi-value" id="kpi-comments">0</div><div class="kpi-label" data-i18n="kpi_comments">총 댓글</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">🔄</div><div class="kpi-value" id="kpi-shares">0</div><div class="kpi-label" data-i18n="kpi_shares">총 공유</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">👁</div><div class="kpi-value" id="kpi-views">0</div><div class="kpi-label" data-i18n="kpi_views">총 조회수</div></div>
+                    <div class="kpi-card"><div class="kpi-icon">📱</div><div class="kpi-value" id="kpi-channels">0</div><div class="kpi-label" data-i18n="kpi_channels">연결 채널</div></div>
                 </div>
 
                 <!-- Recent Posts -->
-                <div class="section-title">📝 최근 콘텐츠</div>
+                <div class="section-title" data-i18n="recent_title">📝 최근 콘텐츠</div>
                 <div id="recentPosts" class="post-list">
                     <div style="text-align:center;color:#94a3b8;padding:40px">
                         <div style="font-size:3rem;margin-bottom:12px">✍️</div>
-                        <div style="font-size:1rem;font-weight:600;margin-bottom:8px;color:#475569">첫 콘텐츠를 만들어보세요</div>
-                        <div style="font-size:.85rem;margin-bottom:16px">AI가 키워드 기반으로 콘텐츠를 자동 생성합니다</div>
-                        <button class="btn btn-primary" onclick="location.href='pages/create.html'">✍️ 콘텐츠 만들기</button>
+                        <div style="font-size:1rem;font-weight:600;margin-bottom:8px;color:#475569" data-i18n="recent_empty_title">첫 콘텐츠를 만들어보세요</div>
+                        <div style="font-size:.85rem;margin-bottom:16px" data-i18n="recent_empty_sub">AI가 키워드 기반으로 콘텐츠를 자동 생성합니다</div>
+                        <button class="btn btn-primary" onclick="location.href='pages/create.html'" data-i18n="recent_empty_btn">✍️ 콘텐츠 만들기</button>
                     </div>
                 </div>
 
                 <!-- Weekly Engagement -->
-                <div class="section-title">📈 주간 인터렉션</div>
+                <div class="section-title" data-i18n="weekly_title">📈 주간 인터렉션</div>
                 <div class="engagement-grid">
-                    <div class="eng-card"><div class="eng-day">월</div><div class="eng-bar" style="height:20%"></div><div class="eng-val">-</div></div>
-                    <div class="eng-card"><div class="eng-day">화</div><div class="eng-bar" style="height:40%"></div><div class="eng-val">-</div></div>
-                    <div class="eng-card"><div class="eng-day">수</div><div class="eng-bar" style="height:60%"></div><div class="eng-val">-</div></div>
-                    <div class="eng-card"><div class="eng-day">목</div><div class="eng-bar" style="height:35%"></div><div class="eng-val">-</div></div>
-                    <div class="eng-card"><div class="eng-day">금</div><div class="eng-bar" style="height:80%"></div><div class="eng-val">-</div></div>
-                    <div class="eng-card"><div class="eng-day">토</div><div class="eng-bar" style="height:50%"></div><div class="eng-val">-</div></div>
-                    <div class="eng-card"><div class="eng-day">일</div><div class="eng-bar" style="height:30%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day" data-i18n="day_mon">월</div><div class="eng-bar" style="height:20%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day" data-i18n="day_tue">화</div><div class="eng-bar" style="height:40%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day" data-i18n="day_wed">수</div><div class="eng-bar" style="height:60%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day" data-i18n="day_thu">목</div><div class="eng-bar" style="height:35%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day" data-i18n="day_fri">금</div><div class="eng-bar" style="height:80%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day" data-i18n="day_sat">토</div><div class="eng-bar" style="height:50%"></div><div class="eng-val">-</div></div>
+                    <div class="eng-card"><div class="eng-day" data-i18n="day_sun">일</div><div class="eng-bar" style="height:30%"></div><div class="eng-val">-</div></div>
                 </div>
             </div>
         </div>
     </div>
+    <!-- 페이지 다국어 사전 (ko / en / vi) -->
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                doc_title: 'SNS 콘텐츠 플랫폼 | DIVOOST',
+                tb_title: '🏠 홈', tb_sub: '나의 플랜 정보 및 콘텐츠 운영 현황을 확인할 수 있는 페이지입니다',
+                setup_intro_title: '👋 처음 오셨나요? 먼저 연동 설정부터 해주세요',
+                setup_intro_text: 'SNS 채널을 연결하면 Facebook·Instagram·TikTok 등 7개 플랫폼에 한 번에 발행하고 AI로 콘텐츠를 만들 수 있어요.<br>설정 페이지에서 내 계정을 안전하게 연동하고, 막히는 부분은 단계별 가이드를 확인하세요.',
+                setup_intro_btn: '⚙️ 설정하러 가기',
+                promo_tag: '(신규유저 필수) SNS 채널 연동',
+                promo_text: 'SNS 채널 연동 가이드와 함께 쉽게 7개 채널을 연동할 수 있어요. 지금 바로 시작해 볼까요?',
+                promo_btn: '🔗 채널 연동하기', shortcuts_title: '🔗 내 SNS 바로가기', loading: '불러오는 중...',
+                card_trial_title: '🎁 체험 플랜', card_trial_body: 'DIVOOST SNS 플랫폼의 모든 서비스를 경험해 볼 수 있는 체험 플랜을 이용 중입니다.', card_trial_btn: '플랜 이용하기 ›',
+                card_notice_title: '📋 공지사항', tag_notice: '공지', tag_update: '업데이트', tag_new: '신규',
+                notice1: 'SNS 채널 7개 (FB/IG/TT 등) 통합 관리 기능 출시', notice2: 'AI 작성기 다중 플랫폼 동시 생성 지원',
+                notice3: '이미지/동영상 옵션 추가 (크기, 비율, 프레임)', notice4: '설정 페이지에서 API 키 통합 관리 가능',
+                card_faq_title: '❓ 자주하는 질문', card_faq_body: 'DIVOOST SNS 콘텐츠 플랫폼에 대해서 운영자님들께서 가장 자주 하시는 질문을 모두 모았습니다.', card_faq_btn: '자주하는 질문 보기 ›',
+                today_sub: '오늘 발행/예약된 콘텐츠 수를 확인해봐요.', today_count_title: '오늘 발행 콘텐츠 수', today_publish: '오늘 발행', today_channel_title: '오늘 채널별 발행 수',
+                total_sub: '나의 전체 발행 콘텐츠 수를 확인해봐요.', total_count_title: '전체 발행 콘텐츠 수', total_publish: '전체 발행', total_channel_title: '전체 채널별 발행 수',
+                kpi_title: '📊 통합 KPI', kpi_posts: '이번 주 포스팅', kpi_likes: '총 좋아요', kpi_comments: '총 댓글', kpi_shares: '총 공유', kpi_views: '총 조회수', kpi_channels: '연결 채널',
+                recent_title: '📝 최근 콘텐츠', recent_empty_title: '첫 콘텐츠를 만들어보세요', recent_empty_sub: 'AI가 키워드 기반으로 콘텐츠를 자동 생성합니다', recent_empty_btn: '✍️ 콘텐츠 만들기',
+                weekly_title: '📈 주간 인터렉션', day_mon: '월', day_tue: '화', day_wed: '수', day_thu: '목', day_fri: '금', day_sat: '토', day_sun: '일'
+            },
+            en: {
+                doc_title: 'SNS Content Platform | DIVOOST',
+                tb_title: '🏠 Home', tb_sub: 'View your plan info and content operation status',
+                setup_intro_title: '👋 New here? Set up your channels first',
+                setup_intro_text: 'Connect your SNS channels to publish to 7 platforms at once (Facebook, Instagram, TikTok, etc.) and create content with AI.<br>Connect your accounts safely on the Settings page, and check the step-by-step guide if you get stuck.',
+                setup_intro_btn: '⚙️ Go to Settings',
+                promo_tag: '(Required for new users) Connect SNS channels',
+                promo_text: 'Easily connect all 7 channels with our connection guide. Shall we start now?',
+                promo_btn: '🔗 Connect channels', shortcuts_title: '🔗 My SNS shortcuts', loading: 'Loading...',
+                card_trial_title: '🎁 Trial Plan', card_trial_body: "You're on the trial plan, where you can try all features of the DIVOOST SNS platform.", card_trial_btn: 'Use plan ›',
+                card_notice_title: '📋 Notices', tag_notice: 'Notice', tag_update: 'Update', tag_new: 'New',
+                notice1: 'Launched unified management for 7 SNS channels (FB/IG/TT, etc.)', notice2: 'AI Writer now supports multi-platform generation at once',
+                notice3: 'Added image/video options (size, ratio, frame)', notice4: 'Unified API key management on the Settings page',
+                card_faq_title: '❓ FAQ', card_faq_body: "We've gathered the questions most frequently asked by operators about the DIVOOST SNS platform.", card_faq_btn: 'View FAQ ›',
+                today_sub: 'Check the number of posts published/scheduled today.', today_count_title: "Today's published posts", today_publish: 'Published today', today_channel_title: "Today's posts by channel",
+                total_sub: 'Check your total number of published posts.', total_count_title: 'Total published posts', total_publish: 'Total published', total_channel_title: 'Total posts by channel',
+                kpi_title: '📊 Unified KPI', kpi_posts: 'Posts this week', kpi_likes: 'Total likes', kpi_comments: 'Total comments', kpi_shares: 'Total shares', kpi_views: 'Total views', kpi_channels: 'Connected channels',
+                recent_title: '📝 Recent content', recent_empty_title: 'Create your first content', recent_empty_sub: 'AI auto-generates content based on keywords', recent_empty_btn: '✍️ Create content',
+                weekly_title: '📈 Weekly engagement', day_mon: 'Mon', day_tue: 'Tue', day_wed: 'Wed', day_thu: 'Thu', day_fri: 'Fri', day_sat: 'Sat', day_sun: 'Sun'
+            },
+            vi: {
+                doc_title: 'Nền tảng nội dung SNS | DIVOOST',
+                tb_title: '🏠 Trang chủ', tb_sub: 'Xem thông tin gói và tình trạng vận hành nội dung của bạn',
+                setup_intro_title: '👋 Bạn mới? Hãy thiết lập kênh trước',
+                setup_intro_text: 'Kết nối các kênh SNS để đăng lên 7 nền tảng cùng lúc (Facebook, Instagram, TikTok, v.v.) và tạo nội dung bằng AI.<br>Kết nối tài khoản an toàn ở trang Cài đặt, và xem hướng dẫn từng bước nếu bạn gặp khó khăn.',
+                setup_intro_btn: '⚙️ Đến Cài đặt',
+                promo_tag: '(Bắt buộc với người dùng mới) Kết nối kênh SNS',
+                promo_text: 'Dễ dàng kết nối cả 7 kênh với hướng dẫn của chúng tôi. Bắt đầu ngay nhé?',
+                promo_btn: '🔗 Kết nối kênh', shortcuts_title: '🔗 Lối tắt SNS của tôi', loading: 'Đang tải...',
+                card_trial_title: '🎁 Gói dùng thử', card_trial_body: 'Bạn đang dùng gói dùng thử, trải nghiệm mọi tính năng của nền tảng SNS DIVOOST.', card_trial_btn: 'Dùng gói ›',
+                card_notice_title: '📋 Thông báo', tag_notice: 'Thông báo', tag_update: 'Cập nhật', tag_new: 'Mới',
+                notice1: 'Ra mắt quản lý hợp nhất 7 kênh SNS (FB/IG/TT, v.v.)', notice2: 'Trình viết AI hỗ trợ tạo đa nền tảng cùng lúc',
+                notice3: 'Thêm tùy chọn ảnh/video (kích thước, tỷ lệ, khung)', notice4: 'Quản lý khóa API hợp nhất ở trang Cài đặt',
+                card_faq_title: '❓ Câu hỏi thường gặp', card_faq_body: 'Chúng tôi đã tổng hợp các câu hỏi mà nhà vận hành thường hỏi nhất về nền tảng SNS DIVOOST.', card_faq_btn: 'Xem FAQ ›',
+                today_sub: 'Kiểm tra số bài đã đăng/lên lịch hôm nay.', today_count_title: 'Bài đăng hôm nay', today_publish: 'Đăng hôm nay', today_channel_title: 'Bài hôm nay theo kênh',
+                total_sub: 'Kiểm tra tổng số bài đã đăng của bạn.', total_count_title: 'Tổng bài đã đăng', total_publish: 'Tổng đã đăng', total_channel_title: 'Tổng bài theo kênh',
+                kpi_title: '📊 KPI hợp nhất', kpi_posts: 'Bài tuần này', kpi_likes: 'Tổng lượt thích', kpi_comments: 'Tổng bình luận', kpi_shares: 'Tổng chia sẻ', kpi_views: 'Tổng lượt xem', kpi_channels: 'Kênh đã kết nối',
+                recent_title: '📝 Nội dung gần đây', recent_empty_title: 'Tạo nội dung đầu tiên', recent_empty_sub: 'AI tự động tạo nội dung dựa trên từ khóa', recent_empty_btn: '✍️ Tạo nội dung',
+                weekly_title: '📈 Tương tác hàng tuần', day_mon: 'T2', day_tue: 'T3', day_wed: 'T4', day_thu: 'T5', day_fri: 'T6', day_sat: 'T7', day_sun: 'CN'
+            }
+        };
+    </script>
+    <script src="js/i18n-common.js"></script>
+    <script src="js/i18n.js"></script>
+
     <script>
         document.getElementById('menuBtn').onclick = function(){
             document.getElementById('sidebar').classList.toggle('open');
