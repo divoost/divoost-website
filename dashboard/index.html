@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소싱 트래커 | 멀티채널 대시보드</title>
+    <title data-i18n="doc_title">소싱 트래커 | 멀티채널 대시보드</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/mobile-fix.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
@@ -47,11 +47,11 @@
         </aside>
         <div class="main-content">
             <header class="top-bar">
-                <div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">멀티채널 소싱 트래커</div><div class="top-bar-date">업데이트: <span id="lastUpdated">-</span></div></div></div>
+                <div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title" data-i18n="tb_title">멀티채널 소싱 트래커</div><div class="top-bar-date"><span data-i18n="tb_updated">업데이트:</span> <span id="lastUpdated">-</span></div></div></div>
                 <div class="top-bar-right">
                     <span id="dataSourceBadge" class="data-source-badge sample">📋 샘플 데이터</span>
-                    <label class="top-bar-btn btn-upload" style="background:#10b981!important;color:#fff!important;cursor:pointer">📤 <span>업로드</span><input type="file" accept=".json,.csv" onchange="handleUpload(this)" hidden></label>
-                    <button class="top-bar-btn btn-crawl" onclick="runCrawl()">🕷 <span>크롤링</span></button>
+                    <label class="top-bar-btn btn-upload" style="background:#10b981!important;color:#fff!important;cursor:pointer">📤 <span data-i18n="btn_upload">업로드</span><input type="file" accept=".json,.csv" onchange="handleUpload(this)" hidden></label>
+                    <button class="top-bar-btn btn-crawl" onclick="runCrawl()">🕷 <span data-i18n="btn_crawl">크롤링</span></button>
                     <button class="top-bar-btn btn-api" onclick="runApi()">🔌 <span>API</span></button>
                     <button class="top-bar-btn btn-refresh" onclick="location.reload()">🔄</button>
                 </div>
@@ -76,25 +76,25 @@
                 <div id="aiSearchHub" style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:20px 24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
                     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
                         <span style="font-size:20px">🤖</span>
-                        <strong style="color:#0F172A;font-size:1rem">오늘의 AI 추천 상품 검색</strong>
-                        <span id="hubStatus" style="font-size:.7rem;padding:2px 10px;border-radius:10px;background:#F1F5F9;color:#64748B;font-weight:600">대기</span>
+                        <strong style="color:#0F172A;font-size:1rem" data-i18n="ai_hub_title">오늘의 AI 추천 상품 검색</strong>
+                        <span id="hubStatus" style="font-size:.7rem;padding:2px 10px;border-radius:10px;background:#F1F5F9;color:#64748B;font-weight:600" data-i18n="ai_hub_status">대기</span>
                     </div>
-                    <div style="color:#64748B;font-size:.78rem;margin-bottom:14px">키워드 입력 → 전 플랫폼(쿠팡 API · 1688/타오바오 크롤링 · 글로벌 마켓) 동시 검색</div>
+                    <div style="color:#64748B;font-size:.78rem;margin-bottom:14px" data-i18n="ai_hub_desc">키워드 입력 → 전 플랫폼(쿠팡 API · 1688/타오바오 크롤링 · 글로벌 마켓) 동시 검색</div>
 
                     <!-- 검색바 + 기간 -->
                     <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
-                        <input id="hubKeyword" type="text" placeholder="검색 키워드 (예: 무선이어폰, 마라톤바지, 캠핑테이블)" style="flex:1;min-width:240px;padding:11px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;color:#0F172A;font-size:.92rem;outline:none">
-                        <button id="hubBtn" onclick="aiSearchAll()" style="padding:11px 24px;background:#2563EB;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.92rem;font-weight:700">🤖 AI 검색</button>
+                        <input id="hubKeyword" type="text" placeholder="검색 키워드 (예: 무선이어폰, 마라톤바지, 캠핑테이블)" data-i18n-ph="ai_hub_ph" style="flex:1;min-width:240px;padding:11px 16px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;color:#0F172A;font-size:.92rem;outline:none">
+                        <button id="hubBtn" onclick="aiSearchAll()" style="padding:11px 24px;background:#2563EB;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.92rem;font-weight:700" data-i18n="ai_hub_btn">🤖 AI 검색</button>
                     </div>
 
                     <!-- 기간 토글 -->
                     <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap">
-                        <span style="font-size:.78rem;color:#64748B;margin-right:4px;font-weight:600">인기 기간:</span>
-                        <button class="period-btn active" data-days="3" onclick="setPeriod(3)">3일</button>
-                        <button class="period-btn" data-days="7" onclick="setPeriod(7)">7일</button>
-                        <button class="period-btn" data-days="15" onclick="setPeriod(15)">15일</button>
-                        <button class="period-btn" data-days="30" onclick="setPeriod(30)">30일</button>
-                        <button class="period-btn" data-days="0" onclick="setPeriod(0)">수동</button>
+                        <span style="font-size:.78rem;color:#64748B;margin-right:4px;font-weight:600" data-i18n="period_label">인기 기간:</span>
+                        <button class="period-btn active" data-days="3" onclick="setPeriod(3)" data-i18n="period_3">3일</button>
+                        <button class="period-btn" data-days="7" onclick="setPeriod(7)" data-i18n="period_7">7일</button>
+                        <button class="period-btn" data-days="15" onclick="setPeriod(15)" data-i18n="period_15">15일</button>
+                        <button class="period-btn" data-days="30" onclick="setPeriod(30)" data-i18n="period_30">30일</button>
+                        <button class="period-btn" data-days="0" onclick="setPeriod(0)" data-i18n="period_manual">수동</button>
                     </div>
 
                     <!-- 수동 날짜 범위 (수동 클릭 시 표시) -->
@@ -1011,6 +1011,42 @@
         var kwInput = document.getElementById('hubKeyword');
         if(kwInput) kwInput.addEventListener('keypress', function(e){ if(e.key==='Enter') window.aiSearchAll(); });
     })();
+    </script>
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                doc_title: '소싱 트래커 | 멀티채널 대시보드', tb_title: '멀티채널 소싱 트래커', tb_updated: '업데이트:',
+                btn_upload: '업로드', btn_crawl: '크롤링',
+                ai_hub_title: '오늘의 AI 추천 상품 검색', ai_hub_status: '대기',
+                ai_hub_desc: '키워드 입력 → 전 플랫폼(쿠팡 API · 1688/타오바오 크롤링 · 글로벌 마켓) 동시 검색',
+                ai_hub_ph: '검색 키워드 (예: 무선이어폰, 마라톤바지, 캠핑테이블)', ai_hub_btn: '🤖 AI 검색',
+                period_label: '인기 기간:', period_3: '3일', period_7: '7일', period_15: '15일', period_30: '30일', period_manual: '수동'
+            },
+            en: {
+                doc_title: 'Sourcing Tracker | Multi-channel Dashboard', tb_title: 'Multi-channel Sourcing Tracker', tb_updated: 'Updated:',
+                btn_upload: 'Upload', btn_crawl: 'Crawl',
+                ai_hub_title: "Today's AI Product Search", ai_hub_status: 'Idle',
+                ai_hub_desc: 'Enter a keyword → search all platforms at once (Coupang API · 1688/Taobao crawl · global markets)',
+                ai_hub_ph: 'Search keyword (e.g. wireless earbuds, running pants, camping table)', ai_hub_btn: '🤖 AI Search',
+                period_label: 'Trending period:', period_3: '3 days', period_7: '7 days', period_15: '15 days', period_30: '30 days', period_manual: 'Manual'
+            },
+            zh: {
+                doc_title: '采购追踪器 | 多渠道仪表板', tb_title: '多渠道采购追踪器', tb_updated: '更新:',
+                btn_upload: '上传', btn_crawl: '采集',
+                ai_hub_title: '今日AI推荐商品搜索', ai_hub_status: '待机',
+                ai_hub_desc: '输入关键词 → 同时搜索全平台(Coupang API · 1688/淘宝采集 · 全球市场)',
+                ai_hub_ph: '搜索关键词(如:无线耳机、跑步裤、露营桌)', ai_hub_btn: '🤖 AI搜索',
+                period_label: '热门周期:', period_3: '3天', period_7: '7天', period_15: '15天', period_30: '30天', period_manual: '手动'
+            },
+            vi: {
+                doc_title: 'Trình theo dõi nguồn hàng | Bảng đa kênh', tb_title: 'Trình theo dõi nguồn hàng đa kênh', tb_updated: 'Cập nhật:',
+                btn_upload: 'Tải lên', btn_crawl: 'Thu thập',
+                ai_hub_title: 'Tìm sản phẩm AI hôm nay', ai_hub_status: 'Chờ',
+                ai_hub_desc: 'Nhập từ khóa → tìm tất cả nền tảng cùng lúc (Coupang API · 1688/Taobao · thị trường toàn cầu)',
+                ai_hub_ph: 'Từ khóa tìm kiếm (vd: tai nghe không dây, quần chạy bộ, bàn cắm trại)', ai_hub_btn: '🤖 Tìm AI',
+                period_label: 'Khoảng thời gian:', period_3: '3 ngày', period_7: '7 ngày', period_15: '15 ngày', period_30: '30 ngày', period_manual: 'Thủ công'
+            }
+        };
     </script>
     <script src="js/i18n-auto.js"></script>
     <script src="js/i18n-common.js"></script>
