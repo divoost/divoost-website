@@ -90,13 +90,17 @@
         }
     });
 
-    // ─── Contact form: mailto 발송 (정적 사이트용 - 백엔드 없이 이메일로 받기) ───
+    // ─── Contact form: Supabase DB 저장 + mailto 백업 (백엔드 + 이메일 듀얼 방식) ───
     var form = document.getElementById('contactForm');
     if (form) {
+        // Supabase 클라이언트 (DB 저장용)
+        var ETH_SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
+        var ETH_SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
+
         form.addEventListener('submit', function(e) {
             e.preventDefault();
+            var lang = localStorage.getItem('eth_lang') || 'en';
             var fd = new FormData(form);
-            // 다중 선택 (service[], market[]) 묶기
             var data = {};
             fd.forEach(function(v, k) {
                 if (data[k]) {
@@ -111,57 +115,103 @@
                 return Array.isArray(v) ? v.join(', ') : String(v);
             }
 
-            // 이메일 본문 구성
+            var submitBtn = form.querySelector('button[type="submit"]');
+            var origText = submitBtn ? submitBtn.textContent : '';
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = lang === 'zh' ? '提交中...' : 'Submitting...';
+            }
+
+            // 1) Supabase 'eth_inquiries' 테이블에 저장 (백엔드 백업)
+            var inquiry = {
+                name: pick('name'),
+                company: pick('company'),
+                phone: pick('phone'),
+                email: pick('email'),
+                service: pick('service'),
+                market: pick('market'),
+                budget: pick('budget'),
+                source: pick('source'),
+                message: pick('message'),
+                lang: lang,
+                user_agent: navigator.userAgent,
+                referer: document.referrer
+            };
+
+            fetch(ETH_SUPABASE_URL + '/rest/v1/eth_inquiries', {
+                method: 'POST',
+                headers: {
+                    'apikey': ETH_SUPABASE_KEY,
+                    'Content-Type': 'application/json',
+                    'Prefer': 'return=minimal'
+                },
+                body: JSON.stringify(inquiry)
+            }).catch(function(err) {
+                console.warn('Supabase save failed (테이블 없을 수 있음):', err);
+            });
+
+            // 2) localStorage 백업
+            try {
+                var inquiries = JSON.parse(localStorage.getItem('eztradehub_inquiries') || '[]');
+                inquiries.push({ ts: new Date().toISOString(), data: data });
+                localStorage.setItem('eztradehub_inquiries', JSON.stringify(inquiries));
+            } catch (err) {}
+
+            // 3) 이메일 본문 (다국어)
+            var labels = lang === 'zh' ? {
+                title: '※ EZ TRADE HUB 咨询申请 ※',
+                applicant: '■ 申请人信息',
+                name: '姓名', company: '公司', phone: '电话', email: '邮箱',
+                service: '■ 关注服务', market: '■ 目标市场',
+                budget: '■ 预算', source: '■ 来源', msg: '■ 详细内容',
+                received: '接收时间'
+            } : {
+                title: '※ EZ TRADE HUB Inquiry ※',
+                applicant: '■ Applicant Info',
+                name: 'Name', company: 'Company', phone: 'Phone', email: 'Email',
+                service: '■ Service Interest', market: '■ Target Market',
+                budget: '■ Budget', source: '■ Source', msg: '■ Message',
+                received: 'Received'
+            };
+
             var lines = [
-                '※ EZ TRADE HUB 상담 신청 ※',
-                '',
-                '■ 신청자 정보',
-                '이름: ' + pick('name'),
-                '기업명: ' + pick('company'),
-                '연락처: ' + pick('phone'),
-                '이메일: ' + pick('email'),
-                '',
-                '■ 관심 서비스',
-                pick('service'),
-                '',
-                '■ 진출 희망 시장',
-                pick('market'),
-                '',
-                '■ 예상 예산',
-                pick('budget'),
-                '',
-                '■ 유입 경로',
-                pick('source'),
-                '',
-                '■ 문의 내용',
-                pick('message'),
-                '',
+                labels.title, '',
+                labels.applicant,
+                labels.name + ': ' + pick('name'),
+                labels.company + ': ' + pick('company'),
+                labels.phone + ': ' + pick('phone'),
+                labels.email + ': ' + pick('email'), '',
+                labels.service, pick('service'), '',
+                labels.market, pick('market'), '',
+                labels.budget, pick('budget'), '',
+                labels.source, pick('source'), '',
+                labels.msg, pick('message'), '',
                 '────────────────',
-                '접수 시각: ' + new Date().toLocaleString('ko-KR')
+                labels.received + ': ' + new Date().toLocaleString(lang === 'zh' ? 'zh-CN' : 'en-US')
             ];
             var body = lines.join('\n');
-            var subject = '[EZ TRADE HUB 상담신청] ' + pick('company') + ' / ' + pick('name');
+            var subject = '[EZ TRADE HUB] ' + pick('company') + ' / ' + pick('name');
 
             var mailto = 'mailto:shandongyiji_88@163.com'
                 + '?subject=' + encodeURIComponent(subject)
                 + '&body=' + encodeURIComponent(body);
 
-            // 로그 백업 (브라우저 종료 시에도 추적 가능하게)
-            try {
-                var inquiries = JSON.parse(localStorage.getItem('eztradehub_inquiries') || '[]');
-                inquiries.push({ ts: new Date().toISOString(), data: data });
-                localStorage.setItem('eztradehub_inquiries', JSON.stringify(inquiries));
-            } catch (err) {
-                console.warn('localStorage save failed:', err);
-            }
-
-            // 이메일 클라이언트 실행
-            window.location.href = mailto;
+            // 4) 메일 클라이언트 실행
+            setTimeout(function() {
+                window.location.href = mailto;
+                if (submitBtn) {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = origText;
+                }
+            }, 400);
 
             var msg = form.querySelector('.form-msg');
             if (msg) {
                 msg.style.display = 'block';
-                msg.textContent = '✅ 이메일 클라이언트가 열렸습니다. 발송 버튼을 눌러 상담신청을 완료해 주세요. (자동으로 열리지 않으면 shandongyiji_88@163.com 으로 직접 보내주세요)';
+                msg.textContent = lang === 'zh'
+                    ? '✅ 邮件客户端已打开。请点击发送完成咨询申请。(如未自动打开,请直接发送至 shandongyiji_88@163.com)'
+                    : '✅ Email client opened. Please click Send to complete your inquiry. (If it didn\'t open, please send to shandongyiji_88@163.com directly)';
+                msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
         });
     }
