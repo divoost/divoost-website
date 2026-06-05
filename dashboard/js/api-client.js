@@ -22,6 +22,19 @@ var API = {
     }
   },
 
+  // Google Shopping 기반 다중 플랫폼 검색 (ScraperAPI 키는 백엔드에서만 사용)
+  async shoppingSearch(query, country, num) {
+    try {
+      var url = this.base + '/api/scrape/shopping?query=' + encodeURIComponent(query) +
+        '&country=' + encodeURIComponent(country || 'kr') +
+        '&num=' + (num || 30);
+      var res = await fetch(url);
+      return res.json();
+    } catch(e) {
+      return { success: false, error: e.message, products: [] };
+    }
+  },
+
   async compare(keyword, keyword1688) {
     var results = { coupang: null, alibaba: null };
     try {

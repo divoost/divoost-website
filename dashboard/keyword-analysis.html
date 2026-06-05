@@ -70,9 +70,9 @@
             </div>
         </div>
     </div>
+    <script src="js/api-client.js"></script>
     <script>
         document.getElementById('mobileMenuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
-        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
 
         async function analyzeKeyword(){
             var kw=document.getElementById('kwInput').value.trim();
@@ -80,8 +80,7 @@
             document.getElementById('resultArea').innerHTML='<div style="text-align:center;padding:40px;color:#94a3b8"><div style="font-size:2rem;margin-bottom:8px">🔍</div>"'+kw+'" 분석 중...</div>';
 
             try{
-                var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(kw)+'&country=kr&num=20';
-                var r=await fetch(url);var data=await r.json();
+                var data=await API.shoppingSearch(kw,'kr',20);
                 var items=data.shopping_results||[];
 
                 // 5요소 분석

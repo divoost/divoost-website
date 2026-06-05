@@ -75,7 +75,7 @@
     </div>
     <script>
         document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
-        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
+        var API_BASE = location.hostname.indexOf('github.io') !== -1 ? 'https://divoost-website.vercel.app' : '';
 
         function loadSavedKeywords(){
             var kws=JSON.parse(localStorage.getItem('listenKeywords')||'[]');
@@ -91,7 +91,7 @@
             document.getElementById('mentionsList').innerHTML='<div style="text-align:center;padding:30px;color:#94a3b8">👂 "'+kw+'" 모니터링 중...</div>';
 
             try{
-                var url='https://api.scraperapi.com/structured/google/search?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(kw+' site:instagram.com OR site:facebook.com OR site:tiktok.com OR site:blog.naver.com')+'&country=kr&num=20';
+                var url=API_BASE+'/api/scrape/web-search?query='+encodeURIComponent(kw+' site:instagram.com OR site:facebook.com OR site:tiktok.com OR site:blog.naver.com')+'&country=kr&num=20';
                 var r=await fetch(url);var data=await r.json();
                 var results=data.organic_results||[];
 

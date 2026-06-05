@@ -126,12 +126,8 @@
         </div>
     </div>
 
+    <script src="js/api-client.js"></script>
     <script>
-        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
-        async function scrapePage(url){var r=await fetch('https://api.scraperapi.com?api_key='+SCRAPER_KEY+'&url='+encodeURIComponent(url)+'&render=false');return r.text()}
-        function parseCoupangHTML(html){var products=[];var regex=/<li[^>]*class="[^"]*search-product[^"]*"[^>]*>[\s\S]*?<\/li>/gi;var matches=html.match(regex)||[];for(var i=0;i<Math.min(matches.length,20);i++){var item=matches[i];var nm=item.match(/class="name"[^>]*>([\s\S]*?)<\//);var pr=item.match(/class="price-value"[^>]*>([\s\S]*?)<\//);var rv=item.match(/class="rating-total-count"[^>]*>\(?([\d,]+)\)?<\//);var im=item.match(/src="(https?:\/\/[^"]*thumbnail[^"]*)"/i)||item.match(/data-img-src="([^"]*)"/);var lk=item.match(/href="(\/vp\/products\/\d+[^"]*)"/);if(nm)products.push({name:nm[1].replace(/<[^>]*>/g,'').trim(),price:pr?parseInt(pr[1].replace(/[^\d]/g,''))||0:0,reviewCount:rv?parseInt(rv[1].replace(/[^\d]/g,''))||0:0,image:im?im[1]:'',url:lk?'https://www.coupang.com'+lk[1]:'',platform:'쿠팡'})}return products}
-        function parse1688HTML(html){var products=[];var jm=html.match(/var\s+__INIT_DATA\s*=\s*({[\s\S]*?});?\s*<\/script>/);if(jm){try{var d=JSON.parse(jm[1]);var ol=(d.data&&d.data.offerList)||[];for(var i=0;i<Math.min(ol.length,20);i++){var it=ol[i];var ps=(it.tradePrice&&it.tradePrice.offerPrice&&it.tradePrice.offerPrice.valueString)||'0';products.push({name:(it.information&&it.information.subject)||'',price:ps,priceKRW:Math.round(parseFloat(ps)*190.5),image:(it.image&&it.image.imgUrl)||'',url:'https://detail.1688.com/offer/'+(it.id||'')+'.html',platform:'1688'})}}catch(e){}}return products}
-
         document.addEventListener('DOMContentLoaded', function() {
             var el=document.getElementById('apiStatus');
             if(el){el.textContent='ScraperAPI 프록시 사용';el.className='api-status api-online'}
@@ -148,13 +144,17 @@
             var keyword = document.getElementById('searchKeyword').value.trim();
             if (!keyword) return;
             showLoading();
+            var grid = document.getElementById('resultsGrid');
             try {
-                var html = await scrapePage('https://www.coupang.com/np/search?component=&q='+encodeURIComponent(keyword)+'&channel=user');
-                var products = parseCoupangHTML(html);
-                var grid = document.getElementById('resultsGrid');
+                var data = await API.coupangSearch(keyword);
+                if (!data.success) {
+                    grid.innerHTML = '<div class="results-panel full"><div class="panel-header coupang">쿠팡 검색 오류</div><div class="panel-body"><div class="error-msg">'+(data.error||data.message||'검색 실패')+'</div></div></div>';
+                    return;
+                }
+                var products = data.products || [];
                 grid.innerHTML = '<div class="results-panel full"><div class="panel-header coupang">쿠팡 검색 결과 <span class="count">'+products.length+'개</span></div><div class="panel-body">'+renderProducts(products,'coupang')+'</div></div>';
             } catch(e) {
-                document.getElementById('resultsGrid').innerHTML = '<div class="results-panel full"><div class="panel-header coupang">쿠팡 검색 오류</div><div class="panel-body"><div class="error-msg">'+e.message+'</div></div></div>';
+                grid.innerHTML = '<div class="results-panel full"><div class="panel-header coupang">쿠팡 검색 오류</div><div class="panel-body"><div class="error-msg">'+e.message+'</div></div></div>';
             }
         }
 
@@ -172,30 +172,15 @@
         }
 
         async function compareSearch() {
-            const keyword = document.getElementById('searchKeyword').value.trim();
-            const keyword1688 = document.getElementById('searchKeyword1688').value.trim();
-            if (!keyword) return;
-            showLoading();
-            try {
-                var html1 = await scrapePage('https://s.1688.com/selloffer/offer_search.htm?keywords='+encodeURIComponent(keyword));
-                var prods1688 = parse1688HTML(html1);
-                var grid = document.getElementById('resultsGrid');
-                grid.innerHTML = '<div class="results-panel full"><div class="panel-header alibaba">1688 검색 결과 <span class="count">'+prods1688.length+'개</span></div><div class="panel-body">'+renderProducts(prods1688,'1688')+'</div></div>';
-            } catch(e) {
-                document.getElementById('resultsGrid').innerHTML = '<div class="results-panel full"><div class="panel-header alibaba">1688 검색 오류</div><div class="panel-body"><div class="error-msg">'+e.message+'</div></div></div>';
-            }
-        }
-
-        async function compareSearch() {
             var keyword = document.getElementById('searchKeyword').value.trim();
             var keyword1688 = document.getElementById('searchKeyword1688').value.trim() || keyword;
             if (!keyword) return;
             showLoading();
             try {
-                var cpHtml = await scrapePage('https://www.coupang.com/np/search?component=&q='+encodeURIComponent(keyword)+'&channel=user');
-                var cpProducts = parseCoupangHTML(cpHtml);
-                var a1Html = await scrapePage('https://s.1688.com/selloffer/offer_search.htm?keywords='+encodeURIComponent(keyword1688));
-                var a1Products = parse1688HTML(a1Html);
+                var cpData = await API.coupangSearch(keyword);
+                var cpProducts = cpData.products || [];
+                var a1Data = await API.alibaba1688Search(keyword1688);
+                var a1Products = a1Data.products || [];
 
                 var avgCp = cpProducts.length > 0 ? cpProducts.reduce(function(s,p){return s+p.price},0)/cpProducts.length : 0;
                 var avgA1 = a1Products.length > 0 ? a1Products.reduce(function(s,p){return s+parseFloat(p.price)},0)/a1Products.length : 0;

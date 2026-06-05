@@ -97,9 +97,9 @@
             </div>
         </div>
     </div>
+    <script src="js/api-client.js"></script>
     <script src="js/supabase-client.js"></script>
     <script>
-        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
         var allProducts=[];
 
         function quickSearch(platform){
@@ -135,17 +135,17 @@
             addLog('키워드: "'+keyword+'" → Google Shopping 검색');
 
             try{
-                var country=platform==='1688'?'cn':platform==='shopee'?'sg':'kr';
-                var apiUrl='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(keyword+(platform?' '+platform:''))+'&country='+country+'&num=30';
-                var r=await fetch(apiUrl);
-                var data=await r.json();
-                var items=data.shopping_results||data.results||[];
-                addLog('✓ '+items.length+'개 상품 발견');
+                var country=platform==='1688'?'cn':platform==='Shopee'?'sg':'kr';
+                var data=await API.shoppingSearch(keyword+(platform?' '+platform:''),country,30);
+                if(!data.success){
+                    addLog('✗ 오류: '+(data.error||'검색 실패'));
+                    btn.disabled=false;btn.textContent='🕷 수집 시작';
+                    return;
+                }
+                addLog('✓ '+(data.total||0)+'개 상품 발견');
 
-                allProducts=items.map(function(it){
-                    var p=it.extracted_price||0;
-                    if(typeof p==='string')p=parseFloat(p.replace(/[^\d.]/g,''))||0;
-                    return{name:it.title||'',price:p,image:it.thumbnail||'',url:it.link||'',platform:it.source||platform||'기타',rating:it.rating||0,reviewCount:it.reviews||0,source:'scraper'};
+                allProducts=(data.products||[]).map(function(p){
+                    return{name:p.name||'',price:p.price||0,image:p.image||'',url:p.url||'',platform:p.platform||platform||'기타',rating:p.rating||0,reviewCount:p.reviewCount||0,source:'scraper'};
                 });
 
                 addLog('✅ 수집 완료: '+allProducts.length+'개');

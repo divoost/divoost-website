@@ -133,6 +133,7 @@
             </div>
         </div>
     </div>
+    <script src="js/api-client.js"></script>
     <script src="js/supabase-client.js"></script>
     <script>
         var API_BASE = location.hostname.indexOf('github.io') !== -1 ? 'https://divoost-website.vercel.app' : '';
@@ -164,13 +165,8 @@
         function updateBadge(s){var b=document.getElementById('dataSourceBadge');var l={sample:'📋 샘플 데이터',crawl:'🕷 스크래핑 데이터',live:'🔌 API 실시간'};b.textContent=l[s]||l.sample;b.className='data-source-badge '+s}
         function addLog(m){var l=document.getElementById('collectionLog'),c=document.getElementById('logContent');l.style.display='block';c.innerHTML+='<div>['+new Date().toLocaleTimeString('ko-KR')+'] '+m+'</div>';l.scrollTop=l.scrollHeight}
 
-        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
-
         async function searchProducts(keyword, country){
-            var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(keyword)+'&country='+(country||'kr')+'&num=20';
-            var r=await fetch(url);
-            if(!r.ok)throw new Error('status '+r.status);
-            return r.json();
+            return API.shoppingSearch(keyword, country || 'kr', 20);
         }
 
         async function runCrawl(){

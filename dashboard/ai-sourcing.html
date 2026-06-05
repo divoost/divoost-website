@@ -91,12 +91,10 @@
             </div>
         </div>
     </div>
+    <script src="js/api-client.js"></script>
     <script>
-        var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
-
         async function searchGoogle(query,country){
-            var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(query)+'&country='+(country||'kr')+'&num=20';
-            var r=await fetch(url);return r.json();
+            return API.shoppingSearch(query, country || 'kr', 20);
         }
 
         function analyzeProduct(product,allProducts){

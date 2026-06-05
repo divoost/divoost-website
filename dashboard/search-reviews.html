@@ -779,8 +779,8 @@
     </script>
     <script src="js/data-sync.js"></script>
     <script src="js/supabase-client.js"></script>
+    <script src="js/api-client.js"></script>
     <script>
-    var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
     function quickKeyword(kw){document.getElementById('manualSearchInput').value=kw;manualSearch()}
     async function manualSearch(){
         var kw=document.getElementById('manualSearchInput').value.trim();
@@ -789,8 +789,7 @@
         box.style.display='block';
         box.innerHTML='<div style="text-align:center;color:#94a3b8;padding:12px">🔍 "'+kw+'" 검색 중...</div>';
         try{
-            var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(kw)+'&country=kr&num=20';
-            var r=await fetch(url);var data=await r.json();
+            var data=await API.shoppingSearch(kw,'kr',20);
             var items=data.shopping_results||[];
             if(items.length===0){box.innerHTML='<div style="text-align:center;color:#94a3b8;padding:12px">결과 없음</div>';return}
             var related=data.related_searches||[];
