@@ -16,7 +16,18 @@ window.I18N_COMMON = {
         tbt_products: '추천 상품 트래커', tbt_trends: '트렌드 분석', tbt_platforms: '플랫폼 비교',
         tbt_search: '검색 & 리뷰 분석', tbt_margin: '마진 분석', tbt_ai: 'AI 상품 소싱',
         tbt_admin: '상품 관리', tbt_keyword: '🔑 키워드 블루오션 분석', tbt_listing: '마켓플레이스 리스팅',
-        tbt_scraper: '🕷 반자동 스크래퍼', tbt_db: '💾 DB 데이터 보기', tbt_live: '실시간 소싱 검색'
+        tbt_scraper: '🕷 반자동 스크래퍼', tbt_db: '💾 DB 데이터 보기', tbt_live: '실시간 소싱 검색',
+        th_product:'상품명', th_platform:'플랫폼', th_price:'가격', th_image:'이미지', th_link:'링크', th_rating:'평점',
+        th_rank:'순위', th_compare:'비교 항목', th_review:'리뷰', th_cur_review:'현재리뷰', th_hot:'핫아이템',
+        th_avg_star:'평균별점', th_avg_margin:'평균마진', th_seller:'판매처', th_sell_price:'판매가',
+        th_coupang_margin:'쿠팡 마진', th_coupang_price:'쿠팡 가격', th_rec_date:'추천일', th_rec_product:'추천상품',
+        th_best_seller:'최적 판매처', th_total_cost:'총원가', th_gmarket_margin:'지마켓 마진', th_gmarket_price:'지마켓 가격',
+        th_growth_rate:'증가율', th_growth_cnt:'증가수', th_vs_lastweek:'전주대비', th_action:'작업', th_new_found:'신규발견',
+        th_net_margin:'순마진', th_collected:'수집상품', th_fee:'수수료', th_source:'소싱처', th_source_price_1688:'소싱가(1688)',
+        th_source_price:'소싱가', th_product_cnt:'상품수', th_detail:'상세', th_ratio:'비율', th_shipping:'배송비',
+        th_margin_rate:'마진율', th_margin_grade:'마진 등급', th_listing:'리스팅', th_review_cnt:'리뷰수', th_grade:'등급',
+        th_naver_store:'네이버 스토어', th_naver_margin:'네이버 마진', th_naver_price:'네이버 가격', th_date:'날짜',
+        th_basis:'기준', th_period:'기간', th_tariff:'관세', th_7days_ago:'7일전'
     },
     en: {
         sb_brand: 'Sourcing Tracker<small>MULTI-CHANNEL</small>',
@@ -32,7 +43,18 @@ window.I18N_COMMON = {
         tbt_products: 'Recommended Products', tbt_trends: 'Trend Analysis', tbt_platforms: 'Platform Comparison',
         tbt_search: 'Search & Review Analysis', tbt_margin: 'Margin Analysis', tbt_ai: 'AI Product Sourcing',
         tbt_admin: 'Product Management', tbt_keyword: '🔑 Keyword Blue Ocean Analysis', tbt_listing: 'Marketplace Listing',
-        tbt_scraper: '🕷 Semi-auto Scraper', tbt_db: '💾 DB Data Viewer', tbt_live: 'Live Sourcing Search'
+        tbt_scraper: '🕷 Semi-auto Scraper', tbt_db: '💾 DB Data Viewer', tbt_live: 'Live Sourcing Search',
+        th_product:'Product', th_platform:'Platform', th_price:'Price', th_image:'Image', th_link:'Link', th_rating:'Rating',
+        th_rank:'Rank', th_compare:'Item', th_review:'Reviews', th_cur_review:'Current Reviews', th_hot:'Hot Item',
+        th_avg_star:'Avg Rating', th_avg_margin:'Avg Margin', th_seller:'Seller', th_sell_price:'Sell Price',
+        th_coupang_margin:'Coupang Margin', th_coupang_price:'Coupang Price', th_rec_date:'Rec. Date', th_rec_product:'Recommended',
+        th_best_seller:'Best Seller', th_total_cost:'Total Cost', th_gmarket_margin:'Gmarket Margin', th_gmarket_price:'Gmarket Price',
+        th_growth_rate:'Growth %', th_growth_cnt:'Growth #', th_vs_lastweek:'vs Last Week', th_action:'Action', th_new_found:'New Found',
+        th_net_margin:'Net Margin', th_collected:'Collected', th_fee:'Fee', th_source:'Source', th_source_price_1688:'Source(1688)',
+        th_source_price:'Source Price', th_product_cnt:'Products', th_detail:'Detail', th_ratio:'Ratio', th_shipping:'Shipping',
+        th_margin_rate:'Margin %', th_margin_grade:'Margin Grade', th_listing:'Listing', th_review_cnt:'Reviews', th_grade:'Grade',
+        th_naver_store:'Naver Store', th_naver_margin:'Naver Margin', th_naver_price:'Naver Price', th_date:'Date',
+        th_basis:'Basis', th_period:'Period', th_tariff:'Tariff', th_7days_ago:'7 days ago'
     },
     zh: {
         sb_brand: '采购追踪器<small>MULTI-CHANNEL</small>',
@@ -48,7 +70,18 @@ window.I18N_COMMON = {
         tbt_products: '推荐商品追踪', tbt_trends: '趋势分析', tbt_platforms: '平台比较',
         tbt_search: '搜索与评价分析', tbt_margin: '利润分析', tbt_ai: 'AI商品采购',
         tbt_admin: '商品管理', tbt_keyword: '🔑 关键词蓝海分析', tbt_listing: '市场上架',
-        tbt_scraper: '🕷 半自动采集器', tbt_db: '💾 数据库查看', tbt_live: '实时采购搜索'
+        tbt_scraper: '🕷 半自动采集器', tbt_db: '💾 数据库查看', tbt_live: '实时采购搜索',
+        th_product:'商品名', th_platform:'平台', th_price:'价格', th_image:'图片', th_link:'链接', th_rating:'评分',
+        th_rank:'排名', th_compare:'比较项', th_review:'评价', th_cur_review:'当前评价', th_hot:'热门',
+        th_avg_star:'平均星级', th_avg_margin:'平均利润', th_seller:'卖家', th_sell_price:'售价',
+        th_coupang_margin:'Coupang利润', th_coupang_price:'Coupang价格', th_rec_date:'推荐日', th_rec_product:'推荐商品',
+        th_best_seller:'最佳卖家', th_total_cost:'总成本', th_gmarket_margin:'Gmarket利润', th_gmarket_price:'Gmarket价格',
+        th_growth_rate:'增长率', th_growth_cnt:'增长数', th_vs_lastweek:'较上周', th_action:'操作', th_new_found:'新发现',
+        th_net_margin:'净利润', th_collected:'采集商品', th_fee:'手续费', th_source:'采购源', th_source_price_1688:'采购价(1688)',
+        th_source_price:'采购价', th_product_cnt:'商品数', th_detail:'详情', th_ratio:'比例', th_shipping:'运费',
+        th_margin_rate:'利润率', th_margin_grade:'利润等级', th_listing:'上架', th_review_cnt:'评价数', th_grade:'等级',
+        th_naver_store:'Naver商店', th_naver_margin:'Naver利润', th_naver_price:'Naver价格', th_date:'日期',
+        th_basis:'基准', th_period:'周期', th_tariff:'关税', th_7days_ago:'7天前'
     },
     vi: {
         sb_brand: 'Theo dõi nguồn hàng<small>MULTI-CHANNEL</small>',
@@ -64,6 +97,17 @@ window.I18N_COMMON = {
         tbt_products: 'Sản phẩm đề xuất', tbt_trends: 'Phân tích xu hướng', tbt_platforms: 'So sánh nền tảng',
         tbt_search: 'Phân tích tìm kiếm & đánh giá', tbt_margin: 'Phân tích lợi nhuận', tbt_ai: 'Nguồn hàng AI',
         tbt_admin: 'Quản lý sản phẩm', tbt_keyword: '🔑 Phân tích từ khóa đại dương xanh', tbt_listing: 'Đăng marketplace',
-        tbt_scraper: '🕷 Trình thu thập bán tự động', tbt_db: '💾 Xem dữ liệu DB', tbt_live: 'Tìm nguồn hàng trực tiếp'
+        tbt_scraper: '🕷 Trình thu thập bán tự động', tbt_db: '💾 Xem dữ liệu DB', tbt_live: 'Tìm nguồn hàng trực tiếp',
+        th_product:'Tên SP', th_platform:'Nền tảng', th_price:'Giá', th_image:'Hình', th_link:'Liên kết', th_rating:'Đánh giá',
+        th_rank:'Hạng', th_compare:'Mục', th_review:'Đánh giá', th_cur_review:'ĐG hiện tại', th_hot:'Hot',
+        th_avg_star:'ĐG TB', th_avg_margin:'LN TB', th_seller:'Người bán', th_sell_price:'Giá bán',
+        th_coupang_margin:'LN Coupang', th_coupang_price:'Giá Coupang', th_rec_date:'Ngày đề xuất', th_rec_product:'SP đề xuất',
+        th_best_seller:'Người bán tốt nhất', th_total_cost:'Tổng chi phí', th_gmarket_margin:'LN Gmarket', th_gmarket_price:'Giá Gmarket',
+        th_growth_rate:'Tỷ lệ tăng', th_growth_cnt:'Số tăng', th_vs_lastweek:'So tuần trước', th_action:'Thao tác', th_new_found:'Mới phát hiện',
+        th_net_margin:'LN ròng', th_collected:'SP thu thập', th_fee:'Phí', th_source:'Nguồn', th_source_price_1688:'Giá nguồn(1688)',
+        th_source_price:'Giá nguồn', th_product_cnt:'Số SP', th_detail:'Chi tiết', th_ratio:'Tỷ lệ', th_shipping:'Phí ship',
+        th_margin_rate:'Tỷ lệ LN', th_margin_grade:'Hạng LN', th_listing:'Đăng', th_review_cnt:'Số ĐG', th_grade:'Hạng',
+        th_naver_store:'Naver Store', th_naver_margin:'LN Naver', th_naver_price:'Giá Naver', th_date:'Ngày',
+        th_basis:'Cơ sở', th_period:'Kỳ', th_tariff:'Thuế', th_7days_ago:'7 ngày trước'
     }
 };
