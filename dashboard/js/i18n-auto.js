@@ -35,6 +35,22 @@
         '🕷 반자동 스크래퍼': 'tbt_scraper', '💾 DB 데이터 보기': 'tbt_db', '실시간 소싱 검색': 'tbt_live'
     };
 
+    // 테이블 헤더(<th>) 한국어 → 키 (전 페이지 공통 자동 번역)
+    var TH_MAP = {
+        '상품명':'th_product','플랫폼':'th_platform','가격':'th_price','이미지':'th_image','링크':'th_link',
+        '평점':'th_rating','순위':'th_rank','비교 항목':'th_compare','리뷰':'th_review','현재리뷰':'th_cur_review',
+        '핫아이템':'th_hot','평균별점':'th_avg_star','평균마진':'th_avg_margin','판매처':'th_seller','판매가':'th_sell_price',
+        '타오바오':'pf_taobao','쿠팡 마진':'th_coupang_margin','쿠팡 가격':'th_coupang_price','쿠팡':'pf_coupang',
+        '추천일':'th_rec_date','추천상품':'th_rec_product','최적 판매처':'th_best_seller','총원가':'th_total_cost',
+        '지마켓 마진':'th_gmarket_margin','지마켓 가격':'th_gmarket_price','지마켓':'pf_gmarket','증가율':'th_growth_rate',
+        '증가수':'th_growth_cnt','전주대비':'th_vs_lastweek','작업':'th_action','신규발견':'th_new_found','순마진':'th_net_margin',
+        '수집상품':'th_collected','수수료':'th_fee','소싱처':'th_source','소싱가(1688)':'th_source_price_1688','소싱가':'th_source_price',
+        '상품수':'th_product_cnt','상세':'th_detail','비율':'th_ratio','배송비':'th_shipping','마진율':'th_margin_rate',
+        '마진 등급':'th_margin_grade','리스팅':'th_listing','리뷰수':'th_review_cnt','등급':'th_grade','네이버 스토어':'th_naver_store',
+        '네이버 마진':'th_naver_margin','네이버 가격':'th_naver_price','네이버':'pf_naver','날짜':'th_date','기준':'th_basis',
+        '기간':'th_period','관세':'th_tariff','7일전':'th_7days_ago'
+    };
+
     function trim(s){ return (s || '').replace(/^\s+|\s+$/g, ''); }
 
     // el 안의 (innerEl 다음) 텍스트 노드를 data-i18n span 으로 감싼다
@@ -73,6 +89,14 @@
         }
         var logo = document.querySelector('.sidebar-logo-text');
         if(logo && !logo.getAttribute('data-i18n-html')){ logo.setAttribute('data-i18n-html', 'sb_brand'); }
+
+        // 테이블 헤더 <th> 자동 번역 (자식 요소 없는 순수 텍스트만)
+        els = document.querySelectorAll('th');
+        for(i = 0; i < els.length; i++){
+            if(els[i].getAttribute('data-i18n') || els[i].children.length > 0){ continue; }
+            var thk = TH_MAP[trim(els[i].textContent)];
+            if(thk){ els[i].setAttribute('data-i18n', thk); }
+        }
 
         // 상단바 제목 (텍스트 매칭 → 페이지별 자동 번역, 자식 요소 없는 순수 텍스트만)
         var tb = document.querySelector('.top-bar-title');
