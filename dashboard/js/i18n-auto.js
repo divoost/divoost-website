@@ -27,6 +27,14 @@
     };
     var BADGE_MAP = { '타오바오': 'pf_taobao', '쿠팡': 'pf_coupang', '지마켓': 'pf_gmarket', '네이버': 'pf_naver' };
 
+    // 각 페이지 상단바 제목(텍스트) → 키 (per-page 편집 없이 자동 번역)
+    var TOPBAR_MAP = {
+        '추천 상품 트래커': 'tbt_products', '트렌드 분석': 'tbt_trends', '플랫폼 비교': 'tbt_platforms',
+        '검색 & 리뷰 분석': 'tbt_search', '마진 분석': 'tbt_margin', 'AI 상품 소싱': 'tbt_ai',
+        '상품 관리': 'tbt_admin', '🔑 키워드 블루오션 분석': 'tbt_keyword', '마켓플레이스 리스팅': 'tbt_listing',
+        '🕷 반자동 스크래퍼': 'tbt_scraper', '💾 DB 데이터 보기': 'tbt_db', '실시간 소싱 검색': 'tbt_live'
+    };
+
     function trim(s){ return (s || '').replace(/^\s+|\s+$/g, ''); }
 
     // el 안의 (innerEl 다음) 텍스트 노드를 data-i18n span 으로 감싼다
@@ -65,6 +73,13 @@
         }
         var logo = document.querySelector('.sidebar-logo-text');
         if(logo && !logo.getAttribute('data-i18n-html')){ logo.setAttribute('data-i18n-html', 'sb_brand'); }
+
+        // 상단바 제목 (텍스트 매칭 → 페이지별 자동 번역, 자식 요소 없는 순수 텍스트만)
+        var tb = document.querySelector('.top-bar-title');
+        if(tb && !tb.getAttribute('data-i18n') && tb.children.length === 0){
+            var tk = TOPBAR_MAP[trim(tb.textContent)];
+            if(tk){ tb.setAttribute('data-i18n', tk); }
+        }
     }
 
     function injectSwitcher(){
