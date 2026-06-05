@@ -1,958 +1,972 @@
 {
-    "meta": {
-        "title": "HUBONTRADE | Nền tảng Xuất nhập khẩu Xuyên biên giới Toàn cầu"
+  "meta": {
+    "title": "HUBONTRADE | Nền tảng Xuất nhập khẩu Xuyên biên giới Toàn cầu"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "solution": "Giải pháp",
+    "features": "Tính năng",
+    "service": "Dịch vụ",
+    "market": "Thị trường",
+    "pricing": "Giá",
+    "case": "Khách hàng",
+    "resources": "Tài liệu",
+    "tracker": "Sourcing",
+    "contact": "Liên hệ"
+  },
+  "hero": {
+    "s1": {
+      "badge": "NỀN TẢNG XUẤT NHẬP KHẨU TOÀN CẦU",
+      "title1": "Thương mại không biên giới,",
+      "title2": "Không giới hạn hướng đi",
+      "title3": "HUBONTRADE<br>kết nối tất cả",
+      "subtitle": "Từ bất cứ đâu đến bất cứ đâu — toàn bộ quy trình xuất nhập khẩu toàn cầu trên một nền tảng",
+      "ctaPrimary": "Bắt đầu miễn phí",
+      "ctaSecondary": "Xem dịch vụ"
     },
-    "nav": {
-        "home": "Trang chủ",
-        "solution": "Giải pháp",
-        "features": "Tính năng",
-        "service": "Dịch vụ",
-        "market": "Thị trường",
-        "pricing": "Giá",
-        "case": "Khách hàng",
-        "resources": "Tài liệu",
-        "tracker": "Sourcing",
-        "contact": "Liên hệ"
+    "s2": {
+      "title1": "Tất cả các sàn",
+      "title2": "Quản lý hợp nhất",
+      "title3": "Đăng sản phẩm một lần — bán khắp nơi",
+      "ctaPrimary": "Dùng thử miễn phí",
+      "ctaSecondary": "Yêu cầu tư vấn 1:1",
+      "trust": "Hàng nghìn nhà bán tin chọn HUBONTRADE",
+      "stat1": "Sàn liên kết",
+      "stat2": "Tỷ lệ hoạt động",
+      "stat3": "Giảm khối lượng việc"
     },
-    "hero": {
-        "s1": {
-            "badge": "NỀN TẢNG XUẤT NHẬP KHẨU TOÀN CẦU",
-            "title1": "Thương mại không biên giới,",
-            "title2": "Không giới hạn hướng đi",
-            "title3": "HUBONTRADE<br>kết nối tất cả",
-            "subtitle": "Từ bất cứ đâu đến bất cứ đâu — toàn bộ quy trình xuất nhập khẩu toàn cầu trên một nền tảng",
-            "ctaPrimary": "Bắt đầu miễn phí",
-            "ctaSecondary": "Xem dịch vụ"
-        },
-        "s2": {
-            "title1": "Tất cả các sàn",
-            "title2": "Quản lý hợp nhất",
-            "title3": "Đăng sản phẩm một lần — bán khắp nơi",
-            "ctaPrimary": "Dùng thử miễn phí",
-            "ctaSecondary": "Yêu cầu tư vấn 1:1",
-            "trust": "Hàng nghìn nhà bán tin chọn HUBONTRADE",
-            "stat1": "Sàn liên kết",
-            "stat2": "Tỷ lệ hoạt động",
-            "stat3": "Giảm khối lượng việc"
-        },
-        "s3": {
-            "badge": "FULFILLMENT TOÀN CẦU",
-            "title1": "Giao hàng trong nước & quốc tế,",
-            "title2": "Fulfillment trọn gói",
-            "title3": "Trong một hệ thống duy nhất",
-            "subtitle": "Từ giao hàng nội địa đến chặng cuối ở nước ngoài —<br>fulfillment tích hợp để bạn tập trung bán hàng, không lo vận chuyển",
-            "ctaPrimary": "Xem hệ thống logistics",
-            "ctaSecondary": "Liên hệ giao hàng"
-        },
-        "s4": {
-            "badge": "SOURCING THÔNG MINH",
-            "title1": "Chưa có hàng để bán?",
-            "title2": "Sourcing toàn cầu",
-            "title3": "Tìm cho bạn sản phẩm có lãi",
-            "subtitle": "Từ sourcing B2B toàn cầu đến tính biên lợi nhuận tự động —<br>kiểm chứng lợi nhuận trước khi nhập hàng",
-            "ctaPrimary": "Bắt đầu sourcing",
-            "ctaSecondary": "Dùng thử công cụ biên lợi nhuận"
-        },
-        "s5": {
-            "badge": "DÀNH CHO NHÀ BÁN TOÀN CẦU",
-            "title1": "Chỉ dành cho nhà bán Hàn Quốc?",
-            "title2": "Không.",
-            "title3": "Nền tảng cho nhà bán toàn cầu",
-            "subtitle": "Nhà bán Hàn Quốc hay quốc tế —<br>nền tảng xuất nhập khẩu toàn cầu duy nhất ai cũng có thể dùng",
-            "ctaPrimary": "Bắt đầu ngay",
-            "ctaSecondary": "Giới thiệu dịch vụ"
-        }
+    "s3": {
+      "badge": "FULFILLMENT TOÀN CẦU",
+      "title1": "Giao hàng trong nước & quốc tế,",
+      "title2": "Fulfillment trọn gói",
+      "title3": "Trong một hệ thống duy nhất",
+      "subtitle": "Từ giao hàng nội địa đến chặng cuối ở nước ngoài —<br>fulfillment tích hợp để bạn tập trung bán hàng, không lo vận chuyển",
+      "ctaPrimary": "Xem hệ thống logistics",
+      "ctaSecondary": "Liên hệ giao hàng"
     },
-    "sec": {
-        "why": {
-            "badge": "TẠI SAO CHỌN HUBONTRADE",
-            "title": "Điều các nền tảng khác không có",
-            "desc": "Tính năng khác biệt giúp thiết lập chuẩn mới cho bán hàng toàn cầu",
-            "c1": {
-                "title": "Xuất nhập khẩu hai chiều toàn cầu",
-                "desc": "Không chỉ Hàn Quốc→nước ngoài, mà còn nước ngoài→Hàn Quốc, Trung Quốc→Mỹ và mọi hướng giao dịch xuyên biên giới"
-            },
-            "c2": {
-                "title": "Tự động khai báo xuất khẩu & hải quan",
-                "desc": "Tự động tạo tờ khai xuất khẩu, mua hộ thông quan nhập khẩu — hệ thống xử lý chứng từ phức tạp"
-            },
-            "c3": {
-                "title": "Hợp nhất Fulfillment nội địa & quốc tế",
-                "desc": "Giao hàng trong nước và quốc tế, dịch vụ fulfillment — quản lý tập trung trong một hệ thống"
-            },
-            "c4": {
-                "title": "Mở cho nhà bán nước ngoài",
-                "desc": "Không chỉ dành cho doanh nghiệp Hàn Quốc. Nền tảng toàn cầu duy nhất ai cũng có thể dùng từ bất kỳ đâu"
-            },
-            "c5": {
-                "title": "Đối tác bằng xuất khẩu của Chính phủ",
-                "desc": "Đối tác bằng xuất khẩu được Chính phủ chứng nhận. Khởi đầu không gánh nặng chi phí thông qua chương trình hỗ trợ"
-            },
-            "c6": {
-                "title": "Tự động hóa bằng AI",
-                "desc": "AI gợi ý tiêu đề/từ khóa sản phẩm, ánh xạ danh mục, dịch đa ngôn ngữ, đề xuất giá"
-            }
-        },
-        "platforms": {
-            "badge": "SÀN ĐƯỢC HỖ TRỢ",
-            "title": "Từ trong nước đến toàn cầu — kết nối mọi sàn lớn",
-            "desc": "Đăng sản phẩm một lần, bán đồng thời mọi sàn"
-        },
-        "comparison": {
-            "badge": "SO SÁNH",
-            "title": "HUBONTRADE vs đối thủ",
-            "desc": "So sánh tính năng cốt lõi"
-        },
-        "features": {
-            "badge": "TÍNH NĂNG CHÍNH",
-            "title": "Tính năng cốt lõi dành cho nhà bán"
-        },
-        "foryou": {
-            "badge": "DÀNH CHO BẠN",
-            "title": "Đặc biệt phù hợp với bạn nếu..."
-        }
+    "s4": {
+      "badge": "SOURCING THÔNG MINH",
+      "title1": "Chưa có hàng để bán?",
+      "title2": "Sourcing toàn cầu",
+      "title3": "Tìm cho bạn sản phẩm có lãi",
+      "subtitle": "Từ sourcing B2B toàn cầu đến tính biên lợi nhuận tự động —<br>kiểm chứng lợi nhuận trước khi nhập hàng",
+      "ctaPrimary": "Bắt đầu sourcing",
+      "ctaSecondary": "Dùng thử công cụ biên lợi nhuận"
     },
-    "footer": {
-        "tagline": "Nền tảng Thương mại điện tử Xuyên biên giới Toàn cầu",
-        "h": {
-            "pages": "Trang",
-            "tools": "Sourcing · Công cụ",
-            "support": "Hỗ trợ"
-        }
+    "s5": {
+      "badge": "DÀNH CHO NHÀ BÁN TOÀN CẦU",
+      "title1": "Chỉ dành cho nhà bán Hàn Quốc?",
+      "title2": "Không.",
+      "title3": "Nền tảng cho nhà bán toàn cầu",
+      "subtitle": "Nhà bán Hàn Quốc hay quốc tế —<br>nền tảng xuất nhập khẩu toàn cầu duy nhất ai cũng có thể dùng",
+      "ctaPrimary": "Bắt đầu ngay",
+      "ctaSecondary": "Giới thiệu dịch vụ"
+    }
+  },
+  "sec": {
+    "why": {
+      "badge": "TẠI SAO CHỌN HUBONTRADE",
+      "title": "Điều các nền tảng khác không có",
+      "desc": "Tính năng khác biệt giúp thiết lập chuẩn mới cho bán hàng toàn cầu",
+      "c1": {
+        "title": "Xuất nhập khẩu hai chiều toàn cầu",
+        "desc": "Không chỉ Hàn Quốc→nước ngoài, mà còn nước ngoài→Hàn Quốc, Trung Quốc→Mỹ và mọi hướng giao dịch xuyên biên giới"
+      },
+      "c2": {
+        "title": "Tự động khai báo xuất khẩu & hải quan",
+        "desc": "Tự động tạo tờ khai xuất khẩu, mua hộ thông quan nhập khẩu — hệ thống xử lý chứng từ phức tạp"
+      },
+      "c3": {
+        "title": "Hợp nhất Fulfillment nội địa & quốc tế",
+        "desc": "Giao hàng trong nước và quốc tế, dịch vụ fulfillment — quản lý tập trung trong một hệ thống"
+      },
+      "c4": {
+        "title": "Mở cho nhà bán nước ngoài",
+        "desc": "Không chỉ dành cho doanh nghiệp Hàn Quốc. Nền tảng toàn cầu duy nhất ai cũng có thể dùng từ bất kỳ đâu"
+      },
+      "c5": {
+        "title": "Đối tác bằng xuất khẩu của Chính phủ",
+        "desc": "Đối tác bằng xuất khẩu được Chính phủ chứng nhận. Khởi đầu không gánh nặng chi phí thông qua chương trình hỗ trợ"
+      },
+      "c6": {
+        "title": "Tự động hóa bằng AI",
+        "desc": "AI gợi ý tiêu đề/từ khóa sản phẩm, ánh xạ danh mục, dịch đa ngôn ngữ, đề xuất giá"
+      }
     },
-    "markets": {
-        "coupang": "Coupang",
-        "naver": "Naver SmartStore",
-        "gmarket": "Gmarket",
-        "eleven": "11st",
-        "wemakeprice": "WeMakePrice",
-        "interpark": "Interpark"
+    "platforms": {
+      "badge": "SÀN ĐƯỢC HỖ TRỢ",
+      "title": "Từ trong nước đến toàn cầu — kết nối mọi sàn lớn",
+      "desc": "Đăng sản phẩm một lần, bán đồng thời mọi sàn"
+    },
+    "comparison": {
+      "badge": "SO SÁNH",
+      "title": "HUBONTRADE vs đối thủ",
+      "desc": "So sánh tính năng cốt lõi"
     },
     "features": {
-        "viewAll": "Xem tất cả tính năng",
-        "c1": {
-            "title": "Đăng sản phẩm đa kênh",
-            "desc": "Tải Excel một lần — đăng cùng lúc trên hàng chục sàn"
-        },
-        "c2": {
-            "title": "Công cụ biên lợi nhuận toàn cầu",
-            "desc": "Tự động tính tỷ giá, phí, vận chuyển — biết lợi nhuận thật trước khi đầu tư"
-        },
-        "c3": {
-            "title": "Fulfillment hợp nhất",
-            "desc": "Quản lý giao hàng nội địa & quốc tế trong một hệ thống"
-        },
-        "c4": {
-            "title": "Tự động hóa xuất nhập khẩu",
-            "desc": "Tự tạo tờ khai xuất khẩu, chứng từ thông quan nhập khẩu"
-        },
-        "c5": {
-            "title": "Sourcing B2B toàn cầu",
-            "desc": "Tìm sản phẩm có biên lợi nhuận cao từ nhà cung cấp toàn cầu"
-        },
-        "c6": {
-            "title": "Tích hợp marketing",
-            "desc": "Tự động liên kết với công cụ marketing của Shopee, TikTok Shop"
-        }
+      "badge": "TÍNH NĂNG CHÍNH",
+      "title": "Tính năng cốt lõi dành cho nhà bán"
     },
     "foryou": {
+      "badge": "DÀNH CHO BẠN",
+      "title": "Đặc biệt phù hợp với bạn nếu..."
+    }
+  },
+  "footer": {
+    "tagline": "Nền tảng Thương mại điện tử Xuyên biên giới Toàn cầu",
+    "h": {
+      "pages": "Trang",
+      "tools": "Sourcing · Công cụ",
+      "support": "Hỗ trợ"
+    }
+  },
+  "markets": {
+    "coupang": "Coupang",
+    "naver": "Naver SmartStore",
+    "gmarket": "Gmarket",
+    "eleven": "11st",
+    "wemakeprice": "WeMakePrice",
+    "interpark": "Interpark"
+  },
+  "features": {
+    "viewAll": "Xem tất cả tính năng",
+    "c1": {
+      "title": "Đăng sản phẩm đa kênh",
+      "desc": "Tải Excel một lần — đăng cùng lúc trên hàng chục sàn"
+    },
+    "c2": {
+      "title": "Công cụ biên lợi nhuận toàn cầu",
+      "desc": "Tự động tính tỷ giá, phí, vận chuyển — biết lợi nhuận thật trước khi đầu tư"
+    },
+    "c3": {
+      "title": "Fulfillment hợp nhất",
+      "desc": "Quản lý giao hàng nội địa & quốc tế trong một hệ thống"
+    },
+    "c4": {
+      "title": "Tự động hóa xuất nhập khẩu",
+      "desc": "Tự tạo tờ khai xuất khẩu, chứng từ thông quan nhập khẩu"
+    },
+    "c5": {
+      "title": "Sourcing B2B toàn cầu",
+      "desc": "Tìm sản phẩm có biên lợi nhuận cao từ nhà cung cấp toàn cầu"
+    },
+    "c6": {
+      "title": "Tích hợp marketing",
+      "desc": "Tự động liên kết với công cụ marketing của Shopee, TikTok Shop"
+    }
+  },
+  "foryou": {
+    "c1": {
+      "title": "Nhà bán Hàn Quốc",
+      "desc": "Doanh nghiệp và nhà bán cá nhân muốn bán hàng Hàn Quốc ra nước ngoài. Tự động hóa khai báo xuất khẩu và đăng sàn quốc tế."
+    },
+    "c2": {
+      "title": "Nhà bán nước ngoài",
+      "desc": "Nhà bán nước ngoài bán hàng Hàn Quốc tại bản địa, hoặc tìm nguồn hàng toàn cầu. Hỗ trợ đa ngôn ngữ."
+    },
+    "c3": {
+      "title": "Mua hộ · Bán hộ",
+      "desc": "Mua hộ và bán hộ tìm nguồn hàng toàn cầu không tồn kho. Hỗ trợ tự động hóa thông quan."
+    }
+  },
+  "cta": {
+    "title": "Bắt đầu HUBONTRADE miễn phí ngay hôm nay",
+    "subtitle": "Trải nghiệm tất cả tính năng với gói dùng thử 30 ngày",
+    "primary": "Dùng thử miễn phí",
+    "secondary": "Yêu cầu tư vấn 1:1"
+  },
+  "pages": {
+    "solution": {
+      "heroTitle": "Xuất khẩu, Nhập khẩu, Sourcing — Trên một nền tảng",
+      "heroDesc": "Giải quyết toàn bộ quy trình thương mại toàn cầu với giải pháp tích hợp HUBONTRADE",
+      "core": {
+        "title": "Ba giải pháp cốt lõi",
         "c1": {
-            "title": "Nhà bán Hàn Quốc",
-            "desc": "Doanh nghiệp và nhà bán cá nhân muốn bán hàng Hàn Quốc ra nước ngoài. Tự động hóa khai báo xuất khẩu và đăng sàn quốc tế."
+          "title": "Giải pháp Xuất khẩu",
+          "desc": "Bán sản phẩm nội địa trên các sàn nước ngoài",
+          "f1": "Đăng sản phẩm đa kênh (Amazon, Shopee, Lazada, TikTok Shop)",
+          "f2": "Tự động tạo và nộp tờ khai xuất khẩu",
+          "f3": "Tích hợp fulfillment & vận chuyển quốc tế",
+          "f4": "Tích hợp công cụ marketing bản địa"
         },
         "c2": {
-            "title": "Nhà bán nước ngoài",
-            "desc": "Nhà bán nước ngoài bán hàng Hàn Quốc tại bản địa, hoặc tìm nguồn hàng toàn cầu. Hỗ trợ đa ngôn ngữ."
+          "title": "Giải pháp Nhập khẩu",
+          "desc": "Bán sản phẩm nước ngoài tại Hàn Quốc và các thị trường khác",
+          "f1": "Tự động hóa hệ thống mua hộ & thông quan",
+          "f2": "Đăng đồng thời các sàn nội địa (Coupang, Naver, Gmarket, 11st)",
+          "f3": "Tích hợp fulfillment & giao hàng nội địa",
+          "f4": "Tự động tính thuế nhập khẩu & VAT"
         },
         "c3": {
-            "title": "Mua hộ · Bán hộ",
-            "desc": "Mua hộ và bán hộ tìm nguồn hàng toàn cầu không tồn kho. Hỗ trợ tự động hóa thông quan."
+          "title": "Giải pháp Sourcing Toàn cầu",
+          "desc": "Tìm kiếm sản phẩm bán chạy qua sourcing B2B",
+          "f1": "Cơ sở dữ liệu nhà cung cấp toàn cầu",
+          "f2": "Mô phỏng biên lợi nhuận tự động theo sản phẩm",
+          "f3": "Hỗ trợ đặt mẫu & kiểm tra chất lượng",
+          "f4": "Tích hợp dropship/mua hộ"
         }
-    },
-    "cta": {
-        "title": "Bắt đầu HUBONTRADE miễn phí ngay hôm nay",
-        "subtitle": "Trải nghiệm tất cả tính năng với gói dùng thử 30 ngày",
-        "primary": "Dùng thử miễn phí",
-        "secondary": "Yêu cầu tư vấn 1:1"
-    },
-    "pages": {
-        "solution": {
-            "heroTitle": "Xuất khẩu, Nhập khẩu, Sourcing — Trên một nền tảng",
-            "heroDesc": "Giải quyết toàn bộ quy trình thương mại toàn cầu với giải pháp tích hợp HUBONTRADE",
-            "core": {
-                "title": "Ba giải pháp cốt lõi",
-                "c1": {
-                    "title": "Giải pháp Xuất khẩu",
-                    "desc": "Bán sản phẩm nội địa trên các sàn nước ngoài",
-                    "f1": "Đăng sản phẩm đa kênh (Amazon, Shopee, Lazada, TikTok Shop)",
-                    "f2": "Tự động tạo và nộp tờ khai xuất khẩu",
-                    "f3": "Tích hợp fulfillment & vận chuyển quốc tế",
-                    "f4": "Tích hợp công cụ marketing bản địa"
-                },
-                "c2": {
-                    "title": "Giải pháp Nhập khẩu",
-                    "desc": "Bán sản phẩm nước ngoài tại Hàn Quốc và các thị trường khác",
-                    "f1": "Tự động hóa hệ thống mua hộ & thông quan",
-                    "f2": "Đăng đồng thời các sàn nội địa (Coupang, Naver, Gmarket, 11st)",
-                    "f3": "Tích hợp fulfillment & giao hàng nội địa",
-                    "f4": "Tự động tính thuế nhập khẩu & VAT"
-                },
-                "c3": {
-                    "title": "Giải pháp Sourcing Toàn cầu",
-                    "desc": "Tìm kiếm sản phẩm bán chạy qua sourcing B2B",
-                    "f1": "Cơ sở dữ liệu nhà cung cấp toàn cầu",
-                    "f2": "Mô phỏng biên lợi nhuận tự động theo sản phẩm",
-                    "f3": "Hỗ trợ đặt mẫu & kiểm tra chất lượng",
-                    "f4": "Tích hợp dropship/mua hộ"
-                }
-            },
-            "oms": {
-                "title": "Tự động hóa vận hành bán hàng — hệ thống xử lý, không phải con người",
-                "desc": "Từ thu thập đơn, nhập vận đơn, đồng bộ tồn kho, đặt hàng đến CS — hệ thống làm thay công việc lặp lại",
-                "c1": {
-                    "title": "Tự động thu thập đơn hàng",
-                    "desc": "Tự động thu thập đơn từ các sàn trong và ngoài nước theo thời gian thực"
-                },
-                "c2": {
-                    "title": "Tự động điền số vận đơn",
-                    "desc": "Tự động nhập số vận đơn vào từng sàn qua tích hợp đơn vị vận chuyển"
-                },
-                "c3": {
-                    "title": "Đồng bộ tồn kho thời gian thực",
-                    "desc": "Đồng bộ tồn kho đa kênh thời gian thực, tránh hết hàng"
-                },
-                "c4": {
-                    "title": "Tự động tạo đơn đặt hàng",
-                    "desc": "Tự động tạo đơn đặt hàng nhà cung cấp dựa trên ngưỡng tồn kho"
-                },
-                "c5": {
-                    "title": "Quản lý CS hợp nhất",
-                    "desc": "Quản lý mọi câu hỏi từ các sàn ở một nơi với trả lời tự động đa ngôn ngữ"
-                },
-                "c6": {
-                    "title": "Tích hợp ERP & Tự động hóa logistics",
-                    "desc": "Tích hợp API với ERP hiện có, tự động hóa xuất kho và xử lý trả hàng"
-                }
-            },
-            "data": {
-                "title": "Phát triển thương hiệu dựa trên dữ liệu — vận hành bằng con số, không phải cảm tính",
-                "desc": "Phân tích tích hợp doanh số, quảng cáo, tồn kho, CRM cho quyết định dựa trên dữ liệu",
-                "c1": {
-                    "title": "Bảng điều khiển phân tích doanh số",
-                    "desc": "Phân tích xu hướng doanh số theo kênh, sản phẩm, kỳ theo thời gian thực"
-                },
-                "c2": {
-                    "title": "Phân tích hiệu quả quảng cáo",
-                    "desc": "Theo dõi hợp nhất ROAS, CPM, CPC và các chỉ số quảng cáo cốt lõi"
-                },
-                "c3": {
-                    "title": "Dự báo tồn kho bằng AI",
-                    "desc": "AI phân tích xu hướng bán để dự báo mức tồn kho tối ưu"
-                },
-                "c4": {
-                    "title": "Quản lý khách hàng CRM",
-                    "desc": "Marketing cá nhân hóa dựa trên lịch sử mua và hành vi khách hàng"
-                },
-                "c5": {
-                    "title": "Bảng điều khiển BI",
-                    "desc": "Bảng BI nắm bắt chỉ số kinh doanh cốt lõi trong nháy mắt"
-                },
-                "c6": {
-                    "title": "Phân tích ROI marketing",
-                    "desc": "Đo lường chính xác ROI theo kênh marketing"
-                }
-            },
-            "diff": {
-                "title": "Điểm khác biệt chỉ HUBONTRADE có",
-                "badge": "Không đối thủ nào có",
-                "c1": {
-                    "title": "Đơn vị thực hiện Voucher Xuất khẩu Chính phủ",
-                    "desc": "Đơn vị chính thức thực hiện Voucher Xuất khẩu của Chính phủ — sử dụng ngân sách voucher để dùng HUBONTRADE. Không đối thủ nào có tư cách này."
-                },
-                "c2": {
-                    "title": "Coupang IOR (Importer of Record)",
-                    "desc": "Hỗ trợ doanh nghiệp nước ngoài bán trực tiếp trên Coupang Hàn Quốc thông qua dịch vụ IOR — từ đăng ký nhập khẩu, thông quan đến bán hàng."
-                },
-                "c3": {
-                    "title": "Tích hợp API KOSME / GoBizKorea",
-                    "desc": "Tích hợp API trực tiếp với GoBizKorea của KOSME để tự động đăng sản phẩm xuất khẩu B2B và hỗ trợ ghép cặp người mua."
-                }
-            },
-            "process": {
-                "title": "Khởi đầu đơn giản, kết quả mạnh mẽ",
-                "s1": {
-                    "title": "Đăng ký & Kết nối sàn",
-                    "desc": "Chọn nền tảng bán và kết nối tài khoản"
-                },
-                "s2": {
-                    "title": "Đăng sản phẩm",
-                    "desc": "Đăng hàng loạt bằng Excel hoặc từng sản phẩm"
-                },
-                "s3": {
-                    "title": "Quản lý đơn & vận chuyển",
-                    "desc": "Quản lý mọi đơn và vận chuyển từ một bảng điều khiển"
-                },
-                "s4": {
-                    "title": "Đối soát & Phân tích",
-                    "desc": "Tối ưu lợi nhuận với phân tích biên và báo cáo doanh số"
-                }
-            },
-            "comp": {
-                "title": "Chỉ có ở HUBONTRADE",
-                "colFeature": "Hạng mục",
-                "colOurs": "HUBONTRADE (chúng tôi)"
-            },
-            "ctaBox": {
-                "title": "Bạn cần giải pháp nào?",
-                "desc": "Tìm giải pháp phù hợp nhất cho doanh nghiệp với tư vấn miễn phí",
-                "btn": "Yêu cầu tư vấn miễn phí"
-            }
+      },
+      "oms": {
+        "title": "Tự động hóa vận hành bán hàng — hệ thống xử lý, không phải con người",
+        "desc": "Từ thu thập đơn, nhập vận đơn, đồng bộ tồn kho, đặt hàng đến CS — hệ thống làm thay công việc lặp lại",
+        "c1": {
+          "title": "Tự động thu thập đơn hàng",
+          "desc": "Tự động thu thập đơn từ các sàn trong và ngoài nước theo thời gian thực"
         },
-        "features": {
-            "heroTitle": "Tính năng mạnh mẽ dành cho nhà bán",
-            "heroDesc": "Tính năng cốt lõi đơn giản hóa việc bán hàng toàn cầu phức tạp",
-            "sec1": {
-                "title": "Tính năng chính"
-            },
-            "f1": {
-                "title": "Đăng hàng loạt đa sàn",
-                "desc": "Đăng sản phẩm trên hàng chục sàn trong và ngoài nước với một file Excel. AI tự động ánh xạ danh mục và gợi ý từ khóa, tag ảnh, rút ngắn thời gian đăng.",
-                "li1": "Đăng hàng loạt đa sàn (Amazon, Shopee, Lazada, TikTok Shop, Coupang, Naver…)",
-                "li2": "Tự động ánh xạ danh mục theo nền tảng bằng AI",
-                "li3": "Gợi ý từ khóa AI & tự sinh tag ảnh",
-                "li4": "Sửa hàng loạt thông tin sản phẩm & đồng bộ giá",
-                "li5": "Tự động resize ảnh & gắn watermark"
-            },
-            "f2": {
-                "title": "Quản lý đơn hàng",
-                "desc": "Tự động thu thập đơn từ mọi sàn và xem trạng thái ở một nơi. Tối đa hiệu quả với xử lý hàng loạt.",
-                "li1": "Tự động thu đơn từ mọi sàn (trong & ngoài nước)",
-                "li2": "Bảng điều khiển trạng thái đơn hợp nhất",
-                "li3": "Xử lý đơn hàng loạt (xác nhận, gửi, hủy)",
-                "li4": "Lịch sử đơn & phân tích thống kê"
-            },
-            "f3": {
-                "title": "Quản lý tồn kho",
-                "desc": "Đồng bộ tồn kho đa kênh thời gian thực để tránh hết hàng. AI phân tích xu hướng bán để dự báo mức tồn tối ưu.",
-                "li1": "Đồng bộ tồn kho đa kênh thời gian thực",
-                "li2": "Cảnh báo sắp hết hàng (ngưỡng tùy chỉnh)",
-                "li3": "Dự báo tồn kho bằng AI dựa trên xu hướng bán",
-                "li4": "Bảng tồn kho theo từng kho"
-            },
-            "f4": {
-                "title": "Quản lý vận đơn",
-                "desc": "Tự động nhập số vận đơn và tích hợp đơn vị vận chuyển thời gian thực. Tự động gửi thông tin theo dõi đến khách.",
-                "li1": "Tự động nhập số vận đơn (gửi đến từng sàn)",
-                "li2": "Tích hợp đơn vị vận chuyển (CJ, Hanjin, bưu điện, các hãng quốc tế)",
-                "li3": "Theo dõi vận chuyển thời gian thực",
-                "li4": "Tự động thông báo khi giao xong"
-            },
-            "f5": {
-                "title": "Quản lý đặt hàng",
-                "desc": "Tự động tạo đơn đặt hàng dựa trên ngưỡng tồn và quản lý nhà cung cấp có hệ thống. Xem lịch sử PO và hàng nhập trong nháy mắt.",
-                "li1": "Tự sinh đơn đặt hàng (theo ngưỡng tồn)",
-                "li2": "Quản lý nhà cung cấp & so sánh đơn giá",
-                "li3": "Theo dõi lịch sử PO & hàng nhập",
-                "li4": "Tự sinh và gửi đơn đặt hàng"
-            },
-            "f6": {
-                "title": "Quản lý CS",
-                "desc": "Quản lý câu hỏi khách từ mọi sàn ở một nơi. Mẫu trả lời tự động và hỗ trợ đa ngôn ngữ giúp CS toàn cầu hiệu quả.",
-                "li1": "Thu thập & quản lý câu hỏi từ mỗi sàn",
-                "li2": "Mẫu trả lời tự động dựa trên FAQ",
-                "li3": "Hỗ trợ đa ngôn ngữ qua dịch AI",
-                "li4": "Trạng thái xử lý CS & thống kê tỉ lệ phản hồi"
-            },
-            "f7": {
-                "title": "Tích hợp ERP",
-                "desc": "Kết nối ERP hiện có qua API để tự động đẩy dữ liệu kế toán & thuế. Quản lý dữ liệu thống nhất, không nhập trùng.",
-                "li1": "Tích hợp API với ERP hiện có (Ecount, Douzone…)",
-                "li2": "Tự động chuyển dữ liệu kế toán/thuế",
-                "li3": "Đồng bộ dữ liệu bán/mua thời gian thực",
-                "li4": "Tự động sắp xếp dữ liệu đối soát"
-            },
-            "f8": {
-                "title": "Tự động hóa logistics",
-                "desc": "Tự động xuất kho và phân bổ vận chuyển tối ưu. Hệ thống cũng xử lý trả hàng và đổi hàng tự động.",
-                "li1": "Tự động xuất kho (lệnh ngay khi xác nhận đơn)",
-                "li2": "Tự động chọn đơn vị vận chuyển (tối ưu chi phí/khu vực)",
-                "li3": "Xử lý tự động trả/đổi hàng",
-                "li4": "Quản lý fulfillment trong & ngoài nước hợp nhất"
-            },
-            "f9": {
-                "title": "Phân tích BI",
-                "desc": "Phân tích thống nhất doanh số, ROAS quảng cáo và dữ liệu CRM. Nắm bắt chỉ số tăng trưởng thương hiệu trong nháy mắt.",
-                "li1": "Phân tích doanh số (theo kênh, sản phẩm, kỳ)",
-                "li2": "Phân tích ROAS/CPM/CPC quảng cáo",
-                "li3": "Phân tích khách hàng CRM (mẫu mua, LTV)",
-                "li4": "Bảng chỉ số tăng trưởng thương hiệu"
-            },
-            "f10": {
-                "title": "Tự động hóa bằng AI",
-                "desc": "AI gợi ý tên sản phẩm, từ khóa, danh mục, dịch đa ngôn ngữ và giá tối ưu — thay nhà bán làm việc lặp lại.",
-                "li1": "AI gợi ý tên/từ khóa sản phẩm (tối ưu SEO)",
-                "li2": "AI tự ánh xạ danh mục",
-                "li3": "Dịch đa ngôn ngữ bằng AI (Anh, Thái, Việt…)",
-                "li4": "AI gợi ý giá (dựa trên phân tích đối thủ)"
-            },
-            "f11": {
-                "title": "Tự động khai báo xuất khẩu",
-                "desc": "Tự động phát hành xác nhận mua xuất khẩu TMĐT và tích hợp với uTradeHub để tự động hóa toàn bộ khai báo. Tự phân loại mã HS giúp đơn giản hóa thông quan.",
-                "li1": "Tự phát hành xác nhận mua xuất khẩu TMĐT",
-                "li2": "Tích hợp uTradeHub (tự động nộp khai báo xuất khẩu)",
-                "li3": "Tự phân loại mã HS",
-                "li4": "Tự tổng hợp & báo cáo hiệu suất xuất khẩu"
-            },
-            "f12": {
-                "title": "Công cụ biên lợi nhuận toàn cầu",
-                "desc": "Xác minh khả năng sinh lời trước với tính biên lợi nhuận gồm tỷ giá, phí, quảng cáo, logistics, thông quan. So sánh lợi nhuận ròng giữa các sàn.",
-                "li1": "Bao gồm tỷ giá/phí/quảng cáo/logistics/thông quan",
-                "li2": "Mô phỏng giá bán để xác minh lợi nhuận trước",
-                "li3": "So sánh lợi nhuận ròng theo nền tảng",
-                "li4": "Tự động cập nhật tỷ giá thời gian thực"
-            },
-            "dash": {
-                "title": "Tất cả trong tầm mắt — Bảng điều khiển hợp nhất",
-                "desc": "Theo dõi thời gian thực doanh số, đơn, tồn kho, đối soát của mọi sàn trên một màn hình",
-                "s1": {
-                    "title": "Doanh số thời gian thực",
-                    "desc": "Tổng hợp doanh số thời gian thực trên mọi sàn"
-                },
-                "s2": {
-                    "title": "Đơn theo sàn",
-                    "desc": "Xem trạng thái đơn theo các kênh Shopee, TikTok Shop… trong nháy mắt"
-                },
-                "s3": {
-                    "title": "Tồn kho hợp nhất",
-                    "desc": "Đồng bộ tồn kho kho trong & ngoài nước thời gian thực để tránh hết hàng"
-                },
-                "s4": {
-                    "title": "Phân tích lợi nhuận",
-                    "desc": "Báo cáo biên lợi nhuận, phí, chi phí logistics theo từng sàn"
-                }
-            },
-            "comp": {
-                "title": "Khi dùng HUBONTRADE, đây là những gì thay đổi",
-                "col1": "Công việc",
-                "col2": "Tự vận hành",
-                "col3": "HUBONTRADE"
-            },
-            "ctaBox": {
-                "title": "Trải nghiệm mọi tính năng miễn phí",
-                "desc": "Trải nghiệm mọi tính năng HUBONTRADE với 14 ngày dùng thử miễn phí",
-                "btn": "Bắt đầu dùng thử miễn phí"
-            }
+        "c2": {
+          "title": "Tự động điền số vận đơn",
+          "desc": "Tự động nhập số vận đơn vào từng sàn qua tích hợp đơn vị vận chuyển"
         },
-        "service": {
-            "heroTitle": "Chúng tôi <span class=\"gradient-text\">đảm nhận mọi việc</span> trong bán hàng toàn cầu",
-            "heroDesc": "Khám phá các dịch vụ chuyên nghiệp HUBONTRADE cung cấp",
-            "cats": {
-                "title": "Lĩnh vực dịch vụ chuyên môn",
-                "c1": {
-                    "title": "Vận hành sàn",
-                    "desc": "Đăng sản phẩm và vận hành trên các sàn trong & ngoài nước",
-                    "l1": "Đăng sản phẩm & thiết kế trang chi tiết",
-                    "l2": "Chiến lược giá & vận hành khuyến mãi",
-                    "l3": "Quản lý đánh giá & xử lý CS",
-                    "l4": "Phân tích doanh số & báo cáo vận hành"
-                },
-                "c2": {
-                    "title": "Dịch vụ logistics XNK",
-                    "desc": "Quản lý logistics trong & ngoài nước trong một hệ thống",
-                    "l1": "Khai báo xuất khẩu & dịch vụ thông quan",
-                    "l2": "Vận chuyển quốc tế & fulfillment bản địa",
-                    "l3": "Thông quan nhập khẩu & giao hàng mua hộ",
-                    "l4": "Xử lý trả/đổi hàng"
-                },
-                "c3": {
-                    "title": "Dịch vụ Sourcing",
-                    "desc": "Tìm sản phẩm biên cao từ nhà cung cấp toàn cầu",
-                    "l1": "Sourcing sản phẩm B2B toàn cầu",
-                    "l2": "Đặt mẫu & kiểm tra chất lượng",
-                    "l3": "Phân tích biên & mô phỏng lợi nhuận",
-                    "l4": "Kết nối sản xuất OEM/ODM"
-                },
-                "c4": {
-                    "title": "Dịch vụ Marketing",
-                    "desc": "Tối đa doanh số với marketing tùy chỉnh theo sàn",
-                    "l1": "Quản lý khuyến mãi Shopee/TikTok Shop",
-                    "l2": "Quảng cáo từ khóa & marketing hiệu suất",
-                    "l3": "Marketing influencer bản địa",
-                    "l4": "Lên kế hoạch & vận hành live commerce"
-                }
-            },
-            "types": {
-                "title": "Dịch vụ tùy theo loại nhà bán",
-                "t1": {
-                    "title": "Nhà bán nội địa (Xuất khẩu)",
-                    "desc": "Doanh nghiệp xuất khẩu sản phẩm Hàn Quốc ra nước ngoài",
-                    "l1": "Tự động khai báo xuất khẩu",
-                    "l2": "Onboard & vận hành sàn nước ngoài",
-                    "l3": "Logistics quốc tế & fulfillment",
-                    "l4": "Marketing bản địa"
-                },
-                "t2": {
-                    "title": "Nhà bán nước ngoài (Nhập/Reverse)",
-                    "desc": "Bán sản phẩm nước ngoài vào Hàn Quốc hoặc nước khác",
-                    "l1": "Tự động thông quan nhập khẩu",
-                    "l2": "Onboard & vận hành sàn Hàn",
-                    "l3": "Fulfillment nội địa",
-                    "l4": "Hệ thống mua hộ"
-                },
-                "t3": {
-                    "title": "Dropship & Mua hộ",
-                    "desc": "Vận hành kinh doanh online không cần tồn kho",
-                    "l1": "Sourcing sản phẩm toàn cầu",
-                    "l2": "Tự động tính biên",
-                    "l3": "Xử lý đơn tự động",
-                    "l4": "Tự động thông quan"
-                }
-            },
-            "support": {
-                "title": "Cùng quản lý chuyên trách",
-                "desc": "Không chỉ là công cụ. Quản lý chuyên trách cùng bạn thiết kế tăng trưởng.",
-                "f1": "Quản lý chuyên trách 1:1",
-                "f2": "Báo cáo phân tích doanh số hàng tuần",
-                "f3": "Hỗ trợ chat & email 24/7"
-            },
-            "ctaBox": {
-                "title": "Bạn cần dịch vụ <span class=\"gradient-text\">nào?</span>",
-                "desc": "Nhận đề xuất dịch vụ phù hợp nhất cho loại hình doanh nghiệp",
-                "btn": "Yêu cầu tư vấn miễn phí"
-            }
+        "c3": {
+          "title": "Đồng bộ tồn kho thời gian thực",
+          "desc": "Đồng bộ tồn kho đa kênh thời gian thực, tránh hết hàng"
         },
-        "market": {
-            "heroTitle": "Từ trong nước đến toàn cầu, <span class=\"gradient-text\">tích hợp các sàn lớn</span>",
-            "heroDesc": "Quản lý sàn trong nước & quốc tế chỉ với HUBONTRADE",
-            "s1": {
-                "title": "<span class=\"gradient-text\">Sàn</span> được hỗ trợ",
-                "korea": "Sàn nội địa",
-                "global": "Sàn toàn cầu"
-            },
-            "mp": {
-                "coupang": "Giao siêu tốc, hỗ trợ IOR",
-                "naver": "Tích hợp cổng tìm kiếm lớn nhất Hàn Quốc",
-                "gmarket": "Hỗ trợ bán hàng toàn cầu",
-                "11st": "Sàn tổng hợp của SK",
-                "wemakeprice": "Sàn tập trung deal giá tốt",
-                "interpark": "Trung tâm mua sắm tổng hợp",
-                "auction": "Sàn mở",
-                "shopeeTag": "Lớn nhất Đông Nam Á",
-                "shopeeDesc": "Việt Nam, Philippines, Singapore, Malaysia, Thái Lan, Indonesia",
-                "lazadaTag": "Tập đoàn Alibaba",
-                "lazadaDesc": "6 nước Đông Nam Á",
-                "tiktokTag": "Đứng đầu live commerce",
-                "tiktokDesc": "5 nước Đông Nam Á",
-                "amazonTag": "Lớn nhất thế giới",
-                "amazonDesc": "Mỹ, Nhật, châu Âu…",
-                "tikiTag": "Sàn bản địa Việt Nam",
-                "tikiDesc": "Sàn bản địa Việt Nam",
-                "aliTag": "Bán hàng toàn cầu",
-                "aliDesc": "Bán hàng toàn cầu",
-                "qoo10Tag": "Sàn mở châu Á",
-                "qoo10Desc": "Nhật, Singapore",
-                "tokoTag": "Lớn nhất Indonesia",
-                "tokoDesc": "Indonesia"
-            },
-            "tag": {
-                "orders": "Thu thập đơn",
-                "inv": "Đồng bộ tồn",
-                "track": "Tự động vận đơn",
-                "listing": "Đăng sản phẩm",
-                "cs": "CS"
-            },
-            "s2": {
-                "title": "<span class=\"gradient-text\">Chi tiết tích hợp</span> theo sàn",
-                "colMarket": "Sàn",
-                "colListing": "Đăng SP",
-                "colOrders": "Thu đơn",
-                "colInv": "Tồn kho",
-                "colTrack": "Vận đơn",
-                "colCS": "Tích hợp CS",
-                "colMarketing": "Marketing",
-                "colLive": "Live commerce"
-            },
-            "excl": {
-                "title": "<span class=\"gradient-text\">Tích hợp</span> chỉ có ở HUBONTRADE",
-                "c1": {
-                    "title": "Coupang IOR (Đại lý nhập khẩu)",
-                    "desc": "Doanh nghiệp nước ngoài bán trực tiếp trên Coupang mà không cần pháp nhân Hàn Quốc — dịch vụ độc quyền không đối thủ nào có."
-                },
-                "b1": "Dịch vụ độc quyền",
-                "c2": {
-                    "title": "Tích hợp API KOSME/GoBizKorea",
-                    "desc": "Tích hợp trực tiếp với chương trình hỗ trợ xuất khẩu của chính phủ — tự động báo cáo và quản lý hợp nhất."
-                },
-                "b2": "Tích hợp chính phủ",
-                "c3": {
-                    "title": "Tự động khai báo xuất khẩu (uTradeHub)",
-                    "desc": "Tích hợp trực tiếp với hệ thống khai báo xuất khẩu Hải quan Hàn Quốc — tự phát hành tờ khai và C/O."
-                },
-                "b3": "Tự động hóa"
-            },
-            "custom": {
-                "title": "<span class=\"gradient-text\">Hỗ trợ</span> cả shop riêng",
-                "desc": "Quản lý hợp nhất cả sàn mở và shop riêng của bạn",
-                "shopify": "Nền tảng shop riêng toàn cầu",
-                "woo": "Shop dựa trên WordPress",
-                "cafe24": "Giải pháp shop hàng đầu Hàn Quốc",
-                "api": "API shop riêng",
-                "apiDesc": "Hỗ trợ tích hợp API tùy chỉnh"
-            },
-            "ctaBox": {
-                "title": "Kết nối sàn của bạn với <span class=\"gradient-text\">HUBONTRADE</span>",
-                "desc": "Trải nghiệm tích hợp sàn miễn phí",
-                "btn1": "Bắt đầu tích hợp",
-                "btn2": "Tư vấn 1:1"
-            }
+        "c4": {
+          "title": "Tự động tạo đơn đặt hàng",
+          "desc": "Tự động tạo đơn đặt hàng nhà cung cấp dựa trên ngưỡng tồn kho"
         },
-        "pricing": {
-            "heroTitle": "Bảng giá hợp lý",
-            "heroDesc": "Chọn gói phù hợp với quy mô doanh nghiệp của bạn",
-            "billing": {
-                "monthly": "Hàng tháng",
-                "yearly": "Hàng năm",
-                "discount": "Giảm 20%"
-            },
-            "starter": {
-                "name": "Starter",
-                "amount": "Miễn phí",
-                "unit": "  30 ngày",
-                "tax": "Không cần thẻ tín dụng",
-                "desc": "Dùng thử mọi tính năng cốt lõi miễn phí 30 ngày",
-                "btn": "Bắt đầu dùng thử"
-            },
-            "growth": {
-                "name": "Growth",
-                "discount": "Giảm 44%",
-                "desc": "Gói phổ biến nhất cho nhà bán đang phát triển",
-                "btn": "Bắt đầu gói"
-            },
-            "ent": {
-                "name": "Enterprise",
-                "discount": "Giảm 50%",
-                "desc": "Mọi tính năng + quản lý chuyên trách để mở rộng toàn cầu",
-                "btn": "Bắt đầu gói"
-            },
-            "faq": {
-                "title": "Câu hỏi thường gặp",
-                "q1": "Thời hạn hợp đồng là bao lâu?",
-                "a1": "Tối thiểu 3 tháng; hợp đồng năm được giảm 20%.",
-                "q2": "Có thể hủy giữa chừng không?",
-                "a2": "Có — hủy không phí phạt khi báo trước 1 tháng.",
-                "q3": "Có phí phát sinh không?",
-                "a3": "Phí vận hành nền tảng đã gồm trong giá cơ bản; quảng cáo & logistics tính theo thực tế.",
-                "q4": "Có thể đổi gói không?",
-                "a4": "Nâng cấp gói bất cứ lúc nào — chỉ thanh toán phần chênh lệch.",
-                "q5": "Có dùng thử miễn phí không?",
-                "a5": "Cung cấp báo cáo phân tích thị trường miễn phí 2 tuần và đề xuất gói tốt nhất."
-            },
-            "ctaBox": {
-                "title": "Không chắc gói nào phù hợp?",
-                "desc": "Nhận tư vấn miễn phí",
-                "btn": "Nhận tư vấn miễn phí"
-            }
+        "c5": {
+          "title": "Quản lý CS hợp nhất",
+          "desc": "Quản lý mọi câu hỏi từ các sàn ở một nơi với trả lời tự động đa ngôn ngữ"
         },
-        "case": {
-            "heroTitle": "Câu chuyện thành công",
-            "heroDesc": "Câu chuyện về các thương hiệu phát triển thị trường toàn cầu cùng HUBONTRADE",
-            "stats": {
-                "partners": "Thương hiệu đối tác",
-                "growth": "Tăng trưởng doanh số trung bình",
-                "awards": "Giải thưởng"
-            },
-            "c1": {
-                "industry": "Mỹ phẩm/Skincare",
-                "market": "Việt Nam, Thái Lan",
-                "title": "Thương hiệu K-Beauty A",
-                "challenge": "Chưa có kinh nghiệm Đông Nam Á; khó nắm bắt quy định bản địa",
-                "solution": "Onboard Shopee + marketing influencer bản địa",
-                "r1": "Đạt 300 triệu KRW doanh số/tháng trong 6 tháng",
-                "r2": "Top 10 mục Beauty trên Shopee",
-                "quote": "\"Nhờ HUBONTRADE, việc mở rộng ra nước ngoài phức tạp trở nên dễ dàng đáng kinh ngạc.\""
-            },
-            "c2": {
-                "industry": "Thực phẩm chức năng",
-                "market": "Indonesia",
-                "title": "Thương hiệu thực phẩm B",
-                "challenge": "Rào cản pháp lý như chứng nhận Halal; xây dựng lòng tin người tiêu dùng",
-                "solution": "Hỗ trợ chứng nhận bản địa + onboard Tokopedia + live commerce",
-                "r1": "Rút ngắn 3 tháng cấp chứng nhận Halal",
-                "r2": "Doanh số tăng 500% trong 1 năm",
-                "quote": "\"HUBONTRADE đã giải quyết toàn bộ quy trình chứng nhận phức tạp.\""
-            },
-            "c3": {
-                "industry": "Thời trang nữ",
-                "market": "Philippines, Malaysia",
-                "title": "Thương hiệu thời trang C",
-                "challenge": "Hệ thống size khác; khó nắm bắt xu hướng thời trang bản địa",
-                "solution": "Xây hướng dẫn size bản địa + live TikTok Shop",
-                "r1": "50 triệu KRW/buổi live TikTok",
-                "r2": "Tỷ lệ hoàn hàng giảm 80%",
-                "quote": "\"Cảm nhận rõ sức mạnh của live commerce. Đội ngũ HUBONTRADE là tuyệt nhất.\""
-            },
-            "c4": {
-                "industry": "Đồ gia dụng thông minh",
-                "market": "Việt Nam, Thái Lan, Indonesia",
-                "title": "Thương hiệu điện tử D",
-                "challenge": "Xây hệ thống hậu mãi; bản địa hóa sản phẩm kỹ thuật",
-                "solution": "Onboard 3 nước đồng thời + kết nối đối tác hậu mãi bản địa",
-                "r1": "Vào thành công 3 thị trường cùng lúc",
-                "r2": "Đạt 5 tỷ KRW doanh số năm",
-                "quote": "\"Vào 3 thị trường cùng lúc sẽ là bất khả thi nếu không có HUBONTRADE.\""
-            },
-            "partners": {
-                "title": "Đối tác của chúng tôi"
-            },
-            "ctaBox": {
-                "title": "Trở thành câu chuyện thành công tiếp theo",
-                "desc": "Mở thị trường Đông Nam Á cùng HUBONTRADE",
-                "btn": "Nhận tư vấn miễn phí"
-            }
-        },
-        "resources": {
-            "heroTitle": "Trung tâm Tài nguyên",
-            "heroDesc": "Cung cấp tất cả thông tin cần thiết cho TMĐT toàn cầu",
-            "filter": {
-                "all": "Tất cả",
-                "guide": "Hướng dẫn",
-                "report": "Báo cáo",
-                "blog": "Blog",
-                "webinar": "Webinar"
-            },
-            "cat": {
-                "guide": "Hướng dẫn",
-                "report": "Báo cáo",
-                "blog": "Blog",
-                "webinar": "Webinar"
-            },
-            "tag": {
-                "pdf": "Hướng dẫn PDF",
-                "report": "Báo cáo",
-                "blog": "Blog"
-            },
-            "c0": {
-                "title": "Hướng dẫn đầy đủ Sourcing 1688 → Bán Coupang",
-                "desc": "TOP 9 sản phẩm biên cao, cách tìm shop ship trực tiếp, từ khóa tìm kiếm cần thiết",
-                "tag": "Hướng dẫn MỚI",
-                "reading": "Thời gian đọc: 10 phút"
-            },
-            "c1": {
-                "title": "Hướng dẫn vào thị trường TMĐT Đông Nam Á 2024",
-                "desc": "Hướng dẫn tổng hợp tình hình, quy định, xu hướng tiêu dùng tại 5 nước Đông Nam Á",
-                "reading": "Thời gian đọc: 15 phút"
-            },
-            "c2": {
-                "title": "Báo cáo phân tích thị trường TMĐT Việt Nam 2024",
-                "desc": "Báo cáo chuyên gia phân tích xu hướng & cơ hội mới nhất thị trường TMĐT Việt Nam",
-                "reading": "32 trang"
-            },
-            "c3": {
-                "title": "Hướng dẫn onboard Shopee đầy đủ: A đến Z cho người mới",
-                "desc": "Hướng dẫn từng bước từ tạo tài khoản người bán Shopee đến đơn hàng đầu tiên",
-                "reading": "Thời gian đọc: 8 phút"
-            },
-            "c4": {
-                "title": "Cách x3 doanh số Đông Nam Á bằng live commerce",
-                "desc": "Chiến lược live commerce thành công từ chuyên gia bản địa",
-                "tag": "Bản ghi webinar",
-                "reading": "45 phút"
-            },
-            "c5": {
-                "title": "Làm chủ logistics & fulfillment Đông Nam Á",
-                "desc": "Hướng dẫn chi tiết vận chuyển quốc tế, thông quan, sử dụng trung tâm logistics bản địa",
-                "reading": "Thời gian đọc: 12 phút"
-            },
-            "c6": {
-                "title": "Báo cáo xu hướng xuất khẩu K-Beauty Đông Nam Á",
-                "desc": "Phân tích thị phần và tiềm năng tăng trưởng mỹ phẩm Hàn Quốc tại Đông Nam Á",
-                "reading": "28 trang"
-            },
-            "nl": {
-                "title": "Nhận thông tin mới nhất về TMĐT Đông Nam Á",
-                "btn": "Đăng ký",
-                "note": "Gửi mỗi thứ Ba · Có thể hủy bất cứ lúc nào"
-            }
-        },
-        "contact": {
-            "heroTitle": "Liên hệ",
-            "heroDesc": "Liên hệ bất cứ lúc nào về việc mở rộng ra thị trường toàn cầu",
-            "form": {
-                "title": "Mẫu liên hệ",
-                "company": "Công ty",
-                "name": "Người liên hệ",
-                "email": "Email",
-                "phone": "Điện thoại",
-                "service": "Dịch vụ quan tâm",
-                "servicePlaceholder": "Chọn dịch vụ quan tâm",
-                "opt": {
-                    "platform": "Onboard sàn",
-                    "logistics": "Logistics & Fulfillment",
-                    "marketing": "Marketing",
-                    "live": "Live commerce",
-                    "consulting": "Tư vấn tổng hợp",
-                    "other": "Khác"
-                },
-                "country": "Quốc gia muốn vào",
-                "cc": {
-                    "vietnam": "Việt Nam",
-                    "thailand": "Thái Lan",
-                    "indonesia": "Indonesia",
-                    "philippines": "Philippines",
-                    "malaysia": "Malaysia"
-                },
-                "message": "Nội dung",
-                "submit": "Gửi liên hệ"
-            },
-            "info": {
-                "title": "Thông tin liên hệ",
-                "addrLabel": "Địa chỉ",
-                "addrValue": "Tầng 3, Tòa Daera, 116 Yeongdeungpo-ro, Yeongdeungpo-gu, Seoul",
-                "phoneLabel": "Điện thoại",
-                "emailLabel": "Email",
-                "hoursLabel": "Giờ làm việc",
-                "hoursValue": "Ngày trong tuần 09:00 - 18:00 (KST)",
-                "mapLink": "Xem trên Naver Maps →"
-            },
-            "quick": {
-                "title": "Liên hệ nhanh",
-                "kakao": {
-                    "title": "Tư vấn KakaoTalk",
-                    "desc": "Trò chuyện thời gian thực (T2-T6 09-18)"
-                },
-                "phone": {
-                    "title": "Tư vấn điện thoại",
-                    "desc": "1660-2318 (T2-T6 09-18)"
-                },
-                "email": {
-                    "title": "Liên hệ Email",
-                    "desc": "contact@drapin.com (nhận 24/7)"
-                }
-            },
-            "office": {
-                "title": "Cách đến văn phòng",
-                "desc": "Tầng 3, Tòa Daera, 116 Yeongdeungpo-ro, Yeongdeungpo-gu, Seoul",
-                "subway": "Đi bộ 6 phút từ ga Yeongdeungpo-gu Office cửa 6 · 6 phút từ ga Mullae cửa 3",
-                "parking": "Bãi đỗ xe hạn chế — vui lòng dùng phương tiện công cộng nếu có thể"
-            }
-        },
-        "guide": {
-            "heroTitle": "Hướng dẫn đầy đủ 1688 Sourcing → <span class=\"gradient-text\">Bán Coupang</span>",
-            "heroDesc": "Từ sản phẩm biên lợi nhuận cao đến tìm shop ship trực tiếp — tất tần tật về 1688",
-            "hero": {
-                "platform1688": "Alibaba 1688",
-                "platformCoupang": "Coupang"
-            },
-            "s1": {
-                "title": "<span class=\"gradient-text\">TOP 9 sản phẩm sourcing biên cao</span>",
-                "desc": "Các nhóm sản phẩm có cầu cao trên Coupang và biên tốt khi nhập từ 1688"
-            },
-            "label": {
-                "unitPrice": "Giá 1688",
-                "coupangPrice": "Giá bán Coupang"
-            },
-            "p1": {
-                "cat": "Phụ kiện điện tử",
-                "title": "Tai nghe không dây / Phụ kiện Bluetooth",
-                "desc": "Tai nghe TWS, cáp sạc, ốp lưng, dán màn hình. Nhẹ & nhỏ — phí ship rẻ. Cạnh tranh tốt trên Coupang Rocket."
-            },
-            "p2": {
-                "cat": "Nhà bếp",
-                "title": "Đồ bếp silicone / Lưu trữ",
-                "desc": "Bộ thìa silicone, hộp kín, hũ gia vị, giá bát, thớt. Tỷ lệ mua lại cao, dễ tích đánh giá."
-            },
-            "p3": {
-                "cat": "Trang trí nhà",
-                "title": "Đèn LED mood / Đồ trang trí",
-                "desc": "Đèn LED, kệ tường, lọ hoa, vỏ gối, thảm. Hợp gu SNS, chuyển đổi cao. Dễ làm mới theo mùa."
-            },
-            "p4": {
-                "cat": "Dụng cụ làm đẹp",
-                "title": "Cọ trang điểm / Dụng cụ làm đẹp",
-                "desc": "Bộ cọ, kẹp mi, mút silicone, dây buộc tóc, kẹp. Siêu nhẹ → ship rẻ. Bộ combo tăng AOV."
-            },
-            "p5": {
-                "cat": "Phụ kiện thời trang",
-                "title": "Túi / Vớ / Phụ kiện thời trang",
-                "desc": "Túi eco, túi đeo chéo, bộ vớ, mũ, kính. Xu hướng nhanh nhưng 1688 cập nhật kịp. Bán theo combo hiệu quả."
-            },
-            "p6": {
-                "cat": "Thú cưng",
-                "title": "Đồ chơi / Quần áo / Đồ dùng thú cưng",
-                "desc": "Đồ chơi chó, quần áo thú cưng, bát ăn, balo, cào mèo. Cầu ổn định nhờ tăng nuôi thú. Đánh giá tạo khách trung thành."
-            },
-            "p7": {
-                "cat": "Bé / Trẻ em",
-                "title": "Đồ chơi giáo dục / Đồ trẻ em",
-                "desc": "Đồ Montessori, xếp hình, yếm silicone, bộ ăn trẻ em, đồ tắm. Bắt buộc chứng nhận KC — chứng nhận = rào cản."
-            },
-            "p8": {
-                "cat": "Thể thao/Outdoor",
-                "title": "Tập gym tại nhà / Đồ cắm trại",
-                "desc": "Thảm yoga, tạ, dây kháng lực, đèn lều LED, gậy leo núi. Có mùa nhưng tập tại nhà cả năm. Chú ý cân nặng."
-            },
-            "p9": {
-                "cat": "Phụ kiện ô tô",
-                "title": "Lưu trữ xe / Rửa xe",
-                "desc": "Hộp xe, giá đỡ điện thoại, khăn rửa xe, sáp thơm, hộp cốp. Tỷ lệ nam cao, cạnh tranh ít hơn."
-            },
-            "s2": {
-                "title": "Cách tìm shop 1688 <span class=\"gradient-text\">giao trực tiếp</span>",
-                "desc": "Các bước tìm shop 1688 giao trực tiếp đến Hàn Quốc, không cần forwarder"
-            },
-            "step1": {
-                "title": "Bộ lọc 跨境专供 (Chuyên xuyên biên giới)",
-                "desc": "Sau khi tìm trên 1688, nhấn <strong>\"跨境专供\"</strong> ở bộ lọc trên cùng để chỉ hiện sản phẩm hỗ trợ ship trực tiếp ra nước ngoài."
-            },
-            "step2": {
-                "title": "Khu vực 跨境专区 (Khu xuyên biên giới)",
-                "desc": "<strong>kj.1688.com</strong> là trang chuyên xuyên biên của 1688. Nhà cung cấp ở đây có kinh nghiệm với người bán nước ngoài, hỗ trợ ship trực tiếp/đơn nhỏ."
-            },
-            "step3": {
-                "title": "Hỏi trực tiếp qua AliWangWang (阿里旺旺)",
-                "desc": "Chat trực tiếp với người bán trên trang sản phẩm để xác nhận ship Hàn Quốc. Dùng công cụ dịch nếu cần."
-            },
-            "step4": {
-                "title": "Checklist tin cậy shop",
-                "desc": "Sau khi tìm thấy shop ship trực tiếp, hãy kiểm tra theo checklist dưới đây để xác nhận đáng tin."
-            },
-            "cmp": {
-                "title": "So sánh phương thức vận chuyển"
-            },
-            "s3": {
-                "title": "<span class=\"gradient-text\">Từ khóa tìm kiếm</span> 1688 thiết yếu",
-                "desc": "Bộ từ khóa tìm kiếm tiếng Trung được chọn lọc để tìm sản phẩm chính xác trên 1688"
-            },
-            "kw": {
-                "electronics": "🎧 Điện tử",
-                "home": "🏠 Đời sống / Nội thất",
-                "beauty": "💄 Làm đẹp / Thời trang",
-                "kitchen": "🍳 Đồ bếp",
-                "pet": "🐾 Thú cưng",
-                "filter": "🔑 Từ khóa lọc thiết yếu"
-            },
-            "s4": {
-                "title": "<span class=\"gradient-text\">Lưu ý & Mẹo</span> sourcing",
-                "desc": "Những điều bắt buộc biết khi sourcing từ 1688 và bán trên Coupang"
-            },
-            "tip1": {
-                "title": "Xác nhận chứng nhận KC"
-            },
-            "tip2": {
-                "title": "Luôn đặt mẫu trước"
-            },
-            "tip3": {
-                "title": "Tính biên lợi nhuận chính xác"
-            },
-            "tip4": {
-                "title": "Cẩn trọng vi phạm sở hữu trí tuệ"
-            },
-            "ctaBox": {
-                "title": "Từ sourcing 1688 đến bán Coupang,<br>HUBONTRADE đồng hành cùng bạn",
-                "desc": "Trải nghiệm HUBONTRADE — hỗ trợ một cửa sourcing, logistics, đăng sản phẩm và CS",
-                "btn1": "Yêu cầu tư vấn miễn phí",
-                "btn2": "Xem dịch vụ"
-            }
+        "c6": {
+          "title": "Tích hợp ERP & Tự động hóa logistics",
+          "desc": "Tích hợp API với ERP hiện có, tự động hóa xuất kho và xử lý trả hàng"
         }
+      },
+      "data": {
+        "title": "Phát triển thương hiệu dựa trên dữ liệu — vận hành bằng con số, không phải cảm tính",
+        "desc": "Phân tích tích hợp doanh số, quảng cáo, tồn kho, CRM cho quyết định dựa trên dữ liệu",
+        "c1": {
+          "title": "Bảng điều khiển phân tích doanh số",
+          "desc": "Phân tích xu hướng doanh số theo kênh, sản phẩm, kỳ theo thời gian thực"
+        },
+        "c2": {
+          "title": "Phân tích hiệu quả quảng cáo",
+          "desc": "Theo dõi hợp nhất ROAS, CPM, CPC và các chỉ số quảng cáo cốt lõi"
+        },
+        "c3": {
+          "title": "Dự báo tồn kho bằng AI",
+          "desc": "AI phân tích xu hướng bán để dự báo mức tồn kho tối ưu"
+        },
+        "c4": {
+          "title": "Quản lý khách hàng CRM",
+          "desc": "Marketing cá nhân hóa dựa trên lịch sử mua và hành vi khách hàng"
+        },
+        "c5": {
+          "title": "Bảng điều khiển BI",
+          "desc": "Bảng BI nắm bắt chỉ số kinh doanh cốt lõi trong nháy mắt"
+        },
+        "c6": {
+          "title": "Phân tích ROI marketing",
+          "desc": "Đo lường chính xác ROI theo kênh marketing"
+        }
+      },
+      "diff": {
+        "title": "Điểm khác biệt chỉ HUBONTRADE có",
+        "badge": "Không đối thủ nào có",
+        "c1": {
+          "title": "Đơn vị thực hiện Voucher Xuất khẩu Chính phủ",
+          "desc": "Đơn vị chính thức thực hiện Voucher Xuất khẩu của Chính phủ — sử dụng ngân sách voucher để dùng HUBONTRADE. Không đối thủ nào có tư cách này."
+        },
+        "c2": {
+          "title": "Coupang IOR (Importer of Record)",
+          "desc": "Hỗ trợ doanh nghiệp nước ngoài bán trực tiếp trên Coupang Hàn Quốc thông qua dịch vụ IOR — từ đăng ký nhập khẩu, thông quan đến bán hàng."
+        },
+        "c3": {
+          "title": "Tích hợp API KOSME / GoBizKorea",
+          "desc": "Tích hợp API trực tiếp với GoBizKorea của KOSME để tự động đăng sản phẩm xuất khẩu B2B và hỗ trợ ghép cặp người mua."
+        }
+      },
+      "process": {
+        "title": "Khởi đầu đơn giản, kết quả mạnh mẽ",
+        "s1": {
+          "title": "Đăng ký & Kết nối sàn",
+          "desc": "Chọn nền tảng bán và kết nối tài khoản"
+        },
+        "s2": {
+          "title": "Đăng sản phẩm",
+          "desc": "Đăng hàng loạt bằng Excel hoặc từng sản phẩm"
+        },
+        "s3": {
+          "title": "Quản lý đơn & vận chuyển",
+          "desc": "Quản lý mọi đơn và vận chuyển từ một bảng điều khiển"
+        },
+        "s4": {
+          "title": "Đối soát & Phân tích",
+          "desc": "Tối ưu lợi nhuận với phân tích biên và báo cáo doanh số"
+        }
+      },
+      "comp": {
+        "title": "Chỉ có ở HUBONTRADE",
+        "colFeature": "Hạng mục",
+        "colOurs": "HUBONTRADE (chúng tôi)"
+      },
+      "ctaBox": {
+        "title": "Bạn cần giải pháp nào?",
+        "desc": "Tìm giải pháp phù hợp nhất cho doanh nghiệp với tư vấn miễn phí",
+        "btn": "Yêu cầu tư vấn miễn phí"
+      }
+    },
+    "features": {
+      "heroTitle": "Tính năng mạnh mẽ dành cho nhà bán",
+      "heroDesc": "Tính năng cốt lõi đơn giản hóa việc bán hàng toàn cầu phức tạp",
+      "sec1": {
+        "title": "Tính năng chính"
+      },
+      "f1": {
+        "title": "Đăng hàng loạt đa sàn",
+        "desc": "Đăng sản phẩm trên hàng chục sàn trong và ngoài nước với một file Excel. AI tự động ánh xạ danh mục và gợi ý từ khóa, tag ảnh, rút ngắn thời gian đăng.",
+        "li1": "Đăng hàng loạt đa sàn (Amazon, Shopee, Lazada, TikTok Shop, Coupang, Naver…)",
+        "li2": "Tự động ánh xạ danh mục theo nền tảng bằng AI",
+        "li3": "Gợi ý từ khóa AI & tự sinh tag ảnh",
+        "li4": "Sửa hàng loạt thông tin sản phẩm & đồng bộ giá",
+        "li5": "Tự động resize ảnh & gắn watermark"
+      },
+      "f2": {
+        "title": "Quản lý đơn hàng",
+        "desc": "Tự động thu thập đơn từ mọi sàn và xem trạng thái ở một nơi. Tối đa hiệu quả với xử lý hàng loạt.",
+        "li1": "Tự động thu đơn từ mọi sàn (trong & ngoài nước)",
+        "li2": "Bảng điều khiển trạng thái đơn hợp nhất",
+        "li3": "Xử lý đơn hàng loạt (xác nhận, gửi, hủy)",
+        "li4": "Lịch sử đơn & phân tích thống kê"
+      },
+      "f3": {
+        "title": "Quản lý tồn kho",
+        "desc": "Đồng bộ tồn kho đa kênh thời gian thực để tránh hết hàng. AI phân tích xu hướng bán để dự báo mức tồn tối ưu.",
+        "li1": "Đồng bộ tồn kho đa kênh thời gian thực",
+        "li2": "Cảnh báo sắp hết hàng (ngưỡng tùy chỉnh)",
+        "li3": "Dự báo tồn kho bằng AI dựa trên xu hướng bán",
+        "li4": "Bảng tồn kho theo từng kho"
+      },
+      "f4": {
+        "title": "Quản lý vận đơn",
+        "desc": "Tự động nhập số vận đơn và tích hợp đơn vị vận chuyển thời gian thực. Tự động gửi thông tin theo dõi đến khách.",
+        "li1": "Tự động nhập số vận đơn (gửi đến từng sàn)",
+        "li2": "Tích hợp đơn vị vận chuyển (CJ, Hanjin, bưu điện, các hãng quốc tế)",
+        "li3": "Theo dõi vận chuyển thời gian thực",
+        "li4": "Tự động thông báo khi giao xong"
+      },
+      "f5": {
+        "title": "Quản lý đặt hàng",
+        "desc": "Tự động tạo đơn đặt hàng dựa trên ngưỡng tồn và quản lý nhà cung cấp có hệ thống. Xem lịch sử PO và hàng nhập trong nháy mắt.",
+        "li1": "Tự sinh đơn đặt hàng (theo ngưỡng tồn)",
+        "li2": "Quản lý nhà cung cấp & so sánh đơn giá",
+        "li3": "Theo dõi lịch sử PO & hàng nhập",
+        "li4": "Tự sinh và gửi đơn đặt hàng"
+      },
+      "f6": {
+        "title": "Quản lý CS",
+        "desc": "Quản lý câu hỏi khách từ mọi sàn ở một nơi. Mẫu trả lời tự động và hỗ trợ đa ngôn ngữ giúp CS toàn cầu hiệu quả.",
+        "li1": "Thu thập & quản lý câu hỏi từ mỗi sàn",
+        "li2": "Mẫu trả lời tự động dựa trên FAQ",
+        "li3": "Hỗ trợ đa ngôn ngữ qua dịch AI",
+        "li4": "Trạng thái xử lý CS & thống kê tỉ lệ phản hồi"
+      },
+      "f7": {
+        "title": "Tích hợp ERP",
+        "desc": "Kết nối ERP hiện có qua API để tự động đẩy dữ liệu kế toán & thuế. Quản lý dữ liệu thống nhất, không nhập trùng.",
+        "li1": "Tích hợp API với ERP hiện có (Ecount, Douzone…)",
+        "li2": "Tự động chuyển dữ liệu kế toán/thuế",
+        "li3": "Đồng bộ dữ liệu bán/mua thời gian thực",
+        "li4": "Tự động sắp xếp dữ liệu đối soát"
+      },
+      "f8": {
+        "title": "Tự động hóa logistics",
+        "desc": "Tự động xuất kho và phân bổ vận chuyển tối ưu. Hệ thống cũng xử lý trả hàng và đổi hàng tự động.",
+        "li1": "Tự động xuất kho (lệnh ngay khi xác nhận đơn)",
+        "li2": "Tự động chọn đơn vị vận chuyển (tối ưu chi phí/khu vực)",
+        "li3": "Xử lý tự động trả/đổi hàng",
+        "li4": "Quản lý fulfillment trong & ngoài nước hợp nhất"
+      },
+      "f9": {
+        "title": "Phân tích BI",
+        "desc": "Phân tích thống nhất doanh số, ROAS quảng cáo và dữ liệu CRM. Nắm bắt chỉ số tăng trưởng thương hiệu trong nháy mắt.",
+        "li1": "Phân tích doanh số (theo kênh, sản phẩm, kỳ)",
+        "li2": "Phân tích ROAS/CPM/CPC quảng cáo",
+        "li3": "Phân tích khách hàng CRM (mẫu mua, LTV)",
+        "li4": "Bảng chỉ số tăng trưởng thương hiệu"
+      },
+      "f10": {
+        "title": "Tự động hóa bằng AI",
+        "desc": "AI gợi ý tên sản phẩm, từ khóa, danh mục, dịch đa ngôn ngữ và giá tối ưu — thay nhà bán làm việc lặp lại.",
+        "li1": "AI gợi ý tên/từ khóa sản phẩm (tối ưu SEO)",
+        "li2": "AI tự ánh xạ danh mục",
+        "li3": "Dịch đa ngôn ngữ bằng AI (Anh, Thái, Việt…)",
+        "li4": "AI gợi ý giá (dựa trên phân tích đối thủ)"
+      },
+      "f11": {
+        "title": "Tự động khai báo xuất khẩu",
+        "desc": "Tự động phát hành xác nhận mua xuất khẩu TMĐT và tích hợp với uTradeHub để tự động hóa toàn bộ khai báo. Tự phân loại mã HS giúp đơn giản hóa thông quan.",
+        "li1": "Tự phát hành xác nhận mua xuất khẩu TMĐT",
+        "li2": "Tích hợp uTradeHub (tự động nộp khai báo xuất khẩu)",
+        "li3": "Tự phân loại mã HS",
+        "li4": "Tự tổng hợp & báo cáo hiệu suất xuất khẩu"
+      },
+      "f12": {
+        "title": "Công cụ biên lợi nhuận toàn cầu",
+        "desc": "Xác minh khả năng sinh lời trước với tính biên lợi nhuận gồm tỷ giá, phí, quảng cáo, logistics, thông quan. So sánh lợi nhuận ròng giữa các sàn.",
+        "li1": "Bao gồm tỷ giá/phí/quảng cáo/logistics/thông quan",
+        "li2": "Mô phỏng giá bán để xác minh lợi nhuận trước",
+        "li3": "So sánh lợi nhuận ròng theo nền tảng",
+        "li4": "Tự động cập nhật tỷ giá thời gian thực"
+      },
+      "dash": {
+        "title": "Tất cả trong tầm mắt — Bảng điều khiển hợp nhất",
+        "desc": "Theo dõi thời gian thực doanh số, đơn, tồn kho, đối soát của mọi sàn trên một màn hình",
+        "s1": {
+          "title": "Doanh số thời gian thực",
+          "desc": "Tổng hợp doanh số thời gian thực trên mọi sàn"
+        },
+        "s2": {
+          "title": "Đơn theo sàn",
+          "desc": "Xem trạng thái đơn theo các kênh Shopee, TikTok Shop… trong nháy mắt"
+        },
+        "s3": {
+          "title": "Tồn kho hợp nhất",
+          "desc": "Đồng bộ tồn kho kho trong & ngoài nước thời gian thực để tránh hết hàng"
+        },
+        "s4": {
+          "title": "Phân tích lợi nhuận",
+          "desc": "Báo cáo biên lợi nhuận, phí, chi phí logistics theo từng sàn"
+        }
+      },
+      "comp": {
+        "title": "Khi dùng HUBONTRADE, đây là những gì thay đổi",
+        "col1": "Công việc",
+        "col2": "Tự vận hành",
+        "col3": "HUBONTRADE"
+      },
+      "ctaBox": {
+        "title": "Trải nghiệm mọi tính năng miễn phí",
+        "desc": "Trải nghiệm mọi tính năng HUBONTRADE với 14 ngày dùng thử miễn phí",
+        "btn": "Bắt đầu dùng thử miễn phí"
+      }
+    },
+    "service": {
+      "heroTitle": "Chúng tôi <span class=\"gradient-text\">đảm nhận mọi việc</span> trong bán hàng toàn cầu",
+      "heroDesc": "Khám phá các dịch vụ chuyên nghiệp HUBONTRADE cung cấp",
+      "cats": {
+        "title": "Lĩnh vực dịch vụ chuyên môn",
+        "c1": {
+          "title": "Vận hành sàn",
+          "desc": "Đăng sản phẩm và vận hành trên các sàn trong & ngoài nước",
+          "l1": "Đăng sản phẩm & thiết kế trang chi tiết",
+          "l2": "Chiến lược giá & vận hành khuyến mãi",
+          "l3": "Quản lý đánh giá & xử lý CS",
+          "l4": "Phân tích doanh số & báo cáo vận hành"
+        },
+        "c2": {
+          "title": "Dịch vụ logistics XNK",
+          "desc": "Quản lý logistics trong & ngoài nước trong một hệ thống",
+          "l1": "Khai báo xuất khẩu & dịch vụ thông quan",
+          "l2": "Vận chuyển quốc tế & fulfillment bản địa",
+          "l3": "Thông quan nhập khẩu & giao hàng mua hộ",
+          "l4": "Xử lý trả/đổi hàng"
+        },
+        "c3": {
+          "title": "Dịch vụ Sourcing",
+          "desc": "Tìm sản phẩm biên cao từ nhà cung cấp toàn cầu",
+          "l1": "Sourcing sản phẩm B2B toàn cầu",
+          "l2": "Đặt mẫu & kiểm tra chất lượng",
+          "l3": "Phân tích biên & mô phỏng lợi nhuận",
+          "l4": "Kết nối sản xuất OEM/ODM"
+        },
+        "c4": {
+          "title": "Dịch vụ Marketing",
+          "desc": "Tối đa doanh số với marketing tùy chỉnh theo sàn",
+          "l1": "Quản lý khuyến mãi Shopee/TikTok Shop",
+          "l2": "Quảng cáo từ khóa & marketing hiệu suất",
+          "l3": "Marketing influencer bản địa",
+          "l4": "Lên kế hoạch & vận hành live commerce"
+        }
+      },
+      "types": {
+        "title": "Dịch vụ tùy theo loại nhà bán",
+        "t1": {
+          "title": "Nhà bán nội địa (Xuất khẩu)",
+          "desc": "Doanh nghiệp xuất khẩu sản phẩm Hàn Quốc ra nước ngoài",
+          "l1": "Tự động khai báo xuất khẩu",
+          "l2": "Onboard & vận hành sàn nước ngoài",
+          "l3": "Logistics quốc tế & fulfillment",
+          "l4": "Marketing bản địa"
+        },
+        "t2": {
+          "title": "Nhà bán nước ngoài (Nhập/Reverse)",
+          "desc": "Bán sản phẩm nước ngoài vào Hàn Quốc hoặc nước khác",
+          "l1": "Tự động thông quan nhập khẩu",
+          "l2": "Onboard & vận hành sàn Hàn",
+          "l3": "Fulfillment nội địa",
+          "l4": "Hệ thống mua hộ"
+        },
+        "t3": {
+          "title": "Dropship & Mua hộ",
+          "desc": "Vận hành kinh doanh online không cần tồn kho",
+          "l1": "Sourcing sản phẩm toàn cầu",
+          "l2": "Tự động tính biên",
+          "l3": "Xử lý đơn tự động",
+          "l4": "Tự động thông quan"
+        }
+      },
+      "support": {
+        "title": "Cùng quản lý chuyên trách",
+        "desc": "Không chỉ là công cụ. Quản lý chuyên trách cùng bạn thiết kế tăng trưởng.",
+        "f1": "Quản lý chuyên trách 1:1",
+        "f2": "Báo cáo phân tích doanh số hàng tuần",
+        "f3": "Hỗ trợ chat & email 24/7"
+      },
+      "ctaBox": {
+        "title": "Bạn cần dịch vụ <span class=\"gradient-text\">nào?</span>",
+        "desc": "Nhận đề xuất dịch vụ phù hợp nhất cho loại hình doanh nghiệp",
+        "btn": "Yêu cầu tư vấn miễn phí"
+      }
+    },
+    "market": {
+      "heroTitle": "Từ trong nước đến toàn cầu, <span class=\"gradient-text\">tích hợp các sàn lớn</span>",
+      "heroDesc": "Quản lý sàn trong nước & quốc tế chỉ với HUBONTRADE",
+      "s1": {
+        "title": "<span class=\"gradient-text\">Sàn</span> được hỗ trợ",
+        "korea": "Sàn nội địa",
+        "global": "Sàn toàn cầu"
+      },
+      "mp": {
+        "coupang": "Giao siêu tốc, hỗ trợ IOR",
+        "naver": "Tích hợp cổng tìm kiếm lớn nhất Hàn Quốc",
+        "gmarket": "Hỗ trợ bán hàng toàn cầu",
+        "11st": "Sàn tổng hợp của SK",
+        "wemakeprice": "Sàn tập trung deal giá tốt",
+        "interpark": "Trung tâm mua sắm tổng hợp",
+        "auction": "Sàn mở",
+        "shopeeTag": "Lớn nhất Đông Nam Á",
+        "shopeeDesc": "Việt Nam, Philippines, Singapore, Malaysia, Thái Lan, Indonesia",
+        "lazadaTag": "Tập đoàn Alibaba",
+        "lazadaDesc": "6 nước Đông Nam Á",
+        "tiktokTag": "Đứng đầu live commerce",
+        "tiktokDesc": "5 nước Đông Nam Á",
+        "amazonTag": "Lớn nhất thế giới",
+        "amazonDesc": "Mỹ, Nhật, châu Âu…",
+        "tikiTag": "Sàn bản địa Việt Nam",
+        "tikiDesc": "Sàn bản địa Việt Nam",
+        "aliTag": "Bán hàng toàn cầu",
+        "aliDesc": "Bán hàng toàn cầu",
+        "qoo10Tag": "Sàn mở châu Á",
+        "qoo10Desc": "Nhật, Singapore",
+        "tokoTag": "Lớn nhất Indonesia",
+        "tokoDesc": "Indonesia"
+      },
+      "tag": {
+        "orders": "Thu thập đơn",
+        "inv": "Đồng bộ tồn",
+        "track": "Tự động vận đơn",
+        "listing": "Đăng sản phẩm",
+        "cs": "CS"
+      },
+      "s2": {
+        "title": "<span class=\"gradient-text\">Chi tiết tích hợp</span> theo sàn",
+        "colMarket": "Sàn",
+        "colListing": "Đăng SP",
+        "colOrders": "Thu đơn",
+        "colInv": "Tồn kho",
+        "colTrack": "Vận đơn",
+        "colCS": "Tích hợp CS",
+        "colMarketing": "Marketing",
+        "colLive": "Live commerce"
+      },
+      "excl": {
+        "title": "<span class=\"gradient-text\">Tích hợp</span> chỉ có ở HUBONTRADE",
+        "c1": {
+          "title": "Coupang IOR (Đại lý nhập khẩu)",
+          "desc": "Doanh nghiệp nước ngoài bán trực tiếp trên Coupang mà không cần pháp nhân Hàn Quốc — dịch vụ độc quyền không đối thủ nào có."
+        },
+        "b1": "Dịch vụ độc quyền",
+        "c2": {
+          "title": "Tích hợp API KOSME/GoBizKorea",
+          "desc": "Tích hợp trực tiếp với chương trình hỗ trợ xuất khẩu của chính phủ — tự động báo cáo và quản lý hợp nhất."
+        },
+        "b2": "Tích hợp chính phủ",
+        "c3": {
+          "title": "Tự động khai báo xuất khẩu (uTradeHub)",
+          "desc": "Tích hợp trực tiếp với hệ thống khai báo xuất khẩu Hải quan Hàn Quốc — tự phát hành tờ khai và C/O."
+        },
+        "b3": "Tự động hóa"
+      },
+      "custom": {
+        "title": "<span class=\"gradient-text\">Hỗ trợ</span> cả shop riêng",
+        "desc": "Quản lý hợp nhất cả sàn mở và shop riêng của bạn",
+        "shopify": "Nền tảng shop riêng toàn cầu",
+        "woo": "Shop dựa trên WordPress",
+        "cafe24": "Giải pháp shop hàng đầu Hàn Quốc",
+        "api": "API shop riêng",
+        "apiDesc": "Hỗ trợ tích hợp API tùy chỉnh"
+      },
+      "ctaBox": {
+        "title": "Kết nối sàn của bạn với <span class=\"gradient-text\">HUBONTRADE</span>",
+        "desc": "Trải nghiệm tích hợp sàn miễn phí",
+        "btn1": "Bắt đầu tích hợp",
+        "btn2": "Tư vấn 1:1"
+      }
+    },
+    "pricing": {
+      "heroTitle": "Bảng giá hợp lý",
+      "heroDesc": "Chọn gói phù hợp với quy mô doanh nghiệp của bạn",
+      "billing": {
+        "monthly": "Hàng tháng",
+        "yearly": "Hàng năm",
+        "discount": "Giảm 20%"
+      },
+      "starter": {
+        "name": "Starter",
+        "amount": "Miễn phí",
+        "unit": "  30 ngày",
+        "tax": "Không cần thẻ tín dụng",
+        "desc": "Dùng thử mọi tính năng cốt lõi miễn phí 30 ngày",
+        "btn": "Bắt đầu dùng thử"
+      },
+      "growth": {
+        "name": "Growth",
+        "discount": "Giảm 44%",
+        "desc": "Gói phổ biến nhất cho nhà bán đang phát triển",
+        "btn": "Bắt đầu gói"
+      },
+      "ent": {
+        "name": "Enterprise",
+        "discount": "Giảm 50%",
+        "desc": "Mọi tính năng + quản lý chuyên trách để mở rộng toàn cầu",
+        "btn": "Bắt đầu gói"
+      },
+      "faq": {
+        "title": "Câu hỏi thường gặp",
+        "q1": "Thời hạn hợp đồng là bao lâu?",
+        "a1": "Tối thiểu 3 tháng; hợp đồng năm được giảm 20%.",
+        "q2": "Có thể hủy giữa chừng không?",
+        "a2": "Có — hủy không phí phạt khi báo trước 1 tháng.",
+        "q3": "Có phí phát sinh không?",
+        "a3": "Phí vận hành nền tảng đã gồm trong giá cơ bản; quảng cáo & logistics tính theo thực tế.",
+        "q4": "Có thể đổi gói không?",
+        "a4": "Nâng cấp gói bất cứ lúc nào — chỉ thanh toán phần chênh lệch.",
+        "q5": "Có dùng thử miễn phí không?",
+        "a5": "Cung cấp báo cáo phân tích thị trường miễn phí 2 tuần và đề xuất gói tốt nhất."
+      },
+      "ctaBox": {
+        "title": "Không chắc gói nào phù hợp?",
+        "desc": "Nhận tư vấn miễn phí",
+        "btn": "Nhận tư vấn miễn phí"
+      }
+    },
+    "case": {
+      "heroTitle": "Câu chuyện thành công",
+      "heroDesc": "Câu chuyện về các thương hiệu phát triển thị trường toàn cầu cùng HUBONTRADE",
+      "stats": {
+        "partners": "Thương hiệu đối tác",
+        "growth": "Tăng trưởng doanh số trung bình",
+        "awards": "Giải thưởng"
+      },
+      "c1": {
+        "industry": "Mỹ phẩm/Skincare",
+        "market": "Việt Nam, Thái Lan",
+        "title": "Thương hiệu K-Beauty A",
+        "challenge": "Chưa có kinh nghiệm Đông Nam Á; khó nắm bắt quy định bản địa",
+        "solution": "Onboard Shopee + marketing influencer bản địa",
+        "r1": "Đạt 300 triệu KRW doanh số/tháng trong 6 tháng",
+        "r2": "Top 10 mục Beauty trên Shopee",
+        "quote": "\"Nhờ HUBONTRADE, việc mở rộng ra nước ngoài phức tạp trở nên dễ dàng đáng kinh ngạc.\""
+      },
+      "c2": {
+        "industry": "Thực phẩm chức năng",
+        "market": "Indonesia",
+        "title": "Thương hiệu thực phẩm B",
+        "challenge": "Rào cản pháp lý như chứng nhận Halal; xây dựng lòng tin người tiêu dùng",
+        "solution": "Hỗ trợ chứng nhận bản địa + onboard Tokopedia + live commerce",
+        "r1": "Rút ngắn 3 tháng cấp chứng nhận Halal",
+        "r2": "Doanh số tăng 500% trong 1 năm",
+        "quote": "\"HUBONTRADE đã giải quyết toàn bộ quy trình chứng nhận phức tạp.\""
+      },
+      "c3": {
+        "industry": "Thời trang nữ",
+        "market": "Philippines, Malaysia",
+        "title": "Thương hiệu thời trang C",
+        "challenge": "Hệ thống size khác; khó nắm bắt xu hướng thời trang bản địa",
+        "solution": "Xây hướng dẫn size bản địa + live TikTok Shop",
+        "r1": "50 triệu KRW/buổi live TikTok",
+        "r2": "Tỷ lệ hoàn hàng giảm 80%",
+        "quote": "\"Cảm nhận rõ sức mạnh của live commerce. Đội ngũ HUBONTRADE là tuyệt nhất.\""
+      },
+      "c4": {
+        "industry": "Đồ gia dụng thông minh",
+        "market": "Việt Nam, Thái Lan, Indonesia",
+        "title": "Thương hiệu điện tử D",
+        "challenge": "Xây hệ thống hậu mãi; bản địa hóa sản phẩm kỹ thuật",
+        "solution": "Onboard 3 nước đồng thời + kết nối đối tác hậu mãi bản địa",
+        "r1": "Vào thành công 3 thị trường cùng lúc",
+        "r2": "Đạt 5 tỷ KRW doanh số năm",
+        "quote": "\"Vào 3 thị trường cùng lúc sẽ là bất khả thi nếu không có HUBONTRADE.\""
+      },
+      "partners": {
+        "title": "Đối tác của chúng tôi"
+      },
+      "ctaBox": {
+        "title": "Trở thành câu chuyện thành công tiếp theo",
+        "desc": "Mở thị trường Đông Nam Á cùng HUBONTRADE",
+        "btn": "Nhận tư vấn miễn phí"
+      }
+    },
+    "resources": {
+      "heroTitle": "Trung tâm Tài nguyên",
+      "heroDesc": "Cung cấp tất cả thông tin cần thiết cho TMĐT toàn cầu",
+      "filter": {
+        "all": "Tất cả",
+        "guide": "Hướng dẫn",
+        "report": "Báo cáo",
+        "blog": "Blog",
+        "webinar": "Webinar"
+      },
+      "cat": {
+        "guide": "Hướng dẫn",
+        "report": "Báo cáo",
+        "blog": "Blog",
+        "webinar": "Webinar"
+      },
+      "tag": {
+        "pdf": "Hướng dẫn PDF",
+        "report": "Báo cáo",
+        "blog": "Blog"
+      },
+      "c0": {
+        "title": "Hướng dẫn đầy đủ Sourcing 1688 → Bán Coupang",
+        "desc": "TOP 9 sản phẩm biên cao, cách tìm shop ship trực tiếp, từ khóa tìm kiếm cần thiết",
+        "tag": "Hướng dẫn MỚI",
+        "reading": "Thời gian đọc: 10 phút"
+      },
+      "c1": {
+        "title": "Hướng dẫn vào thị trường TMĐT Đông Nam Á 2024",
+        "desc": "Hướng dẫn tổng hợp tình hình, quy định, xu hướng tiêu dùng tại 5 nước Đông Nam Á",
+        "reading": "Thời gian đọc: 15 phút"
+      },
+      "c2": {
+        "title": "Báo cáo phân tích thị trường TMĐT Việt Nam 2024",
+        "desc": "Báo cáo chuyên gia phân tích xu hướng & cơ hội mới nhất thị trường TMĐT Việt Nam",
+        "reading": "32 trang"
+      },
+      "c3": {
+        "title": "Hướng dẫn onboard Shopee đầy đủ: A đến Z cho người mới",
+        "desc": "Hướng dẫn từng bước từ tạo tài khoản người bán Shopee đến đơn hàng đầu tiên",
+        "reading": "Thời gian đọc: 8 phút"
+      },
+      "c4": {
+        "title": "Cách x3 doanh số Đông Nam Á bằng live commerce",
+        "desc": "Chiến lược live commerce thành công từ chuyên gia bản địa",
+        "tag": "Bản ghi webinar",
+        "reading": "45 phút"
+      },
+      "c5": {
+        "title": "Làm chủ logistics & fulfillment Đông Nam Á",
+        "desc": "Hướng dẫn chi tiết vận chuyển quốc tế, thông quan, sử dụng trung tâm logistics bản địa",
+        "reading": "Thời gian đọc: 12 phút"
+      },
+      "c6": {
+        "title": "Báo cáo xu hướng xuất khẩu K-Beauty Đông Nam Á",
+        "desc": "Phân tích thị phần và tiềm năng tăng trưởng mỹ phẩm Hàn Quốc tại Đông Nam Á",
+        "reading": "28 trang"
+      },
+      "nl": {
+        "title": "Nhận thông tin mới nhất về TMĐT Đông Nam Á",
+        "btn": "Đăng ký",
+        "note": "Gửi mỗi thứ Ba · Có thể hủy bất cứ lúc nào"
+      }
+    },
+    "contact": {
+      "heroTitle": "Liên hệ",
+      "heroDesc": "Liên hệ bất cứ lúc nào về việc mở rộng ra thị trường toàn cầu",
+      "form": {
+        "title": "Mẫu liên hệ",
+        "company": "Công ty",
+        "name": "Người liên hệ",
+        "email": "Email",
+        "phone": "Điện thoại",
+        "service": "Dịch vụ quan tâm",
+        "servicePlaceholder": "Chọn dịch vụ quan tâm",
+        "opt": {
+          "platform": "Onboard sàn",
+          "logistics": "Logistics & Fulfillment",
+          "marketing": "Marketing",
+          "live": "Live commerce",
+          "consulting": "Tư vấn tổng hợp",
+          "other": "Khác"
+        },
+        "country": "Quốc gia muốn vào",
+        "cc": {
+          "vietnam": "Việt Nam",
+          "thailand": "Thái Lan",
+          "indonesia": "Indonesia",
+          "philippines": "Philippines",
+          "malaysia": "Malaysia"
+        },
+        "message": "Nội dung",
+        "submit": "Gửi liên hệ"
+      },
+      "info": {
+        "title": "Thông tin liên hệ",
+        "addrLabel": "Địa chỉ",
+        "addrValue": "Tầng 3, Tòa Daera, 116 Yeongdeungpo-ro, Yeongdeungpo-gu, Seoul",
+        "phoneLabel": "Điện thoại",
+        "emailLabel": "Email",
+        "hoursLabel": "Giờ làm việc",
+        "hoursValue": "Ngày trong tuần 09:00 - 18:00 (KST)",
+        "mapLink": "Xem trên Naver Maps →"
+      },
+      "quick": {
+        "title": "Liên hệ nhanh",
+        "kakao": {
+          "title": "Tư vấn KakaoTalk",
+          "desc": "Trò chuyện thời gian thực (T2-T6 09-18)"
+        },
+        "phone": {
+          "title": "Tư vấn điện thoại",
+          "desc": "1660-2318 (T2-T6 09-18)"
+        },
+        "email": {
+          "title": "Liên hệ Email",
+          "desc": "contact@drapin.com (nhận 24/7)"
+        }
+      },
+      "office": {
+        "title": "Cách đến văn phòng",
+        "desc": "Tầng 3, Tòa Daera, 116 Yeongdeungpo-ro, Yeongdeungpo-gu, Seoul",
+        "subway": "Đi bộ 6 phút từ ga Yeongdeungpo-gu Office cửa 6 · 6 phút từ ga Mullae cửa 3",
+        "parking": "Bãi đỗ xe hạn chế — vui lòng dùng phương tiện công cộng nếu có thể"
+      }
+    },
+    "guide": {
+      "heroTitle": "Hướng dẫn đầy đủ 1688 Sourcing → <span class=\"gradient-text\">Bán Coupang</span>",
+      "heroDesc": "Từ sản phẩm biên lợi nhuận cao đến tìm shop ship trực tiếp — tất tần tật về 1688",
+      "hero": {
+        "platform1688": "Alibaba 1688",
+        "platformCoupang": "Coupang"
+      },
+      "s1": {
+        "title": "<span class=\"gradient-text\">TOP 9 sản phẩm sourcing biên cao</span>",
+        "desc": "Các nhóm sản phẩm có cầu cao trên Coupang và biên tốt khi nhập từ 1688"
+      },
+      "label": {
+        "unitPrice": "Giá 1688",
+        "coupangPrice": "Giá bán Coupang"
+      },
+      "p1": {
+        "cat": "Phụ kiện điện tử",
+        "title": "Tai nghe không dây / Phụ kiện Bluetooth",
+        "desc": "Tai nghe TWS, cáp sạc, ốp lưng, dán màn hình. Nhẹ & nhỏ — phí ship rẻ. Cạnh tranh tốt trên Coupang Rocket."
+      },
+      "p2": {
+        "cat": "Nhà bếp",
+        "title": "Đồ bếp silicone / Lưu trữ",
+        "desc": "Bộ thìa silicone, hộp kín, hũ gia vị, giá bát, thớt. Tỷ lệ mua lại cao, dễ tích đánh giá."
+      },
+      "p3": {
+        "cat": "Trang trí nhà",
+        "title": "Đèn LED mood / Đồ trang trí",
+        "desc": "Đèn LED, kệ tường, lọ hoa, vỏ gối, thảm. Hợp gu SNS, chuyển đổi cao. Dễ làm mới theo mùa."
+      },
+      "p4": {
+        "cat": "Dụng cụ làm đẹp",
+        "title": "Cọ trang điểm / Dụng cụ làm đẹp",
+        "desc": "Bộ cọ, kẹp mi, mút silicone, dây buộc tóc, kẹp. Siêu nhẹ → ship rẻ. Bộ combo tăng AOV."
+      },
+      "p5": {
+        "cat": "Phụ kiện thời trang",
+        "title": "Túi / Vớ / Phụ kiện thời trang",
+        "desc": "Túi eco, túi đeo chéo, bộ vớ, mũ, kính. Xu hướng nhanh nhưng 1688 cập nhật kịp. Bán theo combo hiệu quả."
+      },
+      "p6": {
+        "cat": "Thú cưng",
+        "title": "Đồ chơi / Quần áo / Đồ dùng thú cưng",
+        "desc": "Đồ chơi chó, quần áo thú cưng, bát ăn, balo, cào mèo. Cầu ổn định nhờ tăng nuôi thú. Đánh giá tạo khách trung thành."
+      },
+      "p7": {
+        "cat": "Bé / Trẻ em",
+        "title": "Đồ chơi giáo dục / Đồ trẻ em",
+        "desc": "Đồ Montessori, xếp hình, yếm silicone, bộ ăn trẻ em, đồ tắm. Bắt buộc chứng nhận KC — chứng nhận = rào cản."
+      },
+      "p8": {
+        "cat": "Thể thao/Outdoor",
+        "title": "Tập gym tại nhà / Đồ cắm trại",
+        "desc": "Thảm yoga, tạ, dây kháng lực, đèn lều LED, gậy leo núi. Có mùa nhưng tập tại nhà cả năm. Chú ý cân nặng."
+      },
+      "p9": {
+        "cat": "Phụ kiện ô tô",
+        "title": "Lưu trữ xe / Rửa xe",
+        "desc": "Hộp xe, giá đỡ điện thoại, khăn rửa xe, sáp thơm, hộp cốp. Tỷ lệ nam cao, cạnh tranh ít hơn."
+      },
+      "s2": {
+        "title": "Cách tìm shop 1688 <span class=\"gradient-text\">giao trực tiếp</span>",
+        "desc": "Các bước tìm shop 1688 giao trực tiếp đến Hàn Quốc, không cần forwarder"
+      },
+      "step1": {
+        "title": "Bộ lọc 跨境专供 (Chuyên xuyên biên giới)",
+        "desc": "Sau khi tìm trên 1688, nhấn <strong>\"跨境专供\"</strong> ở bộ lọc trên cùng để chỉ hiện sản phẩm hỗ trợ ship trực tiếp ra nước ngoài."
+      },
+      "step2": {
+        "title": "Khu vực 跨境专区 (Khu xuyên biên giới)",
+        "desc": "<strong>kj.1688.com</strong> là trang chuyên xuyên biên của 1688. Nhà cung cấp ở đây có kinh nghiệm với người bán nước ngoài, hỗ trợ ship trực tiếp/đơn nhỏ."
+      },
+      "step3": {
+        "title": "Hỏi trực tiếp qua AliWangWang (阿里旺旺)",
+        "desc": "Chat trực tiếp với người bán trên trang sản phẩm để xác nhận ship Hàn Quốc. Dùng công cụ dịch nếu cần."
+      },
+      "step4": {
+        "title": "Checklist tin cậy shop",
+        "desc": "Sau khi tìm thấy shop ship trực tiếp, hãy kiểm tra theo checklist dưới đây để xác nhận đáng tin."
+      },
+      "cmp": {
+        "title": "So sánh phương thức vận chuyển"
+      },
+      "s3": {
+        "title": "<span class=\"gradient-text\">Từ khóa tìm kiếm</span> 1688 thiết yếu",
+        "desc": "Bộ từ khóa tìm kiếm tiếng Trung được chọn lọc để tìm sản phẩm chính xác trên 1688"
+      },
+      "kw": {
+        "electronics": "🎧 Điện tử",
+        "home": "🏠 Đời sống / Nội thất",
+        "beauty": "💄 Làm đẹp / Thời trang",
+        "kitchen": "🍳 Đồ bếp",
+        "pet": "🐾 Thú cưng",
+        "filter": "🔑 Từ khóa lọc thiết yếu"
+      },
+      "s4": {
+        "title": "<span class=\"gradient-text\">Lưu ý & Mẹo</span> sourcing",
+        "desc": "Những điều bắt buộc biết khi sourcing từ 1688 và bán trên Coupang"
+      },
+      "tip1": {
+        "title": "Xác nhận chứng nhận KC"
+      },
+      "tip2": {
+        "title": "Luôn đặt mẫu trước"
+      },
+      "tip3": {
+        "title": "Tính biên lợi nhuận chính xác"
+      },
+      "tip4": {
+        "title": "Cẩn trọng vi phạm sở hữu trí tuệ"
+      },
+      "ctaBox": {
+        "title": "Từ sourcing 1688 đến bán Coupang,<br>HUBONTRADE đồng hành cùng bạn",
+        "desc": "Trải nghiệm HUBONTRADE — hỗ trợ một cửa sourcing, logistics, đăng sản phẩm và CS",
+        "btn1": "Yêu cầu tư vấn miễn phí",
+        "btn2": "Xem dịch vụ"
+      }
     }
+  },
+  "x": {
+    "localDelivery": "Giao hàng nội địa",
+    "avgLeadtime": "Thời gian giao TB",
+    "onTimeRate": "Tỷ lệ đúng hạn",
+    "tariffFreight": "Thuế & Vận chuyển",
+    "platformFee": "Phí nền tảng",
+    "expectedProfit": "Lợi nhuận ròng dự kiến",
+    "countries": "Quốc gia",
+    "activeSellers": "Người bán hoạt động",
+    "langSupport": "Hỗ trợ ngôn ngữ",
+    "exportAuto": "Tự động khai báo XK",
+    "foreignSell": "DN nước ngoài tại Hàn",
+    "multiCs": "Dịch vụ CSKH đa ngôn ngữ"
+  }
 }

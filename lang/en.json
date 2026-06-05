@@ -1,958 +1,972 @@
 {
-    "meta": {
-        "title": "HUBONTRADE | Global Cross-Border E-Commerce Platform"
+  "meta": {
+    "title": "HUBONTRADE | Global Cross-Border E-Commerce Platform"
+  },
+  "nav": {
+    "home": "Home",
+    "solution": "Solutions",
+    "features": "Features",
+    "service": "Services",
+    "market": "Markets",
+    "pricing": "Pricing",
+    "case": "Cases",
+    "resources": "Resources",
+    "tracker": "Sourcing Tracker",
+    "contact": "Contact"
+  },
+  "hero": {
+    "s1": {
+      "badge": "GLOBAL ALL-IN-ONE EXPORT/IMPORT PLATFORM",
+      "title1": "Borderless Commerce,",
+      "title2": "No Direction Limits",
+      "title3": "HUBONTRADE<br>Connects",
+      "subtitle": "From anywhere to anywhere — the entire global export & import process on a single platform",
+      "ctaPrimary": "Start Free",
+      "ctaSecondary": "Explore Services"
     },
-    "nav": {
-        "home": "Home",
-        "solution": "Solutions",
-        "features": "Features",
-        "service": "Services",
-        "market": "Markets",
-        "pricing": "Pricing",
-        "case": "Cases",
-        "resources": "Resources",
-        "tracker": "Sourcing Tracker",
-        "contact": "Contact"
+    "s2": {
+      "title1": "All Marketplaces",
+      "title2": "Unified in One",
+      "title3": "Register Products Once, Sell Everywhere",
+      "ctaPrimary": "Start Free Trial",
+      "ctaSecondary": "Request 1:1 Consultation",
+      "trust": "Trusted by thousands of sellers on HUBONTRADE",
+      "stat1": "Connected Marketplaces",
+      "stat2": "Uptime",
+      "stat3": "Workload Reduced"
     },
-    "hero": {
-        "s1": {
-            "badge": "GLOBAL ALL-IN-ONE EXPORT/IMPORT PLATFORM",
-            "title1": "Borderless Commerce,",
-            "title2": "No Direction Limits",
-            "title3": "HUBONTRADE<br>Connects",
-            "subtitle": "From anywhere to anywhere — the entire global export & import process on a single platform",
-            "ctaPrimary": "Start Free",
-            "ctaSecondary": "Explore Services"
-        },
-        "s2": {
-            "title1": "All Marketplaces",
-            "title2": "Unified in One",
-            "title3": "Register Products Once, Sell Everywhere",
-            "ctaPrimary": "Start Free Trial",
-            "ctaSecondary": "Request 1:1 Consultation",
-            "trust": "Trusted by thousands of sellers on HUBONTRADE",
-            "stat1": "Connected Marketplaces",
-            "stat2": "Uptime",
-            "stat3": "Workload Reduced"
-        },
-        "s3": {
-            "badge": "GLOBAL FULFILLMENT",
-            "title1": "Domestic & Cross-Border Shipping,",
-            "title2": "Full Fulfillment",
-            "title3": "On One System",
-            "subtitle": "From local dispatch to international last-mile —<br>integrated fulfillment so you can focus on selling, not shipping",
-            "ctaPrimary": "See Logistics System",
-            "ctaSecondary": "Shipping Inquiry"
-        },
-        "s4": {
-            "badge": "SMART SOURCING",
-            "title1": "No Products to Sell?",
-            "title2": "Find Winners With Global Sourcing",
-            "title3": "We Find Profitable Products For You",
-            "subtitle": "From B2B global sourcing to automatic margin calculation —<br>verify profitability before you commit",
-            "ctaPrimary": "Start Sourcing",
-            "ctaSecondary": "Try Margin Tool"
-        },
-        "s5": {
-            "badge": "FOR GLOBAL SELLERS",
-            "title1": "Korean Sellers Only?",
-            "title2": "No.",
-            "title3": "A Platform For Sellers Worldwide",
-            "subtitle": "Whether you sell from Korea or anywhere else —<br>the only global export/import platform built for everyone",
-            "ctaPrimary": "Get Started",
-            "ctaSecondary": "Service Overview"
-        }
+    "s3": {
+      "badge": "GLOBAL FULFILLMENT",
+      "title1": "Domestic & Cross-Border Shipping,",
+      "title2": "Full Fulfillment",
+      "title3": "On One System",
+      "subtitle": "From local dispatch to international last-mile —<br>integrated fulfillment so you can focus on selling, not shipping",
+      "ctaPrimary": "See Logistics System",
+      "ctaSecondary": "Shipping Inquiry"
     },
-    "sec": {
-        "why": {
-            "badge": "WHY HUBONTRADE",
-            "title": "What Other Platforms Don't Have",
-            "desc": "Differentiated features that set a new standard for global selling",
-            "c1": {
-                "title": "Bidirectional Global Trade",
-                "desc": "Not just Korea→Overseas exports — we support imports, China→US, and every cross-border direction"
-            },
-            "c2": {
-                "title": "Auto Customs & Export Declaration",
-                "desc": "Auto-generated export declarations and proxy-purchase customs handling — complex trade documents handled automatically"
-            },
-            "c3": {
-                "title": "Unified Local & Global Fulfillment",
-                "desc": "Domestic and cross-border delivery, plus fulfillment services — all managed in one system"
-            },
-            "c4": {
-                "title": "Open to Overseas Sellers",
-                "desc": "Not limited to Korean companies. The only truly global platform anyone can use from anywhere"
-            },
-            "c5": {
-                "title": "Government Export Voucher Partner",
-                "desc": "Government-certified export voucher provider. Start without cost burden through government support programs"
-            },
-            "c6": {
-                "title": "AI-Powered Automation",
-                "desc": "AI product title/keyword recommendations, category mapping, multilingual translation, and pricing suggestions"
-            }
-        },
-        "platforms": {
-            "badge": "SUPPORTED PLATFORMS",
-            "title": "From Local to Global — Major Marketplace Integrations",
-            "desc": "List once, sell on all marketplaces simultaneously"
-        },
-        "comparison": {
-            "badge": "COMPARISON",
-            "title": "HUBONTRADE vs Competitors",
-            "desc": "Key feature comparison"
-        },
-        "features": {
-            "badge": "KEY FEATURES",
-            "title": "Core Features Built For Sellers"
-        },
-        "foryou": {
-            "badge": "FOR YOU",
-            "title": "Recommended For You"
-        }
+    "s4": {
+      "badge": "SMART SOURCING",
+      "title1": "No Products to Sell?",
+      "title2": "Find Winners With Global Sourcing",
+      "title3": "We Find Profitable Products For You",
+      "subtitle": "From B2B global sourcing to automatic margin calculation —<br>verify profitability before you commit",
+      "ctaPrimary": "Start Sourcing",
+      "ctaSecondary": "Try Margin Tool"
     },
-    "footer": {
-        "tagline": "Global Cross-Border E-Commerce Platform",
-        "h": {
-            "pages": "Pages",
-            "tools": "Sourcing · Tools",
-            "support": "Support"
-        }
+    "s5": {
+      "badge": "FOR GLOBAL SELLERS",
+      "title1": "Korean Sellers Only?",
+      "title2": "No.",
+      "title3": "A Platform For Sellers Worldwide",
+      "subtitle": "Whether you sell from Korea or anywhere else —<br>the only global export/import platform built for everyone",
+      "ctaPrimary": "Get Started",
+      "ctaSecondary": "Service Overview"
+    }
+  },
+  "sec": {
+    "why": {
+      "badge": "WHY HUBONTRADE",
+      "title": "What Other Platforms Don't Have",
+      "desc": "Differentiated features that set a new standard for global selling",
+      "c1": {
+        "title": "Bidirectional Global Trade",
+        "desc": "Not just Korea→Overseas exports — we support imports, China→US, and every cross-border direction"
+      },
+      "c2": {
+        "title": "Auto Customs & Export Declaration",
+        "desc": "Auto-generated export declarations and proxy-purchase customs handling — complex trade documents handled automatically"
+      },
+      "c3": {
+        "title": "Unified Local & Global Fulfillment",
+        "desc": "Domestic and cross-border delivery, plus fulfillment services — all managed in one system"
+      },
+      "c4": {
+        "title": "Open to Overseas Sellers",
+        "desc": "Not limited to Korean companies. The only truly global platform anyone can use from anywhere"
+      },
+      "c5": {
+        "title": "Government Export Voucher Partner",
+        "desc": "Government-certified export voucher provider. Start without cost burden through government support programs"
+      },
+      "c6": {
+        "title": "AI-Powered Automation",
+        "desc": "AI product title/keyword recommendations, category mapping, multilingual translation, and pricing suggestions"
+      }
     },
-    "markets": {
-        "coupang": "Coupang",
-        "naver": "Naver SmartStore",
-        "gmarket": "Gmarket",
-        "eleven": "11st",
-        "wemakeprice": "WeMakePrice",
-        "interpark": "Interpark"
+    "platforms": {
+      "badge": "SUPPORTED PLATFORMS",
+      "title": "From Local to Global — Major Marketplace Integrations",
+      "desc": "List once, sell on all marketplaces simultaneously"
+    },
+    "comparison": {
+      "badge": "COMPARISON",
+      "title": "HUBONTRADE vs Competitors",
+      "desc": "Key feature comparison"
     },
     "features": {
-        "viewAll": "View All Features",
-        "c1": {
-            "title": "Multi-Channel Listing",
-            "desc": "Upload Excel once — register products across dozens of platforms simultaneously"
-        },
-        "c2": {
-            "title": "Global & Local Margin Tool",
-            "desc": "Auto-calculate FX, fees, shipping — see real profit before you commit"
-        },
-        "c3": {
-            "title": "Unified Fulfillment",
-            "desc": "Manage domestic & international shipping from one system"
-        },
-        "c4": {
-            "title": "Export/Import Automation",
-            "desc": "Auto-generate export declarations and import customs documents"
-        },
-        "c5": {
-            "title": "B2B Global Sourcing",
-            "desc": "Find high-margin products from suppliers worldwide"
-        },
-        "c6": {
-            "title": "Marketing Integration",
-            "desc": "Auto-integrated with Shopee, TikTok Shop, and other platform marketing tools"
-        }
+      "badge": "KEY FEATURES",
+      "title": "Core Features Built For Sellers"
     },
     "foryou": {
+      "badge": "FOR YOU",
+      "title": "Recommended For You"
+    }
+  },
+  "footer": {
+    "tagline": "Global Cross-Border E-Commerce Platform",
+    "h": {
+      "pages": "Pages",
+      "tools": "Sourcing · Tools",
+      "support": "Support"
+    }
+  },
+  "markets": {
+    "coupang": "Coupang",
+    "naver": "Naver SmartStore",
+    "gmarket": "Gmarket",
+    "eleven": "11st",
+    "wemakeprice": "WeMakePrice",
+    "interpark": "Interpark"
+  },
+  "features": {
+    "viewAll": "View All Features",
+    "c1": {
+      "title": "Multi-Channel Listing",
+      "desc": "Upload Excel once — register products across dozens of platforms simultaneously"
+    },
+    "c2": {
+      "title": "Global & Local Margin Tool",
+      "desc": "Auto-calculate FX, fees, shipping — see real profit before you commit"
+    },
+    "c3": {
+      "title": "Unified Fulfillment",
+      "desc": "Manage domestic & international shipping from one system"
+    },
+    "c4": {
+      "title": "Export/Import Automation",
+      "desc": "Auto-generate export declarations and import customs documents"
+    },
+    "c5": {
+      "title": "B2B Global Sourcing",
+      "desc": "Find high-margin products from suppliers worldwide"
+    },
+    "c6": {
+      "title": "Marketing Integration",
+      "desc": "Auto-integrated with Shopee, TikTok Shop, and other platform marketing tools"
+    }
+  },
+  "foryou": {
+    "c1": {
+      "title": "Korean Sellers",
+      "desc": "Businesses & individual sellers exporting Korean products globally. Export declarations and marketplace listings — all in one."
+    },
+    "c2": {
+      "title": "Overseas Sellers",
+      "desc": "Overseas sellers selling Korean products domestically, or sourcing global products. Multilingual support."
+    },
+    "c3": {
+      "title": "Drop-shipping & Resellers",
+      "desc": "Drop-shippers and resellers sourcing global products without inventory. Customs automation included."
+    }
+  },
+  "cta": {
+    "title": "Start HUBONTRADE Free Today",
+    "subtitle": "Experience all features with 30-day free trial",
+    "primary": "Start Free Trial",
+    "secondary": "Request 1:1 Consultation"
+  },
+  "pages": {
+    "solution": {
+      "heroTitle": "Export, Import, Sourcing — All on One Platform",
+      "heroDesc": "Solve every step of global commerce with HUBONTRADE’s unified solution",
+      "core": {
+        "title": "Three Core Solutions",
         "c1": {
-            "title": "Korean Sellers",
-            "desc": "Businesses & individual sellers exporting Korean products globally. Export declarations and marketplace listings — all in one."
+          "title": "Export Solution",
+          "desc": "Sell local products on overseas marketplaces",
+          "f1": "Multi-channel listing (Amazon, Shopee, Lazada, TikTok Shop)",
+          "f2": "Auto-generate and submit export declarations",
+          "f3": "Overseas fulfillment & international shipping integration",
+          "f4": "Local marketing tool integration"
         },
         "c2": {
-            "title": "Overseas Sellers",
-            "desc": "Overseas sellers selling Korean products domestically, or sourcing global products. Multilingual support."
+          "title": "Import Solution",
+          "desc": "Sell overseas products in Korea and other markets",
+          "f1": "Proxy purchase & customs automation",
+          "f2": "Domestic marketplace listing (Coupang, Naver, Gmarket, 11st)",
+          "f3": "Domestic fulfillment & delivery integration",
+          "f4": "Auto-calculation of import duties & VAT"
         },
         "c3": {
-            "title": "Drop-shipping & Resellers",
-            "desc": "Drop-shippers and resellers sourcing global products without inventory. Customs automation included."
+          "title": "Global Sourcing Solution",
+          "desc": "Discover winning products through B2B sourcing",
+          "f1": "Global supplier database",
+          "f2": "Automatic per-product margin simulation",
+          "f3": "Sample ordering & quality inspection support",
+          "f4": "Dropshipping/proxy purchase integration"
         }
-    },
-    "cta": {
-        "title": "Start HUBONTRADE Free Today",
-        "subtitle": "Experience all features with 30-day free trial",
-        "primary": "Start Free Trial",
-        "secondary": "Request 1:1 Consultation"
-    },
-    "pages": {
-        "solution": {
-            "heroTitle": "Export, Import, Sourcing — All on One Platform",
-            "heroDesc": "Solve every step of global commerce with HUBONTRADE’s unified solution",
-            "core": {
-                "title": "Three Core Solutions",
-                "c1": {
-                    "title": "Export Solution",
-                    "desc": "Sell local products on overseas marketplaces",
-                    "f1": "Multi-channel listing (Amazon, Shopee, Lazada, TikTok Shop)",
-                    "f2": "Auto-generate and submit export declarations",
-                    "f3": "Overseas fulfillment & international shipping integration",
-                    "f4": "Local marketing tool integration"
-                },
-                "c2": {
-                    "title": "Import Solution",
-                    "desc": "Sell overseas products in Korea and other markets",
-                    "f1": "Proxy purchase & customs automation",
-                    "f2": "Domestic marketplace listing (Coupang, Naver, Gmarket, 11st)",
-                    "f3": "Domestic fulfillment & delivery integration",
-                    "f4": "Auto-calculation of import duties & VAT"
-                },
-                "c3": {
-                    "title": "Global Sourcing Solution",
-                    "desc": "Discover winning products through B2B sourcing",
-                    "f1": "Global supplier database",
-                    "f2": "Automatic per-product margin simulation",
-                    "f3": "Sample ordering & quality inspection support",
-                    "f4": "Dropshipping/proxy purchase integration"
-                }
-            },
-            "oms": {
-                "title": "Sales Operations Automation — Handled by Systems, Not People",
-                "desc": "From order collection to tracking input, inventory sync, purchase orders, and CS — the system handles the repetition",
-                "c1": {
-                    "title": "Auto-Collect Orders from Marketplaces",
-                    "desc": "Automatically collect orders from local and overseas marketplaces in real time"
-                },
-                "c2": {
-                    "title": "Auto-Fill Tracking Numbers",
-                    "desc": "Auto-populate tracking numbers across marketplaces via carrier integration"
-                },
-                "c3": {
-                    "title": "Real-Time Inventory Sync",
-                    "desc": "Sync inventory across channels in real time to prevent stockouts"
-                },
-                "c4": {
-                    "title": "Auto-Generate Purchase Orders",
-                    "desc": "Auto-create supplier purchase orders based on inventory thresholds"
-                },
-                "c5": {
-                    "title": "Unified CS Management",
-                    "desc": "Manage inquiries from every marketplace in one place with multilingual auto-replies"
-                },
-                "c6": {
-                    "title": "ERP Integration & Logistics Automation",
-                    "desc": "Integrate via API with existing ERP and automate dispatch & returns"
-                }
-            },
-            "data": {
-                "title": "Data-Driven Brand Growth — Run on Numbers, Not Instinct",
-                "desc": "Integrated analytics across sales, ads, inventory, and CRM for data-driven decisions",
-                "c1": {
-                    "title": "Sales Analytics Dashboard",
-                    "desc": "Real-time sales trends by channel, product, and period"
-                },
-                "c2": {
-                    "title": "Ad Performance Analytics",
-                    "desc": "Unified monitoring of ROAS, CPM, CPC and other core ad metrics"
-                },
-                "c3": {
-                    "title": "AI Inventory Forecasting",
-                    "desc": "AI analyzes sales trends to predict optimal inventory levels"
-                },
-                "c4": {
-                    "title": "CRM Customer Management",
-                    "desc": "Personalized marketing based on customer purchase history and behavior"
-                },
-                "c5": {
-                    "title": "BI Dashboard",
-                    "desc": "Business intelligence dashboard for at-a-glance key metrics"
-                },
-                "c6": {
-                    "title": "Marketing ROI Analytics",
-                    "desc": "Accurately measure return on ad spend across marketing channels"
-                }
-            },
-            "diff": {
-                "title": "What Competitors Don't Have — Only on HUBONTRADE",
-                "badge": "No Competitor Offers This",
-                "c1": {
-                    "title": "Government Export Voucher Partner",
-                    "desc": "Officially designated government export voucher partner — use voucher budgets to access HUBONTRADE. No competitor holds this status."
-                },
-                "c2": {
-                    "title": "Coupang IOR (Importer of Record)",
-                    "desc": "Enable overseas companies to sell directly on Korean Coupang via IOR services — from importer registration to customs and selling, all in one stop."
-                },
-                "c3": {
-                    "title": "KOSME / GoBizKorea API Integration",
-                    "desc": "Direct API integration with KOSME's GoBizKorea to auto-register B2B export products and support buyer matching."
-                }
-            },
-            "process": {
-                "title": "Simple Start, Powerful Results",
-                "s1": {
-                    "title": "Sign Up & Connect Marketplaces",
-                    "desc": "Pick your platforms and connect accounts"
-                },
-                "s2": {
-                    "title": "List Products",
-                    "desc": "Bulk-list via Excel upload or one-by-one"
-                },
-                "s3": {
-                    "title": "Manage Orders & Shipping",
-                    "desc": "Manage every order and shipment from one dashboard"
-                },
-                "s4": {
-                    "title": "Settlement & Analytics",
-                    "desc": "Optimize profit with margin analysis and sales reports"
-                }
-            },
-            "comp": {
-                "title": "Only on HUBONTRADE",
-                "colFeature": "Feature",
-                "colOurs": "HUBONTRADE (Us)"
-            },
-            "ctaBox": {
-                "title": "Which Solution Do You Need?",
-                "desc": "Find the best solution for your business with a free consultation",
-                "btn": "Request Free Consultation"
-            }
+      },
+      "oms": {
+        "title": "Sales Operations Automation — Handled by Systems, Not People",
+        "desc": "From order collection to tracking input, inventory sync, purchase orders, and CS — the system handles the repetition",
+        "c1": {
+          "title": "Auto-Collect Orders from Marketplaces",
+          "desc": "Automatically collect orders from local and overseas marketplaces in real time"
         },
-        "features": {
-            "heroTitle": "Powerful Features Built for Sellers",
-            "heroDesc": "Core features that simplify the complexity of global selling",
-            "sec1": {
-                "title": "Key Features"
-            },
-            "f1": {
-                "title": "Bulk Listing Across Marketplaces",
-                "desc": "List products across dozens of local and overseas platforms with a single Excel. AI auto-maps categories and recommends keywords & image tags to drastically reduce listing time.",
-                "li1": "Bulk listing across marketplaces (Amazon, Shopee, Lazada, TikTok Shop, Coupang, Naver, etc.)",
-                "li2": "AI-powered automatic category mapping per platform",
-                "li3": "AI keyword suggestions & auto-generated image tags",
-                "li4": "Bulk product editing & price sync",
-                "li5": "Auto image resizing & watermarking"
-            },
-            "f2": {
-                "title": "Order Management",
-                "desc": "Auto-collect orders from every marketplace and view statuses in one place. Maximize efficiency with bulk processing.",
-                "li1": "Auto-collect orders from all marketplaces (local & overseas)",
-                "li2": "Unified order status dashboard",
-                "li3": "Bulk order processing (confirm, ship, cancel)",
-                "li4": "Order history & statistical analysis"
-            },
-            "f3": {
-                "title": "Inventory Management",
-                "desc": "Sync multi-channel inventory in real time to prevent stockouts. AI analyzes sales trends to forecast optimal stock levels.",
-                "li1": "Real-time multi-channel inventory sync",
-                "li2": "Low-stock alerts (configurable thresholds)",
-                "li3": "AI inventory forecasting based on sales trends",
-                "li4": "Per-warehouse inventory dashboard"
-            },
-            "f4": {
-                "title": "Tracking & Shipping",
-                "desc": "Auto-fill tracking numbers and integrate with carriers in real time. Push delivery tracking updates to customers automatically.",
-                "li1": "Auto-fill tracking numbers (auto-pushed to each marketplace)",
-                "li2": "Carrier integrations (CJ, Hanjin, Korea Post, international carriers)",
-                "li3": "Real-time shipment tracking",
-                "li4": "Auto-notify on delivery completion"
-            },
-            "f5": {
-                "title": "Purchase Order Management",
-                "desc": "Auto-create purchase orders based on stock thresholds and manage suppliers systematically. View PO history and incoming stock at a glance.",
-                "li1": "Auto-generated purchase orders (threshold-based)",
-                "li2": "Supplier management & unit price comparison",
-                "li3": "PO history & incoming stock tracking",
-                "li4": "Auto-generate and send purchase orders"
-            },
-            "f6": {
-                "title": "Customer Service Management",
-                "desc": "Manage customer inquiries from every marketplace in one place. Auto-reply templates and multilingual support keep global CS efficient.",
-                "li1": "Unified collection of inquiries from each marketplace",
-                "li2": "FAQ-based auto-reply templates",
-                "li3": "Multilingual support via AI translation",
-                "li4": "CS handling status & response rate stats"
-            },
-            "f7": {
-                "title": "ERP Integration",
-                "desc": "Connect to existing ERP via API to auto-push accounting and tax data. Manage data uniformly without duplicate input.",
-                "li1": "API integration with existing ERPs (Ecount, Douzone, etc.)",
-                "li2": "Auto-transfer of accounting/tax data",
-                "li3": "Real-time sync of sales/purchase data",
-                "li4": "Automatic settlement data organization"
-            },
-            "f8": {
-                "title": "Logistics Automation",
-                "desc": "Automate dispatch and optimally assign carriers. The system handles returns and exchanges automatically.",
-                "li1": "Auto dispatch (ship instruction immediately on order confirmation)",
-                "li2": "Carrier auto-assignment (cost/region optimization)",
-                "li3": "Automated returns/exchanges handling",
-                "li4": "Unified local & overseas fulfillment management"
-            },
-            "f9": {
-                "title": "BI Analytics",
-                "desc": "Unified analysis of sales, ad ROAS, and CRM data. See brand growth metrics at a glance and decide with data.",
-                "li1": "Sales analysis (by channel, product, period)",
-                "li2": "Ad ROAS / CPM / CPC analysis",
-                "li3": "CRM customer analytics (purchase patterns, LTV)",
-                "li4": "Brand growth metrics dashboard"
-            },
-            "f10": {
-                "title": "AI-Powered Automation",
-                "desc": "AI suggests product names, keywords, categories, multilingual translations, and optimal prices — handling repetitive seller tasks.",
-                "li1": "AI product name / keyword suggestions (SEO-optimized)",
-                "li2": "AI automatic category mapping",
-                "li3": "AI multilingual translation (English, Thai, Vietnamese, etc.)",
-                "li4": "AI price recommendation (competitor-based)"
-            },
-            "f11": {
-                "title": "Export Declaration Automation",
-                "desc": "Auto-issue e-commerce export purchase confirmations and integrate with uTradeHub to automate every step. HS code auto-classification simplifies customs.",
-                "li1": "Auto-issued e-commerce export purchase confirmation",
-                "li2": "uTradeHub integration (auto-submit export declarations)",
-                "li3": "Automatic HS code classification",
-                "li4": "Auto-aggregation & reporting of export performance"
-            },
-            "f12": {
-                "title": "Global Margin Tool",
-                "desc": "Verify profitability up front with margin calculations that include FX, fees, ads, logistics, and customs. Compare net profit across platforms at a glance.",
-                "li1": "Includes FX / fees / ads / logistics / customs costs",
-                "li2": "Sale-price simulation to validate profitability up front",
-                "li3": "Per-platform net profit comparison",
-                "li4": "Real-time FX auto-update"
-            },
-            "dash": {
-                "title": "Everything at a Glance — Unified Dashboard",
-                "desc": "Real-time monitoring of sales, orders, inventory, and settlements across every platform on a single screen",
-                "s1": {
-                    "title": "Real-Time Sales",
-                    "desc": "Unified real-time sales aggregation across all platforms"
-                },
-                "s2": {
-                    "title": "Per-Platform Orders",
-                    "desc": "View order statuses across channels like Shopee, TikTok Shop at a glance"
-                },
-                "s3": {
-                    "title": "Unified Inventory",
-                    "desc": "Sync local & overseas warehouse stock in real time to prevent stockouts"
-                },
-                "s4": {
-                    "title": "Profitability Analytics",
-                    "desc": "Per-platform margin, fee, and logistics cost reports"
-                }
-            },
-            "comp": {
-                "title": "Here's What Changes With HUBONTRADE",
-                "col1": "Task",
-                "col2": "DIY Operation",
-                "col3": "HUBONTRADE"
-            },
-            "ctaBox": {
-                "title": "Try Every Feature Free",
-                "desc": "Experience every HUBONTRADE feature with a 14-day free trial",
-                "btn": "Start Free Trial"
-            }
+        "c2": {
+          "title": "Auto-Fill Tracking Numbers",
+          "desc": "Auto-populate tracking numbers across marketplaces via carrier integration"
         },
-        "service": {
-            "heroTitle": "We Handle Everything in <span class=\"gradient-text\">Global Selling</span>",
-            "heroDesc": "Discover the expert services HUBONTRADE provides",
-            "cats": {
-                "title": "Our Service Areas",
-                "c1": {
-                    "title": "Marketplace Operations",
-                    "desc": "Listing and operations on local & overseas marketplaces",
-                    "l1": "Listing & detail page creation",
-                    "l2": "Pricing strategy & promotion management",
-                    "l3": "Review management & CS response",
-                    "l4": "Sales analytics & operations reports"
-                },
-                "c2": {
-                    "title": "Import/Export Logistics",
-                    "desc": "Manage local & overseas logistics in one system",
-                    "l1": "Export declaration & customs brokerage",
-                    "l2": "International shipping & local fulfillment",
-                    "l3": "Import customs & proxy purchase delivery",
-                    "l4": "Returns & exchanges handling"
-                },
-                "c3": {
-                    "title": "Product Sourcing",
-                    "desc": "Discover high-margin products from global suppliers",
-                    "l1": "B2B global product sourcing",
-                    "l2": "Sample ordering & quality inspection",
-                    "l3": "Margin analysis & profitability simulation",
-                    "l4": "OEM/ODM manufacturing matching"
-                },
-                "c4": {
-                    "title": "Marketing Services",
-                    "desc": "Maximize sales with platform-tailored marketing",
-                    "l1": "Shopee/TikTok Shop promotion management",
-                    "l2": "Keyword ads & performance marketing",
-                    "l3": "Local influencer marketing",
-                    "l4": "Live commerce planning & operations"
-                }
-            },
-            "types": {
-                "title": "Services Tailored to Seller Types",
-                "t1": {
-                    "title": "Domestic Sellers (Export)",
-                    "desc": "Businesses exporting Korean products overseas",
-                    "l1": "Export declaration automation",
-                    "l2": "Overseas platform onboarding & operations",
-                    "l3": "International logistics & fulfillment",
-                    "l4": "Local marketing"
-                },
-                "t2": {
-                    "title": "Overseas Sellers (Import/Reverse Direct)",
-                    "desc": "Sell overseas products to Korea or other countries",
-                    "l1": "Import customs automation",
-                    "l2": "Korean platform onboarding & operations",
-                    "l3": "Domestic fulfillment",
-                    "l4": "Proxy purchase system"
-                },
-                "t3": {
-                    "title": "Dropshipping & Proxy Purchase",
-                    "desc": "Run online sales without inventory",
-                    "l1": "Global product sourcing",
-                    "l2": "Automatic margin calculation",
-                    "l3": "Automatic order processing",
-                    "l4": "Customs automation"
-                }
-            },
-            "support": {
-                "title": "Backed by Dedicated Managers",
-                "desc": "More than a tool. Dedicated managers help design your growth.",
-                "f1": "1:1 dedicated manager",
-                "f2": "Weekly sales analysis reports",
-                "f3": "24/7 chat & email support"
-            },
-            "ctaBox": {
-                "title": "Which Service Do You <span class=\"gradient-text\">Need?</span>",
-                "desc": "Get the best service recommendation for your business type",
-                "btn": "Request Free Consultation"
-            }
+        "c3": {
+          "title": "Real-Time Inventory Sync",
+          "desc": "Sync inventory across channels in real time to prevent stockouts"
         },
-        "market": {
-            "heroTitle": "From Local to Global, <span class=\"gradient-text\">Major Marketplace Integrations</span>",
-            "heroDesc": "Manage local & overseas marketplaces in one HUBONTRADE",
-            "s1": {
-                "title": "Supported <span class=\"gradient-text\">Marketplaces</span>",
-                "korea": "Domestic Marketplaces",
-                "global": "Global Marketplaces"
-            },
-            "mp": {
-                "coupang": "Rocket Delivery, IOR support",
-                "naver": "Korea's largest search portal integration",
-                "gmarket": "Global selling supported",
-                "11st": "SK-affiliated general marketplace",
-                "wemakeprice": "Deal-focused marketplace",
-                "interpark": "General shopping mall",
-                "auction": "Open marketplace",
-                "shopeeTag": "Largest in SE Asia",
-                "shopeeDesc": "Vietnam, Philippines, Singapore, Malaysia, Thailand, Indonesia",
-                "lazadaTag": "Alibaba Group",
-                "lazadaDesc": "6 SE Asian countries",
-                "tiktokTag": "Live-commerce leader",
-                "tiktokDesc": "5 SE Asian countries",
-                "amazonTag": "World's largest",
-                "amazonDesc": "USA, Japan, Europe, etc.",
-                "tikiTag": "Vietnam local",
-                "tikiDesc": "Local Vietnamese marketplace",
-                "aliTag": "Global selling",
-                "aliDesc": "Global selling",
-                "qoo10Tag": "Asian open marketplace",
-                "qoo10Desc": "Japan, Singapore",
-                "tokoTag": "Largest in Indonesia",
-                "tokoDesc": "Indonesia"
-            },
-            "tag": {
-                "orders": "Orders",
-                "inv": "Inventory Sync",
-                "track": "Auto Tracking",
-                "listing": "Listing",
-                "cs": "CS"
-            },
-            "s2": {
-                "title": "<span class=\"gradient-text\">Per-Marketplace Integration Details</span>",
-                "colMarket": "Marketplace",
-                "colListing": "Listing",
-                "colOrders": "Orders",
-                "colInv": "Inventory",
-                "colTrack": "Tracking",
-                "colCS": "CS",
-                "colMarketing": "Marketing",
-                "colLive": "Live Commerce"
-            },
-            "excl": {
-                "title": "<span class=\"gradient-text\">Integrations</span> Only on HUBONTRADE",
-                "c1": {
-                    "title": "Coupang IOR (Importer of Record)",
-                    "desc": "Overseas companies can sell directly on Coupang without a Korean entity — an exclusive service no competitor offers."
-                },
-                "b1": "Exclusive Service",
-                "c2": {
-                    "title": "KOSME/GoBizKorea API Integration",
-                    "desc": "Direct integration with government export support programs — auto-report performance and unified program management."
-                },
-                "b2": "Government Integration",
-                "c3": {
-                    "title": "Export Declaration Automation (uTradeHub)",
-                    "desc": "Direct integration with Korea Customs export system — auto-issue export declarations and origin certificates."
-                },
-                "b3": "Automation"
-            },
-            "custom": {
-                "title": "Custom Shops <span class=\"gradient-text\">Also Supported</span>",
-                "desc": "Unified management of both open marketplaces and your own shop",
-                "shopify": "Global custom shop platform",
-                "woo": "WordPress-based shop",
-                "cafe24": "Korea's leading shop solution",
-                "api": "Custom Shop API",
-                "apiDesc": "Custom API integration supported"
-            },
-            "ctaBox": {
-                "title": "Connect Your Marketplaces to <span class=\"gradient-text\">HUBONTRADE</span>",
-                "desc": "Experience marketplace integrations free",
-                "btn1": "Start Integration",
-                "btn2": "1:1 Consultation"
-            }
+        "c4": {
+          "title": "Auto-Generate Purchase Orders",
+          "desc": "Auto-create supplier purchase orders based on inventory thresholds"
         },
-        "pricing": {
-            "heroTitle": "Simple, Fair Pricing",
-            "heroDesc": "Pick the plan that fits your business scale",
-            "billing": {
-                "monthly": "Monthly",
-                "yearly": "Yearly",
-                "discount": "20% off"
-            },
-            "starter": {
-                "name": "Starter",
-                "amount": "Free",
-                "unit": "  30 days",
-                "tax": "No credit card required",
-                "desc": "Try every core feature free for 30 days",
-                "btn": "Start Free Trial"
-            },
-            "growth": {
-                "name": "Growth",
-                "discount": "44% off",
-                "desc": "The most popular plan for growing sellers",
-                "btn": "Start Plan"
-            },
-            "ent": {
-                "name": "Enterprise",
-                "discount": "50% off",
-                "desc": "All features + dedicated manager for global expansion",
-                "btn": "Start Plan"
-            },
-            "faq": {
-                "title": "Frequently Asked Questions",
-                "q1": "What's the contract length?",
-                "a1": "Starting from 3 months minimum; annual contracts get a 20% discount.",
-                "q2": "Can I cancel mid-term?",
-                "a2": "Yes — cancel without penalty with 1 month's notice.",
-                "q3": "Are there additional fees?",
-                "a3": "Platform operating costs are included in the base fee; ad spend and logistics are billed at cost.",
-                "q4": "Can I switch plans?",
-                "a4": "Upgrade to a higher plan anytime — pay only the difference.",
-                "q5": "Is there a free trial?",
-                "a5": "We provide a 2-week free market analysis report and recommend the best plan based on it."
-            },
-            "ctaBox": {
-                "title": "Not sure which plan fits?",
-                "desc": "Get a free consultation",
-                "btn": "Get Free Consultation"
-            }
+        "c5": {
+          "title": "Unified CS Management",
+          "desc": "Manage inquiries from every marketplace in one place with multilingual auto-replies"
         },
-        "case": {
-            "heroTitle": "Success Stories",
-            "heroDesc": "Stories of brands that grew global markets with HUBONTRADE",
-            "stats": {
-                "partners": "Partner Brands",
-                "growth": "Avg. Revenue Growth",
-                "awards": "Awards"
-            },
-            "c1": {
-                "industry": "Cosmetics/Skincare",
-                "market": "Vietnam, Thailand",
-                "title": "K-Beauty Brand A",
-                "challenge": "No SE Asia experience; difficulty understanding local regulations",
-                "solution": "Shopee onboarding + local influencer marketing",
-                "r1": "Reached KRW 300M monthly revenue in 6 months",
-                "r2": "Top 10 in Shopee Beauty category",
-                "quote": "\"Thanks to HUBONTRADE, complex overseas expansion became surprisingly easy.\""
-            },
-            "c2": {
-                "industry": "Health Supplements",
-                "market": "Indonesia",
-                "title": "Health Brand B",
-                "challenge": "Regulatory barriers like Halal certification; building local consumer trust",
-                "solution": "Local certification support + Tokopedia onboarding + live commerce",
-                "r1": "Halal certification cut by 3 months",
-                "r2": "500% revenue growth in 1 year",
-                "quote": "\"HUBONTRADE handled the entire complex certification process.\""
-            },
-            "c3": {
-                "industry": "Women's Apparel",
-                "market": "Philippines, Malaysia",
-                "title": "Fashion Brand C",
-                "challenge": "Different sizing systems; hard to read local fashion trends",
-                "solution": "Local sizing guide + TikTok Shop live",
-                "r1": "KRW 50M revenue per TikTok live",
-                "r2": "Return rate down 80%",
-                "quote": "\"We felt the power of live commerce. The HUBONTRADE team is the best.\""
-            },
-            "c4": {
-                "industry": "Smart Appliances",
-                "market": "Vietnam, Thailand, Indonesia",
-                "title": "Electronics Brand D",
-                "challenge": "Building after-sales system; localizing technical products",
-                "solution": "Onboard 3 countries simultaneously + connect local A/S partners",
-                "r1": "Successful simultaneous entry into 3 markets",
-                "r2": "Reached KRW 5B annual revenue",
-                "quote": "\"Entering 3 markets at once would've been impossible without HUBONTRADE.\""
-            },
-            "partners": {
-                "title": "Our Partners"
-            },
-            "ctaBox": {
-                "title": "Be the Next Success Story",
-                "desc": "Open up SE Asian markets with HUBONTRADE",
-                "btn": "Get Free Consultation"
-            }
-        },
-        "resources": {
-            "heroTitle": "Resource Center",
-            "heroDesc": "Everything you need for global e-commerce",
-            "filter": {
-                "all": "All",
-                "guide": "Guides",
-                "report": "Reports",
-                "blog": "Blog",
-                "webinar": "Webinars"
-            },
-            "cat": {
-                "guide": "Guide",
-                "report": "Report",
-                "blog": "Blog",
-                "webinar": "Webinar"
-            },
-            "tag": {
-                "pdf": "PDF Guide",
-                "report": "Report",
-                "blog": "Blog"
-            },
-            "c0": {
-                "title": "1688 Sourcing → Coupang Selling: The Complete Guide",
-                "desc": "TOP 9 high-margin product picks, how to find direct-shipping shops, and key search keywords",
-                "tag": "NEW Guide",
-                "reading": "Read time: 10 min"
-            },
-            "c1": {
-                "title": "2024 SE Asia E-Commerce Market Entry Guide",
-                "desc": "Comprehensive guide covering market status, regulations, and consumer trends across 5 SE Asian countries",
-                "reading": "Read time: 15 min"
-            },
-            "c2": {
-                "title": "Vietnam E-Commerce Market Analysis Report 2024",
-                "desc": "Professional report analyzing latest trends and opportunities in Vietnam's e-commerce market",
-                "reading": "32 pages"
-            },
-            "c3": {
-                "title": "Shopee Onboarding Complete Guide: A to Z for Beginners",
-                "desc": "Step-by-step from creating a Shopee seller account to your first order",
-                "reading": "Read time: 8 min"
-            },
-            "c4": {
-                "title": "How to 3x SE Asia Sales with Live Commerce",
-                "desc": "Live commerce success strategies shared by local experts",
-                "tag": "Webinar Recording",
-                "reading": "45 min"
-            },
-            "c5": {
-                "title": "Mastering SE Asia Logistics & Fulfillment",
-                "desc": "Detailed guide on international shipping, customs, and using local logistics centers",
-                "reading": "Read time: 12 min"
-            },
-            "c6": {
-                "title": "K-Beauty SE Asia Export Trends Report",
-                "desc": "Analysis of Korean cosmetics market share and growth potential in SE Asia",
-                "reading": "28 pages"
-            },
-            "nl": {
-                "title": "Get the Latest SE Asia E-Commerce Insights",
-                "btn": "Subscribe",
-                "note": "Sent every Tuesday · Unsubscribe anytime"
-            }
-        },
-        "contact": {
-            "heroTitle": "Get in Touch",
-            "heroDesc": "Reach out anytime with questions about global market entry",
-            "form": {
-                "title": "Inquiry Form",
-                "company": "Company",
-                "name": "Contact Name",
-                "email": "Email",
-                "phone": "Phone",
-                "service": "Service of Interest",
-                "servicePlaceholder": "Select a service of interest",
-                "opt": {
-                    "platform": "Marketplace Onboarding",
-                    "logistics": "Logistics & Fulfillment",
-                    "marketing": "Marketing",
-                    "live": "Live Commerce",
-                    "consulting": "Comprehensive Consulting",
-                    "other": "Other"
-                },
-                "country": "Target Country",
-                "cc": {
-                    "vietnam": "Vietnam",
-                    "thailand": "Thailand",
-                    "indonesia": "Indonesia",
-                    "philippines": "Philippines",
-                    "malaysia": "Malaysia"
-                },
-                "message": "Message",
-                "submit": "Send Inquiry"
-            },
-            "info": {
-                "title": "Contact Information",
-                "addrLabel": "Address",
-                "addrValue": "3F Daera Bldg, 116 Yeongdeungpo-ro, Yeongdeungpo-gu, Seoul",
-                "phoneLabel": "Phone",
-                "emailLabel": "Email",
-                "hoursLabel": "Hours",
-                "hoursValue": "Weekdays 09:00 – 18:00 (KST)",
-                "mapLink": "View on Naver Maps →"
-            },
-            "quick": {
-                "title": "Quick Contact Options",
-                "kakao": {
-                    "title": "KakaoTalk Chat",
-                    "desc": "Real-time chat (weekdays 09-18)"
-                },
-                "phone": {
-                    "title": "Phone Consultation",
-                    "desc": "1660-2318 (weekdays 09-18)"
-                },
-                "email": {
-                    "title": "Email Inquiry",
-                    "desc": "contact@drapin.com (24/7 intake)"
-                }
-            },
-            "office": {
-                "title": "How to Find Us",
-                "desc": "3F Daera Bldg, 116 Yeongdeungpo-ro, Yeongdeungpo-gu, Seoul",
-                "subway": "6 min walk from Yeongdeungpo-gu Office Stn Exit 6 · 6 min from Mullae Stn Exit 3",
-                "parking": "Parking is limited — please use public transport when possible"
-            }
-        },
-        "guide": {
-            "heroTitle": "1688 Sourcing → <span class=\"gradient-text\">Coupang Selling</span> Complete Guide",
-            "heroDesc": "From high-margin product picks to finding direct-shipping suppliers — everything about 1688",
-            "hero": {
-                "platform1688": "Alibaba 1688",
-                "platformCoupang": "Coupang"
-            },
-            "s1": {
-                "title": "<span class=\"gradient-text\">TOP 9 High-Margin Sourcing Picks</span>",
-                "desc": "Categories with high Coupang demand and solid margins when sourced from 1688"
-            },
-            "label": {
-                "unitPrice": "1688 Unit Price",
-                "coupangPrice": "Coupang Selling Price"
-            },
-            "p1": {
-                "cat": "Electronics Accessories",
-                "title": "Wireless Earbuds / Bluetooth Accessories",
-                "desc": "TWS earbuds, charging cables, phone cases, screen protectors. Light & small — cheap shipping. Easy to compete on Coupang Rocket."
-            },
-            "p2": {
-                "cat": "Kitchen",
-                "title": "Silicone Kitchenware / Storage",
-                "desc": "Silicone spatula sets, sealed containers, spice jars, dish racks, cutting boards. High repeat purchase, easy review build-up."
-            },
-            "p3": {
-                "cat": "Home Decor",
-                "title": "LED Mood Lights / Decor Items",
-                "desc": "LED lights, wall shelves, vases, cushion covers, rugs. SNS-friendly aesthetics drive high conversion. Easy seasonal refresh."
-            },
-            "p4": {
-                "cat": "Beauty Tools",
-                "title": "Makeup Brushes / Beauty Tools",
-                "desc": "Brush sets, lash curlers, silicone puffs, hair ties, clips. Ultra-light → minimal shipping. Bundles boost AOV."
-            },
-            "p5": {
-                "cat": "Fashion Accessories",
-                "title": "Bags / Socks / Fashion Accessories",
-                "desc": "Eco bags, crossbody bags, sock sets, hats, sunglasses. Fast-moving trends but 1688 keeps up. Bundle selling works well."
-            },
-            "p6": {
-                "cat": "Pets",
-                "title": "Pet Toys / Apparel / Supplies",
-                "desc": "Dog toys, pet clothing, feeders, carriers, cat scratchers. Steady demand from growing pet ownership. Reviews build loyalty."
-            },
-            "p7": {
-                "cat": "Baby/Kids",
-                "title": "Educational Toys / Kids Goods",
-                "desc": "Montessori materials, puzzles, silicone bibs, kids dishes, bath toys. KC certification required. Certification = competitive moat."
-            },
-            "p8": {
-                "cat": "Sports/Outdoor",
-                "title": "Home Workout / Camping Gear",
-                "desc": "Yoga mats, dumbbells, resistance bands, camp LED lanterns, hiking poles. Seasonal but home gym is year-round. Watch weight."
-            },
-            "p9": {
-                "cat": "Car Accessories",
-                "title": "Car Storage / Wash Supplies",
-                "desc": "Car organizers, phone holders, wash towels, fresheners, trunk boxes. Higher male buyer share, relatively less competition."
-            },
-            "s2": {
-                "title": "How to Find 1688 Shops With <span class=\"gradient-text\">Direct Shipping</span>",
-                "desc": "Step-by-step methods to find 1688 shops that ship directly to Korea without a forwarder"
-            },
-            "step1": {
-                "title": "跨境专供 (Cross-border Exclusive) Filter",
-                "desc": "After searching on 1688, click <strong>\"跨境专供\"</strong> in the top filter to show only products eligible for overseas direct shipping."
-            },
-            "step2": {
-                "title": "跨境专区 (Cross-border Zone)",
-                "desc": "<strong>kj.1688.com</strong> is 1688's cross-border portal. Listed suppliers have experience with overseas sellers and support direct shipping or small orders."
-            },
-            "step3": {
-                "title": "Ask Directly via AliWangWang (阿里旺旺)",
-                "desc": "Chat directly with the seller on the product page to confirm direct shipping to Korea. Use a translator if needed."
-            },
-            "step4": {
-                "title": "Shop Trust Checklist",
-                "desc": "After finding a direct-shipping shop, verify trustworthiness with the checklist below."
-            },
-            "cmp": {
-                "title": "Shipping Methods Compared"
-            },
-            "s3": {
-                "title": "Essential 1688 <span class=\"gradient-text\">Search Keywords</span>",
-                "desc": "A curated set of Chinese search keywords to precisely find products on 1688"
-            },
-            "kw": {
-                "electronics": "🎧 Electronics",
-                "home": "🏠 Home/Decor",
-                "beauty": "💄 Beauty/Fashion",
-                "kitchen": "🍳 Kitchen",
-                "pet": "🐾 Pets",
-                "filter": "🔑 Essential Filter Keywords"
-            },
-            "s4": {
-                "title": "Sourcing <span class=\"gradient-text\">Warnings & Key Tips</span>",
-                "desc": "Must-know items when sourcing from 1688 and selling on Coupang"
-            },
-            "tip1": {
-                "title": "Verify KC Certification"
-            },
-            "tip2": {
-                "title": "Always Order Samples First"
-            },
-            "tip3": {
-                "title": "Accurate Margin Calculation"
-            },
-            "tip4": {
-                "title": "Watch Out for IP Infringement"
-            },
-            "ctaBox": {
-                "title": "From 1688 Sourcing to Coupang Selling,<br>HUBONTRADE Has You Covered",
-                "desc": "Experience HUBONTRADE — one-stop sourcing, logistics, listing, and CS support",
-                "btn1": "Request Free Consultation",
-                "btn2": "View Services"
-            }
+        "c6": {
+          "title": "ERP Integration & Logistics Automation",
+          "desc": "Integrate via API with existing ERP and automate dispatch & returns"
         }
+      },
+      "data": {
+        "title": "Data-Driven Brand Growth — Run on Numbers, Not Instinct",
+        "desc": "Integrated analytics across sales, ads, inventory, and CRM for data-driven decisions",
+        "c1": {
+          "title": "Sales Analytics Dashboard",
+          "desc": "Real-time sales trends by channel, product, and period"
+        },
+        "c2": {
+          "title": "Ad Performance Analytics",
+          "desc": "Unified monitoring of ROAS, CPM, CPC and other core ad metrics"
+        },
+        "c3": {
+          "title": "AI Inventory Forecasting",
+          "desc": "AI analyzes sales trends to predict optimal inventory levels"
+        },
+        "c4": {
+          "title": "CRM Customer Management",
+          "desc": "Personalized marketing based on customer purchase history and behavior"
+        },
+        "c5": {
+          "title": "BI Dashboard",
+          "desc": "Business intelligence dashboard for at-a-glance key metrics"
+        },
+        "c6": {
+          "title": "Marketing ROI Analytics",
+          "desc": "Accurately measure return on ad spend across marketing channels"
+        }
+      },
+      "diff": {
+        "title": "What Competitors Don't Have — Only on HUBONTRADE",
+        "badge": "No Competitor Offers This",
+        "c1": {
+          "title": "Government Export Voucher Partner",
+          "desc": "Officially designated government export voucher partner — use voucher budgets to access HUBONTRADE. No competitor holds this status."
+        },
+        "c2": {
+          "title": "Coupang IOR (Importer of Record)",
+          "desc": "Enable overseas companies to sell directly on Korean Coupang via IOR services — from importer registration to customs and selling, all in one stop."
+        },
+        "c3": {
+          "title": "KOSME / GoBizKorea API Integration",
+          "desc": "Direct API integration with KOSME's GoBizKorea to auto-register B2B export products and support buyer matching."
+        }
+      },
+      "process": {
+        "title": "Simple Start, Powerful Results",
+        "s1": {
+          "title": "Sign Up & Connect Marketplaces",
+          "desc": "Pick your platforms and connect accounts"
+        },
+        "s2": {
+          "title": "List Products",
+          "desc": "Bulk-list via Excel upload or one-by-one"
+        },
+        "s3": {
+          "title": "Manage Orders & Shipping",
+          "desc": "Manage every order and shipment from one dashboard"
+        },
+        "s4": {
+          "title": "Settlement & Analytics",
+          "desc": "Optimize profit with margin analysis and sales reports"
+        }
+      },
+      "comp": {
+        "title": "Only on HUBONTRADE",
+        "colFeature": "Feature",
+        "colOurs": "HUBONTRADE (Us)"
+      },
+      "ctaBox": {
+        "title": "Which Solution Do You Need?",
+        "desc": "Find the best solution for your business with a free consultation",
+        "btn": "Request Free Consultation"
+      }
+    },
+    "features": {
+      "heroTitle": "Powerful Features Built for Sellers",
+      "heroDesc": "Core features that simplify the complexity of global selling",
+      "sec1": {
+        "title": "Key Features"
+      },
+      "f1": {
+        "title": "Bulk Listing Across Marketplaces",
+        "desc": "List products across dozens of local and overseas platforms with a single Excel. AI auto-maps categories and recommends keywords & image tags to drastically reduce listing time.",
+        "li1": "Bulk listing across marketplaces (Amazon, Shopee, Lazada, TikTok Shop, Coupang, Naver, etc.)",
+        "li2": "AI-powered automatic category mapping per platform",
+        "li3": "AI keyword suggestions & auto-generated image tags",
+        "li4": "Bulk product editing & price sync",
+        "li5": "Auto image resizing & watermarking"
+      },
+      "f2": {
+        "title": "Order Management",
+        "desc": "Auto-collect orders from every marketplace and view statuses in one place. Maximize efficiency with bulk processing.",
+        "li1": "Auto-collect orders from all marketplaces (local & overseas)",
+        "li2": "Unified order status dashboard",
+        "li3": "Bulk order processing (confirm, ship, cancel)",
+        "li4": "Order history & statistical analysis"
+      },
+      "f3": {
+        "title": "Inventory Management",
+        "desc": "Sync multi-channel inventory in real time to prevent stockouts. AI analyzes sales trends to forecast optimal stock levels.",
+        "li1": "Real-time multi-channel inventory sync",
+        "li2": "Low-stock alerts (configurable thresholds)",
+        "li3": "AI inventory forecasting based on sales trends",
+        "li4": "Per-warehouse inventory dashboard"
+      },
+      "f4": {
+        "title": "Tracking & Shipping",
+        "desc": "Auto-fill tracking numbers and integrate with carriers in real time. Push delivery tracking updates to customers automatically.",
+        "li1": "Auto-fill tracking numbers (auto-pushed to each marketplace)",
+        "li2": "Carrier integrations (CJ, Hanjin, Korea Post, international carriers)",
+        "li3": "Real-time shipment tracking",
+        "li4": "Auto-notify on delivery completion"
+      },
+      "f5": {
+        "title": "Purchase Order Management",
+        "desc": "Auto-create purchase orders based on stock thresholds and manage suppliers systematically. View PO history and incoming stock at a glance.",
+        "li1": "Auto-generated purchase orders (threshold-based)",
+        "li2": "Supplier management & unit price comparison",
+        "li3": "PO history & incoming stock tracking",
+        "li4": "Auto-generate and send purchase orders"
+      },
+      "f6": {
+        "title": "Customer Service Management",
+        "desc": "Manage customer inquiries from every marketplace in one place. Auto-reply templates and multilingual support keep global CS efficient.",
+        "li1": "Unified collection of inquiries from each marketplace",
+        "li2": "FAQ-based auto-reply templates",
+        "li3": "Multilingual support via AI translation",
+        "li4": "CS handling status & response rate stats"
+      },
+      "f7": {
+        "title": "ERP Integration",
+        "desc": "Connect to existing ERP via API to auto-push accounting and tax data. Manage data uniformly without duplicate input.",
+        "li1": "API integration with existing ERPs (Ecount, Douzone, etc.)",
+        "li2": "Auto-transfer of accounting/tax data",
+        "li3": "Real-time sync of sales/purchase data",
+        "li4": "Automatic settlement data organization"
+      },
+      "f8": {
+        "title": "Logistics Automation",
+        "desc": "Automate dispatch and optimally assign carriers. The system handles returns and exchanges automatically.",
+        "li1": "Auto dispatch (ship instruction immediately on order confirmation)",
+        "li2": "Carrier auto-assignment (cost/region optimization)",
+        "li3": "Automated returns/exchanges handling",
+        "li4": "Unified local & overseas fulfillment management"
+      },
+      "f9": {
+        "title": "BI Analytics",
+        "desc": "Unified analysis of sales, ad ROAS, and CRM data. See brand growth metrics at a glance and decide with data.",
+        "li1": "Sales analysis (by channel, product, period)",
+        "li2": "Ad ROAS / CPM / CPC analysis",
+        "li3": "CRM customer analytics (purchase patterns, LTV)",
+        "li4": "Brand growth metrics dashboard"
+      },
+      "f10": {
+        "title": "AI-Powered Automation",
+        "desc": "AI suggests product names, keywords, categories, multilingual translations, and optimal prices — handling repetitive seller tasks.",
+        "li1": "AI product name / keyword suggestions (SEO-optimized)",
+        "li2": "AI automatic category mapping",
+        "li3": "AI multilingual translation (English, Thai, Vietnamese, etc.)",
+        "li4": "AI price recommendation (competitor-based)"
+      },
+      "f11": {
+        "title": "Export Declaration Automation",
+        "desc": "Auto-issue e-commerce export purchase confirmations and integrate with uTradeHub to automate every step. HS code auto-classification simplifies customs.",
+        "li1": "Auto-issued e-commerce export purchase confirmation",
+        "li2": "uTradeHub integration (auto-submit export declarations)",
+        "li3": "Automatic HS code classification",
+        "li4": "Auto-aggregation & reporting of export performance"
+      },
+      "f12": {
+        "title": "Global Margin Tool",
+        "desc": "Verify profitability up front with margin calculations that include FX, fees, ads, logistics, and customs. Compare net profit across platforms at a glance.",
+        "li1": "Includes FX / fees / ads / logistics / customs costs",
+        "li2": "Sale-price simulation to validate profitability up front",
+        "li3": "Per-platform net profit comparison",
+        "li4": "Real-time FX auto-update"
+      },
+      "dash": {
+        "title": "Everything at a Glance — Unified Dashboard",
+        "desc": "Real-time monitoring of sales, orders, inventory, and settlements across every platform on a single screen",
+        "s1": {
+          "title": "Real-Time Sales",
+          "desc": "Unified real-time sales aggregation across all platforms"
+        },
+        "s2": {
+          "title": "Per-Platform Orders",
+          "desc": "View order statuses across channels like Shopee, TikTok Shop at a glance"
+        },
+        "s3": {
+          "title": "Unified Inventory",
+          "desc": "Sync local & overseas warehouse stock in real time to prevent stockouts"
+        },
+        "s4": {
+          "title": "Profitability Analytics",
+          "desc": "Per-platform margin, fee, and logistics cost reports"
+        }
+      },
+      "comp": {
+        "title": "Here's What Changes With HUBONTRADE",
+        "col1": "Task",
+        "col2": "DIY Operation",
+        "col3": "HUBONTRADE"
+      },
+      "ctaBox": {
+        "title": "Try Every Feature Free",
+        "desc": "Experience every HUBONTRADE feature with a 14-day free trial",
+        "btn": "Start Free Trial"
+      }
+    },
+    "service": {
+      "heroTitle": "We Handle Everything in <span class=\"gradient-text\">Global Selling</span>",
+      "heroDesc": "Discover the expert services HUBONTRADE provides",
+      "cats": {
+        "title": "Our Service Areas",
+        "c1": {
+          "title": "Marketplace Operations",
+          "desc": "Listing and operations on local & overseas marketplaces",
+          "l1": "Listing & detail page creation",
+          "l2": "Pricing strategy & promotion management",
+          "l3": "Review management & CS response",
+          "l4": "Sales analytics & operations reports"
+        },
+        "c2": {
+          "title": "Import/Export Logistics",
+          "desc": "Manage local & overseas logistics in one system",
+          "l1": "Export declaration & customs brokerage",
+          "l2": "International shipping & local fulfillment",
+          "l3": "Import customs & proxy purchase delivery",
+          "l4": "Returns & exchanges handling"
+        },
+        "c3": {
+          "title": "Product Sourcing",
+          "desc": "Discover high-margin products from global suppliers",
+          "l1": "B2B global product sourcing",
+          "l2": "Sample ordering & quality inspection",
+          "l3": "Margin analysis & profitability simulation",
+          "l4": "OEM/ODM manufacturing matching"
+        },
+        "c4": {
+          "title": "Marketing Services",
+          "desc": "Maximize sales with platform-tailored marketing",
+          "l1": "Shopee/TikTok Shop promotion management",
+          "l2": "Keyword ads & performance marketing",
+          "l3": "Local influencer marketing",
+          "l4": "Live commerce planning & operations"
+        }
+      },
+      "types": {
+        "title": "Services Tailored to Seller Types",
+        "t1": {
+          "title": "Domestic Sellers (Export)",
+          "desc": "Businesses exporting Korean products overseas",
+          "l1": "Export declaration automation",
+          "l2": "Overseas platform onboarding & operations",
+          "l3": "International logistics & fulfillment",
+          "l4": "Local marketing"
+        },
+        "t2": {
+          "title": "Overseas Sellers (Import/Reverse Direct)",
+          "desc": "Sell overseas products to Korea or other countries",
+          "l1": "Import customs automation",
+          "l2": "Korean platform onboarding & operations",
+          "l3": "Domestic fulfillment",
+          "l4": "Proxy purchase system"
+        },
+        "t3": {
+          "title": "Dropshipping & Proxy Purchase",
+          "desc": "Run online sales without inventory",
+          "l1": "Global product sourcing",
+          "l2": "Automatic margin calculation",
+          "l3": "Automatic order processing",
+          "l4": "Customs automation"
+        }
+      },
+      "support": {
+        "title": "Backed by Dedicated Managers",
+        "desc": "More than a tool. Dedicated managers help design your growth.",
+        "f1": "1:1 dedicated manager",
+        "f2": "Weekly sales analysis reports",
+        "f3": "24/7 chat & email support"
+      },
+      "ctaBox": {
+        "title": "Which Service Do You <span class=\"gradient-text\">Need?</span>",
+        "desc": "Get the best service recommendation for your business type",
+        "btn": "Request Free Consultation"
+      }
+    },
+    "market": {
+      "heroTitle": "From Local to Global, <span class=\"gradient-text\">Major Marketplace Integrations</span>",
+      "heroDesc": "Manage local & overseas marketplaces in one HUBONTRADE",
+      "s1": {
+        "title": "Supported <span class=\"gradient-text\">Marketplaces</span>",
+        "korea": "Domestic Marketplaces",
+        "global": "Global Marketplaces"
+      },
+      "mp": {
+        "coupang": "Rocket Delivery, IOR support",
+        "naver": "Korea's largest search portal integration",
+        "gmarket": "Global selling supported",
+        "11st": "SK-affiliated general marketplace",
+        "wemakeprice": "Deal-focused marketplace",
+        "interpark": "General shopping mall",
+        "auction": "Open marketplace",
+        "shopeeTag": "Largest in SE Asia",
+        "shopeeDesc": "Vietnam, Philippines, Singapore, Malaysia, Thailand, Indonesia",
+        "lazadaTag": "Alibaba Group",
+        "lazadaDesc": "6 SE Asian countries",
+        "tiktokTag": "Live-commerce leader",
+        "tiktokDesc": "5 SE Asian countries",
+        "amazonTag": "World's largest",
+        "amazonDesc": "USA, Japan, Europe, etc.",
+        "tikiTag": "Vietnam local",
+        "tikiDesc": "Local Vietnamese marketplace",
+        "aliTag": "Global selling",
+        "aliDesc": "Global selling",
+        "qoo10Tag": "Asian open marketplace",
+        "qoo10Desc": "Japan, Singapore",
+        "tokoTag": "Largest in Indonesia",
+        "tokoDesc": "Indonesia"
+      },
+      "tag": {
+        "orders": "Orders",
+        "inv": "Inventory Sync",
+        "track": "Auto Tracking",
+        "listing": "Listing",
+        "cs": "CS"
+      },
+      "s2": {
+        "title": "<span class=\"gradient-text\">Per-Marketplace Integration Details</span>",
+        "colMarket": "Marketplace",
+        "colListing": "Listing",
+        "colOrders": "Orders",
+        "colInv": "Inventory",
+        "colTrack": "Tracking",
+        "colCS": "CS",
+        "colMarketing": "Marketing",
+        "colLive": "Live Commerce"
+      },
+      "excl": {
+        "title": "<span class=\"gradient-text\">Integrations</span> Only on HUBONTRADE",
+        "c1": {
+          "title": "Coupang IOR (Importer of Record)",
+          "desc": "Overseas companies can sell directly on Coupang without a Korean entity — an exclusive service no competitor offers."
+        },
+        "b1": "Exclusive Service",
+        "c2": {
+          "title": "KOSME/GoBizKorea API Integration",
+          "desc": "Direct integration with government export support programs — auto-report performance and unified program management."
+        },
+        "b2": "Government Integration",
+        "c3": {
+          "title": "Export Declaration Automation (uTradeHub)",
+          "desc": "Direct integration with Korea Customs export system — auto-issue export declarations and origin certificates."
+        },
+        "b3": "Automation"
+      },
+      "custom": {
+        "title": "Custom Shops <span class=\"gradient-text\">Also Supported</span>",
+        "desc": "Unified management of both open marketplaces and your own shop",
+        "shopify": "Global custom shop platform",
+        "woo": "WordPress-based shop",
+        "cafe24": "Korea's leading shop solution",
+        "api": "Custom Shop API",
+        "apiDesc": "Custom API integration supported"
+      },
+      "ctaBox": {
+        "title": "Connect Your Marketplaces to <span class=\"gradient-text\">HUBONTRADE</span>",
+        "desc": "Experience marketplace integrations free",
+        "btn1": "Start Integration",
+        "btn2": "1:1 Consultation"
+      }
+    },
+    "pricing": {
+      "heroTitle": "Simple, Fair Pricing",
+      "heroDesc": "Pick the plan that fits your business scale",
+      "billing": {
+        "monthly": "Monthly",
+        "yearly": "Yearly",
+        "discount": "20% off"
+      },
+      "starter": {
+        "name": "Starter",
+        "amount": "Free",
+        "unit": "  30 days",
+        "tax": "No credit card required",
+        "desc": "Try every core feature free for 30 days",
+        "btn": "Start Free Trial"
+      },
+      "growth": {
+        "name": "Growth",
+        "discount": "44% off",
+        "desc": "The most popular plan for growing sellers",
+        "btn": "Start Plan"
+      },
+      "ent": {
+        "name": "Enterprise",
+        "discount": "50% off",
+        "desc": "All features + dedicated manager for global expansion",
+        "btn": "Start Plan"
+      },
+      "faq": {
+        "title": "Frequently Asked Questions",
+        "q1": "What's the contract length?",
+        "a1": "Starting from 3 months minimum; annual contracts get a 20% discount.",
+        "q2": "Can I cancel mid-term?",
+        "a2": "Yes — cancel without penalty with 1 month's notice.",
+        "q3": "Are there additional fees?",
+        "a3": "Platform operating costs are included in the base fee; ad spend and logistics are billed at cost.",
+        "q4": "Can I switch plans?",
+        "a4": "Upgrade to a higher plan anytime — pay only the difference.",
+        "q5": "Is there a free trial?",
+        "a5": "We provide a 2-week free market analysis report and recommend the best plan based on it."
+      },
+      "ctaBox": {
+        "title": "Not sure which plan fits?",
+        "desc": "Get a free consultation",
+        "btn": "Get Free Consultation"
+      }
+    },
+    "case": {
+      "heroTitle": "Success Stories",
+      "heroDesc": "Stories of brands that grew global markets with HUBONTRADE",
+      "stats": {
+        "partners": "Partner Brands",
+        "growth": "Avg. Revenue Growth",
+        "awards": "Awards"
+      },
+      "c1": {
+        "industry": "Cosmetics/Skincare",
+        "market": "Vietnam, Thailand",
+        "title": "K-Beauty Brand A",
+        "challenge": "No SE Asia experience; difficulty understanding local regulations",
+        "solution": "Shopee onboarding + local influencer marketing",
+        "r1": "Reached KRW 300M monthly revenue in 6 months",
+        "r2": "Top 10 in Shopee Beauty category",
+        "quote": "\"Thanks to HUBONTRADE, complex overseas expansion became surprisingly easy.\""
+      },
+      "c2": {
+        "industry": "Health Supplements",
+        "market": "Indonesia",
+        "title": "Health Brand B",
+        "challenge": "Regulatory barriers like Halal certification; building local consumer trust",
+        "solution": "Local certification support + Tokopedia onboarding + live commerce",
+        "r1": "Halal certification cut by 3 months",
+        "r2": "500% revenue growth in 1 year",
+        "quote": "\"HUBONTRADE handled the entire complex certification process.\""
+      },
+      "c3": {
+        "industry": "Women's Apparel",
+        "market": "Philippines, Malaysia",
+        "title": "Fashion Brand C",
+        "challenge": "Different sizing systems; hard to read local fashion trends",
+        "solution": "Local sizing guide + TikTok Shop live",
+        "r1": "KRW 50M revenue per TikTok live",
+        "r2": "Return rate down 80%",
+        "quote": "\"We felt the power of live commerce. The HUBONTRADE team is the best.\""
+      },
+      "c4": {
+        "industry": "Smart Appliances",
+        "market": "Vietnam, Thailand, Indonesia",
+        "title": "Electronics Brand D",
+        "challenge": "Building after-sales system; localizing technical products",
+        "solution": "Onboard 3 countries simultaneously + connect local A/S partners",
+        "r1": "Successful simultaneous entry into 3 markets",
+        "r2": "Reached KRW 5B annual revenue",
+        "quote": "\"Entering 3 markets at once would've been impossible without HUBONTRADE.\""
+      },
+      "partners": {
+        "title": "Our Partners"
+      },
+      "ctaBox": {
+        "title": "Be the Next Success Story",
+        "desc": "Open up SE Asian markets with HUBONTRADE",
+        "btn": "Get Free Consultation"
+      }
+    },
+    "resources": {
+      "heroTitle": "Resource Center",
+      "heroDesc": "Everything you need for global e-commerce",
+      "filter": {
+        "all": "All",
+        "guide": "Guides",
+        "report": "Reports",
+        "blog": "Blog",
+        "webinar": "Webinars"
+      },
+      "cat": {
+        "guide": "Guide",
+        "report": "Report",
+        "blog": "Blog",
+        "webinar": "Webinar"
+      },
+      "tag": {
+        "pdf": "PDF Guide",
+        "report": "Report",
+        "blog": "Blog"
+      },
+      "c0": {
+        "title": "1688 Sourcing → Coupang Selling: The Complete Guide",
+        "desc": "TOP 9 high-margin product picks, how to find direct-shipping shops, and key search keywords",
+        "tag": "NEW Guide",
+        "reading": "Read time: 10 min"
+      },
+      "c1": {
+        "title": "2024 SE Asia E-Commerce Market Entry Guide",
+        "desc": "Comprehensive guide covering market status, regulations, and consumer trends across 5 SE Asian countries",
+        "reading": "Read time: 15 min"
+      },
+      "c2": {
+        "title": "Vietnam E-Commerce Market Analysis Report 2024",
+        "desc": "Professional report analyzing latest trends and opportunities in Vietnam's e-commerce market",
+        "reading": "32 pages"
+      },
+      "c3": {
+        "title": "Shopee Onboarding Complete Guide: A to Z for Beginners",
+        "desc": "Step-by-step from creating a Shopee seller account to your first order",
+        "reading": "Read time: 8 min"
+      },
+      "c4": {
+        "title": "How to 3x SE Asia Sales with Live Commerce",
+        "desc": "Live commerce success strategies shared by local experts",
+        "tag": "Webinar Recording",
+        "reading": "45 min"
+      },
+      "c5": {
+        "title": "Mastering SE Asia Logistics & Fulfillment",
+        "desc": "Detailed guide on international shipping, customs, and using local logistics centers",
+        "reading": "Read time: 12 min"
+      },
+      "c6": {
+        "title": "K-Beauty SE Asia Export Trends Report",
+        "desc": "Analysis of Korean cosmetics market share and growth potential in SE Asia",
+        "reading": "28 pages"
+      },
+      "nl": {
+        "title": "Get the Latest SE Asia E-Commerce Insights",
+        "btn": "Subscribe",
+        "note": "Sent every Tuesday · Unsubscribe anytime"
+      }
+    },
+    "contact": {
+      "heroTitle": "Get in Touch",
+      "heroDesc": "Reach out anytime with questions about global market entry",
+      "form": {
+        "title": "Inquiry Form",
+        "company": "Company",
+        "name": "Contact Name",
+        "email": "Email",
+        "phone": "Phone",
+        "service": "Service of Interest",
+        "servicePlaceholder": "Select a service of interest",
+        "opt": {
+          "platform": "Marketplace Onboarding",
+          "logistics": "Logistics & Fulfillment",
+          "marketing": "Marketing",
+          "live": "Live Commerce",
+          "consulting": "Comprehensive Consulting",
+          "other": "Other"
+        },
+        "country": "Target Country",
+        "cc": {
+          "vietnam": "Vietnam",
+          "thailand": "Thailand",
+          "indonesia": "Indonesia",
+          "philippines": "Philippines",
+          "malaysia": "Malaysia"
+        },
+        "message": "Message",
+        "submit": "Send Inquiry"
+      },
+      "info": {
+        "title": "Contact Information",
+        "addrLabel": "Address",
+        "addrValue": "3F Daera Bldg, 116 Yeongdeungpo-ro, Yeongdeungpo-gu, Seoul",
+        "phoneLabel": "Phone",
+        "emailLabel": "Email",
+        "hoursLabel": "Hours",
+        "hoursValue": "Weekdays 09:00 – 18:00 (KST)",
+        "mapLink": "View on Naver Maps →"
+      },
+      "quick": {
+        "title": "Quick Contact Options",
+        "kakao": {
+          "title": "KakaoTalk Chat",
+          "desc": "Real-time chat (weekdays 09-18)"
+        },
+        "phone": {
+          "title": "Phone Consultation",
+          "desc": "1660-2318 (weekdays 09-18)"
+        },
+        "email": {
+          "title": "Email Inquiry",
+          "desc": "contact@drapin.com (24/7 intake)"
+        }
+      },
+      "office": {
+        "title": "How to Find Us",
+        "desc": "3F Daera Bldg, 116 Yeongdeungpo-ro, Yeongdeungpo-gu, Seoul",
+        "subway": "6 min walk from Yeongdeungpo-gu Office Stn Exit 6 · 6 min from Mullae Stn Exit 3",
+        "parking": "Parking is limited — please use public transport when possible"
+      }
+    },
+    "guide": {
+      "heroTitle": "1688 Sourcing → <span class=\"gradient-text\">Coupang Selling</span> Complete Guide",
+      "heroDesc": "From high-margin product picks to finding direct-shipping suppliers — everything about 1688",
+      "hero": {
+        "platform1688": "Alibaba 1688",
+        "platformCoupang": "Coupang"
+      },
+      "s1": {
+        "title": "<span class=\"gradient-text\">TOP 9 High-Margin Sourcing Picks</span>",
+        "desc": "Categories with high Coupang demand and solid margins when sourced from 1688"
+      },
+      "label": {
+        "unitPrice": "1688 Unit Price",
+        "coupangPrice": "Coupang Selling Price"
+      },
+      "p1": {
+        "cat": "Electronics Accessories",
+        "title": "Wireless Earbuds / Bluetooth Accessories",
+        "desc": "TWS earbuds, charging cables, phone cases, screen protectors. Light & small — cheap shipping. Easy to compete on Coupang Rocket."
+      },
+      "p2": {
+        "cat": "Kitchen",
+        "title": "Silicone Kitchenware / Storage",
+        "desc": "Silicone spatula sets, sealed containers, spice jars, dish racks, cutting boards. High repeat purchase, easy review build-up."
+      },
+      "p3": {
+        "cat": "Home Decor",
+        "title": "LED Mood Lights / Decor Items",
+        "desc": "LED lights, wall shelves, vases, cushion covers, rugs. SNS-friendly aesthetics drive high conversion. Easy seasonal refresh."
+      },
+      "p4": {
+        "cat": "Beauty Tools",
+        "title": "Makeup Brushes / Beauty Tools",
+        "desc": "Brush sets, lash curlers, silicone puffs, hair ties, clips. Ultra-light → minimal shipping. Bundles boost AOV."
+      },
+      "p5": {
+        "cat": "Fashion Accessories",
+        "title": "Bags / Socks / Fashion Accessories",
+        "desc": "Eco bags, crossbody bags, sock sets, hats, sunglasses. Fast-moving trends but 1688 keeps up. Bundle selling works well."
+      },
+      "p6": {
+        "cat": "Pets",
+        "title": "Pet Toys / Apparel / Supplies",
+        "desc": "Dog toys, pet clothing, feeders, carriers, cat scratchers. Steady demand from growing pet ownership. Reviews build loyalty."
+      },
+      "p7": {
+        "cat": "Baby/Kids",
+        "title": "Educational Toys / Kids Goods",
+        "desc": "Montessori materials, puzzles, silicone bibs, kids dishes, bath toys. KC certification required. Certification = competitive moat."
+      },
+      "p8": {
+        "cat": "Sports/Outdoor",
+        "title": "Home Workout / Camping Gear",
+        "desc": "Yoga mats, dumbbells, resistance bands, camp LED lanterns, hiking poles. Seasonal but home gym is year-round. Watch weight."
+      },
+      "p9": {
+        "cat": "Car Accessories",
+        "title": "Car Storage / Wash Supplies",
+        "desc": "Car organizers, phone holders, wash towels, fresheners, trunk boxes. Higher male buyer share, relatively less competition."
+      },
+      "s2": {
+        "title": "How to Find 1688 Shops With <span class=\"gradient-text\">Direct Shipping</span>",
+        "desc": "Step-by-step methods to find 1688 shops that ship directly to Korea without a forwarder"
+      },
+      "step1": {
+        "title": "跨境专供 (Cross-border Exclusive) Filter",
+        "desc": "After searching on 1688, click <strong>\"跨境专供\"</strong> in the top filter to show only products eligible for overseas direct shipping."
+      },
+      "step2": {
+        "title": "跨境专区 (Cross-border Zone)",
+        "desc": "<strong>kj.1688.com</strong> is 1688's cross-border portal. Listed suppliers have experience with overseas sellers and support direct shipping or small orders."
+      },
+      "step3": {
+        "title": "Ask Directly via AliWangWang (阿里旺旺)",
+        "desc": "Chat directly with the seller on the product page to confirm direct shipping to Korea. Use a translator if needed."
+      },
+      "step4": {
+        "title": "Shop Trust Checklist",
+        "desc": "After finding a direct-shipping shop, verify trustworthiness with the checklist below."
+      },
+      "cmp": {
+        "title": "Shipping Methods Compared"
+      },
+      "s3": {
+        "title": "Essential 1688 <span class=\"gradient-text\">Search Keywords</span>",
+        "desc": "A curated set of Chinese search keywords to precisely find products on 1688"
+      },
+      "kw": {
+        "electronics": "🎧 Electronics",
+        "home": "🏠 Home/Decor",
+        "beauty": "💄 Beauty/Fashion",
+        "kitchen": "🍳 Kitchen",
+        "pet": "🐾 Pets",
+        "filter": "🔑 Essential Filter Keywords"
+      },
+      "s4": {
+        "title": "Sourcing <span class=\"gradient-text\">Warnings & Key Tips</span>",
+        "desc": "Must-know items when sourcing from 1688 and selling on Coupang"
+      },
+      "tip1": {
+        "title": "Verify KC Certification"
+      },
+      "tip2": {
+        "title": "Always Order Samples First"
+      },
+      "tip3": {
+        "title": "Accurate Margin Calculation"
+      },
+      "tip4": {
+        "title": "Watch Out for IP Infringement"
+      },
+      "ctaBox": {
+        "title": "From 1688 Sourcing to Coupang Selling,<br>HUBONTRADE Has You Covered",
+        "desc": "Experience HUBONTRADE — one-stop sourcing, logistics, listing, and CS support",
+        "btn1": "Request Free Consultation",
+        "btn2": "View Services"
+      }
     }
+  },
+  "x": {
+    "localDelivery": "Local Delivery",
+    "avgLeadtime": "Avg Lead Time",
+    "onTimeRate": "On-time Rate",
+    "tariffFreight": "Tariff & Freight",
+    "platformFee": "Platform Fee",
+    "expectedProfit": "Est. Net Profit",
+    "countries": "Countries",
+    "activeSellers": "Active Sellers",
+    "langSupport": "Languages",
+    "exportAuto": "Export Declaration Auto",
+    "foreignSell": "Foreign Cos. in Korea",
+    "multiCs": "Multilingual CS Service"
+  }
 }
