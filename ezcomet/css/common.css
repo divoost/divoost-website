@@ -73,7 +73,7 @@
 
   /* Layout */
   --container-max: 1200px;
-  --header-height: 72px;
+  --header-height: 52px;        /* 헤더 높이 축소(72→52): 로고 바 하단 여백 줄임 */
 
   /* Borders */
   --radius-sm: 6px;
@@ -233,11 +233,17 @@ p {
   align-items: center;
   gap: var(--space-sm);
   font-family: var(--font-heading);
-  font-size: var(--text-xl);
+  font-size: 0.875rem;          /* 로고 30% 축소 (1.25rem → 0.875rem) */
   font-weight: 800;
   color: var(--color-primary);
   letter-spacing: -0.02em;
   flex-shrink: 0;
+}
+
+/* 로고가 이미지(<img>)인 경우도 30% 수준으로 축소 */
+.logo img {
+  height: 36px;
+  width: auto;
 }
 
 .logo span {
