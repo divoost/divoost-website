@@ -16,7 +16,7 @@
 | 요구사항 (What) | SRS v0.1 | ✅ 완료 |
 | **설계 (How) — 본 문서** | **ez-flow 기획서 v1.0** | ✅ 본 문서 |
 | 데이터 DDL 실행본 | `docs/specs/ez-flow-schema.sql` | ✅ 본 문서 §5·§5.3·§6 기반 생성 완료 |
-| ADR (의사결정 기록) | `docs/adr/ADR-0xx-*.md` | ⏳ §16 미정사항 확정 시 |
+| ADR (의사결정 기록) | `docs/adr/ADR-001~008` | ✅ D1~D8 작성 완료 (D4·D8 일부 보류) |
 
 **읽는 순서 권장**: §2(시나리오) → §3(화면맵) → §6(권한/보안) → §5(데이터) → §8(화면별 상세) → §14(로드맵)
 
@@ -538,14 +538,16 @@ create policy task_write on tasks for update
 | AI 질의(flowAI) | Client→Edge→LLM | TLS | 프롬프트에 민감데이터 최소화, 로그 마스킹 |
 | 외부 연동 토큰 | OAuth | TLS | 토큰 암호화 저장 + 만료 갱신 |
 
-### 6.6 보안 미정사항 (마스터 결정 필요 — 위험도 표기, I6)
+### 6.6 보안 결정사항 (✅ 2026-06-07 확정 — 위험도 표기, I6)
 
-| 항목 | 옵션 | 보안 위험 | 권장 |
+> 마스터 지시로 아래 권장안을 모두 **확정**. 근거·종료조건은 각 ADR 참조.
+
+| 항목 | 옵션 | 보안 위험 | 결정 (✅ 확정) |
 |---|---|---|---|
-| 회의 음성 원본 보존 | (A)전사 후 즉시 삭제 (B)N일 보관 | A=낮음, B=중(유출 시 음성 노출) | **A(전사 후 삭제)** 권장, 필요 시 B+암호화 |
-| AI에 보낼 데이터 범위 | (A)요약/메타만 (B)원문 포함 | A=낮음, B=높음(LLM 제공사 전송) | A 기본, B는 명시 동의 |
-| LLM 제공사 데이터 학습 | 옵트아웃 계약 | 미설정 시 중 | **학습 옵트아웃 필수**(Claude/OpenAI Enterprise) |
-| Guest 셀프 가입 | 초대 토큰만 | 공개 가입=높음 | **초대 토큰 only** |
+| 회의 음성 원본 보존 | (A)전사 후 즉시 삭제 (B)N일 보관 | A=낮음, B=중(유출 시 음성 노출) | ✅ **A(전사 후 즉시 삭제)** — [ADR-005](../adr/ADR-005-meeting-audio-retention.md) |
+| AI에 보낼 데이터 범위 | (A)요약/메타만 (B)원문 포함 | A=낮음, B=높음(LLM 제공사 전송) | ✅ **A(요약/메타 우선)**, 원문은 명시 동의 시 — [ADR-006](../adr/ADR-006-ai-data-scope.md) |
+| LLM 제공사 데이터 학습 | 옵트아웃 계약 | 미설정 시 중 | ✅ **학습 옵트아웃 필수**(Enterprise/Zero-retention) — [ADR-006](../adr/ADR-006-ai-data-scope.md) |
+| Guest 셀프 가입 | 초대 토큰만 | 공개 가입=높음 | ✅ **초대 토큰 only** — [ADR-004](../adr/ADR-004-guest-access-policy.md) |
 
 ### 6.7 보안 사고 패턴 사전 경고 (I7)
 - Supabase RLS 미설정으로 anon key만으로 전 테이블 덤프된 사례 다수 → **RLS 테스트를 CI 게이트로.**
@@ -769,20 +771,22 @@ create policy task_write on tasks for update
 
 ---
 
-## 16. 미정 사항 / 의사결정 필요 (ADR 후보)
+## 16. 의사결정 기록 (ADR) — ✅ 2026-06-07 확정
 
-| # | 항목 | 옵션 | 영향 | 권장/메모 |
+> D1~D8을 ADR로 확정. 전체 인덱스·근거·트레이드오프는 [`docs/adr/`](../adr/README.md) 참조.
+
+| # | 항목 | 결정 | 상태 | ADR |
 |---|---|---|---|---|
-| D1 | 리포 구조 | 신규 리포 vs divoost 모노레포 | 빌드/배포 | 신규 리포 권장(스택 상이) |
-| D2 | 모바일 | PWA vs 네이티브 | 비용/기능 | **PWA 먼저**, 네이티브 후순위 |
-| D3 | Trellis 마이그레이션 범위 | 전체 vs 신규시작+선택이관 | 데이터 | 신규시작 + 핵심 데이터 이관 |
-| D4 | Guest 과금/시트 정책 | 무료 vs 시트 차감 | 비용 | 정책 확정 필요(영업) |
-| D5 | 회의 음성 보존 | 즉시삭제 vs 보관 | 보안(§6.6) | **즉시삭제** 권장 |
-| D6 | AI 데이터 범위 | 요약만 vs 원문 | 보안(§6.6) | **요약/메타 우선** |
-| D7 | LLM 제공사 | Claude vs OpenAI vs 병행 | 비용/품질 | 병행 추상화(어댑터) |
-| D8 | 커머스 연동 우선순위 | IOR 통합 여부 | 범위 | Phase4, 별도 검토 |
+| D1 | 리포 구조 | 신규 리포 분리(스택 상이) | ✅ 승인 | [ADR-001](../adr/ADR-001-repo-structure.md) |
+| D2 | 모바일 | PWA 우선, 네이티브 후순위 | ✅ 승인 | [ADR-002](../adr/ADR-002-mobile-strategy.md) |
+| D3 | Trellis 마이그레이션 | 신규 시작 + 핵심 데이터 선택 이관 | ✅ 승인 | [ADR-003](../adr/ADR-003-trellis-migration.md) |
+| D4 | Guest 정책 | 초대 토큰 가입(보안 확정) / 시트 과금(영업 보류) | 🔶 부분 | [ADR-004](../adr/ADR-004-guest-access-policy.md) |
+| D5 | 회의 음성 보존 | 전사 후 즉시 삭제 | ✅ 승인 | [ADR-005](../adr/ADR-005-meeting-audio-retention.md) |
+| D6 | AI 데이터 범위 | 요약/메타 우선 + LLM 학습 옵트아웃 | ✅ 승인 | [ADR-006](../adr/ADR-006-ai-data-scope.md) |
+| D7 | LLM 제공사 | 어댑터 기반 병행 추상화 | ✅ 승인 | [ADR-007](../adr/ADR-007-llm-provider.md) |
+| D8 | 커머스 연동 | Phase 4 보류(종료조건 명시) | ⏳ 제안 | [ADR-008](../adr/ADR-008-commerce-integration.md) |
 
-> D1~D8 확정 시 각각 `docs/adr/ADR-0xx-*.md` 작성(CLAUDE.md E1).
+> 잔여 보류 항목: D4 시트 과금(영업 확정 대기), D8 커머스(Phase 4 재검토). 각 ADR 종료조건 참조.
 
 ---
 
@@ -825,9 +829,15 @@ export const TZ_PRESETS = ['Asia/Seoul','Asia/Shanghai','Asia/Ho_Chi_Minh',
 
 ---
 
-**다음 액션 (마스터님 결정 필요)**
-1. §16 D1~D8 의사결정 → ADR 작성 트리거
-2. §6.6 보안 옵션(음성 보존·AI 데이터 범위·LLM 학습 옵트아웃) 승인
-3. 승인 시 후속: `ez-flow-schema.sql`(전체 DDL+RLS) + 디자인 시스템 컴포넌트 착수
+**진행 상태 (2026-06-07 갱신)**
+1. ✅ §16 D1~D8 의사결정 → [`docs/adr/`](../adr/README.md) ADR-001~008 작성 완료 (D4·D8 일부 보류)
+2. ✅ §6.6 보안 옵션(음성 보존·AI 데이터 범위·LLM 학습 옵트아웃·Guest 가입) 확정
+3. ✅ `ez-flow-schema.sql`(전체 DDL+RLS) 생성 + 임시 PG로 실행·멱등성·RLS 격리 검증 완료
+   → 잔여: 디자인 시스템 컴포넌트 착수, 프로덕션 Supabase에 스키마 적용(마스터)
 
-**문서 상태**: 제작 착수 가능 수준. 단, D1~D8 미확정 항목은 착수 전 결정 권장.
+**다음 액션 (마스터님)**
+- 프로덕션(또는 ez-flow 전용) Supabase에 `ez-flow-schema.sql` 적용
+- D4 시트 과금 정책(영업) / D8 커머스(Phase 4) 잔여 결정
+- 신규 리포 생성(ADR-001) 및 셋업 착수
+
+**문서 상태**: 제작 착수 가능. 핵심 의사결정·스키마 확정 완료(보류 2건은 후속 Phase).
