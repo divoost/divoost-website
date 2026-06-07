@@ -104,8 +104,8 @@
         "desc": "AI product title/keyword recommendations, category mapping, multilingual translation, and pricing suggestions"
       },
       "c7": {
-        "title": "Trending Product Discovery",
-        "desc": "Analyze real-time best-sellers and rising keywords across domestic and global markets to quickly find what sells"
+        "title": "UNI-PASS Import Clearance",
+        "desc": "Connect with Korea Customs' UNI-PASS to auto-process import declaration and clearance for overseas goods — including duties and VAT"
       },
       "c8": {
         "title": "Global Marketplace Marketing",
@@ -284,10 +284,6 @@
       "diff": {
         "title": "What Competitors Don't Have — Only on HubOnTrade",
         "badge": "No Competitor Offers This",
-        "c1": {
-          "title": "Government Export Voucher Partner",
-          "desc": "Officially designated government export voucher partner — use voucher budgets to access HubOnTrade. No competitor holds this status."
-        },
         "c2": {
           "title": "Coupang IOR (Importer of Record)",
           "desc": "Enable overseas companies to sell directly on Korean Coupang via IOR services — from importer registration to customs and selling, all in one stop."
