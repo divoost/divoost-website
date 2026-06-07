@@ -356,6 +356,13 @@ create index if not exists idx_records_values_gin    on records using gin (value
 -- ============================================================================
 
 -- 10.1 헬퍼 함수 (기획서 §6.3) -----------------------------------------------
+-- 주의: CREATE OR REPLACE는 파라미터 "이름" 변경을 허용하지 않는다(ERROR 42P13).
+--   기존(이전 버전) 함수가 다른 파라미터명으로 존재할 수 있으므로 먼저 drop 후 생성.
+--   cascade로 의존 정책이 함께 삭제돼도, 아래 §10.3에서 모두 재생성하므로 안전.
+drop function if exists is_ws_member(uuid)        cascade;
+drop function if exists ws_role(uuid)             cascade;
+drop function if exists can_access_project(uuid)  cascade;
+drop function if exists is_channel_member(uuid)   cascade;
 
 -- 현재 유저가 워크스페이스 멤버인가
 create or replace function is_ws_member(ws uuid) returns boolean
