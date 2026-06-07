@@ -484,12 +484,6 @@
           "desc": "플랫폼별 마진, 수수료, 물류비 상세 분석 리포트"
         }
       },
-      "comp": {
-        "title": "HubOnTrade를 쓰면 이렇게 달라집니다",
-        "col1": "업무",
-        "col2": "직접 운영",
-        "col3": "HubOnTrade"
-      },
       "ctaBox": {
         "title": "모든 기능을 무료로 체험해보세요",
         "desc": "14일 무료 체험으로 HubOnTrade의 모든 기능을 경험하세요",
@@ -1017,9 +1011,6 @@
     "expectedProfit": "예상 순수익",
     "countries": "국가",
     "activeSellers": "활성 셀러",
-    "langSupport": "언어 지원",
-    "exportAuto": "수출신고 자동화",
-    "foreignSell": "해외기업 한국 판매",
-    "multiCs": "다국어 CS 대행"
+    "langSupport": "언어 지원"
   }
 }

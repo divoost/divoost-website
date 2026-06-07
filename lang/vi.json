@@ -484,12 +484,6 @@
           "desc": "Báo cáo biên lợi nhuận, phí, chi phí logistics theo từng sàn"
         }
       },
-      "comp": {
-        "title": "Khi dùng HubOnTrade, đây là những gì thay đổi",
-        "col1": "Công việc",
-        "col2": "Tự vận hành",
-        "col3": "HubOnTrade"
-      },
       "ctaBox": {
         "title": "Trải nghiệm mọi tính năng miễn phí",
         "desc": "Trải nghiệm mọi tính năng HubOnTrade với 14 ngày dùng thử miễn phí",
@@ -1017,9 +1011,6 @@
     "expectedProfit": "Lợi nhuận ròng dự kiến",
     "countries": "Quốc gia",
     "activeSellers": "Người bán hoạt động",
-    "langSupport": "Hỗ trợ ngôn ngữ",
-    "exportAuto": "Tự động khai báo XK",
-    "foreignSell": "DN nước ngoài tại Hàn",
-    "multiCs": "Dịch vụ CSKH đa ngôn ngữ"
+    "langSupport": "Hỗ trợ ngôn ngữ"
   }
 }
