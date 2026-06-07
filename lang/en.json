@@ -96,12 +96,20 @@
         "desc": "Not limited to Korean companies. The only truly global platform anyone can use from anywhere"
       },
       "c5": {
-        "title": "Government Export Voucher Partner",
-        "desc": "Government-certified export voucher provider. Start without cost burden through government support programs"
+        "title": "Automatic Margin Calculation",
+        "desc": "Factor in FX, tariffs, shipping and platform fees to confirm real net profit — at home and abroad — before you sell"
       },
       "c6": {
         "title": "AI-Powered Automation",
         "desc": "AI product title/keyword recommendations, category mapping, multilingual translation, and pricing suggestions"
+      },
+      "c7": {
+        "title": "Trending Product Discovery",
+        "desc": "Analyze real-time best-sellers and rising keywords across domestic and global markets to quickly find what sells"
+      },
+      "c8": {
+        "title": "Marketplace Marketing",
+        "desc": "Auto-connect with platform ad and promotion tools like Shopee and TikTok Shop — from listing to sales boost"
       }
     },
     "platforms": {
