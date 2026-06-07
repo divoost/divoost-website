@@ -1,5 +1,5 @@
 /* =========================================
-   EZCOMET Home Page Styles
+   HubOnTrade Home Page Styles
    Page-specific styles for index.html
    ========================================= */
 
@@ -195,6 +195,76 @@
     .hero-flow-hub { align-self: center; }
 }
 
+/* --- Slide 2: 2단 레이아웃 (텍스트 좌 / 비주얼 우) --- */
+.hero-container--split {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3xl);
+}
+.hero-col-text {
+    flex: 1 1 55%;
+    min-width: 0;
+}
+.hero-col-visual {
+    flex: 1 1 45%;
+    display: flex;
+    justify-content: center;
+}
+
+/* 우측 세로형 플로우 카드 (오른쪽 비주얼) */
+.hero-flow--vertical {
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: var(--space-md);
+    margin-top: 0;
+    width: 100%;
+    max-width: 360px;
+    padding: var(--space-xl);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-xl);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+.hero-flow--vertical .hero-flow-group {
+    align-items: center;
+    width: 100%;
+}
+.hero-flow--vertical .hero-flow-label {
+    text-align: center;
+}
+.hero-flow--vertical .hero-flow-chips {
+    justify-content: center;
+    max-width: none;
+}
+.hero-flow--vertical .hero-flow-arrow {
+    font-size: 22px;
+    line-height: 1;
+    width: auto;
+    transform: none;        /* 세로형은 ↓ 문자 그대로(회전 금지) */
+}
+.hero-flow--vertical .hero-flow-hub {
+    font-size: 18px;
+    padding: 14px 30px;
+    align-self: center;
+}
+
+@media (max-width: 900px) {
+    .hero-container--split {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-2xl);
+    }
+    .hero-col-visual {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    .hero-flow--vertical {
+        max-width: 340px;
+    }
+}
+
 /* --- SLIDER CONTROLS --- */
 .hero-slider-controls {
     position: absolute;
@@ -285,7 +355,7 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- WHY EZCOMET SECTION --- */
+/* --- WHY HubOnTrade SECTION --- */
 .section-why { background: var(--bg-light); }
 .section-header { margin-bottom: var(--space-3xl); }
 .section-header .section-desc { margin-left: auto; margin-right: auto; }

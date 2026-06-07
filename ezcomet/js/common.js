@@ -1,5 +1,5 @@
 /* ============================================================
-   EZCOMET Common JavaScript
+   HubOnTrade Common JavaScript
    Cross-Border E-Commerce Platform for Southeast Asian Markets
    ============================================================ */
 
