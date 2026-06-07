@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "HUBONTRADE | 全球跨境进出口电商一体化平台"
+    "title": "HubOnTrade | 全球跨境进出口电商一体化平台"
   },
   "nav": {
     "home": "首页",
@@ -19,7 +19,7 @@
       "badge": "全球进出口一体化平台",
       "title1": "无国界的电商,",
       "title2": "不设方向的限制",
-      "title3": "由 HUBONTRADE<br>来连接",
+      "title3": "由 HubOnTrade<br>来连接",
       "subtitle": "无论从哪里到哪里 — 全球进出口的所有环节都在一个平台",
       "ctaPrimary": "免费开始",
       "ctaSecondary": "查看服务"
@@ -30,7 +30,7 @@
       "title3": "一次上传，全渠道铺货",
       "ctaPrimary": "免费试用",
       "ctaSecondary": "申请 1:1 咨询",
-      "trust": "众多卖家信赖 HUBONTRADE",
+      "trust": "众多卖家信赖 HubOnTrade",
       "stat1": "对接渠道",
       "stat2": "运行稳定率",
       "stat3": "工作量减少"
@@ -61,11 +61,22 @@
       "subtitle": "韩国卖家、海外卖家 —<br>任何人都能使用的唯一全球进出口平台",
       "ctaPrimary": "立即开始",
       "ctaSecondary": "服务介绍"
+    },
+    "s6": {
+      "badge": "HubOnTrade，国内外销售一站式",
+      "title1": "代购，",
+      "title2": "不再复杂",
+      "title3": "用 HubOnTrade 轻松搞定",
+      "subtitle": "从商品采集到商城上架，<br>以用户为中心的 AI 代购平台",
+      "ctaPrimary": "免费注册",
+      "ctaSecondary": "浏览服务",
+      "labelOverseas": "海外采集源",
+      "labelDomestic": "国内销售渠道"
     }
   },
   "sec": {
     "why": {
-      "badge": "选择 HUBONTRADE 的理由",
+      "badge": "选择 HubOnTrade 的理由",
       "title": "其他平台没有的能力",
       "desc": "用差异化功能为全球销售设立新标准",
       "c1": {
@@ -100,7 +111,7 @@
     },
     "comparison": {
       "badge": "对比",
-      "title": "HUBONTRADE 与同行对比",
+      "title": "HubOnTrade 与同行对比",
       "desc": "核心差异化功能对比"
     },
     "features": {
@@ -170,7 +181,7 @@
     }
   },
   "cta": {
-    "title": "立即免费开始 HUBONTRADE",
+    "title": "立即免费开始 HubOnTrade",
     "subtitle": "30 天免费体验所有功能",
     "primary": "免费试用",
     "secondary": "申请 1:1 咨询"
@@ -178,7 +189,7 @@
   "pages": {
     "solution": {
       "heroTitle": "出口、进口、选品 — 一站式平台",
-      "heroDesc": "使用 HUBONTRADE 一体化解决方案搞定全球电商的每一个环节",
+      "heroDesc": "使用 HubOnTrade 一体化解决方案搞定全球电商的每一个环节",
       "core": {
         "title": "三大核心解决方案",
         "c1": {
@@ -263,11 +274,11 @@
         }
       },
       "diff": {
-        "title": "竞争对手没有的 HUBONTRADE 独特优势",
+        "title": "竞争对手没有的 HubOnTrade 独特优势",
         "badge": "竞争对手皆无",
         "c1": {
           "title": "政府出口券执行机构",
-          "desc": "作为官方政府出口券执行机构,可使用券预算购买 HUBONTRADE 服务。没有竞争对手具备此资格。"
+          "desc": "作为官方政府出口券执行机构,可使用券预算购买 HubOnTrade 服务。没有竞争对手具备此资格。"
         },
         "c2": {
           "title": "Coupang IOR (进口商)",
@@ -298,9 +309,9 @@
         }
       },
       "comp": {
-        "title": "HUBONTRADE 独有优势",
+        "title": "HubOnTrade 独有优势",
         "colFeature": "功能项",
-        "colOurs": "HUBONTRADE(本公司)"
+        "colOurs": "HubOnTrade(本公司)"
       },
       "ctaBox": {
         "title": "您需要哪种解决方案?",
@@ -310,7 +321,7 @@
     },
     "features": {
       "heroTitle": "为卖家打造的强大功能",
-      "heroDesc": "让复杂的全球销售变得简单的 HUBONTRADE 核心功能",
+      "heroDesc": "让复杂的全球销售变得简单的 HubOnTrade 核心功能",
       "sec1": {
         "title": "核心功能"
       },
@@ -432,20 +443,20 @@
         }
       },
       "comp": {
-        "title": "使用 HUBONTRADE 后,这些都会改变",
+        "title": "使用 HubOnTrade 后,这些都会改变",
         "col1": "工作",
         "col2": "自行运营",
-        "col3": "HUBONTRADE"
+        "col3": "HubOnTrade"
       },
       "ctaBox": {
         "title": "免费体验全部功能",
-        "desc": "通过 14 天免费试用体验 HUBONTRADE 所有功能",
+        "desc": "通过 14 天免费试用体验 HubOnTrade 所有功能",
         "btn": "开始免费试用"
       }
     },
     "service": {
       "heroTitle": "我们<span class=\"gradient-text\">代办全球销售</span>的一切",
-      "heroDesc": "了解 HUBONTRADE 提供的专业服务",
+      "heroDesc": "了解 HubOnTrade 提供的专业服务",
       "cats": {
         "title": "专业服务领域",
         "c1": {
@@ -523,7 +534,7 @@
     },
     "market": {
       "heroTitle": "从本土到全球，<span class=\"gradient-text\">主要市场全对接</span>",
-      "heroDesc": "用一个 HUBONTRADE 统一管理国内外市场",
+      "heroDesc": "用一个 HubOnTrade 统一管理国内外市场",
       "s1": {
         "title": "可对接的<span class=\"gradient-text\">市场</span>",
         "korea": "国内市场",
@@ -573,7 +584,7 @@
         "colLive": "直播电商"
       },
       "excl": {
-        "title": "仅 HUBONTRADE 支持的<span class=\"gradient-text\">对接</span>",
+        "title": "仅 HubOnTrade 支持的<span class=\"gradient-text\">对接</span>",
         "c1": {
           "title": "Coupang IOR (代理进口商)",
           "desc": "海外企业无需韩国法人即可在 Coupang 直接销售 — 竞争对手未提供的独家服务。"
@@ -600,7 +611,7 @@
         "apiDesc": "支持自定义 API 对接"
       },
       "ctaBox": {
-        "title": "将您正在使用的市场<span class=\"gradient-text\">接入 HUBONTRADE</span>",
+        "title": "将您正在使用的市场<span class=\"gradient-text\">接入 HubOnTrade</span>",
         "desc": "通过免费试用亲身体验市场对接",
         "btn1": "开始对接",
         "btn2": "1:1 咨询"
@@ -655,7 +666,7 @@
     },
     "case": {
       "heroTitle": "成功案例",
-      "heroDesc": "与 HUBONTRADE 一起开拓全球市场的品牌故事",
+      "heroDesc": "与 HubOnTrade 一起开拓全球市场的品牌故事",
       "stats": {
         "partners": "合作品牌",
         "growth": "平均销售增长",
@@ -669,7 +680,7 @@
         "solution": "Shopee 入驻 + 本地网红营销",
         "r1": "6 个月内月销售达 3 亿韩元",
         "r2": "Shopee 美妆类目 Top 10",
-        "quote": "\"多亏 HUBONTRADE,复杂的海外拓展变得出奇地简单。\""
+        "quote": "\"多亏 HubOnTrade,复杂的海外拓展变得出奇地简单。\""
       },
       "c2": {
         "industry": "保健食品",
@@ -679,7 +690,7 @@
         "solution": "本地认证支持 + Tokopedia 入驻 + 直播电商",
         "r1": "清真认证缩短 3 个月",
         "r2": "1 年内销售增长 500%",
-        "quote": "\"复杂的认证过程都由 HUBONTRADE 帮我们解决了。\""
+        "quote": "\"复杂的认证过程都由 HubOnTrade 帮我们解决了。\""
       },
       "c3": {
         "industry": "女装",
@@ -689,7 +700,7 @@
         "solution": "制作本地尺码指南 + TikTok Shop 直播",
         "r1": "TikTok 单场直播销售 5,000 万韩元",
         "r2": "退货率下降 80%",
-        "quote": "\"切身感受到直播电商的威力。HUBONTRADE 团队最棒!\""
+        "quote": "\"切身感受到直播电商的威力。HubOnTrade 团队最棒!\""
       },
       "c4": {
         "industry": "智能家电",
@@ -699,14 +710,14 @@
         "solution": "3 国同步入驻 + 对接本地售后伙伴",
         "r1": "成功同步进入 3 国市场",
         "r2": "年销售达 50 亿韩元",
-        "quote": "\"没有 HUBONTRADE,3 国同步进入是不可能的。\""
+        "quote": "\"没有 HubOnTrade,3 国同步进入是不可能的。\""
       },
       "partners": {
         "title": "合作伙伴"
       },
       "ctaBox": {
         "title": "成为下一个成功案例",
-        "desc": "与 HUBONTRADE 一起开拓东南亚市场",
+        "desc": "与 HubOnTrade 一起开拓东南亚市场",
         "btn": "获取免费咨询"
       }
     },
@@ -948,8 +959,8 @@
         "title": "注意知识产权侵权"
       },
       "ctaBox": {
-        "title": "从 1688 选品到 Coupang 销售,<br>HUBONTRADE 与您同行",
-        "desc": "体验 HUBONTRADE — 一站式提供选品、物流、上架、客服",
+        "title": "从 1688 选品到 Coupang 销售,<br>HubOnTrade 与您同行",
+        "desc": "体验 HubOnTrade — 一站式提供选品、物流、上架、客服",
         "btn1": "申请免费咨询",
         "btn2": "查看服务"
       }
