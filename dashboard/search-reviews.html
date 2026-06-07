@@ -780,7 +780,7 @@
     <script src="js/data-sync.js"></script>
     <script src="js/supabase-client.js"></script>
     <script>
-    var SCRAPER_KEY='da10cdf2d03db3175bc2a8fdb9947218';
+    var SCRAPER_KEY=''/* 🔴 ScraperAPI 키 노출 사고로 제거됨. 키 회전 후 Edge Function에서 사용 */;
     function quickKeyword(kw){document.getElementById('manualSearchInput').value=kw;manualSearch()}
     async function manualSearch(){
         var kw=document.getElementById('manualSearchInput').value.trim();
