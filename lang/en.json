@@ -484,12 +484,6 @@
           "desc": "Per-platform margin, fee, and logistics cost reports"
         }
       },
-      "comp": {
-        "title": "Here's What Changes With HubOnTrade",
-        "col1": "Task",
-        "col2": "DIY Operation",
-        "col3": "HubOnTrade"
-      },
       "ctaBox": {
         "title": "Try Every Feature Free",
         "desc": "Experience every HubOnTrade feature with a 14-day free trial",
@@ -1017,9 +1011,6 @@
     "expectedProfit": "Est. Net Profit",
     "countries": "Countries",
     "activeSellers": "Active Sellers",
-    "langSupport": "Languages",
-    "exportAuto": "Export Declaration Auto",
-    "foreignSell": "Foreign Cos. in Korea",
-    "multiCs": "Multilingual CS Service"
+    "langSupport": "Languages"
   }
 }

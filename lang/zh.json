@@ -484,12 +484,6 @@
           "desc": "各平台利润、手续费、物流费详细分析报表"
         }
       },
-      "comp": {
-        "title": "使用 HubOnTrade 后,这些都会改变",
-        "col1": "工作",
-        "col2": "自行运营",
-        "col3": "HubOnTrade"
-      },
       "ctaBox": {
         "title": "免费体验全部功能",
         "desc": "通过 14 天免费试用体验 HubOnTrade 所有功能",
@@ -1017,9 +1011,6 @@
     "expectedProfit": "预计净利润",
     "countries": "国家",
     "activeSellers": "活跃卖家",
-    "langSupport": "语言支持",
-    "exportAuto": "出口申报自动化",
-    "foreignSell": "海外企业韩国销售",
-    "multiCs": "多语言客服代理"
+    "langSupport": "语言支持"
   }
 }
