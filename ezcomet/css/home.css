@@ -136,6 +136,65 @@
     color: #ffffff;
 }
 
+/* --- HERO 플로우 비주얼 (해외 수집처 → HubOnTrade → 국내 판매처) --- */
+.hero-flow {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-2xl);
+}
+.hero-flow-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.hero-flow-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.55);
+}
+.hero-flow-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    max-width: 280px;
+}
+.hero-flow-chip {
+    padding: 5px 11px;
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+.hero-flow-hub {
+    padding: 12px 20px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, #6366f1, #3b82f6);
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 15px;
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
+    white-space: nowrap;
+}
+.hero-flow-arrow {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 20px;
+    font-weight: 700;
+}
+@media (max-width: 768px) {
+    .hero-flow { gap: var(--space-sm); margin-top: var(--space-xl); }
+    .hero-flow-group { width: 100%; }
+    .hero-flow-chips { max-width: none; }
+    .hero-flow-arrow { width: 100%; text-align: center; transform: rotate(90deg); }
+    .hero-flow-hub { align-self: center; }
+}
+
 /* --- SLIDER CONTROLS --- */
 .hero-slider-controls {
     position: absolute;
