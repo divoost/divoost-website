@@ -75,7 +75,7 @@
 
   /* Layout */
   --container-max: 1200px;
-  --header-height: 80px;
+  --header-height: 54px; /* 헤더 슬림화: 80→54 (로고 축소에 맞춰 하단 여백 축소) */
 
   /* Borders */
   --radius-sm: 6px;
@@ -251,7 +251,7 @@ p {
   height: 58px;
   width: auto;
 }
-.logo-img-header { height: 58px; }
+.logo-img-header { height: 37px; } /* 로고 약 37% 축소 (58→37) */
 .logo-img-footer { height: 72px; }
 
 .logo span {
@@ -296,11 +296,11 @@ body.lang-en .logo {
 @media (max-width: 1024px) {
   .logo { margin-right: 24px; }
   .logo-img { height: 44px; }
-  .logo-img-header { height: 44px; }
+  .logo-img-header { height: 28px; } /* 로고 약 37% 축소 (44→28) */
 }
 @media (max-width: 640px) {
   .logo-img { height: 36px; }
-  .logo-img-header { height: 36px; }
+  .logo-img-header { height: 23px; } /* 로고 약 37% 축소 (36→23) */
 }
 
 .nav-link {
@@ -875,7 +875,7 @@ body.lang-en .logo {
    ============================================================ */
 @media (max-width: 1024px) {
   :root {
-    --header-height: 64px;
+    --header-height: 48px; /* 헤더 슬림화: 64→48 */
   }
 
   .section {
