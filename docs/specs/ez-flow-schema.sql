@@ -320,6 +320,60 @@ create table if not exists notifications (
 
 
 -- ----------------------------------------------------------------------------
+-- 7.5 확장 테이블 (기획서 deferred 항목 정식 편입 — 2026-06-07 마스터 결정)
+--   §8.9 files / §9.4 ai_usage_logs / §11 notification_prefs / §8.1 user_dashboard_layout
+-- ----------------------------------------------------------------------------
+
+-- 프로젝트 파일 + 버전 관리 (§8.9). 동일 storage_path 신규 업로드 시 version 증가
+create table if not exists files (
+  id           uuid primary key default gen_random_uuid(),
+  workspace_id uuid not null references workspaces(id) on delete cascade,
+  project_id   uuid references projects(id) on delete cascade,
+  name         text not null,
+  storage_path text not null,
+  mime         text,
+  size_bytes   bigint,
+  version      int not null default 1,
+  uploaded_by  uuid references users(id),
+  created_at   timestamptz not null default now()
+);
+
+-- AI 사용 로그 (§9.4 원가/마진). 삽입은 Edge Function(service_role)만 — 클라 차단
+create table if not exists ai_usage_logs (
+  id                uuid primary key default gen_random_uuid(),
+  workspace_id      uuid not null references workspaces(id) on delete cascade,
+  user_id           uuid references users(id) on delete set null,
+  feature           text not null,                  -- project_design/assistant/meeting_stt
+  provider          text not null,                  -- claude/openai (ADR-007)
+  model             text not null,
+  prompt_tokens     int not null default 0,
+  completion_tokens int not null default 0,
+  cost_usd          numeric(12,6) not null default 0,
+  created_at        timestamptz not null default now()
+);
+
+-- 알림 개인 설정 (§11). 사용자 × 워크스페이스 단위
+create table if not exists notification_prefs (
+  user_id       uuid not null references users(id) on delete cascade,
+  workspace_id  uuid not null references workspaces(id) on delete cascade,
+  channel_email boolean not null default true,
+  channel_push  boolean not null default true,
+  prefs         jsonb not null default '{}',        -- 타입별 on/off·빈도 (§17 NOTIF_TYPE)
+  updated_at    timestamptz not null default now(),
+  primary key (user_id, workspace_id)
+);
+
+-- 대시보드 위젯 배치 (§8.1). 사용자 × 워크스페이스 단위, jsonb 레이아웃
+create table if not exists user_dashboard_layout (
+  user_id      uuid not null references users(id) on delete cascade,
+  workspace_id uuid not null references workspaces(id) on delete cascade,
+  layout       jsonb not null default '[]',         -- 위젯 배치 (react-grid-layout 등)
+  updated_at   timestamptz not null default now(),
+  primary key (user_id, workspace_id)
+);
+
+
+-- ----------------------------------------------------------------------------
 -- 8. updated_at 자동 갱신 트리거 (updated_at 컬럼 보유 테이블)
 -- ----------------------------------------------------------------------------
 create or replace function set_updated_at() returns trigger
@@ -335,6 +389,16 @@ create trigger trg_tasks_updated_at
   before update on tasks
   for each row execute function set_updated_at();
 
+drop trigger if exists trg_notif_prefs_updated_at on notification_prefs;
+create trigger trg_notif_prefs_updated_at
+  before update on notification_prefs
+  for each row execute function set_updated_at();
+
+drop trigger if exists trg_dash_layout_updated_at on user_dashboard_layout;
+create trigger trg_dash_layout_updated_at
+  before update on user_dashboard_layout
+  for each row execute function set_updated_at();
+
 
 -- ----------------------------------------------------------------------------
 -- 9. 인덱스 전략 (기획서 §5.3 — 성능 NFR 1초/2초)
@@ -346,6 +410,9 @@ create index if not exists idx_messages_channel_time on messages (channel_id, cr
 create index if not exists idx_notifications_user    on notifications (user_id, read_at, created_at desc); -- 알림 센터
 create index if not exists idx_task_assignees_user   on task_assignees (user_id);         -- "내 업무"
 create index if not exists idx_records_values_gin    on records using gin (values);        -- jsonb 필드 검색
+create index if not exists idx_files_project        on files (project_id);                 -- 프로젝트 파일 트리
+create index if not exists idx_ai_usage_ws_time     on ai_usage_logs (workspace_id, created_at desc); -- 사용량/원가 집계
+create index if not exists idx_ai_usage_user        on ai_usage_logs (user_id);            -- 유저별 사용량
 
 
 -- ============================================================================
@@ -427,6 +494,10 @@ alter table events            enable row level security;
 alter table approvals         enable row level security;
 alter table approval_steps    enable row level security;
 alter table notifications     enable row level security;
+alter table files                 enable row level security;
+alter table ai_usage_logs         enable row level security;
+alter table notification_prefs    enable row level security;
+alter table user_dashboard_layout enable row level security;
 
 
 -- 10.3 정책 (기획서 §6.1 RBAC 매트릭스 + §6.2 상속/오버라이드) ---------------
@@ -782,6 +853,37 @@ create policy notif_update on notifications for update
 -- INSERT는 Edge Function(service role)이 RLS 우회로 수행 (notify-dispatch, §7.2)
 -- → 클라이언트 직접 insert 정책 없음 = 차단(default deny)
 
+-- files: 프로젝트 접근자 조회(프로젝트 없으면 ws 멤버), 업로더/내부 멤버 관리
+drop policy if exists files_select on files;
+create policy files_select on files for select
+  using ( case when project_id is null then is_ws_member(workspace_id)
+               else can_access_project(project_id) end );
+drop policy if exists files_insert on files;
+create policy files_insert on files for insert
+  with check ( uploaded_by = auth.uid()
+               and case when project_id is null then is_ws_member(workspace_id)
+                        else can_access_project(project_id) end );
+drop policy if exists files_delete on files;
+create policy files_delete on files for delete
+  using ( uploaded_by = auth.uid() or is_ws_member(workspace_id) );
+
+-- ai_usage_logs: 본인 사용량 또는 ws 관리자(owner/admin) 조회. 삽입은 service_role만(정책 없음)
+drop policy if exists ai_usage_select on ai_usage_logs;
+create policy ai_usage_select on ai_usage_logs for select
+  using ( user_id = auth.uid() or ws_role(workspace_id) in ('owner','admin') );
+
+-- notification_prefs: 본인 것만 (CRUD)
+drop policy if exists notif_prefs_all on notification_prefs;
+create policy notif_prefs_all on notification_prefs for all
+  using ( user_id = auth.uid() )
+  with check ( user_id = auth.uid() and is_ws_member(workspace_id) );
+
+-- user_dashboard_layout: 본인 것만 (CRUD)
+drop policy if exists dash_layout_all on user_dashboard_layout;
+create policy dash_layout_all on user_dashboard_layout for all
+  using ( user_id = auth.uid() )
+  with check ( user_id = auth.uid() and is_ws_member(workspace_id) );
+
 
 -- ============================================================================
 -- 11. 부록 — 상수 참조 (기획서 §17, CLAUDE.md 규칙3 매직넘버 금지)
@@ -795,10 +897,8 @@ create policy notif_update on notifications for update
 --   TZ_PRESETS     = ['Asia/Seoul','Asia/Shanghai','Asia/Ho_Chi_Minh',
 --                     'Asia/Singapore','Asia/Kuala_Lumpur','Asia/Manila']
 --
--- 추후 ez-flow-기획서.md §16 ADR 확정 시 추가 검토 항목 (이 스키마 미포함):
---   - notification_prefs (§11 알림 개인 설정)
---   - ai_usage_logs (§9.4 AI 원가/마진 — 기존 billing 자산 재활용)
---   - user_dashboard_layout (§8.1 위젯 배치 jsonb)
---   - files 버전 관리 (§8.9 — 현재 attachments로 커버, 버전 정책 미확정)
---   → 위 항목은 기획서 §5.2 확정 DDL 범위 밖이라 의도적으로 제외 (착수 전 결정 필요)
+-- deferred 항목 정식 편입 완료 (2026-06-07 마스터 결정, §7.5):
+--   ✅ files (§8.9 버전관리) / ai_usage_logs (§9.4) /
+--      notification_prefs (§11) / user_dashboard_layout (§8.1)
+--   → 모두 RLS 적용. 총 테이블 29개.
 -- ============================================================================
