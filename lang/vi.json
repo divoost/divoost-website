@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "HUBONTRADE | Nền tảng Xuất nhập khẩu Xuyên biên giới Toàn cầu"
+    "title": "HubOnTrade | Nền tảng Xuất nhập khẩu Xuyên biên giới Toàn cầu"
   },
   "nav": {
     "home": "Trang chủ",
@@ -19,7 +19,7 @@
       "badge": "NỀN TẢNG XUẤT NHẬP KHẨU TOÀN CẦU",
       "title1": "Thương mại không biên giới,",
       "title2": "Không giới hạn hướng đi",
-      "title3": "HUBONTRADE<br>kết nối tất cả",
+      "title3": "HubOnTrade<br>kết nối tất cả",
       "subtitle": "Từ bất cứ đâu đến bất cứ đâu — toàn bộ quy trình xuất nhập khẩu toàn cầu trên một nền tảng",
       "ctaPrimary": "Bắt đầu miễn phí",
       "ctaSecondary": "Xem dịch vụ"
@@ -30,7 +30,7 @@
       "title3": "Đăng sản phẩm một lần — bán khắp nơi",
       "ctaPrimary": "Dùng thử miễn phí",
       "ctaSecondary": "Yêu cầu tư vấn 1:1",
-      "trust": "Hàng nghìn nhà bán tin chọn HUBONTRADE",
+      "trust": "Hàng nghìn nhà bán tin chọn HubOnTrade",
       "stat1": "Sàn liên kết",
       "stat2": "Tỷ lệ hoạt động",
       "stat3": "Giảm khối lượng việc"
@@ -63,10 +63,10 @@
       "ctaSecondary": "Giới thiệu dịch vụ"
     },
     "s6": {
-      "badge": "Mua hộ trọn gói cùng HUBONTRADE",
+      "badge": "Mua hộ trọn gói cùng HubOnTrade",
       "title1": "Dịch vụ mua hộ,",
       "title2": "không còn phức tạp",
-      "title3": "Đơn giản với HUBONTRADE",
+      "title3": "Đơn giản với HubOnTrade",
       "subtitle": "Từ thu thập sản phẩm đến đăng tải lên sàn,<br>nền tảng mua hộ ứng dụng AI lấy người dùng làm trung tâm",
       "ctaPrimary": "Đăng ký miễn phí",
       "ctaSecondary": "Khám phá dịch vụ",
@@ -76,7 +76,7 @@
   },
   "sec": {
     "why": {
-      "badge": "TẠI SAO CHỌN HUBONTRADE",
+      "badge": "TẠI SAO CHỌN HubOnTrade",
       "title": "Điều các nền tảng khác không có",
       "desc": "Tính năng khác biệt giúp thiết lập chuẩn mới cho bán hàng toàn cầu",
       "c1": {
@@ -111,7 +111,7 @@
     },
     "comparison": {
       "badge": "SO SÁNH",
-      "title": "HUBONTRADE vs đối thủ",
+      "title": "HubOnTrade vs đối thủ",
       "desc": "So sánh tính năng cốt lõi"
     },
     "features": {
@@ -181,7 +181,7 @@
     }
   },
   "cta": {
-    "title": "Bắt đầu HUBONTRADE miễn phí ngay hôm nay",
+    "title": "Bắt đầu HubOnTrade miễn phí ngay hôm nay",
     "subtitle": "Trải nghiệm tất cả tính năng với gói dùng thử 30 ngày",
     "primary": "Dùng thử miễn phí",
     "secondary": "Yêu cầu tư vấn 1:1"
@@ -189,7 +189,7 @@
   "pages": {
     "solution": {
       "heroTitle": "Xuất khẩu, Nhập khẩu, Sourcing — Trên một nền tảng",
-      "heroDesc": "Giải quyết toàn bộ quy trình thương mại toàn cầu với giải pháp tích hợp HUBONTRADE",
+      "heroDesc": "Giải quyết toàn bộ quy trình thương mại toàn cầu với giải pháp tích hợp HubOnTrade",
       "core": {
         "title": "Ba giải pháp cốt lõi",
         "c1": {
@@ -274,11 +274,11 @@
         }
       },
       "diff": {
-        "title": "Điểm khác biệt chỉ HUBONTRADE có",
+        "title": "Điểm khác biệt chỉ HubOnTrade có",
         "badge": "Không đối thủ nào có",
         "c1": {
           "title": "Đơn vị thực hiện Voucher Xuất khẩu Chính phủ",
-          "desc": "Đơn vị chính thức thực hiện Voucher Xuất khẩu của Chính phủ — sử dụng ngân sách voucher để dùng HUBONTRADE. Không đối thủ nào có tư cách này."
+          "desc": "Đơn vị chính thức thực hiện Voucher Xuất khẩu của Chính phủ — sử dụng ngân sách voucher để dùng HubOnTrade. Không đối thủ nào có tư cách này."
         },
         "c2": {
           "title": "Coupang IOR (Importer of Record)",
@@ -309,9 +309,9 @@
         }
       },
       "comp": {
-        "title": "Chỉ có ở HUBONTRADE",
+        "title": "Chỉ có ở HubOnTrade",
         "colFeature": "Hạng mục",
-        "colOurs": "HUBONTRADE (chúng tôi)"
+        "colOurs": "HubOnTrade (chúng tôi)"
       },
       "ctaBox": {
         "title": "Bạn cần giải pháp nào?",
@@ -443,20 +443,20 @@
         }
       },
       "comp": {
-        "title": "Khi dùng HUBONTRADE, đây là những gì thay đổi",
+        "title": "Khi dùng HubOnTrade, đây là những gì thay đổi",
         "col1": "Công việc",
         "col2": "Tự vận hành",
-        "col3": "HUBONTRADE"
+        "col3": "HubOnTrade"
       },
       "ctaBox": {
         "title": "Trải nghiệm mọi tính năng miễn phí",
-        "desc": "Trải nghiệm mọi tính năng HUBONTRADE với 14 ngày dùng thử miễn phí",
+        "desc": "Trải nghiệm mọi tính năng HubOnTrade với 14 ngày dùng thử miễn phí",
         "btn": "Bắt đầu dùng thử miễn phí"
       }
     },
     "service": {
       "heroTitle": "Chúng tôi <span class=\"gradient-text\">đảm nhận mọi việc</span> trong bán hàng toàn cầu",
-      "heroDesc": "Khám phá các dịch vụ chuyên nghiệp HUBONTRADE cung cấp",
+      "heroDesc": "Khám phá các dịch vụ chuyên nghiệp HubOnTrade cung cấp",
       "cats": {
         "title": "Lĩnh vực dịch vụ chuyên môn",
         "c1": {
@@ -534,7 +534,7 @@
     },
     "market": {
       "heroTitle": "Từ trong nước đến toàn cầu, <span class=\"gradient-text\">tích hợp các sàn lớn</span>",
-      "heroDesc": "Quản lý sàn trong nước & quốc tế chỉ với HUBONTRADE",
+      "heroDesc": "Quản lý sàn trong nước & quốc tế chỉ với HubOnTrade",
       "s1": {
         "title": "<span class=\"gradient-text\">Sàn</span> được hỗ trợ",
         "korea": "Sàn nội địa",
@@ -584,7 +584,7 @@
         "colLive": "Live commerce"
       },
       "excl": {
-        "title": "<span class=\"gradient-text\">Tích hợp</span> chỉ có ở HUBONTRADE",
+        "title": "<span class=\"gradient-text\">Tích hợp</span> chỉ có ở HubOnTrade",
         "c1": {
           "title": "Coupang IOR (Đại lý nhập khẩu)",
           "desc": "Doanh nghiệp nước ngoài bán trực tiếp trên Coupang mà không cần pháp nhân Hàn Quốc — dịch vụ độc quyền không đối thủ nào có."
@@ -611,7 +611,7 @@
         "apiDesc": "Hỗ trợ tích hợp API tùy chỉnh"
       },
       "ctaBox": {
-        "title": "Kết nối sàn của bạn với <span class=\"gradient-text\">HUBONTRADE</span>",
+        "title": "Kết nối sàn của bạn với <span class=\"gradient-text\">HubOnTrade</span>",
         "desc": "Trải nghiệm tích hợp sàn miễn phí",
         "btn1": "Bắt đầu tích hợp",
         "btn2": "Tư vấn 1:1"
@@ -666,7 +666,7 @@
     },
     "case": {
       "heroTitle": "Câu chuyện thành công",
-      "heroDesc": "Câu chuyện về các thương hiệu phát triển thị trường toàn cầu cùng HUBONTRADE",
+      "heroDesc": "Câu chuyện về các thương hiệu phát triển thị trường toàn cầu cùng HubOnTrade",
       "stats": {
         "partners": "Thương hiệu đối tác",
         "growth": "Tăng trưởng doanh số trung bình",
@@ -680,7 +680,7 @@
         "solution": "Onboard Shopee + marketing influencer bản địa",
         "r1": "Đạt 300 triệu KRW doanh số/tháng trong 6 tháng",
         "r2": "Top 10 mục Beauty trên Shopee",
-        "quote": "\"Nhờ HUBONTRADE, việc mở rộng ra nước ngoài phức tạp trở nên dễ dàng đáng kinh ngạc.\""
+        "quote": "\"Nhờ HubOnTrade, việc mở rộng ra nước ngoài phức tạp trở nên dễ dàng đáng kinh ngạc.\""
       },
       "c2": {
         "industry": "Thực phẩm chức năng",
@@ -690,7 +690,7 @@
         "solution": "Hỗ trợ chứng nhận bản địa + onboard Tokopedia + live commerce",
         "r1": "Rút ngắn 3 tháng cấp chứng nhận Halal",
         "r2": "Doanh số tăng 500% trong 1 năm",
-        "quote": "\"HUBONTRADE đã giải quyết toàn bộ quy trình chứng nhận phức tạp.\""
+        "quote": "\"HubOnTrade đã giải quyết toàn bộ quy trình chứng nhận phức tạp.\""
       },
       "c3": {
         "industry": "Thời trang nữ",
@@ -700,7 +700,7 @@
         "solution": "Xây hướng dẫn size bản địa + live TikTok Shop",
         "r1": "50 triệu KRW/buổi live TikTok",
         "r2": "Tỷ lệ hoàn hàng giảm 80%",
-        "quote": "\"Cảm nhận rõ sức mạnh của live commerce. Đội ngũ HUBONTRADE là tuyệt nhất.\""
+        "quote": "\"Cảm nhận rõ sức mạnh của live commerce. Đội ngũ HubOnTrade là tuyệt nhất.\""
       },
       "c4": {
         "industry": "Đồ gia dụng thông minh",
@@ -710,14 +710,14 @@
         "solution": "Onboard 3 nước đồng thời + kết nối đối tác hậu mãi bản địa",
         "r1": "Vào thành công 3 thị trường cùng lúc",
         "r2": "Đạt 5 tỷ KRW doanh số năm",
-        "quote": "\"Vào 3 thị trường cùng lúc sẽ là bất khả thi nếu không có HUBONTRADE.\""
+        "quote": "\"Vào 3 thị trường cùng lúc sẽ là bất khả thi nếu không có HubOnTrade.\""
       },
       "partners": {
         "title": "Đối tác của chúng tôi"
       },
       "ctaBox": {
         "title": "Trở thành câu chuyện thành công tiếp theo",
-        "desc": "Mở thị trường Đông Nam Á cùng HUBONTRADE",
+        "desc": "Mở thị trường Đông Nam Á cùng HubOnTrade",
         "btn": "Nhận tư vấn miễn phí"
       }
     },
@@ -959,8 +959,8 @@
         "title": "Cẩn trọng vi phạm sở hữu trí tuệ"
       },
       "ctaBox": {
-        "title": "Từ sourcing 1688 đến bán Coupang,<br>HUBONTRADE đồng hành cùng bạn",
-        "desc": "Trải nghiệm HUBONTRADE — hỗ trợ một cửa sourcing, logistics, đăng sản phẩm và CS",
+        "title": "Từ sourcing 1688 đến bán Coupang,<br>HubOnTrade đồng hành cùng bạn",
+        "desc": "Trải nghiệm HubOnTrade — hỗ trợ một cửa sourcing, logistics, đăng sản phẩm và CS",
         "btn1": "Yêu cầu tư vấn miễn phí",
         "btn2": "Xem dịch vụ"
       }

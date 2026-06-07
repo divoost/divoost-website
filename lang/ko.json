@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "HUBONTRADE | 글로벌 수출입 크로스보더 이커머스 플랫폼"
+    "title": "HubOnTrade | 글로벌 수출입 크로스보더 이커머스 플랫폼"
   },
   "nav": {
     "home": "홈",
@@ -19,7 +19,7 @@
       "badge": "글로벌 수출입 올인원 플랫폼",
       "title1": "국경 없는 커머스,",
       "title2": "방향 없는 제한",
-      "title3": "HUBONTRADE가<br>연결합니다",
+      "title3": "HubOnTrade가<br>연결합니다",
       "subtitle": "어디서든 어디로든, 글로벌 수출입 전 과정을 하나의 플랫폼에서",
       "ctaPrimary": "무료로 시작하기",
       "ctaSecondary": "서비스 둘러보기"
@@ -30,7 +30,7 @@
       "title3": "어디든 한 번에 상품등록",
       "ctaPrimary": "무료 체험 시작",
       "ctaSecondary": "1:1 상담 신청",
-      "trust": "이미 많은 셀러가 HUBONTRADE를 신뢰합니다",
+      "trust": "이미 많은 셀러가 HubOnTrade를 신뢰합니다",
       "stat1": "연동 마켓",
       "stat2": "가동률",
       "stat3": "업무 시간 절감"
@@ -63,10 +63,10 @@
       "ctaSecondary": "서비스 소개"
     },
     "s6": {
-      "badge": "HUBONTRADE와 함께, 국내외 판매를 한 번에!",
+      "badge": "HubOnTrade와 함께, 국내외 판매를 한 번에!",
       "title1": "구매대행, 더 이상",
       "title2": "복잡할 필요 없습니다",
-      "title3": "HUBONTRADE 하나로 간편하게!",
+      "title3": "HubOnTrade 하나로 간편하게!",
       "subtitle": "상품 수집부터 쇼핑몰 업로드까지,<br>사용자 중심 AI 기반 구매대행 플랫폼",
       "ctaPrimary": "무료로 가입하기",
       "ctaSecondary": "서비스 둘러보기",
@@ -76,9 +76,9 @@
   },
   "sec": {
     "why": {
-      "badge": "WHY HUBONTRADE",
+      "badge": "WHY HubOnTrade",
       "title": "다른 플랫폼에는 없는 것",
-      "desc": "HUBONTRADE만의 차별화된 기능으로 글로벌 셀링의 새로운 기준을 만듭니다",
+      "desc": "HubOnTrade만의 차별화된 기능으로 글로벌 셀링의 새로운 기준을 만듭니다",
       "c1": {
         "title": "글로벌 양방향 수출입",
         "desc": "한국→해외 수출뿐 아니라 해외→한국 수입, 중국→미국 등 모든 방향의 크로스보더 거래를 지원합니다"
@@ -111,7 +111,7 @@
     },
     "comparison": {
       "badge": "COMPARISON",
-      "title": "HUBONTRADE vs 경쟁사",
+      "title": "HubOnTrade vs 경쟁사",
       "desc": "핵심 차별 기능 비교"
     },
     "features": {
@@ -181,7 +181,7 @@
     }
   },
   "cta": {
-    "title": "지금 HUBONTRADE를 무료로 시작하세요",
+    "title": "지금 HubOnTrade를 무료로 시작하세요",
     "subtitle": "30일 무료 체험으로 모든 기능을 경험해보세요",
     "primary": "무료 체험 시작",
     "secondary": "1:1 상담 신청"
@@ -189,7 +189,7 @@
   "pages": {
     "solution": {
       "heroTitle": "수출도, 수입도, 소싱도 — 하나의 플랫폼에서",
-      "heroDesc": "HUBONTRADE의 통합 솔루션으로 글로벌 커머스의 모든 과정을 해결하세요",
+      "heroDesc": "HubOnTrade의 통합 솔루션으로 글로벌 커머스의 모든 과정을 해결하세요",
       "core": {
         "title": "3대 핵심 솔루션",
         "c1": {
@@ -274,11 +274,11 @@
         }
       },
       "diff": {
-        "title": "경쟁사에 없는, HUBONTRADE만의 차별화",
+        "title": "경쟁사에 없는, HubOnTrade만의 차별화",
         "badge": "경쟁사 전무",
         "c1": {
           "title": "정부 수출바우처 수행사",
-          "desc": "정부 수출바우처 공식 수행사로 지정되어 바우처 예산으로 HUBONTRADE 서비스를 이용할 수 있습니다. 경쟁사 중 수출바우처 수행사는 없습니다."
+          "desc": "정부 수출바우처 공식 수행사로 지정되어 바우처 예산으로 HubOnTrade 서비스를 이용할 수 있습니다. 경쟁사 중 수출바우처 수행사는 없습니다."
         },
         "c2": {
           "title": "쿠팡 IOR (Importer of Record)",
@@ -309,7 +309,7 @@
         }
       },
       "comp": {
-        "title": "HUBONTRADE만의 차별점",
+        "title": "HubOnTrade만의 차별점",
         "colFeature": "기능 항목",
         "colOurs": "드라핀(당사)"
       },
@@ -321,7 +321,7 @@
     },
     "features": {
       "heroTitle": "셀러를 위한 강력한 기능",
-      "heroDesc": "복잡한 글로벌 셀링을 간편하게 만드는 HUBONTRADE의 핵심 기능",
+      "heroDesc": "복잡한 글로벌 셀링을 간편하게 만드는 HubOnTrade의 핵심 기능",
       "sec1": {
         "title": "핵심 기능"
       },
@@ -443,20 +443,20 @@
         }
       },
       "comp": {
-        "title": "HUBONTRADE를 쓰면 이렇게 달라집니다",
+        "title": "HubOnTrade를 쓰면 이렇게 달라집니다",
         "col1": "업무",
         "col2": "직접 운영",
-        "col3": "HUBONTRADE"
+        "col3": "HubOnTrade"
       },
       "ctaBox": {
         "title": "모든 기능을 무료로 체험해보세요",
-        "desc": "14일 무료 체험으로 HUBONTRADE의 모든 기능을 경험하세요",
+        "desc": "14일 무료 체험으로 HubOnTrade의 모든 기능을 경험하세요",
         "btn": "무료 체험 시작"
       }
     },
     "service": {
       "heroTitle": "글로벌 셀링의 모든 것을 <span class=\"gradient-text\">대신합니다</span>",
-      "heroDesc": "HUBONTRADE가 제공하는 전문 서비스를 소개합니다",
+      "heroDesc": "HubOnTrade가 제공하는 전문 서비스를 소개합니다",
       "cats": {
         "title": "전문 서비스 영역",
         "c1": {
@@ -534,7 +534,7 @@
     },
     "market": {
       "heroTitle": "국내부터 글로벌까지, <span class=\"gradient-text\">주요 마켓플레이스 연동</span>",
-      "heroDesc": "HUBONTRADE 하나로 국내외 마켓플레이스를 통합 관리하세요",
+      "heroDesc": "HubOnTrade 하나로 국내외 마켓플레이스를 통합 관리하세요",
       "s1": {
         "title": "연동 가능한 <span class=\"gradient-text\">마켓플레이스</span>",
         "korea": "국내 마켓플레이스",
@@ -584,7 +584,7 @@
         "colLive": "라이브커머스"
       },
       "excl": {
-        "title": "HUBONTRADE에서만 가능한 <span class=\"gradient-text\">연동</span>",
+        "title": "HubOnTrade에서만 가능한 <span class=\"gradient-text\">연동</span>",
         "c1": {
           "title": "쿠팡 IOR (수입자 대행)",
           "desc": "해외 기업이 한국 법인 없이 쿠팡에 직접 판매 가능. 경쟁사에서는 지원하지 않는 독점 서비스"
@@ -611,7 +611,7 @@
         "apiDesc": "커스텀 API 연동 지원"
       },
       "ctaBox": {
-        "title": "사용 중인 마켓을 <span class=\"gradient-text\">HUBONTRADE에 연동하세요</span>",
+        "title": "사용 중인 마켓을 <span class=\"gradient-text\">HubOnTrade에 연동하세요</span>",
         "desc": "무료 체험으로 마켓 연동을 직접 경험해보세요",
         "btn1": "연동 시작하기",
         "btn2": "1:1 상담"
@@ -666,7 +666,7 @@
     },
     "case": {
       "heroTitle": "성공 사례",
-      "heroDesc": "HUBONTRADE과 함께 동남아 시장을 개척한 브랜드들의 이야기",
+      "heroDesc": "HubOnTrade과 함께 동남아 시장을 개척한 브랜드들의 이야기",
       "stats": {
         "partners": "파트너 브랜드",
         "growth": "평균 매출 성장",
@@ -680,7 +680,7 @@
         "solution": "Shopee 입점 + 현지 인플루언서 마케팅",
         "r1": "6개월 만에 월 매출 3억원 달성",
         "r2": "Shopee 뷰티 카테고리 Top 10",
-        "quote": "\"HUBONTRADE 덕분에 복잡한 해외 진출이 놀랍도록 쉬워졌습니다\""
+        "quote": "\"HubOnTrade 덕분에 복잡한 해외 진출이 놀랍도록 쉬워졌습니다\""
       },
       "c2": {
         "industry": "건강기능식품",
@@ -690,7 +690,7 @@
         "solution": "현지 인증 지원 + Tokopedia 입점 + 라이브커머스",
         "r1": "할랄 인증 취득 3개월 단축",
         "r2": "1년간 매출 500% 성장",
-        "quote": "\"복잡한 인증 과정을 HUBONTRADE가 모두 해결해주었습니다\""
+        "quote": "\"복잡한 인증 과정을 HubOnTrade가 모두 해결해주었습니다\""
       },
       "c3": {
         "industry": "여성 의류",
@@ -700,7 +700,7 @@
         "solution": "현지 사이즈 가이드 제작 + TikTok Shop 라이브",
         "r1": "TikTok 라이브 1회 매출 5천만원",
         "r2": "반품률 80% 감소",
-        "quote": "\"라이브커머스의 위력을 실감했습니다. HUBONTRADE 팀이 최고입니다\""
+        "quote": "\"라이브커머스의 위력을 실감했습니다. HubOnTrade 팀이 최고입니다\""
       },
       "c4": {
         "industry": "스마트 가전",
@@ -710,14 +710,14 @@
         "solution": "3개국 동시 입점 + 현지 A/S 파트너 연결",
         "r1": "3개국 시장 동시 진출 성공",
         "r2": "연 매출 50억원 달성",
-        "quote": "\"3개국 동시 진출은 HUBONTRADE 없이는 불가능했을 것입니다\""
+        "quote": "\"3개국 동시 진출은 HubOnTrade 없이는 불가능했을 것입니다\""
       },
       "partners": {
         "title": "함께하는 파트너사"
       },
       "ctaBox": {
         "title": "다음 성공 사례의 주인공이 되세요",
-        "desc": "HUBONTRADE과 함께 동남아 시장을 개척하세요",
+        "desc": "HubOnTrade과 함께 동남아 시장을 개척하세요",
         "btn": "무료 상담 받기"
       }
     },
@@ -959,8 +959,8 @@
         "title": "지식재산권 침해 주의"
       },
       "ctaBox": {
-        "title": "1688 소싱부터 쿠팡 판매까지<br>HUBONTRADE가 함께합니다",
-        "desc": "상품 소싱, 물류, 상품 등록, CS까지 원스톱으로 지원하는 HUBONTRADE 플랫폼을 경험하세요",
+        "title": "1688 소싱부터 쿠팡 판매까지<br>HubOnTrade가 함께합니다",
+        "desc": "상품 소싱, 물류, 상품 등록, CS까지 원스톱으로 지원하는 HubOnTrade 플랫폼을 경험하세요",
         "btn1": "무료 상담 신청",
         "btn2": "서비스 보기"
       }
