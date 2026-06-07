@@ -442,63 +442,119 @@
     color: rgba(255, 255, 255, 0.6);
 }
 
-.comparison-card {
-    max-width: 680px;
+/* 비교 표 (features → home 이전). 파란 섹션 위 흰 카드 + 다크 헤더 */
+.comparison-table-wrap {
+    max-width: 900px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: var(--radius-xl);
-    padding: var(--space-2xl) var(--space-xl);
-    backdrop-filter: blur(8px);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
-.comparison-checklist {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
+.comparison-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    background: var(--bg-card);
+}
+
+.comparison-table thead {
+    background: var(--bg-dark);
+}
+
+.comparison-table th {
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    padding: var(--space-lg) var(--space-xl);
+    text-align: center;
+    white-space: nowrap;
+}
+
+.comparison-header-item {
+    color: var(--text-light);
+    text-align: left !important;
+    width: 25%;
+}
+
+.comparison-header-ez {
+    color: var(--color-accent);
+    width: 37.5%;
+}
+
+.comparison-header-direct {
+    color: var(--text-muted);
+    width: 37.5%;
+}
+
+.comparison-table tbody tr {
+    border-bottom: 1px solid var(--border-light);
+    transition: background var(--transition-fast);
+}
+
+.comparison-table tbody tr:hover {
+    background: rgba(37, 99, 235, 0.03);
+}
+
+.comparison-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.comparison-table td {
+    padding: var(--space-md) var(--space-xl);
+    font-size: var(--text-sm);
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.comparison-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .comparison-item {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-md);
-    padding: var(--space-md) var(--space-lg);
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    transition: all 0.3s ease;
+    text-align: left !important;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
-.comparison-item:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(99, 102, 241, 0.3);
+.comparison-ez {
+    color: var(--text-secondary);
 }
 
-.comparison-check {
-    font-size: 22px;
-    line-height: 1.4;
-    flex-shrink: 0;
+.comparison-direct {
+    color: var(--text-muted);
 }
 
-.comparison-text {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-}
-
-.comparison-text strong {
-    font-size: var(--text-base);
+.check-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(16, 185, 129, 0.12);
+    color: var(--color-success);
+    font-size: var(--text-xs);
     font-weight: 700;
-    color: #ffffff;
+    margin-right: var(--space-sm);
+    vertical-align: middle;
 }
 
-.comparison-note {
-    font-size: var(--text-sm);
-    color: rgba(255, 255, 255, 0.5);
-    font-weight: 400;
+.x-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--color-danger);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    margin-right: var(--space-sm);
+    vertical-align: middle;
 }
 
 /* --- CTA BANNER SECTION --- */
@@ -644,8 +700,10 @@
     .platforms-row { flex-direction: column; align-items: stretch; }
     .platform-box { min-width: auto; }
 
-    .comparison-card { padding: var(--space-xl) var(--space-md); }
-    .comparison-item { padding: var(--space-sm) var(--space-md); }
+    .comparison-table th,
+    .comparison-table td { padding: var(--space-sm) var(--space-md); font-size: var(--text-xs); }
+    .check-icon,
+    .x-icon { width: 18px; height: 18px; font-size: 0.6rem; margin-right: 4px; }
 
     .features-preview-grid { grid-template-columns: 1fr; }
     .for-grid { grid-template-columns: 1fr; }

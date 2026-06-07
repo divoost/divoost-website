@@ -120,7 +120,45 @@
     "comparison": {
       "badge": "SO SÁNH",
       "title": "HubOnTrade vs đối thủ",
-      "desc": "So sánh tính năng cốt lõi"
+      "desc": "So sánh tính năng cốt lõi",
+      "col1": "Công việc",
+      "col2": "Tự vận hành",
+      "col3": "HubOnTrade",
+      "r1": {
+        "task": "Đăng sản phẩm",
+        "direct": "Đăng riêng trên từng sàn",
+        "ez": "Đăng tất cả cùng lúc"
+      },
+      "r2": {
+        "task": "Khai báo xuất khẩu",
+        "direct": "Tự viết, tự nộp",
+        "ez": "Tự động tạo & nộp"
+      },
+      "r3": {
+        "task": "Thông quan",
+        "direct": "Thuê riêng đại lý hải quan",
+        "ez": "Hệ thống xử lý tự động"
+      },
+      "r4": {
+        "task": "Quản lý kho",
+        "direct": "Quản lý thủ công bằng Excel",
+        "ez": "Đồng bộ tự động thời gian thực"
+      },
+      "r5": {
+        "task": "Tính biên lợi nhuận",
+        "direct": "Tính thủ công, hay sai sót",
+        "ez": "Tự động, cập nhật thời gian thực"
+      },
+      "r6": {
+        "task": "Quản lý vận chuyển",
+        "direct": "Trong nước · nước ngoài quản lý riêng",
+        "ez": "Hệ thống hợp nhất"
+      },
+      "r7": {
+        "task": "Tìm nguồn hàng",
+        "direct": "Tự đi tìm, tốn thời gian",
+        "ez": "Tìm trong DB, tự tính lợi nhuận"
+      }
     },
     "features": {
       "badge": "TÍNH NĂNG CHÍNH",
