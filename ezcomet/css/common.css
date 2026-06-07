@@ -233,16 +233,16 @@ p {
   align-items: center;
   gap: var(--space-sm);
   font-family: var(--font-heading);
-  font-size: 0.875rem;          /* 로고 30% 축소 (1.25rem → 0.875rem) */
+  font-size: 0.79rem;           /* 로고 축소: 1.25→0.875(30%)→0.79(추가 10%) */
   font-weight: 800;
   color: var(--color-primary);
   letter-spacing: -0.02em;
   flex-shrink: 0;
 }
 
-/* 로고가 이미지(<img>)인 경우도 30% 수준으로 축소 */
+/* 로고가 이미지(<img>)인 경우도 동일 비율로 축소 (36→32px, 추가 10%) */
 .logo img {
-  height: 36px;
+  height: 32px;
   width: auto;
 }
 
