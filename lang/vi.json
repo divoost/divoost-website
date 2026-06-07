@@ -104,8 +104,8 @@
         "desc": "AI gợi ý tiêu đề/từ khóa sản phẩm, ánh xạ danh mục, dịch đa ngôn ngữ, đề xuất giá"
       },
       "c7": {
-        "title": "Khám phá sản phẩm xu hướng",
-        "desc": "Phân tích sản phẩm bán chạy theo thời gian thực và từ khóa tăng trưởng trên các sàn trong và ngoài nước để nhanh chóng tìm hàng dễ bán"
+        "title": "Thông quan nhập khẩu UNI-PASS",
+        "desc": "Kết nối với UNI-PASS của Hải quan Hàn Quốc để tự động xử lý khai báo và thông quan nhập khẩu hàng nước ngoài — gồm cả thuế quan và VAT"
       },
       "c8": {
         "title": "Marketing trên sàn toàn cầu",
@@ -284,10 +284,6 @@
       "diff": {
         "title": "Điểm khác biệt chỉ HubOnTrade có",
         "badge": "Không đối thủ nào có",
-        "c1": {
-          "title": "Đơn vị thực hiện Voucher Xuất khẩu Chính phủ",
-          "desc": "Đơn vị chính thức thực hiện Voucher Xuất khẩu của Chính phủ — sử dụng ngân sách voucher để dùng HubOnTrade. Không đối thủ nào có tư cách này."
-        },
         "c2": {
           "title": "Coupang IOR (Importer of Record)",
           "desc": "Hỗ trợ doanh nghiệp nước ngoài bán trực tiếp trên Coupang Hàn Quốc thông qua dịch vụ IOR — từ đăng ký nhập khẩu, thông quan đến bán hàng."
