@@ -78,10 +78,19 @@ ALTER TABLE sourcing_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE crawl_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE platform_stats ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Public access products" ON products FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Public access sourcing_items" ON sourcing_items FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Public access crawl_logs" ON crawl_logs FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "Public access platform_stats" ON platform_stats FOR ALL USING (true) WITH CHECK (true);
+-- ⚠️ 익명(anon) 키는 조회/삽입/수정만 허용하고 DELETE는 차단한다.
+-- (FOR ALL USING(true) 는 익명 전체 삭제가 가능해 보안 위험 → 사용 금지)
+-- 데이터 삭제/정리는 service_role(Edge Function)로만 수행 (RLS 우회).
+DO $$
+DECLARE t text;
+BEGIN
+  FOREACH t IN ARRAY ARRAY['products','sourcing_items','crawl_logs','platform_stats'] LOOP
+    EXECUTE format('DROP POLICY IF EXISTS "Public access %1$s" ON public.%1$s', t);
+    EXECUTE format('CREATE POLICY "anon_select_%1$s" ON public.%1$s FOR SELECT USING (true)', t);
+    EXECUTE format('CREATE POLICY "anon_insert_%1$s" ON public.%1$s FOR INSERT WITH CHECK (true)', t);
+    EXECUTE format('CREATE POLICY "anon_update_%1$s" ON public.%1$s FOR UPDATE USING (true) WITH CHECK (true)', t);
+  END LOOP;
+END $$;
 
 -- 인덱스
 CREATE INDEX idx_products_platform ON products(platform);
