@@ -588,41 +588,53 @@
                 <p class="section-desc" data-i18n="sec.comparison.desc">핵심 차별 기능 비교</p>
             </div>
 
-            <div class="comparison-card">
-                <ul class="comparison-checklist">
-                    <li class="comparison-item">
-                        <span class="comparison-check" aria-hidden="true">✅</span>
-                        <div class="comparison-text">
-                            <strong data-i18n="x.exportAuto">수출신고 자동화</strong>
-                            <span class="comparison-note">6개 경쟁사 모두 미지원</span>
-                        </div>
-                    </li>
-                    <li class="comparison-item">
-                        <span class="comparison-check" aria-hidden="true">✅</span>
-                        <div class="comparison-text">
-                            <strong>쿠팡 IOR 지원</strong>
-                            <span class="comparison-note" data-i18n="x.foreignSell">해외기업 한국 판매</span>
-                        </div>
-                    </li>
-                    <li class="comparison-item">
-                        <span class="comparison-check" aria-hidden="true">✅</span>
-                        <div class="comparison-text">
-                            <strong>중진공/고비즈코리아 API 연동</strong>
-                        </div>
-                    </li>
-                    <li class="comparison-item">
-                        <span class="comparison-check" aria-hidden="true">✅</span>
-                        <div class="comparison-text">
-                            <strong>B2B 글로벌 상품 소싱</strong>
-                        </div>
-                    </li>
-                    <li class="comparison-item">
-                        <span class="comparison-check" aria-hidden="true">✅</span>
-                        <div class="comparison-text">
-                            <strong data-i18n="x.multiCs">다국어 CS 대행</strong>
-                        </div>
-                    </li>
-                </ul>
+            <div class="comparison-table-wrap fade-in-up">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th class="comparison-header-item" data-i18n="sec.comparison.col1">업무</th>
+                            <th class="comparison-header-direct" data-i18n="sec.comparison.col2">직접 운영</th>
+                            <th class="comparison-header-ez" data-i18n="sec.comparison.col3">HubOnTrade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="comparison-item" data-i18n="sec.comparison.r1.task">상품 등록</td>
+                            <td class="comparison-direct"><span class="x-icon">✕</span> <span data-i18n="sec.comparison.r1.direct">플랫폼마다 개별 등록</span></td>
+                            <td class="comparison-ez"><span class="check-icon">✓</span> <span data-i18n="sec.comparison.r1.ez">한 번에 전체 등록</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-item" data-i18n="sec.comparison.r2.task">수출 신고</td>
+                            <td class="comparison-direct"><span class="x-icon">✕</span> <span data-i18n="sec.comparison.r2.direct">수기 작성, 직접 제출</span></td>
+                            <td class="comparison-ez"><span class="check-icon">✓</span> <span data-i18n="sec.comparison.r2.ez">자동 생성 &amp; 제출</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-item" data-i18n="sec.comparison.r3.task">통관 처리</td>
+                            <td class="comparison-direct"><span class="x-icon">✕</span> <span data-i18n="sec.comparison.r3.direct">관세사 별도 의뢰</span></td>
+                            <td class="comparison-ez"><span class="check-icon">✓</span> <span data-i18n="sec.comparison.r3.ez">시스템 자동 처리</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-item" data-i18n="sec.comparison.r4.task">재고 관리</td>
+                            <td class="comparison-direct"><span class="x-icon">✕</span> <span data-i18n="sec.comparison.r4.direct">엑셀 수동 관리</span></td>
+                            <td class="comparison-ez"><span class="check-icon">✓</span> <span data-i18n="sec.comparison.r4.ez">실시간 자동 동기화</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-item" data-i18n="sec.comparison.r5.task">마진 계산</td>
+                            <td class="comparison-direct"><span class="x-icon">✕</span> <span data-i18n="sec.comparison.r5.direct">수동 계산, 오류 빈번</span></td>
+                            <td class="comparison-ez"><span class="check-icon">✓</span> <span data-i18n="sec.comparison.r5.ez">자동 계산, 실시간 반영</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-item" data-i18n="sec.comparison.r6.task">배송 관리</td>
+                            <td class="comparison-direct"><span class="x-icon">✕</span> <span data-i18n="sec.comparison.r6.direct">국내 · 해외 따로 관리</span></td>
+                            <td class="comparison-ez"><span class="check-icon">✓</span> <span data-i18n="sec.comparison.r6.ez">통합 시스템</span></td>
+                        </tr>
+                        <tr>
+                            <td class="comparison-item" data-i18n="sec.comparison.r7.task">소싱</td>
+                            <td class="comparison-direct"><span class="x-icon">✕</span> <span data-i18n="sec.comparison.r7.direct">직접 발품, 시간 소요</span></td>
+                            <td class="comparison-ez"><span class="check-icon">✓</span> <span data-i18n="sec.comparison.r7.ez">DB 검색, 마진 자동 계산</span></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>

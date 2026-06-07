@@ -120,7 +120,45 @@
     "comparison": {
       "badge": "COMPARISON",
       "title": "HubOnTrade vs Competitors",
-      "desc": "Key feature comparison"
+      "desc": "Key feature comparison",
+      "col1": "Task",
+      "col2": "Self-managed",
+      "col3": "HubOnTrade",
+      "r1": {
+        "task": "Product listing",
+        "direct": "Register on each platform separately",
+        "ez": "Register everywhere at once"
+      },
+      "r2": {
+        "task": "Export declaration",
+        "direct": "Manual writing, self-submission",
+        "ez": "Auto-generated & submitted"
+      },
+      "r3": {
+        "task": "Customs clearance",
+        "direct": "Separate broker request",
+        "ez": "Handled automatically by the system"
+      },
+      "r4": {
+        "task": "Inventory",
+        "direct": "Manual Excel management",
+        "ez": "Real-time auto-sync"
+      },
+      "r5": {
+        "task": "Margin calculation",
+        "direct": "Manual, error-prone",
+        "ez": "Automatic, real-time"
+      },
+      "r6": {
+        "task": "Shipping",
+        "direct": "Domestic & overseas managed separately",
+        "ez": "Unified system"
+      },
+      "r7": {
+        "task": "Sourcing",
+        "direct": "Legwork, time-consuming",
+        "ez": "DB search, auto margin calc"
+      }
     },
     "features": {
       "badge": "KEY FEATURES",
