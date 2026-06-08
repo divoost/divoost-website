@@ -208,27 +208,43 @@
   },
   "foryou": {
     "c1": {
-      "title": "Nhà bán Hàn Quốc",
-      "desc": "Doanh nghiệp và nhà bán cá nhân muốn bán hàng Hàn Quốc ra nước ngoài. Tự động hóa khai báo xuất khẩu và đăng sàn quốc tế.",
-      "t1": "TMĐT Hàn Quốc",
-      "t2": "Xuất khẩu ra nước ngoài",
-      "t3": "Mua hộ",
-      "t4": "Nhập khẩu"
+      "title": "Người bán Hàn Quốc",
+      "desc": "Doanh nghiệp & cá nhân Hàn Quốc bán trên sàn nội địa (Coupang, Naver, Gmarket…) và nước ngoài (Shopee, Amazon, TikTok Shop…)",
+      "t1": "Tự động khai báo xuất khẩu",
+      "t2": "Tìm nguồn",
+      "t3": "Đăng bán",
+      "t4": "Dịch thuật",
+      "t5": "Đơn hàng",
+      "t6": "CSKH",
+      "t7": "Quản lý kho",
+      "t8": "Marketing",
+      "t9": "Đăng SNS",
+      "t10": "Tìm người mua"
     },
     "c2": {
-      "title": "Nhà bán nước ngoài",
-      "desc": "Nhà bán nước ngoài bán hàng Hàn Quốc tại bản địa, hoặc tìm nguồn hàng toàn cầu. Hỗ trợ đa ngôn ngữ.",
-      "t1": "TMĐT toàn cầu",
-      "t2": "Xuất sang Hàn Quốc",
-      "t3": "Xuất khẩu toàn cầu",
-      "t4": "Nhập khẩu"
+      "title": "Người bán nước ngoài",
+      "desc": "Doanh nghiệp & cá nhân nước ngoài bán trên sàn toàn cầu (Shopee, Amazon, TikTok Shop…) và Hàn Quốc (Coupang, Naver, Gmarket…)",
+      "t1": "Tìm nguồn",
+      "t2": "Đăng bán",
+      "t3": "Dịch thuật",
+      "t4": "Đơn hàng",
+      "t5": "CSKH",
+      "t6": "Quản lý kho",
+      "t7": "Marketing",
+      "t8": "Đăng SNS",
+      "t9": "Tìm người mua"
     },
     "c3": {
-      "title": "Mua hộ · Bán hộ",
-      "desc": "Mua hộ và bán hộ tìm nguồn hàng toàn cầu không tồn kho. Hỗ trợ tự động hóa thông quan.",
+      "title": "Mua hộ",
+      "desc": "Khi nhập khẩu rồi bán trên sàn Hàn Quốc và nước ngoài",
       "t1": "Kho trung chuyển",
-      "t2": "Nhập về bán trên sàn Hàn Quốc",
-      "t3": "Nhập về bán trên sàn nước ngoài"
+      "t2": "Nhập về bán sàn Hàn Quốc",
+      "t3": "Nhập về bán sàn nước ngoài"
+    },
+    "c4": {
+      "title": "Cung cấp hàng",
+      "desc": "Khi doanh nghiệp Hàn Quốc hoặc nước ngoài cung cấp hàng theo mô hình B2B2C",
+      "t1": "Cung cấp hàng B2B2C"
     }
   },
   "cta": {
