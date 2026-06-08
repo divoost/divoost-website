@@ -209,15 +209,26 @@
   "foryou": {
     "c1": {
       "title": "Nhà bán Hàn Quốc",
-      "desc": "Doanh nghiệp và nhà bán cá nhân muốn bán hàng Hàn Quốc ra nước ngoài. Tự động hóa khai báo xuất khẩu và đăng sàn quốc tế."
+      "desc": "Doanh nghiệp và nhà bán cá nhân muốn bán hàng Hàn Quốc ra nước ngoài. Tự động hóa khai báo xuất khẩu và đăng sàn quốc tế.",
+      "t1": "TMĐT Hàn Quốc",
+      "t2": "Xuất khẩu ra nước ngoài",
+      "t3": "Mua hộ",
+      "t4": "Nhập khẩu"
     },
     "c2": {
       "title": "Nhà bán nước ngoài",
-      "desc": "Nhà bán nước ngoài bán hàng Hàn Quốc tại bản địa, hoặc tìm nguồn hàng toàn cầu. Hỗ trợ đa ngôn ngữ."
+      "desc": "Nhà bán nước ngoài bán hàng Hàn Quốc tại bản địa, hoặc tìm nguồn hàng toàn cầu. Hỗ trợ đa ngôn ngữ.",
+      "t1": "TMĐT toàn cầu",
+      "t2": "Xuất sang Hàn Quốc",
+      "t3": "Xuất khẩu toàn cầu",
+      "t4": "Nhập khẩu"
     },
     "c3": {
       "title": "Mua hộ · Bán hộ",
-      "desc": "Mua hộ và bán hộ tìm nguồn hàng toàn cầu không tồn kho. Hỗ trợ tự động hóa thông quan."
+      "desc": "Mua hộ và bán hộ tìm nguồn hàng toàn cầu không tồn kho. Hỗ trợ tự động hóa thông quan.",
+      "t1": "Kho trung chuyển",
+      "t2": "Nhập về bán trên sàn Hàn Quốc",
+      "t3": "Nhập về bán trên sàn nước ngoài"
     }
   },
   "cta": {
