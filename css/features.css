@@ -609,3 +609,22 @@
     font-size: var(--text-base);
   }
 }
+
+/* ============================================================
+   Key Features Overview (홈에서 이동) - 6장 요약 카드
+   ============================================================ */
+.section-features-preview { background: var(--bg-light); }
+
+.features-preview-grid .card {
+  text-align: center;
+}
+
+.features-preview-grid .card-icon {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 28px;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-xl);
+  background: rgba(37, 99, 235, 0.08);
+}
