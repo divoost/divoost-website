@@ -353,22 +353,6 @@
 .platform-global .platform-name { color: var(--color-accent-dark); }
 
 /* --- FEATURES PREVIEW SECTION --- */
-.section-features-preview { background: var(--bg-light); }
-
-.features-preview-grid .card {
-    text-align: center;
-}
-
-.features-preview-grid .card-icon {
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 28px;
-    width: 64px;
-    height: 64px;
-    border-radius: var(--radius-xl);
-    background: rgba(37, 99, 235, 0.08);
-}
-
 /* --- WHO IT'S FOR SECTION --- */
 .section-for { background: var(--bg-white); }
 
@@ -617,7 +601,6 @@
     .hero-arrow { width: 40px; height: 40px; font-size: 16px; }
     .hero-arrow-prev { left: 12px; }
     .hero-arrow-next { right: 12px; }
-    .features-preview-grid { grid-template-columns: repeat(2, 1fr); }
     .for-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
@@ -643,7 +626,6 @@
     .platform-box { min-width: auto; }
 
 
-    .features-preview-grid { grid-template-columns: 1fr; }
     .for-grid { grid-template-columns: 1fr; }
     .for-card { padding: var(--space-xl) var(--space-lg); }
 
