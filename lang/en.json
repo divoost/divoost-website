@@ -209,26 +209,42 @@
   "foryou": {
     "c1": {
       "title": "Korean Sellers",
-      "desc": "Businesses & individual sellers exporting Korean products globally. Export declarations and marketplace listings — all in one.",
-      "t1": "Korea e-commerce",
-      "t2": "Export overseas",
-      "t3": "Purchasing agent",
-      "t4": "Import"
+      "desc": "Korean companies & individual sellers selling on domestic (Coupang, Naver, Gmarket…) and overseas (Shopee, Amazon, TikTok Shop…) markets",
+      "t1": "Export declaration automation",
+      "t2": "Sourcing",
+      "t3": "Listing",
+      "t4": "Translation",
+      "t5": "Orders",
+      "t6": "CS",
+      "t7": "Inventory",
+      "t8": "Marketing",
+      "t9": "SNS posting",
+      "t10": "Buyer discovery"
     },
     "c2": {
       "title": "Overseas Sellers",
-      "desc": "Overseas sellers selling Korean products domestically, or sourcing global products. Multilingual support.",
-      "t1": "Global e-commerce",
-      "t2": "Export to Korea",
-      "t3": "Export globally",
-      "t4": "Import"
+      "desc": "Overseas companies & individual sellers selling on global (Shopee, Amazon, TikTok Shop…) and Korean (Coupang, Naver, Gmarket…) markets",
+      "t1": "Sourcing",
+      "t2": "Listing",
+      "t3": "Translation",
+      "t4": "Orders",
+      "t5": "CS",
+      "t6": "Inventory",
+      "t7": "Marketing",
+      "t8": "SNS posting",
+      "t9": "Buyer discovery"
     },
     "c3": {
-      "title": "Drop-shipping & Resellers",
-      "desc": "Drop-shippers and resellers sourcing global products without inventory. Customs automation included.",
+      "title": "Purchasing Agent",
+      "desc": "When importing and then selling on Korean and overseas markets",
       "t1": "Forwarding hub",
-      "t2": "Import → sell on Korean markets",
-      "t3": "Import → sell on global markets"
+      "t2": "Import → Korean markets",
+      "t3": "Import → global markets"
+    },
+    "c4": {
+      "title": "Product Supply",
+      "desc": "When Korean or overseas companies supply products via B2B2C",
+      "t1": "B2B2C product supply"
     }
   },
   "cta": {

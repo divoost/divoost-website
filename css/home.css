@@ -620,7 +620,7 @@
     .hero-arrow { width: 40px; height: 40px; font-size: 16px; }
     .hero-arrow-prev { left: 12px; }
     .hero-arrow-next { right: 12px; }
-    .for-grid { grid-template-columns: repeat(3, 1fr); }
+    .for-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* --- RESPONSIVE: MOBILE --- */
