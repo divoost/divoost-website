@@ -1033,5 +1033,11 @@
     "countries": "国家",
     "activeSellers": "活跃卖家",
     "langSupport": "语言支持"
+  },
+  "beta": {
+    "heading": "HubOnTrade 公测将于<br>2026 年 8 月底开放",
+    "body": "把全球贸易全流程整合为一 —— 我们正在做最后冲刺。<br>抢先预约，第一时间获取开放消息与公测优先体验资格。",
+    "apply": "预约申请",
+    "close": "关闭"
   }
 }
