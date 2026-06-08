@@ -1274,3 +1274,70 @@
     .route-meta { display: none; }
     .flow-route-pro { grid-template-columns: auto 1fr auto; gap: 8px; padding: 8px 10px; }
 }
+
+/* --- 베타 오픈 안내 팝업 --- */
+.beta-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+}
+.beta-modal.open { display: flex; }
+.beta-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+}
+.beta-modal-box {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 460px;
+    background: #ffffff;
+    border-radius: var(--radius-xl);
+    padding: var(--space-3xl) var(--space-2xl) var(--space-2xl);
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    animation: betaPop 0.3s ease-out;
+}
+@keyframes betaPop {
+    from { opacity: 0; transform: translateY(16px) scale(0.96); }
+    to { opacity: 1; transform: none; }
+}
+.beta-modal-x {
+    position: absolute;
+    top: 14px; right: 16px;
+    background: none; border: none;
+    font-size: 26px; line-height: 1;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+.beta-modal-emoji { font-size: 44px; line-height: 1; margin-bottom: var(--space-md); }
+.beta-modal-heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.35;
+    margin-bottom: var(--space-md);
+}
+.beta-modal-body {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xl);
+}
+.beta-modal-actions {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+@media (max-width: 480px) {
+    .beta-modal-actions { flex-direction: column; }
+    .beta-modal-actions .btn { width: 100%; }
+}

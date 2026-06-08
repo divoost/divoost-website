@@ -1033,5 +1033,11 @@
     "countries": "Countries",
     "activeSellers": "Active Sellers",
     "langSupport": "Languages"
+  },
+  "beta": {
+    "heading": "HubOnTrade beta opens<br>in late August 2026",
+    "body": "Bringing all of global trade into one — we're in the final stretch.<br>Sign up early to be first to hear when we open and get priority beta access.",
+    "apply": "Pre-register",
+    "close": "Close"
   }
 }

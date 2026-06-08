@@ -1033,5 +1033,11 @@
     "countries": "Quốc gia",
     "activeSellers": "Người bán hoạt động",
     "langSupport": "Hỗ trợ ngôn ngữ"
+  },
+  "beta": {
+    "heading": "Bản beta HubOnTrade mở<br>vào cuối tháng 8/2026",
+    "body": "Hợp nhất toàn bộ quy trình thương mại toàn cầu — chúng tôi đang ở chặng cuối.<br>Đăng ký sớm để nhận tin mở cửa đầu tiên và quyền tham gia beta ưu tiên.",
+    "apply": "Đăng ký trước",
+    "close": "Đóng"
   }
 }
