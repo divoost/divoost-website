@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HubOnTrade · 도구</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        body { background: #0F172A; min-height: 100vh; }
+        .app-wrap { max-width: 980px; margin: 0 auto; padding: 0 24px 80px; }
+        .app-top {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 22px 0; margin-bottom: 24px;
+        }
+        .app-logo img { height: 34px; width: auto; display: block; }
+        .app-user { display: flex; align-items: center; gap: 12px; }
+        .app-email { color: rgba(255,255,255,.7); font-size: 14px; }
+        .app-logout {
+            padding: 8px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,.18);
+            background: rgba(255,255,255,.06); color: #fff; font-size: 13px; font-weight: 600;
+            cursor: pointer; font-family: inherit;
+        }
+        .app-logout:hover { background: rgba(255,255,255,.12); }
+        .app-hi { color: #fff; font-family: 'Poppins','Inter',sans-serif; font-size: 28px; font-weight: 800; margin: 8px 0 4px; }
+        .app-sub { color: rgba(255,255,255,.55); font-size: 15px; margin-bottom: 36px; }
+        .app-section-label {
+            color: rgba(255,255,255,.5); font-size: 12px; font-weight: 700; letter-spacing: .08em;
+            text-transform: uppercase; margin: 32px 0 14px;
+        }
+        .app-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+        .app-card {
+            display: block; text-decoration: none;
+            background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
+            border-radius: 18px; padding: 28px 26px; transition: all .25s ease;
+        }
+        .app-card:hover { background: rgba(255,255,255,.1); border-color: rgba(99,102,241,.55); transform: translateY(-4px); }
+        .app-card-icon {
+            width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+            font-size: 28px; margin-bottom: 16px; background: rgba(99,102,241,.15);
+        }
+        .app-card.admin .app-card-icon { background: rgba(220,38,38,.15); }
+        .app-card-title { color: #fff; font-size: 19px; font-weight: 700; margin-bottom: 6px; font-family: 'Poppins','Inter',sans-serif; }
+        .app-card-desc { color: rgba(255,255,255,.6); font-size: 13.5px; line-height: 1.6; }
+        .app-card-go { color: #818cf8; font-size: 13px; font-weight: 700; margin-top: 14px; display: inline-block; }
+        .app-card.admin .app-card-go { color: #f87171; }
+        #adminSection { display: none; }
+        @media (max-width: 640px) {
+            .app-grid { grid-template-columns: 1fr; }
+            .app-hi { font-size: 23px; }
+            .app-email { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-wrap">
+        <div class="app-top">
+            <a href="index.html" class="app-logo"><img src="assets/hubongtrade-logo-bottom.png" alt="HubOnTrade"></a>
+            <div class="app-user">
+                <span class="app-email" id="appEmail"></span>
+                <button class="app-logout" id="appLogout">로그아웃</button>
+            </div>
+        </div>
+
+        <h1 class="app-hi" id="appHi">반갑습니다 👋</h1>
+        <p class="app-sub">사용할 도구를 선택하세요.</p>
+
+        <div class="app-section-label">내 도구</div>
+        <div class="app-grid">
+            <a class="app-card" href="dashboard/index.html">
+                <div class="app-card-icon">🔍</div>
+                <div class="app-card-title">소싱 트래커</div>
+                <div class="app-card-desc">1688·쿠팡 소싱, 마진 분석, 상품 발굴을 한 곳에서.</div>
+                <span class="app-card-go">바로 들어가기 →</span>
+            </a>
+            <a class="app-card" href="sns-platform/index.html">
+                <div class="app-card-icon">📱</div>
+                <div class="app-card-title">SNS 자동화</div>
+                <div class="app-card-desc">7개 채널 통합 발행, AI 콘텐츠, 댓글·인사이트 관리.</div>
+                <span class="app-card-go">바로 들어가기 →</span>
+            </a>
+        </div>
+
+        <div id="adminSection">
+            <div class="app-section-label" style="color:#fca5a5">🛡 관리자</div>
+            <div class="app-grid">
+                <a class="app-card admin" id="adminSourcing" href="dashboard/admin.html" style="display:none">
+                    <div class="app-card-icon">📊</div>
+                    <div class="app-card-title">소싱트래커 관리자</div>
+                    <div class="app-card-desc">상품·크롤링·소싱 데이터 관리.</div>
+                    <span class="app-card-go">관리자 콘솔 →</span>
+                </a>
+                <a class="app-card admin" id="adminSns" href="sns-platform/admin/index.html" style="display:none">
+                    <div class="app-card-icon">⚙️</div>
+                    <div class="app-card-title">SNS 관리자</div>
+                    <div class="app-card-desc">회원·결제·SNS 운영 관리.</div>
+                    <span class="app-card-go">관리자 콘솔 →</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="sns-platform/js/auth-guard.js"></script>
+    <script>
+        (function () {
+            // ─── 인증 게이트: 미로그인 시 로그인 화면으로 (로그인 후 런처로 복귀) ───
+            var session = (window.SNSAuth && SNSAuth.getSession()) || null;
+            if (!session) {
+                window.location.replace('sns-platform/auth.html?next=' + encodeURIComponent(window.location.href));
+                return;
+            }
+
+            var user = SNSAuth.getUser() || {};
+            var name = (user.user_metadata && user.user_metadata.full_name) || localStorage.getItem('snsAuthName') || '';
+            var email = user.email || localStorage.getItem('snsAuthEmail') || '';
+            var hi = document.getElementById('appHi');
+            if (hi) hi.textContent = (name || email ? (name || email.split('@')[0]) + '님, 반갑습니다 👋' : '반갑습니다 👋');
+            var emailEl = document.getElementById('appEmail');
+            if (emailEl) emailEl.textContent = email;
+
+            document.getElementById('appLogout').addEventListener('click', function () {
+                // 런처 기준 로그아웃 (auth-guard의 logout은 sns 경로 기준이라 직접 처리)
+                try {
+                    localStorage.removeItem('snsAuthSession');
+                    localStorage.removeItem('snsAuthEmail');
+                    localStorage.removeItem('snsAuthName');
+                } catch (e) { console.error('logout cleanup failed', e); }
+                window.location.replace('sns-platform/auth.html');
+            });
+
+            // ─── 관리자 카드: role 기반 노출 (도구별 분리 지원) ───
+            // profiles.role(기존) + profiles.roles(배열, 도구별 권한; 있으면 우선)
+            fetch(SNSAuth.SUPABASE_URL + '/rest/v1/profiles?id=eq.' + user.id + '&select=role,roles', {
+                headers: { 'apikey': SNSAuth.SUPABASE_KEY, 'Authorization': 'Bearer ' + session.access_token }
+            }).then(function (r) { return r.json(); }).then(function (rows) {
+                if (!rows || !rows.length) return;
+                var role = rows[0].role || '';
+                var roles = rows[0].roles || []; // text[] (없으면 빈 배열)
+                var isSuper = (role === 'super_admin');
+                function has(r) { return isSuper || role === r || (roles && roles.indexOf && roles.indexOf(r) > -1); }
+
+                var showSourcing = has('sourcing_admin') || role === 'admin';
+                var showSns = has('sns_admin') || role === 'admin';
+
+                if (showSourcing) document.getElementById('adminSourcing').style.display = 'block';
+                if (showSns) document.getElementById('adminSns').style.display = 'block';
+                if (showSourcing || showSns) document.getElementById('adminSection').style.display = 'block';
+            }).catch(function (err) {
+                console.error('role lookup failed', err);
+            });
+        })();
+    </script>
+</body>
+</html>

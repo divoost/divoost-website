@@ -351,7 +351,12 @@
         // ─── Supabase Auth Config ───
         var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
         var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
-        var REDIRECT_URL = window.location.origin + window.location.pathname.replace('auth.html', 'pages/settings.html');
+        // 로그인 후 이동: ?next= 파라미터(동일 origin만 허용 — 오픈 리다이렉트 방지), 없으면 기본 설정 페이지
+        var REDIRECT_URL = (function () {
+            var nxt = new URLSearchParams(window.location.search).get('next');
+            if (nxt && nxt.indexOf(window.location.origin) === 0) return nxt;
+            return window.location.origin + window.location.pathname.replace('auth.html', 'pages/settings.html');
+        })();
 
         // ─── Already logged in? Redirect ───
         var existingSession = JSON.parse(localStorage.getItem('snsAuthSession') || 'null');
