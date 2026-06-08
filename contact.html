@@ -68,7 +68,7 @@
                 <!-- Left: Contact Form -->
                 <div class="contact-form-wrap fade-in-up">
                     <h2 class="contact-form-heading" data-i18n="pages.contact.form.title">문의 양식</h2>
-                    <form class="contact-form" onsubmit="return false;">
+                    <form class="contact-form" id="contactForm">
                         <div class="form-group">
                             <label class="form-label" for="company" data-i18n="pages.contact.form.company">회사명</label>
                             <input type="text" id="company" class="form-input" placeholder="회사명을 입력하세요">
@@ -139,6 +139,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-lg contact-submit-btn" data-i18n="pages.contact.form.submit">문의 보내기</button>
+                        <p class="form-msg" id="formMsg" style="display:none;margin-top:14px;font-size:14px;line-height:1.6;padding:12px 14px;border-radius:10px;"></p>
                     </form>
                 </div>
 
@@ -284,6 +285,75 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        // 상담/사전신청 폼 → mailto 발송 (백엔드 없이 사용자 메일로 접수)
+        (function () {
+            // TODO: HubOnTrade 공식 수신 메일로 교체 (현재 contact.html 표기 메일 사용)
+            var RECIPIENT = 'contact@drapin.com';
+            var form = document.getElementById('contactForm');
+            if (!form) return;
+            var msg = document.getElementById('formMsg');
+
+            function val(id) {
+                var el = document.getElementById(id);
+                return el ? el.value.trim() : '';
+            }
+            function showMsg(text, ok) {
+                if (!msg) return;
+                msg.style.display = 'block';
+                msg.textContent = text;
+                msg.style.background = ok ? 'rgba(16,185,129,.1)' : 'rgba(239,68,68,.1)';
+                msg.style.color = ok ? '#047857' : '#b91c1c';
+            }
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                var email = val('email');
+                var name = val('name');
+                if (!email && !name) {
+                    showMsg('담당자명 또는 이메일을 입력해 주세요.', false);
+                    return;
+                }
+
+                var countries = Array.prototype.slice
+                    .call(form.querySelectorAll('input[name="country"]:checked'))
+                    .map(function (c) {
+                        var t = c.parentNode.querySelector('.checkbox-text');
+                        return t ? t.textContent.trim() : c.value;
+                    })
+                    .join(', ') || '-';
+
+                var sel = document.getElementById('service');
+                var service = (sel && sel.value) ? sel.options[sel.selectedIndex].textContent.trim() : '-';
+
+                var lines = [
+                    '※ HubOnTrade 1:1 상담 / 사전 신청 ※',
+                    '',
+                    '회사명: ' + (val('company') || '-'),
+                    '담당자: ' + (name || '-'),
+                    '이메일: ' + (email || '-'),
+                    '연락처: ' + (val('phone') || '-'),
+                    '관심 서비스: ' + service,
+                    '진출 희망 국가: ' + countries,
+                    '',
+                    '문의 내용:',
+                    (val('message') || '-'),
+                    '',
+                    '────────────────',
+                    '접수 시각: ' + new Date().toLocaleString('ko-KR')
+                ];
+                var subject = '[HubOnTrade 상담신청] ' + (val('company') || '') + ' / ' + (name || '');
+                var mailto = 'mailto:' + RECIPIENT +
+                    '?subject=' + encodeURIComponent(subject) +
+                    '&body=' + encodeURIComponent(lines.join('\n'));
+
+                window.location.href = mailto;
+                showMsg('✅ 메일 앱이 열렸습니다. 발송 버튼을 눌러 접수를 완료해 주세요. (자동으로 열리지 않으면 ' + RECIPIENT + ' 으로 보내주세요)', true);
+            });
+        })();
+    </script>
 
     <script src="js/common.js"></script>
     <script src="js/i18n.js"></script>
