@@ -110,6 +110,14 @@
       "c8": {
         "title": "Global Marketplace Marketing",
         "desc": "Auto-connect with platform ad and promotion tools like Shopee and TikTok Shop — from listing to sales boost"
+      },
+      "c9": {
+        "title": "AI Marketing Automation",
+        "desc": "AI auto-generates card news, short-form videos and DM messages — cutting your marketing content production time"
+      },
+      "c10": {
+        "title": "Social Account Integration",
+        "desc": "Connect Instagram, YouTube, TikTok and more to manage product promotion and content publishing in one place"
       }
     },
     "platforms": {

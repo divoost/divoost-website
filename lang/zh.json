@@ -110,6 +110,14 @@
       "c8": {
         "title": "全球商城营销联动",
         "desc": "与 Shopee、TikTok Shop 等平台广告及促销工具自动联动，从上架到促销一站完成"
+      },
+      "c9": {
+        "title": "AI 营销自动化",
+        "desc": "AI 自动生成图文卡片、短视频和私信文案，缩短营销内容制作时间"
+      },
+      "c10": {
+        "title": "社交账号联动",
+        "desc": "联动 Instagram、YouTube、TikTok 等社交账号，集中管理商品推广与内容发布"
       }
     },
     "platforms": {

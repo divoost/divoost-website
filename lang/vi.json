@@ -110,6 +110,14 @@
       "c8": {
         "title": "Marketing trên sàn toàn cầu",
         "desc": "Tự động kết nối với công cụ quảng cáo và khuyến mãi của các sàn như Shopee, TikTok Shop — từ đăng bán đến thúc đẩy doanh số"
+      },
+      "c9": {
+        "title": "Tự động hóa marketing AI",
+        "desc": "AI tự động tạo card news, video ngắn và tin nhắn DM — rút ngắn thời gian sản xuất nội dung marketing"
+      },
+      "c10": {
+        "title": "Liên kết tài khoản MXH",
+        "desc": "Liên kết Instagram, YouTube, TikTok... để quản lý quảng bá sản phẩm và đăng nội dung tại một nơi"
       }
     },
     "platforms": {
