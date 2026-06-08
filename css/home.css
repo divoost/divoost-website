@@ -406,6 +406,25 @@
     color: var(--text-secondary);
 }
 
+/* FOR YOU 카드 키워드 칩 (흰 카드 위 파란 칩) */
+.for-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+.for-tag {
+    padding: 5px 12px;
+    border-radius: 9999px;
+    background: rgba(37, 99, 235, 0.08);
+    border: 1px solid rgba(37, 99, 235, 0.15);
+    color: var(--color-primary-dark);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
 /* --- COMPETITOR COMPARISON SECTION --- */
 .section-comparison {
     background: linear-gradient(135deg, #3B82F6 0%, #2563EB 50%, #1E40AF 100%);

@@ -209,15 +209,26 @@
   "foryou": {
     "c1": {
       "title": "Korean Sellers",
-      "desc": "Businesses & individual sellers exporting Korean products globally. Export declarations and marketplace listings — all in one."
+      "desc": "Businesses & individual sellers exporting Korean products globally. Export declarations and marketplace listings — all in one.",
+      "t1": "Korea e-commerce",
+      "t2": "Export overseas",
+      "t3": "Purchasing agent",
+      "t4": "Import"
     },
     "c2": {
       "title": "Overseas Sellers",
-      "desc": "Overseas sellers selling Korean products domestically, or sourcing global products. Multilingual support."
+      "desc": "Overseas sellers selling Korean products domestically, or sourcing global products. Multilingual support.",
+      "t1": "Global e-commerce",
+      "t2": "Export to Korea",
+      "t3": "Export globally",
+      "t4": "Import"
     },
     "c3": {
       "title": "Drop-shipping & Resellers",
-      "desc": "Drop-shippers and resellers sourcing global products without inventory. Customs automation included."
+      "desc": "Drop-shippers and resellers sourcing global products without inventory. Customs automation included.",
+      "t1": "Forwarding hub",
+      "t2": "Import → sell on Korean markets",
+      "t3": "Import → sell on global markets"
     }
   },
   "cta": {
