@@ -168,7 +168,22 @@
     "h": {
       "pages": "页面",
       "tools": "选品 · 工具",
-      "support": "客户支持"
+      "support": "客户支持",
+      "product": "产品",
+      "resources": "资料",
+      "policy": "政策 · 支持"
+    },
+    "co": {
+      "addr": "地址",
+      "biz": "公司名称",
+      "ceo": "代表",
+      "email": "邮箱",
+      "reg": "营业执照号",
+      "mail": "通信销售业申报号"
+    },
+    "l": {
+      "terms": "服务条款",
+      "privacy": "隐私政策"
     }
   },
   "markets": {
