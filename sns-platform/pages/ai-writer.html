@@ -105,6 +105,23 @@
         .char-counter.warn{color:#f59e0b}
         .char-counter.over{color:#ef4444}
 
+        /* Per-platform character limit chips */
+        .platform-chip .p-limit{font-size:.65rem;color:#94a3b8;font-weight:500;margin-left:auto}
+        .platform-chip.selected .p-limit{color:#7c3aed}
+
+        /* Credit cost badge on action buttons */
+        .credit-badge{display:inline-flex;align-items:center;gap:3px;background:rgba(255,255,255,.22);color:#fff;padding:2px 8px;border-radius:10px;font-size:.7rem;font-weight:700;margin-left:6px}
+        .credit-badge::before{content:'💎';font-size:.78rem}
+        .result-btn .credit-badge{background:#ede9fe;color:#7c3aed}
+        .result-btn .credit-badge::before{content:'💎'}
+
+        /* Per-channel char meter (multi-platform result tabs) */
+        .channel-char-meter{display:flex;align-items:center;gap:6px;font-size:.7rem;color:#64748b;margin-top:4px}
+        .channel-char-meter .meter-bar{flex:1;height:4px;background:#e2e8f0;border-radius:2px;overflow:hidden}
+        .channel-char-meter .meter-fill{height:100%;background:#10b981;transition:width .3s,background .3s}
+        .channel-char-meter .meter-fill.warn{background:#f59e0b}
+        .channel-char-meter .meter-fill.over{background:#ef4444}
+
         /* Toast notification */
         .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;display:flex;align-items:center;gap:8px}
         .toast.show{opacity:1;transform:translateY(0)}
@@ -177,26 +194,35 @@
                 <div class="writer-box">
                     <h2>📱 대상 플랫폼</h2>
                     <div class="platform-grid" id="platformGrid">
-                        <div class="platform-chip" data-platform="facebook" onclick="selectPlatform(this)">
-                            <span class="p-icon">📘</span> Facebook
+                        <div class="platform-chip" data-platform="facebook" data-limit="63206" onclick="selectPlatform(this)">
+                            <span class="p-icon">📘</span> Facebook <span class="p-limit">63K자</span>
                         </div>
-                        <div class="platform-chip" data-platform="tiktok" onclick="selectPlatform(this)">
-                            <span class="p-icon">🎵</span> TikTok
+                        <div class="platform-chip" data-platform="tiktok" data-limit="2200" onclick="selectPlatform(this)">
+                            <span class="p-icon">🎵</span> TikTok <span class="p-limit">2.2K자</span>
                         </div>
-                        <div class="platform-chip" data-platform="instagram" onclick="selectPlatform(this)">
-                            <span class="p-icon">📸</span> Instagram
+                        <div class="platform-chip" data-platform="instagram" data-limit="2200" onclick="selectPlatform(this)">
+                            <span class="p-icon">📸</span> Instagram <span class="p-limit">2.2K자</span>
                         </div>
-                        <div class="platform-chip" data-platform="naver_blog" onclick="selectPlatform(this)">
-                            <span class="p-icon">📗</span> 네이버 블로그
+                        <div class="platform-chip" data-platform="x_twitter" data-limit="280" onclick="selectPlatform(this)">
+                            <span class="p-icon">✖️</span> X (Twitter) <span class="p-limit">280자</span>
                         </div>
-                        <div class="platform-chip" data-platform="naver_cafe" onclick="selectPlatform(this)">
-                            <span class="p-icon">☕</span> 네이버 카페
+                        <div class="platform-chip" data-platform="threads" data-limit="500" onclick="selectPlatform(this)">
+                            <span class="p-icon">🧵</span> Threads <span class="p-limit">500자</span>
                         </div>
-                        <div class="platform-chip" data-platform="xiaohongshu" onclick="selectPlatform(this)">
-                            <span class="p-icon">📕</span> 샤오홍수
+                        <div class="platform-chip" data-platform="linkedin" data-limit="3000" onclick="selectPlatform(this)">
+                            <span class="p-icon">💼</span> LinkedIn <span class="p-limit">3K자</span>
                         </div>
-                        <div class="platform-chip" data-platform="douyin" onclick="selectPlatform(this)">
-                            <span class="p-icon">🎬</span> 도우인
+                        <div class="platform-chip" data-platform="naver_blog" data-limit="40000" onclick="selectPlatform(this)">
+                            <span class="p-icon">📗</span> 네이버 블로그 <span class="p-limit">40K자</span>
+                        </div>
+                        <div class="platform-chip" data-platform="naver_cafe" data-limit="40000" onclick="selectPlatform(this)">
+                            <span class="p-icon">☕</span> 네이버 카페 <span class="p-limit">40K자</span>
+                        </div>
+                        <div class="platform-chip" data-platform="xiaohongshu" data-limit="1000" onclick="selectPlatform(this)">
+                            <span class="p-icon">📕</span> 샤오홍수 <span class="p-limit">1K자</span>
+                        </div>
+                        <div class="platform-chip" data-platform="douyin" data-limit="55" onclick="selectPlatform(this)">
+                            <span class="p-icon">🎬</span> 도우인 <span class="p-limit">55자</span>
                         </div>
                     </div>
                 </div>
@@ -308,9 +334,10 @@
                 <div class="writer-box generate-section">
                     <button class="btn-generate" id="btnGenerate" onclick="generateContent()">
                         <div class="spinner"></div>
-                        <span class="btn-text">✨ AI 콘텐츠 생성하기</span>
+                        <span class="btn-text">✨ AI 콘텐츠 생성하기<span class="credit-badge" id="genCreditBadge">8</span></span>
                         <span class="loading-text" style="display:none">생성 중...</span>
                     </button>
+                    <div style="margin-top:8px;font-size:.72rem;color:#94a3b8">선택한 플랫폼 수 × 8 크레딧 차감</div>
                 </div>
 
                 <!-- Generated Result -->
@@ -416,6 +443,17 @@
             document.getElementById('sidebar').classList.toggle('open');
         };
 
+        // ─── Platform char limits (Leviosa benchmark) ───
+        var PLATFORM_LIMITS = {
+            facebook: 63206, tiktok: 2200, instagram: 2200,
+            x_twitter: 280, threads: 500, linkedin: 3000,
+            naver_blog: 40000, naver_cafe: 40000,
+            xiaohongshu: 1000, douyin: 55
+        };
+        window.PLATFORM_LIMITS = PLATFORM_LIMITS;
+        function getPlatformLimit(p){ return PLATFORM_LIMITS[p] || 2200; }
+        window.getPlatformLimit = getPlatformLimit;
+
         // ─── Platform selection (multi select) ───
         window.selectPlatform = function(el){
             el.classList.toggle('selected');
@@ -423,6 +461,12 @@
             document.querySelectorAll('.platform-chip.selected').forEach(function(c){
                 selectedPlatforms.push(c.getAttribute('data-platform'));
             });
+            // Update generate-button credit cost: 8 credits × platform count
+            var badge = document.getElementById('genCreditBadge');
+            if(badge){
+                var cost = Math.max(8, selectedPlatforms.length * 8);
+                badge.textContent = cost;
+            }
         };
 
         // ─── Chip group selection (single select within group) ───
@@ -770,15 +814,20 @@
             setTimeout(function(){ toast.className = 'toast'; }, 2500);
         };
 
-        // ─── Character counter ───
+        // ─── Character counter (platform-aware, Leviosa pattern) ───
         function updateCharCounter(content){
             var len = content.length;
             var counter = document.getElementById('charCounter');
-            counter.textContent = len.toLocaleString() + '자';
+            // Use first selected platform's limit; default 2200 (IG)
+            var limit = selectedPlatforms.length > 0 ? getPlatformLimit(selectedPlatforms[0]) : 2200;
+            var platformName = selectedPlatforms.length > 0 ? selectedPlatforms[0] : '';
+            var pct = limit > 0 ? Math.min(100, Math.round((len / limit) * 100)) : 0;
+            counter.textContent = len.toLocaleString() + ' / ' + limit.toLocaleString() + '자 (' + pct + '%)';
             counter.className = 'char-counter';
-            if(len > 2000) counter.className = 'char-counter over';
-            else if(len > 1000) counter.className = 'char-counter warn';
+            if(len > limit) counter.className = 'char-counter over';
+            else if(len > limit * 0.85) counter.className = 'char-counter warn';
         }
+        window.updateCharCounter = updateCharCounter;
 
         window.copyContent = function(){
             var activePanel = document.querySelector('.multi-panel[style*="display: block"] .generated-content, .multi-panel[style*="display:block"] .generated-content');
