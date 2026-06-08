@@ -168,7 +168,22 @@
     "h": {
       "pages": "Trang",
       "tools": "Sourcing · Công cụ",
-      "support": "Hỗ trợ"
+      "support": "Hỗ trợ",
+      "product": "Sản phẩm",
+      "resources": "Tài liệu",
+      "policy": "Chính sách · Hỗ trợ"
+    },
+    "co": {
+      "addr": "Địa chỉ",
+      "biz": "Công ty",
+      "ceo": "Đại diện",
+      "email": "Email",
+      "reg": "Số ĐKKD",
+      "mail": "Số ĐK bán hàng TMĐT"
+    },
+    "l": {
+      "terms": "Điều khoản dịch vụ",
+      "privacy": "Chính sách bảo mật"
     }
   },
   "markets": {

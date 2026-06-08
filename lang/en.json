@@ -168,7 +168,22 @@
     "h": {
       "pages": "Pages",
       "tools": "Sourcing · Tools",
-      "support": "Support"
+      "support": "Support",
+      "product": "Product",
+      "resources": "Resources",
+      "policy": "Policy · Support"
+    },
+    "co": {
+      "addr": "Address",
+      "biz": "Company",
+      "ceo": "CEO",
+      "email": "Email",
+      "reg": "Business Reg. No.",
+      "mail": "E-commerce Reg. No."
+    },
+    "l": {
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy"
     }
   },
   "markets": {
