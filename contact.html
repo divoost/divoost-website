@@ -287,13 +287,18 @@
     </footer>
 
     <script>
-        // 상담/사전신청 폼 → mailto 발송 (백엔드 없이 사용자 메일로 접수)
+        // 상담/사전신청 폼 → Supabase inquiries 테이블 저장
+        // ⚠️ 보안: 이 publishable 키는 공개값. 반드시 inquiries 테이블 RLS를
+        //         "익명 INSERT만 허용, SELECT 차단"으로 설정해야 개인정보 유출 방지.
         (function () {
-            // TODO: HubOnTrade 공식 수신 메일로 교체 (현재 contact.html 표기 메일 사용)
-            var RECIPIENT = 'contact@drapin.com';
+            var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
+            var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
+            var TABLE = 'inquiries';
+
             var form = document.getElementById('contactForm');
             if (!form) return;
             var msg = document.getElementById('formMsg');
+            var btn = form.querySelector('.contact-submit-btn');
 
             function val(id) {
                 var el = document.getElementById(id);
@@ -323,34 +328,50 @@
                         var t = c.parentNode.querySelector('.checkbox-text');
                         return t ? t.textContent.trim() : c.value;
                     })
-                    .join(', ') || '-';
+                    .join(', ');
 
                 var sel = document.getElementById('service');
-                var service = (sel && sel.value) ? sel.options[sel.selectedIndex].textContent.trim() : '-';
+                var service = (sel && sel.value) ? sel.options[sel.selectedIndex].textContent.trim() : '';
 
-                var lines = [
-                    '※ HubOnTrade 1:1 상담 / 사전 신청 ※',
-                    '',
-                    '회사명: ' + (val('company') || '-'),
-                    '담당자: ' + (name || '-'),
-                    '이메일: ' + (email || '-'),
-                    '연락처: ' + (val('phone') || '-'),
-                    '관심 서비스: ' + service,
-                    '진출 희망 국가: ' + countries,
-                    '',
-                    '문의 내용:',
-                    (val('message') || '-'),
-                    '',
-                    '────────────────',
-                    '접수 시각: ' + new Date().toLocaleString('ko-KR')
-                ];
-                var subject = '[HubOnTrade 상담신청] ' + (val('company') || '') + ' / ' + (name || '');
-                var mailto = 'mailto:' + RECIPIENT +
-                    '?subject=' + encodeURIComponent(subject) +
-                    '&body=' + encodeURIComponent(lines.join('\n'));
+                var payload = {
+                    company: val('company'),
+                    name: name,
+                    email: email,
+                    phone: val('phone'),
+                    service: service,
+                    countries: countries,
+                    message: val('message'),
+                    source: 'contact_form'
+                };
 
-                window.location.href = mailto;
-                showMsg('✅ 메일 앱이 열렸습니다. 발송 버튼을 눌러 접수를 완료해 주세요. (자동으로 열리지 않으면 ' + RECIPIENT + ' 으로 보내주세요)', true);
+                if (btn) { btn.disabled = true; }
+                showMsg('접수 중입니다...', true);
+
+                fetch(SUPABASE_URL + '/rest/v1/' + TABLE, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': 'Bearer ' + SUPABASE_KEY,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(payload)
+                }).then(function (r) {
+                    if (btn) { btn.disabled = false; }
+                    if (r.ok) {
+                        showMsg('✅ 신청이 접수되었습니다. 빠르게 연락드리겠습니다.', true);
+                        form.reset();
+                    } else {
+                        r.text().then(function (t) {
+                            console.error('inquiry insert failed', r.status, t);
+                        });
+                        showMsg('접수 중 오류가 발생했습니다. 잠시 후 다시 시도하시거나 contact@drapin.com 으로 보내주세요.', false);
+                    }
+                }).catch(function (err) {
+                    if (btn) { btn.disabled = false; }
+                    console.error('inquiry insert error', err);
+                    showMsg('네트워크 오류로 접수에 실패했습니다. contact@drapin.com 으로 보내주세요.', false);
+                });
             });
         })();
     </script>
