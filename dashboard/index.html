@@ -87,6 +87,36 @@
                         <button id="hubBtn" onclick="aiSearchAll()" style="padding:11px 24px;background:#2563EB;color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.92rem;font-weight:700;display:inline-flex;align-items:center;gap:6px">🤖 AI 검색 <span style="background:rgba(255,255,255,.25);padding:2px 8px;border-radius:10px;font-size:.72rem;font-weight:700">💎 10</span></button>
                     </div>
 
+                    <!-- 연관 키워드 패널 (Leviosa 벤치마크) -->
+                    <div id="relatedKwPanel" style="display:none;background:linear-gradient(135deg,#FAF5FF,#F5F3FF);border:1px solid #E9D5FF;border-radius:10px;padding:12px 14px;margin-bottom:12px">
+                        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+                            <span style="font-size:14px">🔗</span>
+                            <strong style="font-size:.82rem;color:#0F172A">연관 키워드 분석</strong>
+                            <span style="font-size:.7rem;color:#64748B">— 네이버 검색 트렌드 기반</span>
+                            <button onclick="document.getElementById('relatedKwPanel').style.display='none'" style="margin-left:auto;background:none;border:none;color:#94A3B8;cursor:pointer;font-size:14px">✕</button>
+                        </div>
+                        <div id="relatedKwScroll" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px">
+                            <!-- 동적 렌더링 -->
+                        </div>
+                        <div style="font-size:.68rem;color:#94A3B8;margin-top:6px">💡 키워드 카드 클릭 → 해당 키워드로 재검색</div>
+                    </div>
+                    <style>
+                        .related-kw-card{flex:0 0 auto;min-width:140px;background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:10px 12px;cursor:pointer;transition:.15s}
+                        .related-kw-card:hover{transform:translateY(-2px);border-color:#8B5CF6;box-shadow:0 4px 12px rgba(139,92,246,.15)}
+                        .related-kw-card.main{background:linear-gradient(135deg,#8B5CF6,#7C3AED);border-color:#7C3AED;color:#fff}
+                        .related-kw-card.main .rkc-name,.related-kw-card.main .rkc-stat{color:#fff}
+                        .related-kw-card.main .rkc-comp{background:rgba(255,255,255,.25);color:#fff}
+                        .rkc-name{font-size:.85rem;font-weight:700;color:#0F172A;display:flex;align-items:center;gap:6px;margin-bottom:6px}
+                        .rkc-comp{font-size:.62rem;padding:1px 6px;border-radius:8px;font-weight:700}
+                        .rkc-comp.tight{background:#FEE2E2;color:#B91C1C}
+                        .rkc-comp.medium{background:#FEF3C7;color:#92400E}
+                        .rkc-comp.loose{background:#DCFCE7;color:#15803D}
+                        .rkc-stats{display:flex;gap:8px;font-size:.7rem;color:#64748B}
+                        .rkc-stat{display:flex;align-items:center;gap:3px}
+                        .rkc-stat.up{color:#15803D}
+                        .rkc-stat.down{color:#B91C1C}
+                    </style>
+
                     <!-- 기간 토글 -->
                     <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap">
                         <span style="font-size:.78rem;color:#64748B;margin-right:4px;font-weight:600">인기 기간:</span>
@@ -625,6 +655,7 @@
 
         // 트렌딩 키워드 렌더링 (점진적 + 자동 새로고침)
         var trendingState = { coupang: [], naver: [], lastUpdate: null };
+        window.trendingState = trendingState;
 
         function renderTrendingState(){
             var groupsEl = document.getElementById('kwGroups');
@@ -855,10 +886,115 @@
             }
         }
 
+        // ─── 연관 키워드 사이드바 (Leviosa 벤치마크) ───
+        // trendingState (이미 로드된 실제 네이버/쿠팡 데이터) 에서 유사 키워드 추출
+        function flattenTrendingPool(){
+            // trendingState.coupang/naver = [{cat, keywords:[{keyword, ...}]}]
+            var ts = window.trendingState;
+            if(!ts) return [];
+            var pool = [];
+            (ts.coupang || []).forEach(function(c){
+                (c.keywords || []).forEach(function(k){
+                    if(!k) return;
+                    var kw = typeof k === 'string' ? { keyword: k } : k;
+                    if(kw.keyword) pool.push(kw);
+                });
+            });
+            (ts.naver || []).forEach(function(c){
+                (c.keywords || []).forEach(function(k){
+                    if(!k) return;
+                    var kw = typeof k === 'string' ? { keyword: k } : k;
+                    if(kw.keyword) pool.push(kw);
+                });
+            });
+            return pool;
+        }
+
+        function renderRelatedKeywords(mainKw){
+            var panel = document.getElementById('relatedKwPanel');
+            var scroll = document.getElementById('relatedKwScroll');
+            if(!panel || !scroll) return;
+            var pool = flattenTrendingPool();
+            if(pool.length === 0){
+                // 데이터 아직 로딩 안 됨 — 패널 숨김 (가짜 데이터 안 만듦)
+                panel.style.display = 'none';
+                return;
+            }
+            // 메인 키워드 + 토큰이 일부 일치하는 트렌딩 키워드 4개 추출
+            var mainTokens = mainKw.replace(/[^가-힣a-zA-Z0-9]/g,' ').split(/\s+/).filter(function(t){ return t.length > 1; });
+            // 중복 제거
+            var seen = {};
+            pool = pool.filter(function(k){
+                if(seen[k.keyword]) return false;
+                seen[k.keyword] = 1;
+                return true;
+            });
+            var related = pool.filter(function(k){
+                if(k.keyword === mainKw) return false;
+                return mainTokens.some(function(t){ return k.keyword.indexOf(t) >= 0; });
+            }).slice(0, 4);
+            // 부족하면 트렌딩 풀에서 보충
+            if(related.length < 4){
+                pool.forEach(function(k){
+                    if(related.length >= 4) return;
+                    if(k.keyword === mainKw) return;
+                    if(related.indexOf(k) >= 0) return;
+                    related.push(k);
+                });
+            }
+            if(related.length === 0){ panel.style.display = 'none'; return; }
+
+            // 경쟁 강도 분류 (네이버 trendingState 의 rank/volume 기반)
+            function classifyCompetition(k){
+                var v = k.searchVolume || k.volume || 0;
+                if(v >= 10000) return { cls:'tight', label:'경쟁 시열' };
+                if(v >= 1000) return { cls:'medium', label:'경쟁 보통' };
+                return { cls:'loose', label:'경쟁 느슨' };
+            }
+            function fmtNum(n){
+                if(!n && n !== 0) return '—';
+                if(n >= 10000) return (n/1000).toFixed(1) + 'K';
+                if(n >= 1000) return (n/1000).toFixed(1) + 'K';
+                return String(n);
+            }
+            function growthSign(g){
+                if(g == null || isNaN(g)) return { cls:'', txt:'—' };
+                if(g > 0) return { cls:'up', txt:'↑ ' + g.toFixed(1) + '%' };
+                if(g < 0) return { cls:'down', txt:'↓ ' + Math.abs(g).toFixed(1) + '%' };
+                return { cls:'', txt:'0%' };
+            }
+
+            // 메인 카드 + 연관 카드
+            var html = '';
+            var mainComp = { cls:'tight', label:'메인' };
+            html += '<div class="related-kw-card main">' +
+                '<div class="rkc-name">' + escapeHtml(mainKw) + ' <span class="rkc-comp ' + mainComp.cls + '">' + mainComp.label + '</span></div>' +
+                '<div class="rkc-stats"><span class="rkc-stat">🔍 검색 중</span></div>' +
+                '</div>';
+            related.forEach(function(k){
+                var comp = classifyCompetition(k);
+                var g = growthSign(k.growth);
+                html += '<div class="related-kw-card" onclick="document.getElementById(\'hubKeyword\').value=\'' + escapeAttr(k.keyword) + '\';window.aiSearchAll();">' +
+                    '<div class="rkc-name">' + escapeHtml(k.keyword) + ' <span class="rkc-comp ' + comp.cls + '">' + comp.label + '</span></div>' +
+                    '<div class="rkc-stats">' +
+                        '<span class="rkc-stat">📊 ' + fmtNum(k.searchVolume || k.volume) + '</span>' +
+                        '<span class="rkc-stat ' + g.cls + '">' + g.txt + '</span>' +
+                    '</div>' +
+                    '</div>';
+            });
+            scroll.innerHTML = html;
+            panel.style.display = 'block';
+        }
+        function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+        function escapeAttr(s){ return String(s).replace(/'/g,"\\'"); }
+
         window.aiSearchAll = async function(){
             var kw = document.getElementById('hubKeyword').value.trim();
             if(!kw) return alert('검색어를 입력하세요');
             if(!session) return alert('로그인이 필요합니다.\nhttps://hubontrade.com/sns-platform/auth.html');
+
+            // 연관 키워드 사이드바 갱신 (실제 트렌딩 데이터에서 파생, 가짜 X)
+            renderRelatedKeywords(kw);
 
             var btn = document.getElementById('hubBtn');
             btn.disabled = true; btn.textContent = '🔄 검색 중...';
@@ -1011,6 +1147,22 @@
         var kwInput = document.getElementById('hubKeyword');
         if(kwInput) kwInput.addEventListener('keypress', function(e){ if(e.key==='Enter') window.aiSearchAll(); });
     })();
+    </script>
+    <script src="js/onboarding-tour.js"></script>
+    <script>
+        // ─── 첫 방문 온보딩 투어 (Leviosa 패턴) ───
+        document.addEventListener('DOMContentLoaded', function(){
+            setTimeout(function(){
+                if(!window.DivoostTour) return;
+                window.DivoostTour.start([
+                    { target:null, title:'소싱 트래커에 오신 걸 환영합니다 👋', body:'쿠팡·1688·타오바오·네이버·G마켓 등 22개 마켓플레이스를 한 번에 검색하는 통합 소싱 도구입니다.' },
+                    { target:'#hubKeyword', title:'1단계 · 키워드 입력', body:'찾고 싶은 상품명·카테고리를 입력하세요 (예: 무선이어폰, 캠핑테이블).', placement:'bottom' },
+                    { target:'#hubBtn', title:'2단계 · AI 통합 검색', body:'한 번 클릭으로 22개 플랫폼 동시 검색 (💎 10 크레딧). 결과는 플랫폼별로 정리됩니다.', placement:'bottom' },
+                    { target:'.period-btn', title:'3단계 · 인기 기간 설정', body:'3일 / 7일 / 30일 / 수동 기간을 선택해 트렌딩 추천 상품을 받아보세요.', placement:'bottom' },
+                    { target:'#aiResultByPlatform', title:'4단계 · 결과 확인', body:'플랫폼별 추천 상품을 확인하고 이미지·가격·링크를 비교하세요. 좌측 연관 키워드 패널에서 다른 검색어로 확장할 수 있어요.', placement:'top' }
+                ], { storageKey: 'divoost_tour_dashboard_v1' });
+            }, 600);
+        });
     </script>
 </body>
 </html>
