@@ -126,46 +126,32 @@
       "desc": "Đăng sản phẩm một lần, bán đồng thời mọi sàn"
     },
     "comparison": {
-      "badge": "SO SÁNH",
-      "title": "HubOnTrade vs đối thủ",
-      "desc": "So sánh tính năng cốt lõi",
-      "col1": "Công việc",
-      "col2": "Tự vận hành",
-      "col3": "HubOnTrade",
-      "r1": {
-        "task": "Đăng sản phẩm",
-        "direct": "Đăng riêng trên từng sàn",
-        "ez": "Đăng tất cả cùng lúc"
+      "badge": "HIGHLIGHTS",
+      "title": "Tất cả những gì HubOnTrade mang lại",
+      "desc": "Toàn bộ quy trình xuất nhập khẩu trên một nền tảng",
+      "h1": {
+        "title": "Thương mại toàn cầu trọn gói",
+        "desc": "Từ bất cứ đâu đến bất cứ đâu — toàn bộ quy trình xuất nhập khẩu trên một nền tảng"
       },
-      "r2": {
-        "task": "Khai báo xuất khẩu",
-        "direct": "Tự viết, tự nộp",
-        "ez": "Tự động tạo & nộp"
+      "h2": {
+        "title": "Mua hộ dễ dàng",
+        "desc": "Từ thu thập sản phẩm đến đăng tải lên sàn — nền tảng mua hộ AI lấy người dùng làm trung tâm"
       },
-      "r3": {
-        "task": "Thông quan",
-        "direct": "Thuê riêng đại lý hải quan",
-        "ez": "Hệ thống xử lý tự động"
+      "h3": {
+        "title": "Quản lý sàn tập trung",
+        "desc": "Từ Coupang, Naver đến Shopee, TikTok Shop — đăng và quản lý sản phẩm cùng lúc"
       },
-      "r4": {
-        "task": "Quản lý kho",
-        "direct": "Quản lý thủ công bằng Excel",
-        "ez": "Đồng bộ tự động thời gian thực"
+      "h4": {
+        "title": "Fulfillment hợp nhất",
+        "desc": "Từ xuất hàng trong nước đến giao hàng nội địa nước ngoài — trong một hệ thống"
       },
-      "r5": {
-        "task": "Tính biên lợi nhuận",
-        "direct": "Tính thủ công, hay sai sót",
-        "ez": "Tự động, cập nhật thời gian thực"
+      "h5": {
+        "title": "Tìm nguồn toàn cầu thông minh",
+        "desc": "Từ tìm nguồn B2B toàn cầu đến tự động tính biên lợi nhuận — kiểm tra lợi nhuận trước"
       },
-      "r6": {
-        "task": "Quản lý vận chuyển",
-        "direct": "Trong nước · nước ngoài quản lý riêng",
-        "ez": "Hệ thống hợp nhất"
-      },
-      "r7": {
-        "task": "Tìm nguồn hàng",
-        "direct": "Tự đi tìm, tốn thời gian",
-        "ez": "Tìm trong DB, tự tính lợi nhuận"
+      "h6": {
+        "title": "Nền tảng cho người bán toàn cầu",
+        "desc": "Cả người bán Hàn Quốc lẫn nước ngoài — nền tảng toàn cầu duy nhất ai cũng dùng được"
       }
     },
     "features": {

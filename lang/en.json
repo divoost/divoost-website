@@ -126,46 +126,32 @@
       "desc": "List once, sell on all marketplaces simultaneously"
     },
     "comparison": {
-      "badge": "COMPARISON",
-      "title": "HubOnTrade vs Competitors",
-      "desc": "Key feature comparison",
-      "col1": "Task",
-      "col2": "Self-managed",
-      "col3": "HubOnTrade",
-      "r1": {
-        "task": "Product listing",
-        "direct": "Register on each platform separately",
-        "ez": "Register everywhere at once"
+      "badge": "HIGHLIGHTS",
+      "title": "Everything HubOnTrade offers",
+      "desc": "The entire import/export journey on one platform",
+      "h1": {
+        "title": "All-in-one global trade",
+        "desc": "Anywhere to anywhere — the entire import/export journey on one platform"
       },
-      "r2": {
-        "task": "Export declaration",
-        "direct": "Manual writing, self-submission",
-        "ez": "Auto-generated & submitted"
+      "h2": {
+        "title": "Effortless purchasing agency",
+        "desc": "From product sourcing to marketplace upload — a user-centric, AI-powered platform"
       },
-      "r3": {
-        "task": "Customs clearance",
-        "direct": "Separate broker request",
-        "ez": "Handled automatically by the system"
+      "h3": {
+        "title": "Unified marketplace management",
+        "desc": "From Coupang and Naver to Shopee and TikTok Shop — list and manage at once"
       },
-      "r4": {
-        "task": "Inventory",
-        "direct": "Manual Excel management",
-        "ez": "Real-time auto-sync"
+      "h4": {
+        "title": "Integrated fulfillment",
+        "desc": "From domestic dispatch to overseas local delivery — in one system"
       },
-      "r5": {
-        "task": "Margin calculation",
-        "direct": "Manual, error-prone",
-        "ez": "Automatic, real-time"
+      "h5": {
+        "title": "Smart global sourcing",
+        "desc": "From B2B global sourcing to automatic margin calculation — check profitability first"
       },
-      "r6": {
-        "task": "Shipping",
-        "direct": "Domestic & overseas managed separately",
-        "ez": "Unified system"
-      },
-      "r7": {
-        "task": "Sourcing",
-        "direct": "Legwork, time-consuming",
-        "ez": "DB search, auto margin calc"
+      "h6": {
+        "title": "A platform for sellers worldwide",
+        "desc": "Korean and overseas sellers alike — the only global platform anyone can use"
       }
     },
     "features": {
