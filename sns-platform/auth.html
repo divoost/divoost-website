@@ -96,8 +96,10 @@
                 <option value="ko">🇰🇷 한국어</option>
                 <option value="en">🇺🇸 English</option>
                 <option value="vi">🇻🇳 Tiếng Việt</option>
+                <option value="zh">🇨🇳 中文</option>
             </select>
         </div>
+        <a href="../index.html" class="auth-back" data-i18n="back_home" style="display:block;text-align:center;color:#64748b;font-size:13px;font-weight:600;text-decoration:none;margin-bottom:16px">← HubOnTrade로 돌아가기</a>
         <div class="auth-logo">
             <div class="auth-logo-icon"><img src="../assets/hubongtrade-logo.png" alt="HubOnTrade" style="height:38px;width:auto;display:inline-block;vertical-align:middle"></div>
             <div class="auth-logo-title" data-i18n="logo_title">HubOnTrade 통합 로그인</div>
@@ -229,8 +231,8 @@
             <!-- Social Login (only on login/signup) -->
             <div id="socialSection">
                 <div class="divider" data-i18n="divider_or">또는</div>
-                <button class="social-btn" onclick="showSocialAlert('Google')"><span class="ico">🔵</span> <span data-i18n="social_google">Google로 계속하기</span></button>
-                <button class="social-btn" onclick="showSocialAlert('Kakao')"><span class="ico">💬</span> <span data-i18n="social_kakao">카카오로 계속하기</span></button>
+                <button class="social-btn" onclick="signInWithProvider('google')"><span class="ico">🔵</span> <span data-i18n="social_google">Google로 계속하기</span></button>
+                <button class="social-btn" onclick="signInWithProvider('kakao')"><span class="ico">💬</span> <span data-i18n="social_kakao">카카오로 계속하기</span></button>
             </div>
 
             <div class="auth-footer" id="authFooter">
@@ -277,7 +279,7 @@
                 err_pw_required: '비밀번호를 입력해주세요', ok_login: '로그인 성공! 이동 중...',
                 err_login: '로그인 실패', err_invalid_cred: '이메일 또는 비밀번호가 일치하지 않습니다',
                 err_not_confirmed: '이메일 인증이 완료되지 않았습니다. 메일함을 확인해주세요.',
-                err_resend_no_email: '재발송할 이메일이 없습니다'
+                err_resend_no_email: '재발송할 이메일이 없습니다', back_home: '← HubOnTrade로 돌아가기'
             },
             en: {
                 doc_title: 'Log in / Sign up | HubOnTrade',
@@ -309,7 +311,7 @@
                 err_pw_required: 'Please enter your password', ok_login: 'Login successful! Redirecting...',
                 err_login: 'Login failed', err_invalid_cred: 'Email or password is incorrect',
                 err_not_confirmed: 'Email not verified yet. Please check your inbox.',
-                err_resend_no_email: 'No email to resend to'
+                err_resend_no_email: 'No email to resend to', back_home: '← Back to HubOnTrade'
             },
             vi: {
                 doc_title: 'Đăng nhập / Đăng ký | HubOnTrade',
@@ -341,7 +343,39 @@
                 err_pw_required: 'Vui lòng nhập mật khẩu', ok_login: 'Đăng nhập thành công! Đang chuyển hướng...',
                 err_login: 'Đăng nhập thất bại', err_invalid_cred: 'Email hoặc mật khẩu không đúng',
                 err_not_confirmed: 'Email chưa được xác minh. Vui lòng kiểm tra hộp thư.',
-                err_resend_no_email: 'Không có email để gửi lại'
+                err_resend_no_email: 'Không có email để gửi lại', back_home: '← Quay lại HubOnTrade'
+            },
+            zh: {
+                doc_title: '登录 / 注册 | HubOnTrade',
+                logo_title: 'HubOnTrade 统一登录',
+                logo_sub: '选品追踪 · SNS 自动化 —— 一个账号',
+                tab_login: '登录', tab_signup: '注册',
+                label_email: '邮箱', label_password: '密码', ph_password: '密码',
+                remember: '保持登录', forgot: '忘记密码？', btn_login: '登录',
+                label_name: '姓名（可选）', ph_name: '张三', ph_pw_min: '至少6位',
+                pw_strength: '密码强度', pw_weak: '⚠ 弱 - 请设置更复杂', pw_medium: '🟡 中等', pw_strong: '✓ 强',
+                label_pw_confirm: '确认密码', ph_pw_confirm: '再次输入密码',
+                agree_terms: '我同意服务条款和隐私政策', btn_signup: '注册',
+                verify_title: '请完成邮箱验证',
+                verify_text: '我们已向您的邮箱发送<strong>6位验证码</strong>。<br>请查收邮件并在下方输入。',
+                label_otp: '6位验证码', btn_verify: '验证并开始',
+                verify_or_link: '或点击邮件中的<strong>验证链接</strong>。',
+                resend: '📤 重新发送验证邮件', to_login: '返回登录',
+                forgot_title: '重置密码',
+                forgot_text: '输入您的邮箱，我们将发送<br>密码重置链接。',
+                btn_forgot: '发送重置邮件', back_to_login: '返回登录',
+                divider_or: '或', social_google: '使用 Google 继续', social_kakao: '使用 Kakao 继续',
+                footer_no_account: '还没有账号？', footer_have_account: '已有账号？',
+                link_signup: '注册', link_login: '登录',
+                terms_text: '继续即表示您同意我们的<a href="#">服务条款</a>和<a href="#">隐私政策</a>。',
+                err_email_required: '请输入邮箱', err_email_invalid: '邮箱格式不正确',
+                err_pw_min: '密码至少6位', err_pw_mismatch: '两次密码不一致',
+                err_agree: '请同意服务条款', ok_signup: '注册成功！正在跳转...',
+                err_signup: '注册失败', err_already: '该邮箱已注册，请登录。',
+                err_pw_required: '请输入密码', ok_login: '登录成功！正在跳转...',
+                err_login: '登录失败', err_invalid_cred: '邮箱或密码不正确',
+                err_not_confirmed: '邮箱尚未验证，请查收邮件。',
+                err_resend_no_email: '没有可重新发送的邮箱', back_home: '← 返回 HubOnTrade'
             }
         };
     </script>
@@ -671,9 +705,12 @@
             }
         }
 
-        // ─── Social (placeholder) ───
-        function showSocialAlert(provider){
-            showAlert(provider + ' 로그인은 준비 중입니다. 이메일 회원가입을 이용해주세요.', 'info');
+        // ─── Social login (Supabase OAuth) ───
+        function signInWithProvider(provider){
+            // 콜백 = 현재 auth.html (해시 토큰을 handleAuthCallback이 처리, next 파라미터 보존)
+            var redirectTo = window.location.origin + window.location.pathname + window.location.search;
+            window.location.href = SUPABASE_URL + '/auth/v1/authorize?provider=' +
+                encodeURIComponent(provider) + '&redirect_to=' + encodeURIComponent(redirectTo);
         }
 
         // ─── Save session ───
