@@ -712,8 +712,11 @@
         function signInWithProvider(provider){
             // 콜백 = 현재 auth.html (해시 토큰을 handleAuthCallback이 처리, next 파라미터 보존)
             var redirectTo = window.location.origin + window.location.pathname + window.location.search;
-            window.location.href = SUPABASE_URL + '/auth/v1/authorize?provider=' +
+            var url = SUPABASE_URL + '/auth/v1/authorize?provider=' +
                 encodeURIComponent(provider) + '&redirect_to=' + encodeURIComponent(redirectTo);
+            // 구글: 항상 계정 선택 화면을 띄워 무프롬프트 자동 로그인 방지
+            if(provider === 'google'){ url += '&prompt=select_account'; }
+            window.location.href = url;
         }
 
         // ─── Save session ───
@@ -741,6 +744,8 @@
                 if(parts[0]) params[parts[0]] = decodeURIComponent(parts[1] || '');
             });
             if(params.access_token){
+                // 해시 즉시 정리 (재방문/새로고침 시 스테일 토큰으로 자동 로그인되는 것 방지)
+                try { history.replaceState(null, '', window.location.pathname + window.location.search); } catch(e){}
                 // Email verified - save session and redirect
                 var session = {
                     access_token: params.access_token,
@@ -757,11 +762,11 @@
                 }).then(function(r){ return r.json(); }).then(function(user){
                     session.user = user;
                     saveSession(session, user);
-                    showAlert('이메일 인증 완료! 잠시 후 이동합니다.', 'success');
+                    showAlert('로그인 완료! 잠시 후 이동합니다.', 'success');
                     setTimeout(function(){ window.location.href = REDIRECT_URL; }, 1200);
                 }).catch(function(){
                     saveSession(session, null);
-                    showAlert('인증 완료! 이동합니다.', 'success');
+                    showAlert('로그인 완료! 이동합니다.', 'success');
                     setTimeout(function(){ window.location.href = REDIRECT_URL; }, 1200);
                 });
             }
