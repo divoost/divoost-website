@@ -1407,3 +1407,10 @@ h1,h2,h3,h4,h5 { font-family: var(--font-heading); font-weight: 700; line-height
   .platform-tabs { gap: 4px; }
   .platform-badge { padding: 4px 10px; font-size: 11px; }
 }
+
+/* 사이드바 아코디언 (그룹 접기/펼치기) */
+.sidebar-section.accordion > .sidebar-section-title{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between}
+.sidebar-section.accordion > .sidebar-section-title::after{content:'\25BE';font-size:.7em;opacity:.55;transition:transform .2s;margin-left:8px}
+.sidebar-section.accordion.collapsed > .sidebar-section-title::after{transform:rotate(-90deg)}
+.sidebar-section.accordion.collapsed > .sidebar-link{display:none}
+.sidebar-section.accordion{margin-bottom:8px}
