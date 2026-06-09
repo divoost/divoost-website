@@ -389,7 +389,8 @@
         var REDIRECT_URL = (function () {
             var nxt = new URLSearchParams(window.location.search).get('next');
             if (nxt && nxt.indexOf(window.location.origin) === 0) return nxt;
-            return window.location.origin + window.location.pathname.replace('auth.html', 'pages/settings.html');
+            // 기본 도착지: 도구 선택 런처(app.html) — 로그인 후 소싱트래커/SNS를 먼저 선택
+            return window.location.origin + window.location.pathname.replace('sns-platform/auth.html', 'app.html');
         })();
 
         // ─── Already logged in? Redirect ───
