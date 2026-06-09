@@ -14,7 +14,7 @@
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'Inter','Pretendard',-apple-system,sans-serif;background:linear-gradient(135deg,#eef2ff 0%,#e0f2fe 50%,#ecfdf5 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;color:#0f172a;-webkit-font-smoothing:antialiased}
         .auth-container{width:100%;max-width:440px}
-        .auth-logo{text-align:center;margin-bottom:24px}
+        .auth-logo{text-align:center;margin-bottom:16px;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(15,23,42,.08);border:1px solid #e2e8f0;padding:24px 28px}
         .auth-logo-icon{font-size:48px;margin-bottom:8px}
         .auth-logo-title{font-size:24px;font-weight:800;color:#0f172a;letter-spacing:-.02em}
         .auth-logo-sub{font-size:13px;color:#64748b;margin-top:4px}
@@ -95,8 +95,8 @@
             <select id="langSelect" onchange="I18N.setLang(this.value)" aria-label="Language">
                 <option value="ko">🇰🇷 한국어</option>
                 <option value="en">🇺🇸 English</option>
-                <option value="vi">🇻🇳 Tiếng Việt</option>
                 <option value="zh">🇨🇳 中文</option>
+                <option value="vi">🇻🇳 Tiếng Việt</option>
             </select>
         </div>
         <a href="../index.html" class="auth-back" data-i18n="back_home" style="display:block;text-align:center;color:#64748b;font-size:13px;font-weight:600;text-decoration:none;margin-bottom:16px">← HubOnTrade로 돌아가기</a>
