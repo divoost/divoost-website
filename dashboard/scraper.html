@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+    <script>
+    /* 소싱트래커 로그인 게이트 — 미로그인 시 통합 로그인으로 (로그인 후 복귀) */
+    (function(){
+        try{
+            var s = JSON.parse(localStorage.getItem("snsAuthSession")||"null");
+            var ok = s && s.access_token && (!s.expires_at || s.expires_at*1000 > Date.now());
+            if(!ok){ location.replace("../sns-platform/auth.html?next=" + encodeURIComponent(location.href)); }
+        }catch(e){}
+    })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>반자동 스크래퍼 | 소싱 트래커</title>
