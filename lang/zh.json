@@ -883,10 +883,25 @@
           "thailand": "泰国",
           "indonesia": "印度尼西亚",
           "philippines": "菲律宾",
-          "malaysia": "马来西亚"
+          "malaysia": "马来西亚",
+          "korea": "韩国",
+          "china": "中国",
+          "japan": "日本",
+          "singapore": "新加坡",
+          "usa": "美国",
+          "canada": "加拿大",
+          "uk": "英国",
+          "germany": "德国",
+          "france": "法国"
         },
         "message": "咨询内容",
-        "submit": "提交咨询"
+        "submit": "提交咨询",
+        "region": {
+          "neasia": "东北亚",
+          "seasia": "东南亚",
+          "namerica": "北美",
+          "europe": "欧洲"
+        }
       },
       "info": {
         "title": "联系方式",

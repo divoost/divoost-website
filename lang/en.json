@@ -883,10 +883,25 @@
           "thailand": "Thailand",
           "indonesia": "Indonesia",
           "philippines": "Philippines",
-          "malaysia": "Malaysia"
+          "malaysia": "Malaysia",
+          "korea": "Korea",
+          "china": "China",
+          "japan": "Japan",
+          "singapore": "Singapore",
+          "usa": "USA",
+          "canada": "Canada",
+          "uk": "UK",
+          "germany": "Germany",
+          "france": "France"
         },
         "message": "Message",
-        "submit": "Send Inquiry"
+        "submit": "Send Inquiry",
+        "region": {
+          "neasia": "Northeast Asia",
+          "seasia": "Southeast Asia",
+          "namerica": "North America",
+          "europe": "Europe"
+        }
       },
       "info": {
         "title": "Contact Information",

@@ -883,10 +883,25 @@
           "thailand": "Thái Lan",
           "indonesia": "Indonesia",
           "philippines": "Philippines",
-          "malaysia": "Malaysia"
+          "malaysia": "Malaysia",
+          "korea": "Hàn Quốc",
+          "china": "Trung Quốc",
+          "japan": "Nhật Bản",
+          "singapore": "Singapore",
+          "usa": "Hoa Kỳ",
+          "canada": "Canada",
+          "uk": "Anh",
+          "germany": "Đức",
+          "france": "Pháp"
         },
         "message": "Nội dung",
-        "submit": "Gửi liên hệ"
+        "submit": "Gửi liên hệ",
+        "region": {
+          "neasia": "Đông Bắc Á",
+          "seasia": "Đông Nam Á",
+          "namerica": "Bắc Mỹ",
+          "europe": "Châu Âu"
+        }
       },
       "info": {
         "title": "Thông tin liên hệ",

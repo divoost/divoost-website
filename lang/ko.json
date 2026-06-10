@@ -883,10 +883,25 @@
           "thailand": "태국",
           "indonesia": "인도네시아",
           "philippines": "필리핀",
-          "malaysia": "말레이시아"
+          "malaysia": "말레이시아",
+          "korea": "한국",
+          "china": "중국",
+          "japan": "일본",
+          "singapore": "싱가포르",
+          "usa": "미국",
+          "canada": "캐나다",
+          "uk": "영국",
+          "germany": "독일",
+          "france": "프랑스"
         },
         "message": "문의 내용",
-        "submit": "문의 보내기"
+        "submit": "문의 보내기",
+        "region": {
+          "neasia": "동북아시아",
+          "seasia": "동남아시아",
+          "namerica": "북미",
+          "europe": "유럽"
+        }
       },
       "info": {
         "title": "연락처 정보",
