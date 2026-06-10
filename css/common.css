@@ -1034,3 +1034,31 @@ body.lang-en .logo {
 body {
   padding-top: var(--header-height);
 }
+
+/* --- 풋터 (회사정보형, flow.team 톤) — 전 페이지 공용 --- */
+.footer-grid-co {
+    grid-template-columns: 1.9fr 1fr 1fr 1fr 1fr;
+}
+.footer-company {
+    margin-top: var(--space-md);
+}
+.footer-company p {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.9;
+    max-width: 380px;
+    margin: 0;
+}
+.fc-label {
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 600;
+    margin-right: 6px;
+}
+@media (max-width: 1024px) {
+    .footer-grid-co { grid-template-columns: 1fr 1fr 1fr; }
+    .footer-grid-co .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+    .footer-grid-co { grid-template-columns: 1fr 1fr; }
+    .footer-grid-co .footer-brand { grid-column: 1 / -1; }
+}
