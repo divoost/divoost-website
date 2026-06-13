@@ -111,11 +111,10 @@ h1,h2,h3,h4,h5 { font-family: var(--font-heading); font-weight: 700; line-height
 .sidebar-nav { padding: 16px 12px; flex: 1; }
 .sidebar-section { margin-bottom: 24px; }
 .sidebar-section-title {
-  font-size: 10px;
+  font-size: 13px;
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
+  letter-spacing: 0.01em;
+  color: var(--text-secondary);
   padding: 0 12px;
   margin-bottom: 8px;
 }
@@ -124,9 +123,9 @@ h1,h2,h3,h4,h5 { font-family: var(--font-heading); font-weight: 700; line-height
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 10px 12px;
+  padding: 11px 12px;
   border-radius: var(--radius-md);
-  font-size: 13px;
+  font-size: 14.5px;
   font-weight: 500;
   color: var(--text-secondary);
   transition: all 0.2s;
@@ -145,7 +144,7 @@ h1,h2,h3,h4,h5 { font-family: var(--font-heading); font-weight: 700; line-height
   font-weight: 600;
 }
 
-.sidebar-link-icon { font-size: 18px; width: 24px; text-align: center; }
+.sidebar-link-icon { font-size: 19px; width: 24px; text-align: center; }
 
 .sidebar-link .badge {
   margin-left: auto;
@@ -1408,9 +1407,10 @@ h1,h2,h3,h4,h5 { font-family: var(--font-heading); font-weight: 700; line-height
   .platform-badge { padding: 4px 10px; font-size: 11px; }
 }
 
-/* 사이드바 아코디언 (그룹 접기/펼치기) */
-.sidebar-section.accordion > .sidebar-section-title{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between}
-.sidebar-section.accordion > .sidebar-section-title::after{content:'\25BE';font-size:.7em;opacity:.55;transition:transform .2s;margin-left:8px}
+/* 사이드바 아코디언 (그룹 접기/펼치기 = 드롭다운) */
+.sidebar-section.accordion > .sidebar-section-title{cursor:pointer;user-select:none;display:flex;align-items:center;justify-content:space-between;padding:9px 12px;margin-bottom:4px;border-radius:var(--radius-md);transition:background .15s}
+.sidebar-section.accordion > .sidebar-section-title:hover{background:#F1F5F9;color:var(--primary)}
+.sidebar-section.accordion > .sidebar-section-title::after{content:'\25BE';font-size:1em;opacity:.5;transition:transform .2s;margin-left:8px}
 .sidebar-section.accordion.collapsed > .sidebar-section-title::after{transform:rotate(-90deg)}
 .sidebar-section.accordion.collapsed > .sidebar-link{display:none}
-.sidebar-section.accordion{margin-bottom:8px}
+.sidebar-section.accordion{margin-bottom:6px}
