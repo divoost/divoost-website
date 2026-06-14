@@ -265,7 +265,7 @@
   },
   "cta": {
     "title": "Start HubOnTrade Free Today",
-    "subtitle": "Experience all features with 30-day free trial",
+    "subtitle": "Experience all features with 15-day free trial",
     "primary": "Start Free Trial",
     "secondary": "Request 1:1 Consultation"
   },
@@ -523,7 +523,7 @@
       },
       "ctaBox": {
         "title": "Try Every Feature Free",
-        "desc": "Experience every HubOnTrade feature with a 14-day free trial",
+        "desc": "Experience every HubOnTrade feature with a 15-day free trial",
         "btn": "Start Free Trial"
       }
     },
@@ -701,9 +701,9 @@
       "starter": {
         "name": "Starter",
         "amount": "Free",
-        "unit": "  30 days",
+        "unit": "  15 days",
         "tax": "No credit card required",
-        "desc": "Try every core feature free for 30 days",
+        "desc": "Try every core feature free for 15 days",
         "btn": "Start Free Trial"
       },
       "growth": {
@@ -730,6 +730,17 @@
         "a4": "Upgrade to a higher plan anytime — pay only the difference.",
         "q5": "Is there a free trial?",
         "a5": "We provide a 2-week free market analysis report and recommend the best plan based on it."
+      },
+      "trialCta": {
+        "title": "Experience every HubOnTrade feature<br><span class=\"hl\">free for 15 days</span>",
+        "b1": "<strong>Web &amp; Mobile</strong> — Manage sourcing, orders and inventory anywhere",
+        "b2": "<strong>Powerful customization</strong> — Flexible setup for your business needs",
+        "b3": "<strong>Automated settlement</strong> — Margin, fees and payouts in one place",
+        "b4": "<strong>Multi-channel listing</strong> — Register to your own mall, Coupang, Naver at once",
+        "b5": "<strong>Rich integrations</strong> — 1688, Korea Customs UNI-PASS, Cafe24 &amp; Open API",
+        "more": "+ many more",
+        "start": "Get Started",
+        "compare": "Compare Plans"
       },
       "ctaBox": {
         "title": "Not sure which plan fits?",

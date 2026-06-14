@@ -265,7 +265,7 @@
   },
   "cta": {
     "title": "立即免费开始 HubOnTrade",
-    "subtitle": "30 天免费体验所有功能",
+    "subtitle": "15 天免费体验所有功能",
     "primary": "免费试用",
     "secondary": "申请 1:1 咨询"
   },
@@ -523,7 +523,7 @@
       },
       "ctaBox": {
         "title": "免费体验全部功能",
-        "desc": "通过 14 天免费试用体验 HubOnTrade 所有功能",
+        "desc": "通过 15 天免费试用体验 HubOnTrade 所有功能",
         "btn": "开始免费试用"
       }
     },
@@ -701,9 +701,9 @@
       "starter": {
         "name": "入门版",
         "amount": "免费",
-        "unit": "  30 天",
+        "unit": "  15 天",
         "tax": "无需注册信用卡",
-        "desc": "免费试用所有核心功能 30 天",
+        "desc": "免费试用所有核心功能 15 天",
         "btn": "开始免费试用"
       },
       "growth": {
@@ -730,6 +730,17 @@
         "a4": "随时可升级到更高方案,仅需支付差额。",
         "q5": "有免费试用吗?",
         "a5": "提供 2 周免费市场分析报告,并据此推荐最适合的方案。"
+      },
+      "trialCta": {
+        "title": "<span class=\"hl\">15 天免费</span>体验 HubOnTrade<br>的所有功能",
+        "b1": "<strong>网页·移动端支持</strong> — 随时随地管理选品·订单·库存",
+        "b2": "<strong>强大定制</strong> — 按行业运营需求灵活配置",
+        "b3": "<strong>结算自动化</strong> — 利润计算·手续费·结算一站完成",
+        "b4": "<strong>多渠道上架</strong> — 自营商城·Coupang·Naver 同时上架",
+        "b5": "<strong>丰富集成</strong> — 1688·韩国海关 UNI-PASS·Cafe24 等 Open API",
+        "more": "+更多",
+        "start": "开始使用",
+        "compare": "比较方案"
       },
       "ctaBox": {
         "title": "不确定哪种方案适合您?",

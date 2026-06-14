@@ -265,7 +265,7 @@
   },
   "cta": {
     "title": "Bắt đầu HubOnTrade miễn phí ngay hôm nay",
-    "subtitle": "Trải nghiệm tất cả tính năng với gói dùng thử 30 ngày",
+    "subtitle": "Trải nghiệm tất cả tính năng với gói dùng thử 15 ngày",
     "primary": "Dùng thử miễn phí",
     "secondary": "Yêu cầu tư vấn 1:1"
   },
@@ -523,7 +523,7 @@
       },
       "ctaBox": {
         "title": "Trải nghiệm mọi tính năng miễn phí",
-        "desc": "Trải nghiệm mọi tính năng HubOnTrade với 14 ngày dùng thử miễn phí",
+        "desc": "Trải nghiệm mọi tính năng HubOnTrade với 15 ngày dùng thử miễn phí",
         "btn": "Bắt đầu dùng thử miễn phí"
       }
     },
@@ -701,9 +701,9 @@
       "starter": {
         "name": "Starter",
         "amount": "Miễn phí",
-        "unit": "  30 ngày",
+        "unit": "  15 ngày",
         "tax": "Không cần thẻ tín dụng",
-        "desc": "Dùng thử mọi tính năng cốt lõi miễn phí 30 ngày",
+        "desc": "Dùng thử mọi tính năng cốt lõi miễn phí 15 ngày",
         "btn": "Bắt đầu dùng thử"
       },
       "growth": {
@@ -730,6 +730,17 @@
         "a4": "Nâng cấp gói bất cứ lúc nào — chỉ thanh toán phần chênh lệch.",
         "q5": "Có dùng thử miễn phí không?",
         "a5": "Cung cấp báo cáo phân tích thị trường miễn phí 2 tuần và đề xuất gói tốt nhất."
+      },
+      "trialCta": {
+        "title": "Trải nghiệm mọi tính năng HubOnTrade<br><span class=\"hl\">miễn phí 15 ngày</span>",
+        "b1": "<strong>Hỗ trợ Web &amp; Mobile</strong> — Quản lý tìm nguồn, đơn hàng, tồn kho mọi lúc",
+        "b2": "<strong>Tùy chỉnh mạnh mẽ</strong> — Cấu hình linh hoạt theo nhu cầu doanh nghiệp",
+        "b3": "<strong>Tự động quyết toán</strong> — Lợi nhuận, phí và thanh toán trong một nơi",
+        "b4": "<strong>Đăng đa kênh</strong> — Đăng lên mall riêng, Coupang, Naver cùng lúc",
+        "b5": "<strong>Tích hợp đa dạng</strong> — 1688, UNI-PASS Hải quan Hàn Quốc, Cafe24 &amp; Open API",
+        "more": "+ nhiều hơn",
+        "start": "Bắt đầu",
+        "compare": "So sánh gói"
       },
       "ctaBox": {
         "title": "Không chắc gói nào phù hợp?",
