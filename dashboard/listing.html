@@ -244,6 +244,11 @@
                             <div class="l-panel-header">🏪 판매 마켓 선택</div>
                             <div class="l-panel-body">
                                 <div class="mp-grid" id="marketplaceGrid">
+                                    <div class="mp-btn" data-mp="mystore" style="--mp-color:#7C3AED" onclick="selectMarketplace('mystore')">
+                                        <div class="mp-icon">🏠</div>
+                                        <div class="mp-name">내 쇼핑몰(자체몰)</div>
+                                        <div class="mp-sub">API 자동등록</div>
+                                    </div>
                                     <div class="mp-btn" data-mp="coupang" style="--mp-color:#E42528" onclick="selectMarketplace('coupang')">
                                         <div class="mp-icon">🚀</div>
                                         <div class="mp-name">쿠팡 Wing</div>
@@ -535,6 +540,15 @@
     var listingHistory = JSON.parse(localStorage.getItem('listingHistory') || '[]');
 
     var MARKETPLACE_CONFIG = {
+        mystore: {
+            name: '내 쇼핑몰(자체몰)', icon: '🏠', color: '#7C3AED',
+            apiRegister: true,
+            // 보안: 토큰은 클라이언트에 두지 않고 Edge Function(서버)이 보관 → 몰로 전달
+            endpoint: 'https://unruyezigyybnuvgdgdt.supabase.co/functions/v1/register-mystore',
+            feeRate: 0, titleMax: 200,
+            titleTip: '자체몰: 자유롭게 작성 (검색 키워드 포함 권장)',
+            descTip: '자체몰 상세설명. 등록 시 자체몰 상품 테이블에 저장됩니다.'
+        },
         coupang: {
             name: '쿠팡 Wing', icon: '🚀', color: '#E42528',
             url: 'https://wing.coupang.com/vendor/products/register',
@@ -993,12 +1007,90 @@
     /* =================================================================
        Register
        ================================================================= */
+    /* 표준 상품 모델 — 어떤 쇼핑몰이든 이 형태로 변환 후 커넥터가 몰 형식에 매핑 */
+    function buildStandardProduct(title) {
+        var src = currentProduct !== null ? allProducts[currentProduct] : {};
+        return {
+            title: title,
+            description: document.getElementById('listingDesc').value || '',
+            sell_price: parseInt(document.getElementById('sellPrice').value || '0', 10) || 0,
+            source_price: parseInt(document.getElementById('sourcePrice').value || '0', 10) || 0,
+            shipping_cost: parseInt(document.getElementById('shippingCost').value || '0', 10) || 0,
+            category_major: document.getElementById('catMajor').value || '',
+            category_minor: document.getElementById('catMinor').value || '',
+            tags: listingTags.slice(),
+            images: src && src.image ? [src.image] : [],
+            source_url: (src && src.url) || '',
+            source_platform: (src && (src.platform || src._source)) || ''
+        };
+    }
+
+    /* 자체몰 API 등록 — 토큰은 Edge Function(서버)이 보관, 클라이언트는 JWT만 전달 (loading/success/error 3분기) */
+    function registerToMyStore(title, config, btn) {
+        var payload = buildStandardProduct(title);
+        var sess = null;
+        try { sess = JSON.parse(localStorage.getItem('snsAuthSession') || 'null'); } catch (e) { sess = null; }
+        var jwt = sess && sess.access_token;
+        if (!jwt) { showToast('로그인이 필요합니다', 'error'); return; }
+
+        if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = '⏳ 등록 중...'; }
+        showToast('내 쇼핑몰에 등록 중...', 'info');
+
+        fetch(config.endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + jwt },
+            body: JSON.stringify({ product: payload })
+        }).then(function (res) {
+            return res.json().then(function (data) { return { ok: res.ok, status: res.status, data: data }; });
+        }).then(function (r) {
+            if (!r.ok) {
+                var msg = (r.data && r.data.error) ? r.data.error : ('등록 실패 (' + r.status + ')');
+                throw new Error(msg);
+            }
+            saveListingHistory(title, config, 'success', r.data && r.data.product_url);
+            showToast('내 쇼핑몰 등록 완료 ✅', 'success');
+        }).catch(function (err) {
+            // 에러를 삼키지 않음 — 로그 + 사용자 표시 + 이력 기록
+            console.error('자체몰 등록 실패', { err: err, endpoint: config.endpoint });
+            saveListingHistory(title, config, 'failed', null);
+            showToast('등록 실패: ' + err.message + ' (register.php 배포 여부 확인)', 'error');
+        }).then(function () {
+            if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || '🚀 등록하기'; }
+        });
+    }
+
+    function saveListingHistory(title, config, status, productUrl) {
+        var entry = {
+            id: Date.now(),
+            title: title,
+            marketplace: currentMarketplace,
+            marketplaceName: config.name,
+            price: document.getElementById('sellPrice').value,
+            status: status,
+            productUrl: productUrl || '',
+            timestamp: new Date().toISOString(),
+            image: currentProduct !== null ? (allProducts[currentProduct].image || '') : ''
+        };
+        listingHistory.unshift(entry);
+        if (listingHistory.length > 100) listingHistory = listingHistory.slice(0, 100);
+        localStorage.setItem('listingHistory', JSON.stringify(listingHistory));
+        renderHistory();
+        updateHistoryCount();
+    }
+
     function registerListing() {
         if (!currentMarketplace) { showToast('판매 마켓을 선택하세요', 'error'); return; }
         var title = document.getElementById('listingTitle').value;
         if (!title) { showToast('상품명을 입력하세요', 'error'); return; }
 
         var config = MARKETPLACE_CONFIG[currentMarketplace];
+
+        // 자체몰은 API 자동등록 경로로 분기
+        if (config.apiRegister) {
+            registerToMyStore(title, config, document.querySelector('.btn-register'));
+            return;
+        }
+
         var sellPrice = document.getElementById('sellPrice').value;
 
         // Save to history
