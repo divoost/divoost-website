@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
-const { getCoupangHeaders } = require('./lib/coupang-auth');
-const { get1688Params } = require('./lib/alibaba-auth');
+const { getCoupangHeaders } = require('../lib/coupang-auth');
+const { get1688Params } = require('../lib/alibaba-auth');
 
 const COUPANG_BASE = 'https://api-gateway.coupang.com';
 const ALIBABA_BASE = 'https://gw.open.1688.com/openapi';

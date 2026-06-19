@@ -162,6 +162,12 @@
     "foryou": {
       "badge": "FOR YOU",
       "title": "Recommended For You"
+    },
+    "pricing": {
+      "badge": "PRICING",
+      "title": "Pricing that fits your business",
+      "desc": "Start free, then choose a plan as you grow",
+      "more": "View all plans"
     }
   },
   "footer": {
@@ -700,10 +706,10 @@
       },
       "starter": {
         "name": "Starter",
-        "amount": "Free",
-        "unit": "  15 days",
+        "amount": "9,900",
+        "unit": "원/월",
         "tax": "No credit card required",
-        "desc": "Try every core feature free for 15 days",
+        "desc": "An affordable starting plan for solo and small sellers",
         "btn": "Start Free Trial"
       },
       "growth": {
@@ -746,6 +752,23 @@
         "title": "Not sure which plan fits?",
         "desc": "Get a free consultation",
         "btn": "Get Free Consultation"
+      },
+      "table": {
+        "col": "Category",
+        "price": "Monthly",
+        "popular": "Popular",
+        "trial": "15-day free trial",
+        "contact": "Contact"
+      },
+      "basic": {
+        "name": "Basic",
+        "desc": "For sellers scaling up their operations",
+        "btn": "Get Started"
+      },
+      "custom": {
+        "name": "Custom",
+        "desc": "Enterprise-tailored setup for your scale",
+        "btn": "Contact Sales"
       }
     },
     "case": {
