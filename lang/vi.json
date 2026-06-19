@@ -706,10 +706,10 @@
       },
       "starter": {
         "name": "Starter",
-        "amount": "Miễn phí",
-        "unit": "  15 ngày",
+        "amount": "9,900",
+        "unit": "원/월",
         "tax": "Không cần thẻ tín dụng",
-        "desc": "Dùng thử mọi tính năng cốt lõi miễn phí 15 ngày",
+        "desc": "Gói khởi đầu hợp lý cho người bán nhỏ",
         "btn": "Bắt đầu dùng thử"
       },
       "growth": {
@@ -756,7 +756,19 @@
       "table": {
         "col": "Hạng mục",
         "price": "Phí tháng",
-        "popular": "Phổ biến"
+        "popular": "Phổ biến",
+        "trial": "Dùng thử 15 ngày",
+        "contact": "Liên hệ"
+      },
+      "basic": {
+        "name": "Cơ bản",
+        "desc": "Dành cho người bán bắt đầu vận hành nghiêm túc",
+        "btn": "Bắt đầu"
+      },
+      "custom": {
+        "name": "Tùy chỉnh",
+        "desc": "Tùy chỉnh cho doanh nghiệp theo quy mô",
+        "btn": "Liên hệ"
       }
     },
     "case": {

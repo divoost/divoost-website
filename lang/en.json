@@ -706,10 +706,10 @@
       },
       "starter": {
         "name": "Starter",
-        "amount": "Free",
-        "unit": "  15 days",
+        "amount": "9,900",
+        "unit": "원/월",
         "tax": "No credit card required",
-        "desc": "Try every core feature free for 15 days",
+        "desc": "An affordable starting plan for solo and small sellers",
         "btn": "Start Free Trial"
       },
       "growth": {
@@ -756,7 +756,19 @@
       "table": {
         "col": "Category",
         "price": "Monthly",
-        "popular": "Popular"
+        "popular": "Popular",
+        "trial": "15-day free trial",
+        "contact": "Contact"
+      },
+      "basic": {
+        "name": "Basic",
+        "desc": "For sellers scaling up their operations",
+        "btn": "Get Started"
+      },
+      "custom": {
+        "name": "Custom",
+        "desc": "Enterprise-tailored setup for your scale",
+        "btn": "Contact Sales"
       }
     },
     "case": {

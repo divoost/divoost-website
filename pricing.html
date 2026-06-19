@@ -75,11 +75,13 @@
 
             <!-- Pricing Comparison Table -->
             <div class="pricing-table-wrap">
-              <table class="pricing-table">
+              <table class="pricing-table pricing-table-5">
                 <colgroup>
                   <col class="ptbl-col-label">
                   <col>
+                  <col>
                   <col class="ptbl-col-pop">
+                  <col>
                   <col>
                 </colgroup>
                 <thead>
@@ -89,6 +91,11 @@
                       <span class="ptbl-plan-ic" aria-hidden="true">🎟️</span>
                       <span class="ptbl-plan-name" data-i18n="pages.pricing.starter.name">스타터</span>
                       <span class="ptbl-plan-en">Starter</span>
+                    </th>
+                    <th class="ptbl-plan">
+                      <span class="ptbl-plan-ic" aria-hidden="true">📦</span>
+                      <span class="ptbl-plan-name" data-i18n="pages.pricing.basic.name">베이직</span>
+                      <span class="ptbl-plan-en">Basic</span>
                     </th>
                     <th class="ptbl-plan ptbl-plan-pop">
                       <span class="ptbl-pop-badge" data-i18n="pages.pricing.table.popular">인기</span>
@@ -101,11 +108,23 @@
                       <span class="ptbl-plan-name" data-i18n="pages.pricing.ent.name">엔터프라이즈</span>
                       <span class="ptbl-plan-en">Enterprise</span>
                     </th>
+                    <th class="ptbl-plan">
+                      <span class="ptbl-plan-ic" aria-hidden="true">🏢</span>
+                      <span class="ptbl-plan-name" data-i18n="pages.pricing.custom.name">커스텀</span>
+                      <span class="ptbl-plan-en">Custom</span>
+                    </th>
                   </tr>
                   <tr class="ptbl-price-row">
                     <th data-i18n="pages.pricing.table.price">월 요금</th>
-                    <td class="ptbl-price">
-                      <span class="ptbl-price-main"><span class="ptbl-amount" data-i18n="pages.pricing.starter.amount">무료</span><span class="ptbl-unit" data-i18n="pages.pricing.starter.unit">&nbsp;15일</span></span>
+                    <td class="ptbl-price"
+                        data-monthly="9900" data-yearly="7920">
+                      <span class="ptbl-price-main"><span class="ptbl-amount">9,900</span><span class="ptbl-unit">원/월</span></span>
+                      <span class="ptbl-trial" data-i18n="pages.pricing.table.trial">15일 무료 체험</span>
+                    </td>
+                    <td class="ptbl-price"
+                        data-monthly="29900" data-yearly="23920">
+                      <span class="ptbl-price-main"><span class="ptbl-amount">29,900</span><span class="ptbl-unit">원/월</span></span>
+                      <span class="ptbl-trial" data-i18n="pages.pricing.table.trial">15일 무료 체험</span>
                     </td>
                     <td class="ptbl-price ptbl-cell-pop"
                         data-monthly="60000" data-yearly="48000"
@@ -114,6 +133,7 @@
                       <span class="ptbl-original">99,000원</span>
                       <span class="ptbl-price-main"><span class="ptbl-amount">60,000</span><span class="ptbl-unit">원/월</span></span>
                       <span class="pricing-discount-badge ptbl-discount">44% 할인</span>
+                      <span class="ptbl-trial" data-i18n="pages.pricing.table.trial">15일 무료 체험</span>
                     </td>
                     <td class="ptbl-price"
                         data-monthly="150000" data-yearly="120000"
@@ -122,39 +142,46 @@
                       <span class="ptbl-original">300,000원</span>
                       <span class="ptbl-price-main"><span class="ptbl-amount">150,000</span><span class="ptbl-unit">원/월</span></span>
                       <span class="pricing-discount-badge ptbl-discount">50% 할인</span>
+                      <span class="ptbl-trial" data-i18n="pages.pricing.table.trial">15일 무료 체험</span>
+                    </td>
+                    <td class="ptbl-price ptbl-price-contact">
+                      <span class="ptbl-price-main"><span class="ptbl-amount ptbl-amount-contact" data-i18n="pages.pricing.table.contact">문의</span></span>
+                      <span class="ptbl-trial">맞춤 견적</span>
                     </td>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr><th>가입비</th><td>무료</td><td class="ptbl-cell-pop">무료</td><td>무료</td></tr>
-                  <tr><th>마켓플레이스 연동</th><td>1개</td><td class="ptbl-cell-pop">5개</td><td>무제한</td></tr>
-                  <tr><th>상품 수집</th><td>일 10개</td><td class="ptbl-cell-pop">일 50개</td><td>무제한</td></tr>
-                  <tr><th>상품 등록</th><td>월 50개</td><td class="ptbl-cell-pop">월 300개</td><td>무제한</td></tr>
-                  <tr><th>일괄 번역</th><td>일 10회</td><td class="ptbl-cell-pop">일 100회</td><td>일 100개</td></tr>
-                  <tr><th>AI 상품 소싱</th><td>일 3회</td><td class="ptbl-cell-pop">일 100회</td><td>일 5개</td></tr>
-                  <tr><th>이미지 번역</th><td>일 100회</td><td class="ptbl-cell-pop">무제한</td><td>일 500회</td></tr>
-                  <tr><th>AI 이미지 에디터</th><td>일 10회</td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
-                  <tr><th>AI 옵션명 다듬기</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop">일 100회</td><td>무제한</td></tr>
-                  <tr><th>AI 매칭 (카테고리·키워드)</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
-                  <tr><th>주문 관리</th><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td class="ptbl-cell-pop">통합</td><td>통합 + HOT 어플</td></tr>
-                  <tr><th>고객 문의 관리</th><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
-                  <tr><th>수출 신고·통관 자동화</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
-                  <tr><th>풀필먼트 통합</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop">국내</td><td>국내·해외</td></tr>
-                  <tr><th>마진 자동 계산</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
-                  <tr><th>다국어 번역 (영·중·베)</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop"><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
-                  <tr><th>1688 글로벌 소싱</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop"><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
-                  <tr><th>애널리틱스</th><td>기본 대시보드</td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td>커스텀 리포트</td></tr>
-                  <tr><th>경고 단어(지재권) 필터링</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
-                  <tr><th>전담 매니저</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop"><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
-                  <tr><th>지원</th><td>이메일</td><td class="ptbl-cell-pop">우선 이메일</td><td>24/7 우선</td></tr>
-                  <tr><th>무료 1:1 컨설팅</th><td>온보딩</td><td class="ptbl-cell-pop">월 1회</td><td>무제한</td></tr>
+                  <tr><th>가입비</th><td>무료</td><td>무료</td><td class="ptbl-cell-pop">무료</td><td>무료</td><td>별도 협의</td></tr>
+                  <tr><th>마켓플레이스 연동</th><td>1개</td><td>3개</td><td class="ptbl-cell-pop">5개</td><td>무제한</td><td>무제한</td></tr>
+                  <tr><th>상품 수집</th><td>일 10개</td><td>일 25개</td><td class="ptbl-cell-pop">일 50개</td><td>무제한</td><td>무제한</td></tr>
+                  <tr><th>상품 등록</th><td>월 50개</td><td>월 150개</td><td class="ptbl-cell-pop">월 300개</td><td>무제한</td><td>무제한</td></tr>
+                  <tr><th>일괄 번역</th><td>일 10회</td><td>일 50회</td><td class="ptbl-cell-pop">일 100회</td><td>일 100개</td><td>무제한</td></tr>
+                  <tr><th>AI 상품 소싱</th><td>일 3회</td><td>일 30회</td><td class="ptbl-cell-pop">일 100회</td><td>일 5개</td><td>무제한</td></tr>
+                  <tr><th>이미지 번역</th><td>일 100회</td><td>일 300회</td><td class="ptbl-cell-pop">무제한</td><td>일 500회</td><td>무제한</td></tr>
+                  <tr><th>AI 이미지 에디터</th><td>일 10회</td><td>일 50회</td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
+                  <tr><th>AI 옵션명 다듬기</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td>일 30회</td><td class="ptbl-cell-pop">일 100회</td><td>무제한</td><td>무제한</td></tr>
+                  <tr><th>AI 매칭 (카테고리·키워드)</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
+                  <tr><th>주문 관리</th><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td class="ptbl-cell-pop">통합</td><td>통합 + HOT 어플</td><td>통합 + HOT 어플</td></tr>
+                  <tr><th>고객 문의 관리</th><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
+                  <tr><th>수출 신고·통관 자동화</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
+                  <tr><th>풀필먼트 통합</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop">국내</td><td>국내·해외</td><td>국내·해외</td></tr>
+                  <tr><th>마진 자동 계산</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
+                  <tr><th>다국어 번역 (영·중·베)</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop"><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
+                  <tr><th>1688 글로벌 소싱</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop"><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
+                  <tr><th>애널리틱스</th><td>기본 대시보드</td><td>기본 대시보드</td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td>커스텀 리포트</td><td>맞춤 리포트</td></tr>
+                  <tr><th>경고 단어(지재권) 필터링</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td class="ptbl-cell-pop"><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
+                  <tr><th>전담 매니저</th><td><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-no" aria-label="미지원">—</span></td><td class="ptbl-cell-pop"><span class="ptbl-no" aria-label="미지원">—</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td><td><span class="ptbl-yes" aria-label="지원">✓</span></td></tr>
+                  <tr><th>지원</th><td>이메일</td><td>이메일</td><td class="ptbl-cell-pop">우선 이메일</td><td>24/7 우선</td><td>전용 매니저·SLA</td></tr>
+                  <tr><th>무료 1:1 컨설팅</th><td>온보딩</td><td>온보딩</td><td class="ptbl-cell-pop">월 1회</td><td>무제한</td><td>무제한</td></tr>
                 </tbody>
                 <tfoot>
                   <tr>
                     <td class="ptbl-corner"></td>
                     <td><a href="contact.html" class="btn btn-outline-pricing btn-ptbl js-beta-popup" data-i18n="pages.pricing.starter.btn">무료 체험 시작</a></td>
+                    <td><a href="contact.html" class="btn btn-outline-pricing btn-ptbl js-beta-popup" data-i18n="pages.pricing.basic.btn">플랜 시작하기</a></td>
                     <td class="ptbl-cell-pop"><a href="contact.html" class="btn btn-primary btn-ptbl js-beta-popup" data-i18n="pages.pricing.growth.btn">플랜 시작하기</a></td>
                     <td><a href="contact.html" class="btn btn-outline-pricing btn-ptbl js-beta-popup" data-i18n="pages.pricing.ent.btn">플랜 시작하기</a></td>
+                    <td><a href="contact.html" class="btn btn-outline-pricing btn-ptbl" data-i18n="pages.pricing.custom.btn">도입 문의</a></td>
                   </tr>
                 </tfoot>
               </table>

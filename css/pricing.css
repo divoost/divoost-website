@@ -736,10 +736,27 @@
 .pricing-table tfoot td { border-bottom: none; padding-top: 20px; }
 .btn-ptbl { width: 100%; }
 
+/* 15일 무료 체험 안내 / 문의 가격 */
+.ptbl-trial {
+    display: block;
+    margin-top: 6px;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: #10B981;
+}
+.ptbl-amount-contact { font-size: var(--text-lg); color: var(--color-primary); }
+.ptbl-price-contact .ptbl-trial { color: var(--text-muted); }
+
+/* 5단 구성: 컬럼이 많아 가로 폭 확대 */
+.pricing-table-5 { min-width: 1040px; }
+.pricing-table-5 .ptbl-col-label { width: 200px; }
+
 @media (max-width: 768px) {
     .pricing-table { min-width: 640px; }
+    .pricing-table-5 { min-width: 900px; }
     .pricing-table th,
     .pricing-table td { padding: 11px 12px; }
     .pricing-table .ptbl-col-label { width: 150px; }
+    .pricing-table-5 .ptbl-col-label { width: 140px; }
     .ptbl-amount { font-size: var(--text-lg); }
 }
