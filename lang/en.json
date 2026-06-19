@@ -162,6 +162,12 @@
     "foryou": {
       "badge": "FOR YOU",
       "title": "Recommended For You"
+    },
+    "pricing": {
+      "badge": "PRICING",
+      "title": "Pricing that fits your business",
+      "desc": "Start free, then choose a plan as you grow",
+      "more": "View all plans"
     }
   },
   "footer": {
@@ -746,6 +752,11 @@
         "title": "Not sure which plan fits?",
         "desc": "Get a free consultation",
         "btn": "Get Free Consultation"
+      },
+      "table": {
+        "col": "Category",
+        "price": "Monthly",
+        "popular": "Popular"
       }
     },
     "case": {

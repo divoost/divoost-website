@@ -162,6 +162,12 @@
     "foryou": {
       "badge": "DÀNH CHO BẠN",
       "title": "Đặc biệt phù hợp với bạn nếu..."
+    },
+    "pricing": {
+      "badge": "PRICING",
+      "title": "Bảng giá phù hợp với quy mô của bạn",
+      "desc": "Bắt đầu miễn phí, chọn gói khi bạn phát triển",
+      "more": "Xem tất cả gói"
     }
   },
   "footer": {
@@ -746,6 +752,11 @@
         "title": "Không chắc gói nào phù hợp?",
         "desc": "Nhận tư vấn miễn phí",
         "btn": "Nhận tư vấn miễn phí"
+      },
+      "table": {
+        "col": "Hạng mục",
+        "price": "Phí tháng",
+        "popular": "Phổ biến"
       }
     },
     "case": {

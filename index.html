@@ -696,6 +696,87 @@
         </div>
     </section>
 
+    <!-- Pricing Preview Section -->
+    <style>
+      .home-pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; align-items: stretch; margin-top: 8px; }
+      .hp-card { display: flex; flex-direction: column; background: var(--bg-white); border: 1px solid var(--border-light); border-radius: var(--radius-xl); padding: 30px 26px; transition: transform .2s ease, box-shadow .2s ease; }
+      .hp-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-card-hover); }
+      .hp-card-pop { border: 2px solid transparent; background-image: linear-gradient(var(--bg-white), var(--bg-white)), linear-gradient(135deg, #3B82F6, #1E40AF); background-origin: border-box; background-clip: padding-box, border-box; position: relative; }
+      .hp-pop-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); padding: 4px 16px; font-size: 12px; font-weight: 700; color: #fff; background: linear-gradient(135deg, #3B82F6, #1E40AF); border-radius: var(--radius-full); }
+      .hp-name { font-size: 1.05rem; font-weight: 800; color: var(--text-primary); }
+      .hp-name-en { font-size: .8rem; font-weight: 600; color: var(--text-muted); letter-spacing: .04em; margin-bottom: 14px; }
+      .hp-price { margin-bottom: 6px; }
+      .hp-price .amt { font-size: 1.9rem; font-weight: 800; color: var(--text-primary); }
+      .hp-card:first-child .hp-price .amt { color: #10B981; }
+      .hp-card-pop .hp-price .amt { color: var(--color-primary); }
+      .hp-price .unit { font-size: .82rem; color: var(--text-muted); margin-left: 3px; }
+      .hp-desc { font-size: .88rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 18px; min-height: 40px; }
+      .hp-feats { list-style: none; padding: 0; margin: 0 0 22px; display: flex; flex-direction: column; gap: 9px; }
+      .hp-feats li { display: flex; align-items: flex-start; gap: 8px; font-size: .86rem; color: var(--text-secondary); }
+      .hp-feats .ck { color: var(--color-primary); font-weight: 700; flex-shrink: 0; }
+      .hp-card .btn { margin-top: auto; width: 100%; }
+      .home-pricing-more { text-align: center; margin-top: 34px; }
+      @media (max-width: 860px) {
+        .home-pricing-grid { grid-template-columns: 1fr; gap: 18px; }
+        .hp-card-pop { order: -1; }
+      }
+    </style>
+    <section class="section section-light fade-in-up">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-badge" data-i18n="sec.pricing.badge">PRICING</span>
+                <h2 class="section-title" data-i18n="sec.pricing.title">비즈니스 규모에 맞는 합리적인 요금제</h2>
+                <p class="section-desc" data-i18n="sec.pricing.desc">무료 체험으로 시작해, 성장에 맞춰 플랜을 선택하세요</p>
+            </div>
+
+            <div class="home-pricing-grid">
+                <article class="hp-card">
+                    <div class="hp-name" data-i18n="pages.pricing.starter.name">스타터</div>
+                    <div class="hp-name-en">Starter</div>
+                    <div class="hp-price"><span class="amt" data-i18n="pages.pricing.starter.amount">무료</span><span class="unit" data-i18n="pages.pricing.starter.unit">&nbsp;15일</span></div>
+                    <p class="hp-desc" data-i18n="pages.pricing.starter.desc">모든 핵심 기능을 15일간 무료로 체험해 보세요</p>
+                    <ul class="hp-feats">
+                        <li><span class="ck">&#10003;</span> 마켓플레이스 연동 1개</li>
+                        <li><span class="ck">&#10003;</span> 상품 등록 월 50개</li>
+                        <li><span class="ck">&#10003;</span> AI 상품 소싱 · 번역</li>
+                    </ul>
+                    <a href="pricing.html" class="btn btn-secondary" data-i18n="pages.pricing.starter.btn">무료 체험 시작</a>
+                </article>
+
+                <article class="hp-card hp-card-pop">
+                    <span class="hp-pop-badge" data-i18n="pages.pricing.table.popular">인기</span>
+                    <div class="hp-name" data-i18n="pages.pricing.growth.name">그로스</div>
+                    <div class="hp-name-en">Growth</div>
+                    <div class="hp-price"><span class="amt">60,000</span><span class="unit">원/월</span></div>
+                    <p class="hp-desc" data-i18n="pages.pricing.growth.desc">성장하는 셀러를 위한 가장 인기 있는 플랜</p>
+                    <ul class="hp-feats">
+                        <li><span class="ck">&#10003;</span> 마켓플레이스 연동 5개</li>
+                        <li><span class="ck">&#10003;</span> 수출 신고·통관 자동화</li>
+                        <li><span class="ck">&#10003;</span> 국내 풀필먼트 · 마진 계산</li>
+                    </ul>
+                    <a href="pricing.html" class="btn btn-primary" data-i18n="pages.pricing.growth.btn">플랜 시작하기</a>
+                </article>
+
+                <article class="hp-card">
+                    <div class="hp-name" data-i18n="pages.pricing.ent.name">엔터프라이즈</div>
+                    <div class="hp-name-en">Enterprise</div>
+                    <div class="hp-price"><span class="amt">150,000</span><span class="unit">원/월</span></div>
+                    <p class="hp-desc" data-i18n="pages.pricing.ent.desc">모든 핵심 기능 + 전담 매니저로 글로벌 확장</p>
+                    <ul class="hp-feats">
+                        <li><span class="ck">&#10003;</span> 마켓플레이스 무제한</li>
+                        <li><span class="ck">&#10003;</span> 1688 글로벌 소싱 · 다국어</li>
+                        <li><span class="ck">&#10003;</span> 전담 매니저 · 24/7 지원</li>
+                    </ul>
+                    <a href="pricing.html" class="btn btn-secondary" data-i18n="pages.pricing.ent.btn">플랜 시작하기</a>
+                </article>
+            </div>
+
+            <div class="home-pricing-more">
+                <a href="pricing.html" class="btn btn-secondary btn-lg" data-i18n="sec.pricing.more">전체 요금제 보기</a>
+            </div>
+        </div>
+    </section>
+
     <!-- CTA Banner -->
     <section class="section section-cta fade-in-up">
         <div class="container">

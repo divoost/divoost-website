@@ -626,3 +626,120 @@
 @media (max-width: 900px) {
     .pricing-card-popular { transform: none; }
 }
+
+/* ============================================================
+   Pricing Comparison Table (요금 비교표)
+   ============================================================ */
+.pricing-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-xl);
+}
+
+.pricing-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: collapse;
+    background: var(--bg-white);
+    font-size: var(--text-sm);
+}
+
+.pricing-table th,
+.pricing-table td {
+    padding: 14px 18px;
+    text-align: center;
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-secondary);
+}
+
+/* 좌측 구분 컬럼 */
+.pricing-table tbody th,
+.pricing-table .ptbl-price-row > th {
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+.pricing-table .ptbl-col-label { width: 220px; }
+.pricing-table .ptbl-corner { background: transparent; border-bottom: none; }
+
+/* 헤더 플랜 */
+.ptbl-head th { border-bottom: none; padding-bottom: 4px; }
+.ptbl-plan {
+    position: relative;
+    vertical-align: bottom;
+}
+.ptbl-plan-ic { display: block; font-size: 24px; margin-bottom: 4px; }
+.ptbl-plan-name {
+    display: block;
+    font-size: var(--text-lg);
+    font-weight: 800;
+    color: var(--text-primary);
+}
+.ptbl-plan-en {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: .04em;
+}
+
+/* 인기 플랜 강조 컬럼 */
+.ptbl-plan-pop .ptbl-plan-name { color: var(--color-primary); }
+.ptbl-pop-badge {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 3px 12px;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, #3B82F6, #1E40AF);
+    border-radius: var(--radius-full);
+}
+.ptbl-cell-pop {
+    background: rgba(59, 130, 246, 0.05);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* 가격 행 */
+.ptbl-price-row td { border-bottom: 2px solid var(--border-color); padding-bottom: 18px; }
+.ptbl-price-row > th { border-bottom: 2px solid var(--border-color); }
+.ptbl-original {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--text-muted);
+    text-decoration: line-through;
+    margin-bottom: 2px;
+}
+.ptbl-price-main { display: block; }
+.ptbl-amount { font-size: var(--text-xl); font-weight: 800; color: var(--text-primary); }
+.ptbl-cell-pop .ptbl-amount { color: var(--color-primary); }
+.ptbl-price:first-of-type .ptbl-amount { color: #10B981; }
+.ptbl-unit { font-size: var(--text-xs); color: var(--text-muted); margin-left: 3px; }
+.ptbl-discount {
+    margin-top: 6px;
+    display: inline-flex;
+    transform: scale(.9);
+}
+
+/* 지원/미지원 표시 */
+.ptbl-yes { color: var(--color-primary); font-weight: 700; }
+.ptbl-cell-pop .ptbl-yes { color: var(--color-primary); }
+.ptbl-no { color: var(--border-color); }
+
+/* 행 hover */
+.pricing-table tbody tr:hover { background: rgba(59, 130, 246, 0.03); }
+.pricing-table tbody tr:hover .ptbl-cell-pop { background: rgba(59, 130, 246, 0.08); }
+
+/* 하단 CTA 버튼 행 */
+.pricing-table tfoot td { border-bottom: none; padding-top: 20px; }
+.btn-ptbl { width: 100%; }
+
+@media (max-width: 768px) {
+    .pricing-table { min-width: 640px; }
+    .pricing-table th,
+    .pricing-table td { padding: 11px 12px; }
+    .pricing-table .ptbl-col-label { width: 150px; }
+    .ptbl-amount { font-size: var(--text-lg); }
+}
