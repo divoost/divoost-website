@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { get1688Params } = require('../lib/alibaba-auth');
+const { get1688Params } = require('../../lib/alibaba-auth');
 
 const BASE_URL = 'https://gw.open.1688.com/openapi';
 

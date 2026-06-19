@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { getCached, setCache, checkRateLimit } = require('../lib/scrape-utils');
+const { getCached, setCache, checkRateLimit } = require('../../lib/scrape-utils');
 
 var SCRAPER_API_KEY = process.env.SCRAPER_API_KEY || '';
 
