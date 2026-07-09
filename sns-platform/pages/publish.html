@@ -501,26 +501,53 @@
             }
         }
 
-        async function callNaverPublish(payload){
-            var res = await fetch(SUPABASE_URL + '/functions/v1/naver-publish', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + SUPABASE_KEY,
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            });
+        // attachedMedia(data URI) 중 이미지만 Blob 으로 변환 (네이버 블로그/카페는 이미지만 지원, 영상 제외).
+        async function naverImageBlobs(){
+            var images = attachedMedia.filter(function(m){ return m.type === 'image'; });
+            var blobs = [];
+            for(var i = 0; i < images.length; i++){
+                var res = await fetch(images[i].data);
+                var blob = await res.blob();
+                blobs.push({ blob: blob, name: images[i].name || ('image' + i + '.jpg') });
+            }
+            return blobs;
+        }
+
+        async function callNaverPublish(payload, images){
+            var res;
+            if(images && images.length > 0){
+                var form = new FormData();
+                Object.keys(payload).forEach(function(k){
+                    if(payload[k] !== undefined && payload[k] !== null) form.set(k, payload[k]);
+                });
+                images.forEach(function(img){ form.append('image', img.blob, img.name); });
+                res = await fetch(SUPABASE_URL + '/functions/v1/naver-publish', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + SUPABASE_KEY },
+                    body: form
+                });
+            } else {
+                res = await fetch(SUPABASE_URL + '/functions/v1/naver-publish', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': 'Bearer ' + SUPABASE_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+            }
             var data = await res.json();
             if(!res.ok || !data.success){
                 return {ok: false, message: data.error || ('HTTP ' + res.status)};
             }
-            return {ok: true, message: '발행 완료', result: data.result};
+            return {ok: true, message: '발행 완료' + (images && images.length ? ' (이미지 ' + images.length + '장 포함)' : ''), result: data.result};
         }
 
         async function publishToNaverBlog(acc, content){
             if(!acc.accessToken) return {ok: false, message: 'Access Token 누락 — 설정에서 네이버 연동을 먼저 해주세요.'};
             if(!content) return {ok: false, message: '본문 내용이 없습니다'};
             await ensureNaverToken(acc);
+            var images = await naverImageBlobs();
             return await callNaverPublish({
                 target: 'blog',
                 accessToken: acc.accessToken,
@@ -528,7 +555,7 @@
                 contents: content,
                 categoryNo: acc.categoryNo || undefined,
                 openType: 'all'
-            });
+            }, images);
         }
 
         async function publishToNaverCafe(acc, content){
@@ -538,6 +565,7 @@
             }
             if(!content) return {ok: false, message: '본문 내용이 없습니다'};
             await ensureNaverToken(acc);
+            var images = await naverImageBlobs();
             return await callNaverPublish({
                 target: 'cafe',
                 accessToken: acc.accessToken,
@@ -546,7 +574,7 @@
                 subject: deriveNaverTitle(content),
                 contents: content,
                 openyn: 'true'
-            });
+            }, images);
         }
 
         // ─── Supabase Storage 업로드 (Instagram용 공개 URL 확보) ───
