@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
     <link rel="manifest" href="manifest.json">
-    <title>로그인 / 회원가입 | SNS 플랫폼</title>
+    <title data-i18n="doc_title">로그인 / 회원가입 | SNS 플랫폼</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
@@ -84,21 +84,31 @@
             .auth-card{padding:24px 20px}
             .auth-logo-title{font-size:20px}
         }
+        .lang-switch{display:flex;justify-content:flex-end;margin-bottom:10px}
+        .lang-switch select{padding:7px 12px;min-height:38px;border:1px solid #e2e8f0;border-radius:9px;background:#fff;color:#334155;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+        .lang-switch select:focus{outline:none;border-color:#3b82f6}
     </style>
 </head>
 <body>
     <div class="auth-container">
+        <div class="lang-switch">
+            <select id="langSelect" onchange="I18N.setLang(this.value)" aria-label="Language">
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="en">🇺🇸 English</option>
+                <option value="vi">🇻🇳 Tiếng Việt</option>
+            </select>
+        </div>
         <div class="auth-logo">
             <div class="auth-logo-icon">📱</div>
-            <div class="auth-logo-title">SNS 콘텐츠 플랫폼</div>
-            <div class="auth-logo-sub">7개 SNS 채널 통합 관리 자동화</div>
+            <div class="auth-logo-title" data-i18n="logo_title">SNS 콘텐츠 플랫폼</div>
+            <div class="auth-logo-sub" data-i18n="logo_sub">7개 SNS 채널 통합 관리 자동화</div>
         </div>
 
         <div class="auth-card">
             <!-- Tabs -->
             <div class="auth-tabs" id="authTabs">
-                <button class="auth-tab active" data-pane="login" onclick="switchTab('login')">로그인</button>
-                <button class="auth-tab" data-pane="signup" onclick="switchTab('signup')">회원가입</button>
+                <button class="auth-tab active" data-pane="login" onclick="switchTab('login')" data-i18n="tab_login">로그인</button>
+                <button class="auth-tab" data-pane="signup" onclick="switchTab('signup')" data-i18n="tab_signup">회원가입</button>
             </div>
 
             <!-- Alert area -->
@@ -107,40 +117,40 @@
             <!-- LOGIN PANE -->
             <div class="pane active" id="pane-login">
                 <div class="form-group">
-                    <label>이메일</label>
+                    <label data-i18n="label_email">이메일</label>
                     <input type="email" id="loginEmail" placeholder="your@email.com" autocomplete="email">
                 </div>
                 <div class="form-group">
-                    <label>비밀번호</label>
+                    <label data-i18n="label_password">비밀번호</label>
                     <div class="input-wrap">
-                        <input type="password" id="loginPassword" placeholder="비밀번호" autocomplete="current-password">
+                        <input type="password" id="loginPassword" placeholder="비밀번호" data-i18n-ph="ph_password" autocomplete="current-password">
                         <button class="toggle-pw" onclick="togglePw('loginPassword')">👁</button>
                     </div>
                 </div>
                 <div class="form-row">
-                    <label class="checkbox-label"><input type="checkbox" id="rememberMe" checked> 로그인 상태 유지</label>
-                    <a class="forgot-link" onclick="forgotPassword()">비밀번호 찾기</a>
+                    <label class="checkbox-label"><input type="checkbox" id="rememberMe" checked> <span data-i18n="remember">로그인 상태 유지</span></label>
+                    <a class="forgot-link" onclick="forgotPassword()" data-i18n="forgot">비밀번호 찾기</a>
                 </div>
                 <button class="btn-submit" id="btnLogin" onclick="handleLogin()">
                     <div class="spinner"></div>
-                    <span>로그인</span>
+                    <span data-i18n="btn_login">로그인</span>
                 </button>
             </div>
 
             <!-- SIGNUP PANE -->
             <div class="pane" id="pane-signup">
                 <div class="form-group">
-                    <label>이름 (선택)</label>
-                    <input type="text" id="signupName" placeholder="홍길동" autocomplete="name">
+                    <label data-i18n="label_name">이름 (선택)</label>
+                    <input type="text" id="signupName" placeholder="홍길동" data-i18n-ph="ph_name" autocomplete="name">
                 </div>
                 <div class="form-group">
-                    <label>이메일</label>
+                    <label data-i18n="label_email">이메일</label>
                     <input type="email" id="signupEmail" placeholder="your@email.com" autocomplete="email">
                 </div>
                 <div class="form-group">
-                    <label>비밀번호</label>
+                    <label data-i18n="label_password">비밀번호</label>
                     <div class="input-wrap">
-                        <input type="password" id="signupPassword" placeholder="6자 이상" autocomplete="new-password" oninput="checkPwStrength()">
+                        <input type="password" id="signupPassword" placeholder="6자 이상" data-i18n-ph="ph_pw_min" autocomplete="new-password" oninput="checkPwStrength()">
                         <button class="toggle-pw" onclick="togglePw('signupPassword')">👁</button>
                     </div>
                     <div class="pw-strength">
@@ -149,90 +159,193 @@
                         <div class="pw-strength-bar" id="pwBar3"></div>
                         <div class="pw-strength-bar" id="pwBar4"></div>
                     </div>
-                    <div class="pw-strength-text" id="pwStrengthText">비밀번호 강도</div>
+                    <div class="pw-strength-text" id="pwStrengthText" data-i18n="pw_strength">비밀번호 강도</div>
                 </div>
                 <div class="form-group">
-                    <label>비밀번호 확인</label>
+                    <label data-i18n="label_pw_confirm">비밀번호 확인</label>
                     <div class="input-wrap">
-                        <input type="password" id="signupPasswordConfirm" placeholder="비밀번호 재입력" autocomplete="new-password">
+                        <input type="password" id="signupPasswordConfirm" placeholder="비밀번호 재입력" data-i18n-ph="ph_pw_confirm" autocomplete="new-password">
                         <button class="toggle-pw" onclick="togglePw('signupPasswordConfirm')">👁</button>
                     </div>
                 </div>
                 <div class="form-row">
-                    <label class="checkbox-label"><input type="checkbox" id="agreeTerms"> <span>이용약관 및 개인정보처리방침에 동의합니다</span></label>
+                    <label class="checkbox-label"><input type="checkbox" id="agreeTerms"> <span data-i18n="agree_terms">이용약관 및 개인정보처리방침에 동의합니다</span></label>
                 </div>
                 <button class="btn-submit" id="btnSignup" onclick="handleSignup()">
                     <div class="spinner"></div>
-                    <span>회원가입</span>
+                    <span data-i18n="btn_signup">회원가입</span>
                 </button>
             </div>
 
             <!-- VERIFY EMAIL PANE -->
             <div class="pane" id="pane-verify">
                 <div class="verify-icon">📧</div>
-                <div class="verify-title">이메일 인증을 진행해주세요</div>
-                <div class="verify-text">
+                <div class="verify-title" data-i18n="verify_title">이메일 인증을 진행해주세요</div>
+                <div class="verify-text" data-i18n-html="verify_text">
                     가입하신 이메일로 <strong>6자리 인증번호</strong>를 전송했습니다.<br>
                     메일함을 확인하고 아래에 입력해주세요.
                 </div>
                 <span class="verify-email" id="verifyEmailAddr">your@email.com</span>
 
                 <div class="form-group" style="margin-top:18px">
-                    <label>인증번호 6자리</label>
+                    <label data-i18n="label_otp">인증번호 6자리</label>
                     <input type="text" id="verifyOtp" placeholder="123456" inputmode="numeric" pattern="[0-9]*" maxlength="6"
                            autocomplete="one-time-code"
                            style="text-align:center;font-size:24px;letter-spacing:8px;font-weight:700;font-family:monospace">
                 </div>
 
-                <button class="btn-submit" id="btnVerify" onclick="handleVerifyOtp()">인증하고 시작하기</button>
+                <button class="btn-submit" id="btnVerify" onclick="handleVerifyOtp()" data-i18n="btn_verify">인증하고 시작하기</button>
 
-                <div class="verify-text" style="margin-top:10px;font-size:12px;color:#94a3b8">
+                <div class="verify-text" style="margin-top:10px;font-size:12px;color:#94a3b8" data-i18n-html="verify_or_link">
                     또는 메일에 포함된 <strong>인증 링크</strong>를 클릭하셔도 됩니다.
                 </div>
 
                 <div style="text-align:center;margin-top:18px">
-                    <button class="resend-btn" onclick="resendVerification()">📤 인증 메일 재발송</button>
+                    <button class="resend-btn" onclick="resendVerification()" data-i18n="resend">📤 인증 메일 재발송</button>
                 </div>
                 <div style="text-align:center;margin-top:14px">
-                    <button class="btn-submit" onclick="switchTab('login')" style="background:#f1f5f9;color:#475569">로그인 화면으로</button>
+                    <button class="btn-submit" onclick="switchTab('login')" style="background:#f1f5f9;color:#475569" data-i18n="to_login">로그인 화면으로</button>
                 </div>
             </div>
 
             <!-- FORGOT PASSWORD PANE -->
             <div class="pane" id="pane-forgot">
                 <div class="verify-icon">🔐</div>
-                <div class="verify-title">비밀번호 재설정</div>
-                <div class="verify-text" style="margin-bottom:18px">가입하신 이메일을 입력하시면<br>비밀번호 재설정 링크를 전송해드립니다.</div>
+                <div class="verify-title" data-i18n="forgot_title">비밀번호 재설정</div>
+                <div class="verify-text" style="margin-bottom:18px" data-i18n-html="forgot_text">가입하신 이메일을 입력하시면<br>비밀번호 재설정 링크를 전송해드립니다.</div>
                 <div class="form-group">
-                    <label>이메일</label>
+                    <label data-i18n="label_email">이메일</label>
                     <input type="email" id="forgotEmail" placeholder="your@email.com">
                 </div>
                 <button class="btn-submit" id="btnForgot" onclick="handleForgot()">
                     <div class="spinner"></div>
-                    <span>재설정 메일 보내기</span>
+                    <span data-i18n="btn_forgot">재설정 메일 보내기</span>
                 </button>
                 <div style="text-align:center;margin-top:14px">
-                    <button class="resend-btn" onclick="switchTab('login')">로그인 화면으로 돌아가기</button>
+                    <button class="resend-btn" onclick="switchTab('login')" data-i18n="back_to_login">로그인 화면으로 돌아가기</button>
                 </div>
             </div>
 
             <!-- Social Login (only on login/signup) -->
             <div id="socialSection">
-                <div class="divider">또는</div>
-                <button class="social-btn" onclick="showSocialAlert('Google')"><span class="ico">🔵</span> Google로 계속하기</button>
-                <button class="social-btn" onclick="showSocialAlert('Kakao')"><span class="ico">💬</span> 카카오로 계속하기</button>
+                <div class="divider" data-i18n="divider_or">또는</div>
+                <button class="social-btn" onclick="showSocialAlert('Google')"><span class="ico">🔵</span> <span data-i18n="social_google">Google로 계속하기</span></button>
+                <button class="social-btn" onclick="showSocialAlert('Kakao')"><span class="ico">💬</span> <span data-i18n="social_kakao">카카오로 계속하기</span></button>
             </div>
 
             <div class="auth-footer" id="authFooter">
-                <span id="footerText">계정이 없으신가요?</span>
-                <a onclick="switchTab('signup')" id="footerLink">회원가입</a>
+                <span id="footerText" data-i18n="footer_no_account">계정이 없으신가요?</span>
+                <a onclick="switchTab('signup')" id="footerLink" data-i18n="link_signup">회원가입</a>
             </div>
 
-            <div class="terms-text">
+            <div class="terms-text" data-i18n-html="terms_text">
                 계속 진행하시면 <a href="#">이용약관</a> 및 <a href="#">개인정보처리방침</a>에 동의하는 것으로 간주됩니다.
             </div>
         </div>
     </div>
+
+    <!-- 다국어 사전 (ko / en / vi) -->
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                doc_title: '로그인 / 회원가입 | SNS 플랫폼',
+                logo_title: 'SNS 콘텐츠 플랫폼',
+                logo_sub: '7개 SNS 채널 통합 관리 자동화',
+                tab_login: '로그인', tab_signup: '회원가입',
+                label_email: '이메일', label_password: '비밀번호', ph_password: '비밀번호',
+                remember: '로그인 상태 유지', forgot: '비밀번호 찾기', btn_login: '로그인',
+                label_name: '이름 (선택)', ph_name: '홍길동', ph_pw_min: '6자 이상',
+                pw_strength: '비밀번호 강도', pw_weak: '⚠ 약함 - 더 복잡하게 만드세요', pw_medium: '🟡 보통', pw_strong: '✓ 강력',
+                label_pw_confirm: '비밀번호 확인', ph_pw_confirm: '비밀번호 재입력',
+                agree_terms: '이용약관 및 개인정보처리방침에 동의합니다', btn_signup: '회원가입',
+                verify_title: '이메일 인증을 진행해주세요',
+                verify_text: '가입하신 이메일로 <strong>6자리 인증번호</strong>를 전송했습니다.<br>메일함을 확인하고 아래에 입력해주세요.',
+                label_otp: '인증번호 6자리', btn_verify: '인증하고 시작하기',
+                verify_or_link: '또는 메일에 포함된 <strong>인증 링크</strong>를 클릭하셔도 됩니다.',
+                resend: '📤 인증 메일 재발송', to_login: '로그인 화면으로',
+                forgot_title: '비밀번호 재설정',
+                forgot_text: '가입하신 이메일을 입력하시면<br>비밀번호 재설정 링크를 전송해드립니다.',
+                btn_forgot: '재설정 메일 보내기', back_to_login: '로그인 화면으로 돌아가기',
+                divider_or: '또는', social_google: 'Google로 계속하기', social_kakao: '카카오로 계속하기',
+                footer_no_account: '계정이 없으신가요?', footer_have_account: '이미 가입하셨나요?',
+                link_signup: '회원가입', link_login: '로그인',
+                terms_text: '계속 진행하시면 <a href="#">이용약관</a> 및 <a href="#">개인정보처리방침</a>에 동의하는 것으로 간주됩니다.',
+                err_email_required: '이메일을 입력해주세요', err_email_invalid: '올바른 이메일 형식이 아닙니다',
+                err_pw_min: '비밀번호는 6자 이상이어야 합니다', err_pw_mismatch: '비밀번호가 일치하지 않습니다',
+                err_agree: '이용약관에 동의해주세요', ok_signup: '회원가입 성공! 잠시 후 이동합니다.',
+                err_signup: '회원가입 실패', err_already: '이미 가입된 이메일입니다. 로그인해주세요.',
+                err_pw_required: '비밀번호를 입력해주세요', ok_login: '로그인 성공! 이동 중...',
+                err_login: '로그인 실패', err_invalid_cred: '이메일 또는 비밀번호가 일치하지 않습니다',
+                err_not_confirmed: '이메일 인증이 완료되지 않았습니다. 메일함을 확인해주세요.',
+                err_resend_no_email: '재발송할 이메일이 없습니다'
+            },
+            en: {
+                doc_title: 'Log in / Sign up | SNS Platform',
+                logo_title: 'SNS Content Platform',
+                logo_sub: 'Automated management for 7 SNS channels',
+                tab_login: 'Log in', tab_signup: 'Sign up',
+                label_email: 'Email', label_password: 'Password', ph_password: 'Password',
+                remember: 'Keep me logged in', forgot: 'Forgot password?', btn_login: 'Log in',
+                label_name: 'Name (optional)', ph_name: 'John Doe', ph_pw_min: 'At least 6 characters',
+                pw_strength: 'Password strength', pw_weak: '⚠ Weak - make it more complex', pw_medium: '🟡 Medium', pw_strong: '✓ Strong',
+                label_pw_confirm: 'Confirm password', ph_pw_confirm: 'Re-enter password',
+                agree_terms: 'I agree to the Terms of Service and Privacy Policy', btn_signup: 'Sign up',
+                verify_title: 'Please verify your email',
+                verify_text: 'We sent a <strong>6-digit code</strong> to your email.<br>Check your inbox and enter it below.',
+                label_otp: '6-digit code', btn_verify: 'Verify and start',
+                verify_or_link: 'Or click the <strong>verification link</strong> in the email.',
+                resend: '📤 Resend verification email', to_login: 'Back to login',
+                forgot_title: 'Reset password',
+                forgot_text: "Enter your email and we'll send<br>a password reset link.",
+                btn_forgot: 'Send reset email', back_to_login: 'Back to login',
+                divider_or: 'or', social_google: 'Continue with Google', social_kakao: 'Continue with Kakao',
+                footer_no_account: "Don't have an account?", footer_have_account: 'Already have an account?',
+                link_signup: 'Sign up', link_login: 'Log in',
+                terms_text: 'By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.',
+                err_email_required: 'Please enter your email', err_email_invalid: 'Invalid email format',
+                err_pw_min: 'Password must be at least 6 characters', err_pw_mismatch: 'Passwords do not match',
+                err_agree: 'Please agree to the Terms of Service', ok_signup: 'Sign-up successful! Redirecting...',
+                err_signup: 'Sign-up failed', err_already: 'This email is already registered. Please log in.',
+                err_pw_required: 'Please enter your password', ok_login: 'Login successful! Redirecting...',
+                err_login: 'Login failed', err_invalid_cred: 'Email or password is incorrect',
+                err_not_confirmed: 'Email not verified yet. Please check your inbox.',
+                err_resend_no_email: 'No email to resend to'
+            },
+            vi: {
+                doc_title: 'Đăng nhập / Đăng ký | Nền tảng SNS',
+                logo_title: 'Nền tảng nội dung SNS',
+                logo_sub: 'Tự động hóa quản lý 7 kênh SNS',
+                tab_login: 'Đăng nhập', tab_signup: 'Đăng ký',
+                label_email: 'Email', label_password: 'Mật khẩu', ph_password: 'Mật khẩu',
+                remember: 'Duy trì đăng nhập', forgot: 'Quên mật khẩu?', btn_login: 'Đăng nhập',
+                label_name: 'Tên (tùy chọn)', ph_name: 'Nguyễn Văn A', ph_pw_min: 'Tối thiểu 6 ký tự',
+                pw_strength: 'Độ mạnh mật khẩu', pw_weak: '⚠ Yếu - hãy tạo phức tạp hơn', pw_medium: '🟡 Trung bình', pw_strong: '✓ Mạnh',
+                label_pw_confirm: 'Xác nhận mật khẩu', ph_pw_confirm: 'Nhập lại mật khẩu',
+                agree_terms: 'Tôi đồng ý với Điều khoản dịch vụ và Chính sách bảo mật', btn_signup: 'Đăng ký',
+                verify_title: 'Vui lòng xác minh email',
+                verify_text: 'Chúng tôi đã gửi <strong>mã 6 chữ số</strong> đến email của bạn.<br>Kiểm tra hộp thư và nhập bên dưới.',
+                label_otp: 'Mã 6 chữ số', btn_verify: 'Xác minh và bắt đầu',
+                verify_or_link: 'Hoặc nhấp vào <strong>liên kết xác minh</strong> trong email.',
+                resend: '📤 Gửi lại email xác minh', to_login: 'Về trang đăng nhập',
+                forgot_title: 'Đặt lại mật khẩu',
+                forgot_text: 'Nhập email của bạn và chúng tôi sẽ gửi<br>liên kết đặt lại mật khẩu.',
+                btn_forgot: 'Gửi email đặt lại', back_to_login: 'Quay lại đăng nhập',
+                divider_or: 'hoặc', social_google: 'Tiếp tục với Google', social_kakao: 'Tiếp tục với Kakao',
+                footer_no_account: 'Chưa có tài khoản?', footer_have_account: 'Đã có tài khoản?',
+                link_signup: 'Đăng ký', link_login: 'Đăng nhập',
+                terms_text: 'Khi tiếp tục, bạn đồng ý với <a href="#">Điều khoản dịch vụ</a> và <a href="#">Chính sách bảo mật</a> của chúng tôi.',
+                err_email_required: 'Vui lòng nhập email', err_email_invalid: 'Định dạng email không hợp lệ',
+                err_pw_min: 'Mật khẩu phải có ít nhất 6 ký tự', err_pw_mismatch: 'Mật khẩu không khớp',
+                err_agree: 'Vui lòng đồng ý với Điều khoản dịch vụ', ok_signup: 'Đăng ký thành công! Đang chuyển hướng...',
+                err_signup: 'Đăng ký thất bại', err_already: 'Email này đã được đăng ký. Vui lòng đăng nhập.',
+                err_pw_required: 'Vui lòng nhập mật khẩu', ok_login: 'Đăng nhập thành công! Đang chuyển hướng...',
+                err_login: 'Đăng nhập thất bại', err_invalid_cred: 'Email hoặc mật khẩu không đúng',
+                err_not_confirmed: 'Email chưa được xác minh. Vui lòng kiểm tra hộp thư.',
+                err_resend_no_email: 'Không có email để gửi lại'
+            }
+        };
+    </script>
+    <script src="js/i18n.js"></script>
 
     <script>
         // ─── Supabase Auth Config ───
@@ -271,13 +384,13 @@
             var footerText = document.getElementById('footerText');
             var footerLink = document.getElementById('footerLink');
             if(name === 'login'){
-                footerText.textContent = '계정이 없으신가요?';
-                footerLink.textContent = '회원가입';
+                footerText.textContent = I18N.t('footer_no_account');
+                footerLink.textContent = I18N.t('link_signup');
                 footerLink.onclick = function(){ switchTab('signup'); };
                 document.getElementById('authFooter').style.display = 'block';
             } else if(name === 'signup'){
-                footerText.textContent = '이미 가입하셨나요?';
-                footerLink.textContent = '로그인';
+                footerText.textContent = I18N.t('footer_have_account');
+                footerLink.textContent = I18N.t('link_login');
                 footerLink.onclick = function(){ switchTab('login'); };
                 document.getElementById('authFooter').style.display = 'block';
             } else {
@@ -286,6 +399,12 @@
 
             clearAlert();
         }
+
+        // 언어 변경 시: 현재 활성 탭 기준으로 동적 푸터 텍스트 재동기화
+        window.onI18nChange = function(){
+            var active = document.querySelector('.pane.active');
+            if(active){ switchTab(active.id.replace('pane-', '')); }
+        };
 
         // ─── Toggle password visibility ───
         function togglePw(id){
@@ -317,10 +436,10 @@
                 }
             });
             var txt = document.getElementById('pwStrengthText');
-            if(pw.length === 0){ txt.textContent = '비밀번호 강도'; txt.style.color = '#94a3b8'; }
-            else if(score <= 1){ txt.textContent = '⚠ 약함 - 더 복잡하게 만드세요'; txt.style.color = '#ef4444'; }
-            else if(score <= 2){ txt.textContent = '🟡 보통'; txt.style.color = '#f59e0b'; }
-            else { txt.textContent = '✓ 강력'; txt.style.color = '#10b981'; }
+            if(pw.length === 0){ txt.textContent = I18N.t('pw_strength'); txt.style.color = '#94a3b8'; }
+            else if(score <= 1){ txt.textContent = I18N.t('pw_weak'); txt.style.color = '#ef4444'; }
+            else if(score <= 2){ txt.textContent = I18N.t('pw_medium'); txt.style.color = '#f59e0b'; }
+            else { txt.textContent = I18N.t('pw_strong'); txt.style.color = '#10b981'; }
         }
 
         // ─── Alerts ───
@@ -367,11 +486,11 @@
             var passwordConfirm = document.getElementById('signupPasswordConfirm').value;
             var agreed = document.getElementById('agreeTerms').checked;
 
-            if(!email){ showAlert('이메일을 입력해주세요', 'error'); return; }
-            if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showAlert('올바른 이메일 형식이 아닙니다', 'error'); return; }
-            if(password.length < 6){ showAlert('비밀번호는 6자 이상이어야 합니다', 'error'); return; }
-            if(password !== passwordConfirm){ showAlert('비밀번호가 일치하지 않습니다', 'error'); return; }
-            if(!agreed){ showAlert('이용약관에 동의해주세요', 'error'); return; }
+            if(!email){ showAlert(I18N.t('err_email_required'), 'error'); return; }
+            if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){ showAlert(I18N.t('err_email_invalid'), 'error'); return; }
+            if(password.length < 6){ showAlert(I18N.t('err_pw_min'), 'error'); return; }
+            if(password !== passwordConfirm){ showAlert(I18N.t('err_pw_mismatch'), 'error'); return; }
+            if(!agreed){ showAlert(I18N.t('err_agree'), 'error'); return; }
 
             setLoading('btnSignup', true);
 
@@ -395,16 +514,16 @@
                 } else if(result.data.session){
                     // Auto-confirmed (email confirmation disabled in Supabase)
                     saveSession(result.data.session, result.data.user);
-                    showAlert('회원가입 성공! 잠시 후 이동합니다.', 'success');
+                    showAlert(I18N.t('ok_signup'), 'success');
                     setTimeout(function(){ window.location.href = REDIRECT_URL; }, 1000);
                 } else {
                     document.getElementById('verifyEmailAddr').textContent = email;
                     switchTab('verify');
                 }
             } else {
-                var errMsg = (result.data && (result.data.msg || result.data.message || result.data.error_description)) || '회원가입 실패';
+                var errMsg = (result.data && (result.data.msg || result.data.message || result.data.error_description)) || I18N.t('err_signup');
                 if(errMsg.indexOf('already registered') > -1 || errMsg.indexOf('User already') > -1){
-                    errMsg = '이미 가입된 이메일입니다. 로그인해주세요.';
+                    errMsg = I18N.t('err_already');
                 }
                 showAlert(errMsg, 'error');
             }
@@ -416,8 +535,8 @@
             var email = document.getElementById('loginEmail').value.trim();
             var password = document.getElementById('loginPassword').value;
 
-            if(!email){ showAlert('이메일을 입력해주세요', 'error'); return; }
-            if(!password){ showAlert('비밀번호를 입력해주세요', 'error'); return; }
+            if(!email){ showAlert(I18N.t('err_email_required'), 'error'); return; }
+            if(!password){ showAlert(I18N.t('err_pw_required'), 'error'); return; }
 
             setLoading('btnLogin', true);
 
@@ -449,15 +568,15 @@
                         })
                     });
                 } catch(e){}
-                showAlert('로그인 성공! 이동 중...', 'success');
+                showAlert(I18N.t('ok_login'), 'success');
                 setTimeout(function(){ window.location.href = REDIRECT_URL; }, 800);
             } else {
-                var errMsg = (result.data && (result.data.error_description || result.data.msg || result.data.message)) || '로그인 실패';
+                var errMsg = (result.data && (result.data.error_description || result.data.msg || result.data.message)) || I18N.t('err_login');
                 if(errMsg.indexOf('Invalid login') > -1 || errMsg.indexOf('credentials') > -1){
-                    errMsg = '이메일 또는 비밀번호가 일치하지 않습니다';
+                    errMsg = I18N.t('err_invalid_cred');
                 }
                 if(errMsg.indexOf('Email not confirmed') > -1){
-                    errMsg = '이메일 인증이 완료되지 않았습니다. 메일함을 확인해주세요.';
+                    errMsg = I18N.t('err_not_confirmed');
                     document.getElementById('verifyEmailAddr').textContent = email;
                     setTimeout(function(){ switchTab('verify'); }, 1500);
                 }
@@ -468,7 +587,7 @@
         // ─── Resend verification ───
         async function resendVerification(){
             var email = localStorage.getItem('snsAuthPendingEmail') || document.getElementById('verifyEmailAddr').textContent;
-            if(!email || email === 'your@email.com'){ showAlert('재발송할 이메일이 없습니다', 'error'); return; }
+            if(!email || email === 'your@email.com'){ showAlert(I18N.t('err_resend_no_email'), 'error'); return; }
 
             var result = await supabaseAuth('resend', {
                 type: 'signup',

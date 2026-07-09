@@ -287,6 +287,10 @@ body.lang-zh .lang-switcher,
 body.lang-en .lang-switcher {
   padding: 0 8px !important;
 }
+/* 언어 버튼 — 흰 헤더에서 보이도록 + 현재 언어 강조 */
+.lang-btn { color: #64748b; }
+.lang-btn:hover { color: #1d4ed8; }
+.lang-btn.active { color: #1d4ed8 !important; }
 body.lang-vi .logo,
 body.lang-zh .logo,
 body.lang-en .logo {

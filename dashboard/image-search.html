@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 역검색 | 소싱 트래커</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/mobile-fix.css">
+    <style>
+        .img-box{background:#fff;border-radius:16px;padding:24px;margin-bottom:18px}
+        .img-box h1{font-size:1.3rem;color:#0F172A;margin-bottom:4px}
+        .img-box .sub{font-size:.82rem;color:#64748B;margin-bottom:16px}
+        .drop-zone{border:2px dashed #CBD5E1;border-radius:12px;padding:28px;text-align:center;cursor:pointer;transition:.2s;background:#F8FAFC}
+        .drop-zone:hover,.drop-zone.drag{border-color:#7c3aed;background:#F5F3FF}
+        .drop-zone .dz-icon{font-size:2.4rem;margin-bottom:8px}
+        .drop-zone .dz-text{font-size:.86rem;color:#475569;font-weight:600}
+        .drop-zone .dz-hint{font-size:.74rem;color:#94A3B8;margin-top:4px}
+        .url-row{display:flex;gap:8px;margin-top:12px}
+        .url-row input{flex:1;padding:11px 14px;border:1px solid #E2E8F0;border-radius:9px;font-size:.86rem;outline:none}
+        .url-row input:focus{border-color:#7c3aed}
+        .preview-wrap{display:none;margin-top:16px;align-items:flex-start;gap:16px}
+        .preview-wrap img{width:140px;height:140px;object-fit:cover;border-radius:12px;border:1px solid #E2E8F0;background:#f1f5f9}
+        .provider-chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+        .pv-chip{padding:8px 14px;border:1.5px solid #E2E8F0;border-radius:24px;font-size:.8rem;font-weight:600;color:#475569;cursor:pointer;display:flex;align-items:center;gap:6px;user-select:none}
+        .pv-chip.on{border-color:#7c3aed;background:#F5F3FF;color:#7c3aed}
+        .search-btn{padding:13px 28px;border:none;border-radius:11px;background:#7c3aed;color:#fff;font-size:.92rem;font-weight:700;cursor:pointer}
+        .search-btn:hover{background:#6d28d9}
+        .search-btn:disabled{opacity:.5;cursor:not-allowed}
+        .results-section{margin-top:8px}
+        .res-group{background:#fff;border-radius:14px;padding:18px;margin-bottom:16px}
+        .res-group-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+        .res-group-head .rg-title{font-size:1rem;font-weight:800;color:#0F172A}
+        .res-group-head .rg-count{font-size:.72rem;color:#64748B;background:#F1F5F9;padding:2px 10px;border-radius:10px;font-weight:600}
+        .res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+        .r-card{border:1px solid #E2E8F0;border-radius:10px;overflow:hidden;text-decoration:none;color:inherit;transition:.2s;display:block}
+        .r-card:hover{box-shadow:0 4px 14px rgba(0,0,0,.08);transform:translateY(-2px)}
+        .r-card img{width:100%;height:150px;object-fit:cover;background:#f1f5f9}
+        .r-card .rc-body{padding:8px 10px}
+        .r-card .rc-name{font-size:.74rem;color:#0F172A;line-height:1.3;height:2.6em;overflow:hidden}
+        .r-card .rc-price{font-size:.92rem;font-weight:800;color:#e42528;margin-top:4px}
+        .r-card .rc-src{font-size:.62rem;color:#94A3B8;margin-top:2px}
+        .res-status{padding:18px;text-align:center;color:#64748B;font-size:.84rem}
+        .res-note{background:#FFFBEB;border:1px solid #FDE68A;color:#92400E;border-radius:10px;padding:12px 14px;font-size:.78rem;line-height:1.6;margin-top:10px}
+        @media(max-width:768px){.preview-wrap{flex-direction:column}.res-grid{grid-template-columns:1fr 1fr}}
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="sidebar-logo-icon">ST</div><div class="sidebar-logo-text">소싱 트래커<small>MULTI-CHANNEL</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="sidebar-section"><div class="sidebar-section-title">대시보드</div><a href="index.html" class="sidebar-link"><span class="sidebar-link-icon">📊</span> 종합 현황</a><a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품</a><a href="trends.html" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a><a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a><a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 &amp; 리뷰</a><a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a></div>
+                <div class="sidebar-section"><div class="sidebar-section-title">AI &amp; 도구</div><a href="image-search.html" class="sidebar-link active"><span class="sidebar-link-icon">🖼</span> 이미지 역검색</a><a href="ai-sourcing.html" class="sidebar-link"><span class="sidebar-link-icon">🤖</span> AI 소싱</a><a href="keyword-analysis.html" class="sidebar-link"><span class="sidebar-link-icon">🔑</span> 키워드 분석</a>
+                    <a href="listing.html" class="sidebar-link"><span class="sidebar-link-icon">📤</span> 자동 등록</a>
+                    <a href="scraper.html" class="sidebar-link"><span class="sidebar-link-icon">🕷</span> 스크래퍼</a><a href="db-view.html" class="sidebar-link"><span class="sidebar-link-icon">💾</span> DB 데이터</a><a href="live-search.html" class="sidebar-link"><span class="sidebar-link-icon">🔴</span> 실시간 검색</a><a href="admin.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a></div>
+                <div class="sidebar-section"><div class="sidebar-section-title">바로가기</div><a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span> 메인 홈</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar"><div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">🖼 이미지 역검색</div><div class="top-bar-date">상품 이미지 → 국내·해외 유사상품 찾기</div></div></div></header>
+            <div class="content-area">
+
+                <div class="img-box">
+                    <h1>🖼 이미지로 유사상품 찾기</h1>
+                    <div class="sub">상품 이미지를 올리거나 이미지 URL을 입력하면, 선택한 플랫폼에서 유사한 상품(사진·가격·링크)을 찾아줍니다.</div>
+
+                    <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()">
+                        <div class="dz-icon">📤</div>
+                        <div class="dz-text">이미지를 드래그하거나 클릭해서 업로드</div>
+                        <div class="dz-hint">JPG · PNG · WEBP (최대 5MB)</div>
+                        <input type="file" id="fileInput" accept="image/*" hidden onchange="onFile(this.files[0])">
+                    </div>
+                    <div class="url-row">
+                        <input type="text" id="imgUrlInput" placeholder="또는 이미지 URL 붙여넣기 (https://...jpg)" onkeydown="if(event.key==='Enter')onUrl()">
+                        <button class="search-btn" style="padding:11px 18px" onclick="onUrl()">불러오기</button>
+                    </div>
+
+                    <div class="preview-wrap" id="previewWrap">
+                        <img id="previewImg" alt="preview">
+                        <div style="flex:1">
+                            <div style="font-size:.8rem;color:#475569;font-weight:600;margin-bottom:8px">검색할 플랫폼 선택</div>
+                            <div class="provider-chips" id="providerChips">
+                                <span class="pv-chip on" data-pv="naver">🟢 네이버 (국내)</span>
+                                <span class="pv-chip on" data-pv="1688">🏭 1688</span>
+                                <span class="pv-chip" data-pv="taobao">🛒 타오바오</span>
+                                <span class="pv-chip" data-pv="aliexpress">🅰️ 알리익스프레스</span>
+                                <span class="pv-chip" data-pv="amazon">📦 아마존</span>
+                                <span class="pv-chip" data-pv="shopee">🛍 쇼피</span>
+                                <span class="pv-chip" data-pv="google">🔎 Google Lens</span>
+                            </div>
+                            <button class="search-btn" id="searchBtn" onclick="runSearch()">🔍 유사상품 검색</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-section" id="resultsSection"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ─── 이미지 역검색 ───
+        // 백엔드: POST /api/image-search { provider, imageUrl } → { ok, items:[{name,price,image,url,platform}] }
+        var API_BASE = ''; // 동일 출처(Vercel) 사용. 별도 호스트면 절대 URL 설정.
+        var currentImageUrl = '';       // 검색에 쓸 이미지 URL
+        var currentImageData = '';      // base64 (URL 없이 업로드한 경우)
+
+        var PROVIDER_INFO = {
+            naver: { name: '네이버 쇼핑', icon: '🟢' },
+            '1688': { name: '1688', icon: '🏭' },
+            taobao: { name: '타오바오', icon: '🛒' },
+            aliexpress: { name: '알리익스프레스', icon: '🅰️' },
+            amazon: { name: '아마존', icon: '📦' },
+            shopee: { name: '쇼피', icon: '🛍' },
+            google: { name: 'Google Lens', icon: '🔎' }
+        };
+
+        // 플랫폼 칩 토글
+        document.getElementById('providerChips').addEventListener('click', function(e){
+            var chip = e.target.closest('.pv-chip');
+            if(chip){ chip.classList.toggle('on'); }
+        });
+
+        // 드래그&드롭
+        var dz = document.getElementById('dropZone');
+        ['dragenter','dragover'].forEach(function(ev){ dz.addEventListener(ev, function(e){ e.preventDefault(); dz.classList.add('drag'); }); });
+        ['dragleave','drop'].forEach(function(ev){ dz.addEventListener(ev, function(e){ e.preventDefault(); dz.classList.remove('drag'); }); });
+        dz.addEventListener('drop', function(e){ if(e.dataTransfer.files[0]) onFile(e.dataTransfer.files[0]); });
+
+        function onFile(file){
+            if(!file){ return; }
+            if(file.size > 5 * 1024 * 1024){ alert('이미지가 5MB를 초과합니다.'); return; }
+            var reader = new FileReader();
+            reader.onload = function(){
+                currentImageData = reader.result; // data:image/...;base64,...
+                currentImageUrl = '';
+                showPreview(reader.result);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function onUrl(){
+            var url = document.getElementById('imgUrlInput').value.trim();
+            if(!url){ return; }
+            currentImageUrl = url;
+            currentImageData = '';
+            showPreview(url);
+        }
+
+        function showPreview(src){
+            document.getElementById('previewImg').src = src;
+            document.getElementById('previewWrap').style.display = 'flex';
+        }
+
+        function selectedProviders(){
+            var arr = [];
+            document.querySelectorAll('.pv-chip.on').forEach(function(c){ arr.push(c.getAttribute('data-pv')); });
+            return arr;
+        }
+
+        async function runSearch(){
+            if(!currentImageUrl && !currentImageData){ alert('먼저 이미지를 업로드하거나 URL을 입력하세요.'); return; }
+            var providers = selectedProviders();
+            if(!providers.length){ alert('검색할 플랫폼을 1개 이상 선택하세요.'); return; }
+
+            var btn = document.getElementById('searchBtn');
+            btn.disabled = true; btn.textContent = '🔍 검색 중...';
+            var section = document.getElementById('resultsSection');
+            section.innerHTML = '';
+
+            // 플랫폼별 병렬 검색 (각 그룹 독립 렌더)
+            providers.forEach(function(pv){ renderGroupSkeleton(pv); });
+
+            await Promise.all(providers.map(function(pv){ return searchProvider(pv); }));
+
+            btn.disabled = false; btn.textContent = '🔍 유사상품 검색';
+        }
+
+        function renderGroupSkeleton(pv){
+            var info = PROVIDER_INFO[pv] || { name: pv, icon: '🔎' };
+            var el = document.createElement('div');
+            el.className = 'res-group';
+            el.id = 'group-' + pv;
+            el.innerHTML = '<div class="res-group-head"><span style="font-size:1.1rem">' + info.icon + '</span>' +
+                '<span class="rg-title">' + info.name + '</span>' +
+                '<span class="rg-count" id="count-' + pv + '">검색 중…</span></div>' +
+                '<div class="res-status" id="status-' + pv + '">⏳ 유사상품을 찾는 중입니다…</div>' +
+                '<div class="res-grid" id="grid-' + pv + '" style="display:none"></div>';
+            document.getElementById('resultsSection').appendChild(el);
+        }
+
+        async function searchProvider(pv){
+            try {
+                var res = await fetch(API_BASE + '/api/image-search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ provider: pv, imageUrl: currentImageUrl, imageData: currentImageData })
+                });
+                if(!res.ok){ throw new Error('HTTP ' + res.status); }
+                var data = await res.json();
+                if(!data.ok){ throw new Error(data.error || '검색 실패'); }
+                renderGroupResults(pv, data.items || []);
+            } catch(err){
+                renderGroupError(pv, err.message);
+            }
+        }
+
+        function renderGroupResults(pv, items){
+            var status = document.getElementById('status-' + pv);
+            var grid = document.getElementById('grid-' + pv);
+            document.getElementById('count-' + pv).textContent = items.length + '개';
+            if(!items.length){
+                status.textContent = '유사상품을 찾지 못했습니다.';
+                return;
+            }
+            status.style.display = 'none';
+            grid.style.display = 'grid';
+            grid.innerHTML = items.map(function(it){
+                var price = it.price ? (it.priceText || it.price) : '-';
+                return '<a class="r-card" href="' + (it.url || '#') + '" target="_blank" rel="noopener">' +
+                    '<img src="' + (it.image || '') + '" alt="" loading="lazy" onerror="this.style.opacity=.3">' +
+                    '<div class="rc-body"><div class="rc-name">' + escapeHtml(it.name || '') + '</div>' +
+                    '<div class="rc-price">' + price + '</div>' +
+                    '<div class="rc-src">' + (it.platform || pv) + '</div></div></a>';
+            }).join('');
+        }
+
+        function renderGroupError(pv, msg){
+            document.getElementById('count-' + pv).textContent = '실패';
+            var status = document.getElementById('status-' + pv);
+            status.innerHTML = '⚠️ 검색 실패: ' + escapeHtml(msg) +
+                '<div class="res-note">이 플랫폼은 이미지검색 백엔드(<b>/api/image-search</b>)가 아직 연결되지 않았거나 차단되었습니다. ' +
+                '백엔드 함수 배포 + 프록시 설정이 필요합니다. (설계 문서: docs/image-search-setup.md)</div>';
+        }
+
+        function escapeHtml(s){
+            return String(s).replace(/[&<>"']/g, function(c){
+                return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+            });
+        }
+
+        document.getElementById('mobileMenuBtn').onclick = function(){
+            document.getElementById('sidebar').classList.toggle('open');
+        };
+    </script>
+    <script src="js/i18n-auto.js"></script>
+    <script src="js/i18n-common.js"></script>
+    <script src="js/i18n.js"></script>
+</body>
+</html>
