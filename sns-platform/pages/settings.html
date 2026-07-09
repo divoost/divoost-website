@@ -803,6 +803,13 @@
                     html += '<button class="btn-add-account" style="border-color:#000;color:#fff;background:linear-gradient(135deg,#000,#1a1a1a);margin-top:6px" onclick="connectTikTokOAuth()">🎵 TikTok 계정으로 한 번에 연동 (OAuth)</button>';
                     html += '<button class="btn-add-account" style="border-color:#94a3b8;color:#475569;margin-top:6px" onclick="openSetupWizard(\'tiktok\')">🎵 TikTok 설정 방법 보기</button>';
                 }
+                if(chId === 'naver_blog'){
+                    html += '<button class="btn-add-account" style="border-color:#03C75A;color:#fff;background:#03C75A;margin-top:6px" onclick="connectNaverOAuth()">📗 네이버 계정으로 한 번에 연동 (OAuth, 블로그+카페)</button>';
+                    html += '<button class="btn-add-account" style="border-color:#94a3b8;color:#475569;margin-top:6px" onclick="openSetupWizard(\'naver\')">📗 네이버 설정 방법 보기</button>';
+                }
+                if(chId === 'naver_cafe'){
+                    html += '<div class="guide-text" style="margin-top:6px">💡 위 "네이버 블로그" 카드에서 OAuth 연동하면 카페 계정도 함께 등록됩니다. 등록 후 이 카드에서 카페ID(clubid)·게시판ID(menuid)를 입력해야 실제 발행이 됩니다.</div>';
+                }
                 html += '<div class="guide-text">📌 ' + def.guide + '</div>';
                 html += '</div>';
             });
@@ -983,7 +990,60 @@
                     });
                 }
             }
+            if(e.data && e.data.type === 'naver-oauth-complete'){
+                if(e.data.success){
+                    loadSettings();
+                    showResultModal({
+                        kind:'success',
+                        title:'네이버 연동 완료',
+                        text:'네이버 블로그·카페 계정이 등록되었습니다. 카페는 카페ID/게시판ID를 추가로 입력해야 발행됩니다.',
+                        skipReauth: true
+                    });
+                } else {
+                    showResultModal({
+                        kind:'error',
+                        title:'네이버 연동 실패',
+                        text: e.data.error || '알 수 없는 오류',
+                        skipReauth: true
+                    });
+                }
+            }
         });
+
+        // ─── 네이버 OAuth 연동 ───
+        // 네이버 개발자센터에서 발급받은 Client ID (Client Secret 은 Edge Function에만)
+        var NAVER_CLIENT_ID = ''; // ← 마스터가 콘솔에서 발급받은 Client ID 입력
+        var NAVER_REDIRECT_URI = location.origin + location.pathname.replace(/[^/]*$/, 'naver-callback.html');
+
+        window.connectNaverOAuth = function(){
+            if(!NAVER_CLIENT_ID){
+                showResultModal({
+                    kind:'warn',
+                    title:'네이버 Client ID 미설정',
+                    text:'네이버 개발자센터에서 애플리케이션을 등록하고 Client ID 를 발급받은 후 settings.html 파일의 NAVER_CLIENT_ID 값을 설정해주세요.\n\n자세한 방법은 docs/naver-setup.md 참고.',
+                    skipReauth: true,
+                    footer: [
+                        { label:'📖 네이버 개발자센터 열기', type:'reauth', action: function(){ window.open('https://developers.naver.com/apps', '_blank'); } },
+                        { label:'닫기', type:'ghost', action: closeResultModal }
+                    ]
+                });
+                return;
+            }
+
+            var state = 'st_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 10);
+            sessionStorage.setItem('naver_oauth_state', state);
+
+            var authUrl = 'https://nid.naver.com/oauth2.0/authorize?' +
+                'response_type=code' +
+                '&client_id=' + encodeURIComponent(NAVER_CLIENT_ID) +
+                '&redirect_uri=' + encodeURIComponent(NAVER_REDIRECT_URI) +
+                '&state=' + encodeURIComponent(state);
+
+            var popup = window.open(authUrl, 'naver-oauth', 'width=460,height=640,resizable=yes,scrollbars=yes');
+            if(!popup){
+                showResultModal({ kind:'warn', title:'팝업 차단됨', text:'브라우저가 팝업을 차단했습니다. 팝업 허용 후 다시 시도해주세요.', skipReauth: true });
+            }
+        };
 
         async function fetchPagesAndInstagram(userToken){
             try {
@@ -1686,6 +1746,17 @@
                     { icon:'✅', title:'5. 연동하기', body:'설정이 끝나면 아래 <b>[TikTok 연동하기]</b> 버튼으로 로그인 → 권한 허용 → 완료. <b>영상만</b> 발행 가능합니다.' }
                 ],
                 action: { label:'🎵 TikTok 연동하기', fn:'connectTikTokOAuth' }
+            },
+            naver: {
+                title: '📗 네이버 블로그·카페 연동 설정',
+                steps: [
+                    { icon:'🧩', title:'1. 개발자 애플리케이션 등록', body:'<b>developers.naver.com/apps</b> ▸ 애플리케이션 등록 ▸ 사용 API에 <b>네이버 로그인</b>, <b>블로그</b>, <b>카페</b> 를 모두 추가하세요.', tip:'Client ID·Client Secret 이 발급됩니다.' },
+                    { icon:'🔗', title:'2. 서비스 URL / Callback URL 등록', body:'서비스 URL: <b>https://hubontrade.com</b><br>Callback URL: <b>https://hubontrade.com/sns-platform/pages/naver-callback.html</b>' },
+                    { icon:'🔑', title:'3. 키 설정', body:'발급받은 <b>Client ID</b>는 settings.html의 NAVER_CLIENT_ID에, <b>Client Secret</b>은 Supabase Edge Function 환경변수(NAVER_CLIENT_SECRET)에만 등록합니다.', tip:'Client Secret 은 절대 화면/코드에 노출하지 마세요. 자세한 절차는 docs/naver-setup.md 참고.' },
+                    { icon:'☕', title:'4. 카페 발행 추가 설정', body:'카페는 <b>카페ID(clubid)</b>와 <b>게시판ID(menuid)</b>가 별도로 필요합니다. 네이버 카페 관리 페이지 URL에서 확인해 "네이버 카페" 카드에 직접 입력하세요.' },
+                    { icon:'✅', title:'5. 연동하기', body:'설정이 끝나면 아래 <b>[네이버 연동하기]</b> 버튼으로 로그인 → 권한 허용 → 완료. 블로그·카페 계정이 함께 등록됩니다.' }
+                ],
+                action: { label:'📗 네이버 연동하기', fn:'connectNaverOAuth' }
             }
         };
 

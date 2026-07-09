@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>네이버 연동 처리 중...</title>
+    <style>
+        body{margin:0;font-family:'Inter',-apple-system,sans-serif;background:linear-gradient(135deg,#03C75A,#02a94d);min-height:100vh;display:flex;align-items:center;justify-content:center;color:#fff;padding:20px}
+        .card{background:#1e1e1e;border:1px solid #333;border-radius:16px;padding:32px;max-width:480px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+        .logo{width:64px;height:64px;border-radius:16px;background:#03C75A;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;margin:0 auto 20px;color:#fff}
+        h1{font-size:20px;font-weight:700;margin:0 0 8px}
+        .sub{font-size:13px;color:#94a3b8;margin-bottom:24px}
+        .spinner{width:36px;height:36px;border:3px solid #333;border-top-color:#03C75A;border-radius:50%;margin:24px auto;animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .status{font-size:13px;color:#cbd5e1;line-height:1.6;margin-top:16px;padding:14px;background:#0f0f0f;border-radius:10px;border:1px solid #2a2a2a;text-align:left;font-family:monospace;max-height:200px;overflow-y:auto;word-break:break-all}
+        .status.error{border-color:#dc2626;color:#fca5a5}
+        .status.ok{border-color:#16a34a;color:#86efac}
+        .btn{display:inline-block;padding:10px 24px;border-radius:10px;background:#03C75A;color:#fff;font-weight:600;text-decoration:none;margin-top:20px;border:none;cursor:pointer;font-size:14px}
+        .btn:hover{opacity:.9}
+        .btn.secondary{background:#333;color:#cbd5e1}
+        .btn-row{display:flex;gap:8px;justify-content:center;margin-top:20px}
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="logo">N</div>
+        <h1 id="title">네이버 연동 처리 중...</h1>
+        <div class="sub" id="subtitle">잠시만 기다려주세요.</div>
+        <div class="spinner" id="spinner"></div>
+        <div class="status" id="status"></div>
+        <div id="actions"></div>
+    </div>
+
+    <script>
+    (async function(){
+        var titleEl = document.getElementById('title');
+        var subtitleEl = document.getElementById('subtitle');
+        var statusEl = document.getElementById('status');
+        var spinnerEl = document.getElementById('spinner');
+        var actionsEl = document.getElementById('actions');
+
+        function log(msg){
+            statusEl.innerHTML += '[' + new Date().toLocaleTimeString('ko-KR') + '] ' + msg + '<br>';
+        }
+        function fail(title, msg){
+            titleEl.textContent = title;
+            subtitleEl.textContent = '연동에 실패했습니다.';
+            spinnerEl.style.display = 'none';
+            statusEl.className = 'status error';
+            log('❌ ' + msg);
+            actionsEl.innerHTML = '<div class="btn-row">' +
+                '<button class="btn" onclick="window.close()">창 닫기</button>' +
+                '<a class="btn secondary" href="settings.html">설정으로 돌아가기</a>' +
+                '</div>';
+            if(window.opener){
+                window.opener.postMessage({type:'naver-oauth-complete', success:false, error: msg}, location.origin);
+            }
+        }
+        function ok(title, msg){
+            titleEl.textContent = title;
+            subtitleEl.textContent = '연동이 완료되었습니다.';
+            spinnerEl.style.display = 'none';
+            statusEl.className = 'status ok';
+            log('✅ ' + msg);
+            actionsEl.innerHTML = '<div class="btn-row">' +
+                '<a class="btn" href="settings.html">설정 페이지로 이동</a>' +
+                '</div>';
+            setTimeout(function(){
+                if(window.opener){
+                    window.opener.postMessage({type:'naver-oauth-complete', success:true}, location.origin);
+                    window.close();
+                } else {
+                    location.href = 'settings.html';
+                }
+            }, 3000);
+        }
+
+        // 1) URL parameter 파싱
+        var params = new URLSearchParams(location.search);
+        var code = params.get('code');
+        var state = params.get('state');
+        var err = params.get('error');
+        var errDesc = params.get('error_description');
+
+        if(err){
+            fail('네이버 로그인 거부됨', err + (errDesc ? ': ' + decodeURIComponent(errDesc) : ''));
+            return;
+        }
+        if(!code){
+            fail('잘못된 요청', 'authorization code 가 없습니다. 네이버 로그인을 정상적으로 완료했는지 확인하세요.');
+            return;
+        }
+
+        // 2) CSRF 방어: state 검증
+        var savedState = sessionStorage.getItem('naver_oauth_state');
+        if(!state || state !== savedState){
+            fail('보안 검증 실패', 'state 파라미터가 일치하지 않습니다 (CSRF 의심). 다시 로그인해주세요.');
+            return;
+        }
+        sessionStorage.removeItem('naver_oauth_state');
+
+        log('🔑 Authorization code 수신');
+        log('🔄 액세스 토큰 교환 중...');
+
+        // 3) Edge Function 호출 (code → access_token 교환)
+        // ⚠ 네이버 client_secret 은 서버에서만 사용 (Edge Function 환경변수)
+        var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
+        var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
+        var FUNCTION_URL = SUPABASE_URL + '/functions/v1/naver-oauth-exchange';
+
+        try {
+            var r = await fetch(FUNCTION_URL, {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + SUPABASE_KEY,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    code: code,
+                    state: state,
+                    redirect_uri: location.origin + location.pathname
+                })
+            });
+            var data = await r.json();
+
+            if(!r.ok || data.error){
+                fail('토큰 교환 실패', data.error || data.message || ('HTTP ' + r.status));
+                return;
+            }
+            if(!data.access_token){
+                fail('응답 형식 오류', '액세스 토큰이 응답에 없습니다.');
+                return;
+            }
+
+            log('✅ 액세스 토큰 발급 완료');
+            if(data.nickname) log('닉네임: ' + data.nickname);
+            log('만료까지: ' + Math.round((data.expires_in || 0) / 3600) + '시간');
+
+            // 4) settings 에 저장 — 네이버 로그인 토큰 1개로 블로그·카페 둘 다 사용 가능하므로
+            //    기존 설정 페이지의 naver_blog / naver_cafe 두 채널 모두에 반영한다.
+            var settings = JSON.parse(localStorage.getItem('snsSettings') || '{}');
+            var acctKey = data.naver_id || ('anon_' + Date.now().toString(36));
+            var nowMs = Date.now();
+            var expiresAt = nowMs + ((data.expires_in || 3600) * 1000);
+            var displayName = data.nickname || '네이버 계정';
+
+            function upsertAccount(chId, extraFields){
+                if(!settings[chId]) settings[chId] = {accounts: []};
+                if(!settings[chId].accounts) settings[chId].accounts = [];
+                var existing = settings[chId].accounts.find(function(a){ return a.naverId === acctKey; });
+                if(existing){
+                    existing.accessToken = data.access_token;
+                    existing.refreshToken = data.refresh_token || existing.refreshToken;
+                    existing._savedAt = nowMs;
+                    existing._expiresAt = expiresAt;
+                    log('🔄 [' + chId + '] 기존 계정 토큰 갱신: ' + (existing.name || displayName));
+                } else {
+                    var acc = {
+                        id: 'acc_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+                        name: displayName,
+                        naverId: acctKey,
+                        accessToken: data.access_token,
+                        refreshToken: data.refresh_token || '',
+                        _savedAt: nowMs,
+                        _expiresAt: expiresAt
+                    };
+                    for(var k in extraFields){ acc[k] = extraFields[k]; }
+                    settings[chId].accounts.push(acc);
+                    log('➕ [' + chId + '] 신규 계정 등록');
+                }
+            }
+
+            // 블로그: 기본 blogId = 네이버 아이디 (커스텀 블로그 주소를 쓰는 경우 설정에서 수정 필요)
+            upsertAccount('naver_blog', { blogId: acctKey });
+            // 카페: clubid/menuid는 OAuth로 알 수 없어 빈 값 — 설정 페이지에서 직접 입력 필요
+            upsertAccount('naver_cafe', { cafeId: '', menuId: '' });
+
+            localStorage.setItem('snsSettings', JSON.stringify(settings));
+
+            ok('네이버 연동 완료', '블로그·카페 계정이 저장되었습니다. 카페는 설정 페이지에서 카페ID/게시판ID를 추가로 입력해야 발행됩니다.');
+        } catch(e){
+            fail('네트워크 오류', e.message);
+        }
+    })();
+    </script>
+</body>
+</html>

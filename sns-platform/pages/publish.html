@@ -168,8 +168,8 @@
             facebook: {name:'Facebook', icon:'📘', accountLabel:'페이지', tokenField:'pageToken'},
             tiktok: {name:'TikTok', icon:'🎵', accountLabel:'계정', tokenField:'accessToken'},
             instagram: {name:'Instagram', icon:'📸', accountLabel:'계정', tokenField:'accessToken'},
-            naver_blog: {name:'네이버 블로그 (개발 중)', icon:'📗', accountLabel:'블로그', tokenField:'accessToken', devNeeded:true},
-            naver_cafe: {name:'네이버 카페 (개발 중)', icon:'☕', accountLabel:'카페', tokenField:'accessToken', devNeeded:true},
+            naver_blog: {name:'네이버 블로그', icon:'📗', accountLabel:'블로그', tokenField:'accessToken'},
+            naver_cafe: {name:'네이버 카페', icon:'☕', accountLabel:'카페', tokenField:'accessToken'},
             xiaohongshu: {name:'샤오홍수 (개발 중)', icon:'📕', accountLabel:'계정', tokenField:'accessToken', devNeeded:true},
             douyin: {name:'도우인 (개발 중)', icon:'🎬', accountLabel:'계정', tokenField:'accessToken', devNeeded:true}
         };
@@ -453,9 +453,65 @@
                 return await publishToInstagram(acc, content);
             } else if(chId === 'tiktok'){
                 return await publishToTikTok(acc, content);
+            } else if(chId === 'naver_blog'){
+                return await publishToNaverBlog(acc, content);
+            } else if(chId === 'naver_cafe'){
+                return await publishToNaverCafe(acc, content);
             } else {
                 return {ok: false, message: chId + ': 백엔드 연동 필요'};
             }
+        }
+
+        // ─── 네이버 블로그/카페 발행 (naver-publish Edge Function 경유) ───
+        // 네이버 오픈 API는 브라우저 CORS를 허용하지 않아 서버(Edge Function)를 거쳐 호출한다.
+        function deriveNaverTitle(content){
+            var firstLine = (content.split('\n')[0] || '').trim();
+            return (firstLine || content).substring(0, 100);
+        }
+
+        async function callNaverPublish(payload){
+            var res = await fetch(SUPABASE_URL + '/functions/v1/naver-publish', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + SUPABASE_KEY,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            });
+            var data = await res.json();
+            if(!res.ok || !data.success){
+                return {ok: false, message: data.error || ('HTTP ' + res.status)};
+            }
+            return {ok: true, message: '발행 완료', result: data.result};
+        }
+
+        async function publishToNaverBlog(acc, content){
+            if(!acc.accessToken) return {ok: false, message: 'Access Token 누락 — 설정에서 네이버 연동을 먼저 해주세요.'};
+            if(!content) return {ok: false, message: '본문 내용이 없습니다'};
+            return await callNaverPublish({
+                target: 'blog',
+                accessToken: acc.accessToken,
+                title: deriveNaverTitle(content),
+                contents: content,
+                openType: 'all'
+            });
+        }
+
+        async function publishToNaverCafe(acc, content){
+            if(!acc.accessToken) return {ok: false, message: 'Access Token 누락 — 설정에서 네이버 연동을 먼저 해주세요.'};
+            if(!acc.cafeId || !acc.menuId){
+                return {ok: false, message: '카페ID(clubid)/게시판ID(menuid)가 설정되지 않았습니다. 설정 페이지의 "네이버 카페" 계정 수정에서 입력해주세요.'};
+            }
+            if(!content) return {ok: false, message: '본문 내용이 없습니다'};
+            return await callNaverPublish({
+                target: 'cafe',
+                accessToken: acc.accessToken,
+                clubid: acc.cafeId,
+                menuid: acc.menuId,
+                subject: deriveNaverTitle(content),
+                contents: content,
+                openyn: 'true'
+            });
         }
 
         // ─── Supabase Storage 업로드 (Instagram용 공개 URL 확보) ───
