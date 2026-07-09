@@ -66,7 +66,7 @@
             <header class="top-bar">
                 <div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title" data-i18n="tb_title">멀티채널 소싱 트래커</div><div class="top-bar-date"><span data-i18n="tb_updated">업데이트:</span> <span id="lastUpdated">-</span></div></div></div>
                 <div class="top-bar-right">
-                    <span id="dataSourceBadge" class="data-source-badge sample">📋 샘플 데이터</span>
+                    <span id="dataSourceBadge" class="data-source-badge sample" data-i18n="badge_sample">📋 샘플 데이터</span>
                     <label class="top-bar-btn btn-upload" style="background:#10b981!important;color:#fff!important;cursor:pointer">📤 <span data-i18n="btn_upload">업로드</span><input type="file" accept=".json,.csv" onchange="handleUpload(this)" hidden></label>
                     <button class="top-bar-btn btn-crawl" onclick="runCrawl()">🕷 <span data-i18n="btn_crawl">크롤링</span></button>
                     <button class="top-bar-btn btn-api" onclick="runApi()">🔌 <span>API</span></button>
@@ -87,14 +87,14 @@
                     <div class="status-item"><span class="status-dot offline"></span>Amazon 대기</div>
                     <div class="status-item"><span class="status-dot offline"></span>Temu 대기</div>
                 </div>
-                <div id="collectionLog" style="display:none;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-family:monospace;font-size:.78rem;color:#475569;max-height:200px;overflow-y:auto"><div style="color:#2563EB;font-weight:600;margin-bottom:6px">📡 수집 로그</div><div id="logContent"></div></div>
+                <div id="collectionLog" style="display:none;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:12px 16px;margin-bottom:16px;font-family:monospace;font-size:.78rem;color:#475569;max-height:200px;overflow-y:auto"><div style="color:#2563EB;font-weight:600;margin-bottom:6px" data-i18n="log_title">📡 수집 로그</div><div id="logContent"></div></div>
 
                 <!-- AI 통합 추천 검색 (전 플랫폼 동시 검색) -->
                 <div id="aiSearchHub" style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:20px 24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
                     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
                         <span style="font-size:20px">🤖</span>
                         <strong style="color:#0F172A;font-size:1rem" data-i18n="ai_hub_title">오늘의 AI 추천 상품 검색</strong>
-                        <span id="hubStatus" style="font-size:.7rem;padding:2px 10px;border-radius:10px;background:#F1F5F9;color:#64748B;font-weight:600" data-i18n="ai_hub_status">대기</span>
+                        <span id="hubStatus" style="font-size:.7rem;padding:2px 10px;border-radius:10px;background:#F1F5F9;color:#64748B;font-weight:600">대기</span>
                     </div>
                     <div style="color:#64748B;font-size:.78rem;margin-bottom:14px" data-i18n="ai_hub_desc">키워드 입력 → 전 플랫폼(쿠팡 API · 1688/타오바오 크롤링 · 글로벌 마켓) 동시 검색</div>
 
@@ -108,14 +108,14 @@
                     <div id="relatedKwPanel" style="display:none;background:linear-gradient(135deg,#FAF5FF,#F5F3FF);border:1px solid #E9D5FF;border-radius:10px;padding:12px 14px;margin-bottom:12px">
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
                             <span style="font-size:14px">🔗</span>
-                            <strong style="font-size:.82rem;color:#0F172A">연관 키워드 분석</strong>
-                            <span style="font-size:.7rem;color:#64748B">— 네이버 검색 트렌드 기반</span>
+                            <strong style="font-size:.82rem;color:#0F172A" data-i18n="related_kw_title">연관 키워드 분석</strong>
+                            <span style="font-size:.7rem;color:#64748B" data-i18n="related_kw_sub">— 네이버 검색 트렌드 기반</span>
                             <button onclick="document.getElementById('relatedKwPanel').style.display='none'" style="margin-left:auto;background:none;border:none;color:#94A3B8;cursor:pointer;font-size:14px">✕</button>
                         </div>
                         <div id="relatedKwScroll" style="display:flex;gap:8px;overflow-x:auto;padding-bottom:4px">
                             <!-- 동적 렌더링 -->
                         </div>
-                        <div style="font-size:.68rem;color:#94A3B8;margin-top:6px">💡 키워드 카드 클릭 → 해당 키워드로 재검색</div>
+                        <div style="font-size:.68rem;color:#94A3B8;margin-top:6px" data-i18n="related_kw_tip">💡 키워드 카드 클릭 → 해당 키워드로 재검색</div>
                     </div>
                     <style>
                         .related-kw-card{flex:0 0 auto;min-width:140px;background:#fff;border:1px solid #E2E8F0;border-radius:8px;padding:10px 12px;cursor:pointer;transition:.15s}
@@ -146,7 +146,7 @@
 
                     <!-- 수동 날짜 범위 (수동 클릭 시 표시) -->
                     <div id="customDateRange" style="display:none;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:10px 14px;margin-bottom:14px;align-items:center;gap:10px;flex-wrap:wrap">
-                        <span style="font-size:.74rem;color:#64748B;font-weight:600">📅 기간 직접 선택:</span>
+                        <span style="font-size:.74rem;color:#64748B;font-weight:600" data-i18n="period_manual_label">📅 기간 직접 선택:</span>
                         <label style="font-size:.78rem;color:#0F172A">시작
                             <input type="date" id="dateStart" style="margin-left:6px;padding:5px 8px;border:1px solid #E2E8F0;border-radius:6px;font-size:.78rem;color:#0F172A;background:#fff">
                         </label>
@@ -161,8 +161,8 @@
                     <div id="trendingKeywords" style="background:#F8FAFC;border:1px solid #E2E8F0;border-radius:10px;padding:12px 14px">
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
                             <span style="font-size:14px">📅</span>
-                            <strong style="font-size:.82rem;color:#0F172A">시즌별 인기 키워드 추천</strong>
-                            <span style="font-size:.7rem;color:#64748B">— 클릭하면 검색에 추가</span>
+                            <strong style="font-size:.82rem;color:#0F172A" data-i18n="trending_kw_title">시즌별 인기 키워드 추천</strong>
+                            <span style="font-size:.7rem;color:#64748B" data-i18n="trending_kw_sub">— 클릭하면 검색에 추가</span>
                         </div>
                         <div id="kwGroups" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px"></div>
                     </div>
@@ -177,52 +177,52 @@
                     .kw-chip:hover { background:#EFF6FF;border-color:#3B82F6;color:#1D4ED8 }
                 </style>
                 <div class="platform-overview-grid">
-                    <div class="platform-overview-card po-1688"><div class="po-logo">🏭</div><div class="po-info"><div class="po-name">1688</div><div class="po-sub">소싱</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-1688-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-1688">샘플</div></div>
-                    <div class="platform-overview-card po-taobao"><div class="po-logo">🛒</div><div class="po-info"><div class="po-name">타오바오</div><div class="po-sub">소싱</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-taobao-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-taobao">샘플</div></div>
-                    <a href="coupang-partners.html" class="platform-overview-card po-coupang" style="text-decoration:none;color:inherit;cursor:pointer" title="쿠팡 파트너스 API 페이지로 이동"><div class="po-logo">🚀</div><div class="po-info"><div class="po-name">쿠팡 <span style="font-size:.65rem;color:#3b82f6;font-weight:600">→ API</span></div><div class="po-sub">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-coupang-count">-</strong>개</div></div><div class="data-tag tag-live" id="tag-coupang">API 연동</div></a>
-                    <div class="platform-overview-card po-gmarket"><div class="po-logo">🟢</div><div class="po-info"><div class="po-name">지마켓</div><div class="po-sub">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-gmarket-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-gmarket">샘플</div></div>
-                    <div class="platform-overview-card po-naver"><div class="po-logo">🟩</div><div class="po-info"><div class="po-name">네이버</div><div class="po-sub">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-naver-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-naver">샘플</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #EE4D2D"><div class="po-logo">🛍</div><div class="po-info"><div class="po-name">Shopee</div><div class="po-sub">동남아</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-shopee-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-shopee">샘플</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #0F146D"><div class="po-logo">🏬</div><div class="po-info"><div class="po-name">Lazada</div><div class="po-sub">동남아</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-lazada-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-lazada">샘플</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #000"><div class="po-logo">🎵</div><div class="po-info"><div class="po-name">TikTok Shop</div><div class="po-sub">글로벌</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-tiktok-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-tiktok">샘플</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #000"><div class="po-logo">👗</div><div class="po-info"><div class="po-name">SHEIN</div><div class="po-sub">패션</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-shein-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-shein">샘플</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #FF9900"><div class="po-logo">📦</div><div class="po-info"><div class="po-name">Amazon</div><div class="po-sub">글로벌</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-amazon-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-amazon">샘플</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #F05A28"><div class="po-logo">🏷</div><div class="po-info"><div class="po-name">Temu</div><div class="po-sub">초저가</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-temu-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-temu">개발 필요</div></div>
+                    <div class="platform-overview-card po-1688"><div class="po-logo">🏭</div><div class="po-info"><div class="po-name">1688</div><div class="po-sub" data-i18n="card_sub_sourcing">소싱</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-1688-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-1688" data-i18n="card_tag_sample">샘플</div></div>
+                    <div class="platform-overview-card po-taobao"><div class="po-logo">🛒</div><div class="po-info"><div class="po-name" data-i18n="pf_taobao">타오바오</div><div class="po-sub" data-i18n="card_sub_sourcing">소싱</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-taobao-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-taobao" data-i18n="card_tag_sample">샘플</div></div>
+                    <a href="coupang-partners.html" class="platform-overview-card po-coupang" style="text-decoration:none;color:inherit;cursor:pointer" title="쿠팡 파트너스 API 페이지로 이동" data-i18n-title="card_coupang_link_title"><div class="po-logo">🚀</div><div class="po-info"><div class="po-name" data-i18n-html="card_name_coupang">쿠팡 <span style="font-size:.65rem;color:#3b82f6;font-weight:600">→ API</span></div><div class="po-sub" data-i18n="card_sub_selling">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-coupang-count">-</strong>개</div></div><div class="data-tag tag-live" id="tag-coupang" data-i18n="card_tag_api_linked">API 연동</div></a>
+                    <div class="platform-overview-card po-gmarket"><div class="po-logo">🟢</div><div class="po-info"><div class="po-name" data-i18n="pf_gmarket">지마켓</div><div class="po-sub" data-i18n="card_sub_selling">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-gmarket-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-gmarket" data-i18n="card_tag_sample">샘플</div></div>
+                    <div class="platform-overview-card po-naver"><div class="po-logo">🟩</div><div class="po-info"><div class="po-name" data-i18n="pf_naver">네이버</div><div class="po-sub" data-i18n="card_sub_selling">판매</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-naver-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-naver" data-i18n="card_tag_sample">샘플</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #EE4D2D"><div class="po-logo">🛍</div><div class="po-info"><div class="po-name">Shopee</div><div class="po-sub" data-i18n="card_sub_sea">동남아</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-shopee-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-shopee" data-i18n="card_tag_sample">샘플</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #0F146D"><div class="po-logo">🏬</div><div class="po-info"><div class="po-name">Lazada</div><div class="po-sub" data-i18n="card_sub_sea">동남아</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-lazada-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-lazada" data-i18n="card_tag_sample">샘플</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #000"><div class="po-logo">🎵</div><div class="po-info"><div class="po-name">TikTok Shop</div><div class="po-sub" data-i18n="card_sub_global">글로벌</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-tiktok-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-tiktok" data-i18n="card_tag_sample">샘플</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #000"><div class="po-logo">👗</div><div class="po-info"><div class="po-name">SHEIN</div><div class="po-sub" data-i18n="card_sub_fashion">패션</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-shein-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-shein" data-i18n="card_tag_sample">샘플</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #FF9900"><div class="po-logo">📦</div><div class="po-info"><div class="po-name">Amazon</div><div class="po-sub" data-i18n="card_sub_global">글로벌</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-amazon-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-amazon" data-i18n="card_tag_sample">샘플</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #F05A28"><div class="po-logo">🏷</div><div class="po-info"><div class="po-name">Temu</div><div class="po-sub" data-i18n="card_sub_cheap">초저가</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-temu-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-temu" data-i18n="card_tag_dev_needed">개발 필요</div></div>
 
                     <!-- 한국 패션/뷰티 플랫폼 (네이버 mall 필터) -->
-                    <div class="platform-overview-card" style="border-top:4px solid #000"><div class="po-logo">👕</div><div class="po-info"><div class="po-name">무신사</div><div class="po-sub">패션</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-musinsa-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-musinsa">대기</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #FF4081"><div class="po-logo">👗</div><div class="po-info"><div class="po-name">에이블리</div><div class="po-sub">여성패션</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-ably-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-ably">대기</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #FFEB3B"><div class="po-logo">⚡</div><div class="po-info"><div class="po-name">지그재그</div><div class="po-sub">여성패션</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-zigzag-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-zigzag">대기</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #0F172A"><div class="po-logo">2️⃣9️⃣</div><div class="po-info"><div class="po-name">29CM</div><div class="po-sub">라이프스타일</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-29cm-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-29cm">대기</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #E91E63"><div class="po-logo">🅦</div><div class="po-info"><div class="po-name">W컨셉</div><div class="po-sub">패션</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-wconcept-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-wconcept">대기</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #5BBD55"><div class="po-logo">💚</div><div class="po-info"><div class="po-name">올리브영</div><div class="po-sub">뷰티</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-oliveyoung-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-oliveyoung">대기</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #6B46C1"><div class="po-logo">🥬</div><div class="po-info"><div class="po-name">마켓컬리</div><div class="po-sub">신선식품</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-kurly-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-kurly">대기</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #000"><div class="po-logo">👕</div><div class="po-info"><div class="po-name" data-i18n="card_name_musinsa">무신사</div><div class="po-sub" data-i18n="card_sub_fashion">패션</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-musinsa-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-musinsa" data-i18n="card_tag_waiting">대기</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #FF4081"><div class="po-logo">👗</div><div class="po-info"><div class="po-name" data-i18n="card_name_ably">에이블리</div><div class="po-sub" data-i18n="card_sub_women_fashion">여성패션</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-ably-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-ably" data-i18n="card_tag_waiting">대기</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #FFEB3B"><div class="po-logo">⚡</div><div class="po-info"><div class="po-name" data-i18n="card_name_zigzag">지그재그</div><div class="po-sub" data-i18n="card_sub_women_fashion">여성패션</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-zigzag-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-zigzag" data-i18n="card_tag_waiting">대기</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #0F172A"><div class="po-logo">2️⃣9️⃣</div><div class="po-info"><div class="po-name">29CM</div><div class="po-sub" data-i18n="card_sub_lifestyle">라이프스타일</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-29cm-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-29cm" data-i18n="card_tag_waiting">대기</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #E91E63"><div class="po-logo">🅦</div><div class="po-info"><div class="po-name" data-i18n="card_name_wconcept">W컨셉</div><div class="po-sub" data-i18n="card_sub_fashion">패션</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-wconcept-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-wconcept" data-i18n="card_tag_waiting">대기</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #5BBD55"><div class="po-logo">💚</div><div class="po-info"><div class="po-name" data-i18n="card_name_oliveyoung">올리브영</div><div class="po-sub" data-i18n="card_sub_beauty">뷰티</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-oliveyoung-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-oliveyoung" data-i18n="card_tag_waiting">대기</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #6B46C1"><div class="po-logo">🥬</div><div class="po-info"><div class="po-name" data-i18n="card_name_kurly">마켓컬리</div><div class="po-sub" data-i18n="card_sub_fresh_food">신선식품</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-kurly-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-kurly" data-i18n="card_tag_waiting">대기</div></div>
 
                     <!-- 한국 종합몰 -->
-                    <div class="platform-overview-card" style="border-top:4px solid #FF6900"><div class="po-logo">1️⃣1️⃣</div><div class="po-info"><div class="po-name">11번가</div><div class="po-sub">종합몰</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-11st-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-11st">대기</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #FF4500"><div class="po-logo">🔨</div><div class="po-info"><div class="po-name">옥션</div><div class="po-sub">종합몰</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-auction-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-auction">대기</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #FF3B3B"><div class="po-logo">🛒</div><div class="po-info"><div class="po-name">SSG.COM</div><div class="po-sub">종합몰</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-ssg-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-ssg">대기</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #ED1C24"><div class="po-logo">🟥</div><div class="po-info"><div class="po-name">롯데온</div><div class="po-sub">종합몰</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-lotteon-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-lotteon">대기</div></div>
-                    <div class="platform-overview-card" style="border-top:4px solid #1FB6FF"><div class="po-logo">🅿️</div><div class="po-info"><div class="po-name">인터파크</div><div class="po-sub">종합몰</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-interpark-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-interpark">대기</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #FF6900"><div class="po-logo">1️⃣1️⃣</div><div class="po-info"><div class="po-name" data-i18n="card_name_11st">11번가</div><div class="po-sub" data-i18n="card_sub_mall">종합몰</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-11st-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-11st" data-i18n="card_tag_waiting">대기</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #FF4500"><div class="po-logo">🔨</div><div class="po-info"><div class="po-name" data-i18n="card_name_auction">옥션</div><div class="po-sub" data-i18n="card_sub_mall">종합몰</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-auction-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-auction" data-i18n="card_tag_waiting">대기</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #FF3B3B"><div class="po-logo">🛒</div><div class="po-info"><div class="po-name">SSG.COM</div><div class="po-sub" data-i18n="card_sub_mall">종합몰</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-ssg-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-ssg" data-i18n="card_tag_waiting">대기</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #ED1C24"><div class="po-logo">🟥</div><div class="po-info"><div class="po-name" data-i18n="card_name_lotteon">롯데온</div><div class="po-sub" data-i18n="card_sub_mall">종합몰</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-lotteon-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-lotteon" data-i18n="card_tag_waiting">대기</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #1FB6FF"><div class="po-logo">🅿️</div><div class="po-info"><div class="po-name" data-i18n="card_name_interpark">인터파크</div><div class="po-sub" data-i18n="card_sub_mall">종합몰</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-interpark-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-interpark" data-i18n="card_tag_waiting">대기</div></div>
 
                     <!-- 해외 (API 키 필요) -->
-                    <div class="platform-overview-card" style="border-top:4px solid #FF4747"><div class="po-logo">🅰️</div><div class="po-info"><div class="po-name">AliExpress</div><div class="po-sub">중국</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-aliexpress-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-aliexpress">개발 필요</div></div>
+                    <div class="platform-overview-card" style="border-top:4px solid #FF4747"><div class="po-logo">🅰️</div><div class="po-info"><div class="po-name">AliExpress</div><div class="po-sub" data-i18n="card_sub_china">중국</div></div><div class="po-stats"><div class="po-stat">수집 <strong id="v-aliexpress-count">-</strong>개</div></div><div class="data-tag tag-sample" id="tag-aliexpress" data-i18n="card_tag_dev_needed">개발 필요</div></div>
                 </div>
 
                 <!-- AI 검색 결과 상품 그리드 (플랫폼별) -->
                 <div id="aiSearchResults" style="display:none;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:18px 22px;margin-top:16px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
                     <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
                         <span style="font-size:18px">🛍</span>
-                        <strong style="color:#0F172A;font-size:.95rem">검색 결과 상품</strong>
+                        <strong style="color:#0F172A;font-size:.95rem" data-i18n="ai_result_title">검색 결과 상품</strong>
                         <span id="aiResultMeta" style="font-size:.74rem;color:#64748B;font-weight:600"></span>
                     </div>
                     <div id="aiResultByPlatform"></div>
                 </div>
 
                 <section id="overview"><div class="kpi-grid">
-                    <div class="kpi-card kpi-total"><div class="kpi-header"><div class="kpi-icon">📦</div><span class="kpi-change up" id="kpi-total-change">-</span></div><div class="kpi-value" id="kpi-total-value">-</div><div class="kpi-label">수집 상품</div><div class="kpi-sub" id="kpi-total-sub">크롤링 버튼을 눌러주세요</div></div>
-                    <div class="kpi-card kpi-recommend"><div class="kpi-header"><div class="kpi-icon">🎯</div><span class="kpi-change up">-</span></div><div class="kpi-value" id="kpi-rec-value">-</div><div class="kpi-label">추천 상품</div><div class="kpi-sub">크롤링 후 표시</div></div>
-                    <div class="kpi-card kpi-margin"><div class="kpi-header"><div class="kpi-icon">💰</div><span class="kpi-change up">-</span></div><div class="kpi-value" id="kpi-margin-value">-</div><div class="kpi-label">평균 마진율</div><div class="kpi-sub">크롤링 후 표시</div></div>
+                    <div class="kpi-card kpi-total"><div class="kpi-header"><div class="kpi-icon">📦</div><span class="kpi-change up" id="kpi-total-change">-</span></div><div class="kpi-value" id="kpi-total-value">-</div><div class="kpi-label" data-i18n="kpi_total_label">수집 상품</div><div class="kpi-sub" id="kpi-total-sub" data-i18n="kpi_total_sub_default">크롤링 버튼을 눌러주세요</div></div>
+                    <div class="kpi-card kpi-recommend"><div class="kpi-header"><div class="kpi-icon">🎯</div><span class="kpi-change up">-</span></div><div class="kpi-value" id="kpi-rec-value">-</div><div class="kpi-label" data-i18n="kpi_rec_label">추천 상품</div><div class="kpi-sub" data-i18n="kpi_rec_sub">크롤링 후 표시</div></div>
+                    <div class="kpi-card kpi-margin"><div class="kpi-header"><div class="kpi-icon">💰</div><span class="kpi-change up">-</span></div><div class="kpi-value" id="kpi-margin-value">-</div><div class="kpi-label" data-i18n="kpi_margin_label">평균 마진율</div><div class="kpi-sub" data-i18n="kpi_rec_sub">크롤링 후 표시</div></div>
                 </div></section>
                 <!-- 수집 결과 통계 바 -->
                 <div id="extractionStats" style="display:none;background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:16px 20px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;box-shadow:0 1px 3px rgba(0,0,0,.04)">
@@ -239,8 +239,8 @@
 
                 <!-- 상품 이미지 보기 토글 + 플랫폼 필터 -->
                 <div id="viewToggle" style="display:none;margin-bottom:12px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-                    <button onclick="setView('grid')" id="viewGrid" style="padding:5px 12px;border-radius:6px;background:#3b82f6;color:#fff;border:none;font-size:.78rem;cursor:pointer">🖼 이미지</button>
-                    <button onclick="setView('table')" id="viewTable" style="padding:5px 12px;border-radius:6px;background:#F8FAFC;color:#64748B;border:1px solid #E2E8F0;font-size:.78rem;cursor:pointer">📋 테이블</button>
+                    <button onclick="setView('grid')" id="viewGrid" style="padding:5px 12px;border-radius:6px;background:#3b82f6;color:#fff;border:none;font-size:.78rem;cursor:pointer" data-i18n="view_grid_btn">🖼 이미지</button>
+                    <button onclick="setView('table')" id="viewTable" style="padding:5px 12px;border-radius:6px;background:#F8FAFC;color:#64748B;border:1px solid #E2E8F0;font-size:.78rem;cursor:pointer" data-i18n="view_table_btn">📋 테이블</button>
                     <span style="font-size:.72rem;color:#64748b;margin-left:4px" id="productCountLabel">0개 상품</span>
                     <span style="margin-left:auto"></span>
                     <div id="platformFilters" style="display:flex;gap:4px;flex-wrap:wrap"></div>
@@ -264,8 +264,8 @@
                     </table>
                 </div>
 
-                <div class="section-divider">🔥 수집 결과</div>
-                <div class="alert-list" id="alertList"><div style="text-align:center;color:#64748B;padding:20px">🕷 크롤링 버튼을 눌러 실제 데이터를 수집하세요<br><small>또는 📤 업로드 버튼으로 CSV/JSON 파일을 불러오세요</small></div></div>
+                <div class="section-divider" data-i18n="section_collect_result">🔥 수집 결과</div>
+                <div class="alert-list" id="alertList"><div style="text-align:center;color:#64748B;padding:20px" data-i18n-html="alert_empty_state">🕷 크롤링 버튼을 눌러 실제 데이터를 수집하세요<br><small>또는 📤 업로드 버튼으로 CSV/JSON 파일을 불러오세요</small></div></div>
             </div>
         </div>
     </div>
@@ -274,7 +274,7 @@
     <div class="pp-modal-overlay" id="ppModal">
         <div class="pp-modal">
             <div class="pp-modal-head">
-                <strong style="font-size:.95rem">상품 상세</strong>
+                <strong style="font-size:.95rem" data-i18n="pp_modal_title">상품 상세</strong>
                 <span style="color:#64748B;font-size:.8rem" id="ppPageLabel">1 / 1</span>
                 <span style="color:#8B5CF6;font-size:.78rem;font-weight:600" id="ppSelectedLabel"></span>
                 <button onclick="closeProductModal()" style="margin-left:auto;background:none;border:none;font-size:18px;color:#94A3B8;cursor:pointer">✕</button>
@@ -284,10 +284,10 @@
                 <div class="pp-pane-right" id="ppRightDetail"></div>
             </div>
             <div class="pp-actionbar">
-                <button class="pp-action-btn" onclick="ppAdjustPrice()">💰<span>가격조정</span></button>
-                <button class="pp-action-btn" onclick="ppSeoName()">✏️<span>SEO 상품명 💎1</span></button>
-                <button class="pp-action-btn" onclick="ppAiImage()">🖼<span>AI 이미지</span></button>
-                <button class="pp-action-btn fav" id="ppFavBtn" onclick="ppToggleFavorite()">❤️<span>즐겨찾기</span></button>
+                <button class="pp-action-btn" onclick="ppAdjustPrice()">💰<span data-i18n="pp_btn_price">가격조정</span></button>
+                <button class="pp-action-btn" onclick="ppSeoName()">✏️<span data-i18n="pp_btn_seo">SEO 상품명 💎1</span></button>
+                <button class="pp-action-btn" onclick="ppAiImage()">🖼<span data-i18n="pp_btn_ai_image">AI 이미지</span></button>
+                <button class="pp-action-btn fav" id="ppFavBtn" onclick="ppToggleFavorite()">❤️<span data-i18n="pp_btn_favorite">즐겨찾기</span></button>
             </div>
         </div>
     </div>
@@ -297,29 +297,29 @@
         var crawlResults = JSON.parse(localStorage.getItem('crawlResults2') || 'null');
 
         function loadSampleData(){
-            setText('v-1688-count','342');setTag('tag-1688','샘플','tag-sample');
-            setText('v-taobao-count','145');setTag('tag-taobao','샘플','tag-sample');
-            setText('v-coupang-count','63');setTag('tag-coupang','샘플','tag-sample');
-            setText('v-gmarket-count','48');setTag('tag-gmarket','샘플','tag-sample');
-            setText('v-naver-count','52');setTag('tag-naver','샘플','tag-sample');
-            setText('kpi-total-value','487');setText('kpi-total-sub','샘플 데이터');setText('kpi-total-change','샘플');
+            setText('v-1688-count','342');setTag('tag-1688',I18N.t('card_tag_sample'),'tag-sample');
+            setText('v-taobao-count','145');setTag('tag-taobao',I18N.t('card_tag_sample'),'tag-sample');
+            setText('v-coupang-count','63');setTag('tag-coupang',I18N.t('card_tag_sample'),'tag-sample');
+            setText('v-gmarket-count','48');setTag('tag-gmarket',I18N.t('card_tag_sample'),'tag-sample');
+            setText('v-naver-count','52');setTag('tag-naver',I18N.t('card_tag_sample'),'tag-sample');
+            setText('kpi-total-value','487');setText('kpi-total-sub',I18N.t('kpi_total_sub_sample'));setText('kpi-total-change',I18N.t('kpi_total_change_sample'));
             setText('kpi-rec-value','87');setText('kpi-margin-value','41.2%');
             updateBadge('sample');
         }
         function loadCrawlData(d){
             if(!d)return;
-            setText('v-coupang-count',d.coupang||0);setTag('tag-coupang',d.coupang>0?'스크래핑':'실패',d.coupang>0?'tag-scrape':'tag-sample');
-            setText('v-1688-count',d.alibaba||0);setTag('tag-1688',d.alibaba>0?'스크래핑':'실패',d.alibaba>0?'tag-scrape':'tag-sample');
-            setText('v-gmarket-count','0');setTag('tag-gmarket','준비중','tag-sample');
-            setText('v-naver-count','0');setTag('tag-naver','준비중','tag-sample');
-            setText('v-taobao-count','0');setTag('tag-taobao','준비중','tag-sample');
+            setText('v-coupang-count',d.coupang||0);setTag('tag-coupang',d.coupang>0?I18N.t('card_tag_scrape'):I18N.t('card_tag_fail'),d.coupang>0?'tag-scrape':'tag-sample');
+            setText('v-1688-count',d.alibaba||0);setTag('tag-1688',d.alibaba>0?I18N.t('card_tag_scrape'):I18N.t('card_tag_fail'),d.alibaba>0?'tag-scrape':'tag-sample');
+            setText('v-gmarket-count','0');setTag('tag-gmarket',I18N.t('card_tag_prep'),'tag-sample');
+            setText('v-naver-count','0');setTag('tag-naver',I18N.t('card_tag_prep'),'tag-sample');
+            setText('v-taobao-count','0');setTag('tag-taobao',I18N.t('card_tag_prep'),'tag-sample');
             var total=(d.coupang||0)+(d.alibaba||0);
-            setText('kpi-total-value',total);setText('kpi-total-sub','웹 스크래핑 데이터');setText('kpi-total-change','실제');
+            setText('kpi-total-value',total);setText('kpi-total-sub',I18N.t('kpi_total_sub_scrape'));setText('kpi-total-change',I18N.t('kpi_total_change_real'));
             updateBadge('crawl');
         }
         function setText(id,v){var e=document.getElementById(id);if(e)e.textContent=v}
         function setTag(id,t,c){var e=document.getElementById(id);if(e){e.textContent=t;e.className='data-tag '+c}}
-        function updateBadge(s){var b=document.getElementById('dataSourceBadge');var l={sample:'📋 샘플 데이터',crawl:'🕷 스크래핑 데이터',live:'🔌 API 실시간'};b.textContent=l[s]||l.sample;b.className='data-source-badge '+s}
+        function updateBadge(s){var b=document.getElementById('dataSourceBadge');var l={sample:I18N.t('badge_sample'),crawl:I18N.t('badge_crawl'),live:I18N.t('badge_live')};b.textContent=l[s]||l.sample;b.className='data-source-badge '+s}
         function addLog(m){var l=document.getElementById('collectionLog'),c=document.getElementById('logContent');l.style.display='block';c.innerHTML+='<div>['+new Date().toLocaleTimeString('ko-KR')+'] '+m+'</div>';l.scrollTop=l.scrollHeight}
 
         var SCRAPER_KEY=''/* 🔴 ScraperAPI 키 노출 사고로 제거됨. 키 회전 후 Edge Function에서 사용 */;
@@ -332,12 +332,12 @@
         }
 
         async function runCrawl(){
-            var btn=document.querySelector('.btn-crawl');btn.disabled=true;btn.innerHTML='🕷 <span>수집중...</span>';
-            addLog('Google Shopping API로 수집 시작');
+            var btn=document.querySelector('.btn-crawl');btn.disabled=true;btn.innerHTML='🕷 <span>'+I18N.t('status_collecting')+'</span>';
+            addLog(I18N.t('log_start_google'));
             var results={coupang:0,alibaba:0,products:[],timestamp:new Date().toISOString()};
 
             var dotC=document.getElementById('dot-coupang');if(dotC)dotC.className='status-dot working';
-            setText('st-coupang-mode','수집중...');
+            setText('st-coupang-mode',I18N.t('status_collecting'));
             var cpKW=['블루투스 이어폰','실리콘 주방용품','LED 무드등','여름 패션 무신사','생활용품 SSG'];
             for(var ki=0;ki<cpKW.length;ki++){
                 var kw=cpKW[ki];
@@ -366,11 +366,11 @@
                 }catch(e){addLog('  ✗ "'+kw+'" → '+e.message);break}
             }
             if(dotC)dotC.className='status-dot '+(results.coupang>0?'online':'error');
-            setText('st-coupang-mode',results.coupang>0?results.coupang+'개':'실패');
-            addLog('한국 마켓 완료: '+results.products.length+'개');
+            setText('st-coupang-mode',results.coupang>0?I18N.t('label_count_plain').replace('{n}',results.coupang):I18N.t('card_tag_fail'));
+            addLog(I18N.t('log_kr_market_done').replace('{n}',results.products.length));
 
             var dot1=document.getElementById('dot-1688');if(dot1)dot1.className='status-dot working';
-            setText('st-1688-mode','수집중...');
+            setText('st-1688-mode',I18N.t('status_collecting'));
             var a1KW=['bluetooth earphone 1688','silicone kitchen 1688','LED light 1688'];
             for(var ai=0;ai<a1KW.length;ai++){
                 var kw2=a1KW[ai];
@@ -391,8 +391,8 @@
                 }catch(e2){addLog('  ✗ "'+kw2+'" → '+e2.message);break}
             }
             if(dot1)dot1.className='status-dot '+(results.alibaba>0?'online':'offline');
-            setText('st-1688-mode',results.alibaba>0?results.alibaba+'개':'실패');
-            addLog('중국 마켓 완료: '+results.alibaba+'개');
+            setText('st-1688-mode',results.alibaba>0?I18N.t('label_count_plain').replace('{n}',results.alibaba):I18N.t('card_tag_fail'));
+            addLog(I18N.t('log_cn_market_done').replace('{n}',results.alibaba));
 
             // 쇼피/라자다/틱톡샵 검색
             var seaKW=[
@@ -430,43 +430,43 @@
             if(results.products&&results.products.length>0){
                 showProducts(results.products);
                 if(DB.isConfigured()){
-                    addLog('💾 Supabase DB 저장 중...');
+                    addLog(I18N.t('log_db_saving'));
                     try{
                         await DB.saveProducts(results.products);
                         if(results.coupang>0)await DB.logCrawl('쿠팡','mixed',results.coupang,'success');
                         if(results.alibaba>0)await DB.logCrawl('1688','mixed',results.alibaba,'success');
-                        addLog('✅ DB 저장 완료: '+results.products.length+'개');
-                    }catch(dbe){addLog('⚠ DB 저장 실패: '+dbe.message)}
+                        addLog(I18N.t('log_db_saved').replace('{n}',results.products.length));
+                    }catch(dbe){addLog(I18N.t('log_db_save_fail').replace('{msg}',dbe.message))}
                 }
             }
 
             // 알림 업데이트
             var ah='';
-            if(results.coupang>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">✅</span><div class="alert-body"><div class="alert-title">[쿠팡] '+results.coupang+'개 수집</div><div class="alert-desc">Google Shopping</div><div class="alert-time">방금</div></div></div>';
-            if(results.alibaba>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">✅</span><div class="alert-body"><div class="alert-title">[1688] '+results.alibaba+'개 수집</div><div class="alert-desc">Google Shopping CN</div><div class="alert-time">방금</div></div></div>';
-            if(results.shopee>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">🛍</span><div class="alert-body"><div class="alert-title">[Shopee] '+results.shopee+'개 수집</div><div class="alert-desc">동남아 마켓</div><div class="alert-time">방금</div></div></div>';
-            if(results.lazada>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">🏬</span><div class="alert-body"><div class="alert-title">[Lazada] '+results.lazada+'개 수집</div><div class="alert-desc">동남아 마켓</div><div class="alert-time">방금</div></div></div>';
-            if(results.tiktok>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">🎵</span><div class="alert-body"><div class="alert-title">[TikTok Shop] '+results.tiktok+'개 수집</div><div class="alert-desc">글로벌 마켓</div><div class="alert-time">방금</div></div></div>';
-            if(results.shein>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">👗</span><div class="alert-body"><div class="alert-title">[SHEIN] '+results.shein+'개 수집</div><div class="alert-desc">패션</div><div class="alert-time">방금</div></div></div>';
-            if(results.amazon>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">📦</span><div class="alert-body"><div class="alert-title">[Amazon] '+results.amazon+'개 수집</div><div class="alert-desc">글로벌</div><div class="alert-time">방금</div></div></div>';
-            if(results.temu>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">🏷</span><div class="alert-body"><div class="alert-title">[Temu] '+results.temu+'개 수집</div><div class="alert-desc">초저가</div><div class="alert-time">방금</div></div></div>';
+            if(results.coupang>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">✅</span><div class="alert-body"><div class="alert-title">'+I18N.t('alert_collected').replace('{platform}','['+I18N.t('pf_coupang')+']').replace('{n}',results.coupang)+'</div><div class="alert-desc">Google Shopping</div><div class="alert-time">'+I18N.t('label_just_now')+'</div></div></div>';
+            if(results.alibaba>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">✅</span><div class="alert-body"><div class="alert-title">'+I18N.t('alert_collected').replace('{platform}','[1688]').replace('{n}',results.alibaba)+'</div><div class="alert-desc">Google Shopping CN</div><div class="alert-time">'+I18N.t('label_just_now')+'</div></div></div>';
+            if(results.shopee>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">🛍</span><div class="alert-body"><div class="alert-title">'+I18N.t('alert_collected').replace('{platform}','[Shopee]').replace('{n}',results.shopee)+'</div><div class="alert-desc">'+I18N.t('label_sea_market')+'</div><div class="alert-time">'+I18N.t('label_just_now')+'</div></div></div>';
+            if(results.lazada>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">🏬</span><div class="alert-body"><div class="alert-title">'+I18N.t('alert_collected').replace('{platform}','[Lazada]').replace('{n}',results.lazada)+'</div><div class="alert-desc">'+I18N.t('label_sea_market')+'</div><div class="alert-time">'+I18N.t('label_just_now')+'</div></div></div>';
+            if(results.tiktok>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">🎵</span><div class="alert-body"><div class="alert-title">'+I18N.t('alert_collected').replace('{platform}','[TikTok Shop]').replace('{n}',results.tiktok)+'</div><div class="alert-desc">'+I18N.t('card_sub_global')+'</div><div class="alert-time">'+I18N.t('label_just_now')+'</div></div></div>';
+            if(results.shein>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">👗</span><div class="alert-body"><div class="alert-title">'+I18N.t('alert_collected').replace('{platform}','[SHEIN]').replace('{n}',results.shein)+'</div><div class="alert-desc">'+I18N.t('card_sub_fashion')+'</div><div class="alert-time">'+I18N.t('label_just_now')+'</div></div></div>';
+            if(results.amazon>0)ah+='<div class="alert-item alert-rising"><span class="alert-icon">📦</span><div class="alert-body"><div class="alert-title">'+I18N.t('alert_collected').replace('{platform}','[Amazon]').replace('{n}',results.amazon)+'</div><div class="alert-desc">'+I18N.t('card_sub_global')+'</div><div class="alert-time">'+I18N.t('label_just_now')+'</div></div></div>';
+            if(results.temu>0)ah+='<div class="alert-item alert-new"><span class="alert-icon">🏷</span><div class="alert-body"><div class="alert-title">'+I18N.t('alert_collected').replace('{platform}','[Temu]').replace('{n}',results.temu)+'</div><div class="alert-desc">'+I18N.t('card_sub_cheap')+'</div><div class="alert-time">'+I18N.t('label_just_now')+'</div></div></div>';
             if(results.coupang===0&&results.alibaba===0){
-                ah+='<div class="alert-item alert-hot"><span class="alert-icon">🚫</span><div class="alert-body"><div class="alert-title">서버 스크래핑 차단됨</div><div class="alert-desc">쿠팡/1688이 Vercel 서버 IP를 차단했습니다.</div><div class="alert-time">방금</div></div></div>';
-                ah+='<div class="alert-item alert-new"><span class="alert-icon">💡</span><div class="alert-body"><div class="alert-title">대안: CSV/JSON 업로드</div><div class="alert-desc">① Chrome에서 Ultimate Web Scraper 설치<br>② 쿠팡/1688에서 직접 스크래핑<br>③ CSV/JSON 내보내기<br>④ 📤 업로드 버튼으로 데이터 불러오기</div><div class="alert-time">추천</div></div></div>';
-                ah+='<div class="alert-item alert-rising"><span class="alert-icon">🔌</span><div class="alert-body"><div class="alert-title">대안: API 키 연동</div><div class="alert-desc">쿠팡 파트너스 / 1688 API 키를 받으면 차단 없이 데이터 수집 가능</div><div class="alert-time">추천</div></div></div>';
+                ah+='<div class="alert-item alert-hot"><span class="alert-icon">🚫</span><div class="alert-body"><div class="alert-title">'+I18N.t('msg_server_blocked_title')+'</div><div class="alert-desc">'+I18N.t('msg_server_blocked_desc')+'</div><div class="alert-time">'+I18N.t('label_just_now')+'</div></div></div>';
+                ah+='<div class="alert-item alert-new"><span class="alert-icon">💡</span><div class="alert-body"><div class="alert-title">'+I18N.t('msg_alt_upload_title')+'</div><div class="alert-desc">'+I18N.t('msg_alt_upload_desc')+'</div><div class="alert-time">'+I18N.t('label_recommended')+'</div></div></div>';
+                ah+='<div class="alert-item alert-rising"><span class="alert-icon">🔌</span><div class="alert-body"><div class="alert-title">'+I18N.t('msg_alt_api_title')+'</div><div class="alert-desc">'+I18N.t('msg_alt_api_desc')+'</div><div class="alert-time">'+I18N.t('label_recommended')+'</div></div></div>';
             }
             document.getElementById('alertList').innerHTML=ah;
-            btn.disabled=false;btn.innerHTML='🕷 <span>크롤링</span>';
+            btn.disabled=false;btn.innerHTML='🕷 <span>'+I18N.t('btn_crawl')+'</span>';
         }
 
         async function runApi(){
-            var btn=document.querySelector('.btn-api');btn.disabled=true;btn.innerHTML='🔌 <span>확인중...</span>';
-            addLog('API 상태 확인...');
+            var btn=document.querySelector('.btn-api');btn.disabled=true;btn.innerHTML='🔌 <span>'+I18N.t('status_checking')+'</span>';
+            addLog(I18N.t('log_api_check'));
             try{var h=await fetch(API_BASE+'/api/health').then(function(r){return r.json()});
-            addLog('쿠팡 API: '+(h.apis&&h.apis.coupang?'✓ 연결됨':'✗ 키없음'));
-            addLog('1688 API: '+(h.apis&&h.apis.alibaba1688?'✓ 연결됨':'✗ 미설정'));
-            addLog('💡 API 키 설정 전에는 크롤링 버튼을 사용하세요');
-            updateBadge('live')}catch(e){addLog('✗ API 서버 연결 실패')}
+            addLog(I18N.t('log_coupang_api')+(h.apis&&h.apis.coupang?I18N.t('log_connected'):I18N.t('log_no_key')));
+            addLog(I18N.t('log_1688_api')+(h.apis&&h.apis.alibaba1688?I18N.t('log_connected'):I18N.t('log_not_set')));
+            addLog(I18N.t('log_api_tip'));
+            updateBadge('live')}catch(e){addLog(I18N.t('log_api_conn_fail'))}
             btn.disabled=false;btn.innerHTML='🔌 <span>API</span>';
         }
 
@@ -477,11 +477,11 @@
             document.getElementById('extractionStats').style.display='flex';
             document.getElementById('viewToggle').style.display='flex';
             document.getElementById('extractTotal').textContent=products.length;
-            document.getElementById('productCountLabel').textContent=products.length+'개 상품';
+            document.getElementById('productCountLabel').textContent=I18N.t('product_count_label').replace('{n}',products.length);
             // 플랫폼 필터 생성
-            var platforms={};products.forEach(function(p){var k=p.platform||'기타';if(!platforms[k])platforms[k]=0;platforms[k]++});
+            var platforms={};products.forEach(function(p){var k=p.platform||I18N.t('label_other');if(!platforms[k])platforms[k]=0;platforms[k]++});
             var pf=document.getElementById('platformFilters');
-            pf.innerHTML='<button onclick="filterPlatform(\'all\')" style="padding:3px 10px;border-radius:12px;border:1px solid #e2e8f0;background:#3b82f6;color:#fff;font-size:.7rem;font-weight:600;cursor:pointer" class="pf-btn pf-active">전체 ('+products.length+')</button>';
+            pf.innerHTML='<button onclick="filterPlatform(\'all\')" style="padding:3px 10px;border-radius:12px;border:1px solid #e2e8f0;background:#3b82f6;color:#fff;font-size:.7rem;font-weight:600;cursor:pointer" class="pf-btn pf-active">'+I18N.t('filter_all_label').replace('{n}',products.length)+'</button>';
             Object.keys(platforms).forEach(function(k){
                 pf.innerHTML+='<button onclick="filterPlatform(\''+escH(k)+'\')" style="padding:3px 10px;border-radius:12px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:.7rem;font-weight:600;cursor:pointer" class="pf-btn">'+escH(k)+' ('+platforms[k]+')</button>';
             });
@@ -491,7 +491,7 @@
             document.querySelectorAll('.pf-btn').forEach(function(b){b.style.background='#fff';b.style.color='#64748b'});
             event.target.style.background='#3b82f6';event.target.style.color='#fff';
             var filtered=platform==='all'?allCrawlProducts:allCrawlProducts.filter(function(p){return p.platform===platform});
-            document.getElementById('productCountLabel').textContent=filtered.length+'개 상품';
+            document.getElementById('productCountLabel').textContent=I18N.t('product_count_label').replace('{n}',filtered.length);
             renderProductGrid(filtered);
         }
         var ppGridSource=[];
@@ -503,10 +503,10 @@
                 var price=p.platform==='1688'||p.market==='cn'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
                 var platColor={'쿠팡':'#E42528','무신사':'#000','지마켓':'#00A651','네이버':'#03C75A','1688':'#FF6A00','1688/중국':'#FF6A00','Shopee':'#EE4D2D','Lazada':'#0F146D','TikTok Shop':'#000','wconcept':'#000'}[p.platform]||'#3b82f6';
                 return '<div style="background:#fff;border-radius:10px;border:1px solid #e2e8f0;overflow:hidden;cursor:pointer;transition:all .2s" onclick="openProductModal(ppGridSource,'+i+')" onmouseover="this.style.boxShadow=\'0 4px 12px rgba(0,0,0,.1)\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.boxShadow=\'none\';this.style.transform=\'none\'">'+
-                    '<div style="width:100%;height:150px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative">'+(img?'<img src="'+escH(img)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'<span style=&quot;font-size:2.5rem&quot;>📦</span>\'">':'<span style="font-size:2.5rem">📦</span>')+'<div style="position:absolute;top:6px;left:6px;padding:2px 8px;border-radius:4px;background:'+platColor+';color:#fff;font-size:.6rem;font-weight:700">'+escH(p.platform||'')+'</div>'+(p.url?'<div onclick="event.stopPropagation();window.open(\''+escH(p.url).replace(/'/g,'')+'\',\'_blank\')" style="position:absolute;top:6px;right:6px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,.5);color:#fff;font-size:.55rem;cursor:pointer">↗ 바로가기</div>':'')+'</div>'+
+                    '<div style="width:100%;height:150px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative">'+(img?'<img src="'+escH(img)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'<span style=&quot;font-size:2.5rem&quot;>📦</span>\'">':'<span style="font-size:2.5rem">📦</span>')+'<div style="position:absolute;top:6px;left:6px;padding:2px 8px;border-radius:4px;background:'+platColor+';color:#fff;font-size:.6rem;font-weight:700">'+escH(p.platform||'')+'</div>'+(p.url?'<div onclick="event.stopPropagation();window.open(\''+escH(p.url).replace(/'/g,'')+'\',\'_blank\')" style="position:absolute;top:6px;right:6px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,.5);color:#fff;font-size:.55rem;cursor:pointer">'+I18N.t('card_go_link')+'</div>':'')+'</div>'+
                     '<div style="padding:10px"><div style="font-size:.78rem;font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px">'+escH(p.name||'')+'</div>'+
                     '<div style="font-size:.95rem;font-weight:800;color:#e42528">'+price+'</div>'+
-                    '<div style="display:flex;justify-content:space-between;margin-top:6px;font-size:.65rem;color:#64748B">'+(p.rating?'<span>⭐'+p.rating+'</span>':'<span></span>')+(p.reviewCount?'<span>리뷰 '+p.reviewCount+'</span>':'')+'</div></div></div>';
+                    '<div style="display:flex;justify-content:space-between;margin-top:6px;font-size:.65rem;color:#64748B">'+(p.rating?'<span>⭐'+p.rating+'</span>':'<span></span>')+(p.reviewCount?'<span>'+I18N.t('review_count').replace('{n}',p.reviewCount)+'</span>':'')+'</div></div></div>';
             }).join('');
             // 테이블
             var tbody=document.getElementById('productTableBody');
@@ -519,7 +519,7 @@
                     '<td style="padding:6px;font-weight:700;color:#e42528">'+price+'</td>'+
                     '<td style="padding:6px"><span style="font-size:.68rem;padding:2px 8px;border-radius:4px;background:'+platColor+';color:#fff;font-weight:600">'+escH(p.platform||'')+'</span></td>'+
                     '<td style="padding:6px;color:#64748b;font-size:.78rem">'+(p.reviewCount||'-')+'</td>'+
-                    '<td style="padding:6px">'+(p.url?'<a href="'+escH(p.url)+'" target="_blank" onclick="event.stopPropagation()" style="color:#3b82f6;font-size:.72rem;font-weight:500">상세→</a>':'')+'</td></tr>';
+                    '<td style="padding:6px">'+(p.url?'<a href="'+escH(p.url)+'" target="_blank" onclick="event.stopPropagation()" style="color:#3b82f6;font-size:.72rem;font-weight:500">'+I18N.t('table_detail_link')+'</a>':'')+'</td></tr>';
             }).join('');
             localStorage.setItem('crawlProducts',JSON.stringify(allCrawlProducts));
         }
@@ -563,7 +563,7 @@
             }).join('');
             document.getElementById('ppPageLabel').textContent=(ppIndex+1)+' / '+ppList.length;
             var selCount=Object.keys(ppSelected).filter(function(k){return ppSelected[k]}).length;
-            document.getElementById('ppSelectedLabel').textContent=selCount>0?selCount+'개 선택됨':'';
+            document.getElementById('ppSelectedLabel').textContent=selCount>0?I18N.t('selected_count').replace('{n}',selCount):'';
             var active=box.querySelector('.pp-list-item.active');
             if(active)active.scrollIntoView({block:'nearest'});
         }
@@ -581,29 +581,29 @@
                 '<div style="display:flex;gap:8px;flex-wrap:wrap;font-size:.78rem;color:#64748B">'+
                 '<span style="padding:2px 10px;border-radius:12px;background:#EFF6FF;color:#2563EB;font-weight:600">'+escH(p.platform||'')+'</span>'+
                 (p.rating?'<span>⭐ '+p.rating+'</span>':'')+
-                (p.reviewCount?'<span>리뷰 '+p.reviewCount+'개</span>':'')+
+                (p.reviewCount?'<span>'+I18N.t('review_count').replace('{n}',p.reviewCount)+'</span>':'')+
                 '</div>'+
-                (p.url?'<a href="'+escH(p.url)+'" target="_blank" style="display:inline-block;margin-top:14px;color:#3B82F6;font-size:.82rem;font-weight:600">↗ 원본 상품 페이지</a>':'');
+                (p.url?'<a href="'+escH(p.url)+'" target="_blank" style="display:inline-block;margin-top:14px;color:#3B82F6;font-size:.82rem;font-weight:600">'+I18N.t('pp_original_link')+'</a>':'');
             var favBtn=document.getElementById('ppFavBtn');
             var isFav=JSON.parse(localStorage.getItem('favorites')||'[]').some(function(f){return f.name===p.name});
             favBtn.classList.toggle('active',isFav);
         }
         function ppAdjustPrice(){
             var p=ppList[ppIndex];if(!p)return;
-            var raw=prompt('새 가격을 입력하세요 (숫자만)',p.price||0);
+            var raw=prompt(I18N.t('pp_price_prompt'),p.price||0);
             if(raw===null)return;
             var num=parseFloat(String(raw).replace(/[^0-9.]/g,''));
-            if(isNaN(num)){alert('숫자를 입력해주세요');return}
+            if(isNaN(num)){alert(I18N.t('pp_price_invalid'));return}
             p.price=num;
             localStorage.setItem('crawlProducts',JSON.stringify(allCrawlProducts));
             renderPpDetail();renderPpLeftList();
-            addLog('💰 가격조정: '+p.name.substring(0,30)+' → '+num);
+            addLog(I18N.t('log_price_adjust')+p.name.substring(0,30)+' → '+num);
         }
         function ppSeoName(){
-            alert('✏️ SEO 상품명 자동 생성: AI Gateway 연동 개발 필요 (💎1 크레딧)');
+            alert(I18N.t('pp_seo_alert'));
         }
         function ppAiImage(){
-            alert('🖼 AI 이미지 생성: AI Gateway 연동 개발 필요');
+            alert(I18N.t('pp_ai_image_alert'));
         }
         function ppToggleFavorite(){
             var p=ppList[ppIndex];if(!p)return;
@@ -612,11 +612,11 @@
             if(i>=0){
                 favs.splice(i,1);
                 localStorage.setItem('favorites',JSON.stringify(favs));
-                addLog('즐겨찾기 해제: '+p.name.substring(0,30));
+                addLog(I18N.t('log_fav_removed')+p.name.substring(0,30));
             }else{
                 favs.push({name:p.name,price:p.price,platform:p.platform,image:p.image,url:p.url,rating:p.rating,savedAt:new Date().toISOString()});
                 localStorage.setItem('favorites',JSON.stringify(favs));
-                addLog('❤️ 즐겨찾기 저장: '+p.name.substring(0,30));
+                addLog(I18N.t('log_fav_saved')+p.name.substring(0,30));
             }
             renderPpDetail();
         }
@@ -653,22 +653,22 @@
                             var vals=lines[i].split(',');
                             var obj={};
                             headers.forEach(function(h,j){obj[h]=vals[j]?vals[j].trim().replace(/"/g,''):''});
-                            obj.platform=obj.platform||'업로드';
+                            obj.platform=obj.platform||I18N.t('label_upload_source');
                             obj.source='upload';
                             products.push(obj);
                         }
                     }
-                    addLog('📤 파일 업로드: '+file.name+' → '+products.length+'개 상품');
+                    addLog(I18N.t('log_file_upload').replace('{file}',file.name).replace('{n}',products.length));
                     if(products.length>0){showProducts(products);updateBadge('crawl');
-                    setText('kpi-total-value',products.length);setText('kpi-total-sub','업로드 데이터');setText('kpi-total-change','업로드')}
-                }catch(err){addLog('✗ 파일 파싱 오류: '+err.message)}
+                    setText('kpi-total-value',products.length);setText('kpi-total-sub',I18N.t('kpi_total_sub_upload'));setText('kpi-total-change',I18N.t('kpi_total_change_upload'))}
+                }catch(err){addLog(I18N.t('log_parse_error')+err.message)}
                 input.value='';
             };
             reader.readAsText(file);
         }
         function exportData(format){
             var products=JSON.parse(localStorage.getItem('crawlProducts')||'[]');
-            if(!products.length){addLog('내보낼 데이터가 없습니다');return}
+            if(!products.length){addLog(I18N.t('log_no_export_data'));return}
             var blob,filename;
             if(format==='json'){
                 blob=new Blob([JSON.stringify(products,null,2)],{type:'application/json'});
@@ -681,12 +681,12 @@
                 filename='sourcing-data-'+new Date().toISOString().slice(0,10)+(format==='excel'?'.xls':'.csv');
             }
             var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=filename;a.click();
-            addLog('📥 '+format.toUpperCase()+' 내보내기: '+products.length+'개 → '+filename);
+            addLog(I18N.t('log_export_done').replace('{format}',format.toUpperCase()).replace('{n}',products.length).replace('{file}',filename));
         }
 
         document.addEventListener('DOMContentLoaded',async function(){
             if(DB.isConfigured()){
-                addLog('💾 DB에서 데이터 로딩...');
+                addLog(I18N.t('log_db_load_start'));
                 try{
                     var dbProducts=await DB.getProducts({limit:100});
                     if(dbProducts&&dbProducts.length>0){
@@ -694,13 +694,13 @@
                         showProducts(mapped);
                         var platforms={};mapped.forEach(function(p){var k=p.platform||'';if(!platforms[k])platforms[k]=0;platforms[k]++});
                         Object.keys(platforms).forEach(function(k){setText('v-'+(k==='쿠팡'?'coupang':k==='1688'?'1688':'naver')+'-count',platforms[k]);});
-                        setText('kpi-total-value',mapped.length);setText('kpi-total-sub','DB 데이터');updateBadge('live');
-                        document.getElementById('lastUpdated').textContent='DB 연동 ('+mapped.length+'개)';
-                        addLog('✅ DB 로드: '+mapped.length+'개 상품');
-                    }else{loadSampleData();addLog('DB 비어있음 → 샘플 데이터')}
-                }catch(e){loadSampleData();addLog('DB 연결 실패 → 샘플 데이터')}
+                        setText('kpi-total-value',mapped.length);setText('kpi-total-sub',I18N.t('kpi_total_sub_db'));updateBadge('live');
+                        document.getElementById('lastUpdated').textContent=I18N.t('log_db_linked').replace('{n}',mapped.length);
+                        addLog(I18N.t('log_db_loaded').replace('{n}',mapped.length));
+                    }else{loadSampleData();addLog(I18N.t('log_db_empty'))}
+                }catch(e){loadSampleData();addLog(I18N.t('log_db_conn_fail'))}
             }else if(crawlResults&&(crawlResults.coupang>0||crawlResults.alibaba>0)){
-                loadCrawlData(crawlResults);document.getElementById('lastUpdated').textContent=new Date(crawlResults.timestamp).toLocaleString('ko-KR')+' (스크래핑)';
+                loadCrawlData(crawlResults);document.getElementById('lastUpdated').textContent=new Date(crawlResults.timestamp).toLocaleString('ko-KR')+I18N.t('label_scrape_suffix');
                 if(crawlResults.products)showProducts(crawlResults.products);
             }else{
                 loadSampleData();
@@ -748,6 +748,23 @@
             { id: 1024, name: '반려동물', icon: '🐶' },
             { id: 1025, name: '헬스/건강', icon: '💊' }
         ];
+
+        // 카테고리/플랫폼 표시명 다국어 매핑 (원본 데이터는 그대로, 표시할 때만 번역)
+        var CAT_NAME_KEY = {
+            '여성패션':'cat_women_fashion', '남성패션':'cat_men_fashion', '뷰티':'cat_beauty', '출산/유아동':'cat_baby',
+            '식품':'cat_food', '주방용품':'cat_kitchen', '생활용품':'cat_living', '홈인테리어':'cat_home_interior',
+            '가전디지털':'cat_digital', '스포츠/레저':'cat_sports', '자동차용품':'cat_auto', '도서/음반':'cat_books',
+            '완구/취미':'cat_toys', '문구/오피스':'cat_stationery', '반려동물':'cat_pet', '헬스/건강':'cat_health'
+        };
+        function catName(name){ var k = CAT_NAME_KEY[name]; return k ? I18N.t(k) : name; }
+
+        var PLATFORM_NAME_KEY = {
+            coupang:'pf_coupang', naver:'pf_naver', gmarket:'pf_gmarket', taobao:'pf_taobao',
+            '11st':'card_name_11st', auction:'card_name_auction', lotteon:'card_name_lotteon', interpark:'card_name_interpark',
+            musinsa:'card_name_musinsa', ably:'card_name_ably', zigzag:'card_name_zigzag', wconcept:'card_name_wconcept',
+            oliveyoung:'card_name_oliveyoung', kurly:'card_name_kurly'
+        };
+        function platformName(p){ var k = PLATFORM_NAME_KEY[p.key]; return k ? I18N.t(k) : p.name; }
 
         // 상품명에서 키워드 추출
         function extractKeyword(productName){
@@ -809,9 +826,9 @@
 
             // 쿠팡 섹션
             var coupangCount = trendingState.coupang.filter(function(r){ return r && r.keywords && r.keywords.length > 0; }).length;
-            html += '<div style="grid-column:1/-1;margin-bottom:6px"><div style="font-size:.7rem;color:#2563EB;font-weight:700">🛒 쿠팡 Partners API · 베스트 카테고리 ' + coupangCount + '개 실시간</div></div>';
+            html += '<div style="grid-column:1/-1;margin-bottom:6px"><div style="font-size:.7rem;color:#2563EB;font-weight:700">' + I18N.t('trending_coupang_header').replace('{n}', coupangCount) + '</div></div>';
             html += trendingState.coupang.filter(function(r){ return r && r.keywords && r.keywords.length > 0; }).map(function(r){
-                return '<div><div class="kw-group-title">' + r.cat.icon + ' ' + r.cat.name + ' <span style="font-weight:400;text-transform:none;color:#94A3B8">— ' + r.keywords.length + '개</span></div><div>' +
+                return '<div><div class="kw-group-title">' + r.cat.icon + ' ' + catName(r.cat.name) + ' <span style="font-weight:400;text-transform:none;color:#94A3B8">— ' + I18N.t('label_count_plain').replace('{n}', r.keywords.length) + '</span></div><div>' +
                     r.keywords.map(function(k){ return '<span class="kw-chip" onclick="addKeyword(\'' + k.replace(/\'/g, "\\\\'") + '\')">' + k + '</span>'; }).join('') +
                 '</div></div>';
             }).join('');
@@ -819,17 +836,17 @@
             // 네이버 섹션
             if(trendingState.naver.length > 0){
                 var naverCount = trendingState.naver.filter(function(r){ return r && r.keywords && r.keywords.length > 0; }).length;
-                html += '<div style="grid-column:1/-1;margin-top:14px;margin-bottom:6px"><div style="font-size:.7rem;color:#059669;font-weight:700">🟩 네이버 쇼핑 검색 API · ' + naverCount + '개 카테고리 실시간</div></div>';
+                html += '<div style="grid-column:1/-1;margin-top:14px;margin-bottom:6px"><div style="font-size:.7rem;color:#059669;font-weight:700">' + I18N.t('trending_naver_header').replace('{n}', naverCount) + '</div></div>';
                 html += trendingState.naver.filter(function(r){ return r && r.keywords && r.keywords.length > 0; }).map(function(r){
-                    return '<div><div class="kw-group-title">' + r.cat.icon + ' ' + r.cat.name + ' <span style="font-weight:400;text-transform:none;color:#94A3B8">— ' + r.keywords.length + '개</span></div><div>' +
+                    return '<div><div class="kw-group-title">' + r.cat.icon + ' ' + catName(r.cat.name) + ' <span style="font-weight:400;text-transform:none;color:#94A3B8">— ' + I18N.t('label_count_plain').replace('{n}', r.keywords.length) + '</span></div><div>' +
                         r.keywords.map(function(k){ return '<span class="kw-chip" onclick="addKeyword(\'' + k.replace(/\'/g, "\\\\'") + '\')">' + k + '</span>'; }).join('') +
                     '</div></div>';
                 }).join('');
             }
 
             // 푸터
-            var updatedAt = trendingState.lastUpdate ? new Date(trendingState.lastUpdate).toLocaleTimeString('ko-KR') : '로딩 중';
-            html += '<div style="grid-column:1/-1;padding-top:10px;border-top:1px dashed #E2E8F0;margin-top:8px"><div style="font-size:.68rem;color:#94A3B8;display:flex;justify-content:space-between"><span>📡 실시간 추출 (쿠팡 + 네이버) · 가짜 데이터 없음</span><span>업데이트: ' + updatedAt + ' (5분마다 자동)</span></div></div>';
+            var updatedAt = trendingState.lastUpdate ? new Date(trendingState.lastUpdate).toLocaleTimeString('ko-KR') : I18N.t('label_loading');
+            html += '<div style="grid-column:1/-1;padding-top:10px;border-top:1px dashed #E2E8F0;margin-top:8px"><div style="font-size:.68rem;color:#94A3B8;display:flex;justify-content:space-between"><span>' + I18N.t('trending_footer_desc') + '</span><span>' + I18N.t('tb_updated') + ' ' + updatedAt + ' ' + I18N.t('label_auto_5min') + '</span></div></div>';
 
             groupsEl.innerHTML = html;
         }
@@ -839,7 +856,7 @@
             if(!groupsEl) return;
 
             if(!session){
-                groupsEl.innerHTML = '<div style="color:#94A3B8;font-size:.78rem;padding:12px;text-align:center">⚠️ 로그인 후 실시간 인기 키워드 로딩</div>';
+                groupsEl.innerHTML = '<div style="color:#94A3B8;font-size:.78rem;padding:12px;text-align:center">' + t('trending_login_required', '로그인 후 트렌딩 키워드를 확인하세요') + '</div>';
                 return;
             }
 
@@ -898,6 +915,11 @@
         var currentPeriod = 3;
         var customStart = null, customEnd = null;
 
+        function periodDaysLabel(n){
+            var map = {3:'period_3',7:'period_7',15:'period_15',30:'period_30'};
+            return map[n] ? I18N.t(map[n]) : (n + (I18N.getLang() === 'ko' ? '일' : ''));
+        }
+
         window.setPeriod = function(days){
             currentPeriod = days;
             document.querySelectorAll('.period-btn').forEach(function(b){
@@ -927,10 +949,10 @@
                 var d1 = new Date(s), d2 = new Date(e);
                 var diff = Math.round((d2 - d1) / (24*60*60*1000));
                 if(diff < 0){
-                    info.textContent = '⚠ 종료일이 시작일보다 앞섭니다';
+                    info.textContent = I18N.t('date_range_invalid');
                     info.style.color = '#DC2626';
                 } else {
-                    info.textContent = '총 ' + (diff + 1) + '일';
+                    info.textContent = I18N.t('date_range_total').replace('{n}', diff + 1);
                     info.style.color = '#64748B';
                 }
             } else {
@@ -951,16 +973,28 @@
             input.focus();
         };
 
+        function t(key, fallback){ return window.I18N ? window.I18N.t(key) : fallback; }
+
         var statusEl = document.getElementById('hubStatus');
-        if(!session){
-            statusEl.textContent = '로그인 필요';
-            statusEl.style.background = '#FEF3C7'; statusEl.style.color = '#92400E';
-            var btn = document.getElementById('hubBtn');
-            if(btn){ btn.disabled = true; btn.style.opacity = '.5'; btn.title = 'SNS 플랫폼에서 먼저 로그인'; }
-        } else {
-            statusEl.textContent = '연결됨';
-            statusEl.style.background = '#D1FAE5'; statusEl.style.color = '#065F46';
+        function renderHubStatus(){
+            if(!session){
+                statusEl.textContent = t('hub_status_login_required', '로그인 필요');
+                statusEl.style.background = '#FEF3C7'; statusEl.style.color = '#92400E';
+                var btn = document.getElementById('hubBtn');
+                if(btn){ btn.disabled = true; btn.style.opacity = '.5'; btn.title = t('hub_login_first_title', '먼저 로그인하세요'); }
+            } else {
+                statusEl.textContent = t('hub_status_connected', '연결됨');
+                statusEl.style.background = '#D1FAE5'; statusEl.style.color = '#065F46';
+            }
         }
+        renderHubStatus();
+
+        var prevOnI18nChange = window.onI18nChange;
+        window.onI18nChange = function(lang){
+            if(typeof prevOnI18nChange === 'function') prevOnI18nChange(lang);
+            renderHubStatus();
+            if(typeof loadTrendingKeywords === 'function') loadTrendingKeywords();
+        };
 
         var PLATFORMS = [
             // 직접 API 연동
@@ -1023,10 +1057,10 @@
         function methodToLabel(method){
             switch(method){
                 case 'api': return { label: 'API', cls: 'tag-live' };
-                case 'naver-fallback': return { label: '네이버 fallback', cls: 'tag-scrape' };
+                case 'naver-fallback': return { label: I18N.t('pf_naver') + ' fallback', cls: 'tag-scrape' };
                 case 'scraping':
                 case 'html':
-                default: return { label: '크롤링', cls: 'tag-scrape' };
+                default: return { label: I18N.t('btn_crawl'), cls: 'tag-scrape' };
             }
         }
 
@@ -1091,9 +1125,9 @@
             // 경쟁 강도 분류 (네이버 trendingState 의 rank/volume 기반)
             function classifyCompetition(k){
                 var v = k.searchVolume || k.volume || 0;
-                if(v >= 10000) return { cls:'tight', label:'경쟁 시열' };
-                if(v >= 1000) return { cls:'medium', label:'경쟁 보통' };
-                return { cls:'loose', label:'경쟁 느슨' };
+                if(v >= 10000) return { cls:'tight', label:I18N.t('comp_tight') };
+                if(v >= 1000) return { cls:'medium', label:I18N.t('comp_medium') };
+                return { cls:'loose', label:I18N.t('comp_loose') };
             }
             function fmtNum(n){
                 if(!n && n !== 0) return '—';
@@ -1110,10 +1144,10 @@
 
             // 메인 카드 + 연관 카드
             var html = '';
-            var mainComp = { cls:'tight', label:'메인' };
+            var mainComp = { cls:'tight', label:I18N.t('comp_main') };
             html += '<div class="related-kw-card main">' +
                 '<div class="rkc-name">' + escapeHtml(mainKw) + ' <span class="rkc-comp ' + mainComp.cls + '">' + mainComp.label + '</span></div>' +
-                '<div class="rkc-stats"><span class="rkc-stat">🔍 검색 중</span></div>' +
+                '<div class="rkc-stats"><span class="rkc-stat">🔍 ' + I18N.t('label_searching') + '</span></div>' +
                 '</div>';
             related.forEach(function(k){
                 var comp = classifyCompetition(k);
@@ -1134,14 +1168,14 @@
 
         window.aiSearchAll = async function(){
             var kw = document.getElementById('hubKeyword').value.trim();
-            if(!kw) return alert('검색어를 입력하세요');
-            if(!session) return alert('로그인이 필요합니다.\nhttps://hubontrade.com/sns-platform/auth.html');
+            if(!kw) return alert(I18N.t('alert_enter_keyword'));
+            if(!session) return alert(I18N.t('alert_login_required'));
 
             // 연관 키워드 사이드바 갱신 (실제 트렌딩 데이터에서 파생, 가짜 X)
             renderRelatedKeywords(kw);
 
             var btn = document.getElementById('hubBtn');
-            btn.disabled = true; btn.textContent = '🔄 검색 중...';
+            btn.disabled = true; btn.textContent = I18N.t('search_in_progress');
 
             var resultsArea = document.getElementById('aiSearchResults');
             var resultsByPlatform = document.getElementById('aiResultByPlatform');
@@ -1149,13 +1183,13 @@
             resultsArea.style.display = 'block';
             var periodLabel;
             if(currentPeriod === 0){
-                if(customStart && customEnd) periodLabel = '수동 (' + customStart + ' ~ ' + customEnd + ')';
-                else periodLabel = '수동';
+                if(customStart && customEnd) periodLabel = I18N.t('period_manual') + ' (' + customStart + ' ~ ' + customEnd + ')';
+                else periodLabel = I18N.t('period_manual');
             } else {
-                periodLabel = currentPeriod + '일';
+                periodLabel = periodDaysLabel(currentPeriod);
             }
-            resultMeta.textContent = '"' + kw + '" · 기간 ' + periodLabel;
-            resultsByPlatform.innerHTML = '<div style="color:#64748B;font-size:.85rem;padding:14px">🔄 전 플랫폼 동시 검색 중...</div>';
+            resultMeta.textContent = '"' + kw + '" · ' + I18N.t('label_period') + ' ' + periodLabel;
+            resultsByPlatform.innerHTML = '<div style="color:#64748B;font-size:.85rem;padding:14px">' + I18N.t('msg_searching_all') + '</div>';
 
             PLATFORMS.forEach(function(p){
                 var c = document.getElementById(p.countId); if(c) c.textContent = '...';
@@ -1192,10 +1226,10 @@
             // 2. 쿠팡 결과
             if(coupangResult){
                 allResults.coupang = coupangResult;
-                setCount('coupang', coupangResult.length, 'API 연동', 'tag-live');
+                setCount('coupang', coupangResult.length, I18N.t('card_tag_api_linked'), 'tag-live');
             } else {
                 allResults.coupang = [];
-                setCount('coupang', 0, 'API 오류', 'tag-sample');
+                setCount('coupang', 0, I18N.t('card_tag_api_error'), 'tag-sample');
             }
 
             // 3. 네이버 자체 mall + 모든 mall 합쳐서 표시
@@ -1218,16 +1252,16 @@
                 });
                 allResults[p.key] = matched.slice(0, 30);
                 if(matched.length > 0){
-                    setCount(p.key, matched.length, '네이버 mall', 'tag-scrape');
+                    setCount(p.key, matched.length, I18N.t('card_tag_naver_mall'), 'tag-scrape');
                 } else {
-                    setCount(p.key, 0, '결과 없음', 'tag-sample');
+                    setCount(p.key, 0, I18N.t('card_tag_no_result'), 'tag-sample');
                 }
             });
 
             // 5. 미연동 플랫폼 (해외)
             PLATFORMS.forEach(function(p){
                 if(p.source === 'todo'){
-                    setCount(p.key, 0, '개발 필요', 'tag-sample');
+                    setCount(p.key, 0, I18N.t('card_tag_dev_needed'), 'tag-sample');
                     allResults[p.key] = [];
                 }
             });
@@ -1244,22 +1278,22 @@
                 html += '<div style="margin-bottom:24px">';
                 html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #F1F5F9">';
                 html += '<span style="font-size:16px">'+p.icon+'</span>';
-                html += '<strong style="font-size:.88rem;color:#0F172A">'+p.name+'</strong>';
-                html += '<span style="font-size:.72rem;color:#64748B">'+products.length+'개</span>';
+                html += '<strong style="font-size:.88rem;color:#0F172A">'+platformName(p)+'</strong>';
+                html += '<span style="font-size:.72rem;color:#64748B">'+I18N.t('label_count_plain').replace('{n}',products.length)+'</span>';
                 if(p.source === 'api') html += '<span style="font-size:.65rem;padding:1px 8px;background:#D1FAE5;color:#065F46;border-radius:8px;font-weight:600">API</span>';
-                else if(p.source === 'naver-mall') html += '<span style="font-size:.65rem;padding:1px 8px;background:#DBEAFE;color:#1E40AF;border-radius:8px;font-weight:600">네이버 mall</span>';
-                else if(p.source === 'crawl') html += '<span style="font-size:.65rem;padding:1px 8px;background:#F3E8FF;color:#6B21A8;border-radius:8px;font-weight:600">크롤링</span>';
-                else html += '<span style="font-size:.65rem;padding:1px 8px;background:#FEF3C7;color:#92400E;border-radius:8px;font-weight:600">개발 필요</span>';
+                else if(p.source === 'naver-mall') html += '<span style="font-size:.65rem;padding:1px 8px;background:#DBEAFE;color:#1E40AF;border-radius:8px;font-weight:600">'+I18N.t('card_tag_naver_mall')+'</span>';
+                else if(p.source === 'crawl') html += '<span style="font-size:.65rem;padding:1px 8px;background:#F3E8FF;color:#6B21A8;border-radius:8px;font-weight:600">'+I18N.t('btn_crawl')+'</span>';
+                else html += '<span style="font-size:.65rem;padding:1px 8px;background:#FEF3C7;color:#92400E;border-radius:8px;font-weight:600">'+I18N.t('card_tag_dev_needed')+'</span>';
                 html += '</div>';
 
                 if(products.length === 0){
-                    var emptyMsg = '결과 없음';
+                    var emptyMsg = I18N.t('card_tag_no_result');
                     if(p.source === 'todo'){
-                        emptyMsg = '⚠ 백엔드 미개발 - API 또는 크롤러 추가 필요';
+                        emptyMsg = I18N.t('msg_backend_missing');
                     } else if(p.source === 'crawl' && window.__crawlerDebug){
                         var dbg = window.__crawlerDebug[p.key === 'gmarket' ? 'gmarket-search' : 'naver-search'];
                         if(dbg){
-                            emptyMsg = '⚠ ' + (dbg.hint || '크롤링 차단됨');
+                            emptyMsg = '⚠ ' + (dbg.hint || I18N.t('msg_crawl_blocked'));
                             emptyMsg += ' (HTTP ' + dbg.httpStatus + ', HTML ' + (dbg.htmlLength||0) + 'B)';
                         }
                     }
@@ -1285,7 +1319,7 @@
             });
             resultsByPlatform.innerHTML = html;
 
-            btn.disabled = false; btn.textContent = '🤖 AI 검색';
+            btn.disabled = false; btn.textContent = I18N.t('ai_hub_btn');
         };
 
         var kwInput = document.getElementById('hubKeyword');
@@ -1299,11 +1333,11 @@
             setTimeout(function(){
                 if(!window.DivoostTour) return;
                 window.DivoostTour.start([
-                    { target:null, title:'소싱 트래커에 오신 걸 환영합니다 👋', body:'쿠팡·1688·타오바오·네이버·G마켓 등 22개 마켓플레이스를 한 번에 검색하는 통합 소싱 도구입니다.' },
-                    { target:'#hubKeyword', title:'1단계 · 키워드 입력', body:'찾고 싶은 상품명·카테고리를 입력하세요 (예: 무선이어폰, 캠핑테이블).', placement:'bottom' },
-                    { target:'#hubBtn', title:'2단계 · AI 통합 검색', body:'한 번 클릭으로 22개 플랫폼 동시 검색 (💎 10 크레딧). 결과는 플랫폼별로 정리됩니다.', placement:'bottom' },
-                    { target:'.period-btn', title:'3단계 · 인기 기간 설정', body:'3일 / 7일 / 30일 / 수동 기간을 선택해 트렌딩 추천 상품을 받아보세요.', placement:'bottom' },
-                    { target:'#aiResultByPlatform', title:'4단계 · 결과 확인', body:'플랫폼별 추천 상품을 확인하고 이미지·가격·링크를 비교하세요. 좌측 연관 키워드 패널에서 다른 검색어로 확장할 수 있어요.', placement:'top' }
+                    { target:null, title:I18N.t('tour_1_title'), body:I18N.t('tour_1_body') },
+                    { target:'#hubKeyword', title:I18N.t('tour_2_title'), body:I18N.t('tour_2_body'), placement:'bottom' },
+                    { target:'#hubBtn', title:I18N.t('tour_3_title'), body:I18N.t('tour_3_body'), placement:'bottom' },
+                    { target:'.period-btn', title:I18N.t('tour_4_title'), body:I18N.t('tour_4_body'), placement:'bottom' },
+                    { target:'#aiResultByPlatform', title:I18N.t('tour_5_title'), body:I18N.t('tour_5_body'), placement:'top' }
                 ], { storageKey: 'divoost_tour_dashboard_v1' });
             }, 600);
         });
@@ -1316,7 +1350,73 @@
                 ai_hub_title: '오늘의 AI 추천 상품 검색', ai_hub_status: '대기',
                 ai_hub_desc: '키워드 입력 → 전 플랫폼(쿠팡 API · 1688/타오바오 크롤링 · 글로벌 마켓) 동시 검색',
                 ai_hub_ph: '검색 키워드 (예: 무선이어폰, 마라톤바지, 캠핑테이블)', ai_hub_btn: '🤖 AI 검색',
-                period_label: '인기 기간:', period_3: '3일', period_7: '7일', period_15: '15일', period_30: '30일', period_manual: '수동'
+                period_label: '인기 기간:', period_3: '3일', period_7: '7일', period_15: '15일', period_30: '30일', period_manual: '수동',
+                card_coupang_link_title: '쿠팡 파트너스 API 페이지로 이동',
+                card_name_coupang: '쿠팡 <span style="font-size:.65rem;color:#3b82f6;font-weight:600">→ API</span>',
+                card_name_musinsa: '무신사', card_name_ably: '에이블리', card_name_zigzag: '지그재그', card_name_wconcept: 'W컨셉',
+                card_name_oliveyoung: '올리브영', card_name_kurly: '마켓컬리', card_name_11st: '11번가', card_name_auction: '옥션',
+                card_name_lotteon: '롯데온', card_name_interpark: '인터파크',
+                card_sub_sourcing: '소싱', card_sub_selling: '판매', card_sub_sea: '동남아', card_sub_global: '글로벌',
+                card_sub_fashion: '패션', card_sub_cheap: '초저가', card_sub_women_fashion: '여성패션', card_sub_lifestyle: '라이프스타일',
+                card_sub_beauty: '뷰티', card_sub_fresh_food: '신선식품', card_sub_mall: '종합몰', card_sub_china: '중국',
+                card_tag_waiting: '대기', card_tag_sample: '샘플', card_tag_api_linked: 'API 연동', card_tag_dev_needed: '개발 필요',
+                card_tag_fail: '실패', card_tag_scrape: '스크래핑', card_tag_prep: '준비중', card_tag_naver_mall: '네이버 mall',
+                card_tag_no_result: '결과 없음', card_tag_api_error: 'API 오류',
+                ai_result_title: '검색 결과 상품',
+                kpi_total_label: '수집 상품', kpi_total_sub_default: '크롤링 버튼을 눌러주세요', kpi_rec_label: '추천 상품',
+                kpi_rec_sub: '크롤링 후 표시', kpi_margin_label: '평균 마진율',
+                kpi_total_sub_sample: '샘플 데이터', kpi_total_change_sample: '샘플', kpi_total_sub_scrape: '웹 스크래핑 데이터',
+                kpi_total_change_real: '실제', kpi_total_sub_upload: '업로드 데이터', kpi_total_change_upload: '업로드', kpi_total_sub_db: 'DB 데이터',
+                view_grid_btn: '🖼 이미지', view_table_btn: '📋 테이블',
+                section_collect_result: '🔥 수집 결과',
+                alert_empty_state: '🕷 크롤링 버튼을 눌러 실제 데이터를 수집하세요<br><small>또는 📤 업로드 버튼으로 CSV/JSON 파일을 불러오세요</small>',
+                pp_modal_title: '상품 상세', pp_btn_price: '가격조정', pp_btn_seo: 'SEO 상품명 💎1', pp_btn_ai_image: 'AI 이미지', pp_btn_favorite: '즐겨찾기',
+                related_kw_title: '연관 키워드 분석', related_kw_sub: '— 네이버 검색 트렌드 기반', related_kw_tip: '💡 키워드 카드 클릭 → 해당 키워드로 재검색',
+                period_manual_label: '📅 기간 직접 선택:',
+                trending_kw_title: '시즌별 인기 키워드 추천', trending_kw_sub: '— 클릭하면 검색에 추가',
+                log_title: '📡 수집 로그',
+                badge_sample: '📋 샘플 데이터', badge_crawl: '🕷 스크래핑 데이터', badge_live: '🔌 API 실시간',
+                status_collecting: '수집중...', status_checking: '확인중...',
+                log_start_google: 'Google Shopping API로 수집 시작', log_kr_market_done: '한국 마켓 완료: {n}개', log_cn_market_done: '중국 마켓 완료: {n}개',
+                label_count_plain: '{n}개',
+                log_api_check: 'API 상태 확인...', log_coupang_api: '쿠팡 API: ', log_1688_api: '1688 API: ',
+                log_connected: '✓ 연결됨', log_no_key: '✗ 키없음', log_not_set: '✗ 미설정',
+                log_api_tip: '💡 API 키 설정 전에는 크롤링 버튼을 사용하세요', log_api_conn_fail: '✗ API 서버 연결 실패',
+                log_db_saving: '💾 Supabase DB 저장 중...', log_db_saved: '✅ DB 저장 완료: {n}개', log_db_save_fail: '⚠ DB 저장 실패: {msg}',
+                log_db_load_start: '💾 DB에서 데이터 로딩...', log_db_loaded: '✅ DB 로드: {n}개 상품', log_db_empty: 'DB 비어있음 → 샘플 데이터',
+                log_db_conn_fail: 'DB 연결 실패 → 샘플 데이터', log_db_linked: 'DB 연동 ({n}개)', label_scrape_suffix: ' (스크래핑)',
+                product_count_label: '{n}개 상품', filter_all_label: '전체 ({n})', label_other: '기타', card_go_link: '↗ 바로가기',
+                review_count: '리뷰 {n}', table_detail_link: '상세→', selected_count: '{n}개 선택됨', pp_original_link: '↗ 원본 상품 페이지',
+                pp_price_prompt: '새 가격을 입력하세요 (숫자만)', pp_price_invalid: '숫자를 입력해주세요', log_price_adjust: '💰 가격조정: ',
+                pp_seo_alert: '✏️ SEO 상품명 자동 생성: AI Gateway 연동 개발 필요 (💎1 크레딧)', pp_ai_image_alert: '🖼 AI 이미지 생성: AI Gateway 연동 개발 필요',
+                log_fav_removed: '즐겨찾기 해제: ', log_fav_saved: '❤️ 즐겨찾기 저장: ', label_upload_source: '업로드',
+                alert_collected: '{platform} {n}개 수집', label_just_now: '방금', label_recommended: '추천', label_sea_market: '동남아 마켓',
+                msg_server_blocked_title: '서버 스크래핑 차단됨', msg_server_blocked_desc: '쿠팡/1688이 Vercel 서버 IP를 차단했습니다.',
+                msg_alt_upload_title: '대안: CSV/JSON 업로드',
+                msg_alt_upload_desc: '① Chrome에서 Ultimate Web Scraper 설치<br>② 쿠팡/1688에서 직접 스크래핑<br>③ CSV/JSON 내보내기<br>④ 📤 업로드 버튼으로 데이터 불러오기',
+                msg_alt_api_title: '대안: API 키 연동', msg_alt_api_desc: '쿠팡 파트너스 / 1688 API 키를 받으면 차단 없이 데이터 수집 가능',
+                tour_1_title: '소싱 트래커에 오신 걸 환영합니다 👋',
+                tour_1_body: '쿠팡·1688·타오바오·네이버·G마켓 등 22개 마켓플레이스를 한 번에 검색하는 통합 소싱 도구입니다.',
+                tour_2_title: '1단계 · 키워드 입력', tour_2_body: '찾고 싶은 상품명·카테고리를 입력하세요 (예: 무선이어폰, 캠핑테이블).',
+                tour_3_title: '2단계 · AI 통합 검색', tour_3_body: '한 번 클릭으로 22개 플랫폼 동시 검색 (💎 10 크레딧). 결과는 플랫폼별로 정리됩니다.',
+                tour_4_title: '3단계 · 인기 기간 설정', tour_4_body: '3일 / 7일 / 30일 / 수동 기간을 선택해 트렌딩 추천 상품을 받아보세요.',
+                tour_5_title: '4단계 · 결과 확인',
+                tour_5_body: '플랫폼별 추천 상품을 확인하고 이미지·가격·링크를 비교하세요. 좌측 연관 키워드 패널에서 다른 검색어로 확장할 수 있어요.',
+                cat_women_fashion: '여성패션', cat_men_fashion: '남성패션', cat_beauty: '뷰티', cat_baby: '출산/유아동',
+                cat_food: '식품', cat_kitchen: '주방용품', cat_living: '생활용품', cat_home_interior: '홈인테리어',
+                cat_digital: '가전디지털', cat_sports: '스포츠/레저', cat_auto: '자동차용품', cat_books: '도서/음반',
+                cat_toys: '완구/취미', cat_stationery: '문구/오피스', cat_pet: '반려동물', cat_health: '헬스/건강',
+                trending_coupang_header: '🛒 쿠팡 Partners API · 베스트 카테고리 {n}개 실시간', trending_naver_header: '🟩 네이버 쇼핑 검색 API · {n}개 카테고리 실시간',
+                label_loading: '로딩 중', trending_footer_desc: '📡 실시간 추출 (쿠팡 + 네이버) · 가짜 데이터 없음', label_auto_5min: '(5분마다 자동)',
+                trending_login_required: '⚠️ 로그인 후 실시간 인기 키워드 로딩',
+                date_range_invalid: '⚠ 종료일이 시작일보다 앞섭니다', date_range_total: '총 {n}일',
+                hub_status_login_required: '로그인 필요', hub_login_first_title: 'SNS 플랫폼에서 먼저 로그인', hub_status_connected: '연결됨',
+                comp_tight: '경쟁 치열', comp_medium: '경쟁 보통', comp_loose: '경쟁 느슨', comp_main: '메인', label_searching: '검색 중',
+                alert_enter_keyword: '검색어를 입력하세요', alert_login_required: '로그인이 필요합니다.\nhttps://hubontrade.com/sns-platform/auth.html',
+                search_in_progress: '🔄 검색 중...', label_period: '기간', msg_searching_all: '🔄 전 플랫폼 동시 검색 중...',
+                msg_backend_missing: '⚠ 백엔드 미개발 - API 또는 크롤러 추가 필요', msg_crawl_blocked: '크롤링 차단됨',
+                log_file_upload: '📤 파일 업로드: {file} → {n}개 상품', log_parse_error: '✗ 파일 파싱 오류: ',
+                log_no_export_data: '내보낼 데이터가 없습니다', log_export_done: '📥 {format} 내보내기: {n}개 → {file}'
             },
             en: {
                 doc_title: 'Sourcing Tracker | Multi-channel Dashboard', tb_title: 'Multi-channel Sourcing Tracker', tb_updated: 'Updated:',
@@ -1324,7 +1424,73 @@
                 ai_hub_title: "Today's AI Product Search", ai_hub_status: 'Idle',
                 ai_hub_desc: 'Enter a keyword → search all platforms at once (Coupang API · 1688/Taobao crawl · global markets)',
                 ai_hub_ph: 'Search keyword (e.g. wireless earbuds, running pants, camping table)', ai_hub_btn: '🤖 AI Search',
-                period_label: 'Trending period:', period_3: '3 days', period_7: '7 days', period_15: '15 days', period_30: '30 days', period_manual: 'Manual'
+                period_label: 'Trending period:', period_3: '3 days', period_7: '7 days', period_15: '15 days', period_30: '30 days', period_manual: 'Manual',
+                card_coupang_link_title: 'Go to Coupang Partners API page',
+                card_name_coupang: 'Coupang <span style="font-size:.65rem;color:#3b82f6;font-weight:600">→ API</span>',
+                card_name_musinsa: 'Musinsa', card_name_ably: 'Ably', card_name_zigzag: 'Zigzag', card_name_wconcept: 'W Concept',
+                card_name_oliveyoung: 'Olive Young', card_name_kurly: 'Market Kurly', card_name_11st: '11st', card_name_auction: 'Auction',
+                card_name_lotteon: 'Lotte On', card_name_interpark: 'Interpark',
+                card_sub_sourcing: 'Sourcing', card_sub_selling: 'Selling', card_sub_sea: 'SE Asia', card_sub_global: 'Global',
+                card_sub_fashion: 'Fashion', card_sub_cheap: 'Ultra-low price', card_sub_women_fashion: "Women's Fashion", card_sub_lifestyle: 'Lifestyle',
+                card_sub_beauty: 'Beauty', card_sub_fresh_food: 'Fresh Food', card_sub_mall: 'General Mall', card_sub_china: 'China',
+                card_tag_waiting: 'Pending', card_tag_sample: 'Sample', card_tag_api_linked: 'API Linked', card_tag_dev_needed: 'Dev needed',
+                card_tag_fail: 'Failed', card_tag_scrape: 'Scraped', card_tag_prep: 'Preparing', card_tag_naver_mall: 'Naver mall',
+                card_tag_no_result: 'No results', card_tag_api_error: 'API error',
+                ai_result_title: 'Search Results',
+                kpi_total_label: 'Products Collected', kpi_total_sub_default: 'Click the crawl button', kpi_rec_label: 'Recommended',
+                kpi_rec_sub: 'Shown after crawling', kpi_margin_label: 'Avg. Margin',
+                kpi_total_sub_sample: 'Sample data', kpi_total_change_sample: 'Sample', kpi_total_sub_scrape: 'Web scraped data',
+                kpi_total_change_real: 'Actual', kpi_total_sub_upload: 'Uploaded data', kpi_total_change_upload: 'Upload', kpi_total_sub_db: 'DB data',
+                view_grid_btn: '🖼 Image', view_table_btn: '📋 Table',
+                section_collect_result: '🔥 Collection Results',
+                alert_empty_state: '🕷 Click the crawl button to collect real data<br><small>Or use the 📤 upload button to load a CSV/JSON file</small>',
+                pp_modal_title: 'Product Detail', pp_btn_price: 'Adjust Price', pp_btn_seo: 'SEO Title 💎1', pp_btn_ai_image: 'AI Image', pp_btn_favorite: 'Favorite',
+                related_kw_title: 'Related Keywords', related_kw_sub: '— Based on Naver search trends', related_kw_tip: '💡 Click a keyword card → search again with it',
+                period_manual_label: '📅 Select custom period:',
+                trending_kw_title: 'Seasonal Trending Keywords', trending_kw_sub: '— Click to add to search',
+                log_title: '📡 Collection Log',
+                badge_sample: '📋 Sample data', badge_crawl: '🕷 Scraped data', badge_live: '🔌 Live API',
+                status_collecting: 'Collecting...', status_checking: 'Checking...',
+                log_start_google: 'Starting collection via Google Shopping API', log_kr_market_done: 'Korea market done: {n} items', log_cn_market_done: 'China market done: {n} items',
+                label_count_plain: '{n}',
+                log_api_check: 'Checking API status...', log_coupang_api: 'Coupang API: ', log_1688_api: '1688 API: ',
+                log_connected: '✓ Connected', log_no_key: '✗ No key', log_not_set: '✗ Not set',
+                log_api_tip: '💡 Use the crawl button until API keys are set', log_api_conn_fail: '✗ Failed to connect to API server',
+                log_db_saving: '💾 Saving to Supabase DB...', log_db_saved: '✅ DB save complete: {n} items', log_db_save_fail: '⚠ DB save failed: {msg}',
+                log_db_load_start: '💾 Loading data from DB...', log_db_loaded: '✅ DB loaded: {n} products', log_db_empty: 'DB empty → sample data',
+                log_db_conn_fail: 'DB connection failed → sample data', log_db_linked: 'DB linked ({n})', label_scrape_suffix: ' (scraped)',
+                product_count_label: '{n} products', filter_all_label: 'All ({n})', label_other: 'Other', card_go_link: '↗ View',
+                review_count: '{n} reviews', table_detail_link: 'Detail→', selected_count: '{n} selected', pp_original_link: '↗ Original product page',
+                pp_price_prompt: 'Enter new price (numbers only)', pp_price_invalid: 'Please enter a number', log_price_adjust: '💰 Price adjusted: ',
+                pp_seo_alert: '✏️ Auto SEO title generation: AI Gateway integration needed (💎1 credit)', pp_ai_image_alert: '🖼 AI image generation: AI Gateway integration needed',
+                log_fav_removed: 'Removed from favorites: ', log_fav_saved: '❤️ Saved to favorites: ', label_upload_source: 'Upload',
+                alert_collected: '{platform} {n} collected', label_just_now: 'Just now', label_recommended: 'Recommended', label_sea_market: 'SE Asia market',
+                msg_server_blocked_title: 'Server scraping blocked', msg_server_blocked_desc: 'Coupang/1688 blocked the Vercel server IP.',
+                msg_alt_upload_title: 'Alternative: CSV/JSON upload',
+                msg_alt_upload_desc: '① Install Ultimate Web Scraper in Chrome<br>② Scrape directly on Coupang/1688<br>③ Export as CSV/JSON<br>④ Load the data with the 📤 upload button',
+                msg_alt_api_title: 'Alternative: API key integration', msg_alt_api_desc: 'Get a Coupang Partners / 1688 API key to collect data without being blocked',
+                tour_1_title: 'Welcome to Sourcing Tracker 👋',
+                tour_1_body: 'An all-in-one sourcing tool that searches 22 marketplaces at once, including Coupang, 1688, Taobao, Naver and Gmarket.',
+                tour_2_title: 'Step 1 · Enter a keyword', tour_2_body: 'Enter the product name or category you want to find (e.g. wireless earbuds, camping table).',
+                tour_3_title: 'Step 2 · AI unified search', tour_3_body: 'Search 22 platforms at once with a single click (💎 10 credits). Results are organized by platform.',
+                tour_4_title: 'Step 3 · Set trending period', tour_4_body: 'Choose 3 / 7 / 30 days or a custom period to get trending product recommendations.',
+                tour_5_title: 'Step 4 · Check results',
+                tour_5_body: 'Check recommended products by platform and compare images, prices and links. Use the related keywords panel on the left to expand your search.',
+                cat_women_fashion: "Women's Fashion", cat_men_fashion: "Men's Fashion", cat_beauty: 'Beauty', cat_baby: 'Baby & Kids',
+                cat_food: 'Food', cat_kitchen: 'Kitchenware', cat_living: 'Household Goods', cat_home_interior: 'Home Interior',
+                cat_digital: 'Electronics & Digital', cat_sports: 'Sports & Leisure', cat_auto: 'Auto Accessories', cat_books: 'Books & Music',
+                cat_toys: 'Toys & Hobby', cat_stationery: 'Stationery & Office', cat_pet: 'Pet Supplies', cat_health: 'Fitness & Health',
+                trending_coupang_header: '🛒 Coupang Partners API · {n} best categories live', trending_naver_header: '🟩 Naver Shopping Search API · {n} categories live',
+                label_loading: 'Loading', trending_footer_desc: '📡 Live extraction (Coupang + Naver) · No fake data', label_auto_5min: '(auto every 5 min)',
+                trending_login_required: '⚠️ Log in to load live trending keywords',
+                date_range_invalid: '⚠ End date is before start date', date_range_total: '{n} days total',
+                hub_status_login_required: 'Login required', hub_login_first_title: 'Log in on SNS Platform first', hub_status_connected: 'Connected',
+                comp_tight: 'High competition', comp_medium: 'Medium competition', comp_loose: 'Low competition', comp_main: 'Main', label_searching: 'Searching',
+                alert_enter_keyword: 'Please enter a search keyword', alert_login_required: 'Login required.\nhttps://hubontrade.com/sns-platform/auth.html',
+                search_in_progress: '🔄 Searching...', label_period: 'Period', msg_searching_all: '🔄 Searching all platforms at once...',
+                msg_backend_missing: '⚠ Backend not built - needs an API or crawler', msg_crawl_blocked: 'Crawling blocked',
+                log_file_upload: '📤 File upload: {file} → {n} products', log_parse_error: '✗ File parse error: ',
+                log_no_export_data: 'No data to export', log_export_done: '📥 {format} export: {n} items → {file}'
             },
             zh: {
                 doc_title: '采购追踪器 | 多渠道仪表板', tb_title: '多渠道采购追踪器', tb_updated: '更新:',
@@ -1332,7 +1498,73 @@
                 ai_hub_title: '今日AI推荐商品搜索', ai_hub_status: '待机',
                 ai_hub_desc: '输入关键词 → 同时搜索全平台(Coupang API · 1688/淘宝采集 · 全球市场)',
                 ai_hub_ph: '搜索关键词(如:无线耳机、跑步裤、露营桌)', ai_hub_btn: '🤖 AI搜索',
-                period_label: '热门周期:', period_3: '3天', period_7: '7天', period_15: '15天', period_30: '30天', period_manual: '手动'
+                period_label: '热门周期:', period_3: '3天', period_7: '7天', period_15: '15天', period_30: '30天', period_manual: '手动',
+                card_coupang_link_title: '前往Coupang联盟API页面',
+                card_name_coupang: 'Coupang <span style="font-size:.65rem;color:#3b82f6;font-weight:600">→ API</span>',
+                card_name_musinsa: 'Musinsa', card_name_ably: 'Ably', card_name_zigzag: 'Zigzag', card_name_wconcept: 'W Concept',
+                card_name_oliveyoung: 'Olive Young', card_name_kurly: 'Market Kurly', card_name_11st: '11号街', card_name_auction: 'Auction拍卖',
+                card_name_lotteon: 'Lotte On', card_name_interpark: 'Interpark',
+                card_sub_sourcing: '采购', card_sub_selling: '销售', card_sub_sea: '东南亚', card_sub_global: '全球',
+                card_sub_fashion: '时尚', card_sub_cheap: '超低价', card_sub_women_fashion: '女装', card_sub_lifestyle: '生活方式',
+                card_sub_beauty: '美妆', card_sub_fresh_food: '生鲜', card_sub_mall: '综合商城', card_sub_china: '中国',
+                card_tag_waiting: '待机', card_tag_sample: '样本', card_tag_api_linked: 'API对接', card_tag_dev_needed: '待开发',
+                card_tag_fail: '失败', card_tag_scrape: '采集', card_tag_prep: '准备中', card_tag_naver_mall: 'Naver商城',
+                card_tag_no_result: '无结果', card_tag_api_error: 'API错误',
+                ai_result_title: '搜索结果商品',
+                kpi_total_label: '采集商品', kpi_total_sub_default: '请点击采集按钮', kpi_rec_label: '推荐商品',
+                kpi_rec_sub: '采集后显示', kpi_margin_label: '平均利润率',
+                kpi_total_sub_sample: '样本数据', kpi_total_change_sample: '样本', kpi_total_sub_scrape: '网页采集数据',
+                kpi_total_change_real: '实际', kpi_total_sub_upload: '上传数据', kpi_total_change_upload: '上传', kpi_total_sub_db: '数据库数据',
+                view_grid_btn: '🖼 图片', view_table_btn: '📋 表格',
+                section_collect_result: '🔥 采集结果',
+                alert_empty_state: '🕷 点击采集按钮收集真实数据<br><small>或使用📤上传按钮加载CSV/JSON文件</small>',
+                pp_modal_title: '商品详情', pp_btn_price: '调整价格', pp_btn_seo: 'SEO商品名 💎1', pp_btn_ai_image: 'AI图片', pp_btn_favorite: '收藏',
+                related_kw_title: '相关关键词分析', related_kw_sub: '— 基于Naver搜索趋势', related_kw_tip: '💡 点击关键词卡片→用该关键词重新搜索',
+                period_manual_label: '📅 自定义选择期间:',
+                trending_kw_title: '季节性热门关键词推荐', trending_kw_sub: '— 点击添加到搜索',
+                log_title: '📡 采集日志',
+                badge_sample: '📋 样本数据', badge_crawl: '🕷 采集数据', badge_live: '🔌 API实时',
+                status_collecting: '采集中...', status_checking: '检查中...',
+                log_start_google: '通过Google Shopping API开始采集', log_kr_market_done: '韩国市场完成:{n}个', log_cn_market_done: '中国市场完成:{n}个',
+                label_count_plain: '{n}个',
+                log_api_check: '正在检查API状态...', log_coupang_api: 'Coupang API: ', log_1688_api: '1688 API: ',
+                log_connected: '✓ 已连接', log_no_key: '✗ 无密钥', log_not_set: '✗ 未设置',
+                log_api_tip: '💡 在设置API密钥之前请使用采集按钮', log_api_conn_fail: '✗ 连接API服务器失败',
+                log_db_saving: '💾 正在保存到Supabase数据库...', log_db_saved: '✅ 数据库保存完成:{n}个', log_db_save_fail: '⚠ 数据库保存失败:{msg}',
+                log_db_load_start: '💾 正在从数据库加载数据...', log_db_loaded: '✅ 数据库加载:{n}个商品', log_db_empty: '数据库为空→样本数据',
+                log_db_conn_fail: '数据库连接失败→样本数据', log_db_linked: '数据库对接({n}个)', label_scrape_suffix: ' (采集)',
+                product_count_label: '{n}个商品', filter_all_label: '全部({n})', label_other: '其他', card_go_link: '↗ 查看',
+                review_count: '{n}条评价', table_detail_link: '详情→', selected_count: '已选择{n}个', pp_original_link: '↗ 原始商品页面',
+                pp_price_prompt: '请输入新价格(仅限数字)', pp_price_invalid: '请输入数字', log_price_adjust: '💰 价格调整: ',
+                pp_seo_alert: '✏️ SEO商品名自动生成:需要开发AI Gateway对接(💎1积分)', pp_ai_image_alert: '🖼 AI图片生成:需要开发AI Gateway对接',
+                log_fav_removed: '取消收藏: ', log_fav_saved: '❤️ 已收藏: ', label_upload_source: '上传',
+                alert_collected: '{platform} 采集{n}个', label_just_now: '刚刚', label_recommended: '推荐', label_sea_market: '东南亚市场',
+                msg_server_blocked_title: '服务器采集被封锁', msg_server_blocked_desc: 'Coupang/1688已封锁Vercel服务器IP。',
+                msg_alt_upload_title: '替代方案:上传CSV/JSON',
+                msg_alt_upload_desc: '①在Chrome中安装Ultimate Web Scraper<br>②直接在Coupang/1688上采集<br>③导出为CSV/JSON<br>④使用📤上传按钮加载数据',
+                msg_alt_api_title: '替代方案:对接API密钥', msg_alt_api_desc: '获取Coupang联盟/1688 API密钥即可不受封锁采集数据',
+                tour_1_title: '欢迎使用采购追踪器 👋',
+                tour_1_body: '这是一款可一次性搜索Coupang、1688、淘宝、Naver、Gmarket等22个市场平台的一体化采购工具。',
+                tour_2_title: '第1步·输入关键词', tour_2_body: '输入您要查找的商品名称或分类(例如:无线耳机、露营桌)。',
+                tour_3_title: '第2步·AI综合搜索', tour_3_body: '一键同时搜索22个平台(💎10积分)。结果将按平台整理。',
+                tour_4_title: '第3步·设置热门周期', tour_4_body: '选择3天/7天/30天或自定义周期,获取热门推荐商品。',
+                tour_5_title: '第4步·查看结果',
+                tour_5_body: '查看各平台的推荐商品,比较图片、价格和链接。您可以在左侧的相关关键词面板中扩展搜索。',
+                cat_women_fashion: '女装', cat_men_fashion: '男装', cat_beauty: '美妆', cat_baby: '母婴/儿童',
+                cat_food: '食品', cat_kitchen: '厨房用品', cat_living: '生活用品', cat_home_interior: '家居装饰',
+                cat_digital: '家电数码', cat_sports: '运动/休闲', cat_auto: '汽车用品', cat_books: '图书/音乐',
+                cat_toys: '玩具/爱好', cat_stationery: '文具/办公', cat_pet: '宠物用品', cat_health: '健身/健康',
+                trending_coupang_header: '🛒 Coupang Partners API · {n}个热门分类实时', trending_naver_header: '🟩 Naver购物搜索API · {n}个分类实时',
+                label_loading: '加载中', trending_footer_desc: '📡 实时提取(Coupang+Naver)·无虚假数据', label_auto_5min: '(每5分钟自动)',
+                trending_login_required: '⚠️ 请登录后加载实时热门关键词',
+                date_range_invalid: '⚠ 结束日期早于开始日期', date_range_total: '共{n}天',
+                hub_status_login_required: '需要登录', hub_login_first_title: '请先在SNS平台登录', hub_status_connected: '已连接',
+                comp_tight: '竞争激烈', comp_medium: '竞争中等', comp_loose: '竞争较低', comp_main: '主要', label_searching: '搜索中',
+                alert_enter_keyword: '请输入搜索关键词', alert_login_required: '需要登录。\nhttps://hubontrade.com/sns-platform/auth.html',
+                search_in_progress: '🔄 搜索中...', label_period: '期间', msg_searching_all: '🔄 正在同时搜索所有平台...',
+                msg_backend_missing: '⚠ 后端未开发-需要添加API或采集器', msg_crawl_blocked: '采集被封锁',
+                log_file_upload: '📤 文件上传:{file} → {n}个商品', log_parse_error: '✗ 文件解析错误: ',
+                log_no_export_data: '没有可导出的数据', log_export_done: '📥 {format}导出:{n}个 → {file}'
             },
             vi: {
                 doc_title: 'Trình theo dõi nguồn hàng | Bảng đa kênh', tb_title: 'Trình theo dõi nguồn hàng đa kênh', tb_updated: 'Cập nhật:',
@@ -1340,7 +1572,73 @@
                 ai_hub_title: 'Tìm sản phẩm AI hôm nay', ai_hub_status: 'Chờ',
                 ai_hub_desc: 'Nhập từ khóa → tìm tất cả nền tảng cùng lúc (Coupang API · 1688/Taobao · thị trường toàn cầu)',
                 ai_hub_ph: 'Từ khóa tìm kiếm (vd: tai nghe không dây, quần chạy bộ, bàn cắm trại)', ai_hub_btn: '🤖 Tìm AI',
-                period_label: 'Khoảng thời gian:', period_3: '3 ngày', period_7: '7 ngày', period_15: '15 ngày', period_30: '30 ngày', period_manual: 'Thủ công'
+                period_label: 'Khoảng thời gian:', period_3: '3 ngày', period_7: '7 ngày', period_15: '15 ngày', period_30: '30 ngày', period_manual: 'Thủ công',
+                card_coupang_link_title: 'Đi đến trang API Coupang Partners',
+                card_name_coupang: 'Coupang <span style="font-size:.65rem;color:#3b82f6;font-weight:600">→ API</span>',
+                card_name_musinsa: 'Musinsa', card_name_ably: 'Ably', card_name_zigzag: 'Zigzag', card_name_wconcept: 'W Concept',
+                card_name_oliveyoung: 'Olive Young', card_name_kurly: 'Market Kurly', card_name_11st: '11st', card_name_auction: 'Auction',
+                card_name_lotteon: 'Lotte On', card_name_interpark: 'Interpark',
+                card_sub_sourcing: 'Nguồn hàng', card_sub_selling: 'Bán hàng', card_sub_sea: 'Đông Nam Á', card_sub_global: 'Toàn cầu',
+                card_sub_fashion: 'Thời trang', card_sub_cheap: 'Giá siêu rẻ', card_sub_women_fashion: 'Thời trang nữ', card_sub_lifestyle: 'Phong cách sống',
+                card_sub_beauty: 'Làm đẹp', card_sub_fresh_food: 'Thực phẩm tươi', card_sub_mall: 'Trung tâm mua sắm', card_sub_china: 'Trung Quốc',
+                card_tag_waiting: 'Chờ', card_tag_sample: 'Mẫu', card_tag_api_linked: 'Liên kết API', card_tag_dev_needed: 'Cần phát triển',
+                card_tag_fail: 'Thất bại', card_tag_scrape: 'Đã thu thập', card_tag_prep: 'Đang chuẩn bị', card_tag_naver_mall: 'Naver mall',
+                card_tag_no_result: 'Không có kết quả', card_tag_api_error: 'Lỗi API',
+                ai_result_title: 'Kết quả tìm kiếm',
+                kpi_total_label: 'Sản phẩm đã thu thập', kpi_total_sub_default: 'Nhấn nút thu thập', kpi_rec_label: 'Sản phẩm đề xuất',
+                kpi_rec_sub: 'Hiển thị sau khi thu thập', kpi_margin_label: 'Tỷ suất lợi nhuận TB',
+                kpi_total_sub_sample: 'Dữ liệu mẫu', kpi_total_change_sample: 'Mẫu', kpi_total_sub_scrape: 'Dữ liệu thu thập web',
+                kpi_total_change_real: 'Thực tế', kpi_total_sub_upload: 'Dữ liệu tải lên', kpi_total_change_upload: 'Tải lên', kpi_total_sub_db: 'Dữ liệu DB',
+                view_grid_btn: '🖼 Hình ảnh', view_table_btn: '📋 Bảng',
+                section_collect_result: '🔥 Kết quả thu thập',
+                alert_empty_state: '🕷 Nhấn nút thu thập để lấy dữ liệu thực<br><small>Hoặc dùng nút 📤 tải lên để nhập tệp CSV/JSON</small>',
+                pp_modal_title: 'Chi tiết sản phẩm', pp_btn_price: 'Điều chỉnh giá', pp_btn_seo: 'Tên SEO 💎1', pp_btn_ai_image: 'Hình ảnh AI', pp_btn_favorite: 'Yêu thích',
+                related_kw_title: 'Phân tích từ khóa liên quan', related_kw_sub: '— Dựa trên xu hướng tìm kiếm Naver', related_kw_tip: '💡 Nhấn thẻ từ khóa → tìm kiếm lại với từ khóa đó',
+                period_manual_label: '📅 Chọn khoảng thời gian:',
+                trending_kw_title: 'Từ khóa thịnh hành theo mùa', trending_kw_sub: '— Nhấn để thêm vào tìm kiếm',
+                log_title: '📡 Nhật ký thu thập',
+                badge_sample: '📋 Dữ liệu mẫu', badge_crawl: '🕷 Dữ liệu thu thập', badge_live: '🔌 API trực tiếp',
+                status_collecting: 'Đang thu thập...', status_checking: 'Đang kiểm tra...',
+                log_start_google: 'Bắt đầu thu thập qua Google Shopping API', log_kr_market_done: 'Hoàn tất thị trường Hàn Quốc: {n} mục', log_cn_market_done: 'Hoàn tất thị trường Trung Quốc: {n} mục',
+                label_count_plain: '{n}',
+                log_api_check: 'Đang kiểm tra trạng thái API...', log_coupang_api: 'API Coupang: ', log_1688_api: 'API 1688: ',
+                log_connected: '✓ Đã kết nối', log_no_key: '✗ Không có khóa', log_not_set: '✗ Chưa thiết lập',
+                log_api_tip: '💡 Hãy dùng nút thu thập cho đến khi thiết lập khóa API', log_api_conn_fail: '✗ Kết nối máy chủ API thất bại',
+                log_db_saving: '💾 Đang lưu vào Supabase DB...', log_db_saved: '✅ Lưu DB hoàn tất: {n} mục', log_db_save_fail: '⚠ Lưu DB thất bại: {msg}',
+                log_db_load_start: '💾 Đang tải dữ liệu từ DB...', log_db_loaded: '✅ Đã tải DB: {n} sản phẩm', log_db_empty: 'DB trống → dữ liệu mẫu',
+                log_db_conn_fail: 'Kết nối DB thất bại → dữ liệu mẫu', log_db_linked: 'Liên kết DB ({n})', label_scrape_suffix: ' (đã thu thập)',
+                product_count_label: '{n} sản phẩm', filter_all_label: 'Tất cả ({n})', label_other: 'Khác', card_go_link: '↗ Xem',
+                review_count: '{n} đánh giá', table_detail_link: 'Chi tiết→', selected_count: 'Đã chọn {n}', pp_original_link: '↗ Trang sản phẩm gốc',
+                pp_price_prompt: 'Nhập giá mới (chỉ số)', pp_price_invalid: 'Vui lòng nhập số', log_price_adjust: '💰 Điều chỉnh giá: ',
+                pp_seo_alert: '✏️ Tạo tên SEO tự động: cần tích hợp AI Gateway (💎1 credit)', pp_ai_image_alert: '🖼 Tạo hình ảnh AI: cần tích hợp AI Gateway',
+                log_fav_removed: 'Đã bỏ yêu thích: ', log_fav_saved: '❤️ Đã lưu yêu thích: ', label_upload_source: 'Tải lên',
+                alert_collected: '{platform} thu thập {n}', label_just_now: 'Vừa xong', label_recommended: 'Đề xuất', label_sea_market: 'Thị trường Đông Nam Á',
+                msg_server_blocked_title: 'Máy chủ thu thập bị chặn', msg_server_blocked_desc: 'Coupang/1688 đã chặn IP máy chủ Vercel.',
+                msg_alt_upload_title: 'Giải pháp thay thế: tải lên CSV/JSON',
+                msg_alt_upload_desc: '① Cài Ultimate Web Scraper trên Chrome<br>② Thu thập trực tiếp trên Coupang/1688<br>③ Xuất ra CSV/JSON<br>④ Tải dữ liệu bằng nút 📤 tải lên',
+                msg_alt_api_title: 'Giải pháp thay thế: tích hợp khóa API', msg_alt_api_desc: 'Lấy khóa API Coupang Partners / 1688 để thu thập dữ liệu không bị chặn',
+                tour_1_title: 'Chào mừng đến với Trình theo dõi nguồn hàng 👋',
+                tour_1_body: 'Công cụ nguồn hàng tất cả trong một, tìm kiếm 22 sàn thương mại cùng lúc, gồm Coupang, 1688, Taobao, Naver và Gmarket.',
+                tour_2_title: 'Bước 1 · Nhập từ khóa', tour_2_body: 'Nhập tên sản phẩm hoặc danh mục bạn muốn tìm (vd: tai nghe không dây, bàn cắm trại).',
+                tour_3_title: 'Bước 2 · Tìm kiếm AI tổng hợp', tour_3_body: 'Tìm kiếm 22 nền tảng cùng lúc chỉ với một cú nhấp (💎 10 credit). Kết quả được sắp xếp theo từng nền tảng.',
+                tour_4_title: 'Bước 3 · Thiết lập khoảng thời gian thịnh hành', tour_4_body: 'Chọn 3 / 7 / 30 ngày hoặc khoảng thời gian tùy chỉnh để nhận sản phẩm đề xuất thịnh hành.',
+                tour_5_title: 'Bước 4 · Kiểm tra kết quả',
+                tour_5_body: 'Kiểm tra sản phẩm đề xuất theo từng nền tảng và so sánh hình ảnh, giá cả, liên kết. Dùng bảng từ khóa liên quan bên trái để mở rộng tìm kiếm.',
+                cat_women_fashion: 'Thời trang nữ', cat_men_fashion: 'Thời trang nam', cat_beauty: 'Làm đẹp', cat_baby: 'Mẹ và bé',
+                cat_food: 'Thực phẩm', cat_kitchen: 'Đồ dùng nhà bếp', cat_living: 'Đồ dùng gia đình', cat_home_interior: 'Nội thất nhà cửa',
+                cat_digital: 'Điện tử & Kỹ thuật số', cat_sports: 'Thể thao & Giải trí', cat_auto: 'Phụ kiện ô tô', cat_books: 'Sách & Âm nhạc',
+                cat_toys: 'Đồ chơi & Sở thích', cat_stationery: 'Văn phòng phẩm', cat_pet: 'Đồ dùng thú cưng', cat_health: 'Thể hình & Sức khỏe',
+                trending_coupang_header: '🛒 API Coupang Partners · {n} danh mục bán chạy trực tiếp', trending_naver_header: '🟩 API tìm kiếm mua sắm Naver · {n} danh mục trực tiếp',
+                label_loading: 'Đang tải', trending_footer_desc: '📡 Trích xuất trực tiếp (Coupang + Naver) · Không có dữ liệu giả', label_auto_5min: '(tự động mỗi 5 phút)',
+                trending_login_required: '⚠️ Đăng nhập để tải từ khóa thịnh hành trực tiếp',
+                date_range_invalid: '⚠ Ngày kết thúc trước ngày bắt đầu', date_range_total: 'Tổng {n} ngày',
+                hub_status_login_required: 'Cần đăng nhập', hub_login_first_title: 'Vui lòng đăng nhập trên nền tảng SNS trước', hub_status_connected: 'Đã kết nối',
+                comp_tight: 'Cạnh tranh cao', comp_medium: 'Cạnh tranh vừa', comp_loose: 'Cạnh tranh thấp', comp_main: 'Chính', label_searching: 'Đang tìm kiếm',
+                alert_enter_keyword: 'Vui lòng nhập từ khóa tìm kiếm', alert_login_required: 'Cần đăng nhập.\nhttps://hubontrade.com/sns-platform/auth.html',
+                search_in_progress: '🔄 Đang tìm kiếm...', label_period: 'Khoảng thời gian', msg_searching_all: '🔄 Đang tìm kiếm tất cả nền tảng cùng lúc...',
+                msg_backend_missing: '⚠ Chưa xây dựng backend - cần thêm API hoặc crawler', msg_crawl_blocked: 'Thu thập bị chặn',
+                log_file_upload: '📤 Tải lên tệp: {file} → {n} sản phẩm', log_parse_error: '✗ Lỗi phân tích tệp: ',
+                log_no_export_data: 'Không có dữ liệu để xuất', log_export_done: '📥 Xuất {format}: {n} mục → {file}'
             }
         };
     </script>

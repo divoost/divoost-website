@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소싱 트래커 | 추천 상품</title>
+    <title data-i18n="prod_doc_title">소싱 트래커 | 추천 상품</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     <style>
@@ -259,7 +259,7 @@
 
             <nav class="sidebar-nav">
                 <div class="sidebar-section">
-                    <div class="sidebar-section-title">플랫폼</div>
+                    <div class="sidebar-section-title" data-i18n="prod_sec_platform">플랫폼</div>
                     <div class="platform-tabs" style="padding:4px 12px 12px;gap:4px;">
                         <span class="platform-badge p-coupang active" style="font-size:10px;padding:3px 8px;">쿠팡</span>
                         <span class="platform-badge p-gmarket active" style="font-size:10px;padding:3px 8px;">지마켓</span>
@@ -282,7 +282,7 @@
                 </div>
 
                 <div class="sidebar-section">
-                    <div class="sidebar-section-title">분석</div>
+                    <div class="sidebar-section-title" data-i18n="prod_sec_analysis">분석</div>
                     <a href="platforms.html" class="sidebar-link">
                         <span class="sidebar-link-icon">🏪</span> 플랫폼 비교
                     </a>
@@ -317,11 +317,11 @@
                     <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
                     <div>
                         <div class="top-bar-title">추천 상품 트래커</div>
-                        <div class="top-bar-date">마지막 업데이트: <span id="lastUpdated">-</span> | 환율: 1 CNY = 190.5 KRW</div>
+                        <div class="top-bar-date"><span data-i18n="prod_last_updated">마지막 업데이트:</span> <span id="lastUpdated">-</span> <span data-i18n="prod_exchange_rate">| 환율: 1 CNY = 190.5 KRW</span></div>
                     </div>
                 </div>
                 <div class="top-bar-right">
-                    <button class="top-bar-btn btn-refresh" id="btnRefresh">🔄 <span>새로고침</span></button>
+                    <button class="top-bar-btn btn-refresh" id="btnRefresh">🔄 <span data-i18n="prod_btn_refresh">새로고침</span></button>
                 </div>
             </header>
 
@@ -329,23 +329,23 @@
 
                 <!-- Date Filter Bar -->
                 <div class="date-filter-bar">
-                    <label>📅 추천일 검색</label>
+                    <label data-i18n="prod_date_filter_label">📅 추천일 검색</label>
                     <div style="display:flex;gap:6px;align-items:center;">
-                        <input type="date" id="dateFrom" title="시작일">
+                        <input type="date" id="dateFrom" title="시작일" data-i18n-title="prod_date_from_title">
                         <span style="color:#64748B;font-size:12px;">~</span>
-                        <input type="date" id="dateTo" title="종료일">
+                        <input type="date" id="dateTo" title="종료일" data-i18n-title="prod_date_to_title">
                     </div>
                     <div style="display:flex;gap:4px;">
-                        <button class="date-btn" data-range="today">오늘</button>
-                        <button class="date-btn" data-range="7d">7일</button>
-                        <button class="date-btn" data-range="30d">30일</button>
-                        <button class="date-btn active" data-range="all">전체</button>
+                        <button class="date-btn" data-range="today" data-i18n="prod_range_today">오늘</button>
+                        <button class="date-btn" data-range="7d" data-i18n="prod_range_7d">7일</button>
+                        <button class="date-btn" data-range="30d" data-i18n="prod_range_30d">30일</button>
+                        <button class="date-btn active" data-range="all" data-i18n="prod_range_all">전체</button>
                     </div>
-                    <button class="date-search-btn" id="btnDateSearch">🔍 검색</button>
-                    <button class="date-reset-btn" id="btnDateReset">초기화</button>
+                    <button class="date-search-btn" id="btnDateSearch" data-i18n="prod_btn_search">🔍 검색</button>
+                    <button class="date-reset-btn" id="btnDateReset" data-i18n="prod_btn_reset">초기화</button>
                     <div style="margin-left:auto;display:flex;align-items:center;gap:6px;">
-                        <input type="text" id="dateText" placeholder="YYYY-MM-DD 직접입력" style="width:140px;font-size:12px;">
-                        <button class="date-btn" id="btnDateTextSearch">이동</button>
+                        <input type="text" id="dateText" placeholder="YYYY-MM-DD 직접입력" data-i18n-ph="prod_date_text_ph" style="width:140px;font-size:12px;">
+                        <button class="date-btn" id="btnDateTextSearch" data-i18n="prod_btn_go">이동</button>
                     </div>
                 </div>
 
@@ -358,18 +358,18 @@
                     </div>
                     <div class="category-filter">
                         <select class="category-select" id="sourceFilter">
-                            <option value="all">전체 소싱처</option>
-                            <option value="1688">🏭 1688</option>
-                            <option value="타오바오">🛒 타오바오</option>
+                            <option value="all" data-i18n="prod_filter_all_source">전체 소싱처</option>
+                            <option value="1688" data-i18n="prod_source_1688">🏭 1688</option>
+                            <option value="타오바오" data-i18n="prod_source_taobao">🛒 타오바오</option>
                         </select>
                         <select class="category-select" id="categoryFilter">
-                            <option value="all">전체 카테고리</option>
-                            <option value="주방용품">🍳 주방용품</option>
-                            <option value="전자기기">🎧 전자기기</option>
-                            <option value="홈인테리어">🏠 홈인테리어</option>
-                            <option value="뷰티도구">💄 뷰티도구</option>
-                            <option value="패션잡화">👜 패션잡화</option>
-                            <option value="반려동물">🐾 반려동물</option>
+                            <option value="all" data-i18n="prod_filter_all_category">전체 카테고리</option>
+                            <option value="주방용품" data-i18n="prod_cat_kitchen">🍳 주방용품</option>
+                            <option value="전자기기" data-i18n="prod_cat_electronics">🎧 전자기기</option>
+                            <option value="홈인테리어" data-i18n="prod_cat_home">🏠 홈인테리어</option>
+                            <option value="뷰티도구" data-i18n="prod_cat_beauty">💄 뷰티도구</option>
+                            <option value="패션잡화" data-i18n="prod_cat_fashion">👜 패션잡화</option>
+                            <option value="반려동물" data-i18n="prod_cat_pet">🐾 반려동물</option>
                         </select>
                     </div>
                 </div>
@@ -377,15 +377,15 @@
                 <!-- Main Product Table -->
                 <div class="table-panel">
                     <div class="table-panel-header">
-                        <div class="table-panel-title" id="tableTitle">
+                        <div class="table-panel-title" id="tableTitle" data-i18n="prod_table_title">
                             🏆 추천 상품 TOP (마진율 순)
                         </div>
                         <div class="table-filters">
-                            <button class="table-filter-btn active" data-filter="all">전체</button>
-                            <button class="table-filter-btn" data-filter="strong">STRONG BUY</button>
-                            <button class="table-filter-btn" data-filter="buy">BUY</button>
-                            <button class="table-filter-btn" data-filter="direct">직배송만</button>
-                            <input type="text" class="table-search" placeholder="상품명 검색..." id="tableSearch">
+                            <button class="table-filter-btn active" data-filter="all" data-i18n="prod_filter_all">전체</button>
+                            <button class="table-filter-btn" data-filter="strong" data-i18n="prod_filter_strong">STRONG BUY</button>
+                            <button class="table-filter-btn" data-filter="buy" data-i18n="prod_filter_buy">BUY</button>
+                            <button class="table-filter-btn" data-filter="direct" data-i18n="prod_filter_direct">직배송만</button>
+                            <input type="text" class="table-search" placeholder="상품명 검색..." data-i18n-ph="prod_search_ph" id="tableSearch">
                         </div>
                     </div>
                     <div style="overflow-x:auto;">
@@ -407,47 +407,47 @@
                         </table>
                     </div>
                     <div class="table-footer">
-                        <div class="table-footer-info" id="tableFooterInfo">로딩 중...</div>
+                        <div class="table-footer-info" id="tableFooterInfo" data-i18n="prod_loading">로딩 중...</div>
                         <div class="pagination" id="pagination"></div>
                     </div>
                 </div>
 
                 <!-- Section Divider -->
                 <div class="section-divider">
-                    <div class="section-divider-title">📊 판매 플랫폼별 인기 상품 비교</div>
+                    <div class="section-divider-title" data-i18n="prod_section_divider">📊 판매 플랫폼별 인기 상품 비교</div>
                     <div class="section-divider-line"></div>
                 </div>
 
                 <!-- Multi-Platform Price Comparison -->
                 <div class="mp-price-grid">
                     <div class="mp-price-card">
-                        <div class="mp-price-header mp-coupang">🛒 쿠팡 TOP 5</div>
+                        <div class="mp-price-header mp-coupang" data-i18n="prod_top5_coupang">🛒 쿠팡 TOP 5</div>
                         <div class="mp-price-body">
-                            <div class="mp-price-row"><span class="mp-product-name">실리콘 주방세트</span><span class="mp-price-val">18,900원</span><span class="mp-margin-val" style="color:#059669">마진 54.2%</span></div>
-                            <div class="mp-price-row"><span class="mp-product-name">TWS 이어폰</span><span class="mp-price-val">14,900원</span><span class="mp-margin-val" style="color:#2563EB">마진 42.1%</span></div>
-                            <div class="mp-price-row"><span class="mp-product-name">LED 무드등</span><span class="mp-price-val">15,900원</span><span class="mp-margin-val" style="color:#059669">마진 48.7%</span></div>
-                            <div class="mp-price-row"><span class="mp-product-name">메이크업 브러쉬</span><span class="mp-price-val">12,900원</span><span class="mp-margin-val" style="color:#059669">마진 56.8%</span></div>
-                            <div class="mp-price-row"><span class="mp-product-name">강아지 장난감</span><span class="mp-price-val">9,900원</span><span class="mp-margin-val" style="color:#059669">마진 51.3%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">실리콘 주방세트</span><span class="mp-price-val">18,900원</span><span class="mp-margin-val" style="color:#059669"><span data-i18n="prod_margin_label">마진</span> 54.2%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">TWS 이어폰</span><span class="mp-price-val">14,900원</span><span class="mp-margin-val" style="color:#2563EB"><span data-i18n="prod_margin_label">마진</span> 42.1%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">LED 무드등</span><span class="mp-price-val">15,900원</span><span class="mp-margin-val" style="color:#059669"><span data-i18n="prod_margin_label">마진</span> 48.7%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">메이크업 브러쉬</span><span class="mp-price-val">12,900원</span><span class="mp-margin-val" style="color:#059669"><span data-i18n="prod_margin_label">마진</span> 56.8%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">강아지 장난감</span><span class="mp-price-val">9,900원</span><span class="mp-margin-val" style="color:#059669"><span data-i18n="prod_margin_label">마진</span> 51.3%</span></div>
                         </div>
                     </div>
                     <div class="mp-price-card">
-                        <div class="mp-price-header mp-gmarket">🏬 지마켓 TOP 5</div>
+                        <div class="mp-price-header mp-gmarket" data-i18n="prod_top5_gmarket">🏬 지마켓 TOP 5</div>
                         <div class="mp-price-body">
-                            <div class="mp-price-row"><span class="mp-product-name">실리콘 주방세트</span><span class="mp-price-val">17,500원</span><span class="mp-margin-val" style="color:#059669">마진 48.3%</span></div>
-                            <div class="mp-price-row"><span class="mp-product-name">USB-C 케이블</span><span class="mp-price-val">6,900원</span><span class="mp-margin-val" style="color:#059669">마진 50.2%</span></div>
-                            <div class="mp-price-row"><span class="mp-product-name">LED 무드등</span><span class="mp-price-val">14,500원</span><span class="mp-margin-val" style="color:#2563EB">마진 44.1%</span></div>
-                            <div class="mp-price-row"><span class="mp-product-name">에코백</span><span class="mp-price-val">8,500원</span><span class="mp-margin-val" style="color:#059669">마진 47.2%</span></div>
-                            <div class="mp-price-row"><span class="mp-product-name">핸드폰 거치대</span><span class="mp-price-val">8,900원</span><span class="mp-margin-val" style="color:#2563EB">마진 38.5%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">실리콘 주방세트</span><span class="mp-price-val">17,500원</span><span class="mp-margin-val" style="color:#059669"><span data-i18n="prod_margin_label">마진</span> 48.3%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">USB-C 케이블</span><span class="mp-price-val">6,900원</span><span class="mp-margin-val" style="color:#059669"><span data-i18n="prod_margin_label">마진</span> 50.2%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">LED 무드등</span><span class="mp-price-val">14,500원</span><span class="mp-margin-val" style="color:#2563EB"><span data-i18n="prod_margin_label">마진</span> 44.1%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">에코백</span><span class="mp-price-val">8,500원</span><span class="mp-margin-val" style="color:#059669"><span data-i18n="prod_margin_label">마진</span> 47.2%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">핸드폰 거치대</span><span class="mp-price-val">8,900원</span><span class="mp-margin-val" style="color:#2563EB"><span data-i18n="prod_margin_label">마진</span> 38.5%</span></div>
                         </div>
                     </div>
                     <div class="mp-price-card">
-                        <div class="mp-price-header mp-naver">🟢 네이버 TOP 5</div>
+                        <div class="mp-price-header mp-naver" data-i18n="prod_top5_naver">🟢 네이버 TOP 5</div>
                         <div class="mp-price-body">
-                            <div class="mp-price-row"><span class="mp-product-name">메이크업 브러쉬</span><span class="mp-price-val">13,500원</span><span class="mp-margin-val" style="color:#059669">마진 58.2%</span></div>
-                            <div class="mp-price-row"><span class="mp-product-name">실리콘 주방세트</span><span class="mp-price-val">19,500원</span><span class="mp-margin-val" style="color:#059669">마진 55.8%</span></div>
-                            <div class="mp-price-row"><span class="mp-product-name">고양이 스크래처</span><span class="mp-price-val">12,500원</span><span class="mp-margin-val" style="color:#059669">마진 45.2%</span></div>
-                            <div class="mp-price-row"><span class="mp-product-name">헤어클립 20개</span><span class="mp-price-val">7,500원</span><span class="mp-margin-val" style="color:#059669">마진 55.1%</span></div>
-                            <div class="mp-price-row"><span class="mp-product-name">LED 무드등</span><span class="mp-price-val">16,500원</span><span class="mp-margin-val" style="color:#059669">마진 50.3%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">메이크업 브러쉬</span><span class="mp-price-val">13,500원</span><span class="mp-margin-val" style="color:#059669"><span data-i18n="prod_margin_label">마진</span> 58.2%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">실리콘 주방세트</span><span class="mp-price-val">19,500원</span><span class="mp-margin-val" style="color:#059669"><span data-i18n="prod_margin_label">마진</span> 55.8%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">고양이 스크래처</span><span class="mp-price-val">12,500원</span><span class="mp-margin-val" style="color:#059669"><span data-i18n="prod_margin_label">마진</span> 45.2%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">헤어클립 20개</span><span class="mp-price-val">7,500원</span><span class="mp-margin-val" style="color:#059669"><span data-i18n="prod_margin_label">마진</span> 55.1%</span></div>
+                            <div class="mp-price-row"><span class="mp-product-name">LED 무드등</span><span class="mp-price-val">16,500원</span><span class="mp-margin-val" style="color:#059669"><span data-i18n="prod_margin_label">마진</span> 50.3%</span></div>
                         </div>
                     </div>
                 </div>
@@ -460,7 +460,7 @@
     <div class="modal-overlay" id="productModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="modalTitle">상품 상세</h3>
+                <h3 id="modalTitle" data-i18n="prod_modal_title">상품 상세</h3>
                 <button class="modal-close" id="modalClose">✕</button>
             </div>
             <div class="modal-body" id="modalBody"></div>
@@ -479,6 +479,16 @@
         var filteredProducts = [];
         var currentPage = 1;
         var perPage = 20;
+
+        function tpl(key, vars) {
+            var s = (window.I18N ? I18N.t(key) : key);
+            if (vars) {
+                for (var k in vars) {
+                    if (vars.hasOwnProperty(k)) { s = s.split('{' + k + '}').join(vars[k]); }
+                }
+            }
+            return s;
+        }
 
         function escH(s) {
             if (!s) return '';
@@ -658,8 +668,8 @@
             var pageItems = filteredProducts.slice(start, end);
 
             if (pageItems.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:#64748B">표시할 상품이 없습니다</td></tr>';
-                document.getElementById('tableFooterInfo').textContent = '총 0개 상품';
+                tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:40px;color:#64748B">' + tpl('prod_no_products') + '</td></tr>';
+                document.getElementById('tableFooterInfo').textContent = tpl('prod_footer_zero');
                 document.getElementById('pagination').innerHTML = '';
                 return;
             }
@@ -676,19 +686,22 @@
                         (p.image ? '<img src="' + escH(p.image) + '" style="width:44px;height:44px;object-fit:cover;border-radius:6px" onerror="this.style.display=\'none\'">' : '<div style="width:44px;height:44px;background:#f1f5f9;border-radius:6px;display:flex;align-items:center;justify-content:center">📦</div>') +
                         '<div class="product-info"><div class="product-name" title="' + escH(p.name) + '">' + escH((p.name || '').substring(0, 35)) + '</div>' +
                         '<div class="product-category-sm">' + escH(p.category || p.platform || '') + '</div></div></div></td>' +
-                    '<td><span style="font-size:.68rem;padding:2px 8px;border-radius:4px;background:' + platBg + ';color:#fff;font-weight:600">' + escH(p.platform || '기타') + '</span></td>' +
+                    '<td><span style="font-size:.68rem;padding:2px 8px;border-radius:4px;background:' + platBg + ';color:#fff;font-weight:600">' + escH(p.platform || tpl('prod_platform_other')) + '</span></td>' +
                     '<td style="font-weight:700;color:#e42528">' + formatPrice(p) + '</td>' +
                     '<td>' + (p.reviewCount || '-') + '</td>' +
                     '<td>' + (p.rating ? p.rating : '-') + '</td>' +
                     '<td><span class="rec-date-col">' + formatDate(p.recommendedAt) + '</span></td>' +
-                    '<td><button class="detail-btn" data-idx="' + idx + '" style="padding:3px 10px;border-radius:4px;border:1px solid #3b82f6;background:#fff;color:#3b82f6;font-size:.72rem;font-weight:600;cursor:pointer">보기→</button></td>' +
-                    '<td><select class="listing-select" data-idx="' + idx + '" style="font-size:.65rem;padding:2px 4px;border-radius:4px;border:1px solid #e2e8f0"><option value="">리스팅↗</option><option value="coupang">쿠팡</option><option value="naver">네이버</option><option value="gmarket">지마켓</option><option value="shopee">Shopee</option></select></td>' +
+                    '<td><button class="detail-btn" data-idx="' + idx + '" style="padding:3px 10px;border-radius:4px;border:1px solid #3b82f6;background:#fff;color:#3b82f6;font-size:.72rem;font-weight:600;cursor:pointer">' + tpl('prod_detail_btn') + '</button></td>' +
+                    '<td><select class="listing-select" data-idx="' + idx + '" style="font-size:.65rem;padding:2px 4px;border-radius:4px;border:1px solid #e2e8f0"><option value="">' + tpl('prod_listing_select') + '</option><option value="coupang">' + tpl('pf_coupang') + '</option><option value="naver">' + tpl('pf_naver') + '</option><option value="gmarket">' + tpl('pf_gmarket') + '</option><option value="shopee">Shopee</option></select></td>' +
                     '</tr>';
             }).join('');
 
             // Footer
-            document.getElementById('tableFooterInfo').textContent =
-                '총 ' + filteredProducts.length + '개 추천 상품 중 ' + (start + 1) + '-' + Math.min(end, filteredProducts.length) + ' 표시';
+            document.getElementById('tableFooterInfo').textContent = tpl('prod_footer_info', {
+                total: filteredProducts.length,
+                from: start + 1,
+                to: Math.min(end, filteredProducts.length)
+            });
 
             // Pagination
             var totalPages = Math.ceil(filteredProducts.length / perPage);
@@ -706,10 +719,10 @@
             // Update header
             var headerInfo = document.getElementById('tableTitle');
             if (headerInfo) {
-                var sourceLabel = allProducts.length > 0 && allProducts[0].source === 'sample' ? '샘플 데이터' : '실제 데이터';
+                var sourceLabel = allProducts.length > 0 && allProducts[0].source === 'sample' ? tpl('prod_source_sample') : tpl('prod_source_real');
                 var sourceBg = allProducts[0] && allProducts[0].source === 'sample' ? 'rgba(249,115,22,.15)' : 'rgba(139,92,246,.15)';
                 var sourceColor = allProducts[0] && allProducts[0].source === 'sample' ? '#fb923c' : '#a78bfa';
-                headerInfo.innerHTML = '🏆 스크래핑 상품 TOP ' + filteredProducts.length +
+                headerInfo.innerHTML = tpl('prod_scraped_top', { count: filteredProducts.length }) +
                     ' <span style="font-size:.7rem;padding:2px 8px;border-radius:10px;background:' + sourceBg + ';color:' + sourceColor + ';margin-left:8px">' + sourceLabel + '</span>';
             }
 
@@ -735,27 +748,27 @@
                     imgHtml +
                     '<div class="modal-product-info">' +
                         '<div class="modal-product-name">' + escH(p.name) + '</div>' +
-                        '<div class="modal-product-platform" style="background:' + getPlatColor(p.platform) + '">' + escH(p.platform || '기타') + '</div>' +
+                        '<div class="modal-product-platform" style="background:' + getPlatColor(p.platform) + '">' + escH(p.platform || tpl('prod_platform_other')) + '</div>' +
                         '<div class="modal-product-price">' + formatPrice(p) + '</div>' +
-                        (p.margin ? '<div style="font-size:14px;font-weight:700;color:#059669">마진율: ' + p.margin + '%</div>' : '') +
+                        (p.margin ? '<div style="font-size:14px;font-weight:700;color:#059669">' + tpl('prod_modal_margin_rate') + ' ' + p.margin + '%</div>' : '') +
                     '</div>' +
                 '</div>' +
                 '<div class="modal-info-grid">' +
-                    '<div class="modal-info-item"><div class="modal-info-label">리뷰수</div><div class="modal-info-value">' + (p.reviewCount || '-') + '</div></div>' +
-                    '<div class="modal-info-item"><div class="modal-info-label">평점</div><div class="modal-info-value">' + (p.rating ? p.rating : '-') + '</div></div>' +
-                    '<div class="modal-info-item"><div class="modal-info-label">추천일</div><div class="modal-info-value">' + formatDateTime(p.recommendedAt) + '</div></div>' +
-                    '<div class="modal-info-item"><div class="modal-info-label">카테고리</div><div class="modal-info-value">' + escH(p.category || '-') + '</div></div>' +
-                    (p.price1688 ? '<div class="modal-info-item"><div class="modal-info-label">1688 원가</div><div class="modal-info-value">¥' + p.price1688 + ' (' + Math.round(p.price1688 * 190.5).toLocaleString() + '원)</div></div>' : '') +
-                    (p.isRocket ? '<div class="modal-info-item"><div class="modal-info-label">배송</div><div class="modal-info-value" style="color:#059669">🚀 직배송 가능</div></div>' : '') +
+                    '<div class="modal-info-item"><div class="modal-info-label">' + tpl('th_review_cnt') + '</div><div class="modal-info-value">' + (p.reviewCount || '-') + '</div></div>' +
+                    '<div class="modal-info-item"><div class="modal-info-label">' + tpl('th_rating') + '</div><div class="modal-info-value">' + (p.rating ? p.rating : '-') + '</div></div>' +
+                    '<div class="modal-info-item"><div class="modal-info-label">' + tpl('th_rec_date') + '</div><div class="modal-info-value">' + formatDateTime(p.recommendedAt) + '</div></div>' +
+                    '<div class="modal-info-item"><div class="modal-info-label">' + tpl('prod_modal_category') + '</div><div class="modal-info-value">' + escH(p.category || '-') + '</div></div>' +
+                    (p.price1688 ? '<div class="modal-info-item"><div class="modal-info-label">' + tpl('prod_modal_1688_cost') + '</div><div class="modal-info-value">¥' + p.price1688 + ' (' + Math.round(p.price1688 * 190.5).toLocaleString() + tpl('prod_won_suffix') + ')</div></div>' : '') +
+                    (p.isRocket ? '<div class="modal-info-item"><div class="modal-info-label">' + tpl('prod_modal_shipping') + '</div><div class="modal-info-value" style="color:#059669">' + tpl('prod_modal_direct_ship') + '</div></div>' : '') +
                 '</div>' +
                 '<div class="modal-actions">' +
-                    (p.url ? '<a href="' + escH(p.url) + '" target="_blank" rel="noopener" class="modal-btn-primary">🔗 원본 상품 보기</a>' : '') +
-                    '<button class="modal-btn-listing" onclick="doListing(\'coupang\',' + idx + ')">🛒 쿠팡 리스팅</button>' +
-                    '<button class="modal-btn-listing" onclick="doListing(\'naver\',' + idx + ')" style="background:#03C75A">🟢 네이버 리스팅</button>' +
-                    '<button class="modal-btn-outline" onclick="doListing(\'gmarket\',' + idx + ')">🏬 지마켓 리스팅</button>' +
+                    (p.url ? '<a href="' + escH(p.url) + '" target="_blank" rel="noopener" class="modal-btn-primary">' + tpl('prod_modal_view_original') + '</a>' : '') +
+                    '<button class="modal-btn-listing" onclick="doListing(\'coupang\',' + idx + ')">' + tpl('prod_modal_listing_coupang') + '</button>' +
+                    '<button class="modal-btn-listing" onclick="doListing(\'naver\',' + idx + ')" style="background:#03C75A">' + tpl('prod_modal_listing_naver') + '</button>' +
+                    '<button class="modal-btn-outline" onclick="doListing(\'gmarket\',' + idx + ')">' + tpl('prod_modal_listing_gmarket') + '</button>' +
                 '</div>';
 
-            document.getElementById('modalTitle').textContent = '상품 상세';
+            document.getElementById('modalTitle').textContent = tpl('prod_modal_title');
             modal.classList.add('open');
         }
 
@@ -770,13 +783,16 @@
                 shopee: 'https://seller.shopee.vn/portal/product/new'
             };
             var platformNames = {
-                coupang: '쿠팡',
-                naver: '네이버 스마트스토어',
-                gmarket: '지마켓',
+                coupang: tpl('pf_coupang'),
+                naver: tpl('prod_platform_naver_smartstore'),
+                gmarket: tpl('pf_gmarket'),
                 shopee: 'Shopee'
             };
             if (urls[platform]) {
-                var msg = (name || '상품') + '\n\n→ ' + (platformNames[platform] || platform) + ' 판매자 센터에서 상품을 등록하시겠습니까?';
+                var msg = tpl('prod_listing_confirm', {
+                    name: name || tpl('prod_listing_default_name'),
+                    platform: platformNames[platform] || platform
+                });
                 if (confirm(msg)) {
                     window.open(urls[platform], '_blank');
                 }
@@ -914,7 +930,7 @@
                     document.querySelectorAll('.date-btn[data-range]').forEach(function(b) { b.classList.remove('active'); });
                     applyFilters();
                 } else {
-                    alert('날짜 형식을 확인해주세요. (예: 2025-05-24)');
+                    alert(tpl('prod_date_format_alert'));
                 }
             });
 
@@ -954,7 +970,7 @@
             // Refresh button
             document.getElementById('btnRefresh').addEventListener('click', async function() {
                 var btn = this;
-                btn.innerHTML = '⏳ <span>로딩중...</span>';
+                btn.innerHTML = '⏳ <span>' + tpl('prod_btn_loading') + '</span>';
                 btn.disabled = true;
                 try {
                     allProducts = await loadProducts();
@@ -963,7 +979,7 @@
                     renderTable();
                     updateLastUpdated();
                 } catch (e) { /* ignore */ }
-                btn.innerHTML = '🔄 <span>새로고침</span>';
+                btn.innerHTML = '🔄 <span data-i18n="prod_btn_refresh">' + tpl('prod_btn_refresh') + '</span>';
                 btn.disabled = false;
             });
         }
@@ -996,6 +1012,110 @@
             initEvents();
         });
     })();
+    </script>
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                prod_doc_title: '소싱 트래커 | 추천 상품', prod_sec_platform: '플랫폼', prod_sec_analysis: '분석',
+                prod_last_updated: '마지막 업데이트:', prod_exchange_rate: '| 환율: 1 CNY = 190.5 KRW',
+                prod_btn_refresh: '새로고침', prod_btn_loading: '로딩중...',
+                prod_date_filter_label: '📅 추천일 검색', prod_date_from_title: '시작일', prod_date_to_title: '종료일',
+                prod_range_today: '오늘', prod_range_7d: '7일', prod_range_30d: '30일', prod_range_all: '전체',
+                prod_btn_search: '🔍 검색', prod_btn_reset: '초기화', prod_date_text_ph: 'YYYY-MM-DD 직접입력', prod_btn_go: '이동',
+                prod_filter_all_source: '전체 소싱처', prod_source_1688: '🏭 1688', prod_source_taobao: '🛒 타오바오',
+                prod_filter_all_category: '전체 카테고리', prod_cat_kitchen: '🍳 주방용품', prod_cat_electronics: '🎧 전자기기',
+                prod_cat_home: '🏠 홈인테리어', prod_cat_beauty: '💄 뷰티도구', prod_cat_fashion: '👜 패션잡화', prod_cat_pet: '🐾 반려동물',
+                prod_table_title: '🏆 추천 상품 TOP (마진율 순)', prod_filter_all: '전체', prod_filter_strong: 'STRONG BUY',
+                prod_filter_buy: 'BUY', prod_filter_direct: '직배송만', prod_search_ph: '상품명 검색...',
+                prod_loading: '로딩 중...', prod_no_products: '표시할 상품이 없습니다', prod_footer_zero: '총 0개 상품',
+                prod_footer_info: '총 {total}개 추천 상품 중 {from}-{to} 표시', prod_detail_btn: '보기→', prod_listing_select: '리스팅↗',
+                prod_platform_other: '기타', prod_scraped_top: '🏆 스크래핑 상품 TOP {count}', prod_source_sample: '샘플 데이터',
+                prod_source_real: '실제 데이터', prod_section_divider: '📊 판매 플랫폼별 인기 상품 비교',
+                prod_top5_coupang: '🛒 쿠팡 TOP 5', prod_top5_gmarket: '🏬 지마켓 TOP 5', prod_top5_naver: '🟢 네이버 TOP 5',
+                prod_margin_label: '마진', prod_modal_title: '상품 상세', prod_modal_margin_rate: '마진율:',
+                prod_modal_category: '카테고리', prod_modal_1688_cost: '1688 원가', prod_won_suffix: '원',
+                prod_modal_shipping: '배송', prod_modal_direct_ship: '🚀 직배송 가능', prod_modal_view_original: '🔗 원본 상품 보기',
+                prod_modal_listing_coupang: '🛒 쿠팡 리스팅', prod_modal_listing_naver: '🟢 네이버 리스팅', prod_modal_listing_gmarket: '🏬 지마켓 리스팅',
+                prod_platform_naver_smartstore: '네이버 스마트스토어',
+                prod_listing_confirm: '{name}\n\n→ {platform} 판매자 센터에서 상품을 등록하시겠습니까?',
+                prod_listing_default_name: '상품', prod_date_format_alert: '날짜 형식을 확인해주세요. (예: 2025-05-24)'
+            },
+            en: {
+                prod_doc_title: 'Sourcing Tracker | Recommended Products', prod_sec_platform: 'Platform', prod_sec_analysis: 'Analysis',
+                prod_last_updated: 'Last updated:', prod_exchange_rate: '| Rate: 1 CNY = 190.5 KRW',
+                prod_btn_refresh: 'Refresh', prod_btn_loading: 'Loading...',
+                prod_date_filter_label: '📅 Search by Rec. Date', prod_date_from_title: 'Start date', prod_date_to_title: 'End date',
+                prod_range_today: 'Today', prod_range_7d: '7 Days', prod_range_30d: '30 Days', prod_range_all: 'All',
+                prod_btn_search: '🔍 Search', prod_btn_reset: 'Reset', prod_date_text_ph: 'Enter YYYY-MM-DD', prod_btn_go: 'Go',
+                prod_filter_all_source: 'All Sources', prod_source_1688: '🏭 1688', prod_source_taobao: '🛒 Taobao',
+                prod_filter_all_category: 'All Categories', prod_cat_kitchen: '🍳 Kitchenware', prod_cat_electronics: '🎧 Electronics',
+                prod_cat_home: '🏠 Home & Living', prod_cat_beauty: '💄 Beauty Tools', prod_cat_fashion: '👜 Fashion & Accessories', prod_cat_pet: '🐾 Pet Supplies',
+                prod_table_title: '🏆 Recommended Products TOP (by Margin)', prod_filter_all: 'All', prod_filter_strong: 'STRONG BUY',
+                prod_filter_buy: 'BUY', prod_filter_direct: 'Direct Ship Only', prod_search_ph: 'Search product name...',
+                prod_loading: 'Loading...', prod_no_products: 'No products to display', prod_footer_zero: 'Total 0 products',
+                prod_footer_info: 'Showing {from}-{to} of {total} recommended products', prod_detail_btn: 'View→', prod_listing_select: 'List↗',
+                prod_platform_other: 'Other', prod_scraped_top: '🏆 Scraped Products TOP {count}', prod_source_sample: 'Sample Data',
+                prod_source_real: 'Live Data', prod_section_divider: '📊 Top Products by Selling Platform',
+                prod_top5_coupang: '🛒 Coupang TOP 5', prod_top5_gmarket: '🏬 Gmarket TOP 5', prod_top5_naver: '🟢 Naver TOP 5',
+                prod_margin_label: 'Margin', prod_modal_title: 'Product Details', prod_modal_margin_rate: 'Margin:',
+                prod_modal_category: 'Category', prod_modal_1688_cost: '1688 Cost', prod_won_suffix: ' KRW',
+                prod_modal_shipping: 'Shipping', prod_modal_direct_ship: '🚀 Direct Ship Available', prod_modal_view_original: '🔗 View Original Product',
+                prod_modal_listing_coupang: '🛒 List on Coupang', prod_modal_listing_naver: '🟢 List on Naver', prod_modal_listing_gmarket: '🏬 List on Gmarket',
+                prod_platform_naver_smartstore: 'Naver Smart Store',
+                prod_listing_confirm: '{name}\n\n→ Register this product on the {platform} seller center?',
+                prod_listing_default_name: 'Product', prod_date_format_alert: 'Please check the date format. (e.g. 2025-05-24)'
+            },
+            zh: {
+                prod_doc_title: '采购追踪器 | 推荐商品', prod_sec_platform: '平台', prod_sec_analysis: '分析',
+                prod_last_updated: '最后更新:', prod_exchange_rate: '| 汇率: 1 CNY = 190.5 KRW',
+                prod_btn_refresh: '刷新', prod_btn_loading: '加载中...',
+                prod_date_filter_label: '📅 按推荐日期搜索', prod_date_from_title: '开始日期', prod_date_to_title: '结束日期',
+                prod_range_today: '今天', prod_range_7d: '7天', prod_range_30d: '30天', prod_range_all: '全部',
+                prod_btn_search: '🔍 搜索', prod_btn_reset: '重置', prod_date_text_ph: '输入 YYYY-MM-DD', prod_btn_go: '前往',
+                prod_filter_all_source: '全部采购源', prod_source_1688: '🏭 1688', prod_source_taobao: '🛒 淘宝',
+                prod_filter_all_category: '全部分类', prod_cat_kitchen: '🍳 厨房用品', prod_cat_electronics: '🎧 电子产品',
+                prod_cat_home: '🏠 家居装饰', prod_cat_beauty: '💄 美妆工具', prod_cat_fashion: '👜 时尚配饰', prod_cat_pet: '🐾 宠物用品',
+                prod_table_title: '🏆 推荐商品 TOP(按利润率排序)', prod_filter_all: '全部', prod_filter_strong: 'STRONG BUY',
+                prod_filter_buy: 'BUY', prod_filter_direct: '仅直发', prod_search_ph: '搜索商品名...',
+                prod_loading: '加载中...', prod_no_products: '暂无可显示的商品', prod_footer_zero: '共0件商品',
+                prod_footer_info: '共{total}件推荐商品,显示第{from}-{to}项', prod_detail_btn: '查看→', prod_listing_select: '上架↗',
+                prod_platform_other: '其他', prod_scraped_top: '🏆 采集商品 TOP {count}', prod_source_sample: '示例数据',
+                prod_source_real: '真实数据', prod_section_divider: '📊 各销售平台热门商品比较',
+                prod_top5_coupang: '🛒 Coupang TOP 5', prod_top5_gmarket: '🏬 Gmarket TOP 5', prod_top5_naver: '🟢 Naver TOP 5',
+                prod_margin_label: '利润', prod_modal_title: '商品详情', prod_modal_margin_rate: '利润率:',
+                prod_modal_category: '分类', prod_modal_1688_cost: '1688成本价', prod_won_suffix: '韩元',
+                prod_modal_shipping: '配送', prod_modal_direct_ship: '🚀 支持直发', prod_modal_view_original: '🔗 查看原商品',
+                prod_modal_listing_coupang: '🛒 上架至Coupang', prod_modal_listing_naver: '🟢 上架至Naver', prod_modal_listing_gmarket: '🏬 上架至Gmarket',
+                prod_platform_naver_smartstore: 'Naver智能商店',
+                prod_listing_confirm: '{name}\n\n→ 要在{platform}卖家中心注册该商品吗?',
+                prod_listing_default_name: '商品', prod_date_format_alert: '请检查日期格式。(例: 2025-05-24)'
+            },
+            vi: {
+                prod_doc_title: 'Theo dõi nguồn hàng | Sản phẩm đề xuất', prod_sec_platform: 'Nền tảng', prod_sec_analysis: 'Phân tích',
+                prod_last_updated: 'Cập nhật lần cuối:', prod_exchange_rate: '| Tỷ giá: 1 CNY = 190.5 KRW',
+                prod_btn_refresh: 'Làm mới', prod_btn_loading: 'Đang tải...',
+                prod_date_filter_label: '📅 Tìm theo ngày đề xuất', prod_date_from_title: 'Ngày bắt đầu', prod_date_to_title: 'Ngày kết thúc',
+                prod_range_today: 'Hôm nay', prod_range_7d: '7 ngày', prod_range_30d: '30 ngày', prod_range_all: 'Tất cả',
+                prod_btn_search: '🔍 Tìm kiếm', prod_btn_reset: 'Đặt lại', prod_date_text_ph: 'Nhập YYYY-MM-DD', prod_btn_go: 'Đi',
+                prod_filter_all_source: 'Tất cả nguồn hàng', prod_source_1688: '🏭 1688', prod_source_taobao: '🛒 Taobao',
+                prod_filter_all_category: 'Tất cả danh mục', prod_cat_kitchen: '🍳 Đồ bếp', prod_cat_electronics: '🎧 Thiết bị điện tử',
+                prod_cat_home: '🏠 Nội thất gia đình', prod_cat_beauty: '💄 Dụng cụ làm đẹp', prod_cat_fashion: '👜 Thời trang & phụ kiện', prod_cat_pet: '🐾 Thú cưng',
+                prod_table_title: '🏆 TOP sản phẩm đề xuất (theo tỷ lệ lợi nhuận)', prod_filter_all: 'Tất cả', prod_filter_strong: 'STRONG BUY',
+                prod_filter_buy: 'BUY', prod_filter_direct: 'Chỉ gửi hàng trực tiếp', prod_search_ph: 'Tìm theo tên sản phẩm...',
+                prod_loading: 'Đang tải...', prod_no_products: 'Không có sản phẩm để hiển thị', prod_footer_zero: 'Tổng 0 sản phẩm',
+                prod_footer_info: 'Hiển thị {from}-{to} trong tổng số {total} sản phẩm đề xuất', prod_detail_btn: 'Xem→', prod_listing_select: 'Đăng bán↗',
+                prod_platform_other: 'Khác', prod_scraped_top: '🏆 TOP {count} sản phẩm thu thập', prod_source_sample: 'Dữ liệu mẫu',
+                prod_source_real: 'Dữ liệu thực', prod_section_divider: '📊 So sánh sản phẩm nổi bật theo nền tảng bán hàng',
+                prod_top5_coupang: '🛒 TOP 5 Coupang', prod_top5_gmarket: '🏬 TOP 5 Gmarket', prod_top5_naver: '🟢 TOP 5 Naver',
+                prod_margin_label: 'Lợi nhuận', prod_modal_title: 'Chi tiết sản phẩm', prod_modal_margin_rate: 'Tỷ lệ lợi nhuận:',
+                prod_modal_category: 'Danh mục', prod_modal_1688_cost: 'Giá gốc 1688', prod_won_suffix: ' KRW',
+                prod_modal_shipping: 'Vận chuyển', prod_modal_direct_ship: '🚀 Có thể gửi trực tiếp', prod_modal_view_original: '🔗 Xem sản phẩm gốc',
+                prod_modal_listing_coupang: '🛒 Đăng bán trên Coupang', prod_modal_listing_naver: '🟢 Đăng bán trên Naver', prod_modal_listing_gmarket: '🏬 Đăng bán trên Gmarket',
+                prod_platform_naver_smartstore: 'Naver Smart Store',
+                prod_listing_confirm: '{name}\n\n→ Bạn có muốn đăng ký sản phẩm này trên trung tâm người bán {platform} không?',
+                prod_listing_default_name: 'Sản phẩm', prod_date_format_alert: 'Vui lòng kiểm tra định dạng ngày. (vd: 2025-05-24)'
+            }
+        };
     </script>
     <script src="js/i18n-auto.js"></script>
     <script src="js/i18n-common.js"></script>

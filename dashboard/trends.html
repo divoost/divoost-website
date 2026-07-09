@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>소싱 트래커 | 트렌드 분석</title>
+    <title data-i18n="trend_doc_title">소싱 트래커 | 트렌드 분석</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
@@ -26,13 +26,13 @@
                     <div class="sidebar-section-title">소싱 플랫폼</div>
                     <div style="padding:0 12px;margin-bottom:12px;display:flex;gap:6px;flex-wrap:wrap;">
                         <span class="source-platform-tag tag-1688">1688</span>
-                        <span class="source-platform-tag tag-taobao">타오바오</span>
+                        <span class="source-platform-tag tag-taobao" data-i18n="pf_taobao">타오바오</span>
                     </div>
                     <div class="sidebar-section-title">판매 플랫폼</div>
                     <div style="padding:0 12px;margin-bottom:16px;display:flex;gap:6px;flex-wrap:wrap;">
-                        <span class="sell-platform-tag tag-coupang">쿠팡</span>
-                        <span class="sell-platform-tag tag-gmarket">지마켓</span>
-                        <span class="sell-platform-tag tag-naver">네이버</span>
+                        <span class="sell-platform-tag tag-coupang" data-i18n="pf_coupang">쿠팡</span>
+                        <span class="sell-platform-tag tag-gmarket" data-i18n="pf_gmarket">지마켓</span>
+                        <span class="sell-platform-tag tag-naver" data-i18n="pf_naver">네이버</span>
                     </div>
                 </div>
 
@@ -69,11 +69,11 @@
                     <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
                     <div>
                         <div class="top-bar-title">트렌드 분석</div>
-                        <div class="top-bar-date">마지막 업데이트: <span id="lastUpdated">-</span> | 환율: 1 CNY = 190.5 KRW</div>
+                        <div class="top-bar-date"><span data-i18n="trend_last_updated">마지막 업데이트:</span> <span id="lastUpdated">-</span> <span data-i18n="trend_exchange_rate">| 환율: 1 CNY = 190.5 KRW</span></div>
                     </div>
                 </div>
                 <div class="top-bar-right">
-                    <button class="top-bar-btn btn-refresh" onclick="location.reload()">🔄 <span>새로고침</span></button>
+                    <button class="top-bar-btn btn-refresh" onclick="location.reload()">🔄 <span data-i18n="trend_refresh">새로고침</span></button>
                 </div>
             </header>
 
@@ -82,40 +82,40 @@
                 <!-- Period Tabs -->
                 <div class="period-tabs-bar">
                     <div class="period-tabs">
-                        <button class="period-tab" data-period="hourly">시간별</button>
-                        <button class="period-tab active" data-period="daily">일별</button>
-                        <button class="period-tab" data-period="weekly">주별</button>
-                        <button class="period-tab" data-period="monthly">월별</button>
+                        <button class="period-tab" data-period="hourly" data-i18n="trend_period_hourly">시간별</button>
+                        <button class="period-tab active" data-period="daily" data-i18n="trend_period_daily">일별</button>
+                        <button class="period-tab" data-period="weekly" data-i18n="trend_period_weekly">주별</button>
+                        <button class="period-tab" data-period="monthly" data-i18n="trend_period_monthly">월별</button>
                     </div>
                     <div class="category-filter">
                         <select class="category-select" id="platformFilter">
-                            <option value="all">전체 플랫폼</option>
-                            <option value="coupang">🛒 쿠팡</option>
-                            <option value="gmarket">🏪 지마켓</option>
-                            <option value="naver">🟢 네이버</option>
+                            <option value="all" data-i18n="trend_opt_all_platform">전체 플랫폼</option>
+                            <option value="coupang" data-i18n="trend_platform_coupang">🛒 쿠팡</option>
+                            <option value="gmarket" data-i18n="trend_platform_gmarket">🏪 지마켓</option>
+                            <option value="naver" data-i18n="trend_platform_naver">🟢 네이버</option>
                         </select>
                         <select class="category-select" id="sourceFilter">
-                            <option value="all">전체 소싱</option>
-                            <option value="1688">🟠 1688</option>
-                            <option value="taobao">🔴 타오바오</option>
+                            <option value="all" data-i18n="trend_opt_all_source">전체 소싱</option>
+                            <option value="1688" data-i18n="trend_source_1688">🟠 1688</option>
+                            <option value="taobao" data-i18n="trend_source_taobao">🔴 타오바오</option>
                         </select>
                     </div>
                 </div>
 
                 <!-- Section: 상품 수집 & 추천 트렌드 -->
                 <div class="section-divider">
-                    <div class="section-divider-title">📈 상품 수집 &amp; 추천 트렌드</div>
+                    <div class="section-divider-title" data-i18n="trend_sec_collection">📈 상품 수집 &amp; 추천 트렌드</div>
                     <div class="section-divider-line"></div>
                 </div>
 
                 <div class="charts-row">
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title"><span class="title-icon">📈</span> 상품 수집 &amp; 추천 트렌드</div>
+                            <div class="chart-panel-title"><span class="title-icon">📈</span> <span data-i18n="trend_ct_collection">상품 수집 &amp; 추천 트렌드</span></div>
                             <div class="chart-panel-actions">
-                                <button class="chart-tab active" data-chart="trendCollection" data-days="7">7일</button>
-                                <button class="chart-tab" data-chart="trendCollection" data-days="30">30일</button>
-                                <button class="chart-tab" data-chart="trendCollection" data-days="90">90일</button>
+                                <button class="chart-tab active" data-chart="trendCollection" data-days="7" data-i18n="trend_days_7">7일</button>
+                                <button class="chart-tab" data-chart="trendCollection" data-days="30" data-i18n="trend_days_30">30일</button>
+                                <button class="chart-tab" data-chart="trendCollection" data-days="90" data-i18n="trend_days_90">90일</button>
                             </div>
                         </div>
                         <div class="chart-panel-body">
@@ -124,11 +124,11 @@
                     </div>
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title"><span class="title-icon">💰</span> 평균 마진율 추이</div>
+                            <div class="chart-panel-title"><span class="title-icon">💰</span> <span data-i18n="trend_ct_margin">평균 마진율 추이</span></div>
                             <div class="chart-panel-actions">
-                                <button class="chart-tab active" data-chart="trendMargin" data-days="7">7일</button>
-                                <button class="chart-tab" data-chart="trendMargin" data-days="30">30일</button>
-                                <button class="chart-tab" data-chart="trendMargin" data-days="90">90일</button>
+                                <button class="chart-tab active" data-chart="trendMargin" data-days="7" data-i18n="trend_days_7">7일</button>
+                                <button class="chart-tab" data-chart="trendMargin" data-days="30" data-i18n="trend_days_30">30일</button>
+                                <button class="chart-tab" data-chart="trendMargin" data-days="90" data-i18n="trend_days_90">90일</button>
                             </div>
                         </div>
                         <div class="chart-panel-body">
@@ -139,40 +139,40 @@
 
                 <!-- Section: 플랫폼별 트렌드 -->
                 <div class="section-divider">
-                    <div class="section-divider-title">🏪 플랫폼별 트렌드</div>
+                    <div class="section-divider-title" data-i18n="trend_sec_platform">🏪 플랫폼별 트렌드</div>
                     <div class="section-divider-line"></div>
                 </div>
 
                 <div class="charts-row charts-row-triple">
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title"><span class="title-icon">🛒</span> 쿠팡</div>
+                            <div class="chart-panel-title"><span class="title-icon">🛒</span> <span data-i18n="pf_coupang">쿠팡</span></div>
                             <div class="chart-panel-actions">
-                                <button class="chart-tab active" data-chart="coupang" data-days="7">7일</button>
-                                <button class="chart-tab" data-chart="coupang" data-days="30">30일</button>
-                                <button class="chart-tab" data-chart="coupang" data-days="90">90일</button>
+                                <button class="chart-tab active" data-chart="coupang" data-days="7" data-i18n="trend_days_7">7일</button>
+                                <button class="chart-tab" data-chart="coupang" data-days="30" data-i18n="trend_days_30">30일</button>
+                                <button class="chart-tab" data-chart="coupang" data-days="90" data-i18n="trend_days_90">90일</button>
                             </div>
                         </div>
                         <div class="chart-panel-body"><div class="chart-canvas-wrap"><canvas id="coupangTrendChart"></canvas></div></div>
                     </div>
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title"><span class="title-icon">🏪</span> 지마켓</div>
+                            <div class="chart-panel-title"><span class="title-icon">🏪</span> <span data-i18n="pf_gmarket">지마켓</span></div>
                             <div class="chart-panel-actions">
-                                <button class="chart-tab active" data-chart="gmarket" data-days="7">7일</button>
-                                <button class="chart-tab" data-chart="gmarket" data-days="30">30일</button>
-                                <button class="chart-tab" data-chart="gmarket" data-days="90">90일</button>
+                                <button class="chart-tab active" data-chart="gmarket" data-days="7" data-i18n="trend_days_7">7일</button>
+                                <button class="chart-tab" data-chart="gmarket" data-days="30" data-i18n="trend_days_30">30일</button>
+                                <button class="chart-tab" data-chart="gmarket" data-days="90" data-i18n="trend_days_90">90일</button>
                             </div>
                         </div>
                         <div class="chart-panel-body"><div class="chart-canvas-wrap"><canvas id="gmarketTrendChart"></canvas></div></div>
                     </div>
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title"><span class="title-icon">🟢</span> 네이버</div>
+                            <div class="chart-panel-title"><span class="title-icon">🟢</span> <span data-i18n="pf_naver">네이버</span></div>
                             <div class="chart-panel-actions">
-                                <button class="chart-tab active" data-chart="naver" data-days="7">7일</button>
-                                <button class="chart-tab" data-chart="naver" data-days="30">30일</button>
-                                <button class="chart-tab" data-chart="naver" data-days="90">90일</button>
+                                <button class="chart-tab active" data-chart="naver" data-days="7" data-i18n="trend_days_7">7일</button>
+                                <button class="chart-tab" data-chart="naver" data-days="30" data-i18n="trend_days_30">30일</button>
+                                <button class="chart-tab" data-chart="naver" data-days="90" data-i18n="trend_days_90">90일</button>
                             </div>
                         </div>
                         <div class="chart-panel-body"><div class="chart-canvas-wrap"><canvas id="naverTrendChart"></canvas></div></div>
@@ -181,29 +181,29 @@
 
                 <!-- Section: 시간대별 분석 -->
                 <div class="section-divider">
-                    <div class="section-divider-title">⏰ 시간대별 분석</div>
+                    <div class="section-divider-title" data-i18n="trend_sec_hourly">⏰ 시간대별 분석</div>
                     <div class="section-divider-line"></div>
                 </div>
 
                 <div class="charts-row charts-row-equal">
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title"><span class="title-icon">🔍</span> 시간대별 검색량</div>
+                            <div class="chart-panel-title"><span class="title-icon">🔍</span> <span data-i18n="trend_ct_hourly_search">시간대별 검색량</span></div>
                             <div class="chart-panel-actions">
-                                <button class="chart-tab active" data-chart="hourlySearch" data-days="7">7일</button>
-                                <button class="chart-tab" data-chart="hourlySearch" data-days="30">30일</button>
-                                <button class="chart-tab" data-chart="hourlySearch" data-days="90">90일</button>
+                                <button class="chart-tab active" data-chart="hourlySearch" data-days="7" data-i18n="trend_days_7">7일</button>
+                                <button class="chart-tab" data-chart="hourlySearch" data-days="30" data-i18n="trend_days_30">30일</button>
+                                <button class="chart-tab" data-chart="hourlySearch" data-days="90" data-i18n="trend_days_90">90일</button>
                             </div>
                         </div>
                         <div class="chart-panel-body"><div class="chart-canvas-wrap"><canvas id="hourlySearchChart"></canvas></div></div>
                     </div>
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title"><span class="title-icon">🛒</span> 시간대별 판매량</div>
+                            <div class="chart-panel-title"><span class="title-icon">🛒</span> <span data-i18n="trend_ct_hourly_sales">시간대별 판매량</span></div>
                             <div class="chart-panel-actions">
-                                <button class="chart-tab active" data-chart="hourlySales" data-days="7">7일</button>
-                                <button class="chart-tab" data-chart="hourlySales" data-days="30">30일</button>
-                                <button class="chart-tab" data-chart="hourlySales" data-days="90">90일</button>
+                                <button class="chart-tab active" data-chart="hourlySales" data-days="7" data-i18n="trend_days_7">7일</button>
+                                <button class="chart-tab" data-chart="hourlySales" data-days="30" data-i18n="trend_days_30">30일</button>
+                                <button class="chart-tab" data-chart="hourlySales" data-days="90" data-i18n="trend_days_90">90일</button>
                             </div>
                         </div>
                         <div class="chart-panel-body"><div class="chart-canvas-wrap"><canvas id="hourlySalesChart"></canvas></div></div>
@@ -212,29 +212,29 @@
 
                 <!-- Section: 카테고리 트렌드 -->
                 <div class="section-divider">
-                    <div class="section-divider-title">📂 카테고리 트렌드</div>
+                    <div class="section-divider-title" data-i18n="trend_sec_category">📂 카테고리 트렌드</div>
                     <div class="section-divider-line"></div>
                 </div>
 
                 <div class="charts-row charts-row-equal">
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title"><span class="title-icon">📈</span> 카테고리별 마진율 변동</div>
+                            <div class="chart-panel-title"><span class="title-icon">📈</span> <span data-i18n="trend_ct_category_margin">카테고리별 마진율 변동</span></div>
                             <div class="chart-panel-actions">
-                                <button class="chart-tab active" data-chart="categoryTrend" data-days="7">7일</button>
-                                <button class="chart-tab" data-chart="categoryTrend" data-days="30">30일</button>
-                                <button class="chart-tab" data-chart="categoryTrend" data-days="90">90일</button>
+                                <button class="chart-tab active" data-chart="categoryTrend" data-days="7" data-i18n="trend_days_7">7일</button>
+                                <button class="chart-tab" data-chart="categoryTrend" data-days="30" data-i18n="trend_days_30">30일</button>
+                                <button class="chart-tab" data-chart="categoryTrend" data-days="90" data-i18n="trend_days_90">90일</button>
                             </div>
                         </div>
                         <div class="chart-panel-body"><div class="chart-canvas-wrap chart-tall"><canvas id="categoryTrendChart"></canvas></div></div>
                     </div>
                     <div class="chart-panel">
                         <div class="chart-panel-header">
-                            <div class="chart-panel-title"><span class="title-icon">📊</span> 카테고리별 수집 상품 수</div>
+                            <div class="chart-panel-title"><span class="title-icon">📊</span> <span data-i18n="trend_ct_category_count">카테고리별 수집 상품 수</span></div>
                             <div class="chart-panel-actions">
-                                <button class="chart-tab active" data-chart="categoryCount" data-days="7">7일</button>
-                                <button class="chart-tab" data-chart="categoryCount" data-days="30">30일</button>
-                                <button class="chart-tab" data-chart="categoryCount" data-days="90">90일</button>
+                                <button class="chart-tab active" data-chart="categoryCount" data-days="7" data-i18n="trend_days_7">7일</button>
+                                <button class="chart-tab" data-chart="categoryCount" data-days="30" data-i18n="trend_days_30">30일</button>
+                                <button class="chart-tab" data-chart="categoryCount" data-days="90" data-i18n="trend_days_90">90일</button>
                             </div>
                         </div>
                         <div class="chart-panel-body"><div class="chart-canvas-wrap chart-tall"><canvas id="categoryCountChart"></canvas></div></div>
@@ -243,21 +243,21 @@
 
                 <!-- 월별 성과 요약 -->
                 <div class="section-divider">
-                    <div class="section-divider-title">📅 월별 성과 요약</div>
+                    <div class="section-divider-title" data-i18n="trend_sec_monthly">📅 월별 성과 요약</div>
                     <div class="section-divider-line"></div>
                 </div>
 
                 <div class="kpi-grid" style="grid-template-columns:repeat(4,1fr);">
-                    <div class="kpi-card kpi-total"><div class="kpi-header"><div class="kpi-icon">📦</div><span class="kpi-change up">↑ +16.0%</span></div><div class="kpi-value">487개</div><div class="kpi-label">이번 달 수집</div><div class="kpi-sub">vs 지난달 +16.0%</div></div>
-                    <div class="kpi-card kpi-recommend"><div class="kpi-header"><div class="kpi-icon">🎯</div><span class="kpi-change up">↑ +21.4%</span></div><div class="kpi-value">87개</div><div class="kpi-label">이번 달 추천</div><div class="kpi-sub">vs 지난달 +21.4%</div></div>
-                    <div class="kpi-card kpi-margin"><div class="kpi-header"><div class="kpi-icon">💰</div><span class="kpi-change up">↑ +2.1%p</span></div><div class="kpi-value">41.2%</div><div class="kpi-label">이번 달 평균 마진</div><div class="kpi-sub">vs 지난달 +2.1%p</div></div>
-                    <div class="kpi-card kpi-hot"><div class="kpi-header"><div class="kpi-icon">🔥</div><span class="kpi-change up">↑ +25.0%</span></div><div class="kpi-value">35개</div><div class="kpi-label">이번 달 핫 아이템</div><div class="kpi-sub">vs 지난달 +25.0%</div></div>
+                    <div class="kpi-card kpi-total"><div class="kpi-header"><div class="kpi-icon">📦</div><span class="kpi-change up">↑ +16.0%</span></div><div class="kpi-value">487개</div><div class="kpi-label" data-i18n="trend_kpi1_label">이번 달 수집</div><div class="kpi-sub">vs 지난달 +16.0%</div></div>
+                    <div class="kpi-card kpi-recommend"><div class="kpi-header"><div class="kpi-icon">🎯</div><span class="kpi-change up">↑ +21.4%</span></div><div class="kpi-value">87개</div><div class="kpi-label" data-i18n="trend_kpi2_label">이번 달 추천</div><div class="kpi-sub" data-i18n="trend_kpi2_sub">vs 지난달 +21.4%</div></div>
+                    <div class="kpi-card kpi-margin"><div class="kpi-header"><div class="kpi-icon">💰</div><span class="kpi-change up">↑ +2.1%p</span></div><div class="kpi-value">41.2%</div><div class="kpi-label" data-i18n="trend_kpi3_label">이번 달 평균 마진</div><div class="kpi-sub" data-i18n="trend_kpi3_sub">vs 지난달 +2.1%p</div></div>
+                    <div class="kpi-card kpi-hot"><div class="kpi-header"><div class="kpi-icon">🔥</div><span class="kpi-change up">↑ +25.0%</span></div><div class="kpi-value">35개</div><div class="kpi-label" data-i18n="trend_kpi4_label">이번 달 핫 아이템</div><div class="kpi-sub" data-i18n="trend_kpi4_sub">vs 지난달 +25.0%</div></div>
                 </div>
 
                 <!-- 주간 성과 테이블 -->
                 <div class="table-panel">
                     <div class="table-panel-header">
-                        <div class="table-panel-title">📊 주간 성과 테이블</div>
+                        <div class="table-panel-title" data-i18n="trend_table_title">📊 주간 성과 테이블</div>
                     </div>
                     <div style="overflow-x:auto;">
                         <table class="data-table">
@@ -442,8 +442,8 @@
             buildChart('trendCollectionChart', 'line', {
                 labels: d.labels,
                 datasets: [
-                    { label: '수집 상품', data: d.products, borderColor: '#2563EB', backgroundColor: 'rgba(37,99,235,0.08)', fill: true, tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 4 : days <= 30 ? 2 : 0, pointBackgroundColor: '#2563EB' },
-                    { label: '추천 상품', data: d.recommended, borderColor: '#10B981', backgroundColor: 'rgba(16,185,129,0.08)', fill: true, tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 4 : days <= 30 ? 2 : 0, pointBackgroundColor: '#10B981' }
+                    { label: I18N.t('trend_lbl_collected'), data: d.products, borderColor: '#2563EB', backgroundColor: 'rgba(37,99,235,0.08)', fill: true, tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 4 : days <= 30 ? 2 : 0, pointBackgroundColor: '#2563EB' },
+                    { label: I18N.t('trend_lbl_recommended'), data: d.recommended, borderColor: '#10B981', backgroundColor: 'rgba(16,185,129,0.08)', fill: true, tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 4 : days <= 30 ? 2 : 0, pointBackgroundColor: '#10B981' }
                 ]
             }, Object.assign({}, chartOpts, { plugins: { legend: legendTop() }, scales: lineScales() }));
         }
@@ -452,7 +452,7 @@
             var d = getMarginData(days);
             buildChart('trendMarginChart', 'line', {
                 labels: d.labels,
-                datasets: [{ label: '평균 마진율(%)', data: d.margin, borderColor: '#06B6D4', backgroundColor: 'rgba(6,182,212,0.1)', fill: true, tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 4 : days <= 30 ? 2 : 0, pointBackgroundColor: '#06B6D4' }]
+                datasets: [{ label: I18N.t('trend_lbl_avg_margin'), data: d.margin, borderColor: '#06B6D4', backgroundColor: 'rgba(6,182,212,0.1)', fill: true, tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 4 : days <= 30 ? 2 : 0, pointBackgroundColor: '#06B6D4' }]
             }, Object.assign({}, chartOpts, { plugins: { legend: { display: false } }, scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(0,0,0,0.04)' }, min: 30, max: 50 } } }));
         }
 
@@ -461,8 +461,8 @@
             buildChart(canvasId, 'line', {
                 labels: d.labels,
                 datasets: [
-                    { label: '판매량', data: d.sales, borderColor: d.color1, backgroundColor: hexToRgba(d.color1, 0.08), fill: true, tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 4 : days <= 30 ? 2 : 0, pointBackgroundColor: d.color1 },
-                    { label: '매출(만원)', data: d.revenue, borderColor: d.color2, backgroundColor: hexToRgba(d.color2, 0.06), fill: true, tension: 0.4, borderWidth: 2, pointRadius: days <= 7 ? 3 : days <= 30 ? 1 : 0, pointBackgroundColor: d.color2 }
+                    { label: I18N.t('trend_lbl_sales'), data: d.sales, borderColor: d.color1, backgroundColor: hexToRgba(d.color1, 0.08), fill: true, tension: 0.4, borderWidth: 2.5, pointRadius: days <= 7 ? 4 : days <= 30 ? 2 : 0, pointBackgroundColor: d.color1 },
+                    { label: I18N.t('trend_lbl_revenue'), data: d.revenue, borderColor: d.color2, backgroundColor: hexToRgba(d.color2, 0.06), fill: true, tension: 0.4, borderWidth: 2, pointRadius: days <= 7 ? 3 : days <= 30 ? 1 : 0, pointBackgroundColor: d.color2 }
                 ]
             }, Object.assign({}, chartOpts, { plugins: { legend: legendSmall() }, scales: lineScales() }));
         }
@@ -475,7 +475,7 @@
             buildChart(canvasId, 'bar', {
                 labels: d.labels,
                 datasets: [{
-                    label: type === 'search' ? '검색량' : '판매량',
+                    label: type === 'search' ? I18N.t('trend_lbl_search_volume') : I18N.t('trend_lbl_sales'),
                     data: d.data,
                     backgroundColor: function(context) {
                         var chart = context.chart;
@@ -514,7 +514,7 @@
             var barColors = ['rgba(37,99,235,0.7)','rgba(16,185,129,0.7)','rgba(6,182,212,0.7)','rgba(139,92,246,0.7)','rgba(236,72,153,0.7)','rgba(245,158,11,0.7)','rgba(249,115,22,0.7)','rgba(239,68,68,0.7)','rgba(100,116,139,0.7)','rgba(168,162,158,0.7)'];
             buildChart('categoryCountChart', 'bar', {
                 labels: d.labels,
-                datasets: [{ label: '수집 상품 수', data: d.data, backgroundColor: barColors, borderRadius: 6, barThickness: 22 }]
+                datasets: [{ label: I18N.t('trend_lbl_collected_count'), data: d.data, backgroundColor: barColors, borderRadius: 6, barThickness: 22 }]
             }, Object.assign({}, chartOpts, { indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { grid: { color: 'rgba(0,0,0,0.04)' }, beginAtZero: true }, y: { grid: { display: false } } } }));
         }
 
@@ -543,7 +543,10 @@
             }
         }
 
+        var lastDays = 7;
+
         function updateAllCharts(days) {
+            lastDays = days;
             renderTrendCollection(days);
             renderTrendMargin(days);
             renderPlatformChart('coupang', 'coupangTrendChart', days);
@@ -640,9 +643,22 @@
             initChartTabs();
 
             // Last updated
-            var el = document.getElementById('lastUpdated');
-            if (el) el.textContent = new Date().toLocaleString('ko-KR');
+            updateLastUpdated();
+
+            // Re-render charts and timestamp when the dashboard language changes
+            window.onI18nChange = function() {
+                updateAllCharts(lastDays);
+                updateLastUpdated();
+            };
         });
+
+        function updateLastUpdated() {
+            var el = document.getElementById('lastUpdated');
+            if (!el) return;
+            var localeMap = { ko: 'ko-KR', en: 'en-US', zh: 'zh-CN', vi: 'vi-VN' };
+            var lang = (window.I18N && I18N.getLang) ? I18N.getLang() : 'ko';
+            el.textContent = new Date().toLocaleString(localeMap[lang] || 'ko-KR');
+        }
 
         // ============================================================
         // DB/crawl data overlay for KPIs
@@ -674,6 +690,78 @@
             }
         })();
     })();
+    </script>
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                trend_doc_title: '소싱 트래커 | 트렌드 분석', trend_last_updated: '마지막 업데이트:', trend_exchange_rate: '| 환율: 1 CNY = 190.5 KRW',
+                trend_refresh: '새로고침', trend_period_hourly: '시간별', trend_period_daily: '일별', trend_period_weekly: '주별', trend_period_monthly: '월별',
+                trend_opt_all_platform: '전체 플랫폼', trend_platform_coupang: '🛒 쿠팡', trend_platform_gmarket: '🏪 지마켓', trend_platform_naver: '🟢 네이버',
+                trend_opt_all_source: '전체 소싱', trend_source_1688: '🟠 1688', trend_source_taobao: '🔴 타오바오',
+                trend_sec_collection: '📈 상품 수집 & 추천 트렌드', trend_ct_collection: '상품 수집 & 추천 트렌드',
+                trend_days_7: '7일', trend_days_30: '30일', trend_days_90: '90일', trend_ct_margin: '평균 마진율 추이',
+                trend_sec_platform: '🏪 플랫폼별 트렌드', trend_sec_hourly: '⏰ 시간대별 분석',
+                trend_ct_hourly_search: '시간대별 검색량', trend_ct_hourly_sales: '시간대별 판매량',
+                trend_sec_category: '📂 카테고리 트렌드', trend_ct_category_margin: '카테고리별 마진율 변동', trend_ct_category_count: '카테고리별 수집 상품 수',
+                trend_sec_monthly: '📅 월별 성과 요약',
+                trend_kpi1_label: '이번 달 수집', trend_kpi2_label: '이번 달 추천', trend_kpi2_sub: 'vs 지난달 +21.4%',
+                trend_kpi3_label: '이번 달 평균 마진', trend_kpi3_sub: 'vs 지난달 +2.1%p', trend_kpi4_label: '이번 달 핫 아이템', trend_kpi4_sub: 'vs 지난달 +25.0%',
+                trend_table_title: '📊 주간 성과 테이블',
+                trend_lbl_collected: '수집 상품', trend_lbl_recommended: '추천 상품', trend_lbl_avg_margin: '평균 마진율(%)',
+                trend_lbl_sales: '판매량', trend_lbl_revenue: '매출(만원)', trend_lbl_search_volume: '검색량', trend_lbl_collected_count: '수집 상품 수'
+            },
+            en: {
+                trend_doc_title: 'Sourcing Tracker | Trend Analysis', trend_last_updated: 'Last updated:', trend_exchange_rate: '| Rate: 1 CNY = 190.5 KRW',
+                trend_refresh: 'Refresh', trend_period_hourly: 'Hourly', trend_period_daily: 'Daily', trend_period_weekly: 'Weekly', trend_period_monthly: 'Monthly',
+                trend_opt_all_platform: 'All Platforms', trend_platform_coupang: '🛒 Coupang', trend_platform_gmarket: '🏪 Gmarket', trend_platform_naver: '🟢 Naver',
+                trend_opt_all_source: 'All Sources', trend_source_1688: '🟠 1688', trend_source_taobao: '🔴 Taobao',
+                trend_sec_collection: '📈 Collection & Recommendation Trend', trend_ct_collection: 'Collection & Recommendation Trend',
+                trend_days_7: '7d', trend_days_30: '30d', trend_days_90: '90d', trend_ct_margin: 'Average Margin Trend',
+                trend_sec_platform: '🏪 Platform Trends', trend_sec_hourly: '⏰ Hourly Analysis',
+                trend_ct_hourly_search: 'Hourly Search Volume', trend_ct_hourly_sales: 'Hourly Sales Volume',
+                trend_sec_category: '📂 Category Trends', trend_ct_category_margin: 'Margin Trend by Category', trend_ct_category_count: 'Collected Products by Category',
+                trend_sec_monthly: '📅 Monthly Performance Summary',
+                trend_kpi1_label: 'Collected This Month', trend_kpi2_label: 'Recommended This Month', trend_kpi2_sub: 'vs last month +21.4%',
+                trend_kpi3_label: 'Avg. Margin This Month', trend_kpi3_sub: 'vs last month +2.1%p', trend_kpi4_label: 'Hot Items This Month', trend_kpi4_sub: 'vs last month +25.0%',
+                trend_table_title: '📊 Weekly Performance Table',
+                trend_lbl_collected: 'Collected', trend_lbl_recommended: 'Recommended', trend_lbl_avg_margin: 'Avg. Margin (%)',
+                trend_lbl_sales: 'Sales', trend_lbl_revenue: 'Revenue (10K KRW)', trend_lbl_search_volume: 'Search Volume', trend_lbl_collected_count: 'Collected Products'
+            },
+            zh: {
+                trend_doc_title: '采购追踪器 | 趋势分析', trend_last_updated: '最后更新:', trend_exchange_rate: '| 汇率: 1 CNY = 190.5 KRW',
+                trend_refresh: '刷新', trend_period_hourly: '按小时', trend_period_daily: '按日', trend_period_weekly: '按周', trend_period_monthly: '按月',
+                trend_opt_all_platform: '全部平台', trend_platform_coupang: '🛒 Coupang', trend_platform_gmarket: '🏪 Gmarket', trend_platform_naver: '🟢 Naver',
+                trend_opt_all_source: '全部采购源', trend_source_1688: '🟠 1688', trend_source_taobao: '🔴 淘宝',
+                trend_sec_collection: '📈 商品采集 & 推荐趋势', trend_ct_collection: '商品采集 & 推荐趋势',
+                trend_days_7: '7天', trend_days_30: '30天', trend_days_90: '90天', trend_ct_margin: '平均利润率趋势',
+                trend_sec_platform: '🏪 平台趋势', trend_sec_hourly: '⏰ 时段分析',
+                trend_ct_hourly_search: '时段搜索量', trend_ct_hourly_sales: '时段销量',
+                trend_sec_category: '📂 分类趋势', trend_ct_category_margin: '分类利润率变动', trend_ct_category_count: '分类采集商品数',
+                trend_sec_monthly: '📅 月度业绩汇总',
+                trend_kpi1_label: '本月采集', trend_kpi2_label: '本月推荐', trend_kpi2_sub: '较上月 +21.4%',
+                trend_kpi3_label: '本月平均利润', trend_kpi3_sub: '较上月 +2.1%p', trend_kpi4_label: '本月热门商品', trend_kpi4_sub: '较上月 +25.0%',
+                trend_table_title: '📊 周度业绩表',
+                trend_lbl_collected: '采集商品', trend_lbl_recommended: '推荐商品', trend_lbl_avg_margin: '平均利润率(%)',
+                trend_lbl_sales: '销量', trend_lbl_revenue: '销售额(万韩元)', trend_lbl_search_volume: '搜索量', trend_lbl_collected_count: '采集商品数'
+            },
+            vi: {
+                trend_doc_title: 'Theo dõi nguồn hàng | Phân tích xu hướng', trend_last_updated: 'Cập nhật lần cuối:', trend_exchange_rate: '| Tỷ giá: 1 CNY = 190.5 KRW',
+                trend_refresh: 'Làm mới', trend_period_hourly: 'Theo giờ', trend_period_daily: 'Theo ngày', trend_period_weekly: 'Theo tuần', trend_period_monthly: 'Theo tháng',
+                trend_opt_all_platform: 'Tất cả nền tảng', trend_platform_coupang: '🛒 Coupang', trend_platform_gmarket: '🏪 Gmarket', trend_platform_naver: '🟢 Naver',
+                trend_opt_all_source: 'Tất cả nguồn', trend_source_1688: '🟠 1688', trend_source_taobao: '🔴 Taobao',
+                trend_sec_collection: '📈 Xu hướng thu thập & đề xuất', trend_ct_collection: 'Xu hướng thu thập & đề xuất',
+                trend_days_7: '7 ngày', trend_days_30: '30 ngày', trend_days_90: '90 ngày', trend_ct_margin: 'Xu hướng lợi nhuận trung bình',
+                trend_sec_platform: '🏪 Xu hướng theo nền tảng', trend_sec_hourly: '⏰ Phân tích theo khung giờ',
+                trend_ct_hourly_search: 'Lượt tìm kiếm theo giờ', trend_ct_hourly_sales: 'Doanh số theo giờ',
+                trend_sec_category: '📂 Xu hướng theo danh mục', trend_ct_category_margin: 'Biến động lợi nhuận theo danh mục', trend_ct_category_count: 'Sản phẩm thu thập theo danh mục',
+                trend_sec_monthly: '📅 Tổng kết hiệu suất tháng',
+                trend_kpi1_label: 'Thu thập tháng này', trend_kpi2_label: 'Đề xuất tháng này', trend_kpi2_sub: 'so với tháng trước +21.4%',
+                trend_kpi3_label: 'Lợi nhuận TB tháng này', trend_kpi3_sub: 'so với tháng trước +2.1%p', trend_kpi4_label: 'Sản phẩm hot tháng này', trend_kpi4_sub: 'so với tháng trước +25.0%',
+                trend_table_title: '📊 Bảng hiệu suất theo tuần',
+                trend_lbl_collected: 'Sản phẩm thu thập', trend_lbl_recommended: 'Sản phẩm đề xuất', trend_lbl_avg_margin: 'Lợi nhuận TB (%)',
+                trend_lbl_sales: 'Doanh số', trend_lbl_revenue: 'Doanh thu (vạn KRW)', trend_lbl_search_volume: 'Lượt tìm kiếm', trend_lbl_collected_count: 'Số sản phẩm thu thập'
+            }
+        };
     </script>
     <script src="js/i18n-auto.js"></script>
     <script src="js/i18n-common.js"></script>

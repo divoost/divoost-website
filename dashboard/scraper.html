@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>반자동 스크래퍼 | 소싱 트래커</title>
+    <title data-i18n="scrp_doc_title">반자동 스크래퍼 | 소싱 트래커</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/mobile-fix.css">
     <style>
@@ -60,19 +60,19 @@
             </nav>
         </aside>
         <div class="main-content">
-            <header class="top-bar"><div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">🕷 반자동 스크래퍼</div><div class="top-bar-date">URL 입력 → 상품 자동 추출 → DB 저장</div></div></div></header>
+            <header class="top-bar"><div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">🕷 반자동 스크래퍼</div><div class="top-bar-date" data-i18n="scrp_topbar_sub">URL 입력 → 상품 자동 추출 → DB 저장</div></div></div></header>
             <div class="content-area">
                 <div class="scraper-box">
-                    <h1>🕷 URL 기반 상품 수집기</h1>
-                    <p>쿠팡, 1688, 네이버, Shopee 등의 검색 결과 URL을 붙여넣으면 상품을 자동 추출합니다</p>
+                    <h1 data-i18n="scrp_h1">🕷 URL 기반 상품 수집기</h1>
+                    <p data-i18n="scrp_desc">쿠팡, 1688, 네이버, Shopee 등의 검색 결과 URL을 붙여넣으면 상품을 자동 추출합니다</p>
                     <div class="url-input-wrap">
-                        <input type="text" class="url-input" id="scrapeUrl" placeholder="상품 검색 결과 URL 붙여넣기 (예: https://www.coupang.com/np/search?q=이어폰)" onkeydown="if(event.key==='Enter')startScrape()">
-                        <button class="scrape-btn" id="scrapeBtn" onclick="startScrape()">🕷 수집 시작</button>
+                        <input type="text" class="url-input" id="scrapeUrl" placeholder="상품 검색 결과 URL 붙여넣기 (예: https://www.coupang.com/np/search?q=이어폰)" data-i18n-ph="scrp_url_ph" onkeydown="if(event.key==='Enter')startScrape()">
+                        <button class="scrape-btn" id="scrapeBtn" onclick="startScrape()" data-i18n="scrp_btn_start">🕷 수집 시작</button>
                     </div>
                     <div class="quick-btns">
-                        <button class="quick-btn" onclick="quickSearch('coupang')"><span class="quick-dot" style="background:#E42528"></span>쿠팡</button>
+                        <button class="quick-btn" onclick="quickSearch('coupang')"><span class="quick-dot" style="background:#E42528"></span><span data-i18n="pf_coupang">쿠팡</span></button>
                         <button class="quick-btn" onclick="quickSearch('1688')"><span class="quick-dot" style="background:#FF6A00"></span>1688</button>
-                        <button class="quick-btn" onclick="quickSearch('naver')"><span class="quick-dot" style="background:#03C75A"></span>네이버</button>
+                        <button class="quick-btn" onclick="quickSearch('naver')"><span class="quick-dot" style="background:#03C75A"></span><span data-i18n="pf_naver">네이버</span></button>
                         <button class="quick-btn" onclick="quickSearch('shopee')"><span class="quick-dot" style="background:#EE4D2D"></span>Shopee</button>
                         <button class="quick-btn" onclick="quickSearch('lazada')"><span class="quick-dot" style="background:#0F146D"></span>Lazada</button>
                         <button class="quick-btn" onclick="quickSearch('tiktok')"><span class="quick-dot" style="background:#000"></span>TikTok</button>
@@ -82,10 +82,10 @@
                 <div id="resultArea" style="display:none">
                     <div class="result-stats" id="resultStats"></div>
                     <div class="export-bar">
-                        <button class="export-btn" style="background:#10b981" onclick="exportResults('csv')">📥 CSV</button>
-                        <button class="export-btn" style="background:#3b82f6" onclick="exportResults('json')">📥 JSON</button>
-                        <button class="export-btn" style="background:#7c3aed" onclick="saveToDb()">💾 DB 저장</button>
-                        <span style="font-size:.72rem;color:#64748B" id="productCount">0개</span>
+                        <button class="export-btn" style="background:#10b981" onclick="exportResults('csv')" data-i18n="scrp_btn_csv">📥 CSV</button>
+                        <button class="export-btn" style="background:#3b82f6" onclick="exportResults('json')" data-i18n="scrp_btn_json">📥 JSON</button>
+                        <button class="export-btn" style="background:#7c3aed" onclick="saveToDb()" data-i18n="scrp_btn_db_save">💾 DB 저장</button>
+                        <span style="font-size:.72rem;color:#64748B" id="productCount" data-i18n="scrp_count_initial">0개</span>
                         <div class="view-btns">
                             <button class="v-btn active" onclick="setView('grid',this)">🖼</button>
                             <button class="v-btn" onclick="setView('table',this)">📋</button>
@@ -101,9 +101,10 @@
     <script>
         var SCRAPER_KEY=''/* 🔴 ScraperAPI 키 노출 사고로 제거됨. 키 회전 후 Edge Function에서 사용 */;
         var allProducts=[];
+        function t(key){ return window.I18N ? window.I18N.t(key) : key; }
 
         function quickSearch(platform){
-            var kw=prompt('검색 키워드를 입력하세요:');
+            var kw=prompt(t('scrp_prompt_kw'));
             if(!kw)return;
             var urls={
                 coupang:'https://www.coupang.com/np/search?component=&q='+encodeURIComponent(kw),
@@ -119,20 +120,20 @@
 
         async function startScrape(){
             var url=document.getElementById('scrapeUrl').value.trim();
-            if(!url){alert('URL을 입력하세요');return}
+            if(!url){alert(t('scrp_alert_need_url'));return}
             var btn=document.getElementById('scrapeBtn');
-            btn.disabled=true;btn.textContent='🕷 수집중...';
+            btn.disabled=true;btn.removeAttribute('data-i18n');btn.textContent=t('scrp_btn_collecting');
             var log=document.getElementById('scrapeLog');log.style.display='block';
-            addLog('수집 시작: '+url.substring(0,60)+'...');
+            addLog(t('scrp_log_start_prefix')+' '+url.substring(0,60)+'...');
 
             var platform=detectPlatform(url);
-            addLog('플랫폼 감지: '+(platform||'알 수 없음'));
+            addLog(t('scrp_log_platform_detect')+' '+(platform||t('scrp_unknown')));
 
             // Google Shopping API로 키워드 추출 후 검색
             var keyword=extractKeyword(url);
-            if(!keyword){addLog('키워드 추출 실패 → URL 직접 스크래핑');keyword=url}
+            if(!keyword){addLog(t('scrp_log_kw_extract_fail'));keyword=url}
 
-            addLog('키워드: "'+keyword+'" → Google Shopping 검색');
+            addLog(t('scrp_log_kw_search').replace('{kw}',keyword));
 
             try{
                 var country=platform==='1688'?'cn':platform==='shopee'?'sg':'kr';
@@ -140,21 +141,21 @@
                 var r=await fetch(apiUrl);
                 var data=await r.json();
                 var items=data.shopping_results||data.results||[];
-                addLog('✓ '+items.length+'개 상품 발견');
+                addLog(t('scrp_log_found').replace('{n}',items.length));
 
                 allProducts=items.map(function(it){
                     var p=it.extracted_price||0;
                     if(typeof p==='string')p=parseFloat(p.replace(/[^\d.]/g,''))||0;
-                    return{name:it.title||'',price:p,image:it.thumbnail||'',url:it.link||'',platform:it.source||platform||'기타',rating:it.rating||0,reviewCount:it.reviews||0,source:'scraper'};
+                    return{name:it.title||'',price:p,image:it.thumbnail||'',url:it.link||'',platform:it.source||platform||t('scrp_other'),rating:it.rating||0,reviewCount:it.reviews||0,source:'scraper'};
                 });
 
-                addLog('✅ 수집 완료: '+allProducts.length+'개');
+                addLog(t('scrp_log_done').replace('{n}',allProducts.length));
                 renderResults();
             }catch(e){
-                addLog('✗ 오류: '+e.message);
+                addLog(t('scrp_log_error').replace('{msg}',e.message));
             }
 
-            btn.disabled=false;btn.textContent='🕷 수집 시작';
+            btn.disabled=false;btn.setAttribute('data-i18n','scrp_btn_start');btn.textContent=t('scrp_btn_start');
         }
 
         function detectPlatform(url){
@@ -177,9 +178,11 @@
 
         function renderResults(){
             document.getElementById('resultArea').style.display='block';
-            var platforms={};allProducts.forEach(function(p){var k=p.platform||'기타';if(!platforms[k])platforms[k]=0;platforms[k]++});
-            document.getElementById('resultStats').innerHTML='<div class="r-stat"><div class="r-stat-val">'+allProducts.length+'</div><div class="r-stat-label">총 상품</div></div>'+Object.keys(platforms).map(function(k){return'<div class="r-stat"><div class="r-stat-val">'+platforms[k]+'</div><div class="r-stat-label">'+k+'</div></div>'}).join('');
-            document.getElementById('productCount').textContent=allProducts.length+'개';
+            var platforms={};allProducts.forEach(function(p){var k=p.platform||t('scrp_other');if(!platforms[k])platforms[k]=0;platforms[k]++});
+            document.getElementById('resultStats').innerHTML='<div class="r-stat"><div class="r-stat-val">'+allProducts.length+'</div><div class="r-stat-label">'+t('scrp_stat_total')+'</div></div>'+Object.keys(platforms).map(function(k){return'<div class="r-stat"><div class="r-stat-val">'+platforms[k]+'</div><div class="r-stat-label">'+k+'</div></div>'}).join('');
+            var countEl=document.getElementById('productCount');
+            countEl.removeAttribute('data-i18n');
+            countEl.textContent=t('scrp_count_label').replace('{n}',allProducts.length);
 
             document.getElementById('gridView').innerHTML=allProducts.map(function(p){
                 var price='₩'+(p.price||0).toLocaleString();
@@ -190,7 +193,7 @@
 
             document.getElementById('tableBody').innerHTML=allProducts.map(function(p){
                 var price='₩'+(p.price||0).toLocaleString();
-                return'<tr onclick="'+(p.url?"window.open('"+p.url.replace(/'/g,'')+"')":"")+'"><td>'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📦\'">':'📦')+'</td><td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(p.name)+'</td><td style="font-weight:700;color:#e42528">'+price+'</td><td>'+(p.platform||'')+'</td><td>'+(p.url?'<a href="'+p.url+'" target="_blank" onclick="event.stopPropagation()" style="color:#3b82f6;font-size:.7rem">보기</a>':'')+'</td></tr>';
+                return'<tr onclick="'+(p.url?"window.open('"+p.url.replace(/'/g,'')+"')":"")+'"><td>'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📦\'">':'📦')+'</td><td style="max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(p.name)+'</td><td style="font-weight:700;color:#e42528">'+price+'</td><td>'+(p.platform||'')+'</td><td>'+(p.url?'<a href="'+p.url+'" target="_blank" onclick="event.stopPropagation()" style="color:#3b82f6;font-size:.7rem">'+t('scrp_view_link')+'</a>':'')+'</td></tr>';
             }).join('');
 
             localStorage.setItem('scraperProducts',JSON.stringify(allProducts));
@@ -204,13 +207,13 @@
         }
 
         async function saveToDb(){
-            if(!allProducts.length){addLog('저장할 데이터 없음');return}
-            addLog('💾 Supabase DB 저장중...');
+            if(!allProducts.length){addLog(t('scrp_log_no_data'));return}
+            addLog(t('scrp_log_db_saving'));
             try{
                 await DB.saveProducts(allProducts);
-                addLog('✅ DB 저장 완료: '+allProducts.length+'개');
-                alert('DB 저장 완료: '+allProducts.length+'개 상품');
-            }catch(e){addLog('⚠ DB 저장 실패: '+e.message)}
+                addLog(t('scrp_log_db_done').replace('{n}',allProducts.length));
+                alert(t('scrp_alert_db_done').replace('{n}',allProducts.length));
+            }catch(e){addLog(t('scrp_log_db_fail').replace('{msg}',e.message))}
         }
 
         function exportResults(format){
@@ -220,7 +223,7 @@
                 blob=new Blob([JSON.stringify(allProducts,null,2)],{type:'application/json'});
                 fn='scraper-'+Date.now()+'.json';
             }else{
-                var csv='상품명,가격,플랫폼,URL,평점,리뷰\n';
+                var csv=t('th_product')+','+t('th_price')+','+t('th_platform')+',URL,'+t('th_rating')+','+t('th_review')+'\n';
                 allProducts.forEach(function(p){csv+='"'+(p.name||'')+'",'+p.price+',"'+(p.platform||'')+'","'+(p.url||'')+'",'+p.rating+','+(p.reviewCount||0)+'\n'});
                 blob=new Blob(['﻿'+csv],{type:'text/csv;charset=utf-8'});
                 fn='scraper-'+Date.now()+'.csv';
@@ -238,6 +241,82 @@
             if(mb)mb.onclick=function(){sb.classList.toggle('open');ov.classList.toggle('active')};
             if(ov)ov.onclick=function(){sb.classList.remove('open');ov.classList.remove('active')};
         });
+    </script>
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                scrp_doc_title: '반자동 스크래퍼 | 소싱 트래커', scrp_topbar_sub: 'URL 입력 → 상품 자동 추출 → DB 저장',
+                scrp_h1: '🕷 URL 기반 상품 수집기',
+                scrp_desc: '쿠팡, 1688, 네이버, Shopee 등의 검색 결과 URL을 붙여넣으면 상품을 자동 추출합니다',
+                scrp_url_ph: '상품 검색 결과 URL 붙여넣기 (예: https://www.coupang.com/np/search?q=이어폰)',
+                scrp_btn_start: '🕷 수집 시작', scrp_btn_collecting: '🕷 수집중...',
+                scrp_btn_csv: '📥 CSV', scrp_btn_json: '📥 JSON', scrp_btn_db_save: '💾 DB 저장',
+                scrp_count_initial: '0개', scrp_count_label: '{n}개', scrp_stat_total: '총 상품',
+                scrp_prompt_kw: '검색 키워드를 입력하세요:', scrp_alert_need_url: 'URL을 입력하세요',
+                scrp_log_start_prefix: '수집 시작:', scrp_log_platform_detect: '플랫폼 감지:', scrp_unknown: '알 수 없음',
+                scrp_log_kw_extract_fail: '키워드 추출 실패 → URL 직접 스크래핑',
+                scrp_log_kw_search: '키워드: "{kw}" → Google Shopping 검색',
+                scrp_log_found: '✓ {n}개 상품 발견', scrp_log_done: '✅ 수집 완료: {n}개', scrp_log_error: '✗ 오류: {msg}',
+                scrp_other: '기타', scrp_view_link: '보기',
+                scrp_log_no_data: '저장할 데이터 없음', scrp_log_db_saving: '💾 Supabase DB 저장중...',
+                scrp_log_db_done: '✅ DB 저장 완료: {n}개', scrp_alert_db_done: 'DB 저장 완료: {n}개 상품',
+                scrp_log_db_fail: '⚠ DB 저장 실패: {msg}'
+            },
+            en: {
+                scrp_doc_title: 'Semi-auto Scraper | Sourcing Tracker', scrp_topbar_sub: 'Enter URL → Auto-extract products → Save to DB',
+                scrp_h1: '🕷 URL-based Product Collector',
+                scrp_desc: 'Paste a search result URL from Coupang, 1688, Naver, Shopee, etc. to auto-extract products',
+                scrp_url_ph: 'Paste a product search result URL (e.g. https://www.coupang.com/np/search?q=earbuds)',
+                scrp_btn_start: '🕷 Start Collecting', scrp_btn_collecting: '🕷 Collecting...',
+                scrp_btn_csv: '📥 CSV', scrp_btn_json: '📥 JSON', scrp_btn_db_save: '💾 Save to DB',
+                scrp_count_initial: '0 items', scrp_count_label: '{n} items', scrp_stat_total: 'Total Products',
+                scrp_prompt_kw: 'Enter a search keyword:', scrp_alert_need_url: 'Please enter a URL',
+                scrp_log_start_prefix: 'Started collecting:', scrp_log_platform_detect: 'Platform detected:', scrp_unknown: 'Unknown',
+                scrp_log_kw_extract_fail: 'Keyword extraction failed → scraping URL directly',
+                scrp_log_kw_search: 'Keyword: "{kw}" → Searching Google Shopping',
+                scrp_log_found: '✓ Found {n} products', scrp_log_done: '✅ Collection complete: {n} items', scrp_log_error: '✗ Error: {msg}',
+                scrp_other: 'Other', scrp_view_link: 'View',
+                scrp_log_no_data: 'No data to save', scrp_log_db_saving: '💾 Saving to Supabase DB...',
+                scrp_log_db_done: '✅ Saved to DB: {n} items', scrp_alert_db_done: 'Saved to DB: {n} products',
+                scrp_log_db_fail: '⚠ DB save failed: {msg}'
+            },
+            zh: {
+                scrp_doc_title: '半自动采集器 | 采购追踪器', scrp_topbar_sub: '输入URL → 自动提取商品 → 保存到数据库',
+                scrp_h1: '🕷 基于URL的商品采集器',
+                scrp_desc: '粘贴Coupang、1688、Naver、Shopee等的搜索结果URL即可自动提取商品',
+                scrp_url_ph: '粘贴商品搜索结果URL(如:https://www.coupang.com/np/search?q=耳机)',
+                scrp_btn_start: '🕷 开始采集', scrp_btn_collecting: '🕷 采集中...',
+                scrp_btn_csv: '📥 CSV', scrp_btn_json: '📥 JSON', scrp_btn_db_save: '💾 保存到数据库',
+                scrp_count_initial: '0个', scrp_count_label: '{n}个', scrp_stat_total: '总商品',
+                scrp_prompt_kw: '请输入搜索关键词:', scrp_alert_need_url: '请输入URL',
+                scrp_log_start_prefix: '开始采集:', scrp_log_platform_detect: '检测到平台:', scrp_unknown: '未知',
+                scrp_log_kw_extract_fail: '关键词提取失败 → 直接抓取URL',
+                scrp_log_kw_search: '关键词:"{kw}" → 正在搜索Google Shopping',
+                scrp_log_found: '✓ 发现{n}个商品', scrp_log_done: '✅ 采集完成:{n}个', scrp_log_error: '✗ 错误:{msg}',
+                scrp_other: '其他', scrp_view_link: '查看',
+                scrp_log_no_data: '没有可保存的数据', scrp_log_db_saving: '💾 正在保存到Supabase数据库...',
+                scrp_log_db_done: '✅ 数据库保存完成:{n}个', scrp_alert_db_done: '数据库保存完成:{n}个商品',
+                scrp_log_db_fail: '⚠ 数据库保存失败:{msg}'
+            },
+            vi: {
+                scrp_doc_title: 'Trình thu thập bán tự động | Theo dõi nguồn hàng', scrp_topbar_sub: 'Nhập URL → Tự động trích xuất sản phẩm → Lưu vào DB',
+                scrp_h1: '🕷 Bộ thu thập sản phẩm theo URL',
+                scrp_desc: 'Dán URL kết quả tìm kiếm từ Coupang, 1688, Naver, Shopee,... để tự động trích xuất sản phẩm',
+                scrp_url_ph: 'Dán URL kết quả tìm kiếm sản phẩm (vd: https://www.coupang.com/np/search?q=tai nghe)',
+                scrp_btn_start: '🕷 Bắt đầu thu thập', scrp_btn_collecting: '🕷 Đang thu thập...',
+                scrp_btn_csv: '📥 CSV', scrp_btn_json: '📥 JSON', scrp_btn_db_save: '💾 Lưu vào DB',
+                scrp_count_initial: '0 sản phẩm', scrp_count_label: '{n} sản phẩm', scrp_stat_total: 'Tổng sản phẩm',
+                scrp_prompt_kw: 'Nhập từ khóa tìm kiếm:', scrp_alert_need_url: 'Vui lòng nhập URL',
+                scrp_log_start_prefix: 'Bắt đầu thu thập:', scrp_log_platform_detect: 'Đã phát hiện nền tảng:', scrp_unknown: 'Không xác định',
+                scrp_log_kw_extract_fail: 'Trích xuất từ khóa thất bại → thu thập trực tiếp từ URL',
+                scrp_log_kw_search: 'Từ khóa: "{kw}" → Đang tìm trên Google Shopping',
+                scrp_log_found: '✓ Tìm thấy {n} sản phẩm', scrp_log_done: '✅ Hoàn tất thu thập: {n} sản phẩm', scrp_log_error: '✗ Lỗi: {msg}',
+                scrp_other: 'Khác', scrp_view_link: 'Xem',
+                scrp_log_no_data: 'Không có dữ liệu để lưu', scrp_log_db_saving: '💾 Đang lưu vào Supabase DB...',
+                scrp_log_db_done: '✅ Đã lưu vào DB: {n} sản phẩm', scrp_alert_db_done: 'Đã lưu vào DB: {n} sản phẩm',
+                scrp_log_db_fail: '⚠ Lưu DB thất bại: {msg}'
+            }
+        };
     </script>
     <script src="js/i18n-auto.js"></script>
     <script src="js/i18n-common.js"></script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>마켓플레이스 리스팅 | 소싱 트래커</title>
+    <title data-i18n="list_doc_title">마켓플레이스 리스팅 | 소싱 트래커</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/mobile-fix.css">
     <style>
@@ -216,7 +216,7 @@
                     <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
                     <div>
                         <div class="top-bar-title">마켓플레이스 리스팅</div>
-                        <div class="top-bar-date">수집 상품 → 마켓별 자동 리스팅 등록</div>
+                        <div class="top-bar-date" data-i18n="list_subtitle">수집 상품 → 마켓별 자동 리스팅 등록</div>
                     </div>
                 </div>
                 <div class="top-bar-right">
@@ -227,16 +227,16 @@
             <div class="content-area">
                 <!-- Hero -->
                 <div class="listing-hero">
-                    <h1>📋 마켓플레이스 자동 리스팅</h1>
-                    <p>수집/크롤링된 상품을 선택하고, 판매할 마켓플레이스를 지정하면 AI가 최적의 상품명·설명·키워드를 자동 생성합니다</p>
+                    <h1 data-i18n="list_hero_title">📋 마켓플레이스 자동 리스팅</h1>
+                    <p data-i18n="list_hero_desc">수집/크롤링된 상품을 선택하고, 판매할 마켓플레이스를 지정하면 AI가 최적의 상품명·설명·키워드를 자동 생성합니다</p>
                 </div>
 
                 <!-- Bulk Bar -->
                 <div class="bulk-bar" id="bulkBar">
-                    <div class="bulk-count"><span id="bulkCount">0</span>개 상품 선택됨 (벌크 리스팅 모드)</div>
+                    <div class="bulk-count"><span id="bulkCount">0</span><span data-i18n="list_bulk_selected_suffix">개 상품 선택됨 (벌크 리스팅 모드)</span></div>
                     <div class="bulk-actions">
-                        <button class="bulk-btn bulk-list-btn" onclick="bulkListing()">일괄 등록하기</button>
-                        <button class="bulk-btn bulk-clear-btn" onclick="clearBulk()">선택 해제</button>
+                        <button class="bulk-btn bulk-list-btn" onclick="bulkListing()" data-i18n="list_btn_bulk_list">일괄 등록하기</button>
+                        <button class="bulk-btn bulk-clear-btn" onclick="clearBulk()" data-i18n="list_btn_clear_selection">선택 해제</button>
                     </div>
                 </div>
 
@@ -245,39 +245,39 @@
                     <div class="listing-sidebar-panel">
                         <!-- Product Selector -->
                         <div class="l-panel">
-                            <div class="l-panel-header">📦 상품 선택 <span style="margin-left:auto;font-size:.68rem;color:#64748B" id="productSourceLabel">crawlProducts</span></div>
+                            <div class="l-panel-header"><span data-i18n="list_panel_select_product">📦 상품 선택</span> <span style="margin-left:auto;font-size:.68rem;color:#64748B" id="productSourceLabel">crawlProducts</span></div>
                             <div class="l-panel-body">
-                                <input type="text" class="ps-search" id="productSearch" placeholder="상품명 검색..." oninput="filterProducts()">
+                                <input type="text" class="ps-search" id="productSearch" placeholder="상품명 검색..." data-i18n-ph="list_search_ph" oninput="filterProducts()">
                                 <div class="product-selector" id="productList">
-                                    <div class="ps-empty">수집된 상품이 없습니다.<br>스크래퍼 또는 AI 소싱을 먼저 실행하세요.</div>
+                                    <div class="ps-empty" data-i18n-html="list_empty_products">수집된 상품이 없습니다.<br>스크래퍼 또는 AI 소싱을 먼저 실행하세요.</div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Marketplace Selector -->
                         <div class="l-panel">
-                            <div class="l-panel-header">🏪 판매 마켓 선택</div>
+                            <div class="l-panel-header" data-i18n="list_panel_select_market">🏪 판매 마켓 선택</div>
                             <div class="l-panel-body">
                                 <div class="mp-grid" id="marketplaceGrid">
                                     <div class="mp-btn" data-mp="coupang" style="--mp-color:#E42528" onclick="selectMarketplace('coupang')">
                                         <div class="mp-icon">🚀</div>
-                                        <div class="mp-name">쿠팡 Wing</div>
+                                        <div class="mp-name" data-i18n="list_mp_coupang_name">쿠팡 Wing</div>
                                         <div class="mp-sub">Coupang</div>
                                     </div>
                                     <div class="mp-btn" data-mp="naver" style="--mp-color:#03C75A" onclick="selectMarketplace('naver')">
                                         <div class="mp-icon">🟩</div>
-                                        <div class="mp-name">네이버 스마트스토어</div>
+                                        <div class="mp-name" data-i18n="list_mp_naver_name">네이버 스마트스토어</div>
                                         <div class="mp-sub">Naver Smartstore</div>
                                     </div>
                                     <div class="mp-btn" data-mp="gmarket" style="--mp-color:#00A651" onclick="selectMarketplace('gmarket')">
                                         <div class="mp-icon">🟢</div>
-                                        <div class="mp-name">지마켓</div>
+                                        <div class="mp-name" data-i18n="list_mp_gmarket_name">지마켓</div>
                                         <div class="mp-sub">Gmarket</div>
                                     </div>
                                     <div class="mp-btn" data-mp="shopee" style="--mp-color:#EE4D2D" onclick="selectMarketplace('shopee')">
                                         <div class="mp-icon">🛍</div>
                                         <div class="mp-name">Shopee</div>
-                                        <div class="mp-sub">동남아</div>
+                                        <div class="mp-sub" data-i18n="list_mp_shopee_sub">동남아</div>
                                     </div>
                                     <div class="mp-btn" data-mp="amazon" style="--mp-color:#FF9900" onclick="selectMarketplace('amazon')">
                                         <div class="mp-icon">📦</div>
@@ -290,10 +290,10 @@
 
                         <!-- Listing History -->
                         <div class="l-panel">
-                            <div class="l-panel-header">📜 등록 이력 <button style="margin-left:auto;padding:3px 8px;border-radius:4px;border:1px solid #e2e8f0;background:#fff;font-size:.65rem;color:#64748B;cursor:pointer" onclick="clearHistory()">전체 삭제</button></div>
+                            <div class="l-panel-header"><span data-i18n="list_panel_history">📜 등록 이력</span> <button style="margin-left:auto;padding:3px 8px;border-radius:4px;border:1px solid #e2e8f0;background:#fff;font-size:.65rem;color:#64748B;cursor:pointer" onclick="clearHistory()" data-i18n="list_btn_clear_all">전체 삭제</button></div>
                             <div class="l-panel-body">
                                 <div class="history-list" id="historyList">
-                                    <div class="ps-empty">등록 이력이 없습니다.</div>
+                                    <div class="ps-empty" data-i18n="list_empty_history">등록 이력이 없습니다.</div>
                                 </div>
                             </div>
                         </div>
@@ -303,93 +303,93 @@
                     <div>
                         <!-- Tabs -->
                         <div class="tab-bar">
-                            <button class="tab-btn active" data-tab="form" onclick="switchTab('form')">✏️ 리스팅 작성</button>
-                            <button class="tab-btn" data-tab="preview" onclick="switchTab('preview')">👁 미리보기</button>
-                            <button class="tab-btn" data-tab="bulk" onclick="switchTab('bulk')">📦 벌크 리스팅</button>
+                            <button class="tab-btn active" data-tab="form" onclick="switchTab('form')" data-i18n="list_tab_form">✏️ 리스팅 작성</button>
+                            <button class="tab-btn" data-tab="preview" onclick="switchTab('preview')" data-i18n="list_tab_preview">👁 미리보기</button>
+                            <button class="tab-btn" data-tab="bulk" onclick="switchTab('bulk')" data-i18n="list_tab_bulk">📦 벌크 리스팅</button>
                         </div>
 
                         <!-- TAB: Form -->
                         <div class="tab-content active" id="tab-form">
                             <div class="l-panel">
-                                <div class="l-panel-header">✏️ 리스팅 정보 입력 <span style="margin-left:auto;font-size:.72rem;color:#64748B" id="selectedMpLabel">마켓을 선택하세요</span></div>
+                                <div class="l-panel-header"><span data-i18n="list_panel_form_header">✏️ 리스팅 정보 입력</span> <span style="margin-left:auto;font-size:.72rem;color:#64748B" id="selectedMpLabel" data-i18n="list_placeholder_select_market">마켓을 선택하세요</span></div>
                                 <div class="l-panel-body">
                                     <!-- Product Name -->
                                     <div class="form-section">
-                                        <div class="form-section-title">📝 상품명
-                                            <button class="ai-suggest-btn" onclick="aiSuggestTitle()">🤖 AI 최적화</button>
+                                        <div class="form-section-title"><span data-i18n="list_section_title">📝 상품명</span>
+                                            <button class="ai-suggest-btn" onclick="aiSuggestTitle()" data-i18n="list_btn_ai_optimize">🤖 AI 최적화</button>
                                         </div>
                                         <div class="form-row full">
                                             <div class="form-field">
-                                                <label>판매 상품명</label>
-                                                <input type="text" id="listingTitle" placeholder="마켓에 등록할 상품명 입력">
-                                                <div class="form-hint" id="titleHint">마켓별 SEO에 최적화된 상품명을 작성하세요</div>
+                                                <label data-i18n="list_lbl_sell_title">판매 상품명</label>
+                                                <input type="text" id="listingTitle" placeholder="마켓에 등록할 상품명 입력" data-i18n-ph="list_title_ph">
+                                                <div class="form-hint" id="titleHint" data-i18n="list_default_title_hint">마켓별 SEO에 최적화된 상품명을 작성하세요</div>
                                             </div>
                                         </div>
                                         <div class="ai-suggestion-box" id="titleSuggestion">
-                                            <button class="ai-apply" onclick="applyTitleSuggestion()">적용</button>
+                                            <button class="ai-apply" onclick="applyTitleSuggestion()" data-i18n="list_btn_apply">적용</button>
                                             <div id="titleSuggestionText"></div>
                                         </div>
                                     </div>
 
                                     <!-- Price & Margin -->
                                     <div class="form-section">
-                                        <div class="form-section-title">💰 가격 · 마진</div>
+                                        <div class="form-section-title" data-i18n="list_section_price_margin">💰 가격 · 마진</div>
                                         <div class="form-row">
                                             <div class="form-field">
-                                                <label>소싱가 (원가)</label>
+                                                <label data-i18n="list_lbl_source_cost">소싱가 (원가)</label>
                                                 <input type="number" id="sourcePrice" placeholder="0" oninput="calcMargin()">
                                             </div>
                                             <div class="form-field">
-                                                <label>판매가</label>
+                                                <label data-i18n="th_sell_price">판매가</label>
                                                 <input type="number" id="sellPrice" placeholder="0" oninput="calcMargin()">
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-field">
-                                                <label>수수료율 (%)</label>
+                                                <label data-i18n="list_lbl_fee_rate">수수료율 (%)</label>
                                                 <input type="number" id="feeRate" value="10" oninput="calcMargin()">
                                             </div>
                                             <div class="form-field">
-                                                <label>배송비 (원)</label>
+                                                <label data-i18n="list_lbl_shipping_cost">배송비 (원)</label>
                                                 <input type="number" id="shippingCost" value="3000" oninput="calcMargin()">
                                             </div>
                                         </div>
                                         <div class="margin-calc" id="marginCalc">
-                                            <div class="margin-row"><span class="label">소싱가</span><span class="value" id="mc-source">-</span></div>
-                                            <div class="margin-row"><span class="label">판매가</span><span class="value" id="mc-sell">-</span></div>
-                                            <div class="margin-row"><span class="label">수수료</span><span class="value" id="mc-fee">-</span></div>
-                                            <div class="margin-row"><span class="label">배송비</span><span class="value" id="mc-shipping">-</span></div>
-                                            <div class="margin-row" style="font-size:.9rem"><span class="label" style="font-weight:700">순이익</span><span class="value" id="mc-profit">-</span></div>
-                                            <div class="margin-row" style="font-size:.9rem"><span class="label" style="font-weight:700">마진율</span><span class="value" id="mc-margin">-</span></div>
+                                            <div class="margin-row"><span class="label" data-i18n="th_source_price">소싱가</span><span class="value" id="mc-source">-</span></div>
+                                            <div class="margin-row"><span class="label" data-i18n="th_sell_price">판매가</span><span class="value" id="mc-sell">-</span></div>
+                                            <div class="margin-row"><span class="label" data-i18n="th_fee">수수료</span><span class="value" id="mc-fee">-</span></div>
+                                            <div class="margin-row"><span class="label" data-i18n="th_shipping">배송비</span><span class="value" id="mc-shipping">-</span></div>
+                                            <div class="margin-row" style="font-size:.9rem"><span class="label" style="font-weight:700" data-i18n="list_lbl_profit">순이익</span><span class="value" id="mc-profit">-</span></div>
+                                            <div class="margin-row" style="font-size:.9rem"><span class="label" style="font-weight:700" data-i18n="th_margin_rate">마진율</span><span class="value" id="mc-margin">-</span></div>
                                             <div class="margin-bar"><div class="margin-bar-fill" id="marginBarFill" style="width:0;background:#e2e8f0"></div></div>
                                         </div>
                                     </div>
 
                                     <!-- Category -->
                                     <div class="form-section">
-                                        <div class="form-section-title">📂 카테고리</div>
+                                        <div class="form-section-title" data-i18n="list_section_category">📂 카테고리</div>
                                         <div class="form-row">
                                             <div class="form-field">
-                                                <label>대분류</label>
+                                                <label data-i18n="list_lbl_major_cat">대분류</label>
                                                 <select id="catMajor" onchange="updateSubCategories()">
-                                                    <option value="">선택</option>
-                                                    <option value="fashion">패션의류/잡화</option>
-                                                    <option value="beauty">뷰티</option>
-                                                    <option value="digital">디지털/가전</option>
-                                                    <option value="home">홈/리빙</option>
-                                                    <option value="food">식품</option>
-                                                    <option value="sports">스포츠/레저</option>
-                                                    <option value="baby">출산/유아동</option>
-                                                    <option value="pet">반려동물</option>
-                                                    <option value="hobby">취미/문구</option>
-                                                    <option value="health">건강/의료</option>
-                                                    <option value="auto">자동차용품</option>
+                                                    <option value="" data-i18n="list_opt_select">선택</option>
+                                                    <option value="fashion" data-i18n="list_cat_fashion">패션의류/잡화</option>
+                                                    <option value="beauty" data-i18n="list_cat_beauty">뷰티</option>
+                                                    <option value="digital" data-i18n="list_cat_digital">디지털/가전</option>
+                                                    <option value="home" data-i18n="list_cat_home">홈/리빙</option>
+                                                    <option value="food" data-i18n="list_cat_food">식품</option>
+                                                    <option value="sports" data-i18n="list_cat_sports">스포츠/레저</option>
+                                                    <option value="baby" data-i18n="list_cat_baby">출산/유아동</option>
+                                                    <option value="pet" data-i18n="list_cat_pet">반려동물</option>
+                                                    <option value="hobby" data-i18n="list_cat_hobby">취미/문구</option>
+                                                    <option value="health" data-i18n="list_cat_health">건강/의료</option>
+                                                    <option value="auto" data-i18n="list_cat_auto">자동차용품</option>
                                                 </select>
                                             </div>
                                             <div class="form-field">
-                                                <label>소분류</label>
+                                                <label data-i18n="list_lbl_minor_cat">소분류</label>
                                                 <select id="catMinor">
-                                                    <option value="">대분류를 먼저 선택</option>
+                                                    <option value="" data-i18n="list_opt_select_minor_first">대분류를 먼저 선택</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -397,74 +397,74 @@
 
                                     <!-- Description -->
                                     <div class="form-section">
-                                        <div class="form-section-title">📄 상품 설명
-                                            <button class="ai-suggest-btn" onclick="aiSuggestDesc()">🤖 AI 생성</button>
+                                        <div class="form-section-title"><span data-i18n="list_section_desc">📄 상품 설명</span>
+                                            <button class="ai-suggest-btn" onclick="aiSuggestDesc()" data-i18n="list_btn_ai_generate">🤖 AI 생성</button>
                                         </div>
                                         <div class="form-row full">
                                             <div class="form-field">
-                                                <label>상세 설명</label>
-                                                <textarea id="listingDesc" rows="6" placeholder="상품 상세 설명을 입력하세요. AI 생성 버튼으로 마켓별 최적화된 설명을 자동 생성할 수 있습니다."></textarea>
+                                                <label data-i18n="list_lbl_desc_detail">상세 설명</label>
+                                                <textarea id="listingDesc" rows="6" placeholder="상품 상세 설명을 입력하세요. AI 생성 버튼으로 마켓별 최적화된 설명을 자동 생성할 수 있습니다." data-i18n-ph="list_desc_ph"></textarea>
                                             </div>
                                         </div>
                                         <div class="ai-suggestion-box" id="descSuggestion">
-                                            <button class="ai-apply" onclick="applyDescSuggestion()">적용</button>
+                                            <button class="ai-apply" onclick="applyDescSuggestion()" data-i18n="list_btn_apply">적용</button>
                                             <div id="descSuggestionText"></div>
                                         </div>
                                     </div>
 
                                     <!-- Images -->
                                     <div class="form-section">
-                                        <div class="form-section-title">🖼 이미지</div>
+                                        <div class="form-section-title" data-i18n="list_section_images">🖼 이미지</div>
                                         <div class="img-gallery" id="imageGallery">
-                                            <div class="img-placeholder" title="이미지 없음">📷</div>
+                                            <div class="img-placeholder" title="이미지 없음" data-i18n-title="list_img_none_title">📷</div>
                                         </div>
-                                        <div class="form-hint" style="margin-top:6px">첫 번째 이미지가 대표 이미지로 사용됩니다. 클릭하여 대표 이미지를 변경할 수 있습니다.</div>
+                                        <div class="form-hint" style="margin-top:6px" data-i18n="list_img_hint">첫 번째 이미지가 대표 이미지로 사용됩니다. 클릭하여 대표 이미지를 변경할 수 있습니다.</div>
                                     </div>
 
                                     <!-- Keywords -->
                                     <div class="form-section">
-                                        <div class="form-section-title">🏷 키워드 / 태그
-                                            <button class="ai-suggest-btn" onclick="aiSuggestKeywords()">🤖 추천</button>
+                                        <div class="form-section-title"><span data-i18n="list_section_keywords">🏷 키워드 / 태그</span>
+                                            <button class="ai-suggest-btn" onclick="aiSuggestKeywords()" data-i18n="list_btn_ai_recommend">🤖 추천</button>
                                         </div>
                                         <div class="tags-wrap" id="tagsWrap"></div>
                                         <div class="tag-input-wrap">
-                                            <input type="text" class="tag-input" id="tagInput" placeholder="키워드 입력 후 추가" onkeydown="if(event.key==='Enter'){addTag();event.preventDefault()}">
-                                            <button class="tag-add-btn" onclick="addTag()">추가</button>
+                                            <input type="text" class="tag-input" id="tagInput" placeholder="키워드 입력 후 추가" data-i18n-ph="list_tag_input_ph" onkeydown="if(event.key==='Enter'){addTag();event.preventDefault()}">
+                                            <button class="tag-add-btn" onclick="addTag()" data-i18n="list_btn_add">추가</button>
                                         </div>
                                     </div>
 
                                     <!-- Shipping -->
                                     <div class="form-section">
-                                        <div class="form-section-title">🚚 배송 정보</div>
+                                        <div class="form-section-title" data-i18n="list_section_shipping">🚚 배송 정보</div>
                                         <div class="shipping-grid">
                                             <div class="form-field">
-                                                <label>배송 방법</label>
+                                                <label data-i18n="list_lbl_shipping_method">배송 방법</label>
                                                 <select id="shippingMethod">
-                                                    <option value="rocket">로켓배송 / 당일배송</option>
-                                                    <option value="standard" selected>일반배송 (2~3일)</option>
-                                                    <option value="direct">해외직배송 (7~14일)</option>
-                                                    <option value="free">무료배송</option>
+                                                    <option value="rocket" data-i18n="list_ship_rocket">로켓배송 / 당일배송</option>
+                                                    <option value="standard" selected data-i18n="list_ship_standard">일반배송 (2~3일)</option>
+                                                    <option value="direct" data-i18n="list_ship_direct">해외직배송 (7~14일)</option>
+                                                    <option value="free" data-i18n="list_ship_free">무료배송</option>
                                                 </select>
                                             </div>
                                             <div class="form-field">
-                                                <label>출고지</label>
+                                                <label data-i18n="list_lbl_shipping_origin">출고지</label>
                                                 <select id="shippingOrigin">
-                                                    <option value="domestic">국내</option>
-                                                    <option value="china">중국</option>
-                                                    <option value="overseas">기타 해외</option>
+                                                    <option value="domestic" data-i18n="list_origin_domestic">국내</option>
+                                                    <option value="china" data-i18n="list_origin_china">중국</option>
+                                                    <option value="overseas" data-i18n="list_origin_overseas">기타 해외</option>
                                                 </select>
                                             </div>
                                             <div class="form-field">
-                                                <label>반품 주소</label>
-                                                <input type="text" id="returnAddr" placeholder="반품/교환 주소">
+                                                <label data-i18n="list_lbl_return_addr">반품 주소</label>
+                                                <input type="text" id="returnAddr" placeholder="반품/교환 주소" data-i18n-ph="list_return_addr_ph">
                                             </div>
                                         </div>
                                     </div>
 
                                     <!-- Action Buttons -->
                                     <div class="action-bar">
-                                        <button class="btn btn-register" onclick="registerListing()">🚀 판매자센터 등록하기</button>
-                                        <button class="btn btn-save-draft" onclick="saveDraft()">💾 초안 저장</button>
+                                        <button class="btn btn-register" onclick="registerListing()" data-i18n="list_btn_register">🚀 판매자센터 등록하기</button>
+                                        <button class="btn btn-save-draft" onclick="saveDraft()" data-i18n="list_btn_save_draft">💾 초안 저장</button>
                                     </div>
                                 </div>
                             </div>
@@ -473,12 +473,12 @@
                         <!-- TAB: Preview -->
                         <div class="tab-content" id="tab-preview">
                             <div class="l-panel">
-                                <div class="l-panel-header">👁 리스팅 미리보기</div>
+                                <div class="l-panel-header" data-i18n="list_panel_preview">👁 리스팅 미리보기</div>
                                 <div class="l-panel-body">
                                     <div class="preview-frame" id="previewFrame">
                                         <div class="preview-header">
                                             <span class="mp-logo" id="previewMpLogo">🏪</span>
-                                            <span class="mp-label" id="previewMpLabel">마켓을 선택하세요</span>
+                                            <span class="mp-label" id="previewMpLabel" data-i18n="list_placeholder_select_market">마켓을 선택하세요</span>
                                         </div>
                                         <div class="preview-body">
                                             <div class="preview-product">
@@ -500,16 +500,16 @@
                         <!-- TAB: Bulk -->
                         <div class="tab-content" id="tab-bulk">
                             <div class="l-panel">
-                                <div class="l-panel-header">📦 벌크 리스팅 <span style="margin-left:auto;font-size:.72rem;color:#64748B">여러 상품을 한번에 등록</span></div>
+                                <div class="l-panel-header"><span data-i18n="list_panel_bulk">📦 벌크 리스팅</span> <span style="margin-left:auto;font-size:.72rem;color:#64748B" data-i18n="list_bulk_note">여러 상품을 한번에 등록</span></div>
                                 <div class="l-panel-body">
-                                    <p style="font-size:.82rem;color:#64748b;margin-bottom:16px">왼쪽 상품 목록에서 여러 상품을 선택(체크)한 후, 아래 마켓을 지정하면 일괄 등록할 수 있습니다.</p>
+                                    <p style="font-size:.82rem;color:#64748b;margin-bottom:16px" data-i18n="list_bulk_desc">왼쪽 상품 목록에서 여러 상품을 선택(체크)한 후, 아래 마켓을 지정하면 일괄 등록할 수 있습니다.</p>
                                     <div style="margin-bottom:16px">
                                         <div class="form-field">
-                                            <label>벌크 등록 대상 마켓</label>
+                                            <label data-i18n="list_lbl_bulk_market">벌크 등록 대상 마켓</label>
                                             <select id="bulkMarketplace">
-                                                <option value="coupang">쿠팡 Wing</option>
-                                                <option value="naver">네이버 스마트스토어</option>
-                                                <option value="gmarket">지마켓</option>
+                                                <option value="coupang" data-i18n="list_mp_coupang_name">쿠팡 Wing</option>
+                                                <option value="naver" data-i18n="list_mp_naver_name">네이버 스마트스토어</option>
+                                                <option value="gmarket" data-i18n="list_mp_gmarket_name">지마켓</option>
                                                 <option value="shopee">Shopee</option>
                                                 <option value="amazon">Amazon</option>
                                             </select>
@@ -517,17 +517,17 @@
                                     </div>
                                     <div style="margin-bottom:16px">
                                         <div class="form-field">
-                                            <label>마진율 자동 설정 (%)</label>
+                                            <label data-i18n="list_lbl_margin_rate">마진율 자동 설정 (%)</label>
                                             <input type="number" id="bulkMarginRate" value="40" min="1" max="500">
-                                            <div class="form-hint">소싱가 대비 판매가 마진율을 설정합니다 (예: 40% → 10,000원 소싱가 → 14,000원 판매가)</div>
+                                            <div class="form-hint" data-i18n="list_margin_hint">소싱가 대비 판매가 마진율을 설정합니다 (예: 40% → 10,000원 소싱가 → 14,000원 판매가)</div>
                                         </div>
                                     </div>
                                     <div id="bulkProductList" style="margin-bottom:16px">
-                                        <div class="ps-empty">상품을 선택하세요 (왼쪽 목록에서 클릭)</div>
+                                        <div class="ps-empty" data-i18n="list_bulk_empty">상품을 선택하세요 (왼쪽 목록에서 클릭)</div>
                                     </div>
                                     <div class="action-bar">
-                                        <button class="btn btn-bulk" onclick="bulkListing()">📦 일괄 등록 (<span id="bulkSelectedCount">0</span>개)</button>
-                                        <button class="btn btn-save-draft" onclick="exportBulkCSV()">📥 CSV 다운로드</button>
+                                        <button class="btn btn-bulk" onclick="bulkListing()"><span data-i18n="list_btn_bulk_register">📦 일괄 등록</span> (<span id="bulkSelectedCount">0</span><span data-i18n="list_unit_count">개</span>)</button>
+                                        <button class="btn btn-save-draft" onclick="exportBulkCSV()" data-i18n="list_btn_csv_download">📥 CSV 다운로드</button>
                                     </div>
                                 </div>
                             </div>
@@ -641,9 +641,19 @@
             } catch (e) { /* skip */ }
         });
         if (allProducts.length > 0) {
-            document.getElementById('productSourceLabel').textContent = allProducts.length + '개 상품';
+            document.getElementById('productSourceLabel').textContent = I18N.t('list_product_count_template').replace('{n}', allProducts.length);
         }
         renderProductList(allProducts);
+    }
+
+    /* =================================================================
+       i18n helpers
+       ================================================================= */
+    var MP_NAME_KEY = { coupang: 'list_mp_coupang_name', naver: 'list_mp_naver_name', gmarket: 'list_mp_gmarket_name' };
+    function mpDisplayName(mp) {
+        var k = MP_NAME_KEY[mp];
+        if (k && window.I18N) { return I18N.t(k); }
+        return (MARKETPLACE_CONFIG[mp] && MARKETPLACE_CONFIG[mp].name) || '';
     }
 
     /* =================================================================
@@ -652,7 +662,7 @@
     function renderProductList(products) {
         var container = document.getElementById('productList');
         if (!products.length) {
-            container.innerHTML = '<div class="ps-empty">수집된 상품이 없습니다.<br>스크래퍼 또는 AI 소싱을 먼저 실행하세요.</div>';
+            container.innerHTML = '<div class="ps-empty">' + I18N.t('list_empty_products') + '</div>';
             return;
         }
         var html = '';
@@ -664,7 +674,7 @@
             html += '<div class="ps-item' + (isSelected || isCurrent ? ' selected' : '') + '" data-idx="' + idx + '" onclick="toggleProduct(' + idx + ')">' +
                 '<img src="' + escAttr(p.image || '') + '" onerror="this.outerHTML=\'<div style=width:50px;height:50px;border-radius:6px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:1.2rem>📦</div>\'">' +
                 '<div class="ps-item-info">' +
-                '<div class="ps-item-name">' + esc(p.name || '이름 없음') + '</div>' +
+                '<div class="ps-item-name">' + esc(p.name || I18N.t('list_no_name')) + '</div>' +
                 '<div class="ps-item-price">' + priceStr + '</div>' +
                 '<div class="ps-item-platform">' + esc(p.platform || p._source || '') + '</div>' +
                 '</div>' +
@@ -742,13 +752,13 @@
             p.images.forEach(function(img) { if (images.indexOf(img) === -1) images.push(img); });
         }
         if (!images.length) {
-            gallery.innerHTML = '<div class="img-placeholder" title="이미지 없음">📷</div>';
+            gallery.innerHTML = '<div class="img-placeholder" title="' + I18N.t('list_img_none_title') + '">📷</div>';
             return;
         }
         gallery.innerHTML = images.map(function(img, i) {
-            return '<div class="img-gallery-item' + (i === 0 ? ' primary' : '') + '" onclick="setPrimaryImage(' + i + ')" title="' + (i === 0 ? '대표 이미지' : '클릭하여 대표 이미지로 설정') + '">' +
+            return '<div class="img-gallery-item' + (i === 0 ? ' primary' : '') + '" onclick="setPrimaryImage(' + i + ')" title="' + (i === 0 ? I18N.t('list_img_primary_title') : I18N.t('list_img_set_primary_title')) + '">' +
                 '<img src="' + escAttr(img) + '" onerror="this.parentElement.innerHTML=\'📷\'">' +
-                (i === 0 ? '<div class="primary-badge">대표</div>' : '') +
+                (i === 0 ? '<div class="primary-badge">' + I18N.t('list_badge_primary') + '</div>' : '') +
                 '</div>';
         }).join('');
     }
@@ -788,8 +798,12 @@
             }
         });
         var config = MARKETPLACE_CONFIG[mp];
-        document.getElementById('selectedMpLabel').textContent = config.icon + ' ' + config.name;
-        document.getElementById('titleHint').textContent = config.titleTip;
+        var selLabel = document.getElementById('selectedMpLabel');
+        selLabel.textContent = config.icon + ' ' + mpDisplayName(mp);
+        selLabel.removeAttribute('data-i18n');
+        var titleHint = document.getElementById('titleHint');
+        titleHint.textContent = config.titleTip;
+        titleHint.removeAttribute('data-i18n');
         document.getElementById('feeRate').value = config.feeRate;
         calcMargin();
         updatePreview();
@@ -834,7 +848,7 @@
     function updateSubCategories() {
         var major = document.getElementById('catMajor').value;
         var minorSel = document.getElementById('catMinor');
-        minorSel.innerHTML = '<option value="">소분류 선택</option>';
+        minorSel.innerHTML = '<option value="">' + I18N.t('list_opt_select_minor') + '</option>';
         if (major && SUBCATEGORIES[major]) {
             SUBCATEGORIES[major].forEach(function(sub) {
                 minorSel.innerHTML += '<option value="' + sub + '">' + sub + '</option>';
@@ -873,9 +887,9 @@
        AI Suggestions (simulated)
        ================================================================= */
     function aiSuggestTitle() {
-        if (!currentMarketplace) { showToast('마켓을 먼저 선택하세요', 'error'); return; }
+        if (!currentMarketplace) { showToast(I18N.t('list_msg_select_market_first'), 'error'); return; }
         var title = document.getElementById('listingTitle').value;
-        if (!title) { showToast('상품명을 입력하세요', 'error'); return; }
+        if (!title) { showToast(I18N.t('list_msg_enter_title'), 'error'); return; }
         var config = MARKETPLACE_CONFIG[currentMarketplace];
         var box = document.getElementById('titleSuggestion');
         box.style.display = 'block';
@@ -888,7 +902,7 @@
             amazon: 'Premium ' + translateToSimpleEn(title) + ' - High Quality, Fast Delivery, 100% Satisfaction Guaranteed'
         };
         document.getElementById('titleSuggestionText').innerHTML =
-            '<div style="font-size:.72rem;color:#8b5cf6;font-weight:600;margin-bottom:4px">🤖 AI ' + config.name + ' SEO 최적화 제안:</div>' +
+            '<div style="font-size:.72rem;color:#8b5cf6;font-weight:600;margin-bottom:4px">' + esc(I18N.t('list_ai_title_header_template').replace('{mp}', mpDisplayName(currentMarketplace))) + '</div>' +
             '<div style="font-weight:600;color:#0f172a">' + esc(suggestions[currentMarketplace]) + '</div>' +
             '<div style="font-size:.68rem;color:#64748B;margin-top:4px">' + config.titleTip + '</div>';
     }
@@ -903,7 +917,7 @@
     }
 
     function aiSuggestDesc() {
-        if (!currentMarketplace) { showToast('마켓을 먼저 선택하세요', 'error'); return; }
+        if (!currentMarketplace) { showToast(I18N.t('list_msg_select_market_first'), 'error'); return; }
         var title = document.getElementById('listingTitle').value || '상품';
         var config = MARKETPLACE_CONFIG[currentMarketplace];
         var box = document.getElementById('descSuggestion');
@@ -917,7 +931,7 @@
             amazon: translateToSimpleEn(title) + '\n\n🔹 PREMIUM QUALITY: Made with high-grade materials for long-lasting durability.\n🔹 ERGONOMIC DESIGN: Carefully designed for maximum comfort and ease of use.\n🔹 VERSATILE: Perfect for everyday use, travel, and gifting.\n🔹 SATISFACTION GUARANTEED: We stand behind our products with a 30-day money-back guarantee.\n🔹 FAST SHIPPING: Ships via Amazon FBA for quick, reliable delivery.\n\nWhat\'s in the Box:\n• 1x Main Product\n• 1x Premium Carrying Case\n• 1x User Guide\n\nWhy Choose Us?\nOur products undergo rigorous quality testing to ensure you receive only the best.'
         };
         document.getElementById('descSuggestionText').innerHTML =
-            '<div style="font-size:.72rem;color:#8b5cf6;font-weight:600;margin-bottom:6px">🤖 AI ' + config.name + ' 맞춤 설명 생성:</div>' +
+            '<div style="font-size:.72rem;color:#8b5cf6;font-weight:600;margin-bottom:6px">' + esc(I18N.t('list_ai_desc_header_template').replace('{mp}', mpDisplayName(currentMarketplace))) + '</div>' +
             '<pre style="font-size:.78rem;color:#475569;white-space:pre-wrap;font-family:inherit;margin:0">' + esc(descs[currentMarketplace]) + '</pre>';
     }
 
@@ -931,9 +945,9 @@
     }
 
     function aiSuggestKeywords() {
-        if (!currentMarketplace) { showToast('마켓을 먼저 선택하세요', 'error'); return; }
+        if (!currentMarketplace) { showToast(I18N.t('list_msg_select_market_first'), 'error'); return; }
         var title = document.getElementById('listingTitle').value;
-        if (!title) { showToast('상품명을 입력하세요', 'error'); return; }
+        if (!title) { showToast(I18N.t('list_msg_enter_title'), 'error'); return; }
         // Extract keywords from title + add marketplace-specific ones
         var words = title.replace(/[^\w가-힣\s]/g, '').split(/\s+/).filter(function(w) { return w.length > 1; });
         var extras = {
@@ -951,7 +965,7 @@
         });
         renderTags();
         updatePreview();
-        showToast('키워드가 추가되었습니다', 'success');
+        showToast(I18N.t('list_msg_keywords_added'), 'success');
     }
 
     function translateToSimpleEn(text) {
@@ -964,15 +978,15 @@
        Preview
        ================================================================= */
     function updatePreview() {
-        var title = document.getElementById('listingTitle').value || '상품명을 입력하세요';
+        var title = document.getElementById('listingTitle').value || I18N.t('list_preview_title_default');
         var sell = parseInt(document.getElementById('sellPrice').value) || 0;
-        var desc = document.getElementById('listingDesc').value || '상품 설명을 입력하면 여기에 표시됩니다.';
+        var desc = document.getElementById('listingDesc').value || I18N.t('list_preview_desc_default');
         var shipping = document.getElementById('shippingMethod');
         var shippingText = shipping.options[shipping.selectedIndex].text;
 
         document.getElementById('previewTitle').textContent = title;
         document.getElementById('previewPrice').textContent = sell > 0 ? '₩' + sell.toLocaleString() : '-';
-        document.getElementById('previewShipping').textContent = '배송: ' + shippingText;
+        document.getElementById('previewShipping').textContent = I18N.t('list_preview_shipping_prefix') + shippingText;
         document.getElementById('previewDesc').textContent = desc;
 
         // Image
@@ -989,7 +1003,9 @@
         if (currentMarketplace) {
             var config = MARKETPLACE_CONFIG[currentMarketplace];
             document.getElementById('previewMpLogo').textContent = config.icon;
-            document.getElementById('previewMpLabel').textContent = config.name;
+            var prevLabel = document.getElementById('previewMpLabel');
+            prevLabel.textContent = mpDisplayName(currentMarketplace);
+            prevLabel.removeAttribute('data-i18n');
             document.getElementById('previewFrame').style.borderColor = config.color;
             document.querySelector('#previewFrame .preview-header').style.borderBottomColor = config.color;
         }
@@ -1009,9 +1025,9 @@
        Register
        ================================================================= */
     function registerListing() {
-        if (!currentMarketplace) { showToast('판매 마켓을 선택하세요', 'error'); return; }
+        if (!currentMarketplace) { showToast(I18N.t('list_msg_select_sell_market'), 'error'); return; }
         var title = document.getElementById('listingTitle').value;
-        if (!title) { showToast('상품명을 입력하세요', 'error'); return; }
+        if (!title) { showToast(I18N.t('list_msg_enter_title'), 'error'); return; }
 
         var config = MARKETPLACE_CONFIG[currentMarketplace];
         var sellPrice = document.getElementById('sellPrice').value;
@@ -1021,7 +1037,7 @@
             id: Date.now(),
             title: title,
             marketplace: currentMarketplace,
-            marketplaceName: config.name,
+            marketplaceName: mpDisplayName(currentMarketplace),
             price: sellPrice,
             status: 'success',
             timestamp: new Date().toISOString(),
@@ -1034,22 +1050,22 @@
         updateHistoryCount();
 
         // Open seller center
-        if (confirm(title.substring(0, 50) + '\n\n→ ' + config.name + ' 판매자센터에서 리스팅을 등록하시겠습니까?\n\n상품 정보가 클립보드에 복사됩니다.')) {
+        if (confirm(title.substring(0, 50) + I18N.t('list_confirm_register_template').replace('{mp}', mpDisplayName(currentMarketplace)))) {
             // Copy data to clipboard
             var clipData = '상품명: ' + title + '\n판매가: ₩' + parseInt(sellPrice || 0).toLocaleString() + '\n설명: ' + document.getElementById('listingDesc').value.substring(0, 200) + '\n키워드: ' + listingTags.join(', ');
             try { navigator.clipboard.writeText(clipData); } catch (e) { /* fallback */ }
             window.open(config.url, '_blank');
-            showToast(config.name + ' 판매자센터로 이동합니다', 'success');
+            showToast(I18N.t('list_msg_moving_to_seller_center_template').replace('{mp}', mpDisplayName(currentMarketplace)), 'success');
         }
     }
 
     function saveDraft() {
-        if (!document.getElementById('listingTitle').value) { showToast('상품명을 입력하세요', 'error'); return; }
+        if (!document.getElementById('listingTitle').value) { showToast(I18N.t('list_msg_enter_title'), 'error'); return; }
         var entry = {
             id: Date.now(),
             title: document.getElementById('listingTitle').value,
             marketplace: currentMarketplace || 'unknown',
-            marketplaceName: currentMarketplace ? MARKETPLACE_CONFIG[currentMarketplace].name : '미지정',
+            marketplaceName: currentMarketplace ? mpDisplayName(currentMarketplace) : I18N.t('list_unspecified'),
             price: document.getElementById('sellPrice').value,
             status: 'draft',
             timestamp: new Date().toISOString(),
@@ -1072,7 +1088,7 @@
         localStorage.setItem('listingHistory', JSON.stringify(listingHistory));
         renderHistory();
         updateHistoryCount();
-        showToast('초안이 저장되었습니다', 'success');
+        showToast(I18N.t('list_msg_draft_saved'), 'success');
     }
 
     /* =================================================================
@@ -1087,7 +1103,7 @@
 
         var list = document.getElementById('bulkProductList');
         if (!count) {
-            list.innerHTML = '<div class="ps-empty">상품을 선택하세요 (왼쪽 목록에서 클릭)</div>';
+            list.innerHTML = '<div class="ps-empty">' + I18N.t('list_bulk_empty') + '</div>';
             return;
         }
         list.innerHTML = selectedProducts.map(function(idx) {
@@ -1117,7 +1133,7 @@
     }
 
     function bulkListing() {
-        if (!selectedProducts.length) { showToast('상품을 선택하세요', 'error'); return; }
+        if (!selectedProducts.length) { showToast(I18N.t('list_msg_select_products'), 'error'); return; }
         var mp = document.getElementById('bulkMarketplace').value;
         var config = MARKETPLACE_CONFIG[mp];
         var marginRate = parseInt(document.getElementById('bulkMarginRate').value) || 40;
@@ -1128,9 +1144,9 @@
             var sellPrice = Math.round((p.price || 0) * (1 + marginRate / 100));
             listingHistory.unshift({
                 id: Date.now() + idx,
-                title: p.name || '이름 없음',
+                title: p.name || I18N.t('list_no_name'),
                 marketplace: mp,
-                marketplaceName: config.name,
+                marketplaceName: mpDisplayName(mp),
                 price: sellPrice,
                 status: 'success',
                 timestamp: new Date().toISOString(),
@@ -1143,9 +1159,9 @@
         renderHistory();
         updateHistoryCount();
 
-        if (confirm(selectedProducts.length + '개 상품을 ' + config.name + '에 등록하시겠습니까?\n\n판매자센터로 이동합니다.')) {
+        if (confirm(I18N.t('list_confirm_bulk_register_template').replace('{n}', selectedProducts.length).replace('{mp}', mpDisplayName(mp)))) {
             window.open(config.url, '_blank');
-            showToast(selectedProducts.length + '개 상품 → ' + config.name + ' 등록 완료', 'success');
+            showToast(I18N.t('list_msg_bulk_done_template').replace('{n}', selectedProducts.length).replace('{mp}', mpDisplayName(mp)), 'success');
         }
         selectedProducts = [];
         updateBulkUI();
@@ -1153,21 +1169,21 @@
     }
 
     function exportBulkCSV() {
-        if (!selectedProducts.length) { showToast('상품을 선택하세요', 'error'); return; }
+        if (!selectedProducts.length) { showToast(I18N.t('list_msg_select_products'), 'error'); return; }
         var mp = document.getElementById('bulkMarketplace').value;
         var marginRate = parseInt(document.getElementById('bulkMarginRate').value) || 40;
-        var csv = '상품명,소싱가,판매가,마진율,플랫폼,마켓플레이스,이미지URL\n';
+        var csv = I18N.t('list_csv_header') + '\n';
         selectedProducts.forEach(function(idx) {
             var p = allProducts[idx];
             var sellPrice = Math.round((p.price || 0) * (1 + marginRate / 100));
-            csv += '"' + (p.name || '').replace(/"/g, '""') + '",' + (p.price || 0) + ',' + sellPrice + ',' + marginRate + '%,"' + (p.platform || '') + '","' + MARKETPLACE_CONFIG[mp].name + '","' + (p.image || '') + '"\n';
+            csv += '"' + (p.name || '').replace(/"/g, '""') + '",' + (p.price || 0) + ',' + sellPrice + ',' + marginRate + '%,"' + (p.platform || '') + '","' + mpDisplayName(mp) + '","' + (p.image || '') + '"\n';
         });
         var blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' });
         var a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
         a.download = 'bulk-listing-' + mp + '-' + Date.now() + '.csv';
         a.click();
-        showToast('CSV 파일이 다운로드되었습니다', 'success');
+        showToast(I18N.t('list_msg_csv_downloaded'), 'success');
     }
 
     /* =================================================================
@@ -1176,20 +1192,22 @@
     function renderHistory() {
         var container = document.getElementById('historyList');
         if (!listingHistory.length) {
-            container.innerHTML = '<div class="ps-empty">등록 이력이 없습니다.</div>';
+            container.innerHTML = '<div class="ps-empty">' + I18N.t('list_empty_history') + '</div>';
             return;
         }
+        var LOCALE_MAP = { ko: 'ko-KR', en: 'en-US', zh: 'zh-CN', vi: 'vi-VN' };
+        var dateLocale = LOCALE_MAP[(window.I18N && I18N.getLang()) || 'ko'] || 'ko-KR';
         container.innerHTML = listingHistory.slice(0, 30).map(function(h) {
             var config = MARKETPLACE_CONFIG[h.marketplace] || { color: '#94a3b8', icon: '🏪' };
             var statusClass = h.status === 'success' ? 'h-status-success' : h.status === 'draft' ? 'h-status-draft' : 'h-status-failed';
-            var statusText = h.status === 'success' ? '등록완료' : h.status === 'draft' ? '초안' : '실패';
+            var statusText = h.status === 'success' ? I18N.t('list_status_success') : h.status === 'draft' ? I18N.t('list_status_draft') : I18N.t('list_status_failed');
             var date = new Date(h.timestamp);
-            var dateStr = date.toLocaleDateString('ko-KR') + ' ' + date.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+            var dateStr = date.toLocaleDateString(dateLocale) + ' ' + date.toLocaleTimeString(dateLocale, { hour: '2-digit', minute: '2-digit' });
             return '<div class="history-item" onclick="loadDraft(' + h.id + ')" style="cursor:pointer">' +
                 '<div class="h-dot" style="background:' + config.color + '"></div>' +
                 '<div class="h-info">' +
                 '<div class="h-name">' + esc(h.title || '') + '</div>' +
-                '<div class="h-meta">' + (h.marketplaceName || '') + ' · ₩' + parseInt(h.price || 0).toLocaleString() + ' · ' + dateStr + (h.bulk ? ' (벌크)' : '') + '</div>' +
+                '<div class="h-meta">' + (h.marketplaceName || '') + ' · ₩' + parseInt(h.price || 0).toLocaleString() + ' · ' + dateStr + (h.bulk ? I18N.t('list_bulk_suffix') : '') + '</div>' +
                 '</div>' +
                 '<span class="h-status ' + statusClass + '">' + statusText + '</span>' +
                 '</div>';
@@ -1219,20 +1237,20 @@
         }
         switchTab('form');
         calcMargin();
-        showToast('초안을 불러왔습니다', 'info');
+        showToast(I18N.t('list_msg_draft_loaded'), 'info');
     }
 
     function clearHistory() {
-        if (!confirm('등록 이력을 모두 삭제하시겠습니까?')) return;
+        if (!confirm(I18N.t('list_confirm_clear_history'))) return;
         listingHistory = [];
         localStorage.setItem('listingHistory', JSON.stringify(listingHistory));
         renderHistory();
         updateHistoryCount();
-        showToast('이력이 삭제되었습니다', 'info');
+        showToast(I18N.t('list_msg_history_cleared'), 'info');
     }
 
     function updateHistoryCount() {
-        document.getElementById('historyCount').textContent = '등록 이력: ' + listingHistory.length + '건';
+        document.getElementById('historyCount').textContent = I18N.t('list_history_count_template').replace('{n}', listingHistory.length);
     }
 
     /* =================================================================
@@ -1263,6 +1281,253 @@
         document.body.appendChild(toast);
         setTimeout(function() { toast.remove(); }, 3000);
     }
+
+    /* =================================================================
+       i18n dynamic refresh (re-render JS-generated text on language switch)
+       ================================================================= */
+    window.onI18nChange = function() {
+        filterProducts();
+        updateHistoryCount();
+        renderHistory();
+        renderTags();
+        updateBulkUI();
+        updatePreview();
+        if (allProducts.length > 0) {
+            document.getElementById('productSourceLabel').textContent = I18N.t('list_product_count_template').replace('{n}', allProducts.length);
+        }
+        if (currentMarketplace) {
+            var config = MARKETPLACE_CONFIG[currentMarketplace];
+            var selLabel = document.getElementById('selectedMpLabel');
+            selLabel.textContent = config.icon + ' ' + mpDisplayName(currentMarketplace);
+            selLabel.removeAttribute('data-i18n');
+            var titleHint = document.getElementById('titleHint');
+            titleHint.textContent = config.titleTip;
+            titleHint.removeAttribute('data-i18n');
+        }
+        if (currentProduct !== null && allProducts[currentProduct]) {
+            renderImages(allProducts[currentProduct]);
+        }
+    };
+    </script>
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                list_doc_title: '마켓플레이스 리스팅 | 소싱 트래커', list_subtitle: '수집 상품 → 마켓별 자동 리스팅 등록',
+                list_history_count_template: '등록 이력: {n}건',
+                list_hero_title: '📋 마켓플레이스 자동 리스팅',
+                list_hero_desc: '수집/크롤링된 상품을 선택하고, 판매할 마켓플레이스를 지정하면 AI가 최적의 상품명·설명·키워드를 자동 생성합니다',
+                list_bulk_selected_suffix: '개 상품 선택됨 (벌크 리스팅 모드)', list_btn_bulk_list: '일괄 등록하기', list_btn_clear_selection: '선택 해제',
+                list_panel_select_product: '📦 상품 선택', list_search_ph: '상품명 검색...',
+                list_empty_products: '수집된 상품이 없습니다.<br>스크래퍼 또는 AI 소싱을 먼저 실행하세요.',
+                list_product_count_template: '{n}개 상품', list_panel_select_market: '🏪 판매 마켓 선택',
+                list_mp_coupang_name: '쿠팡 Wing', list_mp_naver_name: '네이버 스마트스토어', list_mp_gmarket_name: '지마켓', list_mp_shopee_sub: '동남아',
+                list_panel_history: '📜 등록 이력', list_btn_clear_all: '전체 삭제', list_empty_history: '등록 이력이 없습니다.',
+                list_tab_form: '✏️ 리스팅 작성', list_tab_preview: '👁 미리보기', list_tab_bulk: '📦 벌크 리스팅',
+                list_panel_form_header: '✏️ 리스팅 정보 입력', list_placeholder_select_market: '마켓을 선택하세요',
+                list_section_title: '📝 상품명', list_btn_ai_optimize: '🤖 AI 최적화', list_lbl_sell_title: '판매 상품명',
+                list_title_ph: '마켓에 등록할 상품명 입력', list_default_title_hint: '마켓별 SEO에 최적화된 상품명을 작성하세요', list_btn_apply: '적용',
+                list_section_price_margin: '💰 가격 · 마진', list_lbl_source_cost: '소싱가 (원가)', list_lbl_fee_rate: '수수료율 (%)',
+                list_lbl_shipping_cost: '배송비 (원)', list_lbl_profit: '순이익',
+                list_section_category: '📂 카테고리', list_lbl_major_cat: '대분류', list_lbl_minor_cat: '소분류',
+                list_opt_select: '선택', list_opt_select_minor_first: '대분류를 먼저 선택', list_opt_select_minor: '소분류 선택',
+                list_cat_fashion: '패션의류/잡화', list_cat_beauty: '뷰티', list_cat_digital: '디지털/가전', list_cat_home: '홈/리빙',
+                list_cat_food: '식품', list_cat_sports: '스포츠/레저', list_cat_baby: '출산/유아동', list_cat_pet: '반려동물',
+                list_cat_hobby: '취미/문구', list_cat_health: '건강/의료', list_cat_auto: '자동차용품',
+                list_section_desc: '📄 상품 설명', list_btn_ai_generate: '🤖 AI 생성', list_lbl_desc_detail: '상세 설명',
+                list_desc_ph: '상품 상세 설명을 입력하세요. AI 생성 버튼으로 마켓별 최적화된 설명을 자동 생성할 수 있습니다.',
+                list_section_images: '🖼 이미지', list_img_none_title: '이미지 없음',
+                list_img_hint: '첫 번째 이미지가 대표 이미지로 사용됩니다. 클릭하여 대표 이미지를 변경할 수 있습니다.',
+                list_img_primary_title: '대표 이미지', list_img_set_primary_title: '클릭하여 대표 이미지로 설정', list_badge_primary: '대표',
+                list_section_keywords: '🏷 키워드 / 태그', list_btn_ai_recommend: '🤖 추천', list_tag_input_ph: '키워드 입력 후 추가', list_btn_add: '추가',
+                list_section_shipping: '🚚 배송 정보', list_lbl_shipping_method: '배송 방법', list_lbl_shipping_origin: '출고지', list_lbl_return_addr: '반품 주소',
+                list_ship_rocket: '로켓배송 / 당일배송', list_ship_standard: '일반배송 (2~3일)', list_ship_direct: '해외직배송 (7~14일)', list_ship_free: '무료배송',
+                list_origin_domestic: '국내', list_origin_china: '중국', list_origin_overseas: '기타 해외', list_return_addr_ph: '반품/교환 주소',
+                list_btn_register: '🚀 판매자센터 등록하기', list_btn_save_draft: '💾 초안 저장',
+                list_panel_preview: '👁 리스팅 미리보기', list_preview_title_default: '상품명을 입력하세요', list_preview_shipping_prefix: '배송: ',
+                list_preview_desc_default: '상품 설명을 입력하면 여기에 표시됩니다.',
+                list_panel_bulk: '📦 벌크 리스팅', list_bulk_note: '여러 상품을 한번에 등록',
+                list_bulk_desc: '왼쪽 상품 목록에서 여러 상품을 선택(체크)한 후, 아래 마켓을 지정하면 일괄 등록할 수 있습니다.',
+                list_lbl_bulk_market: '벌크 등록 대상 마켓', list_lbl_margin_rate: '마진율 자동 설정 (%)',
+                list_margin_hint: '소싱가 대비 판매가 마진율을 설정합니다 (예: 40% → 10,000원 소싱가 → 14,000원 판매가)',
+                list_bulk_empty: '상품을 선택하세요 (왼쪽 목록에서 클릭)', list_btn_bulk_register: '📦 일괄 등록', list_unit_count: '개',
+                list_btn_csv_download: '📥 CSV 다운로드',
+                list_ai_title_header_template: '🤖 AI {mp} SEO 최적화 제안:', list_ai_desc_header_template: '🤖 AI {mp} 맞춤 설명 생성:',
+                list_msg_select_market_first: '마켓을 먼저 선택하세요', list_msg_select_sell_market: '판매 마켓을 선택하세요',
+                list_msg_enter_title: '상품명을 입력하세요', list_msg_keywords_added: '키워드가 추가되었습니다',
+                list_confirm_register_template: '\n\n→ {mp} 판매자센터에서 리스팅을 등록하시겠습니까?\n\n상품 정보가 클립보드에 복사됩니다.',
+                list_msg_moving_to_seller_center_template: '{mp} 판매자센터로 이동합니다', list_msg_draft_saved: '초안이 저장되었습니다',
+                list_confirm_clear_history: '등록 이력을 모두 삭제하시겠습니까?', list_msg_history_cleared: '이력이 삭제되었습니다',
+                list_msg_select_products: '상품을 선택하세요',
+                list_confirm_bulk_register_template: '{n}개 상품을 {mp}에 등록하시겠습니까?\n\n판매자센터로 이동합니다.',
+                list_msg_bulk_done_template: '{n}개 상품 → {mp} 등록 완료', list_msg_csv_downloaded: 'CSV 파일이 다운로드되었습니다',
+                list_msg_draft_loaded: '초안을 불러왔습니다', list_no_name: '이름 없음',
+                list_status_success: '등록완료', list_status_draft: '초안', list_status_failed: '실패',
+                list_bulk_suffix: ' (벌크)', list_unspecified: '미지정',
+                list_csv_header: '상품명,소싱가,판매가,마진율,플랫폼,마켓플레이스,이미지URL'
+            },
+            en: {
+                list_doc_title: 'Marketplace Listing | Sourcing Tracker', list_subtitle: 'Collected products → Auto listing per marketplace',
+                list_history_count_template: 'Listing history: {n}',
+                list_hero_title: '📋 Marketplace Auto Listing',
+                list_hero_desc: 'Select collected/crawled products and choose a marketplace to sell on — AI generates an optimized title, description, and keywords automatically',
+                list_bulk_selected_suffix: ' items selected (bulk listing mode)', list_btn_bulk_list: 'Register in Bulk', list_btn_clear_selection: 'Clear Selection',
+                list_panel_select_product: '📦 Select Product', list_search_ph: 'Search product name...',
+                list_empty_products: 'No products collected.<br>Run the scraper or AI sourcing first.',
+                list_product_count_template: '{n} products', list_panel_select_market: '🏪 Select Marketplace',
+                list_mp_coupang_name: 'Coupang Wing', list_mp_naver_name: 'Naver Smartstore', list_mp_gmarket_name: 'Gmarket', list_mp_shopee_sub: 'Southeast Asia',
+                list_panel_history: '📜 Listing History', list_btn_clear_all: 'Clear All', list_empty_history: 'No listing history yet.',
+                list_tab_form: '✏️ Write Listing', list_tab_preview: '👁 Preview', list_tab_bulk: '📦 Bulk Listing',
+                list_panel_form_header: '✏️ Enter Listing Info', list_placeholder_select_market: 'Select a marketplace',
+                list_section_title: '📝 Product Title', list_btn_ai_optimize: '🤖 AI Optimize', list_lbl_sell_title: 'Selling Title',
+                list_title_ph: 'Enter the title to register on the marketplace', list_default_title_hint: 'Write a title optimized for marketplace SEO', list_btn_apply: 'Apply',
+                list_section_price_margin: '💰 Price · Margin', list_lbl_source_cost: 'Source Price (Cost)', list_lbl_fee_rate: 'Fee Rate (%)',
+                list_lbl_shipping_cost: 'Shipping Cost (KRW)', list_lbl_profit: 'Net Profit',
+                list_section_category: '📂 Category', list_lbl_major_cat: 'Main Category', list_lbl_minor_cat: 'Subcategory',
+                list_opt_select: 'Select', list_opt_select_minor_first: 'Select main category first', list_opt_select_minor: 'Select subcategory',
+                list_cat_fashion: 'Fashion/Accessories', list_cat_beauty: 'Beauty', list_cat_digital: 'Digital/Appliances', list_cat_home: 'Home/Living',
+                list_cat_food: 'Food', list_cat_sports: 'Sports/Leisure', list_cat_baby: 'Maternity/Kids', list_cat_pet: 'Pet Supplies',
+                list_cat_hobby: 'Hobby/Stationery', list_cat_health: 'Health/Medical', list_cat_auto: 'Auto Supplies',
+                list_section_desc: '📄 Product Description', list_btn_ai_generate: '🤖 AI Generate', list_lbl_desc_detail: 'Detailed Description',
+                list_desc_ph: 'Enter a detailed product description. Use the AI Generate button to auto-generate a marketplace-optimized description.',
+                list_section_images: '🖼 Images', list_img_none_title: 'No image',
+                list_img_hint: 'The first image is used as the main image. Click an image to set it as the main image.',
+                list_img_primary_title: 'Main image', list_img_set_primary_title: 'Click to set as main image', list_badge_primary: 'Main',
+                list_section_keywords: '🏷 Keywords / Tags', list_btn_ai_recommend: '🤖 Recommend', list_tag_input_ph: 'Enter a keyword and add', list_btn_add: 'Add',
+                list_section_shipping: '🚚 Shipping Info', list_lbl_shipping_method: 'Shipping Method', list_lbl_shipping_origin: 'Shipping Origin', list_lbl_return_addr: 'Return Address',
+                list_ship_rocket: 'Rocket Delivery / Same-day', list_ship_standard: 'Standard Delivery (2-3 days)', list_ship_direct: 'Overseas Direct Shipping (7-14 days)', list_ship_free: 'Free Shipping',
+                list_origin_domestic: 'Domestic', list_origin_china: 'China', list_origin_overseas: 'Other Overseas', list_return_addr_ph: 'Return/exchange address',
+                list_btn_register: '🚀 Register on Seller Center', list_btn_save_draft: '💾 Save Draft',
+                list_panel_preview: '👁 Listing Preview', list_preview_title_default: 'Enter a product title', list_preview_shipping_prefix: 'Shipping: ',
+                list_preview_desc_default: 'The product description will appear here once entered.',
+                list_panel_bulk: '📦 Bulk Listing', list_bulk_note: 'Register multiple products at once',
+                list_bulk_desc: 'Select multiple products (check) from the list on the left, then choose a marketplace below to register them all at once.',
+                list_lbl_bulk_market: 'Bulk Registration Marketplace', list_lbl_margin_rate: 'Auto Margin Rate (%)',
+                list_margin_hint: 'Sets the sell price margin over the source price (e.g. 40% → source 10,000 KRW → sell price 14,000 KRW)',
+                list_bulk_empty: 'Select products (click from the list on the left)', list_btn_bulk_register: '📦 Bulk Register', list_unit_count: ' items',
+                list_btn_csv_download: '📥 Download CSV',
+                list_ai_title_header_template: '🤖 AI {mp} SEO Optimization Suggestion:', list_ai_desc_header_template: '🤖 AI-generated description for {mp}:',
+                list_msg_select_market_first: 'Select a marketplace first', list_msg_select_sell_market: 'Select a marketplace to sell on',
+                list_msg_enter_title: 'Enter a product title', list_msg_keywords_added: 'Keywords added',
+                list_confirm_register_template: '\n\n→ Register this listing on {mp} Seller Center?\n\nProduct info will be copied to your clipboard.',
+                list_msg_moving_to_seller_center_template: 'Redirecting to {mp} Seller Center', list_msg_draft_saved: 'Draft saved',
+                list_confirm_clear_history: 'Clear all listing history?', list_msg_history_cleared: 'History cleared',
+                list_msg_select_products: 'Select products',
+                list_confirm_bulk_register_template: 'Register {n} products on {mp}?\n\nYou will be redirected to the seller center.',
+                list_msg_bulk_done_template: '{n} products → {mp} registration complete', list_msg_csv_downloaded: 'CSV file downloaded',
+                list_msg_draft_loaded: 'Draft loaded', list_no_name: 'Unnamed',
+                list_status_success: 'Registered', list_status_draft: 'Draft', list_status_failed: 'Failed',
+                list_bulk_suffix: ' (Bulk)', list_unspecified: 'Unspecified',
+                list_csv_header: 'Product Name,Source Price,Sell Price,Margin Rate,Platform,Marketplace,Image URL'
+            },
+            zh: {
+                list_doc_title: '市场上架 | 采购追踪器', list_subtitle: '采集商品 → 按平台自动上架',
+                list_history_count_template: '上架记录: {n} 条',
+                list_hero_title: '📋 市场自动上架',
+                list_hero_desc: '选择采集/抓取的商品并指定要销售的平台,AI 将自动生成最佳商品名·描述·关键词',
+                list_bulk_selected_suffix: ' 件商品已选 (批量上架模式)', list_btn_bulk_list: '批量上架', list_btn_clear_selection: '取消选择',
+                list_panel_select_product: '📦 选择商品', list_search_ph: '搜索商品名...',
+                list_empty_products: '暂无采集商品。<br>请先运行采集器或 AI 采购。',
+                list_product_count_template: '{n} 件商品', list_panel_select_market: '🏪 选择销售平台',
+                list_mp_coupang_name: 'Coupang Wing', list_mp_naver_name: 'Naver Smartstore', list_mp_gmarket_name: 'Gmarket', list_mp_shopee_sub: '东南亚',
+                list_panel_history: '📜 上架记录', list_btn_clear_all: '全部删除', list_empty_history: '暂无上架记录。',
+                list_tab_form: '✏️ 编写上架信息', list_tab_preview: '👁 预览', list_tab_bulk: '📦 批量上架',
+                list_panel_form_header: '✏️ 输入上架信息', list_placeholder_select_market: '请选择平台',
+                list_section_title: '📝 商品名', list_btn_ai_optimize: '🤖 AI 优化', list_lbl_sell_title: '销售商品名',
+                list_title_ph: '输入要在平台注册的商品名', list_default_title_hint: '请撰写针对平台 SEO 优化的商品名', list_btn_apply: '应用',
+                list_section_price_margin: '💰 价格 · 利润', list_lbl_source_cost: '采购价(成本)', list_lbl_fee_rate: '手续费率 (%)',
+                list_lbl_shipping_cost: '运费 (元)', list_lbl_profit: '净利润',
+                list_section_category: '📂 分类', list_lbl_major_cat: '大分类', list_lbl_minor_cat: '小分类',
+                list_opt_select: '选择', list_opt_select_minor_first: '请先选择大分类', list_opt_select_minor: '选择小分类',
+                list_cat_fashion: '服装/杂货', list_cat_beauty: '美妆', list_cat_digital: '数码/家电', list_cat_home: '家居/生活',
+                list_cat_food: '食品', list_cat_sports: '运动/休闲', list_cat_baby: '母婴用品', list_cat_pet: '宠物用品',
+                list_cat_hobby: '兴趣/文具', list_cat_health: '健康/医疗', list_cat_auto: '汽车用品',
+                list_section_desc: '📄 商品描述', list_btn_ai_generate: '🤖 AI 生成', list_lbl_desc_detail: '详细描述',
+                list_desc_ph: '请输入商品详细描述。可使用 AI 生成按钮自动生成针对平台优化的描述。',
+                list_section_images: '🖼 图片', list_img_none_title: '暂无图片',
+                list_img_hint: '第一张图片将作为主图使用。点击图片可设置为主图。',
+                list_img_primary_title: '主图', list_img_set_primary_title: '点击设为主图', list_badge_primary: '主图',
+                list_section_keywords: '🏷 关键词 / 标签', list_btn_ai_recommend: '🤖 推荐', list_tag_input_ph: '输入关键词后添加', list_btn_add: '添加',
+                list_section_shipping: '🚚 配送信息', list_lbl_shipping_method: '配送方式', list_lbl_shipping_origin: '发货地', list_lbl_return_addr: '退货地址',
+                list_ship_rocket: '火箭配送 / 当日达', list_ship_standard: '普通配送 (2~3天)', list_ship_direct: '海外直邮 (7~14天)', list_ship_free: '免费配送',
+                list_origin_domestic: '国内', list_origin_china: '中国', list_origin_overseas: '其他海外', list_return_addr_ph: '退换货地址',
+                list_btn_register: '🚀 前往卖家中心注册', list_btn_save_draft: '💾 保存草稿',
+                list_panel_preview: '👁 上架预览', list_preview_title_default: '请输入商品名', list_preview_shipping_prefix: '配送: ',
+                list_preview_desc_default: '输入商品描述后将显示于此。',
+                list_panel_bulk: '📦 批量上架', list_bulk_note: '一次性注册多个商品',
+                list_bulk_desc: '在左侧商品列表中勾选多个商品后,在下方指定平台即可批量注册。',
+                list_lbl_bulk_market: '批量注册目标平台', list_lbl_margin_rate: '自动设置利润率 (%)',
+                list_margin_hint: '设置相对采购价的销售价利润率(例如:40% → 采购价10,000韩元 → 销售价14,000韩元)',
+                list_bulk_empty: '请选择商品 (点击左侧列表)', list_btn_bulk_register: '📦 批量上架', list_unit_count: ' 件',
+                list_btn_csv_download: '📥 下载 CSV',
+                list_ai_title_header_template: '🤖 AI {mp} SEO 优化建议:', list_ai_desc_header_template: '🤖 AI 生成的 {mp} 专属描述:',
+                list_msg_select_market_first: '请先选择平台', list_msg_select_sell_market: '请选择销售平台',
+                list_msg_enter_title: '请输入商品名', list_msg_keywords_added: '关键词已添加',
+                list_confirm_register_template: '\n\n→ 是否在 {mp} 卖家中心注册此商品?\n\n商品信息将被复制到剪贴板。',
+                list_msg_moving_to_seller_center_template: '正在跳转至 {mp} 卖家中心', list_msg_draft_saved: '草稿已保存',
+                list_confirm_clear_history: '确定要删除全部上架记录吗?', list_msg_history_cleared: '记录已删除',
+                list_msg_select_products: '请选择商品',
+                list_confirm_bulk_register_template: '确定要将 {n} 件商品在 {mp} 上架吗?\n\n将跳转至卖家中心。',
+                list_msg_bulk_done_template: '{n} 件商品 → {mp} 上架完成', list_msg_csv_downloaded: 'CSV 文件已下载',
+                list_msg_draft_loaded: '已加载草稿', list_no_name: '无名称',
+                list_status_success: '已上架', list_status_draft: '草稿', list_status_failed: '失败',
+                list_bulk_suffix: ' (批量)', list_unspecified: '未指定',
+                list_csv_header: '商品名,采购价,销售价,利润率,平台,市场,图片URL'
+            },
+            vi: {
+                list_doc_title: 'Đăng Marketplace | Theo dõi nguồn hàng', list_subtitle: 'Sản phẩm đã thu thập → Tự động đăng theo từng marketplace',
+                list_history_count_template: 'Lịch sử đăng: {n}',
+                list_hero_title: '📋 Tự động đăng lên Marketplace',
+                list_hero_desc: 'Chọn sản phẩm đã thu thập/crawl và chỉ định marketplace muốn bán, AI sẽ tự động tạo tên sản phẩm, mô tả và từ khóa tối ưu',
+                list_bulk_selected_suffix: ' sản phẩm đã chọn (chế độ đăng hàng loạt)', list_btn_bulk_list: 'Đăng hàng loạt', list_btn_clear_selection: 'Bỏ chọn',
+                list_panel_select_product: '📦 Chọn sản phẩm', list_search_ph: 'Tìm tên sản phẩm...',
+                list_empty_products: 'Chưa có sản phẩm nào được thu thập.<br>Vui lòng chạy trình thu thập hoặc nguồn hàng AI trước.',
+                list_product_count_template: '{n} sản phẩm', list_panel_select_market: '🏪 Chọn marketplace bán hàng',
+                list_mp_coupang_name: 'Coupang Wing', list_mp_naver_name: 'Naver Smartstore', list_mp_gmarket_name: 'Gmarket', list_mp_shopee_sub: 'Đông Nam Á',
+                list_panel_history: '📜 Lịch sử đăng', list_btn_clear_all: 'Xóa tất cả', list_empty_history: 'Chưa có lịch sử đăng.',
+                list_tab_form: '✏️ Soạn thông tin đăng', list_tab_preview: '👁 Xem trước', list_tab_bulk: '📦 Đăng hàng loạt',
+                list_panel_form_header: '✏️ Nhập thông tin đăng', list_placeholder_select_market: 'Vui lòng chọn marketplace',
+                list_section_title: '📝 Tên sản phẩm', list_btn_ai_optimize: '🤖 Tối ưu AI', list_lbl_sell_title: 'Tên sản phẩm bán',
+                list_title_ph: 'Nhập tên sản phẩm để đăng lên marketplace', list_default_title_hint: 'Hãy viết tên sản phẩm được tối ưu SEO theo từng marketplace', list_btn_apply: 'Áp dụng',
+                list_section_price_margin: '💰 Giá · Lợi nhuận', list_lbl_source_cost: 'Giá nguồn (giá vốn)', list_lbl_fee_rate: 'Tỷ lệ phí (%)',
+                list_lbl_shipping_cost: 'Phí vận chuyển (KRW)', list_lbl_profit: 'Lợi nhuận ròng',
+                list_section_category: '📂 Danh mục', list_lbl_major_cat: 'Danh mục lớn', list_lbl_minor_cat: 'Danh mục nhỏ',
+                list_opt_select: 'Chọn', list_opt_select_minor_first: 'Vui lòng chọn danh mục lớn trước', list_opt_select_minor: 'Chọn danh mục nhỏ',
+                list_cat_fashion: 'Thời trang/Phụ kiện', list_cat_beauty: 'Làm đẹp', list_cat_digital: 'Kỹ thuật số/Điện gia dụng', list_cat_home: 'Nhà cửa/Đời sống',
+                list_cat_food: 'Thực phẩm', list_cat_sports: 'Thể thao/Giải trí', list_cat_baby: 'Mẹ & bé', list_cat_pet: 'Đồ dùng thú cưng',
+                list_cat_hobby: 'Sở thích/Văn phòng phẩm', list_cat_health: 'Sức khỏe/Y tế', list_cat_auto: 'Đồ dùng ô tô',
+                list_section_desc: '📄 Mô tả sản phẩm', list_btn_ai_generate: '🤖 Tạo bằng AI', list_lbl_desc_detail: 'Mô tả chi tiết',
+                list_desc_ph: 'Nhập mô tả chi tiết sản phẩm. Dùng nút Tạo bằng AI để tự động tạo mô tả tối ưu theo marketplace.',
+                list_section_images: '🖼 Hình ảnh', list_img_none_title: 'Không có hình ảnh',
+                list_img_hint: 'Hình ảnh đầu tiên sẽ được dùng làm ảnh đại diện. Nhấp vào ảnh để đặt làm ảnh đại diện.',
+                list_img_primary_title: 'Ảnh đại diện', list_img_set_primary_title: 'Nhấp để đặt làm ảnh đại diện', list_badge_primary: 'Đại diện',
+                list_section_keywords: '🏷 Từ khóa / Thẻ', list_btn_ai_recommend: '🤖 Đề xuất', list_tag_input_ph: 'Nhập từ khóa rồi thêm', list_btn_add: 'Thêm',
+                list_section_shipping: '🚚 Thông tin vận chuyển', list_lbl_shipping_method: 'Phương thức vận chuyển', list_lbl_shipping_origin: 'Nơi xuất hàng', list_lbl_return_addr: 'Địa chỉ trả hàng',
+                list_ship_rocket: 'Giao hỏa tốc / Trong ngày', list_ship_standard: 'Giao thường (2-3 ngày)', list_ship_direct: 'Giao trực tiếp từ nước ngoài (7-14 ngày)', list_ship_free: 'Miễn phí vận chuyển',
+                list_origin_domestic: 'Trong nước', list_origin_china: 'Trung Quốc', list_origin_overseas: 'Nước ngoài khác', list_return_addr_ph: 'Địa chỉ trả hàng/đổi hàng',
+                list_btn_register: '🚀 Đăng lên trung tâm người bán', list_btn_save_draft: '💾 Lưu bản nháp',
+                list_panel_preview: '👁 Xem trước bài đăng', list_preview_title_default: 'Vui lòng nhập tên sản phẩm', list_preview_shipping_prefix: 'Vận chuyển: ',
+                list_preview_desc_default: 'Mô tả sản phẩm sẽ hiển thị ở đây khi bạn nhập.',
+                list_panel_bulk: '📦 Đăng hàng loạt', list_bulk_note: 'Đăng nhiều sản phẩm cùng lúc',
+                list_bulk_desc: 'Chọn (đánh dấu) nhiều sản phẩm trong danh sách bên trái, sau đó chỉ định marketplace bên dưới để đăng hàng loạt.',
+                list_lbl_bulk_market: 'Marketplace đăng hàng loạt', list_lbl_margin_rate: 'Tự động đặt tỷ lệ lợi nhuận (%)',
+                list_margin_hint: 'Đặt tỷ lệ lợi nhuận giá bán so với giá nguồn (VD: 40% → giá nguồn 10.000 KRW → giá bán 14.000 KRW)',
+                list_bulk_empty: 'Vui lòng chọn sản phẩm (nhấp vào danh sách bên trái)', list_btn_bulk_register: '📦 Đăng hàng loạt', list_unit_count: ' sản phẩm',
+                list_btn_csv_download: '📥 Tải CSV',
+                list_ai_title_header_template: '🤖 Gợi ý tối ưu SEO {mp} bằng AI:', list_ai_desc_header_template: '🤖 Mô tả do AI tạo cho {mp}:',
+                list_msg_select_market_first: 'Vui lòng chọn marketplace trước', list_msg_select_sell_market: 'Vui lòng chọn marketplace để bán',
+                list_msg_enter_title: 'Vui lòng nhập tên sản phẩm', list_msg_keywords_added: 'Đã thêm từ khóa',
+                list_confirm_register_template: '\n\n→ Đăng sản phẩm này lên trung tâm người bán {mp}?\n\nThông tin sản phẩm sẽ được sao chép vào clipboard.',
+                list_msg_moving_to_seller_center_template: 'Đang chuyển đến trung tâm người bán {mp}', list_msg_draft_saved: 'Đã lưu bản nháp',
+                list_confirm_clear_history: 'Xóa toàn bộ lịch sử đăng?', list_msg_history_cleared: 'Đã xóa lịch sử',
+                list_msg_select_products: 'Vui lòng chọn sản phẩm',
+                list_confirm_bulk_register_template: 'Đăng {n} sản phẩm lên {mp}?\n\nBạn sẽ được chuyển đến trung tâm người bán.',
+                list_msg_bulk_done_template: '{n} sản phẩm → Hoàn tất đăng lên {mp}', list_msg_csv_downloaded: 'Đã tải xuống tệp CSV',
+                list_msg_draft_loaded: 'Đã tải bản nháp', list_no_name: 'Không có tên',
+                list_status_success: 'Đã đăng', list_status_draft: 'Bản nháp', list_status_failed: 'Thất bại',
+                list_bulk_suffix: ' (Hàng loạt)', list_unspecified: 'Chưa xác định',
+                list_csv_header: 'Tên SP,Giá nguồn,Giá bán,Tỷ lệ LN,Nền tảng,Marketplace,URL hình ảnh'
+            }
+        };
     </script>
     <script src="js/i18n-auto.js"></script>
     <script src="js/i18n-common.js"></script>

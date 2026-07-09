@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>실시간 소싱 검색 | 소싱 트래커</title>
+    <title data-i18n="live_doc_title">실시간 소싱 검색 | 소싱 트래커</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <style>
         .search-header { margin-bottom:24px; }
@@ -104,20 +104,20 @@
                     <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
                     <div>
                         <div class="top-bar-title">실시간 소싱 검색</div>
-                        <div class="top-bar-date">쿠팡 · 1688 API 실시간 연동 | <span id="apiStatus" class="api-status api-offline">확인중...</span></div>
+                        <div class="top-bar-date"><span data-i18n="live_api_desc">쿠팡 · 1688 API 실시간 연동 |</span> <span id="apiStatus" class="api-status api-offline" data-i18n="live_api_checking">확인중...</span></div>
                     </div>
                 </div>
             </header>
 
             <div class="content-area" style="padding:20px;">
                 <div class="search-header">
-                    <h1>🔍 실시간 소싱 상품 검색</h1>
+                    <h1 data-i18n="live_page_heading">🔍 실시간 소싱 상품 검색</h1>
                     <div class="search-box">
-                        <input type="text" id="searchKeyword" placeholder="검색어 입력 (한국어 또는 중국어)..." onkeydown="if(event.key==='Enter')compareSearch()">
-                        <input type="text" id="searchKeyword1688" placeholder="1688 검색어 (선택, 중국어)" style="max-width:200px;">
-                        <button class="btn-coupang" onclick="searchCoupang()">쿠팡 검색</button>
-                        <button class="btn-1688" onclick="search1688()">1688 검색</button>
-                        <button class="btn-compare" onclick="compareSearch()">비교 검색</button>
+                        <input type="text" id="searchKeyword" data-i18n-ph="live_search_ph" placeholder="검색어 입력 (한국어 또는 중국어)..." onkeydown="if(event.key==='Enter')compareSearch()">
+                        <input type="text" id="searchKeyword1688" data-i18n-ph="live_search_ph_1688" placeholder="1688 검색어 (선택, 중국어)" style="max-width:200px;">
+                        <button class="btn-coupang" data-i18n="live_btn_coupang" onclick="searchCoupang()">쿠팡 검색</button>
+                        <button class="btn-1688" data-i18n="live_btn_1688" onclick="search1688()">1688 검색</button>
+                        <button class="btn-compare" data-i18n="live_btn_compare" onclick="compareSearch()">비교 검색</button>
                     </div>
                 </div>
 
@@ -134,14 +134,16 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             var el=document.getElementById('apiStatus');
-            if(el){el.textContent='ScraperAPI 프록시 사용';el.className='api-status api-online'}
+            if(el){el.textContent=(window.I18N?I18N.t('live_api_online'):'ScraperAPI 프록시 사용');el.className='api-status api-online';el.removeAttribute('data-i18n')}
             var btn=document.getElementById('mobileMenuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('sidebarOverlay');
             if(btn)btn.onclick=function(){sb.classList.toggle('open');ov.classList.toggle('active')};
             if(ov)ov.onclick=function(){sb.classList.remove('open');ov.classList.remove('active')};
         });
 
         function showLoading() {
-            document.getElementById('resultsGrid').innerHTML = '<div class="results-panel full"><div class="panel-header compare">검색 중...</div><div class="panel-body"><div class="loading"><div class="spinner"></div><p style="margin-top:12px">ScraperAPI로 데이터를 가져오고 있습니다...</p></div></div></div>';
+            var t1=window.I18N?I18N.t('live_searching'):'검색 중...';
+            var t2=window.I18N?I18N.t('live_loading_desc'):'ScraperAPI로 데이터를 가져오고 있습니다...';
+            document.getElementById('resultsGrid').innerHTML = '<div class="results-panel full"><div class="panel-header compare">'+t1+'</div><div class="panel-body"><div class="loading"><div class="spinner"></div><p style="margin-top:12px">'+t2+'</p></div></div></div>';
         }
 
         async function searchCoupang() {
@@ -152,9 +154,9 @@
                 var html = await scrapePage('https://www.coupang.com/np/search?component=&q='+encodeURIComponent(keyword)+'&channel=user');
                 var products = parseCoupangHTML(html);
                 var grid = document.getElementById('resultsGrid');
-                grid.innerHTML = '<div class="results-panel full"><div class="panel-header coupang">쿠팡 검색 결과 <span class="count">'+products.length+'개</span></div><div class="panel-body">'+renderProducts(products,'coupang')+'</div></div>';
+                grid.innerHTML = '<div class="results-panel full"><div class="panel-header coupang">'+(window.I18N?I18N.t('live_coupang_results'):'쿠팡 검색 결과')+' <span class="count">'+products.length+(window.I18N?I18N.t('live_count_unit'):'개')+'</span></div><div class="panel-body">'+renderProducts(products,'coupang')+'</div></div>';
             } catch(e) {
-                document.getElementById('resultsGrid').innerHTML = '<div class="results-panel full"><div class="panel-header coupang">쿠팡 검색 오류</div><div class="panel-body"><div class="error-msg">'+e.message+'</div></div></div>';
+                document.getElementById('resultsGrid').innerHTML = '<div class="results-panel full"><div class="panel-header coupang">'+(window.I18N?I18N.t('live_coupang_error'):'쿠팡 검색 오류')+'</div><div class="panel-body"><div class="error-msg">'+e.message+'</div></div></div>';
             }
         }
 
@@ -164,11 +166,14 @@
             showLoading();
             const data = await API.alibaba1688Search(keyword);
             const grid = document.getElementById('resultsGrid');
+            const t1688Error = window.I18N ? I18N.t('live_1688_error') : '1688 검색 오류';
+            const t1688Results = window.I18N ? I18N.t('live_1688_results') : '1688 검색 결과';
+            const tCountUnit = window.I18N ? I18N.t('live_count_unit') : '개';
             if (!data.success) {
-                grid.innerHTML = `<div class="results-panel full"><div class="panel-header alibaba">1688 검색 오류</div><div class="panel-body"><div class="error-msg">${data.error || data.message}</div></div></div>`;
+                grid.innerHTML = `<div class="results-panel full"><div class="panel-header alibaba">${t1688Error}</div><div class="panel-body"><div class="error-msg">${data.error || data.message}</div></div></div>`;
                 return;
             }
-            grid.innerHTML = `<div class="results-panel full"><div class="panel-header alibaba">1688 검색 결과 <span class="count">${data.total}개</span></div><div class="panel-body">${renderProducts(data.products, '1688')}</div></div>`;
+            grid.innerHTML = `<div class="results-panel full"><div class="panel-header alibaba">${t1688Results} <span class="count">${data.total}${tCountUnit}</span></div><div class="panel-body">${renderProducts(data.products, '1688')}</div></div>`;
         }
 
         async function compareSearch() {
@@ -180,9 +185,9 @@
                 var html1 = await scrapePage('https://s.1688.com/selloffer/offer_search.htm?keywords='+encodeURIComponent(keyword));
                 var prods1688 = parse1688HTML(html1);
                 var grid = document.getElementById('resultsGrid');
-                grid.innerHTML = '<div class="results-panel full"><div class="panel-header alibaba">1688 검색 결과 <span class="count">'+prods1688.length+'개</span></div><div class="panel-body">'+renderProducts(prods1688,'1688')+'</div></div>';
+                grid.innerHTML = '<div class="results-panel full"><div class="panel-header alibaba">'+(window.I18N?I18N.t('live_1688_results'):'1688 검색 결과')+' <span class="count">'+prods1688.length+(window.I18N?I18N.t('live_count_unit'):'개')+'</span></div><div class="panel-body">'+renderProducts(prods1688,'1688')+'</div></div>';
             } catch(e) {
-                document.getElementById('resultsGrid').innerHTML = '<div class="results-panel full"><div class="panel-header alibaba">1688 검색 오류</div><div class="panel-body"><div class="error-msg">'+e.message+'</div></div></div>';
+                document.getElementById('resultsGrid').innerHTML = '<div class="results-panel full"><div class="panel-header alibaba">'+(window.I18N?I18N.t('live_1688_error'):'1688 검색 오류')+'</div><div class="panel-body"><div class="error-msg">'+e.message+'</div></div></div>';
             }
         }
 
@@ -202,27 +207,33 @@
                 var avgCostKRW = avgA1 * 190.5 + 2000;
                 var margin = avgCp > 0 ? ((avgCp - avgCostKRW) / avgCp * 100).toFixed(1) : 0;
 
-                var marginHtml = '<div class="results-panel full"><div class="panel-header compare">마진 분석</div><div class="panel-body"><div class="margin-box"><div class="margin-row"><span class="label">쿠팡 평균 판매가</span><span class="value">₩'+Math.round(avgCp).toLocaleString()+'</span></div><div class="margin-row"><span class="label">1688 평균 원가+배송</span><span class="value">₩'+Math.round(avgCostKRW).toLocaleString()+'</span></div><div class="margin-row"><span class="label">예상 마진율</span><span class="value '+(margin>0?'margin-positive':'margin-negative')+'">'+margin+'%</span></div></div></div></div>';
+                var tCountUnit = window.I18N?I18N.t('live_count_unit'):'개';
+                var marginHtml = '<div class="results-panel full"><div class="panel-header compare">'+(window.I18N?I18N.t('live_margin_analysis'):'마진 분석')+'</div><div class="panel-body"><div class="margin-box"><div class="margin-row"><span class="label">'+(window.I18N?I18N.t('live_avg_coupang_price'):'쿠팡 평균 판매가')+'</span><span class="value">₩'+Math.round(avgCp).toLocaleString()+'</span></div><div class="margin-row"><span class="label">'+(window.I18N?I18N.t('live_avg_1688_cost'):'1688 평균 원가+배송')+'</span><span class="value">₩'+Math.round(avgCostKRW).toLocaleString()+'</span></div><div class="margin-row"><span class="label">'+(window.I18N?I18N.t('live_est_margin_rate'):'예상 마진율')+'</span><span class="value '+(margin>0?'margin-positive':'margin-negative')+'">'+margin+'%</span></div></div></div></div>';
 
                 document.getElementById('resultsGrid').innerHTML = marginHtml +
-                    '<div class="results-panel"><div class="panel-header coupang">쿠팡 <span class="count">'+cpProducts.length+'개</span></div><div class="panel-body">'+renderProducts(cpProducts,'coupang')+'</div></div>' +
-                    '<div class="results-panel"><div class="panel-header alibaba">1688 <span class="count">'+a1Products.length+'개</span></div><div class="panel-body">'+renderProducts(a1Products,'1688')+'</div></div>';
+                    '<div class="results-panel"><div class="panel-header coupang">'+(window.I18N?I18N.t('pf_coupang'):'쿠팡')+' <span class="count">'+cpProducts.length+tCountUnit+'</span></div><div class="panel-body">'+renderProducts(cpProducts,'coupang')+'</div></div>' +
+                    '<div class="results-panel"><div class="panel-header alibaba">1688 <span class="count">'+a1Products.length+tCountUnit+'</span></div><div class="panel-body">'+renderProducts(a1Products,'1688')+'</div></div>';
             } catch(e) {
-                document.getElementById('resultsGrid').innerHTML = '<div class="results-panel full"><div class="panel-header compare">비교 검색 오류</div><div class="panel-body"><div class="error-msg">'+e.message+'</div></div></div>';
+                document.getElementById('resultsGrid').innerHTML = '<div class="results-panel full"><div class="panel-header compare">'+(window.I18N?I18N.t('live_compare_error'):'비교 검색 오류')+'</div><div class="panel-body"><div class="error-msg">'+e.message+'</div></div></div>';
             }
         }
 
         function renderProducts(products, type) {
-            if (!products || products.length === 0) return '<div style="text-align:center;color:#64748b;padding:20px;">결과 없음</div>';
+            const tNoResults = window.I18N ? I18N.t('live_no_results') : '결과 없음';
+            if (!products || products.length === 0) return `<div style="text-align:center;color:#64748b;padding:20px;">${tNoResults}</div>`;
+            const tRocket = window.I18N ? I18N.t('live_badge_rocket') : '로켓배송';
+            const tTradeLabel = window.I18N ? I18N.t('live_trade_label') : '거래';
+            const tTradeUnit = window.I18N ? I18N.t('live_trade_unit') : '건';
+            const tReviewPrefix = window.I18N ? I18N.t('live_review_prefix') : '리뷰 ';
             return products.map(p => {
                 const priceDisplay = type === 'coupang'
                     ? `₩${Number(p.price).toLocaleString()}`
                     : `¥${p.price} <span style="font-size:0.75rem;color:#64748B;">(₩${Math.round(p.price * 190.5).toLocaleString()})</span>`;
                 const badges = [];
-                if (p.isRocket) badges.push('<span class="badge-rocket">로켓배송</span>');
-                if (p.tradeQuantity) badges.push(`<span class="badge-trade">거래 ${p.tradeQuantity}건</span>`);
+                if (p.isRocket) badges.push(`<span class="badge-rocket">${tRocket}</span>`);
+                if (p.tradeQuantity) badges.push(`<span class="badge-trade">${tTradeLabel} ${p.tradeQuantity}${tTradeUnit}</span>`);
                 const imgSrc = p.image || 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect fill="%231e293b" width="80" height="80"/><text x="40" y="45" text-anchor="middle" fill="%2364748b" font-size="12">No Image</text></svg>';
-                return `<div class="product-card"><img src="${imgSrc}" alt="" onerror="this.style.display='none'"><div class="info"><div class="name"><a href="${p.url || '#'}" target="_blank" rel="noopener">${escapeHtml(p.name || '')}</a></div><div class="price">${priceDisplay}</div><div class="meta">${badges.join('')}${p.rating ? ` ⭐${p.rating}` : ''}${p.reviewCount ? ` 리뷰 ${p.reviewCount}` : ''}</div></div></div>`;
+                return `<div class="product-card"><img src="${imgSrc}" alt="" onerror="this.style.display='none'"><div class="info"><div class="name"><a href="${p.url || '#'}" target="_blank" rel="noopener">${escapeHtml(p.name || '')}</a></div><div class="price">${priceDisplay}</div><div class="meta">${badges.join('')}${p.rating ? ` ⭐${p.rating}` : ''}${p.reviewCount ? ` ${tReviewPrefix}${p.reviewCount}` : ''}</div></div></div>`;
             }).join('');
         }
 
@@ -231,6 +242,74 @@
             div.textContent = str;
             return div.innerHTML;
         }
+    </script>
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                live_doc_title: '실시간 소싱 검색 | 소싱 트래커',
+                live_api_desc: '쿠팡 · 1688 API 실시간 연동 |', live_api_checking: '확인중...', live_api_online: 'ScraperAPI 프록시 사용',
+                live_page_heading: '🔍 실시간 소싱 상품 검색',
+                live_search_ph: '검색어 입력 (한국어 또는 중국어)...', live_search_ph_1688: '1688 검색어 (선택, 중국어)',
+                live_btn_coupang: '쿠팡 검색', live_btn_1688: '1688 검색', live_btn_compare: '비교 검색',
+                live_searching: '검색 중...', live_loading_desc: 'ScraperAPI로 데이터를 가져오고 있습니다...',
+                live_coupang_results: '쿠팡 검색 결과', live_coupang_error: '쿠팡 검색 오류',
+                live_1688_results: '1688 검색 결과', live_1688_error: '1688 검색 오류',
+                live_compare_error: '비교 검색 오류',
+                live_margin_analysis: '마진 분석', live_avg_coupang_price: '쿠팡 평균 판매가',
+                live_avg_1688_cost: '1688 평균 원가+배송', live_est_margin_rate: '예상 마진율',
+                live_count_unit: '개', live_no_results: '결과 없음',
+                live_badge_rocket: '로켓배송', live_trade_label: '거래', live_trade_unit: '건',
+                live_review_prefix: '리뷰 '
+            },
+            en: {
+                live_doc_title: 'Live Sourcing Search | Sourcing Tracker',
+                live_api_desc: 'Coupang · 1688 API live sync |', live_api_checking: 'Checking...', live_api_online: 'ScraperAPI proxy active',
+                live_page_heading: '🔍 Live Sourcing Product Search',
+                live_search_ph: 'Enter a keyword (Korean or Chinese)...', live_search_ph_1688: '1688 keyword (optional, Chinese)',
+                live_btn_coupang: 'Search Coupang', live_btn_1688: 'Search 1688', live_btn_compare: 'Compare Search',
+                live_searching: 'Searching...', live_loading_desc: 'Fetching data via ScraperAPI...',
+                live_coupang_results: 'Coupang Results', live_coupang_error: 'Coupang Search Error',
+                live_1688_results: '1688 Results', live_1688_error: '1688 Search Error',
+                live_compare_error: 'Compare Search Error',
+                live_margin_analysis: 'Margin Analysis', live_avg_coupang_price: 'Coupang Avg. Sell Price',
+                live_avg_1688_cost: '1688 Avg. Cost + Shipping', live_est_margin_rate: 'Estimated Margin Rate',
+                live_count_unit: ' items', live_no_results: 'No results',
+                live_badge_rocket: 'Rocket Delivery', live_trade_label: 'Orders', live_trade_unit: '',
+                live_review_prefix: 'Reviews '
+            },
+            zh: {
+                live_doc_title: '实时采购搜索 | 采购追踪器',
+                live_api_desc: 'Coupang · 1688 API 实时同步 |', live_api_checking: '检查中...', live_api_online: 'ScraperAPI代理已启用',
+                live_page_heading: '🔍 实时采购商品搜索',
+                live_search_ph: '输入关键词(韩语或中文)...', live_search_ph_1688: '1688关键词(可选,中文)',
+                live_btn_coupang: 'Coupang搜索', live_btn_1688: '1688搜索', live_btn_compare: '比较搜索',
+                live_searching: '搜索中...', live_loading_desc: '正在通过ScraperAPI获取数据...',
+                live_coupang_results: 'Coupang搜索结果', live_coupang_error: 'Coupang搜索出错',
+                live_1688_results: '1688搜索结果', live_1688_error: '1688搜索出错',
+                live_compare_error: '比较搜索出错',
+                live_margin_analysis: '利润分析', live_avg_coupang_price: 'Coupang平均售价',
+                live_avg_1688_cost: '1688平均成本+运费', live_est_margin_rate: '预计利润率',
+                live_count_unit: '个', live_no_results: '暂无结果',
+                live_badge_rocket: '火箭配送', live_trade_label: '交易', live_trade_unit: '笔',
+                live_review_prefix: '评价 '
+            },
+            vi: {
+                live_doc_title: 'Tìm nguồn hàng trực tiếp | Trình theo dõi nguồn hàng',
+                live_api_desc: 'Đồng bộ trực tiếp API Coupang · 1688 |', live_api_checking: 'Đang kiểm tra...', live_api_online: 'Đang dùng proxy ScraperAPI',
+                live_page_heading: '🔍 Tìm kiếm sản phẩm nguồn hàng trực tiếp',
+                live_search_ph: 'Nhập từ khóa (tiếng Hàn hoặc tiếng Trung)...', live_search_ph_1688: 'Từ khóa 1688 (tùy chọn, tiếng Trung)',
+                live_btn_coupang: 'Tìm Coupang', live_btn_1688: 'Tìm 1688', live_btn_compare: 'Tìm kiếm so sánh',
+                live_searching: 'Đang tìm kiếm...', live_loading_desc: 'Đang lấy dữ liệu qua ScraperAPI...',
+                live_coupang_results: 'Kết quả Coupang', live_coupang_error: 'Lỗi tìm kiếm Coupang',
+                live_1688_results: 'Kết quả 1688', live_1688_error: 'Lỗi tìm kiếm 1688',
+                live_compare_error: 'Lỗi tìm kiếm so sánh',
+                live_margin_analysis: 'Phân tích lợi nhuận', live_avg_coupang_price: 'Giá bán TB Coupang',
+                live_avg_1688_cost: 'Chi phí + vận chuyển TB 1688', live_est_margin_rate: 'Tỷ lệ lợi nhuận dự kiến',
+                live_count_unit: ' kết quả', live_no_results: 'Không có kết quả',
+                live_badge_rocket: 'Giao hỏa tốc', live_trade_label: 'Giao dịch', live_trade_unit: '',
+                live_review_prefix: 'Đánh giá '
+            }
+        };
     </script>
     <script src="js/i18n-auto.js"></script>
     <script src="js/i18n-common.js"></script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 소싱 | 소싱 트래커</title>
+    <title data-i18n="ai_src_doc_title">AI 소싱 | 소싱 트래커</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/mobile-fix.css">
     <style>
@@ -66,26 +66,26 @@
         </aside>
         <div class="main-content">
             <header class="top-bar">
-                <div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">AI 상품 소싱</div><div class="top-bar-date">AI가 판매 가능성이 높은 상품을 추천합니다</div></div></div>
+                <div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">AI 상품 소싱</div><div class="top-bar-date" data-i18n="ai_src_topbar_sub">AI가 판매 가능성이 높은 상품을 추천합니다</div></div></div>
             </header>
             <div class="content-area">
                 <div class="ai-search-box">
-                    <h1>🤖 AI 스마트 상품 소싱</h1>
-                    <p>키워드를 입력하면 AI가 쿠팡·네이버·지마켓·1688·Shopee·Amazon·SHEIN·Temu에서 마진 높은 상품을 찾아 추천합니다</p>
+                    <h1 data-i18n="ai_src_h1">🤖 AI 스마트 상품 소싱</h1>
+                    <p data-i18n="ai_src_desc">키워드를 입력하면 AI가 쿠팡·네이버·지마켓·1688·Shopee·Amazon·SHEIN·Temu에서 마진 높은 상품을 찾아 추천합니다</p>
                     <div class="ai-input-wrap">
-                        <input type="text" class="ai-input" id="aiKeyword" placeholder="소싱할 상품 키워드 입력 (예: 블루투스 이어폰)" onkeydown="if(event.key==='Enter')runAI()">
-                        <button class="ai-btn" id="aiBtn" onclick="runAI()">🤖 AI 추천받기</button>
+                        <input type="text" class="ai-input" id="aiKeyword" placeholder="소싱할 상품 키워드 입력 (예: 블루투스 이어폰)" data-i18n-ph="ai_src_kw_ph" onkeydown="if(event.key==='Enter')runAI()">
+                        <button class="ai-btn" id="aiBtn" onclick="runAI()" data-i18n="ai_src_btn">🤖 AI 추천받기</button>
                     </div>
-                    <div class="ai-credits">ScraperAPI 크레딧 사용 | 검색당 약 5크레딧</div>
+                    <div class="ai-credits" data-i18n="ai_src_credits">ScraperAPI 크레딧 사용 | 검색당 약 5크레딧</div>
                     <div class="ai-progress" id="aiProgress"><div class="ai-progress-bar" id="aiProgressBar"></div></div>
                     <div class="ai-status" id="aiStatus"></div>
                 </div>
                 <div class="filters" id="filters" style="display:none">
-                    <span class="filter-chip active" onclick="filterResults('all')">전체</span>
-                    <span class="filter-chip" onclick="filterResults('high')">🔥 강력추천</span>
-                    <span class="filter-chip" onclick="filterResults('margin')">💰 고마진</span>
-                    <span class="filter-chip" onclick="filterResults('trend')">📈 트렌드</span>
-                    <span class="filter-chip" onclick="filterResults('safe')">✅ 안전</span>
+                    <span class="filter-chip active" onclick="filterResults('all')" data-i18n="ai_src_filter_all">전체</span>
+                    <span class="filter-chip" onclick="filterResults('high')" data-i18n="ai_src_filter_high">🔥 강력추천</span>
+                    <span class="filter-chip" onclick="filterResults('margin')" data-i18n="ai_src_filter_margin">💰 고마진</span>
+                    <span class="filter-chip" onclick="filterResults('trend')" data-i18n="ai_src_filter_trend">📈 트렌드</span>
+                    <span class="filter-chip" onclick="filterResults('safe')" data-i18n="ai_src_filter_safe">✅ 안전</span>
                 </div>
                 <div id="results"></div>
             </div>
@@ -93,6 +93,7 @@
     </div>
     <script>
         var SCRAPER_KEY=''/* 🔴 ScraperAPI 키 노출 사고로 제거됨. 키 회전 후 Edge Function에서 사용 */;
+        function t(key){ return window.I18N ? window.I18N.t(key) : key; }
 
         async function searchGoogle(query,country){
             var url='https://api.scraperapi.com/structured/google/shopping?api_key='+SCRAPER_KEY+'&query='+encodeURIComponent(query)+'&country='+(country||'kr')+'&num=20';
@@ -134,26 +135,26 @@
             var keyword=document.getElementById('aiKeyword').value.trim();
             if(!keyword)return;
             var btn=document.getElementById('aiBtn');
-            btn.disabled=true;btn.textContent='🤖 분석중...';
+            btn.disabled=true;btn.removeAttribute('data-i18n');btn.textContent=t('ai_src_btn_analyzing');
             var prog=document.getElementById('aiProgress');prog.style.display='block';
             var bar=document.getElementById('aiProgressBar');
             var status=document.getElementById('aiStatus');
             allResults=[];
 
             // Step 1: 한국 마켓 검색
-            status.textContent='🔍 한국 마켓에서 "'+keyword+'" 검색 중...';
+            status.textContent=t('ai_src_status_kr_search').replace('{kw}',keyword);
             bar.style.width='20%';
             try{
                 var krData=await searchGoogle(keyword,'kr');
                 var krItems=krData.shopping_results||[];
-                status.textContent='✓ 한국 '+krItems.length+'개 상품 발견';
+                status.textContent=t('ai_src_status_kr_found').replace('{n}',krItems.length);
                 bar.style.width='40%';
 
                 // Step 2: 중국 마켓 검색
-                status.textContent='🔍 중국 마켓에서 "'+keyword+'" 검색 중...';
+                status.textContent=t('ai_src_status_cn_search').replace('{kw}',keyword);
                 var cnData=await searchGoogle(keyword+' wholesale','cn');
                 var cnItems=cnData.shopping_results||[];
-                status.textContent='✓ 중국 '+cnItems.length+'개 상품 발견';
+                status.textContent=t('ai_src_status_cn_found').replace('{n}',cnItems.length);
                 bar.style.width='60%';
 
                 // Step 3: 데이터 합치기
@@ -170,7 +171,7 @@
                 });
 
                 // Step 4: AI 분석
-                status.textContent='🤖 AI 분석 중... (마진·경쟁·트렌드·수요·위험도)';
+                status.textContent=t('ai_src_status_analyzing');
                 bar.style.width='80%';
                 await new Promise(function(r){setTimeout(r,1000)});
 
@@ -179,7 +180,7 @@
                 allResults=products;
 
                 bar.style.width='100%';
-                status.textContent='✅ 총 '+products.length+'개 상품 분석 완료';
+                status.textContent=t('ai_src_status_done').replace('{n}',products.length);
 
                 renderResults(products);
                 document.getElementById('filters').style.display='flex';
@@ -187,9 +188,9 @@
                 // Save to localStorage
                 localStorage.setItem('aiSourcingResults',JSON.stringify({keyword:keyword,products:products,timestamp:new Date().toISOString()}));
             }catch(e){
-                status.textContent='❌ 오류: '+e.message;
+                status.textContent=t('ai_src_status_error').replace('{msg}',e.message);
             }
-            btn.disabled=false;btn.textContent='🤖 AI 추천받기';
+            btn.disabled=false;btn.setAttribute('data-i18n','ai_src_btn');btn.textContent=t('ai_src_btn');
         }
 
         function renderResults(products){
@@ -208,28 +209,28 @@
                     '<div class="result-price">'+priceStr+'</div>'+
                     '<div class="result-meta">'+
                     '<span class="result-tag" style="background:'+pc+'22;color:'+pc+'">'+escH(p.platform)+'</span>'+
-                    '<span class="result-tag tag-margin">마진 '+p.ai.estMargin+'%</span>'+
+                    '<span class="result-tag tag-margin">'+t('ai_src_margin_label')+' '+p.ai.estMargin+'%</span>'+
                     '<span class="result-tag" style="background:'+gradeColor+'22;color:'+gradeColor+'">'+p.ai.grade+'</span>'+
                     (p.rating?'<span class="result-tag tag-trend">⭐'+p.rating+'</span>':'')+
-                    (p.reviewCount?'<span class="result-tag" style="background:#f1f5f9;color:#64748b">리뷰 '+p.reviewCount+'</span>':'')+
+                    (p.reviewCount?'<span class="result-tag" style="background:#f1f5f9;color:#64748b">'+t('ai_src_review_label')+' '+p.reviewCount+'</span>':'')+
                     '</div>'+
                     '<div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap">'+
-                    '<button onclick="window.open(\''+safeUrl+'\')" style="padding:3px 10px;border-radius:4px;border:none;background:#3b82f6;color:#fff;font-size:.65rem;font-weight:600;cursor:pointer">상세보기↗</button>'+
-                    '<button onclick="saveFavorite('+i+')" style="padding:3px 10px;border-radius:4px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:.65rem;cursor:pointer">⭐ 저장</button>'+
-                    '<select onchange="listProduct(this.value,'+i+')" style="padding:3px 6px;border-radius:4px;border:1px solid #e2e8f0;font-size:.6rem;color:#64748b"><option value="">리스팅↗</option><option value="coupang">쿠팡</option><option value="naver">네이버</option><option value="gmarket">지마켓</option><option value="shopee">Shopee</option><option value="amazon">Amazon</option></select>'+
+                    '<button onclick="window.open(\''+safeUrl+'\')" style="padding:3px 10px;border-radius:4px;border:none;background:#3b82f6;color:#fff;font-size:.65rem;font-weight:600;cursor:pointer">'+t('ai_src_detail_btn')+'</button>'+
+                    '<button onclick="saveFavorite('+i+')" style="padding:3px 10px;border-radius:4px;border:1px solid #e2e8f0;background:#fff;color:#64748b;font-size:.65rem;cursor:pointer">⭐ '+t('ai_src_save_btn')+'</button>'+
+                    '<select onchange="listProduct(this.value,'+i+')" style="padding:3px 6px;border-radius:4px;border:1px solid #e2e8f0;font-size:.6rem;color:#64748b"><option value="">'+t('ai_src_list_default')+'</option><option value="coupang">'+t('pf_coupang')+'</option><option value="naver">'+t('pf_naver')+'</option><option value="gmarket">'+t('pf_gmarket')+'</option><option value="shopee">Shopee</option><option value="amazon">Amazon</option></select>'+
                     '</div>'+
                     (p.rating?'<span class="result-tag tag-trend">⭐'+p.rating+'</span>':'')+
                     '</div>'+
                     '<div class="result-bars">'+
-                    '<div class="bar-item"><div class="bar-label">마진</div><div class="bar-track"><div class="bar-fill" style="width:'+p.ai.margin+'%;background:#10b981"></div></div></div>'+
-                    '<div class="bar-item"><div class="bar-label">경쟁</div><div class="bar-track"><div class="bar-fill" style="width:'+p.ai.competition+'%;background:#3b82f6"></div></div></div>'+
-                    '<div class="bar-item"><div class="bar-label">트렌드</div><div class="bar-track"><div class="bar-fill" style="width:'+p.ai.trend+'%;background:#f59e0b"></div></div></div>'+
-                    '<div class="bar-item"><div class="bar-label">수요</div><div class="bar-track"><div class="bar-fill" style="width:'+p.ai.demand+'%;background:#8b5cf6"></div></div></div>'+
+                    '<div class="bar-item"><div class="bar-label">'+t('ai_src_bar_margin')+'</div><div class="bar-track"><div class="bar-fill" style="width:'+p.ai.margin+'%;background:#10b981"></div></div></div>'+
+                    '<div class="bar-item"><div class="bar-label">'+t('ai_src_bar_competition')+'</div><div class="bar-track"><div class="bar-fill" style="width:'+p.ai.competition+'%;background:#3b82f6"></div></div></div>'+
+                    '<div class="bar-item"><div class="bar-label">'+t('ai_src_bar_trend')+'</div><div class="bar-track"><div class="bar-fill" style="width:'+p.ai.trend+'%;background:#f59e0b"></div></div></div>'+
+                    '<div class="bar-item"><div class="bar-label">'+t('ai_src_bar_demand')+'</div><div class="bar-track"><div class="bar-fill" style="width:'+p.ai.demand+'%;background:#8b5cf6"></div></div></div>'+
                     '</div></div>'+
-                    '<div class="ai-score"><div class="score-circle '+scoreClass+'">'+p.ai.total+'</div><div class="score-label">AI점수</div></div>'+
+                    '<div class="ai-score"><div class="score-circle '+scoreClass+'">'+p.ai.total+'</div><div class="score-label">'+t('ai_src_score_label')+'</div></div>'+
                     '</div>';
             });
-            document.getElementById('results').innerHTML=html||'<div style="text-align:center;color:#64748B;padding:40px">결과 없음</div>';
+            document.getElementById('results').innerHTML=html||'<div style="text-align:center;color:#64748B;padding:40px">'+t('ai_src_no_result')+'</div>';
         }
 
         function filterResults(type){
@@ -248,10 +249,10 @@
         function saveFavorite(idx){
             var p=allResults[idx];if(!p)return;
             var favs=JSON.parse(localStorage.getItem('favorites')||'[]');
-            if(favs.find(function(f){return f.name===p.name})){alert('이미 저장된 상품입니다');return}
+            if(favs.find(function(f){return f.name===p.name})){alert(t('ai_src_alert_already_saved'));return}
             favs.push({name:p.name,price:p.price,platform:p.platform,image:p.image,url:p.url,rating:p.rating,savedAt:new Date().toISOString()});
             localStorage.setItem('favorites',JSON.stringify(favs));
-            alert('⭐ 즐겨찾기에 저장됨: '+p.name.substring(0,30));
+            alert('⭐ '+t('ai_src_saved_prefix')+' '+p.name.substring(0,30));
         }
 
         function listProduct(platform,idx){
@@ -264,7 +265,7 @@
                 shopee:'https://seller.shopee.vn/portal/product/new',
                 amazon:'https://sellercentral.amazon.com/product/create'
             };
-            if(confirm(p.name.substring(0,40)+'\n\n→ '+platform+' 판매자 센터에서 리스팅하시겠습니까?')){
+            if(confirm(p.name.substring(0,40)+'\n\n→ '+platform+t('ai_src_confirm_list_suffix'))){
                 window.open(urls[platform],'_blank');
             }
         }
@@ -279,9 +280,97 @@
                 document.getElementById('aiKeyword').value=saved.keyword||'';
                 renderResults(saved.products);
                 document.getElementById('filters').style.display='flex';
-                document.getElementById('aiStatus').textContent='이전 검색: '+saved.keyword+' ('+saved.products.length+'개, '+new Date(saved.timestamp).toLocaleString('ko-KR')+')';
+                document.getElementById('aiStatus').textContent=t('ai_src_prev_search').replace('{kw}',saved.keyword).replace('{n}',saved.products.length).replace('{time}',new Date(saved.timestamp).toLocaleString('ko-KR'));
             }
         });
+    </script>
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                ai_src_doc_title: 'AI 소싱 | 소싱 트래커', ai_src_topbar_sub: 'AI가 판매 가능성이 높은 상품을 추천합니다',
+                ai_src_h1: '🤖 AI 스마트 상품 소싱',
+                ai_src_desc: '키워드를 입력하면 AI가 쿠팡·네이버·지마켓·1688·Shopee·Amazon·SHEIN·Temu에서 마진 높은 상품을 찾아 추천합니다',
+                ai_src_kw_ph: '소싱할 상품 키워드 입력 (예: 블루투스 이어폰)',
+                ai_src_btn: '🤖 AI 추천받기', ai_src_btn_analyzing: '🤖 분석중...',
+                ai_src_credits: 'ScraperAPI 크레딧 사용 | 검색당 약 5크레딧',
+                ai_src_filter_all: '전체', ai_src_filter_high: '🔥 강력추천', ai_src_filter_margin: '💰 고마진',
+                ai_src_filter_trend: '📈 트렌드', ai_src_filter_safe: '✅ 안전',
+                ai_src_status_kr_search: '🔍 한국 마켓에서 "{kw}" 검색 중...', ai_src_status_kr_found: '✓ 한국 {n}개 상품 발견',
+                ai_src_status_cn_search: '🔍 중국 마켓에서 "{kw}" 검색 중...', ai_src_status_cn_found: '✓ 중국 {n}개 상품 발견',
+                ai_src_status_analyzing: '🤖 AI 분석 중... (마진·경쟁·트렌드·수요·위험도)',
+                ai_src_status_done: '✅ 총 {n}개 상품 분석 완료', ai_src_status_error: '❌ 오류: {msg}',
+                ai_src_margin_label: '마진', ai_src_review_label: '리뷰', ai_src_detail_btn: '상세보기↗',
+                ai_src_save_btn: '저장', ai_src_list_default: '리스팅↗',
+                ai_src_bar_margin: '마진', ai_src_bar_competition: '경쟁', ai_src_bar_trend: '트렌드', ai_src_bar_demand: '수요',
+                ai_src_score_label: 'AI점수', ai_src_no_result: '결과 없음',
+                ai_src_alert_already_saved: '이미 저장된 상품입니다', ai_src_saved_prefix: '즐겨찾기에 저장됨:',
+                ai_src_confirm_list_suffix: ' 판매자 센터에서 리스팅하시겠습니까?',
+                ai_src_prev_search: '이전 검색: {kw} ({n}개, {time})'
+            },
+            en: {
+                ai_src_doc_title: 'AI Sourcing | Sourcing Tracker', ai_src_topbar_sub: 'AI recommends products with high sales potential',
+                ai_src_h1: '🤖 AI Smart Product Sourcing',
+                ai_src_desc: 'Enter a keyword and AI will find high-margin products across Coupang · Naver · Gmarket · 1688 · Shopee · Amazon · SHEIN · Temu',
+                ai_src_kw_ph: 'Enter a product keyword to source (e.g. Bluetooth earbuds)',
+                ai_src_btn: '🤖 Get AI Recommendations', ai_src_btn_analyzing: '🤖 Analyzing...',
+                ai_src_credits: 'Uses ScraperAPI credits | ~5 credits per search',
+                ai_src_filter_all: 'All', ai_src_filter_high: '🔥 Strong Buy', ai_src_filter_margin: '💰 High Margin',
+                ai_src_filter_trend: '📈 Trending', ai_src_filter_safe: '✅ Safe',
+                ai_src_status_kr_search: '🔍 Searching Korean market for "{kw}"...', ai_src_status_kr_found: '✓ Found {n} products in Korea',
+                ai_src_status_cn_search: '🔍 Searching Chinese market for "{kw}"...', ai_src_status_cn_found: '✓ Found {n} products in China',
+                ai_src_status_analyzing: '🤖 AI analyzing... (margin, competition, trend, demand, risk)',
+                ai_src_status_done: '✅ Analysis complete: {n} products', ai_src_status_error: '❌ Error: {msg}',
+                ai_src_margin_label: 'Margin', ai_src_review_label: 'Reviews', ai_src_detail_btn: 'Details↗',
+                ai_src_save_btn: 'Save', ai_src_list_default: 'List↗',
+                ai_src_bar_margin: 'Margin', ai_src_bar_competition: 'Competition', ai_src_bar_trend: 'Trend', ai_src_bar_demand: 'Demand',
+                ai_src_score_label: 'AI Score', ai_src_no_result: 'No results',
+                ai_src_alert_already_saved: 'This product is already saved', ai_src_saved_prefix: 'Saved to favorites:',
+                ai_src_confirm_list_suffix: ' — list this product in the seller center?',
+                ai_src_prev_search: 'Previous search: {kw} ({n} items, {time})'
+            },
+            zh: {
+                ai_src_doc_title: 'AI采购 | 采购追踪器', ai_src_topbar_sub: 'AI为您推荐畅销潜力高的商品',
+                ai_src_h1: '🤖 AI智能商品采购',
+                ai_src_desc: '输入关键词,AI将在Coupang·Naver·Gmarket·1688·Shopee·Amazon·SHEIN·Temu中查找高利润商品并推荐',
+                ai_src_kw_ph: '输入要采购的商品关键词(如:蓝牙耳机)',
+                ai_src_btn: '🤖 获取AI推荐', ai_src_btn_analyzing: '🤖 分析中...',
+                ai_src_credits: '消耗ScraperAPI额度 | 每次搜索约5点',
+                ai_src_filter_all: '全部', ai_src_filter_high: '🔥 强烈推荐', ai_src_filter_margin: '💰 高利润',
+                ai_src_filter_trend: '📈 趋势', ai_src_filter_safe: '✅ 安全',
+                ai_src_status_kr_search: '🔍 正在韩国市场搜索"{kw}"...', ai_src_status_kr_found: '✓ 在韩国发现{n}个商品',
+                ai_src_status_cn_search: '🔍 正在中国市场搜索"{kw}"...', ai_src_status_cn_found: '✓ 在中国发现{n}个商品',
+                ai_src_status_analyzing: '🤖 AI分析中...(利润·竞争·趋势·需求·风险)',
+                ai_src_status_done: '✅ 共分析完成{n}个商品', ai_src_status_error: '❌ 错误:{msg}',
+                ai_src_margin_label: '利润', ai_src_review_label: '评价', ai_src_detail_btn: '查看详情↗',
+                ai_src_save_btn: '收藏', ai_src_list_default: '上架↗',
+                ai_src_bar_margin: '利润', ai_src_bar_competition: '竞争', ai_src_bar_trend: '趋势', ai_src_bar_demand: '需求',
+                ai_src_score_label: 'AI评分', ai_src_no_result: '暂无结果',
+                ai_src_alert_already_saved: '该商品已收藏', ai_src_saved_prefix: '已收藏:',
+                ai_src_confirm_list_suffix: ' — 是否在卖家中心上架该商品?',
+                ai_src_prev_search: '上次搜索: {kw} ({n}个, {time})'
+            },
+            vi: {
+                ai_src_doc_title: 'Nguồn hàng AI | Theo dõi nguồn hàng', ai_src_topbar_sub: 'AI đề xuất sản phẩm có khả năng bán chạy cao',
+                ai_src_h1: '🤖 Nguồn hàng thông minh AI',
+                ai_src_desc: 'Nhập từ khóa, AI sẽ tìm sản phẩm lợi nhuận cao trên Coupang·Naver·Gmarket·1688·Shopee·Amazon·SHEIN·Temu',
+                ai_src_kw_ph: 'Nhập từ khóa sản phẩm cần tìm nguồn (vd: tai nghe Bluetooth)',
+                ai_src_btn: '🤖 Nhận đề xuất AI', ai_src_btn_analyzing: '🤖 Đang phân tích...',
+                ai_src_credits: 'Sử dụng credit ScraperAPI | khoảng 5 credit/lượt tìm',
+                ai_src_filter_all: 'Tất cả', ai_src_filter_high: '🔥 Đề xuất mạnh', ai_src_filter_margin: '💰 Lợi nhuận cao',
+                ai_src_filter_trend: '📈 Xu hướng', ai_src_filter_safe: '✅ An toàn',
+                ai_src_status_kr_search: '🔍 Đang tìm "{kw}" trên thị trường Hàn Quốc...', ai_src_status_kr_found: '✓ Tìm thấy {n} sản phẩm tại Hàn Quốc',
+                ai_src_status_cn_search: '🔍 Đang tìm "{kw}" trên thị trường Trung Quốc...', ai_src_status_cn_found: '✓ Tìm thấy {n} sản phẩm tại Trung Quốc',
+                ai_src_status_analyzing: '🤖 AI đang phân tích... (lợi nhuận, cạnh tranh, xu hướng, nhu cầu, rủi ro)',
+                ai_src_status_done: '✅ Hoàn tất phân tích {n} sản phẩm', ai_src_status_error: '❌ Lỗi: {msg}',
+                ai_src_margin_label: 'Lợi nhuận', ai_src_review_label: 'Đánh giá', ai_src_detail_btn: 'Xem chi tiết↗',
+                ai_src_save_btn: 'Lưu', ai_src_list_default: 'Đăng bán↗',
+                ai_src_bar_margin: 'Lợi nhuận', ai_src_bar_competition: 'Cạnh tranh', ai_src_bar_trend: 'Xu hướng', ai_src_bar_demand: 'Nhu cầu',
+                ai_src_score_label: 'Điểm AI', ai_src_no_result: 'Không có kết quả',
+                ai_src_alert_already_saved: 'Sản phẩm này đã được lưu', ai_src_saved_prefix: 'Đã lưu vào yêu thích:',
+                ai_src_confirm_list_suffix: ' — đăng bán sản phẩm này tại trung tâm người bán?',
+                ai_src_prev_search: 'Tìm kiếm trước: {kw} ({n} sp, {time})'
+            }
+        };
     </script>
     <script src="js/i18n-auto.js"></script>
     <script src="js/i18n-common.js"></script>

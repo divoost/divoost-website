@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="소싱 트래커 플랫폼 비교 - 1688, 타오바오 소싱 플랫폼과 쿠팡, 지마켓, 네이버 판매 플랫폼 비교 분석">
-    <title>소싱 트래커 | 플랫폼 비교</title>
+    <title data-i18n="plat_doc_title">소싱 트래커 | 플랫폼 비교</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
@@ -77,12 +77,12 @@
                     <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
                     <div>
                         <div class="top-bar-title">플랫폼 비교</div>
-                        <div class="top-bar-date">마지막 업데이트: <span id="lastUpdated">-</span> | 환율: 1 CNY = 190.5 KRW</div>
+                        <div class="top-bar-date"><span data-i18n="plat_last_updated">마지막 업데이트:</span> <span id="lastUpdated">-</span> <span data-i18n="plat_exchange_rate">| 환율: 1 CNY = 190.5 KRW</span></div>
                     </div>
                 </div>
                 <div class="top-bar-right">
-                    
-                    <button class="top-bar-btn btn-refresh" onclick="location.reload()">🔄 <span>새로고침</span></button>
+
+                    <button class="top-bar-btn btn-refresh" onclick="location.reload()">🔄 <span data-i18n="plat_refresh">새로고침</span></button>
                     
                 </div>
             </header>
@@ -98,55 +98,55 @@
                         <div class="po-logo">🏭</div>
                         <div class="po-info">
                             <div class="po-name">1688 (阿里巴巴)</div>
-                            <div class="po-sub">중국 B2B 도매</div>
+                            <div class="po-sub" data-i18n="plat_po_1688_sub">중국 B2B 도매</div>
                         </div>
                         <div class="po-stats">
-                            <div class="po-stat">수집 <strong id="p-1688">-</strong>개</div>
-                            <div class="po-stat">직배송 <strong>-</strong>개</div>
+                            <div class="po-stat"><span data-i18n="plat_collected">수집</span> <strong id="p-1688">-</strong><span data-i18n="plat_unit_count">개</span></div>
+                            <div class="po-stat"><span data-i18n="plat_direct_ship">직배송</span> <strong>-</strong><span data-i18n="plat_unit_count">개</span></div>
                         </div>
                     </div>
                     <div class="platform-overview-card po-taobao">
                         <div class="po-logo">🛒</div>
                         <div class="po-info">
-                            <div class="po-name">타오바오 (淘宝)</div>
-                            <div class="po-sub">중국 B2C/C2C</div>
+                            <div class="po-name" data-i18n="plat_po_taobao_name">타오바오 (淘宝)</div>
+                            <div class="po-sub" data-i18n="plat_po_taobao_sub">중국 B2C/C2C</div>
                         </div>
                         <div class="po-stats">
-                            <div class="po-stat">수집 <strong id="p-taobao">-</strong>개</div>
-                            <div class="po-stat">직배송 <strong>-</strong>개</div>
+                            <div class="po-stat"><span data-i18n="plat_collected">수집</span> <strong id="p-taobao">-</strong><span data-i18n="plat_unit_count">개</span></div>
+                            <div class="po-stat"><span data-i18n="plat_direct_ship">직배송</span> <strong>-</strong><span data-i18n="plat_unit_count">개</span></div>
                         </div>
                     </div>
                     <div class="platform-overview-card po-coupang">
                         <div class="po-logo">🚀</div>
                         <div class="po-info">
-                            <div class="po-name">쿠팡</div>
-                            <div class="po-sub">한국 1위 이커머스</div>
+                            <div class="po-name" data-i18n="pf_coupang">쿠팡</div>
+                            <div class="po-sub" data-i18n="plat_po_coupang_sub">한국 1위 이커머스</div>
                         </div>
                         <div class="po-stats">
-                            <div class="po-stat">인기상품 <strong id="p-coupang2">-</strong>개</div>
-                            <div class="po-stat">평균마진 <strong>-</strong></div>
+                            <div class="po-stat"><span data-i18n="plat_popular">인기상품</span> <strong id="p-coupang2">-</strong><span data-i18n="plat_unit_count">개</span></div>
+                            <div class="po-stat"><span data-i18n="th_avg_margin">평균마진</span> <strong>-</strong></div>
                         </div>
                     </div>
                     <div class="platform-overview-card po-gmarket">
                         <div class="po-logo">🟢</div>
                         <div class="po-info">
-                            <div class="po-name">지마켓</div>
-                            <div class="po-sub">한국 종합 마켓</div>
+                            <div class="po-name" data-i18n="pf_gmarket">지마켓</div>
+                            <div class="po-sub" data-i18n="plat_po_gmarket_sub">한국 종합 마켓</div>
                         </div>
                         <div class="po-stats">
-                            <div class="po-stat">인기상품 <strong id="p-gmarket2">-</strong>개</div>
-                            <div class="po-stat">평균마진 <strong>-</strong></div>
+                            <div class="po-stat"><span data-i18n="plat_popular">인기상품</span> <strong id="p-gmarket2">-</strong><span data-i18n="plat_unit_count">개</span></div>
+                            <div class="po-stat"><span data-i18n="th_avg_margin">평균마진</span> <strong>-</strong></div>
                         </div>
                     </div>
                     <div class="platform-overview-card po-naver">
                         <div class="po-logo">🟩</div>
                         <div class="po-info">
-                            <div class="po-name">네이버 스마트스토어</div>
-                            <div class="po-sub">한국 검색 기반</div>
+                            <div class="po-name" data-i18n="plat_po_naver_name">네이버 스마트스토어</div>
+                            <div class="po-sub" data-i18n="plat_po_naver_sub">한국 검색 기반</div>
                         </div>
                         <div class="po-stats">
-                            <div class="po-stat">인기상품 <strong id="p-naver2">-</strong>개</div>
-                            <div class="po-stat">평균마진 <strong>-</strong></div>
+                            <div class="po-stat"><span data-i18n="plat_popular">인기상품</span> <strong id="p-naver2">-</strong><span data-i18n="plat_unit_count">개</span></div>
+                            <div class="po-stat"><span data-i18n="th_avg_margin">평균마진</span> <strong>-</strong></div>
                         </div>
                     </div>
                 </div>
@@ -155,7 +155,7 @@
                      2. Section Divider: 소싱 플랫폼 비교
                      ============================================================ -->
                 <div class="section-divider">
-                    <div class="section-divider-title">⚖️ 소싱 플랫폼 비교 (1688 vs 타오바오)</div>
+                    <div class="section-divider-title" data-i18n="plat_sec_source_compare">⚖️ 소싱 플랫폼 비교 (1688 vs 타오바오)</div>
                     <div class="section-divider-line"></div>
                 </div>
 
@@ -167,7 +167,7 @@
                         <div class="chart-panel-header">
                             <div class="chart-panel-title">
                                 <span class="title-icon">📊</span>
-                                소싱처별 수집 상품 & 직배송 비율
+                                <span data-i18n="plat_chart_source_compare">소싱처별 수집 상품 & 직배송 비율</span>
                             </div>
                         </div>
                         <div class="chart-panel-body">
@@ -180,7 +180,7 @@
                         <div class="chart-panel-header">
                             <div class="chart-panel-title">
                                 <span class="title-icon">💰</span>
-                                소싱처별 평균 단가 비교
+                                <span data-i18n="plat_chart_source_price">소싱처별 평균 단가 비교</span>
                             </div>
                         </div>
                         <div class="chart-panel-body">
@@ -196,7 +196,7 @@
                      ============================================================ -->
                 <div class="table-panel">
                     <div class="table-panel-header">
-                        <div class="table-panel-title">📋 1688 vs 타오바오 상세 비교</div>
+                        <div class="table-panel-title" data-i18n="plat_tbl_source_detail">📋 1688 vs 타오바오 상세 비교</div>
                     </div>
                     <table class="platform-compare-table">
                         <thead>
@@ -208,49 +208,49 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>플랫폼 유형</td>
-                                <td>B2B 도매</td>
-                                <td>B2C/C2C</td>
+                                <td data-i18n="plat_t1_r1_label">플랫폼 유형</td>
+                                <td data-i18n="plat_t1_r1_v1">B2B 도매</td>
+                                <td data-i18n="plat_t1_r1_v2">B2C/C2C</td>
                             </tr>
                             <tr>
-                                <td>최소 주문량</td>
-                                <td>보통 10~50개</td>
-                                <td>1개부터 가능</td>
+                                <td data-i18n="plat_t1_r2_label">최소 주문량</td>
+                                <td data-i18n="plat_t1_r2_v1">보통 10~50개</td>
+                                <td data-i18n="plat_t1_r2_v2">1개부터 가능</td>
                             </tr>
                             <tr>
-                                <td>평균 단가</td>
-                                <td>더 저렴 (도매가)</td>
-                                <td>소매가 수준</td>
+                                <td data-i18n="plat_t1_r3_label">평균 단가</td>
+                                <td data-i18n="plat_t1_r3_v1">더 저렴 (도매가)</td>
+                                <td data-i18n="plat_t1_r3_v2">소매가 수준</td>
                             </tr>
                             <tr>
-                                <td>직배송 (한국)</td>
-                                <td>跨境专供 지원</td>
-                                <td>일부 상점 지원</td>
+                                <td data-i18n="plat_t1_r4_label">직배송 (한국)</td>
+                                <td data-i18n="plat_t1_r4_v1">跨境专供 지원</td>
+                                <td data-i18n="plat_t1_r4_v2">일부 상점 지원</td>
                             </tr>
                             <tr>
-                                <td>품질 일관성</td>
-                                <td>공장 직판으로 안정적</td>
-                                <td>판매자별 편차</td>
+                                <td data-i18n="plat_t1_r5_label">품질 일관성</td>
+                                <td data-i18n="plat_t1_r5_v1">공장 직판으로 안정적</td>
+                                <td data-i18n="plat_t1_r5_v2">판매자별 편차</td>
                             </tr>
                             <tr>
-                                <td>상품 다양성</td>
-                                <td>B2B 위주, 벌크</td>
-                                <td>소비자 트렌드 반영</td>
+                                <td data-i18n="plat_t1_r6_label">상품 다양성</td>
+                                <td data-i18n="plat_t1_r6_v1">B2B 위주, 벌크</td>
+                                <td data-i18n="plat_t1_r6_v2">소비자 트렌드 반영</td>
                             </tr>
                             <tr>
-                                <td>샘플 주문</td>
-                                <td>MOQ 협의 필요</td>
-                                <td>소량 구매 용이</td>
+                                <td data-i18n="plat_t1_r7_label">샘플 주문</td>
+                                <td data-i18n="plat_t1_r7_v1">MOQ 협의 필요</td>
+                                <td data-i18n="plat_t1_r7_v2">소량 구매 용이</td>
                             </tr>
                             <tr>
-                                <td>결제</td>
-                                <td>알리페이 / 은행 이체</td>
-                                <td>알리페이 / 위챗페이</td>
+                                <td data-i18n="plat_t1_r8_label">결제</td>
+                                <td data-i18n="plat_t1_r8_v1">알리페이 / 은행 이체</td>
+                                <td data-i18n="plat_t1_r8_v2">알리페이 / 위챗페이</td>
                             </tr>
                             <tr>
-                                <td>추천 용도</td>
-                                <td>대량 소싱, 안정 공급</td>
-                                <td>트렌드 테스트, 소량</td>
+                                <td data-i18n="plat_t1_r9_label">추천 용도</td>
+                                <td data-i18n="plat_t1_r9_v1">대량 소싱, 안정 공급</td>
+                                <td data-i18n="plat_t1_r9_v2">트렌드 테스트, 소량</td>
                             </tr>
                         </tbody>
                     </table>
@@ -260,7 +260,7 @@
                      5. Section Divider: 판매 플랫폼 비교
                      ============================================================ -->
                 <div class="section-divider">
-                    <div class="section-divider-title">🏪 판매 플랫폼 비교 (쿠팡 vs 지마켓 vs 네이버)</div>
+                    <div class="section-divider-title" data-i18n="plat_sec_sell_compare">🏪 판매 플랫폼 비교 (쿠팡 vs 지마켓 vs 네이버)</div>
                     <div class="section-divider-line"></div>
                 </div>
 
@@ -272,7 +272,7 @@
                         <div class="chart-panel-header">
                             <div class="chart-panel-title">
                                 <span class="title-icon">💰</span>
-                                판매 플랫폼별 평균 마진율
+                                <span data-i18n="plat_chart_sell_margin">판매 플랫폼별 평균 마진율</span>
                             </div>
                         </div>
                         <div class="chart-panel-body">
@@ -285,7 +285,7 @@
                         <div class="chart-panel-header">
                             <div class="chart-panel-title">
                                 <span class="title-icon">📦</span>
-                                판매 플랫폼별 추천 상품 수
+                                <span data-i18n="plat_chart_sell_product">판매 플랫폼별 추천 상품 수</span>
                             </div>
                         </div>
                         <div class="chart-panel-body">
@@ -298,7 +298,7 @@
                         <div class="chart-panel-header">
                             <div class="chart-panel-title">
                                 <span class="title-icon">🏷️</span>
-                                판매 플랫폼별 수수료율
+                                <span data-i18n="plat_chart_sell_fee">판매 플랫폼별 수수료율</span>
                             </div>
                         </div>
                         <div class="chart-panel-body">
@@ -314,7 +314,7 @@
                      ============================================================ -->
                 <div class="table-panel">
                     <div class="table-panel-header">
-                        <div class="table-panel-title">📋 쿠팡 vs 지마켓 vs 네이버 상세 비교</div>
+                        <div class="table-panel-title" data-i18n="plat_tbl_sell_detail">📋 쿠팡 vs 지마켓 vs 네이버 상세 비교</div>
                     </div>
                     <table class="platform-compare-table">
                         <thead>
@@ -327,58 +327,58 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>월 방문자</td>
-                                <td>약 3,000만</td>
-                                <td>약 1,200만</td>
-                                <td>약 2,500만</td>
+                                <td data-i18n="plat_t2_r1_label">월 방문자</td>
+                                <td data-i18n="plat_t2_r1_v1">약 3,000만</td>
+                                <td data-i18n="plat_t2_r1_v2">약 1,200만</td>
+                                <td data-i18n="plat_t2_r1_v3">약 2,500만</td>
                             </tr>
                             <tr>
-                                <td>수수료</td>
-                                <td>5~15% (카테고리별)</td>
-                                <td>12~15%</td>
-                                <td>2~6% (결제수수료)</td>
+                                <td data-i18n="th_fee">수수료</td>
+                                <td data-i18n="plat_t2_r2_v1">5~15% (카테고리별)</td>
+                                <td data-i18n="plat_t2_r2_v2">12~15%</td>
+                                <td data-i18n="plat_t2_r2_v3">2~6% (결제수수료)</td>
                             </tr>
                             <tr>
-                                <td>입점 난이도</td>
-                                <td>보통</td>
-                                <td>쉬움</td>
-                                <td>쉬움</td>
+                                <td data-i18n="plat_t2_r3_label">입점 난이도</td>
+                                <td data-i18n="plat_t2_r3_v1">보통</td>
+                                <td data-i18n="plat_t2_r3_v2">쉬움</td>
+                                <td data-i18n="plat_t2_r3_v2">쉬움</td>
                             </tr>
                             <tr>
-                                <td>배송 옵션</td>
-                                <td>로켓배송/일반</td>
-                                <td>스마일배송/일반</td>
-                                <td>오늘출발/일반</td>
+                                <td data-i18n="plat_t2_r4_label">배송 옵션</td>
+                                <td data-i18n="plat_t2_r4_v1">로켓배송/일반</td>
+                                <td data-i18n="plat_t2_r4_v2">스마일배송/일반</td>
+                                <td data-i18n="plat_t2_r4_v3">오늘출발/일반</td>
                             </tr>
                             <tr>
-                                <td>광고 비용</td>
-                                <td>중~높음</td>
-                                <td>보통</td>
-                                <td>중~높음</td>
+                                <td data-i18n="plat_t2_r5_label">광고 비용</td>
+                                <td data-i18n="plat_t2_r5_v1">중~높음</td>
+                                <td data-i18n="plat_t2_r3_v1">보통</td>
+                                <td data-i18n="plat_t2_r5_v1">중~높음</td>
                             </tr>
                             <tr>
-                                <td>리뷰 중요도</td>
-                                <td>매우 높음</td>
-                                <td>높음</td>
-                                <td>높음</td>
+                                <td data-i18n="plat_t2_r6_label">리뷰 중요도</td>
+                                <td data-i18n="plat_t2_r6_v1">매우 높음</td>
+                                <td data-i18n="plat_t2_r6_v2">높음</td>
+                                <td data-i18n="plat_t2_r6_v2">높음</td>
                             </tr>
                             <tr>
-                                <td>검색 노출</td>
-                                <td>쿠팡 내 검색</td>
-                                <td>지마켓 내 검색</td>
-                                <td>네이버 쇼핑 통합</td>
+                                <td data-i18n="plat_t2_r7_label">검색 노출</td>
+                                <td data-i18n="plat_t2_r7_v1">쿠팡 내 검색</td>
+                                <td data-i18n="plat_t2_r7_v2">지마켓 내 검색</td>
+                                <td data-i18n="plat_t2_r7_v3">네이버 쇼핑 통합</td>
                             </tr>
                             <tr>
-                                <td>정산 주기</td>
-                                <td>D+1~3</td>
-                                <td>주 1회</td>
-                                <td>D+1</td>
+                                <td data-i18n="plat_t2_r8_label">정산 주기</td>
+                                <td data-i18n="plat_t2_r8_v1">D+1~3</td>
+                                <td data-i18n="plat_t2_r8_v2">주 1회</td>
+                                <td data-i18n="plat_t2_r8_v3">D+1</td>
                             </tr>
                             <tr>
-                                <td>추천 카테고리</td>
-                                <td>생필품, 전자, 식품</td>
-                                <td>패션, 뷰티, 잡화</td>
-                                <td>인테리어, 뷰티, 핸드메이드</td>
+                                <td data-i18n="plat_t2_r9_label">추천 카테고리</td>
+                                <td data-i18n="plat_t2_r9_v1">생필품, 전자, 식품</td>
+                                <td data-i18n="plat_t2_r9_v2">패션, 뷰티, 잡화</td>
+                                <td data-i18n="plat_t2_r9_v3">인테리어, 뷰티, 핸드메이드</td>
                             </tr>
                         </tbody>
                     </table>
@@ -388,7 +388,7 @@
                      8. Section Divider: 크로스 플랫폼 가격 비교
                      ============================================================ -->
                 <div class="section-divider">
-                    <div class="section-divider-title">🔄 크로스 플랫폼 가격 비교</div>
+                    <div class="section-divider-title" data-i18n="plat_sec_cross_price">🔄 크로스 플랫폼 가격 비교</div>
                     <div class="section-divider-line"></div>
                 </div>
 
@@ -397,7 +397,7 @@
                      ============================================================ -->
                 <div class="table-panel">
                     <div class="table-panel-header">
-                        <div class="table-panel-title">동일 상품 플랫폼별 가격 & 마진 비교</div>
+                        <div class="table-panel-title" data-i18n="plat_tbl_cross_price">동일 상품 플랫폼별 가격 & 마진 비교</div>
                     </div>
                     <div style="overflow-x:auto;">
                         <table class="data-table">
@@ -424,7 +424,7 @@
                                     <td><span class="margin-badge margin-strong">45.8%</span></td>
                                     <td>₩19,800</td>
                                     <td><span class="margin-badge margin-strong">56.1%</span></td>
-                                    <td><span class="sell-platform-tag tag-naver">네이버</span></td>
+                                    <td><span class="sell-platform-tag tag-naver" data-i18n="pf_naver">네이버</span></td>
                                 </tr>
                                 <tr>
                                     <td><strong>LED 무드등 리모컨</strong></td>
@@ -435,7 +435,7 @@
                                     <td><span class="margin-badge margin-good">38.2%</span></td>
                                     <td>₩16,500</td>
                                     <td><span class="margin-badge margin-strong">50.3%</span></td>
-                                    <td><span class="sell-platform-tag tag-naver">네이버</span></td>
+                                    <td><span class="sell-platform-tag tag-naver" data-i18n="pf_naver">네이버</span></td>
                                 </tr>
                                 <tr>
                                     <td><strong>메이크업 브러쉬 15종</strong></td>
@@ -446,7 +446,7 @@
                                     <td><span class="margin-badge margin-strong">52.4%</span></td>
                                     <td>₩11,900</td>
                                     <td><span class="margin-badge margin-strong">53.2%</span></td>
-                                    <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                    <td><span class="sell-platform-tag tag-coupang" data-i18n="pf_coupang">쿠팡</span></td>
                                 </tr>
                                 <tr>
                                     <td><strong>TWS 블루투스 이어폰</strong></td>
@@ -457,7 +457,7 @@
                                     <td><span class="margin-badge margin-good">39.5%</span></td>
                                     <td>₩16,900</td>
                                     <td><span class="margin-badge margin-strong">45.8%</span></td>
-                                    <td><span class="sell-platform-tag tag-naver">네이버</span></td>
+                                    <td><span class="sell-platform-tag tag-naver" data-i18n="pf_naver">네이버</span></td>
                                 </tr>
                                 <tr>
                                     <td><strong>강아지 노즈워크 장난감</strong></td>
@@ -468,7 +468,7 @@
                                     <td><span class="margin-badge margin-good">42.7%</span></td>
                                     <td>₩10,500</td>
                                     <td><span class="margin-badge margin-strong">53.8%</span></td>
-                                    <td><span class="sell-platform-tag tag-naver">네이버</span></td>
+                                    <td><span class="sell-platform-tag tag-naver" data-i18n="pf_naver">네이버</span></td>
                                 </tr>
                                 <tr>
                                     <td><strong>차량용 트렁크 정리함</strong></td>
@@ -479,7 +479,7 @@
                                     <td><span class="margin-badge margin-strong">46.2%</span></td>
                                     <td>₩18,900</td>
                                     <td><span class="margin-badge margin-good">40.1%</span></td>
-                                    <td><span class="sell-platform-tag tag-gmarket">지마켓</span></td>
+                                    <td><span class="sell-platform-tag tag-gmarket" data-i18n="pf_gmarket">지마켓</span></td>
                                 </tr>
                                 <tr>
                                     <td><strong>에코백 캔버스 토트백</strong></td>
@@ -490,7 +490,7 @@
                                     <td><span class="margin-badge margin-good">41.8%</span></td>
                                     <td>₩9,900</td>
                                     <td><span class="margin-badge margin-strong">48.5%</span></td>
-                                    <td><span class="sell-platform-tag tag-naver">네이버</span></td>
+                                    <td><span class="sell-platform-tag tag-naver" data-i18n="pf_naver">네이버</span></td>
                                 </tr>
                                 <tr>
                                     <td><strong>USB-C 고속충전 케이블</strong></td>
@@ -501,7 +501,7 @@
                                     <td><span class="margin-badge margin-good">42.3%</span></td>
                                     <td>₩7,500</td>
                                     <td><span class="margin-badge margin-strong">50.1%</span></td>
-                                    <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                    <td><span class="sell-platform-tag tag-coupang" data-i18n="pf_coupang">쿠팡</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -532,17 +532,17 @@
             new Chart(ctx1, {
                 type: 'bar',
                 data: {
-                    labels: ['1688', '타오바오'],
+                    labels: ['1688', I18N.t('pf_taobao')],
                     datasets: [
                         {
-                            label: '수집 상품',
+                            label: I18N.t('plat_collected_products'),
                             data: [0, 0],
                             backgroundColor: 'rgba(255,106,0,0.7)',
                             borderRadius: 6,
                             barThickness: 40
                         },
                         {
-                            label: '직배송 가능',
+                            label: I18N.t('plat_direct_ship_avail'),
                             data: [218, 89],
                             backgroundColor: 'rgba(16,185,129,0.7)',
                             borderRadius: 6,
@@ -576,7 +576,7 @@
             new Chart(ctx2, {
                 type: 'bar',
                 data: {
-                    labels: ['주방용품', '전자기기', '홈인테리어', '뷰티도구', '패션잡화', '반려동물'],
+                    labels: [I18N.t('plat_cat_kitchen'), I18N.t('plat_cat_electronics'), I18N.t('plat_cat_home'), I18N.t('plat_cat_beauty'), I18N.t('plat_cat_fashion'), I18N.t('plat_cat_pet')],
                     datasets: [
                         {
                             label: '1688 (元)',
@@ -586,7 +586,7 @@
                             barThickness: 18
                         },
                         {
-                            label: '타오바오 (元)',
+                            label: I18N.t('pf_taobao') + ' (元)',
                             data: [16.8, 28.5, 24.0, 12.0, 8.2, 9.5],
                             backgroundColor: 'rgba(255,68,0,0.7)',
                             borderRadius: 6,
@@ -620,9 +620,9 @@
             new Chart(ctx3, {
                 type: 'bar',
                 data: {
-                    labels: ['쿠팡', '지마켓', '네이버'],
+                    labels: [I18N.t('pf_coupang'), I18N.t('pf_gmarket'), I18N.t('pf_naver')],
                     datasets: [{
-                        label: '평균 마진율(%)',
+                        label: I18N.t('plat_avg_margin_rate'),
                         data: [41.2, 38.5, 43.8],
                         backgroundColor: [
                             'rgba(228,37,40,0.7)',
@@ -655,7 +655,7 @@
             new Chart(ctx4, {
                 type: 'doughnut',
                 data: {
-                    labels: ['쿠팡', '지마켓', '네이버'],
+                    labels: [I18N.t('pf_coupang'), I18N.t('pf_gmarket'), I18N.t('pf_naver')],
                     datasets: [{
                         data: [63, 48, 52],
                         backgroundColor: [
@@ -689,17 +689,17 @@
             new Chart(ctx5, {
                 type: 'bar',
                 data: {
-                    labels: ['쿠팡', '지마켓', '네이버'],
+                    labels: [I18N.t('pf_coupang'), I18N.t('pf_gmarket'), I18N.t('pf_naver')],
                     datasets: [
                         {
-                            label: '최소 수수료(%)',
+                            label: I18N.t('plat_min_fee'),
                             data: [5, 12, 2],
                             backgroundColor: 'rgba(37,99,235,0.4)',
                             borderRadius: 6,
                             barThickness: 32
                         },
                         {
-                            label: '최대 수수료(%)',
+                            label: I18N.t('plat_max_fee'),
                             data: [15, 15, 6],
                             backgroundColor: 'rgba(239,68,68,0.5)',
                             borderRadius: 6,
@@ -741,7 +741,7 @@
 
         var platforms = {};
         products.forEach(function(p) {
-            var k = p.platform || '기타';
+            var k = p.platform || (window.I18N ? I18N.t('plat_other') : '기타');
             if (!platforms[k]) platforms[k] = { count: 0, totalPrice: 0, withPrice: 0, products: [] };
             platforms[k].count++;
             platforms[k].products.push(p);
@@ -776,10 +776,164 @@
                 var p = platforms[k];
                 var avg = p.withPrice > 0 ? Math.round(p.totalPrice / p.withPrice) : 0;
                 var topProduct = p.products.sort(function(a,b){return (parseInt(b.reviewCount)||0)-(parseInt(a.reviewCount)||0)})[0];
-                return '<tr><td style="font-weight:600">'+k+'</td><td>'+p.count+'개</td><td>'+(avg>0?(k==='1688'?'¥'+avg:'₩'+avg.toLocaleString()):'-')+'</td><td>'+(topProduct?topProduct.name.substring(0,20):'-')+'</td><td><span style="font-size:.7rem;padding:2px 6px;border-radius:4px;background:rgba(139,92,246,.15);color:#a78bfa">실제</span></td></tr>';
+                var unitLabel = window.I18N ? I18N.t('plat_unit_count') : '개';
+                var actualLabel = window.I18N ? I18N.t('plat_actual_badge') : '실제';
+                return '<tr><td style="font-weight:600">'+k+'</td><td>'+p.count+unitLabel+'</td><td>'+(avg>0?(k==='1688'?'¥'+avg:'₩'+avg.toLocaleString()):'-')+'</td><td>'+(topProduct?topProduct.name.substring(0,20):'-')+'</td><td><span style="font-size:.7rem;padding:2px 6px;border-radius:4px;background:rgba(139,92,246,.15);color:#a78bfa">'+actualLabel+'</span></td></tr>';
             }).join('');
         }
     })();
+    </script>
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                plat_doc_title: '소싱 트래커 | 플랫폼 비교',
+                plat_last_updated: '마지막 업데이트:', plat_exchange_rate: '| 환율: 1 CNY = 190.5 KRW', plat_refresh: '새로고침',
+                plat_po_1688_sub: '중국 B2B 도매', plat_collected: '수집', plat_unit_count: '개', plat_direct_ship: '직배송',
+                plat_po_taobao_name: '타오바오 (淘宝)', plat_po_taobao_sub: '중국 B2C/C2C', plat_po_coupang_sub: '한국 1위 이커머스',
+                plat_popular: '인기상품', plat_po_gmarket_sub: '한국 종합 마켓', plat_po_naver_name: '네이버 스마트스토어', plat_po_naver_sub: '한국 검색 기반',
+                plat_sec_source_compare: '⚖️ 소싱 플랫폼 비교 (1688 vs 타오바오)',
+                plat_chart_source_compare: '소싱처별 수집 상품 & 직배송 비율', plat_chart_source_price: '소싱처별 평균 단가 비교',
+                plat_tbl_source_detail: '📋 1688 vs 타오바오 상세 비교',
+                plat_t1_r1_label: '플랫폼 유형', plat_t1_r1_v1: 'B2B 도매', plat_t1_r1_v2: 'B2C/C2C',
+                plat_t1_r2_label: '최소 주문량', plat_t1_r2_v1: '보통 10~50개', plat_t1_r2_v2: '1개부터 가능',
+                plat_t1_r3_label: '평균 단가', plat_t1_r3_v1: '더 저렴 (도매가)', plat_t1_r3_v2: '소매가 수준',
+                plat_t1_r4_label: '직배송 (한국)', plat_t1_r4_v1: '跨境专供 지원', plat_t1_r4_v2: '일부 상점 지원',
+                plat_t1_r5_label: '품질 일관성', plat_t1_r5_v1: '공장 직판으로 안정적', plat_t1_r5_v2: '판매자별 편차',
+                plat_t1_r6_label: '상품 다양성', plat_t1_r6_v1: 'B2B 위주, 벌크', plat_t1_r6_v2: '소비자 트렌드 반영',
+                plat_t1_r7_label: '샘플 주문', plat_t1_r7_v1: 'MOQ 협의 필요', plat_t1_r7_v2: '소량 구매 용이',
+                plat_t1_r8_label: '결제', plat_t1_r8_v1: '알리페이 / 은행 이체', plat_t1_r8_v2: '알리페이 / 위챗페이',
+                plat_t1_r9_label: '추천 용도', plat_t1_r9_v1: '대량 소싱, 안정 공급', plat_t1_r9_v2: '트렌드 테스트, 소량',
+                plat_sec_sell_compare: '🏪 판매 플랫폼 비교 (쿠팡 vs 지마켓 vs 네이버)',
+                plat_chart_sell_margin: '판매 플랫폼별 평균 마진율', plat_chart_sell_product: '판매 플랫폼별 추천 상품 수', plat_chart_sell_fee: '판매 플랫폼별 수수료율',
+                plat_tbl_sell_detail: '📋 쿠팡 vs 지마켓 vs 네이버 상세 비교',
+                plat_t2_r1_label: '월 방문자', plat_t2_r1_v1: '약 3,000만', plat_t2_r1_v2: '약 1,200만', plat_t2_r1_v3: '약 2,500만',
+                plat_t2_r2_v1: '5~15% (카테고리별)', plat_t2_r2_v2: '12~15%', plat_t2_r2_v3: '2~6% (결제수수료)',
+                plat_t2_r3_label: '입점 난이도', plat_t2_r3_v1: '보통', plat_t2_r3_v2: '쉬움',
+                plat_t2_r4_label: '배송 옵션', plat_t2_r4_v1: '로켓배송/일반', plat_t2_r4_v2: '스마일배송/일반', plat_t2_r4_v3: '오늘출발/일반',
+                plat_t2_r5_label: '광고 비용', plat_t2_r5_v1: '중~높음',
+                plat_t2_r6_label: '리뷰 중요도', plat_t2_r6_v1: '매우 높음', plat_t2_r6_v2: '높음',
+                plat_t2_r7_label: '검색 노출', plat_t2_r7_v1: '쿠팡 내 검색', plat_t2_r7_v2: '지마켓 내 검색', plat_t2_r7_v3: '네이버 쇼핑 통합',
+                plat_t2_r8_label: '정산 주기', plat_t2_r8_v1: 'D+1~3', plat_t2_r8_v2: '주 1회', plat_t2_r8_v3: 'D+1',
+                plat_t2_r9_label: '추천 카테고리', plat_t2_r9_v1: '생필품, 전자, 식품', plat_t2_r9_v2: '패션, 뷰티, 잡화', plat_t2_r9_v3: '인테리어, 뷰티, 핸드메이드',
+                plat_sec_cross_price: '🔄 크로스 플랫폼 가격 비교', plat_tbl_cross_price: '동일 상품 플랫폼별 가격 & 마진 비교',
+                plat_collected_products: '수집 상품', plat_direct_ship_avail: '직배송 가능',
+                plat_cat_kitchen: '주방용품', plat_cat_electronics: '전자기기', plat_cat_home: '홈인테리어',
+                plat_cat_beauty: '뷰티도구', plat_cat_fashion: '패션잡화', plat_cat_pet: '반려동물',
+                plat_avg_margin_rate: '평균 마진율(%)', plat_min_fee: '최소 수수료(%)', plat_max_fee: '최대 수수료(%)',
+                plat_other: '기타', plat_actual_badge: '실제'
+            },
+            en: {
+                plat_doc_title: 'Sourcing Tracker | Platform Comparison',
+                plat_last_updated: 'Last updated:', plat_exchange_rate: '| Rate: 1 CNY = 190.5 KRW', plat_refresh: 'Refresh',
+                plat_po_1688_sub: 'China B2B Wholesale', plat_collected: 'Collected', plat_unit_count: ' items', plat_direct_ship: 'Direct Ship',
+                plat_po_taobao_name: 'Taobao (淘宝)', plat_po_taobao_sub: 'China B2C/C2C', plat_po_coupang_sub: "Korea's #1 E-commerce",
+                plat_popular: 'Popular', plat_po_gmarket_sub: 'Korea General Marketplace', plat_po_naver_name: 'Naver Smart Store', plat_po_naver_sub: 'Korea Search-based',
+                plat_sec_source_compare: '⚖️ Sourcing Platform Comparison (1688 vs Taobao)',
+                plat_chart_source_compare: 'Collected Products & Direct-ship Rate by Source', plat_chart_source_price: 'Average Unit Price by Source',
+                plat_tbl_source_detail: '📋 1688 vs Taobao Detailed Comparison',
+                plat_t1_r1_label: 'Platform Type', plat_t1_r1_v1: 'B2B Wholesale', plat_t1_r1_v2: 'B2C/C2C',
+                plat_t1_r2_label: 'Minimum Order', plat_t1_r2_v1: 'Usually 10-50 pcs', plat_t1_r2_v2: 'From 1 piece',
+                plat_t1_r3_label: 'Average Price', plat_t1_r3_v1: 'Cheaper (wholesale)', plat_t1_r3_v2: 'Retail-level pricing',
+                plat_t1_r4_label: 'Direct Ship (Korea)', plat_t1_r4_v1: 'Cross-border exclusive support', plat_t1_r4_v2: 'Supported by some stores',
+                plat_t1_r5_label: 'Quality Consistency', plat_t1_r5_v1: 'Stable via factory-direct', plat_t1_r5_v2: 'Varies by seller',
+                plat_t1_r6_label: 'Product Variety', plat_t1_r6_v1: 'B2B-focused, bulk', plat_t1_r6_v2: 'Reflects consumer trends',
+                plat_t1_r7_label: 'Sample Order', plat_t1_r7_v1: 'MOQ negotiation needed', plat_t1_r7_v2: 'Easy small-quantity buying',
+                plat_t1_r8_label: 'Payment', plat_t1_r8_v1: 'Alipay / Bank transfer', plat_t1_r8_v2: 'Alipay / WeChat Pay',
+                plat_t1_r9_label: 'Recommended Use', plat_t1_r9_v1: 'Bulk sourcing, stable supply', plat_t1_r9_v2: 'Trend testing, small batch',
+                plat_sec_sell_compare: '🏪 Selling Platform Comparison (Coupang vs Gmarket vs Naver)',
+                plat_chart_sell_margin: 'Average Margin Rate by Selling Platform', plat_chart_sell_product: 'Recommended Product Count by Platform', plat_chart_sell_fee: 'Fee Rate by Selling Platform',
+                plat_tbl_sell_detail: '📋 Coupang vs Gmarket vs Naver Detailed Comparison',
+                plat_t2_r1_label: 'Monthly Visitors', plat_t2_r1_v1: 'approx. 30M', plat_t2_r1_v2: 'approx. 12M', plat_t2_r1_v3: 'approx. 25M',
+                plat_t2_r2_v1: '5-15% (by category)', plat_t2_r2_v2: '12-15%', plat_t2_r2_v3: '2-6% (payment fee)',
+                plat_t2_r3_label: 'Onboarding Difficulty', plat_t2_r3_v1: 'Moderate', plat_t2_r3_v2: 'Easy',
+                plat_t2_r4_label: 'Shipping Options', plat_t2_r4_v1: 'Rocket/Standard', plat_t2_r4_v2: 'Smile Delivery/Standard', plat_t2_r4_v3: 'Ships Today/Standard',
+                plat_t2_r5_label: 'Ad Cost', plat_t2_r5_v1: 'Medium-High',
+                plat_t2_r6_label: 'Review Importance', plat_t2_r6_v1: 'Very High', plat_t2_r6_v2: 'High',
+                plat_t2_r7_label: 'Search Exposure', plat_t2_r7_v1: 'Within Coupang search', plat_t2_r7_v2: 'Within Gmarket search', plat_t2_r7_v3: 'Integrated with Naver Shopping',
+                plat_t2_r8_label: 'Settlement Cycle', plat_t2_r8_v1: 'D+1~3', plat_t2_r8_v2: 'Weekly', plat_t2_r8_v3: 'D+1',
+                plat_t2_r9_label: 'Recommended Categories', plat_t2_r9_v1: 'Daily essentials, electronics, food', plat_t2_r9_v2: 'Fashion, beauty, general goods', plat_t2_r9_v3: 'Interior, beauty, handmade',
+                plat_sec_cross_price: '🔄 Cross-Platform Price Comparison', plat_tbl_cross_price: 'Same Product Price & Margin by Platform',
+                plat_collected_products: 'Collected Products', plat_direct_ship_avail: 'Direct-ship Available',
+                plat_cat_kitchen: 'Kitchenware', plat_cat_electronics: 'Electronics', plat_cat_home: 'Home Interior',
+                plat_cat_beauty: 'Beauty Tools', plat_cat_fashion: 'Fashion Accessories', plat_cat_pet: 'Pet Supplies',
+                plat_avg_margin_rate: 'Avg Margin Rate (%)', plat_min_fee: 'Min Fee (%)', plat_max_fee: 'Max Fee (%)',
+                plat_other: 'Other', plat_actual_badge: 'Live'
+            },
+            zh: {
+                plat_doc_title: '采购追踪器 | 平台比较',
+                plat_last_updated: '最后更新:', plat_exchange_rate: '| 汇率: 1 CNY = 190.5 KRW', plat_refresh: '刷新',
+                plat_po_1688_sub: '中国B2B批发', plat_collected: '采集', plat_unit_count: '个', plat_direct_ship: '直邮',
+                plat_po_taobao_name: '淘宝', plat_po_taobao_sub: '中国B2C/C2C', plat_po_coupang_sub: '韩国第一电商平台',
+                plat_popular: '热门商品', plat_po_gmarket_sub: '韩国综合商城', plat_po_naver_name: 'Naver智能商店', plat_po_naver_sub: '韩国搜索导流',
+                plat_sec_source_compare: '⚖️ 采购平台比较 (1688 vs 淘宝)',
+                plat_chart_source_compare: '各采购源采集商品与直邮比例', plat_chart_source_price: '各采购源平均单价比较',
+                plat_tbl_source_detail: '📋 1688 vs 淘宝 详细比较',
+                plat_t1_r1_label: '平台类型', plat_t1_r1_v1: 'B2B批发', plat_t1_r1_v2: 'B2C/C2C',
+                plat_t1_r2_label: '最小订购量', plat_t1_r2_v1: '通常10~50件', plat_t1_r2_v2: '1件起',
+                plat_t1_r3_label: '平均单价', plat_t1_r3_v1: '更便宜(批发价)', plat_t1_r3_v2: '零售价水平',
+                plat_t1_r4_label: '直邮(韩国)', plat_t1_r4_v1: '支持跨境专供', plat_t1_r4_v2: '部分店铺支持',
+                plat_t1_r5_label: '品质一致性', plat_t1_r5_v1: '工厂直销较稳定', plat_t1_r5_v2: '因卖家而异',
+                plat_t1_r6_label: '商品多样性', plat_t1_r6_v1: '以B2B为主,批量', plat_t1_r6_v2: '反映消费趋势',
+                plat_t1_r7_label: '样品订购', plat_t1_r7_v1: '需协商起订量(MOQ)', plat_t1_r7_v2: '易于小批量购买',
+                plat_t1_r8_label: '支付', plat_t1_r8_v1: '支付宝/银行转账', plat_t1_r8_v2: '支付宝/微信支付',
+                plat_t1_r9_label: '推荐用途', plat_t1_r9_v1: '大批量采购,稳定供应', plat_t1_r9_v2: '趋势测试,小批量',
+                plat_sec_sell_compare: '🏪 销售平台比较 (Coupang vs Gmarket vs Naver)',
+                plat_chart_sell_margin: '各销售平台平均利润率', plat_chart_sell_product: '各销售平台推荐商品数', plat_chart_sell_fee: '各销售平台手续费率',
+                plat_tbl_sell_detail: '📋 Coupang vs Gmarket vs Naver 详细比较',
+                plat_t2_r1_label: '月访问量', plat_t2_r1_v1: '约3,000万', plat_t2_r1_v2: '约1,200万', plat_t2_r1_v3: '约2,500万',
+                plat_t2_r2_v1: '5~15%(按类目)', plat_t2_r2_v2: '12~15%', plat_t2_r2_v3: '2~6%(支付手续费)',
+                plat_t2_r3_label: '入驻难度', plat_t2_r3_v1: '一般', plat_t2_r3_v2: '容易',
+                plat_t2_r4_label: '配送选项', plat_t2_r4_v1: '火箭配送/普通', plat_t2_r4_v2: '微笑配送/普通', plat_t2_r4_v3: '今日发货/普通',
+                plat_t2_r5_label: '广告费用', plat_t2_r5_v1: '中~高',
+                plat_t2_r6_label: '评价重要性', plat_t2_r6_v1: '非常高', plat_t2_r6_v2: '高',
+                plat_t2_r7_label: '搜索曝光', plat_t2_r7_v1: 'Coupang站内搜索', plat_t2_r7_v2: 'Gmarket站内搜索', plat_t2_r7_v3: '整合Naver购物',
+                plat_t2_r8_label: '结算周期', plat_t2_r8_v1: 'D+1~3', plat_t2_r8_v2: '每周1次', plat_t2_r8_v3: 'D+1',
+                plat_t2_r9_label: '推荐类目', plat_t2_r9_v1: '生活用品、电子、食品', plat_t2_r9_v2: '时尚、美妆、杂货', plat_t2_r9_v3: '家居、美妆、手工',
+                plat_sec_cross_price: '🔄 跨平台价格比较', plat_tbl_cross_price: '同一商品各平台价格与利润比较',
+                plat_collected_products: '采集商品', plat_direct_ship_avail: '可直邮',
+                plat_cat_kitchen: '厨房用品', plat_cat_electronics: '电子产品', plat_cat_home: '家居装饰',
+                plat_cat_beauty: '美妆工具', plat_cat_fashion: '时尚杂货', plat_cat_pet: '宠物用品',
+                plat_avg_margin_rate: '平均利润率(%)', plat_min_fee: '最低手续费(%)', plat_max_fee: '最高手续费(%)',
+                plat_other: '其他', plat_actual_badge: '实际'
+            },
+            vi: {
+                plat_doc_title: 'Trình theo dõi nguồn hàng | So sánh nền tảng',
+                plat_last_updated: 'Cập nhật lần cuối:', plat_exchange_rate: '| Tỷ giá: 1 CNY = 190.5 KRW', plat_refresh: 'Làm mới',
+                plat_po_1688_sub: 'Bán buôn B2B Trung Quốc', plat_collected: 'Thu thập', plat_unit_count: ' sản phẩm', plat_direct_ship: 'Ship trực tiếp',
+                plat_po_taobao_name: 'Taobao (淘宝)', plat_po_taobao_sub: 'B2C/C2C Trung Quốc', plat_po_coupang_sub: 'Sàn TMĐT số 1 Hàn Quốc',
+                plat_popular: 'SP phổ biến', plat_po_gmarket_sub: 'Chợ tổng hợp Hàn Quốc', plat_po_naver_name: 'Naver Smart Store', plat_po_naver_sub: 'Dựa trên tìm kiếm Hàn Quốc',
+                plat_sec_source_compare: '⚖️ So sánh nền tảng nguồn hàng (1688 vs Taobao)',
+                plat_chart_source_compare: 'Sản phẩm thu thập & tỷ lệ ship trực tiếp theo nguồn', plat_chart_source_price: 'So sánh đơn giá trung bình theo nguồn',
+                plat_tbl_source_detail: '📋 So sánh chi tiết 1688 vs Taobao',
+                plat_t1_r1_label: 'Loại nền tảng', plat_t1_r1_v1: 'Bán buôn B2B', plat_t1_r1_v2: 'B2C/C2C',
+                plat_t1_r2_label: 'Số lượng đặt tối thiểu', plat_t1_r2_v1: 'Thường 10-50 sản phẩm', plat_t1_r2_v2: 'Từ 1 sản phẩm',
+                plat_t1_r3_label: 'Đơn giá trung bình', plat_t1_r3_v1: 'Rẻ hơn (giá sỉ)', plat_t1_r3_v2: 'Mức giá bán lẻ',
+                plat_t1_r4_label: 'Ship trực tiếp (Hàn Quốc)', plat_t1_r4_v1: 'Hỗ trợ chuyên tuyến xuyên biên giới', plat_t1_r4_v2: 'Một số cửa hàng hỗ trợ',
+                plat_t1_r5_label: 'Tính nhất quán chất lượng', plat_t1_r5_v1: 'Ổn định nhờ bán trực tiếp từ nhà máy', plat_t1_r5_v2: 'Khác nhau theo người bán',
+                plat_t1_r6_label: 'Đa dạng sản phẩm', plat_t1_r6_v1: 'Chủ yếu B2B, số lượng lớn', plat_t1_r6_v2: 'Phản ánh xu hướng tiêu dùng',
+                plat_t1_r7_label: 'Đặt hàng mẫu', plat_t1_r7_v1: 'Cần thương lượng MOQ', plat_t1_r7_v2: 'Dễ mua số lượng nhỏ',
+                plat_t1_r8_label: 'Thanh toán', plat_t1_r8_v1: 'Alipay / Chuyển khoản ngân hàng', plat_t1_r8_v2: 'Alipay / WeChat Pay',
+                plat_t1_r9_label: 'Mục đích khuyến nghị', plat_t1_r9_v1: 'Nguồn hàng số lượng lớn, cung ứng ổn định', plat_t1_r9_v2: 'Thử nghiệm xu hướng, số lượng nhỏ',
+                plat_sec_sell_compare: '🏪 So sánh nền tảng bán hàng (Coupang vs Gmarket vs Naver)',
+                plat_chart_sell_margin: 'Tỷ lệ lợi nhuận trung bình theo nền tảng bán hàng', plat_chart_sell_product: 'Số sản phẩm đề xuất theo nền tảng', plat_chart_sell_fee: 'Tỷ lệ phí theo nền tảng bán hàng',
+                plat_tbl_sell_detail: '📋 So sánh chi tiết Coupang vs Gmarket vs Naver',
+                plat_t2_r1_label: 'Lượt truy cập hàng tháng', plat_t2_r1_v1: 'khoảng 30 triệu', plat_t2_r1_v2: 'khoảng 12 triệu', plat_t2_r1_v3: 'khoảng 25 triệu',
+                plat_t2_r2_v1: '5-15% (theo danh mục)', plat_t2_r2_v2: '12-15%', plat_t2_r2_v3: '2-6% (phí thanh toán)',
+                plat_t2_r3_label: 'Độ khó gia nhập', plat_t2_r3_v1: 'Trung bình', plat_t2_r3_v2: 'Dễ',
+                plat_t2_r4_label: 'Tùy chọn vận chuyển', plat_t2_r4_v1: 'Rocket/Tiêu chuẩn', plat_t2_r4_v2: 'Smile Delivery/Tiêu chuẩn', plat_t2_r4_v3: 'Giao hôm nay/Tiêu chuẩn',
+                plat_t2_r5_label: 'Chi phí quảng cáo', plat_t2_r5_v1: 'Trung bình-Cao',
+                plat_t2_r6_label: 'Tầm quan trọng đánh giá', plat_t2_r6_v1: 'Rất cao', plat_t2_r6_v2: 'Cao',
+                plat_t2_r7_label: 'Hiển thị tìm kiếm', plat_t2_r7_v1: 'Tìm kiếm trong Coupang', plat_t2_r7_v2: 'Tìm kiếm trong Gmarket', plat_t2_r7_v3: 'Tích hợp Naver Shopping',
+                plat_t2_r8_label: 'Chu kỳ thanh toán', plat_t2_r8_v1: 'D+1~3', plat_t2_r8_v2: '1 lần/tuần', plat_t2_r8_v3: 'D+1',
+                plat_t2_r9_label: 'Danh mục khuyến nghị', plat_t2_r9_v1: 'Nhu yếu phẩm, điện tử, thực phẩm', plat_t2_r9_v2: 'Thời trang, làm đẹp, tạp hóa', plat_t2_r9_v3: 'Nội thất, làm đẹp, đồ thủ công',
+                plat_sec_cross_price: '🔄 So sánh giá đa nền tảng', plat_tbl_cross_price: 'So sánh giá & lợi nhuận cùng sản phẩm theo nền tảng',
+                plat_collected_products: 'Sản phẩm thu thập', plat_direct_ship_avail: 'Có thể ship trực tiếp',
+                plat_cat_kitchen: 'Đồ nhà bếp', plat_cat_electronics: 'Thiết bị điện tử', plat_cat_home: 'Nội thất gia đình',
+                plat_cat_beauty: 'Dụng cụ làm đẹp', plat_cat_fashion: 'Phụ kiện thời trang', plat_cat_pet: 'Đồ dùng thú cưng',
+                plat_avg_margin_rate: 'Tỷ lệ lợi nhuận TB (%)', plat_min_fee: 'Phí tối thiểu (%)', plat_max_fee: 'Phí tối đa (%)',
+                plat_other: 'Khác', plat_actual_badge: 'Thực tế'
+            }
+        };
     </script>
     <script src="js/i18n-auto.js"></script>
     <script src="js/i18n-common.js"></script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DB 데이터 | 소싱 트래커</title>
+    <title data-i18n="db_doc_title">DB 데이터 | 소싱 트래커</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/mobile-fix.css">
     <style>
@@ -51,14 +51,14 @@
             </nav>
         </aside>
         <div class="main-content">
-            <header class="top-bar"><div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">💾 DB 데이터 보기</div><div class="top-bar-date">Supabase에 저장된 수집 데이터</div></div></div></header>
+            <header class="top-bar"><div class="top-bar-left"><button class="mobile-menu-btn" id="mobileMenuBtn">☰</button><div><div class="top-bar-title">💾 DB 데이터 보기</div><div class="top-bar-date" data-i18n="db_subtitle">Supabase에 저장된 수집 데이터</div></div></div></header>
             <div class="content-area">
-                <div class="db-header"><h1>수집 데이터 <span id="totalCount" style="color:#3b82f6">로딩중...</span></h1><div class="db-stats"><span class="db-stat" id="statPlatforms">-</span><span class="db-stat" id="statDate">-</span></div></div>
+                <div class="db-header"><h1><span data-i18n="db_collected_data">수집 데이터</span> <span id="totalCount" style="color:#3b82f6">로딩중...</span></h1><div class="db-stats"><span class="db-stat" id="statPlatforms">-</span><span class="db-stat" id="statDate">-</span></div></div>
                 <div class="db-filters">
-                    <select id="fPlatform" onchange="loadData()"><option value="">전체 플랫폼</option><option>쿠팡</option><option>무신사</option><option>지마켓</option><option>네이버</option><option>1688</option><option>wconcept</option></select>
-                    <select id="fSort" onchange="loadData()"><option value="scraped_at.desc">최신순</option><option value="price.desc">가격 높은순</option><option value="price.asc">가격 낮은순</option><option value="review_count.desc">리뷰 많은순</option><option value="rating.desc">평점 높은순</option></select>
-                    <input type="text" id="fSearch" placeholder="상품명 검색..." oninput="loadData()">
-                    <div class="view-toggle"><button class="view-btn active" onclick="setView('grid',this)">🖼 사진</button><button class="view-btn" onclick="setView('list',this)">📋 리스트</button></div>
+                    <select id="fPlatform" onchange="loadData()"><option value="" data-i18n="db_filter_all_platform">전체 플랫폼</option><option>쿠팡</option><option>무신사</option><option>지마켓</option><option>네이버</option><option>1688</option><option>wconcept</option></select>
+                    <select id="fSort" onchange="loadData()"><option value="scraped_at.desc" data-i18n="db_sort_latest">최신순</option><option value="price.desc" data-i18n="db_sort_price_desc">가격 높은순</option><option value="price.asc" data-i18n="db_sort_price_asc">가격 낮은순</option><option value="review_count.desc" data-i18n="db_sort_review_desc">리뷰 많은순</option><option value="rating.desc" data-i18n="db_sort_rating_desc">평점 높은순</option></select>
+                    <input type="text" id="fSearch" placeholder="상품명 검색..." data-i18n-ph="db_search_ph" oninput="loadData()">
+                    <div class="view-toggle"><button class="view-btn active" onclick="setView('grid',this)" data-i18n="db_view_grid">🖼 사진</button><button class="view-btn" onclick="setView('list',this)" data-i18n="db_view_list">📋 리스트</button></div>
                 </div>
                 <div id="gridView" class="product-grid"></div>
                 <div id="listView" style="display:none;overflow-x:auto"><table class="p-table"><thead><tr><th>이미지</th><th onclick="sortCol('name')">상품명</th><th onclick="sortCol('price')">가격</th><th onclick="sortCol('platform')">플랫폼</th><th onclick="sortCol('review_count')">리뷰</th><th onclick="sortCol('rating')">평점</th><th>날짜</th><th>링크</th></tr></thead><tbody id="tableBody"></tbody></table></div>
@@ -80,15 +80,15 @@
                 var products=await DB.query('products',params);
                 if(!Array.isArray(products))products=[];
                 allProducts=products;
-                document.getElementById('totalCount').textContent=products.length+'개';
-                var platforms={};products.forEach(function(p){var k=p.platform||'기타';if(!platforms[k])platforms[k]=0;platforms[k]++});
+                document.getElementById('totalCount').textContent=I18N.t('db_count_template').replace('{n}',products.length);
+                var platforms={};products.forEach(function(p){var k=p.platform||I18N.t('db_platform_other');if(!platforms[k])platforms[k]=0;platforms[k]++});
                 document.getElementById('statPlatforms').textContent=Object.keys(platforms).map(function(k){return k+' '+platforms[k]}).join(' · ');
                 var dates=products.map(function(p){return p.scraped_at?p.scraped_at.substring(0,10):''}).filter(Boolean);
-                document.getElementById('statDate').textContent=[...new Set(dates)].length+'일간';
+                document.getElementById('statDate').textContent=I18N.t('db_days_template').replace('{n}',[...new Set(dates)].length);
                 currentPage=1;render();
             }catch(e){
-                document.getElementById('totalCount').textContent='DB 연결 실패';
-                document.getElementById('gridView').innerHTML='<div style="text-align:center;color:#ef4444;padding:40px;grid-column:1/-1">Supabase 연결 실패<br><small>종합 현황에서 크롤링을 먼저 실행하세요</small></div>';
+                document.getElementById('totalCount').textContent=I18N.t('db_conn_fail');
+                document.getElementById('gridView').innerHTML='<div style="text-align:center;color:#ef4444;padding:40px;grid-column:1/-1">'+I18N.t('db_conn_fail')+'<br><small>'+I18N.t('db_conn_fail_hint')+'</small></div>';
             }
         }
         function render(){
@@ -96,11 +96,11 @@
             document.getElementById('gridView').innerHTML=page.map(function(p){
                 var price=p.currency==='CNY'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
                 var date=p.scraped_at?p.scraped_at.substring(0,10):'';
-                return '<div class="p-card" onclick="'+(p.url?"window.open('"+p.url.replace(/'/g,'')+"')":"")+'"><img src="'+(p.image||'')+'" onerror="this.outerHTML=\'<div style=&quot;padding:40px;text-align:center;color:#64748B;background:#f1f5f9;height:160px;display:flex;align-items:center;justify-content:center&quot;>📦</div>\'"><div class="p-card-body"><div class="p-card-name">'+(p.name||'')+'</div><div class="p-card-price">'+price+'</div><div class="p-card-meta"><span class="p-card-tag">'+(p.platform||'')+'</span><span>'+(p.review_count?'리뷰 '+p.review_count:'')+'</span></div><div class="p-card-meta"><span>'+date+'</span>'+(p.rating?'<span>⭐'+p.rating+'</span>':'')+'</div></div></div>';
-            }).join('')||'<div style="text-align:center;color:#64748B;padding:40px;grid-column:1/-1">데이터 없음 - 크롤링을 먼저 실행하세요</div>';
+                return '<div class="p-card" onclick="'+(p.url?"window.open('"+p.url.replace(/'/g,'')+"')":"")+'"><img src="'+(p.image||'')+'" onerror="this.outerHTML=\'<div style=&quot;padding:40px;text-align:center;color:#64748B;background:#f1f5f9;height:160px;display:flex;align-items:center;justify-content:center&quot;>📦</div>\'"><div class="p-card-body"><div class="p-card-name">'+(p.name||'')+'</div><div class="p-card-price">'+price+'</div><div class="p-card-meta"><span class="p-card-tag">'+(p.platform||'')+'</span><span>'+(p.review_count?I18N.t('db_review_prefix')+p.review_count:'')+'</span></div><div class="p-card-meta"><span>'+date+'</span>'+(p.rating?'<span>⭐'+p.rating+'</span>':'')+'</div></div></div>';
+            }).join('')||'<div style="text-align:center;color:#64748B;padding:40px;grid-column:1/-1">'+I18N.t('db_empty_msg')+'</div>';
             document.getElementById('tableBody').innerHTML=page.map(function(p){
                 var price=p.currency==='CNY'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
-                return '<tr><td>'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📦\'">':'📦')+'</td><td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(p.name||'')+'</td><td style="font-weight:700;color:#e42528">'+price+'</td><td><span class="p-card-tag">'+(p.platform||'')+'</span></td><td>'+(p.review_count||'-')+'</td><td>'+(p.rating?'⭐'+p.rating:'-')+'</td><td style="font-size:.72rem;color:#64748B">'+(p.scraped_at?p.scraped_at.substring(0,10):'')+'</td><td>'+(p.url?'<a href="'+p.url+'" target="_blank" style="color:#3b82f6;font-size:.75rem">보기</a>':'')+'</td></tr>';
+                return '<tr><td>'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📦\'">':'📦')+'</td><td style="max-width:250px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(p.name||'')+'</td><td style="font-weight:700;color:#e42528">'+price+'</td><td><span class="p-card-tag">'+(p.platform||'')+'</span></td><td>'+(p.review_count||'-')+'</td><td>'+(p.rating?'⭐'+p.rating:'-')+'</td><td style="font-size:.72rem;color:#64748B">'+(p.scraped_at?p.scraped_at.substring(0,10):'')+'</td><td>'+(p.url?'<a href="'+p.url+'" target="_blank" style="color:#3b82f6;font-size:.75rem">'+I18N.t('db_view_link')+'</a>':'')+'</td></tr>';
             }).join('');
             var totalPages=Math.ceil(allProducts.length/PAGE_SIZE),ph='';
             for(var i=1;i<=totalPages;i++)ph+='<button class="page-btn'+(i===currentPage?' active':'')+'" onclick="goPage('+i+')">'+i+'</button>';
@@ -115,6 +115,51 @@
             if(mb)mb.onclick=function(){sb.classList.toggle('open');ov.classList.toggle('active')};
             if(ov)ov.onclick=function(){sb.classList.remove('open');ov.classList.remove('active')};
         });
+        window.onI18nChange=function(){ loadData(); };
+    </script>
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                db_doc_title: 'DB 데이터 | 소싱 트래커', db_subtitle: 'Supabase에 저장된 수집 데이터',
+                db_collected_data: '수집 데이터', db_filter_all_platform: '전체 플랫폼',
+                db_sort_latest: '최신순', db_sort_price_desc: '가격 높은순', db_sort_price_asc: '가격 낮은순',
+                db_sort_review_desc: '리뷰 많은순', db_sort_rating_desc: '평점 높은순',
+                db_search_ph: '상품명 검색...', db_view_grid: '🖼 사진', db_view_list: '📋 리스트',
+                db_count_template: '{n}개', db_days_template: '{n}일간', db_platform_other: '기타',
+                db_conn_fail: 'DB 연결 실패', db_conn_fail_hint: '종합 현황에서 크롤링을 먼저 실행하세요',
+                db_review_prefix: '리뷰 ', db_empty_msg: '데이터 없음 - 크롤링을 먼저 실행하세요', db_view_link: '보기'
+            },
+            en: {
+                db_doc_title: 'DB Data | Sourcing Tracker', db_subtitle: 'Collected data stored in Supabase',
+                db_collected_data: 'Collected Data', db_filter_all_platform: 'All Platforms',
+                db_sort_latest: 'Latest', db_sort_price_desc: 'Price: High to Low', db_sort_price_asc: 'Price: Low to High',
+                db_sort_review_desc: 'Most Reviews', db_sort_rating_desc: 'Highest Rated',
+                db_search_ph: 'Search product name...', db_view_grid: '🖼 Photo', db_view_list: '📋 List',
+                db_count_template: '{n} items', db_days_template: '{n} days', db_platform_other: 'Other',
+                db_conn_fail: 'DB connection failed', db_conn_fail_hint: 'Run crawling from Overview first',
+                db_review_prefix: 'Reviews ', db_empty_msg: 'No data - Run crawling first', db_view_link: 'View'
+            },
+            zh: {
+                db_doc_title: 'DB 数据 | 采购追踪器', db_subtitle: '存储在 Supabase 中的采集数据',
+                db_collected_data: '采集数据', db_filter_all_platform: '全部平台',
+                db_sort_latest: '最新', db_sort_price_desc: '价格从高到低', db_sort_price_asc: '价格从低到高',
+                db_sort_review_desc: '评价最多', db_sort_rating_desc: '评分最高',
+                db_search_ph: '搜索商品名...', db_view_grid: '🖼 图片', db_view_list: '📋 列表',
+                db_count_template: '{n} 件', db_days_template: '{n} 天', db_platform_other: '其他',
+                db_conn_fail: 'DB 连接失败', db_conn_fail_hint: '请先在综合概况中运行采集',
+                db_review_prefix: '评价 ', db_empty_msg: '暂无数据 - 请先运行采集', db_view_link: '查看'
+            },
+            vi: {
+                db_doc_title: 'Dữ liệu DB | Theo dõi nguồn hàng', db_subtitle: 'Dữ liệu thu thập được lưu trên Supabase',
+                db_collected_data: 'Dữ liệu thu thập', db_filter_all_platform: 'Tất cả nền tảng',
+                db_sort_latest: 'Mới nhất', db_sort_price_desc: 'Giá cao đến thấp', db_sort_price_asc: 'Giá thấp đến cao',
+                db_sort_review_desc: 'Nhiều đánh giá nhất', db_sort_rating_desc: 'Đánh giá cao nhất',
+                db_search_ph: 'Tìm tên sản phẩm...', db_view_grid: '🖼 Ảnh', db_view_list: '📋 Danh sách',
+                db_count_template: '{n} sản phẩm', db_days_template: '{n} ngày', db_platform_other: 'Khác',
+                db_conn_fail: 'Kết nối DB thất bại', db_conn_fail_hint: 'Vui lòng chạy thu thập từ Tổng quan trước',
+                db_review_prefix: 'Đánh giá ', db_empty_msg: 'Không có dữ liệu - Vui lòng chạy thu thập trước', db_view_link: 'Xem'
+            }
+        };
     </script>
     <script src="js/i18n-auto.js"></script>
     <script src="js/i18n-common.js"></script>

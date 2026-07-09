@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>상품 관리 | 소싱 트래커</title>
+    <title data-i18n="admin_doc_title">상품 관리 | 소싱 트래커</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <style>
         .admin-header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:20px; }
@@ -136,18 +136,18 @@
                     <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
                     <div>
                         <div class="top-bar-title">상품 관리</div>
-                        <div class="top-bar-date">수동 데이터 입력 · 날짜별/월별 필터링</div>
+                        <div class="top-bar-date" data-i18n="admin_tb_desc">수동 데이터 입력 · 날짜별/월별 필터링</div>
                     </div>
                 </div>
             </header>
 
             <div class="content-area" style="padding:20px;">
                 <div class="admin-header">
-                    <h1>📦 소싱 상품 관리</h1>
+                    <h1 data-i18n="admin_h1">📦 소싱 상품 관리</h1>
                     <div class="admin-actions">
-                        <button class="btn btn-primary" onclick="openModal()">+ 상품 추가</button>
-                        <button class="btn btn-outline" onclick="DataManager.exportJSON()">📥 JSON 내보내기</button>
-                        <label class="btn btn-outline" style="cursor:pointer;">📤 JSON 가져오기<input type="file" accept=".json" onchange="importData(this)" hidden></label>
+                        <button class="btn btn-primary" onclick="openModal()" data-i18n="admin_btn_add">+ 상품 추가</button>
+                        <button class="btn btn-outline" onclick="DataManager.exportJSON()" data-i18n="admin_btn_export">📥 JSON 내보내기</button>
+                        <label class="btn btn-outline" style="cursor:pointer;"><span data-i18n="admin_btn_import">📤 JSON 가져오기</span><input type="file" accept=".json" onchange="importData(this)" hidden></label>
                     </div>
                 </div>
 
@@ -155,60 +155,60 @@
 
                 <div class="filter-bar">
                     <div class="filter-group">
-                        <label>기간</label>
+                        <label data-i18n="admin_filter_period">기간</label>
                         <select id="filterPeriod" onchange="applyPeriodPreset()">
-                            <option value="all">전체</option>
-                            <option value="today">오늘</option>
-                            <option value="7d">최근 7일</option>
-                            <option value="30d">최근 30일</option>
-                            <option value="month">이번 달</option>
-                            <option value="custom">직접 선택</option>
+                            <option value="all" data-i18n="admin_opt_all">전체</option>
+                            <option value="today" data-i18n="admin_opt_today">오늘</option>
+                            <option value="7d" data-i18n="admin_opt_7d">최근 7일</option>
+                            <option value="30d" data-i18n="admin_opt_30d">최근 30일</option>
+                            <option value="month" data-i18n="admin_opt_month">이번 달</option>
+                            <option value="custom" data-i18n="admin_opt_custom">직접 선택</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label>시작일</label>
+                        <label data-i18n="admin_filter_from">시작일</label>
                         <input type="date" id="filterDateFrom" onchange="applyFilters()">
                     </div>
                     <div class="filter-group">
-                        <label>종료일</label>
+                        <label data-i18n="admin_filter_to">종료일</label>
                         <input type="date" id="filterDateTo" onchange="applyFilters()">
                     </div>
                     <div class="filter-group">
-                        <label>소싱 플랫폼</label>
+                        <label data-i18n="admin_filter_source">소싱 플랫폼</label>
                         <select id="filterSource" onchange="applyFilters()">
-                            <option value="all">전체</option>
+                            <option value="all" data-i18n="admin_opt_all">전체</option>
                             <option value="1688">1688</option>
-                            <option value="타오바오">타오바오</option>
+                            <option value="타오바오" data-i18n="pf_taobao">타오바오</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label>판매 플랫폼</label>
+                        <label data-i18n="admin_filter_sell">판매 플랫폼</label>
                         <select id="filterSell" onchange="applyFilters()">
-                            <option value="all">전체</option>
-                            <option value="쿠팡">쿠팡</option>
-                            <option value="지마켓">지마켓</option>
-                            <option value="네이버">네이버</option>
+                            <option value="all" data-i18n="admin_opt_all">전체</option>
+                            <option value="쿠팡" data-i18n="pf_coupang">쿠팡</option>
+                            <option value="지마켓" data-i18n="pf_gmarket">지마켓</option>
+                            <option value="네이버" data-i18n="pf_naver">네이버</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label>카테고리</label>
+                        <label data-i18n="admin_filter_category">카테고리</label>
                         <select id="filterCategory" onchange="applyFilters()">
-                            <option value="all">전체</option>
-                            <option value="주방용품">주방용품</option>
-                            <option value="전자기기">전자기기</option>
-                            <option value="홈인테리어">홈인테리어</option>
-                            <option value="뷰티도구">뷰티도구</option>
-                            <option value="패션잡화">패션잡화</option>
-                            <option value="반려동물">반려동물</option>
-                            <option value="유아/아동">유아/아동</option>
-                            <option value="스포츠">스포츠</option>
-                            <option value="자동차용품">자동차용품</option>
-                            <option value="문구/사무">문구/사무</option>
+                            <option value="all" data-i18n="admin_opt_all">전체</option>
+                            <option value="주방용품" data-i18n="admin_cat_kitchen">주방용품</option>
+                            <option value="전자기기" data-i18n="admin_cat_electronics">전자기기</option>
+                            <option value="홈인테리어" data-i18n="admin_cat_home">홈인테리어</option>
+                            <option value="뷰티도구" data-i18n="admin_cat_beauty">뷰티도구</option>
+                            <option value="패션잡화" data-i18n="admin_cat_fashion">패션잡화</option>
+                            <option value="반려동물" data-i18n="admin_cat_pet">반려동물</option>
+                            <option value="유아/아동" data-i18n="admin_cat_baby">유아/아동</option>
+                            <option value="스포츠" data-i18n="admin_cat_sports">스포츠</option>
+                            <option value="자동차용품" data-i18n="admin_cat_auto">자동차용품</option>
+                            <option value="문구/사무" data-i18n="admin_cat_office">문구/사무</option>
                         </select>
                     </div>
                     <div class="filter-group">
-                        <label>검색</label>
-                        <input type="text" id="filterSearch" placeholder="상품명/키워드..." oninput="applyFilters()">
+                        <label data-i18n="admin_filter_search">검색</label>
+                        <input type="text" id="filterSearch" placeholder="상품명/키워드..." data-i18n-ph="admin_filter_search_ph" oninput="applyFilters()">
                     </div>
                 </div>
 
@@ -216,16 +216,16 @@
                     <table class="product-table">
                         <thead>
                             <tr>
-                                <th onclick="sortTable('date')">날짜 <span class="sort-icon"></span></th>
-                                <th onclick="sortTable('name')">상품명 <span class="sort-icon"></span></th>
-                                <th onclick="sortTable('category')">카테고리 <span class="sort-icon"></span></th>
-                                <th onclick="sortTable('sourcePlatform')">소싱 <span class="sort-icon"></span></th>
-                                <th onclick="sortTable('sellPlatform')">판매 <span class="sort-icon"></span></th>
-                                <th onclick="sortTable('sourcePrice')">소싱가 <span class="sort-icon"></span></th>
-                                <th onclick="sortTable('sellPrice')">판매가 <span class="sort-icon"></span></th>
-                                <th onclick="sortTable('marginPct')">마진율 <span class="sort-icon"></span></th>
-                                <th onclick="sortTable('monthlySales')">판매량 <span class="sort-icon"></span></th>
-                                <th onclick="sortTable('status')">상태 <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('date')"><span data-i18n="admin_th_date">날짜</span> <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('name')"><span data-i18n="th_product">상품명</span> <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('category')"><span data-i18n="admin_th_category">카테고리</span> <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('sourcePlatform')"><span data-i18n="admin_th_source_short">소싱</span> <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('sellPlatform')"><span data-i18n="admin_th_sell_short">판매</span> <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('sourcePrice')"><span data-i18n="th_source_price">소싱가</span> <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('sellPrice')"><span data-i18n="th_sell_price">판매가</span> <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('marginPct')"><span data-i18n="th_margin_rate">마진율</span> <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('monthlySales')"><span data-i18n="admin_th_sales">판매량</span> <span class="sort-icon"></span></th>
+                                <th onclick="sortTable('status')"><span data-i18n="admin_th_status">상태</span> <span class="sort-icon"></span></th>
                                 <th>작업</th>
                             </tr>
                         </thead>
@@ -233,9 +233,9 @@
                     </table>
                 </div>
                 <div id="emptyState" class="empty-state" style="display:none;">
-                    <h3>등록된 상품이 없습니다</h3>
-                    <p>위의 "상품 추가" 버튼으로 소싱 상품을 등록하세요</p>
-                    <button class="btn btn-primary" onclick="loadSamples()" style="margin-top:12px;">샘플 데이터 불러오기</button>
+                    <h3 data-i18n="admin_empty_title">등록된 상품이 없습니다</h3>
+                    <p data-i18n="admin_empty_desc">위의 "상품 추가" 버튼으로 소싱 상품을 등록하세요</p>
+                    <button class="btn btn-primary" onclick="loadSamples()" style="margin-top:12px;" data-i18n="admin_btn_samples">샘플 데이터 불러오기</button>
                 </div>
                 <div class="pagination" id="pagination"></div>
             </div>
@@ -250,89 +250,89 @@
                 <input type="hidden" id="editId">
                 <div class="form-grid">
                     <div class="form-group full">
-                        <label>상품명 *</label>
-                        <input type="text" id="fName" required placeholder="예: 실리콘 주방용품 12종 세트">
+                        <label data-i18n="admin_f_name">상품명 *</label>
+                        <input type="text" id="fName" required placeholder="예: 실리콘 주방용품 12종 세트" data-i18n-ph="admin_ph_name">
                     </div>
                     <div class="form-group">
-                        <label>카테고리 *</label>
+                        <label data-i18n="admin_f_category">카테고리 *</label>
                         <select id="fCategory" required>
-                            <option value="">선택</option>
-                            <option>주방용품</option><option>전자기기</option><option>홈인테리어</option>
-                            <option>뷰티도구</option><option>패션잡화</option><option>반려동물</option>
-                            <option>유아/아동</option><option>스포츠</option><option>자동차용품</option>
-                            <option>문구/사무</option>
+                            <option value="" data-i18n="admin_opt_select">선택</option>
+                            <option value="주방용품" data-i18n="admin_cat_kitchen">주방용품</option><option value="전자기기" data-i18n="admin_cat_electronics">전자기기</option><option value="홈인테리어" data-i18n="admin_cat_home">홈인테리어</option>
+                            <option value="뷰티도구" data-i18n="admin_cat_beauty">뷰티도구</option><option value="패션잡화" data-i18n="admin_cat_fashion">패션잡화</option><option value="반려동물" data-i18n="admin_cat_pet">반려동물</option>
+                            <option value="유아/아동" data-i18n="admin_cat_baby">유아/아동</option><option value="스포츠" data-i18n="admin_cat_sports">스포츠</option><option value="자동차용품" data-i18n="admin_cat_auto">자동차용품</option>
+                            <option value="문구/사무" data-i18n="admin_cat_office">문구/사무</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>등록일 *</label>
+                        <label data-i18n="admin_f_regdate">등록일 *</label>
                         <input type="date" id="fDate" required>
                     </div>
                     <div class="form-group">
-                        <label>소싱 플랫폼 *</label>
+                        <label data-i18n="admin_f_source">소싱 플랫폼 *</label>
                         <select id="fSourcePlatform" required>
-                            <option value="">선택</option>
-                            <option>1688</option><option>타오바오</option>
+                            <option value="" data-i18n="admin_opt_select">선택</option>
+                            <option value="1688">1688</option><option value="타오바오" data-i18n="pf_taobao">타오바오</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>판매 플랫폼 *</label>
+                        <label data-i18n="admin_f_sell">판매 플랫폼 *</label>
                         <select id="fSellPlatform" required>
-                            <option value="">선택</option>
-                            <option>쿠팡</option><option>지마켓</option><option>네이버</option>
+                            <option value="" data-i18n="admin_opt_select">선택</option>
+                            <option value="쿠팡" data-i18n="pf_coupang">쿠팡</option><option value="지마켓" data-i18n="pf_gmarket">지마켓</option><option value="네이버" data-i18n="pf_naver">네이버</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>소싱가 (CNY) *</label>
-                        <input type="number" id="fSourcePrice" step="0.1" required placeholder="예: 12.5">
+                        <label data-i18n="admin_f_sourceprice">소싱가 (CNY) *</label>
+                        <input type="number" id="fSourcePrice" step="0.1" required placeholder="예: 12.5" data-i18n-ph="admin_ph_sourceprice">
                     </div>
                     <div class="form-group">
-                        <label>판매가 (KRW) *</label>
-                        <input type="number" id="fSellPrice" step="100" required placeholder="예: 18900">
+                        <label data-i18n="admin_f_sellprice">판매가 (KRW) *</label>
+                        <input type="number" id="fSellPrice" step="100" required placeholder="예: 18900" data-i18n-ph="admin_ph_sellprice">
                     </div>
                     <div class="form-group">
-                        <label>배송비 (KRW)</label>
-                        <input type="number" id="fShipping" step="100" value="0" placeholder="예: 1800">
+                        <label data-i18n="admin_f_shipping">배송비 (KRW)</label>
+                        <input type="number" id="fShipping" step="100" value="0" placeholder="예: 1800" data-i18n-ph="admin_ph_shipping">
                     </div>
                     <div class="form-group">
-                        <label>마진율 (%)</label>
-                        <input type="number" id="fMargin" step="0.1" placeholder="자동 계산 또는 직접 입력">
+                        <label data-i18n="admin_f_marginpct">마진율 (%)</label>
+                        <input type="number" id="fMargin" step="0.1" placeholder="자동 계산 또는 직접 입력" data-i18n-ph="admin_ph_margin">
                     </div>
                     <div class="form-group">
-                        <label>월 판매량</label>
-                        <input type="number" id="fSales" placeholder="예: 3847">
+                        <label data-i18n="admin_f_sales">월 판매량</label>
+                        <input type="number" id="fSales" placeholder="예: 3847" data-i18n-ph="admin_ph_sales">
                     </div>
                     <div class="form-group">
-                        <label>판매 순위</label>
-                        <input type="number" id="fRank" placeholder="예: 3">
+                        <label data-i18n="admin_f_rank">판매 순위</label>
+                        <input type="number" id="fRank" placeholder="예: 3" data-i18n-ph="admin_ph_rank">
                     </div>
                     <div class="form-group">
-                        <label>상태</label>
+                        <label data-i18n="admin_th_status">상태</label>
                         <select id="fStatus">
-                            <option>판매중</option><option>조사중</option><option>준비중</option><option>중단</option>
+                            <option value="판매중" data-i18n="admin_status_selling">판매중</option><option value="조사중" data-i18n="admin_status_researching">조사중</option><option value="준비중" data-i18n="admin_status_prep">준비중</option><option value="중단" data-i18n="admin_status_stopped">중단</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>직배송 가능</label>
+                        <label data-i18n="admin_f_direct">직배송 가능</label>
                         <select id="fDirect">
-                            <option value="true">가능</option><option value="false">불가</option>
+                            <option value="true" data-i18n="admin_opt_yes">가능</option><option value="false" data-i18n="admin_opt_no">불가</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>검색 키워드 (중국어)</label>
-                        <input type="text" id="fKeywords" placeholder="예: 硅胶厨具套装">
+                        <label data-i18n="admin_f_keywords">검색 키워드 (중국어)</label>
+                        <input type="text" id="fKeywords" placeholder="예: 硅胶厨具套装" data-i18n-ph="admin_ph_keywords">
                     </div>
                     <div class="form-group">
-                        <label>판매자 배지</label>
-                        <input type="text" id="fBadges" placeholder="예: 实力商家,超级工厂">
+                        <label data-i18n="admin_f_badges">판매자 배지</label>
+                        <input type="text" id="fBadges" placeholder="예: 实力商家,超级工厂" data-i18n-ph="admin_ph_badges">
                     </div>
                     <div class="form-group full">
-                        <label>메모</label>
-                        <textarea id="fMemo" placeholder="메모 입력..."></textarea>
+                        <label data-i18n="admin_f_memo">메모</label>
+                        <textarea id="fMemo" placeholder="메모 입력..." data-i18n-ph="admin_ph_memo"></textarea>
                     </div>
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-outline" onclick="closeModal()">취소</button>
-                    <button type="submit" class="btn btn-primary">저장</button>
+                    <button type="button" class="btn btn-outline" onclick="closeModal()" data-i18n="admin_btn_cancel">취소</button>
+                    <button type="submit" class="btn btn-primary" data-i18n="admin_btn_save">저장</button>
                 </div>
             </form>
         </div>
@@ -415,11 +415,11 @@
             const highMargin = products.filter(p => (p.marginPct || 0) >= 45).length;
 
             document.getElementById('statsBar').innerHTML = `
-                <div class="stat-card"><div class="stat-label">총 상품</div><div class="stat-value">${total}</div></div>
-                <div class="stat-card"><div class="stat-label">평균 마진율</div><div class="stat-value">${avgMargin}%</div></div>
-                <div class="stat-card"><div class="stat-label">총 판매량</div><div class="stat-value">${totalSales.toLocaleString()}</div></div>
-                <div class="stat-card"><div class="stat-label">판매중</div><div class="stat-value">${selling}</div></div>
-                <div class="stat-card"><div class="stat-label">고마진 (45%+)</div><div class="stat-value">${highMargin}</div></div>
+                <div class="stat-card"><div class="stat-label">${I18N.t('admin_stat_total')}</div><div class="stat-value">${total}</div></div>
+                <div class="stat-card"><div class="stat-label">${I18N.t('admin_stat_avgmargin')}</div><div class="stat-value">${avgMargin}%</div></div>
+                <div class="stat-card"><div class="stat-label">${I18N.t('admin_stat_totalsales')}</div><div class="stat-value">${totalSales.toLocaleString()}</div></div>
+                <div class="stat-card"><div class="stat-label">${I18N.t('admin_stat_selling')}</div><div class="stat-value">${selling}</div></div>
+                <div class="stat-card"><div class="stat-label">${I18N.t('admin_stat_highmargin')}</div><div class="stat-value">${highMargin}</div></div>
             `;
         }
 
@@ -440,6 +440,8 @@
             empty.style.display = 'none';
 
             const platformClass = (p) => { const map = {'1688':'badge-1688','타오바오':'badge-taobao','쿠팡':'badge-coupang','지마켓':'badge-gmarket','네이버':'badge-naver'}; return map[p] || ''; };
+            const platformLabel = (p) => { const map = {'타오바오':'pf_taobao','쿠팡':'pf_coupang','지마켓':'pf_gmarket','네이버':'pf_naver'}; return map[p] ? I18N.t(map[p]) : p; };
+            const statusLabel = (s) => { const map = {'판매중':'admin_status_selling','조사중':'admin_status_researching','준비중':'admin_status_prep','중단':'admin_status_stopped'}; return map[s] ? I18N.t(map[s]) : s; };
             const marginClass = (m) => m >= 50 ? 'margin-strong' : m >= 40 ? 'margin-good' : m >= 30 ? 'margin-ok' : 'margin-low';
 
             tbody.innerHTML = pageProducts.map(p => `
@@ -447,16 +449,16 @@
                     <td>${p.date || '-'}</td>
                     <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;" title="${p.name}">${p.name}</td>
                     <td>${p.category}</td>
-                    <td><span class="badge-platform ${platformClass(p.sourcePlatform)}">${p.sourcePlatform}</span></td>
-                    <td><span class="badge-platform ${platformClass(p.sellPlatform)}">${p.sellPlatform}</span></td>
+                    <td><span class="badge-platform ${platformClass(p.sourcePlatform)}">${platformLabel(p.sourcePlatform)}</span></td>
+                    <td><span class="badge-platform ${platformClass(p.sellPlatform)}">${platformLabel(p.sellPlatform)}</span></td>
                     <td>¥${p.sourcePrice}</td>
                     <td>₩${(p.sellPrice || 0).toLocaleString()}</td>
                     <td><span class="${marginClass(p.marginPct)}">${p.marginPct}%</span></td>
                     <td>${(p.monthlySales || 0).toLocaleString()}</td>
-                    <td><span class="status-badge status-${p.status}">${p.status}</span></td>
+                    <td><span class="status-badge status-${p.status}">${statusLabel(p.status)}</span></td>
                     <td>
-                        <button class="btn btn-outline btn-icon btn-sm" onclick="editProduct('${p.id}')" title="수정">✏️</button>
-                        <button class="btn btn-danger btn-icon btn-sm" onclick="deleteProduct('${p.id}')" title="삭제">🗑</button>
+                        <button class="btn btn-outline btn-icon btn-sm" onclick="editProduct('${p.id}')" title="${I18N.t('admin_btn_edit')}">✏️</button>
+                        <button class="btn btn-danger btn-icon btn-sm" onclick="deleteProduct('${p.id}')" title="${I18N.t('admin_btn_delete')}">🗑</button>
                     </td>
                 </tr>
             `).join('');
@@ -482,7 +484,7 @@
 
         function openModal(id) {
             document.getElementById('modalOverlay').classList.add('active');
-            document.getElementById('modalTitle').textContent = id ? '상품 수정' : '상품 추가';
+            document.getElementById('modalTitle').textContent = id ? I18N.t('admin_modal_edit') : I18N.t('admin_modal_add');
             if (id) {
                 const p = DataManager.getAll().find(x => x.id === id);
                 if (!p) return;
@@ -541,8 +543,8 @@
             }
 
             const editId = document.getElementById('editId').value;
-            if (editId) { DataManager.update(editId, data); showToast('상품이 수정되었습니다'); }
-            else { DataManager.add(data); showToast('상품이 추가되었습니다'); }
+            if (editId) { DataManager.update(editId, data); showToast(I18N.t('admin_toast_updated')); }
+            else { DataManager.add(data); showToast(I18N.t('admin_toast_added')); }
 
             closeModal();
             applyFilters();
@@ -551,9 +553,9 @@
         function editProduct(id) { openModal(id); }
 
         function deleteProduct(id) {
-            if (!confirm('이 상품을 삭제하시겠습니까?')) return;
+            if (!confirm(I18N.t('admin_confirm_delete'))) return;
             DataManager.delete(id);
-            showToast('상품이 삭제되었습니다');
+            showToast(I18N.t('admin_toast_deleted'));
             applyFilters();
         }
 
@@ -561,14 +563,14 @@
             localStorage.removeItem(DataManager.STORAGE_KEY);
             DataManager.loadSampleData();
             applyFilters();
-            showToast('샘플 데이터가 로드되었습니다');
+            showToast(I18N.t('admin_toast_samples_loaded'));
         }
 
         async function importData(input) {
             if (!input.files[0]) return;
             try {
                 const count = await DataManager.importJSON(input.files[0]);
-                showToast(`${count}개 상품이 가져오기 되었습니다`);
+                showToast(I18N.t('admin_toast_imported').replace('{n}', count));
                 applyFilters();
             } catch (err) { showToast(err, true); }
             input.value = '';
@@ -612,8 +614,137 @@
             });
         });
         applyFilters();
-        showToast('스크래핑 데이터 ' + products.length + '개 자동 등록됨');
+        var scrapeMsg = window.I18N ? I18N.t('admin_toast_scrape_registered') : '스크래핑 데이터 {n}개 자동 등록됨';
+        showToast(scrapeMsg.replace('{n}', products.length));
     })();
+    </script>
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                admin_doc_title: '상품 관리 | 소싱 트래커', admin_tb_desc: '수동 데이터 입력 · 날짜별/월별 필터링',
+                admin_h1: '📦 소싱 상품 관리', admin_btn_add: '+ 상품 추가', admin_btn_export: '📥 JSON 내보내기', admin_btn_import: '📤 JSON 가져오기',
+                admin_filter_period: '기간', admin_filter_from: '시작일', admin_filter_to: '종료일',
+                admin_filter_source: '소싱 플랫폼', admin_filter_sell: '판매 플랫폼', admin_filter_category: '카테고리',
+                admin_filter_search: '검색', admin_filter_search_ph: '상품명/키워드...',
+                admin_opt_all: '전체', admin_opt_today: '오늘', admin_opt_7d: '최근 7일', admin_opt_30d: '최근 30일',
+                admin_opt_month: '이번 달', admin_opt_custom: '직접 선택', admin_opt_select: '선택', admin_opt_yes: '가능', admin_opt_no: '불가',
+                admin_cat_kitchen: '주방용품', admin_cat_electronics: '전자기기', admin_cat_home: '홈인테리어',
+                admin_cat_beauty: '뷰티도구', admin_cat_fashion: '패션잡화', admin_cat_pet: '반려동물',
+                admin_cat_baby: '유아/아동', admin_cat_sports: '스포츠', admin_cat_auto: '자동차용품', admin_cat_office: '문구/사무',
+                admin_th_date: '날짜', admin_th_category: '카테고리', admin_th_source_short: '소싱', admin_th_sell_short: '판매',
+                admin_th_sales: '판매량', admin_th_status: '상태',
+                admin_empty_title: '등록된 상품이 없습니다', admin_empty_desc: '위의 "상품 추가" 버튼으로 소싱 상품을 등록하세요',
+                admin_btn_samples: '샘플 데이터 불러오기', admin_modal_add: '상품 추가', admin_modal_edit: '상품 수정',
+                admin_f_name: '상품명 *', admin_f_category: '카테고리 *', admin_f_regdate: '등록일 *',
+                admin_f_source: '소싱 플랫폼 *', admin_f_sell: '판매 플랫폼 *', admin_f_sourceprice: '소싱가 (CNY) *',
+                admin_f_sellprice: '판매가 (KRW) *', admin_f_shipping: '배송비 (KRW)', admin_f_marginpct: '마진율 (%)',
+                admin_f_sales: '월 판매량', admin_f_rank: '판매 순위', admin_f_direct: '직배송 가능',
+                admin_f_keywords: '검색 키워드 (중국어)', admin_f_badges: '판매자 배지', admin_f_memo: '메모',
+                admin_ph_name: '예: 실리콘 주방용품 12종 세트', admin_ph_sourceprice: '예: 12.5', admin_ph_sellprice: '예: 18900',
+                admin_ph_shipping: '예: 1800', admin_ph_margin: '자동 계산 또는 직접 입력', admin_ph_sales: '예: 3847',
+                admin_ph_rank: '예: 3', admin_ph_keywords: '예: 硅胶厨具套装', admin_ph_badges: '예: 实力商家,超级工厂', admin_ph_memo: '메모 입력...',
+                admin_btn_cancel: '취소', admin_btn_save: '저장', admin_btn_edit: '수정', admin_btn_delete: '삭제',
+                admin_status_selling: '판매중', admin_status_researching: '조사중', admin_status_prep: '준비중', admin_status_stopped: '중단',
+                admin_stat_total: '총 상품', admin_stat_avgmargin: '평균 마진율', admin_stat_totalsales: '총 판매량',
+                admin_stat_selling: '판매중', admin_stat_highmargin: '고마진 (45%+)',
+                admin_toast_updated: '상품이 수정되었습니다', admin_toast_added: '상품이 추가되었습니다', admin_toast_deleted: '상품이 삭제되었습니다',
+                admin_toast_samples_loaded: '샘플 데이터가 로드되었습니다', admin_toast_imported: '{n}개 상품이 가져오기 되었습니다',
+                admin_toast_scrape_registered: '스크래핑 데이터 {n}개 자동 등록됨', admin_confirm_delete: '이 상품을 삭제하시겠습니까?'
+            },
+            en: {
+                admin_doc_title: 'Product Management | Sourcing Tracker', admin_tb_desc: 'Manual data entry · Filter by date/month',
+                admin_h1: '📦 Sourcing Product Management', admin_btn_add: '+ Add Product', admin_btn_export: '📥 Export JSON', admin_btn_import: '📤 Import JSON',
+                admin_filter_period: 'Period', admin_filter_from: 'From', admin_filter_to: 'To',
+                admin_filter_source: 'Sourcing Platform', admin_filter_sell: 'Selling Platform', admin_filter_category: 'Category',
+                admin_filter_search: 'Search', admin_filter_search_ph: 'Product name/keyword...',
+                admin_opt_all: 'All', admin_opt_today: 'Today', admin_opt_7d: 'Last 7 days', admin_opt_30d: 'Last 30 days',
+                admin_opt_month: 'This month', admin_opt_custom: 'Custom', admin_opt_select: 'Select', admin_opt_yes: 'Available', admin_opt_no: 'Unavailable',
+                admin_cat_kitchen: 'Kitchenware', admin_cat_electronics: 'Electronics', admin_cat_home: 'Home Decor',
+                admin_cat_beauty: 'Beauty Tools', admin_cat_fashion: 'Fashion Accessories', admin_cat_pet: 'Pet Supplies',
+                admin_cat_baby: 'Baby/Kids', admin_cat_sports: 'Sports', admin_cat_auto: 'Auto Accessories', admin_cat_office: 'Stationery/Office',
+                admin_th_date: 'Date', admin_th_category: 'Category', admin_th_source_short: 'Source', admin_th_sell_short: 'Sell',
+                admin_th_sales: 'Sales', admin_th_status: 'Status',
+                admin_empty_title: 'No products registered', admin_empty_desc: 'Use the "Add Product" button above to register a sourcing product',
+                admin_btn_samples: 'Load Sample Data', admin_modal_add: 'Add Product', admin_modal_edit: 'Edit Product',
+                admin_f_name: 'Product Name *', admin_f_category: 'Category *', admin_f_regdate: 'Registration Date *',
+                admin_f_source: 'Sourcing Platform *', admin_f_sell: 'Selling Platform *', admin_f_sourceprice: 'Sourcing Price (CNY) *',
+                admin_f_sellprice: 'Selling Price (KRW) *', admin_f_shipping: 'Shipping Cost (KRW)', admin_f_marginpct: 'Margin (%)',
+                admin_f_sales: 'Monthly Sales', admin_f_rank: 'Sales Rank', admin_f_direct: 'Direct Shipping',
+                admin_f_keywords: 'Search Keyword (Chinese)', admin_f_badges: 'Seller Badges', admin_f_memo: 'Memo',
+                admin_ph_name: 'e.g. Silicone Kitchenware 12-piece Set', admin_ph_sourceprice: 'e.g. 12.5', admin_ph_sellprice: 'e.g. 18900',
+                admin_ph_shipping: 'e.g. 1800', admin_ph_margin: 'Auto-calculated or enter manually', admin_ph_sales: 'e.g. 3847',
+                admin_ph_rank: 'e.g. 3', admin_ph_keywords: 'e.g. 硅胶厨具套装', admin_ph_badges: 'e.g. Power Seller, Super Factory', admin_ph_memo: 'Enter memo...',
+                admin_btn_cancel: 'Cancel', admin_btn_save: 'Save', admin_btn_edit: 'Edit', admin_btn_delete: 'Delete',
+                admin_status_selling: 'Selling', admin_status_researching: 'Researching', admin_status_prep: 'Preparing', admin_status_stopped: 'Stopped',
+                admin_stat_total: 'Total Products', admin_stat_avgmargin: 'Avg. Margin', admin_stat_totalsales: 'Total Sales',
+                admin_stat_selling: 'Selling', admin_stat_highmargin: 'High Margin (45%+)',
+                admin_toast_updated: 'Product updated', admin_toast_added: 'Product added', admin_toast_deleted: 'Product deleted',
+                admin_toast_samples_loaded: 'Sample data loaded', admin_toast_imported: '{n} product(s) imported',
+                admin_toast_scrape_registered: '{n} scraped item(s) auto-registered', admin_confirm_delete: 'Delete this product?'
+            },
+            zh: {
+                admin_doc_title: '商品管理 | 采购追踪器', admin_tb_desc: '手动数据录入 · 按日期/月份筛选',
+                admin_h1: '📦 采购商品管理', admin_btn_add: '+ 添加商品', admin_btn_export: '📥 导出JSON', admin_btn_import: '📤 导入JSON',
+                admin_filter_period: '期间', admin_filter_from: '开始日期', admin_filter_to: '结束日期',
+                admin_filter_source: '采购平台', admin_filter_sell: '销售平台', admin_filter_category: '分类',
+                admin_filter_search: '搜索', admin_filter_search_ph: '商品名/关键词...',
+                admin_opt_all: '全部', admin_opt_today: '今天', admin_opt_7d: '最近7天', admin_opt_30d: '最近30天',
+                admin_opt_month: '本月', admin_opt_custom: '自定义', admin_opt_select: '请选择', admin_opt_yes: '可以', admin_opt_no: '不可以',
+                admin_cat_kitchen: '厨房用品', admin_cat_electronics: '电子产品', admin_cat_home: '家居装饰',
+                admin_cat_beauty: '美容工具', admin_cat_fashion: '时尚配饰', admin_cat_pet: '宠物用品',
+                admin_cat_baby: '母婴/儿童', admin_cat_sports: '运动用品', admin_cat_auto: '汽车用品', admin_cat_office: '文具/办公',
+                admin_th_date: '日期', admin_th_category: '分类', admin_th_source_short: '采购', admin_th_sell_short: '销售',
+                admin_th_sales: '销量', admin_th_status: '状态',
+                admin_empty_title: '暂无注册商品', admin_empty_desc: '请使用上方"添加商品"按钮注册采购商品',
+                admin_btn_samples: '加载示例数据', admin_modal_add: '添加商品', admin_modal_edit: '编辑商品',
+                admin_f_name: '商品名 *', admin_f_category: '分类 *', admin_f_regdate: '注册日期 *',
+                admin_f_source: '采购平台 *', admin_f_sell: '销售平台 *', admin_f_sourceprice: '采购价 (CNY) *',
+                admin_f_sellprice: '销售价 (KRW) *', admin_f_shipping: '运费 (KRW)', admin_f_marginpct: '利润率 (%)',
+                admin_f_sales: '月销量', admin_f_rank: '销售排名', admin_f_direct: '可直邮',
+                admin_f_keywords: '搜索关键词 (中文)', admin_f_badges: '卖家标签', admin_f_memo: '备注',
+                admin_ph_name: '例: 硅胶厨具12件套', admin_ph_sourceprice: '例: 12.5', admin_ph_sellprice: '例: 18900',
+                admin_ph_shipping: '例: 1800', admin_ph_margin: '自动计算或手动输入', admin_ph_sales: '例: 3847',
+                admin_ph_rank: '例: 3', admin_ph_keywords: '例: 硅胶厨具套装', admin_ph_badges: '例: 实力商家,超级工厂', admin_ph_memo: '请输入备注...',
+                admin_btn_cancel: '取消', admin_btn_save: '保存', admin_btn_edit: '编辑', admin_btn_delete: '删除',
+                admin_status_selling: '销售中', admin_status_researching: '调研中', admin_status_prep: '准备中', admin_status_stopped: '已停止',
+                admin_stat_total: '商品总数', admin_stat_avgmargin: '平均利润率', admin_stat_totalsales: '总销量',
+                admin_stat_selling: '销售中', admin_stat_highmargin: '高利润 (45%+)',
+                admin_toast_updated: '商品已更新', admin_toast_added: '商品已添加', admin_toast_deleted: '商品已删除',
+                admin_toast_samples_loaded: '示例数据已加载', admin_toast_imported: '已导入 {n} 个商品',
+                admin_toast_scrape_registered: '已自动注册 {n} 条采集数据', admin_confirm_delete: '确定要删除该商品吗?'
+            },
+            vi: {
+                admin_doc_title: 'Quản lý sản phẩm | Theo dõi nguồn hàng', admin_tb_desc: 'Nhập dữ liệu thủ công · Lọc theo ngày/tháng',
+                admin_h1: '📦 Quản lý sản phẩm nguồn hàng', admin_btn_add: '+ Thêm sản phẩm', admin_btn_export: '📥 Xuất JSON', admin_btn_import: '📤 Nhập JSON',
+                admin_filter_period: 'Thời gian', admin_filter_from: 'Từ ngày', admin_filter_to: 'Đến ngày',
+                admin_filter_source: 'Nền tảng nguồn hàng', admin_filter_sell: 'Nền tảng bán hàng', admin_filter_category: 'Danh mục',
+                admin_filter_search: 'Tìm kiếm', admin_filter_search_ph: 'Tên sản phẩm/từ khóa...',
+                admin_opt_all: 'Tất cả', admin_opt_today: 'Hôm nay', admin_opt_7d: '7 ngày qua', admin_opt_30d: '30 ngày qua',
+                admin_opt_month: 'Tháng này', admin_opt_custom: 'Tùy chỉnh', admin_opt_select: 'Chọn', admin_opt_yes: 'Có', admin_opt_no: 'Không',
+                admin_cat_kitchen: 'Đồ dùng nhà bếp', admin_cat_electronics: 'Thiết bị điện tử', admin_cat_home: 'Nội thất gia đình',
+                admin_cat_beauty: 'Dụng cụ làm đẹp', admin_cat_fashion: 'Phụ kiện thời trang', admin_cat_pet: 'Đồ dùng thú cưng',
+                admin_cat_baby: 'Mẹ & bé', admin_cat_sports: 'Thể thao', admin_cat_auto: 'Phụ kiện ô tô', admin_cat_office: 'Văn phòng phẩm',
+                admin_th_date: 'Ngày', admin_th_category: 'Danh mục', admin_th_source_short: 'Nguồn', admin_th_sell_short: 'Bán',
+                admin_th_sales: 'Doanh số', admin_th_status: 'Trạng thái',
+                admin_empty_title: 'Chưa có sản phẩm nào được đăng ký', admin_empty_desc: 'Nhấn nút "Thêm sản phẩm" ở trên để đăng ký sản phẩm nguồn hàng',
+                admin_btn_samples: 'Tải dữ liệu mẫu', admin_modal_add: 'Thêm sản phẩm', admin_modal_edit: 'Sửa sản phẩm',
+                admin_f_name: 'Tên sản phẩm *', admin_f_category: 'Danh mục *', admin_f_regdate: 'Ngày đăng ký *',
+                admin_f_source: 'Nền tảng nguồn hàng *', admin_f_sell: 'Nền tảng bán hàng *', admin_f_sourceprice: 'Giá nguồn (CNY) *',
+                admin_f_sellprice: 'Giá bán (KRW) *', admin_f_shipping: 'Phí vận chuyển (KRW)', admin_f_marginpct: 'Tỷ lệ lợi nhuận (%)',
+                admin_f_sales: 'Doanh số hàng tháng', admin_f_rank: 'Xếp hạng bán hàng', admin_f_direct: 'Có thể gửi trực tiếp',
+                admin_f_keywords: 'Từ khóa tìm kiếm (Tiếng Trung)', admin_f_badges: 'Nhãn người bán', admin_f_memo: 'Ghi chú',
+                admin_ph_name: 'VD: Bộ dụng cụ bếp silicon 12 món', admin_ph_sourceprice: 'VD: 12.5', admin_ph_sellprice: 'VD: 18900',
+                admin_ph_shipping: 'VD: 1800', admin_ph_margin: 'Tự động tính hoặc nhập thủ công', admin_ph_sales: 'VD: 3847',
+                admin_ph_rank: 'VD: 3', admin_ph_keywords: 'VD: 硅胶厨具套装', admin_ph_badges: 'VD: 实力商家,超级工厂', admin_ph_memo: 'Nhập ghi chú...',
+                admin_btn_cancel: 'Hủy', admin_btn_save: 'Lưu', admin_btn_edit: 'Sửa', admin_btn_delete: 'Xóa',
+                admin_status_selling: 'Đang bán', admin_status_researching: 'Đang nghiên cứu', admin_status_prep: 'Chuẩn bị', admin_status_stopped: 'Đã dừng',
+                admin_stat_total: 'Tổng sản phẩm', admin_stat_avgmargin: 'Lợi nhuận TB', admin_stat_totalsales: 'Tổng doanh số',
+                admin_stat_selling: 'Đang bán', admin_stat_highmargin: 'Lợi nhuận cao (45%+)',
+                admin_toast_updated: 'Đã cập nhật sản phẩm', admin_toast_added: 'Đã thêm sản phẩm', admin_toast_deleted: 'Đã xóa sản phẩm',
+                admin_toast_samples_loaded: 'Đã tải dữ liệu mẫu', admin_toast_imported: 'Đã nhập {n} sản phẩm',
+                admin_toast_scrape_registered: 'Đã tự động đăng ký {n} dữ liệu thu thập', admin_confirm_delete: 'Bạn có chắc muốn xóa sản phẩm này?'
+            }
+        };
     </script>
     <script src="js/i18n-auto.js"></script>
     <script src="js/i18n-common.js"></script>

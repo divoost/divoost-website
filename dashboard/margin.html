@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="소싱 트래커 - 마진 분석 및 시뮬레이터">
-    <title>소싱 트래커 | 마진 분석</title>
+    <title data-i18n="margin_doc_title">소싱 트래커 | 마진 분석</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 </head>
@@ -77,12 +77,12 @@
                     <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
                     <div>
                         <div class="top-bar-title">마진 분석</div>
-                        <div class="top-bar-date">마지막 업데이트: <span id="lastUpdated">2025-05-24 09:15</span> | 환율: 1 CNY = 190.5 KRW</div>
+                        <div class="top-bar-date"><span data-i18n="margin_last_updated">마지막 업데이트:</span> <span id="lastUpdated">2025-05-24 09:15</span> <span data-i18n="margin_exchange_rate">| 환율: 1 CNY = 190.5 KRW</span></div>
                     </div>
                 </div>
                 <div class="top-bar-right">
-                    
-                    <button class="top-bar-btn btn-refresh" onclick="location.reload()">🔄 <span>새로고침</span></button>
+
+                    <button class="top-bar-btn btn-refresh" onclick="location.reload()">🔄 <span data-i18n="margin_refresh">새로고침</span></button>
                     
                 </div>
             </header>
@@ -94,7 +94,7 @@
                      마진 분석 종합
                      ============================================================ -->
                 <div class="section-divider">
-                    <div class="section-divider-title">💰 마진 분석 종합</div>
+                    <div class="section-divider-title" data-i18n="margin_sec_overview">💰 마진 분석 종합</div>
                     <div class="section-divider-line"></div>
                 </div>
 
@@ -105,23 +105,23 @@
                             <span class="kpi-change up">↑ +2.3%p</span>
                         </div>
                         <div class="kpi-value" id="m-kpi-1">-</div>
-                        <div class="kpi-label">전체 평균 마진</div>
+                        <div class="kpi-label" data-i18n="margin_kpi_total_avg">전체 평균 마진</div>
                     </div>
                     <div class="kpi-card kpi-recommend">
                         <div class="kpi-header">
                             <div class="kpi-icon">🏆</div>
                         </div>
                         <div class="kpi-value" id="m-kpi-2">-</div>
-                        <div class="kpi-label">최고 마진 카테고리</div>
-                        <div class="kpi-sub">뷰티도구</div>
+                        <div class="kpi-label" data-i18n="margin_kpi_top_category">최고 마진 카테고리</div>
+                        <div class="kpi-sub" data-i18n="margin_cat_beauty">뷰티도구</div>
                     </div>
                     <div class="kpi-card kpi-hot">
                         <div class="kpi-header">
                             <div class="kpi-icon">🎯</div>
                         </div>
                         <div class="kpi-value" id="m-kpi-3">-</div>
-                        <div class="kpi-label">STRONG BUY 상품</div>
-                        <div class="kpi-sub">마진 40%+</div>
+                        <div class="kpi-label" data-i18n="margin_kpi_strong_buy">STRONG BUY 상품</div>
+                        <div class="kpi-sub" data-i18n="margin_kpi_sub_40plus">마진 40%+</div>
                     </div>
                     <div class="kpi-card kpi-new">
                         <div class="kpi-header">
@@ -129,8 +129,8 @@
                             <span class="kpi-change up">↑ +6.2%p</span>
                         </div>
                         <div class="kpi-value">-</div>
-                        <div class="kpi-label">직배송 평균 마진</div>
-                        <div class="kpi-sub">배대지 대비 +6.2%p</div>
+                        <div class="kpi-label" data-i18n="margin_kpi_direct_avg">직배송 평균 마진</div>
+                        <div class="kpi-sub" data-i18n="margin_kpi_sub_vs_forward">배대지 대비 +6.2%p</div>
                     </div>
                 </div>
 
@@ -138,7 +138,7 @@
                      마진 분석 차트
                      ============================================================ -->
                 <div class="section-divider">
-                    <div class="section-divider-title">📊 마진 분석 차트</div>
+                    <div class="section-divider-title" data-i18n="margin_sec_charts">📊 마진 분석 차트</div>
                     <div class="section-divider-line"></div>
                 </div>
 
@@ -147,7 +147,7 @@
                         <div class="chart-panel-header">
                             <div class="chart-panel-title">
                                 <span class="title-icon">📂</span>
-                                카테고리별 평균 마진율
+                                <span data-i18n="margin_chart_cat_avg">카테고리별 평균 마진율</span>
                             </div>
                         </div>
                         <div class="chart-panel-body">
@@ -160,7 +160,7 @@
                         <div class="chart-panel-header">
                             <div class="chart-panel-title">
                                 <span class="title-icon">🏭</span>
-                                소싱처별 마진율 비교 (1688 vs 타오바오)
+                                <span data-i18n="margin_chart_source_compare">소싱처별 마진율 비교 (1688 vs 타오바오)</span>
                             </div>
                         </div>
                         <div class="chart-panel-body">
@@ -176,7 +176,7 @@
                         <div class="chart-panel-header">
                             <div class="chart-panel-title">
                                 <span class="title-icon">🏪</span>
-                                판매 플랫폼별 마진율
+                                <span data-i18n="margin_chart_platform_margin">판매 플랫폼별 마진율</span>
                             </div>
                         </div>
                         <div class="chart-panel-body">
@@ -189,7 +189,7 @@
                         <div class="chart-panel-header">
                             <div class="chart-panel-title">
                                 <span class="title-icon">📊</span>
-                                마진율 분포
+                                <span data-i18n="margin_chart_dist">마진율 분포</span>
                             </div>
                         </div>
                         <div class="chart-panel-body">
@@ -204,7 +204,7 @@
                      가격 비교
                      ============================================================ -->
                 <div class="section-divider">
-                    <div class="section-divider-title">⚖️ 가격 비교 (원가 vs 판매가 vs 마진)</div>
+                    <div class="section-divider-title" data-i18n="margin_sec_price_compare">⚖️ 가격 비교 (원가 vs 판매가 vs 마진)</div>
                     <div class="section-divider-line"></div>
                 </div>
 
@@ -212,7 +212,7 @@
                     <div class="chart-panel-header">
                         <div class="chart-panel-title">
                             <span class="title-icon">📊</span>
-                            소싱 원가 vs 판매가 vs 순마진 TOP 10
+                            <span data-i18n="margin_chart_top10">소싱 원가 vs 판매가 vs 순마진 TOP 10</span>
                         </div>
                     </div>
                     <div class="chart-panel-body">
@@ -226,7 +226,7 @@
                      마진 시뮬레이터
                      ============================================================ -->
                 <div class="section-divider">
-                    <div class="section-divider-title">🧮 마진 시뮬레이터</div>
+                    <div class="section-divider-title" data-i18n="margin_sec_simulator">🧮 마진 시뮬레이터</div>
                     <div class="section-divider-line"></div>
                 </div>
 
@@ -236,46 +236,46 @@
                         <div class="chart-panel-header">
                             <div class="chart-panel-title">
                                 <span class="title-icon">🧮</span>
-                                마진 시뮬레이터
+                                <span data-i18n="margin_panel_simulator">마진 시뮬레이터</span>
                             </div>
                         </div>
                         <div class="chart-panel-body">
                             <div style="display:flex;flex-direction:column;gap:14px;">
                                 <div style="display:flex;align-items:center;gap:12px;">
-                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;">소싱 플랫폼</label>
+                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;" data-i18n="margin_lbl_source_platform">소싱 플랫폼</label>
                                     <select id="simSource" style="flex:1;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);">
                                         <option value="1688">1688</option>
-                                        <option value="taobao">타오바오</option>
+                                        <option value="taobao" data-i18n="pf_taobao">타오바오</option>
                                     </select>
                                 </div>
                                 <div style="display:flex;align-items:center;gap:12px;">
-                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;">상품 단가 (元)</label>
+                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;" data-i18n="margin_lbl_unit_price">상품 단가 (元)</label>
                                     <input type="number" id="simUnitPrice" value="12.5" step="0.1" style="flex:1;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);">
                                 </div>
                                 <div style="display:flex;align-items:center;gap:12px;">
-                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;">국제 배송비 (원/개)</label>
+                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;" data-i18n="margin_lbl_intl_shipping">국제 배송비 (원/개)</label>
                                     <input type="number" id="simShipping" value="1800" step="100" style="flex:1;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);">
                                 </div>
                                 <div style="display:flex;align-items:center;gap:12px;">
-                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;">판매 플랫폼</label>
+                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;" data-i18n="margin_lbl_sell_platform">판매 플랫폼</label>
                                     <select id="simSellPlatform" style="flex:1;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);">
-                                        <option value="coupang">쿠팡</option>
-                                        <option value="gmarket">지마켓</option>
-                                        <option value="naver">네이버</option>
+                                        <option value="coupang" data-i18n="pf_coupang">쿠팡</option>
+                                        <option value="gmarket" data-i18n="pf_gmarket">지마켓</option>
+                                        <option value="naver" data-i18n="pf_naver">네이버</option>
                                     </select>
                                 </div>
                                 <div style="display:flex;align-items:center;gap:12px;">
-                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;">판매가 (원)</label>
+                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;" data-i18n="margin_lbl_sell_price">판매가 (원)</label>
                                     <input type="number" id="simSellPrice" value="18900" step="100" style="flex:1;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);">
                                 </div>
                                 <div style="display:flex;align-items:center;gap:12px;">
-                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;">수수료율 (%)</label>
+                                    <label style="font-size:13px;font-weight:600;color:var(--text-primary);width:140px;flex-shrink:0;" data-i18n="margin_lbl_fee_rate">수수료율 (%)</label>
                                     <input type="number" id="simFeeRate" value="10" step="0.5" style="flex:1;padding:8px 12px;font-size:13px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg-card);color:var(--text-primary);">
                                 </div>
 
                                 <!-- Result Box -->
                                 <div id="simResult" style="background:var(--bg-body);border-radius:var(--radius-md);padding:20px;text-align:center;margin-top:8px;">
-                                    <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px;">예상 순마진</div>
+                                    <div style="font-size:13px;color:var(--text-muted);margin-bottom:4px;" data-i18n="margin_sim_expected_net">예상 순마진</div>
                                     <div id="simMarginValue" style="font-family:var(--font-heading);font-size:32px;font-weight:800;color:var(--success);">10,246원</div>
                                     <div id="simMarginRate" style="font-size:18px;font-weight:700;color:var(--success);margin-top:2px;">마진율 54.2%</div>
                                 </div>
@@ -283,15 +283,15 @@
                                 <!-- Breakdown -->
                                 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
                                     <div style="background:var(--bg-body);border-radius:var(--radius-md);padding:14px;text-align:center;">
-                                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:2px;">상품원가</div>
+                                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:2px;" data-i18n="margin_cost_label">상품원가</div>
                                         <div id="simCostValue" style="font-size:16px;font-weight:700;color:var(--text-primary);">2,381원</div>
                                     </div>
                                     <div style="background:var(--bg-body);border-radius:var(--radius-md);padding:14px;text-align:center;">
-                                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:2px;">배송비</div>
+                                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:2px;" data-i18n="th_shipping">배송비</div>
                                         <div id="simShipValue" style="font-size:16px;font-weight:700;color:var(--text-primary);">1,800원</div>
                                     </div>
                                     <div style="background:var(--bg-body);border-radius:var(--radius-md);padding:14px;text-align:center;">
-                                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:2px;">수수료</div>
+                                        <div style="font-size:11px;color:var(--text-muted);margin-bottom:2px;" data-i18n="th_fee">수수료</div>
                                         <div id="simFeeValue" style="font-size:16px;font-weight:700;color:var(--text-primary);">1,890원</div>
                                     </div>
                                 </div>
@@ -304,7 +304,7 @@
                         <div class="chart-panel-header">
                             <div class="chart-panel-title">
                                 <span class="title-icon">🍩</span>
-                                마진율별 상품 분포
+                                <span data-i18n="margin_chart_dist_by_rate">마진율별 상품 분포</span>
                             </div>
                         </div>
                         <div class="chart-panel-body">
@@ -341,7 +341,7 @@
                                     </tr>
                                     <tr>
                                         <td><span class="margin-badge margin-low">🔴 SKIP</span></td>
-                                        <td>20%미만</td>
+                                        <td data-i18n="margin_dist_under20">20%미만</td>
                                         <td>8개</td>
                                         <td>9.2%</td>
                                     </tr>
@@ -355,17 +355,17 @@
                      전체 상품 마진 상세
                      ============================================================ -->
                 <div class="section-divider">
-                    <div class="section-divider-title">📋 전체 상품 마진 상세</div>
+                    <div class="section-divider-title" data-i18n="margin_sec_full_detail">📋 전체 상품 마진 상세</div>
                     <div class="section-divider-line"></div>
                 </div>
 
                 <div class="table-panel">
                     <div class="table-panel-header">
                         <div class="table-panel-title">
-                            <span>💰</span> 전체 상품 마진 상세
+                            <span>💰</span> <span data-i18n="margin_tbl_full_detail">전체 상품 마진 상세</span>
                         </div>
                         <div class="table-filters">
-                            <button class="table-filter-btn active">전체</button>
+                            <button class="table-filter-btn active" data-i18n="margin_filter_all">전체</button>
                             <button class="table-filter-btn">STRONG BUY</button>
                             <button class="table-filter-btn">BUY</button>
                             <button class="table-filter-btn">HOLD</button>
@@ -398,7 +398,7 @@
                                     <td>800원</td>
                                     <td>0원</td>
                                     <td>2,419원</td>
-                                    <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                    <td><span class="sell-platform-tag tag-coupang" data-i18n="pf_coupang">쿠팡</span></td>
                                     <td>12,900원</td>
                                     <td>1,290원</td>
                                     <td style="color:var(--success);font-weight:700;">9,191원</td>
@@ -412,7 +412,7 @@
                                     <td>1,800원</td>
                                     <td>0원</td>
                                     <td>4,181원</td>
-                                    <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                    <td><span class="sell-platform-tag tag-coupang" data-i18n="pf_coupang">쿠팡</span></td>
                                     <td>18,900원</td>
                                     <td>1,890원</td>
                                     <td style="color:var(--success);font-weight:700;">12,829원</td>
@@ -426,7 +426,7 @@
                                     <td>500원</td>
                                     <td>0원</td>
                                     <td>1,167원</td>
-                                    <td><span class="sell-platform-tag tag-naver">네이버</span></td>
+                                    <td><span class="sell-platform-tag tag-naver" data-i18n="pf_naver">네이버</span></td>
                                     <td>7,900원</td>
                                     <td>790원</td>
                                     <td style="color:var(--success);font-weight:700;">5,943원</td>
@@ -440,7 +440,7 @@
                                     <td>1,000원</td>
                                     <td>0원</td>
                                     <td>2,143원</td>
-                                    <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                    <td><span class="sell-platform-tag tag-coupang" data-i18n="pf_coupang">쿠팡</span></td>
                                     <td>9,900원</td>
                                     <td>990원</td>
                                     <td style="color:var(--success);font-weight:700;">6,767원</td>
@@ -454,7 +454,7 @@
                                     <td>1,200원</td>
                                     <td>0원</td>
                                     <td>4,629원</td>
-                                    <td><span class="sell-platform-tag tag-naver">네이버</span></td>
+                                    <td><span class="sell-platform-tag tag-naver" data-i18n="pf_naver">네이버</span></td>
                                     <td>15,900원</td>
                                     <td>1,590원</td>
                                     <td style="color:var(--success);font-weight:700;">9,681원</td>
@@ -463,12 +463,12 @@
                                 </tr>
                                 <tr>
                                     <td><strong>에코백 캔버스 토트백</strong></td>
-                                    <td><span class="source-platform-tag tag-taobao">타오바오</span></td>
+                                    <td><span class="source-platform-tag tag-taobao" data-i18n="pf_taobao">타오바오</span></td>
                                     <td>1,048원</td>
                                     <td>800원</td>
                                     <td>0원</td>
                                     <td>1,848원</td>
-                                    <td><span class="sell-platform-tag tag-gmarket">지마켓</span></td>
+                                    <td><span class="sell-platform-tag tag-gmarket" data-i18n="pf_gmarket">지마켓</span></td>
                                     <td>8,900원</td>
                                     <td>890원</td>
                                     <td style="color:var(--success);font-weight:700;">6,162원</td>
@@ -482,7 +482,7 @@
                                     <td>2,500원</td>
                                     <td>500원</td>
                                     <td>7,763원</td>
-                                    <td><span class="sell-platform-tag tag-coupang">쿠팡</span></td>
+                                    <td><span class="sell-platform-tag tag-coupang" data-i18n="pf_coupang">쿠팡</span></td>
                                     <td>19,900원</td>
                                     <td>1,990원</td>
                                     <td style="color:var(--primary);font-weight:700;">10,147원</td>
@@ -491,12 +491,12 @@
                                 </tr>
                                 <tr>
                                     <td><strong>요가매트 6mm 논슬립</strong></td>
-                                    <td><span class="source-platform-tag tag-taobao">타오바오</span></td>
+                                    <td><span class="source-platform-tag tag-taobao" data-i18n="pf_taobao">타오바오</span></td>
                                     <td>3,810원</td>
                                     <td>3,500원</td>
                                     <td>800원</td>
                                     <td>8,110원</td>
-                                    <td><span class="sell-platform-tag tag-gmarket">지마켓</span></td>
+                                    <td><span class="sell-platform-tag tag-gmarket" data-i18n="pf_gmarket">지마켓</span></td>
                                     <td>16,900원</td>
                                     <td>1,690원</td>
                                     <td style="color:var(--warning);font-weight:700;">7,100원</td>
@@ -553,7 +553,7 @@
         Chart.defaults.font.size = 11;
         Chart.defaults.color = '#94A3B8';
 
-        var categories = ['뷰티도구','홈인테리어','반려동물','주방용품','자동차용품','전자기기','문구/사무','유아/아동','패션잡화','스포츠'];
+        var categories = [I18N.t('margin_cat_beauty'), I18N.t('margin_cat_home'), I18N.t('margin_cat_pet'), I18N.t('margin_cat_kitchen'), I18N.t('margin_cat_auto'), I18N.t('margin_cat_electronics'), I18N.t('margin_cat_stationery'), I18N.t('margin_cat_kids'), I18N.t('margin_cat_fashion'), I18N.t('margin_cat_sports')];
         var catMargins = [52.3, 45.1, 44.8, 43.2, 41.6, 38.7, 39.5, 38.1, 36.4, 35.2];
 
         // ── 카테고리별 평균 마진율 (horizontal bar) ──
@@ -564,7 +564,7 @@
                 data: {
                     labels: categories,
                     datasets: [{
-                        label: '평균 마진율(%)',
+                        label: I18N.t('margin_avg_margin_rate'),
                         data: catMargins,
                         backgroundColor: catMargins.map(function(v) {
                             return v >= 45 ? 'rgba(16,185,129,0.7)' :
@@ -589,10 +589,10 @@
             new Chart(ctxSource, {
                 type: 'bar',
                 data: {
-                    labels: ['주방용품','전자기기','홈인테리어','뷰티도구','패션잡화','반려동물'],
+                    labels: [I18N.t('margin_cat_kitchen'), I18N.t('margin_cat_electronics'), I18N.t('margin_cat_home'), I18N.t('margin_cat_beauty'), I18N.t('margin_cat_fashion'), I18N.t('margin_cat_pet')],
                     datasets: [
                         { label:'1688', data:[43.2, 38.7, 45.1, 52.3, 36.4, 44.8], backgroundColor:'rgba(255,106,0,0.7)', borderRadius:4, barThickness:18 },
-                        { label:'타오바오', data:[39.8, 35.2, 41.5, 48.1, 33.8, 41.2], backgroundColor:'rgba(255,68,0,0.5)', borderRadius:4, barThickness:18 }
+                        { label:I18N.t('pf_taobao'), data:[39.8, 35.2, 41.5, 48.1, 33.8, 41.2], backgroundColor:'rgba(255,68,0,0.5)', borderRadius:4, barThickness:18 }
                     ]
                 },
                 options: {
@@ -609,11 +609,11 @@
             new Chart(ctxPlat, {
                 type: 'bar',
                 data: {
-                    labels: ['주방용품','전자기기','홈인테리어','뷰티도구','패션잡화','반려동물'],
+                    labels: [I18N.t('margin_cat_kitchen'), I18N.t('margin_cat_electronics'), I18N.t('margin_cat_home'), I18N.t('margin_cat_beauty'), I18N.t('margin_cat_fashion'), I18N.t('margin_cat_pet')],
                     datasets: [
-                        { label:'쿠팡', data:[41.2, 36.5, 43.8, 50.1, 34.2, 42.5], backgroundColor:'rgba(228,37,40,0.7)', borderRadius:4, barThickness:14 },
-                        { label:'지마켓', data:[38.5, 34.8, 40.2, 47.5, 32.1, 39.8], backgroundColor:'rgba(0,166,81,0.7)', borderRadius:4, barThickness:14 },
-                        { label:'네이버', data:[43.8, 39.2, 46.5, 53.8, 37.5, 45.2], backgroundColor:'rgba(3,199,90,0.7)', borderRadius:4, barThickness:14 }
+                        { label:I18N.t('pf_coupang'), data:[41.2, 36.5, 43.8, 50.1, 34.2, 42.5], backgroundColor:'rgba(228,37,40,0.7)', borderRadius:4, barThickness:14 },
+                        { label:I18N.t('pf_gmarket'), data:[38.5, 34.8, 40.2, 47.5, 32.1, 39.8], backgroundColor:'rgba(0,166,81,0.7)', borderRadius:4, barThickness:14 },
+                        { label:I18N.t('pf_naver'), data:[43.8, 39.2, 46.5, 53.8, 37.5, 45.2], backgroundColor:'rgba(3,199,90,0.7)', borderRadius:4, barThickness:14 }
                     ]
                 },
                 options: {
@@ -632,7 +632,7 @@
                 data: {
                     labels: ['0~10%','10~20%','20~30%','30~40%','40~50%','50%+'],
                     datasets: [{
-                        label: '상품수',
+                        label: I18N.t('th_product_cnt'),
                         data: [3, 5, 16, 35, 18, 10],
                         backgroundColor: [
                             'rgba(239,68,68,0.7)',
@@ -660,12 +660,12 @@
             new Chart(ctxBreak, {
                 type: 'bar',
                 data: {
-                    labels: ['USB-C 케이블','메이크업 브러쉬','에코백 토트','강아지 장난감','실리콘 주방12종','LED 무드등','고양이 스크래처','블루투스 이어폰','트렁크 정리함','밀폐용기 4종'],
+                    labels: [I18N.t('margin_prod_usb'), I18N.t('margin_prod_brush'), I18N.t('margin_prod_totebag'), I18N.t('margin_prod_dogtoy'), I18N.t('margin_prod_silicone12'), I18N.t('margin_prod_ledlamp'), I18N.t('margin_prod_scratcher'), I18N.t('margin_prod_earphone'), I18N.t('margin_prod_trunk'), I18N.t('margin_prod_container4')],
                     datasets: [
-                        { label:'상품원가', data:[667,1619,1048,1143,2381,3429,1524,4191,4763,5715], backgroundColor:'rgba(255,106,0,0.7)', borderRadius:2 },
-                        { label:'배송비', data:[500,800,800,1000,1800,1200,2000,1000,2500,2200], backgroundColor:'rgba(245,158,11,0.7)', borderRadius:2 },
-                        { label:'수수료', data:[790,1290,890,990,1890,1590,1190,1490,1990,2190], backgroundColor:'rgba(139,92,246,0.5)', borderRadius:2 },
-                        { label:'순마진', data:[5943,9191,6162,6767,12829,9681,7186,8219,10647,11795], backgroundColor:'rgba(16,185,129,0.7)', borderRadius:2 }
+                        { label:I18N.t('margin_cost_label'), data:[667,1619,1048,1143,2381,3429,1524,4191,4763,5715], backgroundColor:'rgba(255,106,0,0.7)', borderRadius:2 },
+                        { label:I18N.t('th_shipping'), data:[500,800,800,1000,1800,1200,2000,1000,2500,2200], backgroundColor:'rgba(245,158,11,0.7)', borderRadius:2 },
+                        { label:I18N.t('th_fee'), data:[790,1290,890,990,1890,1590,1190,1490,1990,2190], backgroundColor:'rgba(139,92,246,0.5)', borderRadius:2 },
+                        { label:I18N.t('th_net_margin'), data:[5943,9191,6162,6767,12829,9681,7186,8219,10647,11795], backgroundColor:'rgba(16,185,129,0.7)', borderRadius:2 }
                     ]
                 },
                 options: {
@@ -685,7 +685,7 @@
             new Chart(ctxPie, {
                 type: 'doughnut',
                 data: {
-                    labels: ['STRONG BUY (40%+)','BUY (30~39%)','HOLD (20~29%)','SKIP (20%미만)'],
+                    labels: [I18N.t('margin_pie_strong'), I18N.t('margin_pie_buy'), I18N.t('margin_pie_hold'), I18N.t('margin_pie_skip')],
                     datasets: [{
                         data: [28, 35, 16, 8],
                         backgroundColor: ['#059669','#2563EB','#F59E0B','#EF4444'],
@@ -715,11 +715,12 @@
             var margin = sellPrice - totalCost;
             var marginRate = sellPrice > 0 ? ((margin / sellPrice) * 100) : 0;
 
-            document.getElementById('simMarginValue').textContent = margin.toLocaleString() + '원';
-            document.getElementById('simMarginRate').textContent = '마진율 ' + marginRate.toFixed(1) + '%';
-            document.getElementById('simCostValue').textContent = costKRW.toLocaleString() + '원';
-            document.getElementById('simShipValue').textContent = shipping.toLocaleString() + '원';
-            document.getElementById('simFeeValue').textContent = fee.toLocaleString() + '원';
+            var wonLabel = I18N.t('margin_won');
+            document.getElementById('simMarginValue').textContent = margin.toLocaleString() + wonLabel;
+            document.getElementById('simMarginRate').textContent = I18N.t('margin_rate_prefix') + marginRate.toFixed(1) + '%';
+            document.getElementById('simCostValue').textContent = costKRW.toLocaleString() + wonLabel;
+            document.getElementById('simShipValue').textContent = shipping.toLocaleString() + wonLabel;
+            document.getElementById('simFeeValue').textContent = fee.toLocaleString() + wonLabel;
 
             var color = margin >= 0 ? 'var(--success)' : 'var(--danger)';
             document.getElementById('simMarginValue').style.color = color;
@@ -764,10 +765,128 @@
                 var estCost = Math.round(price * 0.4);
                 var estMargin = price > 0 ? ((price - estCost) / price * 100).toFixed(1) : 0;
                 var mClass = estMargin >= 50 ? 'margin-strong' : estMargin >= 35 ? 'margin-good' : 'margin-ok';
-                return '<tr><td>'+(i+1)+'</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(p.name||'').substring(0,25)+'</td><td>쿠팡</td><td>₩'+price.toLocaleString()+'</td><td>₩'+estCost.toLocaleString()+'</td><td><span class="'+mClass+'">'+estMargin+'%</span></td><td><span style="font-size:.7rem;padding:2px 6px;border-radius:4px;background:rgba(139,92,246,.15);color:#a78bfa">실제</span></td></tr>';
+                var coupangLabel = window.I18N ? I18N.t('pf_coupang') : '쿠팡';
+                var actualLabel = window.I18N ? I18N.t('margin_actual_badge') : '실제';
+                return '<tr><td>'+(i+1)+'</td><td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+(p.name||'').substring(0,25)+'</td><td>'+coupangLabel+'</td><td>₩'+price.toLocaleString()+'</td><td>₩'+estCost.toLocaleString()+'</td><td><span class="'+mClass+'">'+estMargin+'%</span></td><td><span style="font-size:.7rem;padding:2px 6px;border-radius:4px;background:rgba(139,92,246,.15);color:#a78bfa">'+actualLabel+'</span></td></tr>';
             }).join('');
         }
     })();
+    </script>
+    <script>
+        window.I18N_DICT = {
+            ko: {
+                margin_doc_title: '소싱 트래커 | 마진 분석',
+                margin_last_updated: '마지막 업데이트:', margin_exchange_rate: '| 환율: 1 CNY = 190.5 KRW', margin_refresh: '새로고침',
+                margin_sec_overview: '💰 마진 분석 종합',
+                margin_kpi_total_avg: '전체 평균 마진', margin_kpi_top_category: '최고 마진 카테고리', margin_cat_beauty: '뷰티도구',
+                margin_kpi_strong_buy: 'STRONG BUY 상품', margin_kpi_sub_40plus: '마진 40%+',
+                margin_kpi_direct_avg: '직배송 평균 마진', margin_kpi_sub_vs_forward: '배대지 대비 +6.2%p',
+                margin_sec_charts: '📊 마진 분석 차트',
+                margin_chart_cat_avg: '카테고리별 평균 마진율', margin_chart_source_compare: '소싱처별 마진율 비교 (1688 vs 타오바오)',
+                margin_chart_platform_margin: '판매 플랫폼별 마진율', margin_chart_dist: '마진율 분포',
+                margin_sec_price_compare: '⚖️ 가격 비교 (원가 vs 판매가 vs 마진)', margin_chart_top10: '소싱 원가 vs 판매가 vs 순마진 TOP 10',
+                margin_sec_simulator: '🧮 마진 시뮬레이터', margin_panel_simulator: '마진 시뮬레이터',
+                margin_lbl_source_platform: '소싱 플랫폼', margin_lbl_unit_price: '상품 단가 (元)', margin_lbl_intl_shipping: '국제 배송비 (원/개)',
+                margin_lbl_sell_platform: '판매 플랫폼', margin_lbl_sell_price: '판매가 (원)', margin_lbl_fee_rate: '수수료율 (%)',
+                margin_sim_expected_net: '예상 순마진', margin_cost_label: '상품원가',
+                margin_chart_dist_by_rate: '마진율별 상품 분포', margin_dist_under20: '20%미만',
+                margin_sec_full_detail: '📋 전체 상품 마진 상세', margin_tbl_full_detail: '전체 상품 마진 상세', margin_filter_all: '전체',
+                margin_cat_home: '홈인테리어', margin_cat_pet: '반려동물', margin_cat_kitchen: '주방용품', margin_cat_auto: '자동차용품',
+                margin_cat_electronics: '전자기기', margin_cat_stationery: '문구/사무', margin_cat_kids: '유아/아동',
+                margin_cat_fashion: '패션잡화', margin_cat_sports: '스포츠',
+                margin_avg_margin_rate: '평균 마진율(%)',
+                margin_prod_usb: 'USB-C 케이블', margin_prod_brush: '메이크업 브러쉬', margin_prod_totebag: '에코백 토트',
+                margin_prod_dogtoy: '강아지 장난감', margin_prod_silicone12: '실리콘 주방12종', margin_prod_ledlamp: 'LED 무드등',
+                margin_prod_scratcher: '고양이 스크래처', margin_prod_earphone: '블루투스 이어폰', margin_prod_trunk: '트렁크 정리함',
+                margin_prod_container4: '밀폐용기 4종',
+                margin_pie_strong: 'STRONG BUY (40%+)', margin_pie_buy: 'BUY (30~39%)', margin_pie_hold: 'HOLD (20~29%)', margin_pie_skip: 'SKIP (20%미만)',
+                margin_won: '원', margin_rate_prefix: '마진율 ', margin_actual_badge: '실제'
+            },
+            en: {
+                margin_doc_title: 'Sourcing Tracker | Margin Analysis',
+                margin_last_updated: 'Last updated:', margin_exchange_rate: '| Rate: 1 CNY = 190.5 KRW', margin_refresh: 'Refresh',
+                margin_sec_overview: '💰 Margin Analysis Overview',
+                margin_kpi_total_avg: 'Overall Average Margin', margin_kpi_top_category: 'Top Margin Category', margin_cat_beauty: 'Beauty Tools',
+                margin_kpi_strong_buy: 'STRONG BUY Products', margin_kpi_sub_40plus: 'Margin 40%+',
+                margin_kpi_direct_avg: 'Direct-ship Average Margin', margin_kpi_sub_vs_forward: '+6.2%p vs forwarding',
+                margin_sec_charts: '📊 Margin Analysis Charts',
+                margin_chart_cat_avg: 'Average Margin Rate by Category', margin_chart_source_compare: 'Margin Rate Comparison by Source (1688 vs Taobao)',
+                margin_chart_platform_margin: 'Margin Rate by Selling Platform', margin_chart_dist: 'Margin Rate Distribution',
+                margin_sec_price_compare: '⚖️ Price Comparison (Cost vs Sell Price vs Margin)', margin_chart_top10: 'Sourcing Cost vs Sell Price vs Net Margin TOP 10',
+                margin_sec_simulator: '🧮 Margin Simulator', margin_panel_simulator: 'Margin Simulator',
+                margin_lbl_source_platform: 'Sourcing Platform', margin_lbl_unit_price: 'Unit Price (元)', margin_lbl_intl_shipping: 'International Shipping (KRW/item)',
+                margin_lbl_sell_platform: 'Selling Platform', margin_lbl_sell_price: 'Sell Price (KRW)', margin_lbl_fee_rate: 'Fee Rate (%)',
+                margin_sim_expected_net: 'Estimated Net Margin', margin_cost_label: 'Product Cost',
+                margin_chart_dist_by_rate: 'Product Distribution by Margin Rate', margin_dist_under20: 'Under 20%',
+                margin_sec_full_detail: '📋 Full Product Margin Details', margin_tbl_full_detail: 'Full Product Margin Details', margin_filter_all: 'All',
+                margin_cat_home: 'Home Interior', margin_cat_pet: 'Pet Supplies', margin_cat_kitchen: 'Kitchenware', margin_cat_auto: 'Auto Accessories',
+                margin_cat_electronics: 'Electronics', margin_cat_stationery: 'Stationery/Office', margin_cat_kids: 'Baby/Kids',
+                margin_cat_fashion: 'Fashion Accessories', margin_cat_sports: 'Sports',
+                margin_avg_margin_rate: 'Avg Margin Rate (%)',
+                margin_prod_usb: 'USB-C Cable', margin_prod_brush: 'Makeup Brush', margin_prod_totebag: 'Eco Tote Bag',
+                margin_prod_dogtoy: 'Dog Toy', margin_prod_silicone12: 'Silicone Kitchen Set 12pc', margin_prod_ledlamp: 'LED Mood Lamp',
+                margin_prod_scratcher: 'Cat Scratcher', margin_prod_earphone: 'Bluetooth Earphones', margin_prod_trunk: 'Trunk Organizer',
+                margin_prod_container4: 'Airtight Container Set 4pc',
+                margin_pie_strong: 'STRONG BUY (40%+)', margin_pie_buy: 'BUY (30-39%)', margin_pie_hold: 'HOLD (20-29%)', margin_pie_skip: 'SKIP (under 20%)',
+                margin_won: ' KRW', margin_rate_prefix: 'Margin rate ', margin_actual_badge: 'Live'
+            },
+            zh: {
+                margin_doc_title: '采购追踪器 | 利润分析',
+                margin_last_updated: '最后更新:', margin_exchange_rate: '| 汇率: 1 CNY = 190.5 KRW', margin_refresh: '刷新',
+                margin_sec_overview: '💰 利润分析综合',
+                margin_kpi_total_avg: '整体平均利润', margin_kpi_top_category: '最高利润类目', margin_cat_beauty: '美妆工具',
+                margin_kpi_strong_buy: 'STRONG BUY 商品', margin_kpi_sub_40plus: '利润40%+',
+                margin_kpi_direct_avg: '直邮平均利润', margin_kpi_sub_vs_forward: '较转运高+6.2%p',
+                margin_sec_charts: '📊 利润分析图表',
+                margin_chart_cat_avg: '各类目平均利润率', margin_chart_source_compare: '各采购源利润率比较 (1688 vs 淘宝)',
+                margin_chart_platform_margin: '各销售平台利润率', margin_chart_dist: '利润率分布',
+                margin_sec_price_compare: '⚖️ 价格比较 (成本 vs 售价 vs 利润)', margin_chart_top10: '采购成本 vs 售价 vs 净利润 TOP 10',
+                margin_sec_simulator: '🧮 利润模拟器', margin_panel_simulator: '利润模拟器',
+                margin_lbl_source_platform: '采购平台', margin_lbl_unit_price: '商品单价 (元)', margin_lbl_intl_shipping: '国际运费 (KRW/件)',
+                margin_lbl_sell_platform: '销售平台', margin_lbl_sell_price: '售价 (KRW)', margin_lbl_fee_rate: '手续费率 (%)',
+                margin_sim_expected_net: '预计净利润', margin_cost_label: '商品成本',
+                margin_chart_dist_by_rate: '按利润率商品分布', margin_dist_under20: '低于20%',
+                margin_sec_full_detail: '📋 全部商品利润详情', margin_tbl_full_detail: '全部商品利润详情', margin_filter_all: '全部',
+                margin_cat_home: '家居装饰', margin_cat_pet: '宠物用品', margin_cat_kitchen: '厨房用品', margin_cat_auto: '汽车用品',
+                margin_cat_electronics: '电子产品', margin_cat_stationery: '文具/办公', margin_cat_kids: '母婴/儿童',
+                margin_cat_fashion: '时尚杂货', margin_cat_sports: '运动',
+                margin_avg_margin_rate: '平均利润率(%)',
+                margin_prod_usb: 'USB-C数据线', margin_prod_brush: '化妆刷', margin_prod_totebag: '环保托特包',
+                margin_prod_dogtoy: '狗狗玩具', margin_prod_silicone12: '硅胶厨房12件套', margin_prod_ledlamp: 'LED氛围灯',
+                margin_prod_scratcher: '猫抓板', margin_prod_earphone: '蓝牙耳机', margin_prod_trunk: '后备箱收纳箱',
+                margin_prod_container4: '密封保鲜盒4件套',
+                margin_pie_strong: 'STRONG BUY (40%+)', margin_pie_buy: 'BUY (30~39%)', margin_pie_hold: 'HOLD (20~29%)', margin_pie_skip: 'SKIP (低于20%)',
+                margin_won: '韩元', margin_rate_prefix: '利润率 ', margin_actual_badge: '实际'
+            },
+            vi: {
+                margin_doc_title: 'Trình theo dõi nguồn hàng | Phân tích lợi nhuận',
+                margin_last_updated: 'Cập nhật lần cuối:', margin_exchange_rate: '| Tỷ giá: 1 CNY = 190.5 KRW', margin_refresh: 'Làm mới',
+                margin_sec_overview: '💰 Tổng quan phân tích lợi nhuận',
+                margin_kpi_total_avg: 'Lợi nhuận trung bình tổng thể', margin_kpi_top_category: 'Danh mục lợi nhuận cao nhất', margin_cat_beauty: 'Dụng cụ làm đẹp',
+                margin_kpi_strong_buy: 'Sản phẩm STRONG BUY', margin_kpi_sub_40plus: 'Lợi nhuận 40%+',
+                margin_kpi_direct_avg: 'Lợi nhuận TB ship trực tiếp', margin_kpi_sub_vs_forward: '+6.2%p so với ký gửi vận chuyển',
+                margin_sec_charts: '📊 Biểu đồ phân tích lợi nhuận',
+                margin_chart_cat_avg: 'Tỷ lệ lợi nhuận TB theo danh mục', margin_chart_source_compare: 'So sánh tỷ lệ lợi nhuận theo nguồn (1688 vs Taobao)',
+                margin_chart_platform_margin: 'Tỷ lệ lợi nhuận theo nền tảng bán hàng', margin_chart_dist: 'Phân bố tỷ lệ lợi nhuận',
+                margin_sec_price_compare: '⚖️ So sánh giá (giá vốn vs giá bán vs lợi nhuận)', margin_chart_top10: 'Giá vốn vs Giá bán vs Lợi nhuận ròng TOP 10',
+                margin_sec_simulator: '🧮 Mô phỏng lợi nhuận', margin_panel_simulator: 'Mô phỏng lợi nhuận',
+                margin_lbl_source_platform: 'Nền tảng nguồn hàng', margin_lbl_unit_price: 'Đơn giá sản phẩm (元)', margin_lbl_intl_shipping: 'Phí ship quốc tế (KRW/sản phẩm)',
+                margin_lbl_sell_platform: 'Nền tảng bán hàng', margin_lbl_sell_price: 'Giá bán (KRW)', margin_lbl_fee_rate: 'Tỷ lệ phí (%)',
+                margin_sim_expected_net: 'Lợi nhuận ròng dự kiến', margin_cost_label: 'Giá vốn sản phẩm',
+                margin_chart_dist_by_rate: 'Phân bố sản phẩm theo tỷ lệ lợi nhuận', margin_dist_under20: 'Dưới 20%',
+                margin_sec_full_detail: '📋 Chi tiết lợi nhuận toàn bộ sản phẩm', margin_tbl_full_detail: 'Chi tiết lợi nhuận toàn bộ sản phẩm', margin_filter_all: 'Tất cả',
+                margin_cat_home: 'Nội thất gia đình', margin_cat_pet: 'Đồ dùng thú cưng', margin_cat_kitchen: 'Đồ nhà bếp', margin_cat_auto: 'Phụ kiện ô tô',
+                margin_cat_electronics: 'Thiết bị điện tử', margin_cat_stationery: 'Văn phòng phẩm', margin_cat_kids: 'Trẻ em/Em bé',
+                margin_cat_fashion: 'Phụ kiện thời trang', margin_cat_sports: 'Thể thao',
+                margin_avg_margin_rate: 'Tỷ lệ lợi nhuận TB (%)',
+                margin_prod_usb: 'Cáp USB-C', margin_prod_brush: 'Cọ trang điểm', margin_prod_totebag: 'Túi tote sinh thái',
+                margin_prod_dogtoy: 'Đồ chơi cho chó', margin_prod_silicone12: 'Bộ dụng cụ silicon 12 món', margin_prod_ledlamp: 'Đèn LED tạo cảm giác',
+                margin_prod_scratcher: 'Bảng cào cho mèo', margin_prod_earphone: 'Tai nghe Bluetooth', margin_prod_trunk: 'Hộp sắp xếp cốp xe',
+                margin_prod_container4: 'Bộ hộp đựng kín 4 món',
+                margin_pie_strong: 'STRONG BUY (40%+)', margin_pie_buy: 'BUY (30-39%)', margin_pie_hold: 'HOLD (20-29%)', margin_pie_skip: 'SKIP (dưới 20%)',
+                margin_won: ' KRW', margin_rate_prefix: 'Tỷ lệ lợi nhuận ', margin_actual_badge: 'Thực tế'
+            }
+        };
     </script>
     <script src="js/i18n-auto.js"></script>
     <script src="js/i18n-common.js"></script>
