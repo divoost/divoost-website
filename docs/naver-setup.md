@@ -118,20 +118,19 @@ var NAVER_CLIENT_ID = '발급받은Client_ID';
 ### 블로그 글쓰기 (`/blog/writePost`)
 - 제목(title)은 본문 첫 줄(최대 100자)에서 자동 추출됩니다.
 - 공개 설정 기본값: `openType=all` (전체 공개)
-- 카테고리 지정은 현재 미구현 — 기본 카테고리로 발행됩니다.
+- 카테고리: 설정 페이지의 네이버 블로그 계정 카드에서 **"📂 카테고리 불러오기"**로 조회 후 선택 가능. 미지정 시 기본 카테고리로 발행됩니다.
+- 이미지: `publish.html`에서 첨부한 이미지가 자동으로 함께 발행됩니다(최대 10장, 장당 20MB). 영상은 이 API가 지원하지 않아 자동 제외됩니다.
 
 ### 카페 글쓰기 (`/v1/cafe/{clubid}/menu/{menuid}/articles`)
 - `clubid`/`menuid` 미입력 시 발행이 차단됩니다 (설정 필요 안내 메시지 표시).
 - 게시판이 "글쓰기 권한 제한"(등급/가입기간 등)이 걸려있으면 API 호출도 동일하게 거부됩니다 — 본인 카페이거나 충분한 등급이 필요합니다.
-
-### 이미지 첨부
-- 현재 텍스트 발행만 구현되어 있습니다. 이미지 첨부(멀티파트)는 `naver-publish` Edge Function 확장이 필요합니다 (⚠️ 개발 필요).
+- 이미지: 블로그와 동일하게 첨부 이미지가 자동 포함됩니다.
 
 ---
 
 ## 🔄 토큰 갱신
 
-네이버 access token 만료시(기본 1시간, 발급 시 협의된 만료기간에 따라 다를 수 있음) 재로그인(OAuth 재연동)이 필요합니다. `refresh_token` 은 저장해두지만, 자동 갱신 로직은 아직 구현되어 있지 않습니다 (⚠️ 개발 필요 — `refresh_token` 으로 `/oauth2.0/token?grant_type=refresh_token` 호출하는 로직을 `naver-oauth-exchange` 또는 별도 함수에 추가하면 됩니다).
+네이버 access token 만료시(기본 1시간, 발급 시 협의된 만료기간에 따라 다를 수 있음) **자동으로 refresh_token 을 사용해 갱신됩니다** (`publish.html`의 `ensureNaverToken()` — 만료 5분 전부터 발행 직전에 자동 체크·갱신, `naver-oauth-exchange`에 `grant_type: 'refresh_token'` 요청). refresh_token 자체가 만료/폐기된 경우에만 재로그인(OAuth 재연동)이 필요합니다.
 
 ---
 
