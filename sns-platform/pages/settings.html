@@ -626,7 +626,8 @@
                     {key:'clientId', label:'Client ID', type:'text', placeholder:'네이버 API Client ID'},
                     {key:'clientSecret', label:'Client Secret', type:'password', placeholder:'Client Secret'},
                     {key:'accessToken', label:'Access Token (OAuth)', type:'password', placeholder:'네이버 OAuth Access Token', full:true},
-                    {key:'blogId', label:'블로그 ID', type:'text', placeholder:'블로그 아이디'}
+                    {key:'blogId', label:'블로그 ID', type:'text', placeholder:'블로그 아이디'},
+                    {key:'categoryName', label:'발행 카테고리 (아래 버튼으로 불러오기)', type:'text', placeholder:'미지정 시 기본 카테고리', full:true}
                 ],
                 guide: '<a href="https://developers.naver.com" target="_blank">네이버 개발자센터</a>에서 OAuth 2.0 인증 필요.'
             },
@@ -1045,6 +1046,75 @@
             }
         };
 
+        // 네이버 오픈 API는 브라우저 CORS를 막고 있어 naver-publish Edge Function 을 거쳐 조회한다.
+        var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
+        var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
+
+        // 응답 객체 트리에서 categoryNo 를 가진 배열을 재귀 탐색 (정확한 스키마 미확인 대응).
+        function findCategoryList(obj, depth){
+            depth = depth || 0;
+            if(depth > 6 || obj == null || typeof obj !== 'object') return null;
+            if(Array.isArray(obj)){
+                if(obj.length > 0 && obj[0] && typeof obj[0] === 'object' && 'categoryNo' in obj[0]) return obj;
+                return null;
+            }
+            for(var k in obj){
+                var found = findCategoryList(obj[k], depth + 1);
+                if(found) return found;
+            }
+            return null;
+        }
+
+        window.loadNaverBlogCategories = async function(chId, idx){
+            var acc = settings[chId] && settings[chId].accounts[idx];
+            if(!acc){ return; }
+            if(!acc.accessToken){
+                showResultModal({ kind:'warn', title:'Access Token 필요', text:'먼저 네이버 OAuth 연동을 완료해주세요.', skipReauth:true });
+                return;
+            }
+            try {
+                var res = await fetch(SUPABASE_URL + '/functions/v1/naver-publish', {
+                    method: 'POST',
+                    headers: { 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ target: 'blog_categories', accessToken: acc.accessToken })
+                });
+                var data = await res.json();
+                if(!res.ok || !data.success){
+                    showResultModal({ kind:'error', title:'카테고리 조회 실패', text: data.error || ('HTTP ' + res.status), skipReauth:true });
+                    return;
+                }
+                // 네이버 응답 스키마가 문서화가 부실해 정확한 중첩 구조를 확답할 수 없어 방어적으로 탐색.
+                var categories = findCategoryList(data.result) || [];
+                if(categories.length === 0){
+                    showResultModal({ kind:'info', title:'카테고리 없음', text:'블로그에 등록된 카테고리가 없습니다. 기본 카테고리로 발행됩니다.', skipReauth:true });
+                    return;
+                }
+                var items = categories.map(function(c){
+                    return { kind:'ok', name: c.categoryName || ('카테고리 ' + c.categoryNo), msg: '번호: ' + c.categoryNo };
+                });
+                showResultModal({
+                    kind: 'success',
+                    title: '📂 카테고리 선택',
+                    subtitle: '아래에서 발행에 사용할 카테고리를 선택하세요.',
+                    items: items,
+                    footer: categories.map(function(c){
+                        return {
+                            label: c.categoryName || ('카테고리 ' + c.categoryNo),
+                            type: 'ghost',
+                            action: function(){
+                                updateAccountField(chId, idx, 'categoryNo', String(c.categoryNo));
+                                updateAccountField(chId, idx, 'categoryName', c.categoryName || ('카테고리 ' + c.categoryNo));
+                                closeResultModal();
+                                saveAccount(chId, idx);
+                            }
+                        };
+                    }).concat([{ label:'닫기', type:'ghost', action: closeResultModal }])
+                });
+            } catch(err){
+                showResultModal({ kind:'error', title:'네트워크 오류', text: err.message, skipReauth:true });
+            }
+        };
+
         async function fetchPagesAndInstagram(userToken){
             try {
                 // 1) 페이지 목록 + 각 페이지 토큰 가져오기
@@ -1420,6 +1490,9 @@
             html += '<button class="acc-btn danger" onclick="removeAccount(\'' + chId + '\',' + idx + ')">🗑 삭제</button>';
             html += '<button class="acc-btn secondary" onclick="saveAccount(\'' + chId + '\',' + idx + ')">💾 저장</button>';
             html += '<button class="acc-btn primary" onclick="testAccount(\'' + chId + '\',' + idx + ')">🔍 연결 테스트</button>';
+            if(chId === 'naver_blog'){
+                html += '<button class="acc-btn secondary" onclick="loadNaverBlogCategories(\'' + chId + '\',' + idx + ')">📂 카테고리 불러오기</button>';
+            }
             html += '</div>';
             html += '</div>';
             html += '</div>';

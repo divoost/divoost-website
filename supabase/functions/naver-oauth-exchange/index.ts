@@ -1,4 +1,6 @@
-// Supabase Edge Function: 네이버 로그인 authorization code → access token 교환
+// Supabase Edge Function: 네이버 로그인 토큰 발급/갱신
+//   - grant_type "authorization_code"(기본): authorization code → access token 최초 교환
+//   - grant_type "refresh_token": 만료된 access token을 refresh_token으로 갱신
 //
 // 클라이언트(브라우저)는 Client Secret 을 직접 다룰 수 없으므로
 // 이 함수가 서버사이드에서 네이버 토큰 엔드포인트를 호출한다.
@@ -39,7 +41,13 @@ serve(async (req: Request) => {
     );
   }
 
-  let body: { code?: string; state?: string; redirect_uri?: string };
+  let body: {
+    grant_type?: "authorization_code" | "refresh_token";
+    code?: string;
+    state?: string;
+    redirect_uri?: string;
+    refresh_token?: string;
+  };
   try {
     body = await req.json();
   } catch (e) {
@@ -49,22 +57,34 @@ serve(async (req: Request) => {
     });
   }
 
-  const { code, state, redirect_uri } = body;
-  if (!code || !redirect_uri) {
+  const grantType = body.grant_type === "refresh_token" ? "refresh_token" : "authorization_code";
+  const { code, state, redirect_uri, refresh_token } = body;
+
+  if (grantType === "authorization_code" && (!code || !redirect_uri)) {
     return new Response(
       JSON.stringify({ error: "code 와 redirect_uri 는 필수입니다" }),
+      { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
+    );
+  }
+  if (grantType === "refresh_token" && !refresh_token) {
+    return new Response(
+      JSON.stringify({ error: "refresh_token 은 필수입니다" }),
       { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } },
     );
   }
 
   try {
     const params = new URLSearchParams();
-    params.set("grant_type", "authorization_code");
+    params.set("grant_type", grantType);
     params.set("client_id", NAVER_CLIENT_ID);
     params.set("client_secret", NAVER_CLIENT_SECRET);
-    params.set("code", code);
-    if (state) params.set("state", state);
-    params.set("redirect_uri", redirect_uri);
+    if (grantType === "authorization_code") {
+      params.set("code", code!);
+      if (state) params.set("state", state);
+      params.set("redirect_uri", redirect_uri!);
+    } else {
+      params.set("refresh_token", refresh_token!);
+    }
 
     const tokenRes = await fetch(NAVER_TOKEN_URL + "?" + params.toString(), {
       method: "GET",
@@ -93,27 +113,31 @@ serve(async (req: Request) => {
       );
     }
 
-    // 프로필 조회 (계정 식별자 확보 — 네이버는 open_id 개념이 없어 별도 조회 필요)
+    // 프로필 조회 (계정 식별자 확보) — 최초 연동(authorization_code)에서만 필요.
+    // refresh_token 갱신 시에는 클라이언트가 이미 계정을 알고 있으므로 생략(API 호출 절약).
     let naverId = "";
     let nickname = "";
-    try {
-      const profileRes = await fetch(NAVER_PROFILE_URL, {
-        headers: { Authorization: "Bearer " + tokenData.access_token },
-      });
-      const profileData = await profileRes.json();
-      if (profileData.resultcode === "00" && profileData.response) {
-        naverId = profileData.response.id || "";
-        nickname = profileData.response.nickname || profileData.response.name || "";
+    if (grantType === "authorization_code") {
+      try {
+        const profileRes = await fetch(NAVER_PROFILE_URL, {
+          headers: { Authorization: "Bearer " + tokenData.access_token },
+        });
+        const profileData = await profileRes.json();
+        if (profileData.resultcode === "00" && profileData.response) {
+          naverId = profileData.response.id || "";
+          nickname = profileData.response.nickname || profileData.response.name || "";
+        }
+      } catch (profileErr) {
+        // 프로필 조회 실패해도 토큰 자체는 유효하므로 진행 (계정 식별자만 비어있게 됨)
+        console.error("Naver profile lookup failed", profileErr);
       }
-    } catch (profileErr) {
-      // 프로필 조회 실패해도 토큰 자체는 유효하므로 진행 (계정 식별자만 비어있게 됨)
-      console.error("Naver profile lookup failed", profileErr);
     }
 
     return new Response(
       JSON.stringify({
         access_token: tokenData.access_token,
-        refresh_token: tokenData.refresh_token || "",
+        // 네이버는 갱신 응답에 refresh_token을 다시 안 줄 수 있음 — 그 경우 기존 값 유지.
+        refresh_token: tokenData.refresh_token || (grantType === "refresh_token" ? refresh_token : "") || "",
         token_type: tokenData.token_type || "Bearer",
         expires_in: Number(tokenData.expires_in) || 3600,
         naver_id: naverId,
