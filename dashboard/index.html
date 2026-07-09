@@ -22,6 +22,23 @@
         .data-tag.tag-sample{background:rgba(249,115,22,.15);color:#fb923c}
         .data-tag.tag-live{background:rgba(16,185,129,.15);color:#34d399}
         .data-tag.tag-scrape{background:rgba(139,92,246,.15);color:#a78bfa}
+        /* 상품 상세 2-pane 모달 (Sprint 3-2) */
+        .pp-modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:2000;justify-content:center;align-items:center;padding:20px}
+        .pp-modal-overlay.open{display:flex}
+        .pp-modal{background:#fff;border-radius:16px;width:100%;max-width:1080px;height:85vh;max-height:760px;box-shadow:0 24px 60px rgba(0,0,0,.25);display:flex;flex-direction:column;overflow:hidden;animation:ppIn .18s ease}
+        @keyframes ppIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
+        .pp-modal-head{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid #E2E8F0;flex-shrink:0}
+        .pp-modal-body{flex:1;display:flex;overflow:hidden}
+        .pp-pane-left{width:300px;flex-shrink:0;border-right:1px solid #E2E8F0;overflow-y:auto;padding:8px}
+        .pp-pane-right{flex:1;overflow-y:auto;padding:22px}
+        .pp-list-item{display:flex;gap:8px;align-items:center;padding:8px;border-radius:8px;cursor:pointer;margin-bottom:4px}
+        .pp-list-item:hover{background:#F8FAFC}
+        .pp-list-item.active{background:#EFF6FF;border:1px solid #93C5FD}
+        .pp-list-thumb{width:40px;height:40px;border-radius:6px;object-fit:cover;background:#F1F5F9;flex-shrink:0}
+        .pp-actionbar{display:flex;gap:8px;padding:14px 18px;border-top:1px solid #E2E8F0;flex-shrink:0}
+        .pp-action-btn{flex:1;padding:10px;border-radius:8px;border:1px solid #E2E8F0;background:#F8FAFC;cursor:pointer;font-size:.8rem;font-weight:600;color:#334155;display:flex;flex-direction:column;align-items:center;gap:2px}
+        .pp-action-btn:hover{background:#F1F5F9;border-color:#CBD5E1}
+        .pp-action-btn.fav.active{background:#FEF2F2;border-color:#FCA5A5;color:#DC2626}
     </style>
 </head>
 <body>
@@ -252,6 +269,28 @@
             </div>
         </div>
     </div>
+
+    <!-- 상품 상세 2-pane 모달 (Sprint 3-2) -->
+    <div class="pp-modal-overlay" id="ppModal">
+        <div class="pp-modal">
+            <div class="pp-modal-head">
+                <strong style="font-size:.95rem">상품 상세</strong>
+                <span style="color:#64748B;font-size:.8rem" id="ppPageLabel">1 / 1</span>
+                <span style="color:#8B5CF6;font-size:.78rem;font-weight:600" id="ppSelectedLabel"></span>
+                <button onclick="closeProductModal()" style="margin-left:auto;background:none;border:none;font-size:18px;color:#94A3B8;cursor:pointer">✕</button>
+            </div>
+            <div class="pp-modal-body">
+                <div class="pp-pane-left" id="ppLeftList"></div>
+                <div class="pp-pane-right" id="ppRightDetail"></div>
+            </div>
+            <div class="pp-actionbar">
+                <button class="pp-action-btn" onclick="ppAdjustPrice()">💰<span>가격조정</span></button>
+                <button class="pp-action-btn" onclick="ppSeoName()">✏️<span>SEO 상품명 💎1</span></button>
+                <button class="pp-action-btn" onclick="ppAiImage()">🖼<span>AI 이미지</span></button>
+                <button class="pp-action-btn fav" id="ppFavBtn" onclick="ppToggleFavorite()">❤️<span>즐겨찾기</span></button>
+            </div>
+        </div>
+    </div>
     <script src="js/supabase-client.js"></script>
     <script>
         var API_BASE = location.hostname.indexOf('github.io') !== -1 ? 'https://divoost-website.vercel.app' : '';
@@ -455,25 +494,27 @@
             document.getElementById('productCountLabel').textContent=filtered.length+'개 상품';
             renderProductGrid(filtered);
         }
+        var ppGridSource=[];
         function renderProductGrid(products){
+            ppGridSource=products;
             var grid=document.getElementById('productGrid');
-            grid.innerHTML=products.map(function(p){
+            grid.innerHTML=products.map(function(p,i){
                 var img=p.image||'';
                 var price=p.platform==='1688'||p.market==='cn'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
                 var platColor={'쿠팡':'#E42528','무신사':'#000','지마켓':'#00A651','네이버':'#03C75A','1688':'#FF6A00','1688/중국':'#FF6A00','Shopee':'#EE4D2D','Lazada':'#0F146D','TikTok Shop':'#000','wconcept':'#000'}[p.platform]||'#3b82f6';
-                return '<div style="background:#fff;border-radius:10px;border:1px solid #e2e8f0;overflow:hidden;cursor:pointer;transition:all .2s" onclick="'+(p.url?"window.open('"+escH(p.url).replace(/'/g,'')+"','_blank')":'')+'" onmouseover="this.style.boxShadow=\'0 4px 12px rgba(0,0,0,.1)\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.boxShadow=\'none\';this.style.transform=\'none\'">'+
-                    '<div style="width:100%;height:150px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative">'+(img?'<img src="'+escH(img)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'<span style=&quot;font-size:2.5rem&quot;>📦</span>\'">':'<span style="font-size:2.5rem">📦</span>')+'<div style="position:absolute;top:6px;left:6px;padding:2px 8px;border-radius:4px;background:'+platColor+';color:#fff;font-size:.6rem;font-weight:700">'+escH(p.platform||'')+'</div>'+(p.url?'<div style="position:absolute;top:6px;right:6px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,.5);color:#fff;font-size:.55rem">↗ 바로가기</div>':'')+'</div>'+
+                return '<div style="background:#fff;border-radius:10px;border:1px solid #e2e8f0;overflow:hidden;cursor:pointer;transition:all .2s" onclick="openProductModal(ppGridSource,'+i+')" onmouseover="this.style.boxShadow=\'0 4px 12px rgba(0,0,0,.1)\';this.style.transform=\'translateY(-2px)\'" onmouseout="this.style.boxShadow=\'none\';this.style.transform=\'none\'">'+
+                    '<div style="width:100%;height:150px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative">'+(img?'<img src="'+escH(img)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'<span style=&quot;font-size:2.5rem&quot;>📦</span>\'">':'<span style="font-size:2.5rem">📦</span>')+'<div style="position:absolute;top:6px;left:6px;padding:2px 8px;border-radius:4px;background:'+platColor+';color:#fff;font-size:.6rem;font-weight:700">'+escH(p.platform||'')+'</div>'+(p.url?'<div onclick="event.stopPropagation();window.open(\''+escH(p.url).replace(/'/g,'')+'\',\'_blank\')" style="position:absolute;top:6px;right:6px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,.5);color:#fff;font-size:.55rem;cursor:pointer">↗ 바로가기</div>':'')+'</div>'+
                     '<div style="padding:10px"><div style="font-size:.78rem;font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:4px">'+escH(p.name||'')+'</div>'+
                     '<div style="font-size:.95rem;font-weight:800;color:#e42528">'+price+'</div>'+
                     '<div style="display:flex;justify-content:space-between;margin-top:6px;font-size:.65rem;color:#64748B">'+(p.rating?'<span>⭐'+p.rating+'</span>':'<span></span>')+(p.reviewCount?'<span>리뷰 '+p.reviewCount+'</span>':'')+'</div></div></div>';
             }).join('');
             // 테이블
             var tbody=document.getElementById('productTableBody');
-            tbody.innerHTML=products.map(function(p){
+            tbody.innerHTML=products.map(function(p,i){
                 var img=p.image||'';
                 var price=p.platform==='1688'||p.market==='cn'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
                 var platColor={'쿠팡':'#E42528','무신사':'#000','지마켓':'#00A651','네이버':'#03C75A','1688':'#FF6A00','Shopee':'#EE4D2D','Lazada':'#0F146D','TikTok Shop':'#000'}[p.platform]||'#3b82f6';
-                return '<tr style="border-bottom:1px solid #f1f5f9;cursor:pointer" onclick="'+(p.url?"window.open('"+escH(p.url).replace(/'/g,'')+"','_blank')":"")+'"><td style="padding:6px">'+(img?'<img src="'+escH(img)+'" style="width:44px;height:44px;object-fit:cover;border-radius:6px" onerror="this.outerHTML=\'📦\'">':'📦')+'</td>'+
+                return '<tr style="border-bottom:1px solid #f1f5f9;cursor:pointer" onclick="openProductModal(ppGridSource,'+i+')"><td style="padding:6px">'+(img?'<img src="'+escH(img)+'" style="width:44px;height:44px;object-fit:cover;border-radius:6px" onerror="this.outerHTML=\'📦\'">':'📦')+'</td>'+
                     '<td style="padding:6px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500">'+escH(p.name||'')+'</td>'+
                     '<td style="padding:6px;font-weight:700;color:#e42528">'+price+'</td>'+
                     '<td style="padding:6px"><span style="font-size:.68rem;padding:2px 8px;border-radius:4px;background:'+platColor+';color:#fff;font-weight:600">'+escH(p.platform||'')+'</span></td>'+
@@ -483,6 +524,109 @@
             localStorage.setItem('crawlProducts',JSON.stringify(allCrawlProducts));
         }
         function escH(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
+
+        // ─── 상품 상세 2-pane 모달 (Sprint 3-2, Leviosa 벤치마크) ───
+        var ppList=[];
+        var ppIndex=0;
+        var ppSelected={};
+        function ppKey(p){return (p.platform||'')+'|'+(p.name||'')}
+        function openProductModal(list,idx){
+            ppList=list;ppIndex=idx;
+            document.getElementById('ppModal').classList.add('open');
+            renderPpLeftList();renderPpDetail();
+        }
+        function closeProductModal(){
+            document.getElementById('ppModal').classList.remove('open');
+        }
+        function ppNav(dir){
+            var next=ppIndex+dir;
+            if(next<0||next>=ppList.length)return;
+            ppIndex=next;renderPpLeftList();renderPpDetail();
+        }
+        function ppJump(idx){ppIndex=idx;renderPpLeftList();renderPpDetail()}
+        function ppToggleSelect(i){
+            var k=ppKey(ppList[i]);
+            ppSelected[k]=!ppSelected[k];
+            renderPpLeftList();
+        }
+        function renderPpLeftList(){
+            var box=document.getElementById('ppLeftList');
+            box.innerHTML=ppList.map(function(p,i){
+                var img=p.image||'';
+                var price=p.platform==='1688'||p.market==='cn'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
+                var checked=ppSelected[ppKey(p)]?'checked':'';
+                return '<div class="pp-list-item'+(i===ppIndex?' active':'')+'" onclick="ppJump('+i+')">'+
+                    '<input type="checkbox" onclick="event.stopPropagation();ppToggleSelect('+i+')" '+checked+'>'+
+                    (img?'<img class="pp-list-thumb" src="'+escH(img)+'" onerror="this.style.display=\'none\'">':'<div class="pp-list-thumb"></div>')+
+                    '<div style="min-width:0;flex:1"><div style="font-size:.74rem;font-weight:600;color:#0F172A;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escH(p.name||'')+'</div>'+
+                    '<div style="font-size:.72rem;color:#E42528;font-weight:700">'+price+'</div></div></div>';
+            }).join('');
+            document.getElementById('ppPageLabel').textContent=(ppIndex+1)+' / '+ppList.length;
+            var selCount=Object.keys(ppSelected).filter(function(k){return ppSelected[k]}).length;
+            document.getElementById('ppSelectedLabel').textContent=selCount>0?selCount+'개 선택됨':'';
+            var active=box.querySelector('.pp-list-item.active');
+            if(active)active.scrollIntoView({block:'nearest'});
+        }
+        function renderPpDetail(){
+            var p=ppList[ppIndex];
+            var box=document.getElementById('ppRightDetail');
+            if(!p){box.innerHTML='';return}
+            var img=p.image||'';
+            var price=p.platform==='1688'||p.market==='cn'?'¥'+p.price:'₩'+(p.price||0).toLocaleString();
+            box.innerHTML='<div style="width:100%;max-width:360px;height:280px;border-radius:12px;background:#F1F5F9;overflow:hidden;margin-bottom:16px;display:flex;align-items:center;justify-content:center">'+
+                (img?'<img src="'+escH(img)+'" style="width:100%;height:100%;object-fit:cover" onerror="this.parentNode.innerHTML=\'<span style=&quot;font-size:3rem&quot;>📦</span>\'">':'<span style="font-size:3rem">📦</span>')+
+                '</div>'+
+                '<h3 style="font-size:1.05rem;font-weight:700;color:#0F172A;margin-bottom:8px">'+escH(p.name||'')+'</h3>'+
+                '<div style="font-size:1.4rem;font-weight:800;color:#E42528;margin-bottom:10px">'+price+'</div>'+
+                '<div style="display:flex;gap:8px;flex-wrap:wrap;font-size:.78rem;color:#64748B">'+
+                '<span style="padding:2px 10px;border-radius:12px;background:#EFF6FF;color:#2563EB;font-weight:600">'+escH(p.platform||'')+'</span>'+
+                (p.rating?'<span>⭐ '+p.rating+'</span>':'')+
+                (p.reviewCount?'<span>리뷰 '+p.reviewCount+'개</span>':'')+
+                '</div>'+
+                (p.url?'<a href="'+escH(p.url)+'" target="_blank" style="display:inline-block;margin-top:14px;color:#3B82F6;font-size:.82rem;font-weight:600">↗ 원본 상품 페이지</a>':'');
+            var favBtn=document.getElementById('ppFavBtn');
+            var isFav=JSON.parse(localStorage.getItem('favorites')||'[]').some(function(f){return f.name===p.name});
+            favBtn.classList.toggle('active',isFav);
+        }
+        function ppAdjustPrice(){
+            var p=ppList[ppIndex];if(!p)return;
+            var raw=prompt('새 가격을 입력하세요 (숫자만)',p.price||0);
+            if(raw===null)return;
+            var num=parseFloat(String(raw).replace(/[^0-9.]/g,''));
+            if(isNaN(num)){alert('숫자를 입력해주세요');return}
+            p.price=num;
+            localStorage.setItem('crawlProducts',JSON.stringify(allCrawlProducts));
+            renderPpDetail();renderPpLeftList();
+            addLog('💰 가격조정: '+p.name.substring(0,30)+' → '+num);
+        }
+        function ppSeoName(){
+            alert('✏️ SEO 상품명 자동 생성: AI Gateway 연동 개발 필요 (💎1 크레딧)');
+        }
+        function ppAiImage(){
+            alert('🖼 AI 이미지 생성: AI Gateway 연동 개발 필요');
+        }
+        function ppToggleFavorite(){
+            var p=ppList[ppIndex];if(!p)return;
+            var favs=JSON.parse(localStorage.getItem('favorites')||'[]');
+            var i=favs.findIndex(function(f){return f.name===p.name});
+            if(i>=0){
+                favs.splice(i,1);
+                localStorage.setItem('favorites',JSON.stringify(favs));
+                addLog('즐겨찾기 해제: '+p.name.substring(0,30));
+            }else{
+                favs.push({name:p.name,price:p.price,platform:p.platform,image:p.image,url:p.url,rating:p.rating,savedAt:new Date().toISOString()});
+                localStorage.setItem('favorites',JSON.stringify(favs));
+                addLog('❤️ 즐겨찾기 저장: '+p.name.substring(0,30));
+            }
+            renderPpDetail();
+        }
+        document.addEventListener('keydown',function(e){
+            var modal=document.getElementById('ppModal');
+            if(!modal||!modal.classList.contains('open'))return;
+            if(e.key==='ArrowLeft')ppNav(-1);
+            else if(e.key==='ArrowRight')ppNav(1);
+            else if(e.key==='Escape')closeProductModal();
+        });
         function setView(v){
             document.getElementById('productGrid').style.display=v==='grid'?'grid':'none';
             document.getElementById('productTable').style.display=v==='table'?'block':'none';
