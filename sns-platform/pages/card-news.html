@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>카드뉴스 | SNS 플랫폼</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .cn-layout{display:grid;grid-template-columns:1fr 1fr 320px;gap:16px;margin-bottom:24px}
+        @media(max-width:1280px){.cn-layout{grid-template-columns:1fr 1fr}}
+        @media(max-width:768px){.cn-layout{grid-template-columns:1fr}}
+        .cn-box{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:18px}
+        .cn-box-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+        .cn-box-head h2{font-size:1rem;display:flex;align-items:center;gap:6px}
+        .cn-box-head .badge-credit{background:#ede9fe;color:#7c3aed;padding:3px 10px;border-radius:12px;font-size:.72rem;font-weight:700}
+        .cn-box-head .badge-clock{background:#f1f5f9;color:#64748b;padding:3px 10px;border-radius:12px;font-size:.72rem;font-weight:600}
+        .cn-empty{text-align:center;padding:30px 20px;color:#94a3b8;font-size:.84rem;line-height:1.55}
+        .cn-empty .emoji{font-size:38px;display:block;margin-bottom:10px;opacity:.55}
+        .cn-mass-actions{display:flex;gap:6px;flex-direction:column;margin-top:12px}
+        .cn-mass-btn{padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;background:#fff;font-size:.8rem;font-weight:600;cursor:pointer;text-align:left;display:flex;align-items:center;justify-content:space-between;transition:.15s}
+        .cn-mass-btn:hover{border-color:#8b5cf6;background:#faf5ff;color:#7c3aed}
+        .cn-mass-btn .credit{background:#ede9fe;color:#7c3aed;padding:2px 8px;border-radius:10px;font-size:.68rem;font-weight:700}
+        .cn-card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+        .cn-card-thumb{aspect-ratio:1;background:#f8fafc;border:2px dashed #cbd5e1;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:#94a3b8;font-size:.78rem;font-weight:600;transition:.15s}
+        .cn-card-thumb:hover{border-color:#8b5cf6;background:#faf5ff;color:#7c3aed}
+        .cn-card-thumb .plus{font-size:28px;margin-bottom:4px}
+        .cn-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+        @media(max-width:768px){.cn-row{grid-template-columns:1fr}}
+        .cn-mini-card{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:14px}
+        .cn-mini-card h3{font-size:.85rem;margin-bottom:10px;display:flex;align-items:center;gap:5px}
+        .cn-mini-actions{display:flex;gap:6px}
+        .cn-mini-actions button{flex:1;padding:9px 10px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;font-size:.76rem;font-weight:600;cursor:pointer;transition:.15s}
+        .cn-mini-actions button:hover{border-color:#8b5cf6;color:#7c3aed;background:#faf5ff}
+        .brand-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+        .brand-logo-upload{width:48px;height:48px;border:1px dashed #cbd5e1;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;color:#94a3b8;flex-shrink:0;text-align:center;line-height:1.2}
+        .brand-logo-upload:hover{border-color:#8b5cf6;color:#7c3aed}
+        .brand-input{flex:1;padding:9px 12px;border:1px solid #e2e8f0;border-radius:8px;font-size:.82rem;font-family:inherit;min-width:0}
+        .brand-input:focus{border-color:#8b5cf6;outline:none}
+        .brand-status{font-size:.7rem;padding:3px 10px;border-radius:10px;font-weight:600}
+        .brand-status.connected{background:#dcfce7;color:#15803d}
+        .brand-status.disconnected{background:#fee2e2;color:#b91c1c}
+        .cn-auto-btn{padding:11px 14px;border-radius:10px;border:1px solid #e2e8f0;background:#fff;font-size:.82rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:.15s}
+        .cn-auto-btn:hover{border-color:#8b5cf6;background:#faf5ff;color:#7c3aed}
+    </style>
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
+            <nav class="sidebar-nav">
+                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
+                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="card-news.html" class="nav-link active"><span>🃏</span> 카드뉴스</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
+                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
+                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
+                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="menu-btn" id="menuBtn">☰</button>
+                    <div>
+                        <div class="top-bar-title">🃏 카드뉴스</div>
+                        <div class="top-bar-sub">Instagram 카드뉴스 대량 기획 · 자동 응답 · 페르소나 통합 관리</div>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;margin-left:auto">
+                    <div style="background:#ede9fe;color:#7c3aed;padding:6px 14px;border-radius:14px;font-size:.78rem;font-weight:700">💎 <span id="creditBalance">—</span> 크레딧</div>
+                </div>
+            </header>
+            <div class="content">
+                <div class="cn-layout">
+                    <div class="cn-box">
+                        <div class="cn-box-head"><h2>💡 대량 기획</h2></div>
+                        <div class="cn-empty"><span class="emoji">📦</span>저장된 소재가 없어요.<br>새 기획을 시작해보세요.</div>
+                        <div class="cn-mass-actions">
+                            <button class="cn-mass-btn" onclick="alert('키워드 탐색: Naver Search Trends API 연동 개발 필요');">
+                                <span>🔍 키워드 탐색</span><span class="credit">💎 10 크레딧</span>
+                            </button>
+                            <button class="cn-mass-btn" onclick="alert('사이트 탐색: 경쟁사 크롤링 + AI 요약 개발 필요');">
+                                <span>🌐 사이트 탐색</span><span class="credit">💎 10 크레딧</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cn-box">
+                        <div class="cn-box-head"><h2>🃏 카드뉴스</h2><span class="badge-credit">💎 5 크레딧/장</span></div>
+                        <div class="cn-card-grid" id="cardThumbGrid">
+                            <div class="cn-card-thumb" onclick="createNewCardNews()">
+                                <span class="plus">+</span><span>새로 만들기</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cn-box">
+                        <div class="cn-box-head"><h2>⏰ 예약 관리</h2><span class="badge-clock" id="scheduledCount">0</span></div>
+                        <div class="cn-empty"><span class="emoji">📭</span>예약된 발행 없음</div>
+                        <button onclick="location.href='schedule.html'" style="margin-top:10px;width:100%;padding:10px;border-radius:10px;border:1px solid #e2e8f0;background:#fff;font-size:.8rem;font-weight:600;cursor:pointer">📅 예약 관리로 이동</button>
+                    </div>
+                </div>
+                <div class="cn-row">
+                    <div class="cn-mini-card">
+                        <h3>📋 템플릿</h3>
+                        <div class="cn-mini-actions">
+                            <button onclick="location.href='templates.html'">📂 목록 확인</button>
+                            <button onclick="location.href='templates.html?new=1'">+ 새로 만들기</button>
+                        </div>
+                    </div>
+                    <div class="cn-mini-card">
+                        <h3>🎨 브랜드 설정</h3>
+                        <div class="brand-row">
+                            <div class="brand-logo-upload" onclick="alert('로고 업로드는 설정 페이지에서');">로고<br>업로드</div>
+                            <input type="text" class="brand-input" id="brandName" placeholder="brand name" oninput="saveBrandName(this.value)">
+                            <button onclick="setPersona()" style="padding:9px 12px;border-radius:8px;border:1px solid #8b5cf6;background:#faf5ff;color:#7c3aed;font-size:.76rem;font-weight:700;cursor:pointer;white-space:nowrap">카드뉴스<br>페르소나</button>
+                        </div>
+                        <div class="brand-row" style="margin-bottom:0">
+                            <span style="font-size:.74rem;color:#64748b">📷 Instagram 연동:</span>
+                            <span class="brand-status disconnected" id="igStatus">미연동</span>
+                            <button onclick="location.href='settings.html'" style="background:none;border:none;color:#3b82f6;font-size:.74rem;cursor:pointer;font-weight:600;text-decoration:underline">연동하기</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="cn-box">
+                    <div class="cn-box-head">
+                        <h2>🤖 자동 응답 관리</h2>
+                        <span style="font-size:.72rem;color:#94a3b8">— 게시물 / 댓글 / DM 응답 자동화</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+                        <button class="cn-auto-btn" onclick="location.href='engagement.html?tab=posts'">
+                            <span>📌 게시물별 관리</span><span style="color:#94a3b8;font-size:.7rem">→</span>
+                        </button>
+                        <button class="cn-auto-btn" onclick="location.href='templates.html?type=comment'">
+                            <span>💬 댓글 템플릿</span><span style="color:#94a3b8;font-size:.7rem">→</span>
+                        </button>
+                        <button class="cn-auto-btn" onclick="location.href='templates.html?type=dm'">
+                            <span>📩 DM 템플릿</span><span style="color:#94a3b8;font-size:.7rem">→</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/onboarding-tour.js"></script>
+    <script>
+    (function(){
+        'use strict';
+        document.getElementById('menuBtn').onclick = function(){
+            document.getElementById('sidebar').classList.toggle('open');
+        };
+        var brandInput = document.getElementById('brandName');
+        try {
+            var saved = localStorage.getItem('cn_brand_name');
+            if(saved) brandInput.value = saved;
+        } catch(_){}
+        window.saveBrandName = function(v){
+            try { localStorage.setItem('cn_brand_name', v); } catch(_){}
+        };
+        window.setPersona = function(){
+            var current = '';
+            try { current = localStorage.getItem('cn_persona') || ''; } catch(_){}
+            var p = prompt('카드뉴스 페르소나 (브랜드 톤 · 타겟 · 말투):\n예: "20대 여성 타겟, 친근하고 트렌디한 말투, 이모지 적극 활용"', current);
+            if(p == null) return;
+            try { localStorage.setItem('cn_persona', p); } catch(_){}
+            alert('페르소나 저장 완료. AI 카드뉴스 생성 시 자동 적용됩니다.');
+        };
+        window.createNewCardNews = function(){
+            location.href = 'ai-writer.html?style=card&from=card-news';
+        };
+        try {
+            var cached = localStorage.getItem('sns_credit_balance');
+            document.getElementById('creditBalance').textContent = cached || '0';
+        } catch(err){
+            console.error('크레딧 조회 실패', err);
+        }
+        try {
+            var snsAccountsRaw = localStorage.getItem('sns_accounts');
+            if(snsAccountsRaw){
+                var accs = JSON.parse(snsAccountsRaw);
+                var hasIg = (accs || []).some(function(a){ return a && (a.platform === 'instagram' || a.platform === 'ig'); });
+                if(hasIg){
+                    var s = document.getElementById('igStatus');
+                    s.className = 'brand-status connected';
+                    s.textContent = '연동됨';
+                }
+            }
+        } catch(_){}
+        document.addEventListener('DOMContentLoaded', function(){
+            setTimeout(function(){
+                if(!window.DivoostTour) return;
+                window.DivoostTour.start([
+                    { target:null, title:'카드뉴스 워크스페이스 🃏', body:'Instagram 카드뉴스를 대량 기획 → 디자인 → 자동 응답까지 한 페이지에서 관리합니다.' },
+                    { target:'.cn-mass-btn', title:'1단계 · 대량 기획', body:'키워드 탐색·사이트 탐색으로 소재를 일괄 수집합니다. (각 10 크레딧)', placement:'right' },
+                    { target:'#cardThumbGrid', title:'2단계 · 카드뉴스 생성', body:'장당 5 크레딧으로 AI가 카드뉴스를 자동 디자인합니다.', placement:'left' },
+                    { target:'.cn-auto-btn', title:'3단계 · 자동 응답', body:'게시물별 응답, 댓글·DM 템플릿으로 운영 자동화.', placement:'top' }
+                ], { storageKey: 'divoost_tour_cardnews_v1' });
+            }, 400);
+        });
+    })();
+    </script>
+</body>
+</html>
