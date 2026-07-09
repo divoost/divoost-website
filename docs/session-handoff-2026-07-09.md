@@ -84,11 +84,13 @@ GitHub 리포:       divoost/divoost-website (public), divoost/hot-b2b (private)
   - 온보딩 투어 4단계
 - 16개 SNS 페이지 사이드바에 `🃏 카드뉴스` 링크 삽입
 
-**⏳ Sprint 3-2** (미시작) — 2-pane 레이아웃
-- `dashboard/index.html` 상품 카드 → 클릭 시 2-pane 모달
-- 좌측: 플랫폼별 상품 리스트 스크롤
-- 우측: 상세 카드 + 하단 액션바 4버튼 (💰 가격조정 · ✏️ SEO 상품명 💎1 · 🖼 AI 이미지 · ❤️ 즐겨찾기)
-- 페이지네이션 "1 / 493" + "n개 선택됨" + 키보드 ← → 네비
+**✅ Sprint 3-2** (커밋: 4c24a84) — 2-pane 레이아웃
+- `dashboard/index.html` 상품 카드/테이블 행 → 클릭 시 2-pane 모달(`#ppModal`) 오버레이
+- 좌측(`#ppLeftList`): 현재 렌더된 상품 리스트 스크롤, 체크박스 다중선택, 클릭 시 해당 상품으로 점프
+- 우측(`#ppRightDetail`): 이미지 + 상품명 + 가격 + 플랫폼/평점/리뷰 + 원본 링크
+- 하단 액션바 4버튼: 💰 가격조정(실제 동작 · prompt 입력 → `crawlProducts` 갱신) · ✏️ SEO 상품명 💎1(AI Gateway 미연동 → "⚠️ 개발 필요" 표시) · 🖼 AI 이미지(동일) · ❤️ 즐겨찾기(`localStorage.favorites` 연동, `ai-sourcing.html`과 동일 포맷)
+- 페이지네이션 "N / 전체" + "n개 선택됨" + 키보드 ← → 네비 + Esc 닫기
+- Playwright 헤드리스 브라우저로 카드 클릭·네비게이션·즐겨찾기·가격조정·개발필요 알럿·선택 카운트 전부 실동작 검증 완료
 
 ---
 
@@ -124,4 +126,4 @@ GitHub 리포:       divoost/divoost-website (public), divoost/hot-b2b (private)
 
 **작성일**: 2026-07-09
 **브랜치**: claude/zealous-heisenberg-OFzwl
-**최신 커밋**: Sprint 3-1 카드뉴스 페이지 + 사이드바 링크 (이번 커밋)
+**최신 커밋**: Sprint 3-2 대시보드 2-pane 상세 모달 (4c24a84)
