@@ -44,6 +44,12 @@ GitHub 리포:       divoost/divoost-website (public), divoost/hot-b2b (private)
 
 ---
 
+## 🔀 브랜치 통합 (2026-07-09 추가)
+
+`claude/awesome-meitner-MUHqB` 브랜치(공통 조상 b1a48c7에서 갈라진 뒤 33개 커밋 — i18n 엔진 1~4단계, 사이드바/테이블헤더 번역, ScraperAPI 키 노출 제거, TikTok redirect 수정, privacy/terms.html, 이미지 역검색, 연동 위저드)가 이 브랜치와 한 번도 합쳐지지 않고 따로 자라 있던 것을 발견 → `claude/zealous-heisenberg-OFzwl`로 병합 완료(커밋 `c946559`). 충돌 2건(`dashboard/index.html`, `sns-platform/index.html`)은 두 브랜치의 기능을 모두 살리는 방향으로 수동 해결. **이제 이 브랜치가 유일한 통합 작업 브랜치.**
+
+---
+
 ## ✅ 완료된 작업 (이번 세션 커밋)
 
 ### EZ TRADE HUB Task 1-6 (커밋: 9e82521, 27fd36e)
