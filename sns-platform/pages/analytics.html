@@ -1,90 +1,96 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#3b82f6">
+    <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
     <link rel="manifest" href="../manifest.json">
-    <title>분석 리포트 | SNS 플랫폼</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>성과 분석 | DIVOOST SNS</title>
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
         /* Period Selector */
         .period-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
-        .period-btn{padding:8px 18px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;font-size:.82rem;font-weight:600;cursor:pointer;transition:.2s}
-        .period-btn:hover{background:#f1f5f9}
-        .period-btn.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
-        .period-bar .date-range{margin-left:auto;font-size:.78rem;color:#64748b;padding:8px 12px;background:#fff;border-radius:8px;border:1px solid #e2e8f0}
+        .period-btn{padding:8px 18px;border-radius:8px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);color:var(--ds-text-secondary);font-size:.82rem;font-weight:600;cursor:pointer;transition:.2s}
+        .period-btn:hover{background:var(--ds-bg-hover);color:var(--ds-text-primary)}
+        .period-btn.active{background:var(--ds-accent);color:#fff;border-color:var(--ds-accent)}
+        .period-bar .date-range{margin-left:auto;font-size:.78rem;color:var(--ds-text-secondary);padding:8px 12px;background:var(--ds-bg-subtle);border-radius:8px;border:1px solid var(--ds-border)}
 
-        /* KPI Cards override for 6 columns */
+        /* KPI Cards override for 6 columns (sns.css .kpi-card 다크 덮기) */
         .analytics-kpi{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:24px}
-        .analytics-kpi .kpi-card{position:relative;overflow:hidden}
+        .analytics-kpi .kpi-card{position:relative;overflow:hidden;background:var(--ds-bg-surface);border:1px solid var(--ds-border);border-radius:var(--ds-radius-xl);padding:16px}
+        .analytics-kpi .kpi-card .kpi-icon{font-size:1.3rem}
+        .analytics-kpi .kpi-card .kpi-value{font-size:1.5rem;font-weight:800;color:var(--ds-text-primary);margin-top:6px;line-height:1.1}
+        .analytics-kpi .kpi-card .kpi-label{font-size:.72rem;color:var(--ds-text-tertiary);margin-top:3px}
         .analytics-kpi .kpi-card .kpi-trend{font-size:.7rem;margin-top:4px;font-weight:600}
-        .analytics-kpi .kpi-card .kpi-trend.up{color:#10b981}
-        .analytics-kpi .kpi-card .kpi-trend.down{color:#ef4444}
+        .analytics-kpi .kpi-card .kpi-trend.up{color:var(--ds-success-fg)}
+        .analytics-kpi .kpi-card .kpi-trend.down{color:var(--ds-danger-fg)}
 
         /* Chart Area */
-        .chart-section{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:20px;margin-bottom:24px}
+        .chart-section{background:var(--ds-bg-surface);border-radius:var(--ds-radius-xl);border:1px solid var(--ds-border);padding:20px;margin-bottom:24px}
         .chart-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-        .chart-header h3{font-size:.95rem;font-weight:700}
-        .chart-legend{display:flex;gap:16px;font-size:.72rem;color:#64748b}
+        .chart-header h3{font-size:.95rem;font-weight:700;color:var(--ds-text-primary)}
+        .chart-legend{display:flex;gap:16px;font-size:.72rem;color:var(--ds-text-secondary)}
         .chart-legend span::before{content:'';display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:middle}
-        .chart-legend .leg-likes::before{background:#3b82f6}
-        .chart-legend .leg-comments::before{background:#10b981}
-        .chart-legend .leg-shares::before{background:#f59e0b}
-        .chart-legend .leg-views::before{background:#8b5cf6}
+        .chart-legend .leg-likes::before{background:var(--ds-primary-500)}
+        .chart-legend .leg-comments::before{background:var(--ds-success-500)}
+        .chart-legend .leg-shares::before{background:var(--ds-warning-500)}
+        .chart-legend .leg-views::before{background:var(--ds-accent-500)}
         .chart-bars{display:flex;align-items:flex-end;gap:6px;height:200px;padding:0 4px}
         .chart-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
         .chart-col-bars{display:flex;gap:2px;align-items:flex-end;width:100%;height:100%;justify-content:center}
         .chart-bar{width:25%;border-radius:3px 3px 0 0;min-height:2px;transition:height .4s ease;cursor:pointer;position:relative}
         .chart-bar:hover{opacity:.8}
-        .chart-bar.bar-likes{background:linear-gradient(180deg,#3b82f6,#60a5fa)}
-        .chart-bar.bar-comments{background:linear-gradient(180deg,#10b981,#34d399)}
-        .chart-bar.bar-shares{background:linear-gradient(180deg,#f59e0b,#fbbf24)}
-        .chart-bar.bar-views{background:linear-gradient(180deg,#8b5cf6,#a78bfa)}
-        .chart-label{font-size:.65rem;color:#94a3b8;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center}
-        .chart-tooltip{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:4px 8px;border-radius:4px;font-size:.65rem;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s}
+        .chart-bar.bar-likes{background:linear-gradient(180deg,var(--ds-primary-400),var(--ds-primary-600))}
+        .chart-bar.bar-comments{background:linear-gradient(180deg,#34d399,var(--ds-success-600))}
+        .chart-bar.bar-shares{background:linear-gradient(180deg,#fbbf24,var(--ds-warning-600))}
+        .chart-bar.bar-views{background:linear-gradient(180deg,var(--ds-accent-400),var(--ds-accent-600))}
+        .chart-label{font-size:.65rem;color:var(--ds-text-tertiary);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center}
+        .chart-tooltip{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);background:var(--ds-bg-inverse);color:var(--ds-bg-app);padding:4px 8px;border-radius:4px;font-size:.65rem;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .2s;z-index:5}
         .chart-bar:hover .chart-tooltip{opacity:1}
 
         /* Channel Breakdown Table */
-        .table-section{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;margin-bottom:24px}
-        .table-section h3{font-size:.95rem;font-weight:700;padding:16px 20px;border-bottom:1px solid #e2e8f0}
+        .table-section{background:var(--ds-bg-surface);border-radius:var(--ds-radius-xl);border:1px solid var(--ds-border);overflow:hidden;margin-bottom:24px}
+        .table-section h3{font-size:.95rem;font-weight:700;padding:16px 20px;border-bottom:1px solid var(--ds-border);color:var(--ds-text-primary)}
         .data-table{width:100%;border-collapse:collapse;font-size:.8rem}
-        .data-table th{background:#f8fafc;padding:10px 16px;text-align:left;font-weight:600;font-size:.72rem;color:#64748b;text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid #e2e8f0}
-        .data-table td{padding:10px 16px;border-bottom:1px solid #f1f5f9}
+        .data-table th{background:var(--ds-bg-subtle);padding:10px 16px;text-align:left;font-weight:600;font-size:.72rem;color:var(--ds-text-tertiary);text-transform:uppercase;letter-spacing:.04em;border-bottom:1px solid var(--ds-border)}
+        .data-table td{padding:10px 16px;border-bottom:1px solid var(--ds-border-subtle);color:var(--ds-text-primary)}
         .data-table tr:last-child td{border-bottom:none}
-        .data-table tr:hover td{background:#f8fafc}
+        .data-table tr:hover td{background:var(--ds-bg-hover)}
         .data-table .ch-cell{display:flex;align-items:center;gap:8px;font-weight:600}
-        .data-table .rate-bar{width:60px;height:6px;background:#e2e8f0;border-radius:3px;display:inline-block;vertical-align:middle;margin-right:6px}
-        .data-table .rate-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#3b82f6,#60a5fa)}
+        .data-table .rate-bar{width:60px;height:6px;background:var(--ds-bg-active);border-radius:3px;display:inline-block;vertical-align:middle;margin-right:6px}
+        .data-table .rate-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--ds-primary-600),var(--ds-accent-400))}
 
         /* Top Posts */
-        .top-posts{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;margin-bottom:24px}
-        .top-posts h3{font-size:.95rem;font-weight:700;padding:16px 20px;border-bottom:1px solid #e2e8f0}
-        .top-post-item{display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid #f1f5f9}
+        .top-posts{background:var(--ds-bg-surface);border-radius:var(--ds-radius-xl);border:1px solid var(--ds-border);overflow:hidden;margin-bottom:24px}
+        .top-posts h3{font-size:.95rem;font-weight:700;padding:16px 20px;border-bottom:1px solid var(--ds-border);color:var(--ds-text-primary)}
+        .top-post-item{display:flex;align-items:center;gap:14px;padding:12px 20px;border-bottom:1px solid var(--ds-border-subtle)}
         .top-post-item:last-child{border-bottom:none}
-        .top-post-rank{width:28px;height:28px;border-radius:50%;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;flex-shrink:0}
-        .top-post-rank.rank-1{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#fff}
-        .top-post-rank.rank-2{background:linear-gradient(135deg,#94a3b8,#cbd5e1);color:#fff}
+        .top-post-rank{width:28px;height:28px;border-radius:50%;background:var(--ds-bg-active);color:var(--ds-text-secondary);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:800;flex-shrink:0}
+        .top-post-rank.rank-1{background:linear-gradient(135deg,var(--ds-warning-500),#fbbf24);color:#fff}
+        .top-post-rank.rank-2{background:linear-gradient(135deg,#64748b,#94a3b8);color:#fff}
         .top-post-rank.rank-3{background:linear-gradient(135deg,#b45309,#d97706);color:#fff}
         .top-post-info{flex:1;min-width:0}
-        .top-post-title{font-size:.85rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-        .top-post-meta{font-size:.7rem;color:#94a3b8;margin-top:2px}
-        .top-post-stats{display:flex;gap:14px;font-size:.75rem;color:#64748b;flex-shrink:0}
+        .top-post-title{font-size:.85rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ds-text-primary)}
+        .top-post-meta{font-size:.7rem;color:var(--ds-text-tertiary);margin-top:2px}
+        .top-post-stats{display:flex;gap:14px;font-size:.75rem;color:var(--ds-text-secondary);flex-shrink:0}
 
         /* Export Button */
         .export-section{display:flex;justify-content:flex-end;gap:8px;margin-bottom:24px}
-        .btn-export{padding:10px 20px;border-radius:8px;border:1px solid #e2e8f0;background:#fff;font-size:.82rem;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px}
-        .btn-export:hover{background:#f1f5f9;border-color:#cbd5e1}
-        .btn-export.primary{background:#3b82f6;color:#fff;border-color:#3b82f6}
-        .btn-export.primary:hover{background:#2563eb}
+        .btn-export{padding:10px 20px;border-radius:8px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);color:var(--ds-text-primary);font-size:.82rem;font-weight:600;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:6px}
+        .btn-export:hover{background:var(--ds-bg-hover);border-color:var(--ds-border-strong)}
+        .btn-export.primary{background:var(--ds-accent);color:#fff;border-color:var(--ds-accent)}
+        .btn-export.primary:hover{background:var(--ds-accent-hover)}
 
-        .empty-state{text-align:center;padding:60px 20px;color:#94a3b8}
+        .empty-state{text-align:center;padding:60px 20px;color:var(--ds-text-tertiary)}
         .empty-state .empty-icon{font-size:3rem;margin-bottom:12px}
-        .empty-state .empty-title{font-size:1rem;font-weight:600;margin-bottom:8px;color:#64748b}
+        .empty-state .empty-title{font-size:1rem;font-weight:600;margin-bottom:8px;color:var(--ds-text-secondary)}
 
         @media(max-width:768px){
             .analytics-kpi{grid-template-columns:repeat(3,1fr)}
@@ -102,35 +108,24 @@
         }
     </style>
 </head>
-<body>
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
-            <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
-                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
-                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link active"><span>📈</span> 분석 리포트</a></div>
-                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
-            </nav>
-        </aside>
-        <div class="main-content">
-            <header class="top-bar">
-                <div class="top-bar-left">
-                    <button class="menu-btn" id="menuBtn">☰</button>
-                    <div><div class="top-bar-title">📈 분석 리포트</div><div class="top-bar-sub">채널별 성과 분석</div></div>
-                </div>
-                <div class="top-bar-right">
-                    <button class="btn btn-primary" onclick="fetchInstagramInsights()" id="btnIgInsights" style="background:#ec4899;border-color:#ec4899">📸 Instagram 인사이트</button>
-                    <button class="btn btn-primary" onclick="generateSampleData()" title="UI 미리보기용 가짜 데이터 (실제 발행되지 않음)" style="background:#94a3b8;border-color:#94a3b8">🧪 샘플 데이터 (테스트용)</button>
-                </div>
-            </header>
-            <div class="content">
+<body class="ds-root" data-shell-active="analytics">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">성과 분석</h1>
+                <p class="ds-body">채널별 성과를 분석하고 리포트를 내보냅니다.</p>
+            </div>
+            <div class="ds-row ds-gap-2" style="flex-wrap:wrap">
+                <button class="ds-btn ds-btn-secondary" onclick="fetchInstagramInsights()" id="btnIgInsights"><i data-lucide="instagram" class="ds-icon ds-icon-sm"></i> Instagram 인사이트</button>
+                <button class="ds-btn ds-btn-secondary" onclick="generateSampleData()" title="UI 미리보기용 가짜 데이터 (실제 발행되지 않음)"><i data-lucide="flask-conical" class="ds-icon ds-icon-sm"></i> 샘플 데이터</button>
+            </div>
+        </div>
                 <!-- Instagram Insights Panel -->
-                <div id="igInsightsPanel" style="display:none;background:linear-gradient(135deg,#fce7f3,#fef3c7);border:1px solid #f9a8d4;border-radius:14px;padding:18px;margin-bottom:18px">
+                <div id="igInsightsPanel" style="display:none;background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:14px;padding:18px;margin-bottom:18px">
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
-                        <h3 style="font-size:1rem;margin:0;color:#be185d">📸 Instagram 인사이트 (실시간)</h3>
-                        <button onclick="document.getElementById('igInsightsPanel').style.display='none'" style="background:none;border:none;color:#94a3b8;font-size:18px;cursor:pointer">×</button>
+                        <h3 style="font-size:1rem;margin:0;color:var(--ds-accent-soft-fg)">📸 Instagram 인사이트 (실시간)</h3>
+                        <button onclick="document.getElementById('igInsightsPanel').style.display='none'" style="background:none;border:none;color:var(--ds-text-tertiary);font-size:18px;cursor:pointer">×</button>
                     </div>
                     <div id="igInsightsContent"></div>
                 </div>
@@ -199,11 +194,8 @@
                     <button class="btn-export" onclick="exportCSV()">📄 CSV 다운로드</button>
                     <button class="btn-export primary" onclick="exportReport()">📊 리포트 내보내기</button>
                 </div>
-            </div>
-        </div>
-    </div>
+    </main>
     <script>
-        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
 
         var currentPeriod='daily';
         var channelMeta={
@@ -654,5 +646,9 @@
     <script src="../js/i18n-auto.js"></script>
     <script src="../js/i18n-common.js"></script>
     <script src="../js/i18n.js"></script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
 </body>
 </html>

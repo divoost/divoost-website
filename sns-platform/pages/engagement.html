@@ -1,102 +1,94 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#3b82f6">
+    <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
     <link rel="manifest" href="../manifest.json">
     <title>댓글/반응 관리 | SNS 플랫폼</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
         .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
-        .stat-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:18px;text-align:center}
+        .stat-card{background:var(--ds-bg-surface);border-radius:12px;border:1px solid var(--ds-border);padding:18px;text-align:center}
         .stat-icon{font-size:2rem;margin-bottom:6px}
-        .stat-val{font-size:1.6rem;font-weight:800;color:#0f172a}
-        .stat-label{font-size:.72rem;color:#94a3b8;margin-top:4px;font-weight:600}
+        .stat-val{font-size:1.6rem;font-weight:800;color:var(--ds-text-primary)}
+        .stat-label{font-size:.72rem;color:var(--ds-text-tertiary);margin-top:4px;font-weight:600}
 
-        .toolbar{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-        .tb-select{padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem;background:#fff;font-family:inherit}
+        .toolbar{background:var(--ds-bg-surface);border-radius:12px;border:1px solid var(--ds-border);padding:14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+        .tb-select{padding:8px 12px;border-radius:8px;border:1px solid var(--ds-border);font-size:.82rem;background:var(--ds-bg-surface);color:var(--ds-text-primary);font-family:inherit}
         .tb-btn{padding:8px 16px;border-radius:8px;border:none;font-size:.78rem;font-weight:700;cursor:pointer}
-        .tb-btn.primary{background:#3b82f6;color:#fff}
-        .tb-btn.primary:hover{background:#2563eb}
-        .tb-btn.secondary{background:#f1f5f9;color:#475569}
+        .tb-btn.primary{background:var(--ds-accent);color:#fff}
+        .tb-btn.primary:hover{background:var(--ds-accent-hover)}
+        .tb-btn.secondary{background:var(--ds-bg-subtle);color:var(--ds-text-secondary)}
         .tb-btn:disabled{opacity:.6;cursor:not-allowed}
 
-        .comment-list{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden}
-        .comment-item{padding:14px 16px;border-bottom:1px solid #f1f5f9;display:flex;gap:12px}
+        .comment-list{background:var(--ds-bg-surface);border-radius:12px;border:1px solid var(--ds-border);overflow:hidden}
+        .comment-item{padding:14px 16px;border-bottom:1px solid var(--ds-border);display:flex;gap:12px}
         .comment-item:last-child{border-bottom:none}
-        .comment-item.unread{background:#fefce8}
-        .comment-avatar{width:38px;height:38px;border-radius:50%;background:#3b82f6;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .comment-item.unread{background:var(--ds-warning-bg)}
+        .comment-avatar{width:38px;height:38px;border-radius:50%;background:var(--ds-accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
         .comment-body{flex:1;min-width:0}
         .comment-header{display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
-        .comment-author{font-weight:700;font-size:.85rem;color:#0f172a}
+        .comment-author{font-weight:700;font-size:.85rem;color:var(--ds-text-primary)}
         .comment-platform{font-size:.66rem;padding:2px 8px;border-radius:4px;font-weight:700}
-        .comment-platform.fb{background:#dbeafe;color:#1e40af}
-        .comment-platform.ig{background:#fce7f3;color:#be185d}
-        .comment-platform.tt{background:#e0e7ff;color:#3730a3}
-        .comment-time{font-size:.7rem;color:#94a3b8}
-        .comment-text{font-size:.85rem;line-height:1.55;color:#0f172a;margin-bottom:8px;white-space:pre-wrap}
-        .comment-meta{font-size:.7rem;color:#94a3b8;margin-bottom:8px}
-        .comment-meta .post-link{color:#3b82f6;text-decoration:none}
+        .comment-platform.fb{background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg)}
+        .comment-platform.ig{background:var(--ds-danger-bg);color:var(--ds-danger-fg)}
+        .comment-platform.tt{background:var(--ds-bg-subtle);color:var(--ds-text-secondary)}
+        .comment-time{font-size:.7rem;color:var(--ds-text-tertiary)}
+        .comment-text{font-size:.85rem;line-height:1.55;color:var(--ds-text-primary);margin-bottom:8px;white-space:pre-wrap}
+        .comment-meta{font-size:.7rem;color:var(--ds-text-tertiary);margin-bottom:8px}
+        .comment-meta .post-link{color:var(--ds-accent);text-decoration:none}
 
         .comment-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-        .ca-btn{padding:6px 14px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:.74rem;cursor:pointer;font-weight:600;color:#475569;text-decoration:none;display:inline-block}
-        .ca-btn:hover{background:#f8fafc}
-        .ca-btn.primary{background:#3b82f6;color:#fff;border-color:#3b82f6}
-        .ca-btn.primary:hover{background:#2563eb}
-        .ca-btn.success{background:#10b981;color:#fff;border-color:#10b981}
+        .ca-btn{padding:6px 14px;border-radius:6px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);font-size:.74rem;cursor:pointer;font-weight:600;color:var(--ds-text-secondary);text-decoration:none;display:inline-block}
+        .ca-btn:hover{background:var(--ds-bg-subtle)}
+        .ca-btn.primary{background:var(--ds-accent);color:#fff;border-color:var(--ds-accent)}
+        .ca-btn.primary:hover{background:var(--ds-accent-hover)}
+        .ca-btn.success{background:var(--ds-success-500);color:#fff;border-color:var(--ds-success-500)}
 
-        .reply-area{margin-top:10px;padding:10px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;display:none}
+        .reply-area{margin-top:10px;padding:10px;background:var(--ds-bg-subtle);border-radius:8px;border:1px solid var(--ds-border);display:none}
         .reply-area.active{display:block}
-        .reply-area textarea{width:100%;padding:8px 10px;border-radius:6px;border:1px solid #e2e8f0;font-size:.82rem;font-family:inherit;resize:vertical;min-height:60px}
+        .reply-area textarea{width:100%;padding:8px 10px;border-radius:6px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);color:var(--ds-text-primary);font-size:.82rem;font-family:inherit;resize:vertical;min-height:60px}
         .reply-area-actions{display:flex;gap:6px;justify-content:flex-end;margin-top:6px}
         .ai-suggestions{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-        .ai-suggestion-btn{padding:4px 10px;border-radius:12px;border:1px solid #c4b5fd;background:#faf5ff;color:#7c3aed;font-size:.7rem;cursor:pointer;font-weight:600}
-        .ai-suggestion-btn:hover{background:#ede9fe}
+        .ai-suggestion-btn{padding:4px 10px;border-radius:12px;border:1px solid var(--ds-accent);background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg);font-size:.7rem;cursor:pointer;font-weight:600}
+        .ai-suggestion-btn:hover{background:var(--ds-bg-hover)}
 
-        .empty{text-align:center;padding:60px 20px;color:#94a3b8}
+        .empty{text-align:center;padding:60px 20px;color:var(--ds-text-tertiary)}
         .empty-icon{font-size:3.5rem;margin-bottom:12px;opacity:.5}
 
         .source-badge{display:inline-block;font-size:.65rem;padding:1px 6px;border-radius:4px;font-weight:700;margin-left:6px}
-        .source-badge.real{background:#dcfce7;color:#166534}
-        .source-badge.sim{background:#fef3c7;color:#92400e}
+        .source-badge.real{background:var(--ds-success-bg);color:var(--ds-success-fg)}
+        .source-badge.sim{background:var(--ds-warning-bg);color:var(--ds-warning-fg)}
 
-        .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:400px}
+        .toast{position:fixed;bottom:24px;right:24px;background:var(--ds-bg-surface);color:var(--ds-text-primary);border:1px solid var(--ds-border);padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:400px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
         .toast.show{opacity:1;transform:translateY(0)}
 
         @media(max-width:768px){.stats-row{grid-template-columns:1fr 1fr}}
     </style>
 </head>
-<body>
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
-            <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>🏠</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
-                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
-                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link active"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
-                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
-            </nav>
-        </aside>
-        <div class="main-content">
-            <header class="top-bar">
-                <div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">💬 댓글/반응 관리</div><div class="top-bar-sub">실제 SNS 댓글 조회 및 답글 작성</div></div></div>
-                <div class="top-bar-right">
-                    <button class="tb-btn primary" onclick="fetchRealComments()" id="btnRefresh">🔄 실제 댓글 가져오기</button>
-                </div>
-            </header>
-            <div class="content">
+<body class="ds-root" data-shell-active="engagement">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">댓글·DM 관리</h1>
+                <p class="ds-body">수신된 댓글과 반응을 확인하고 답글을 작성합니다.</p>
+            </div>
+            <button class="ds-btn ds-btn-primary" onclick="fetchRealComments()" id="btnRefresh"><i data-lucide="refresh-cw" class="ds-icon ds-icon-sm"></i> 실제 댓글 가져오기</button>
+        </div>
 
                 <div class="stats-row">
                     <div class="stat-card"><div class="stat-icon">💬</div><div class="stat-val" id="statTotal">0</div><div class="stat-label">전체 댓글</div></div>
-                    <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-val" id="statPending" style="color:#f59e0b">0</div><div class="stat-label">미응답</div></div>
-                    <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-val" id="statReplied" style="color:#10b981">0</div><div class="stat-label">응답 완료</div></div>
-                    <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-val" id="statRate" style="color:#3b82f6">0%</div><div class="stat-label">응답률</div></div>
+                    <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-val" id="statPending" style="color:var(--ds-warning-500)">0</div><div class="stat-label">미응답</div></div>
+                    <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-val" id="statReplied" style="color:var(--ds-success-500)">0</div><div class="stat-label">응답 완료</div></div>
+                    <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-val" id="statRate" style="color:var(--ds-accent)">0%</div><div class="stat-label">응답률</div></div>
                 </div>
 
                 <div class="toolbar">
@@ -115,15 +107,11 @@
                 </div>
 
                 <div class="comment-list" id="commentList"></div>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <div class="toast" id="toast"></div>
 
     <script>
-        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
-
         var allComments = [];
 
         function getSettings(){
@@ -297,7 +285,7 @@
                             ' · 👍 ' + (c.likeCount || 0) +
                             (c.replyCount ? ' · 💬 답글 ' + c.replyCount : '') +
                         '</div>' +
-                        '<div style="font-size:.7rem;color:#64748b;margin-bottom:6px">상태: <strong>' + statusLabel + '</strong></div>' +
+                        '<div style="font-size:.7rem;color:var(--ds-text-secondary);margin-bottom:6px">상태: <strong>' + statusLabel + '</strong></div>' +
                         '<div class="comment-actions">' +
                             '<button class="ca-btn primary" onclick="toggleReply(\'' + c.id + '\')">💬 답글 작성</button>' +
                             '<button class="ca-btn" onclick="aiSuggestReply(\'' + c.id + '\')">🤖 AI 답글 추천</button>' +
@@ -486,5 +474,9 @@
     <script src="../js/i18n-auto.js"></script>
     <script src="../js/i18n-common.js"></script>
     <script src="../js/i18n.js"></script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
 </body>
 </html>
