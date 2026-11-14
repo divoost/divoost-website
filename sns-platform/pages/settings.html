@@ -1,209 +1,200 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#3b82f6">
+    <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
     <link rel="manifest" href="../manifest.json">
     <title>설정 | SNS 플랫폼</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
-        .settings-box{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:24px;margin-bottom:20px}
-        .settings-box h2{font-size:1.05rem;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-        .ch-section{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:18px;margin-bottom:14px}
+        .settings-box{background:var(--ds-bg-surface);border-radius:14px;border:1px solid var(--ds-border);padding:24px;margin-bottom:20px}
+        .settings-box h2{font-size:1.05rem;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--ds-text-primary)}
+        .ch-section{background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:12px;padding:18px;margin-bottom:14px}
         .ch-section-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
         .ch-section-icon{font-size:28px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px;flex-shrink:0}
-        .ch-section-icon.fb{background:#e7f0ff}
-        .ch-section-icon.tt{background:#f0f0f0}
-        .ch-section-icon.ig{background:#fce7f3}
-        .ch-section-icon.nb{background:#dcfce7}
-        .ch-section-icon.nc{background:#fef3c7}
-        .ch-section-icon.xhs{background:#fee2e2}
-        .ch-section-icon.dy{background:#f3e8ff}
-        .ch-section-name{font-weight:700;font-size:.95rem}
-        .ch-section-count{margin-left:auto;font-size:.72rem;padding:4px 12px;border-radius:16px;font-weight:600;background:#dbeafe;color:#1e40af}
-        .ch-section-count.empty{background:#f1f5f9;color:#94a3b8}
-        .btn-add-account{padding:8px 16px;border-radius:8px;border:1px dashed #3b82f6;background:#fff;color:#3b82f6;font-size:.78rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.2s;width:100%;justify-content:center;margin-top:8px}
-        .btn-add-account:hover{background:#eff6ff;border-style:solid}
+        .ch-section-icon.fb{background:var(--ds-accent-soft-bg)}
+        .ch-section-icon.tt{background:var(--ds-bg-surface)}
+        .ch-section-icon.ig{background:var(--ds-danger-bg)}
+        .ch-section-icon.nb{background:var(--ds-success-bg)}
+        .ch-section-icon.nc{background:var(--ds-warning-bg)}
+        .ch-section-icon.xhs{background:var(--ds-danger-bg)}
+        .ch-section-icon.dy{background:var(--ds-accent-soft-bg)}
+        .ch-section-name{font-weight:700;font-size:.95rem;color:var(--ds-text-primary)}
+        .ch-section-count{margin-left:auto;font-size:.72rem;padding:4px 12px;border-radius:16px;font-weight:600;background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg)}
+        .ch-section-count.empty{background:var(--ds-bg-subtle);color:var(--ds-text-tertiary)}
+        .btn-add-account{padding:8px 16px;border-radius:8px;border:1px dashed var(--ds-accent);background:var(--ds-bg-surface);color:var(--ds-accent);font-size:.78rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:.2s;width:100%;justify-content:center;margin-top:8px}
+        .btn-add-account:hover{background:var(--ds-accent-soft-bg);border-style:solid}
 
-        .account-card{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:14px;margin-bottom:10px;transition:.2s}
-        .account-card.expanded{box-shadow:0 4px 12px rgba(0,0,0,.04)}
+        .account-card{background:var(--ds-bg-surface);border:1px solid var(--ds-border);border-radius:10px;padding:14px;margin-bottom:10px;transition:.2s}
+        .account-card.expanded{box-shadow:var(--ds-shadow-md)}
         .account-header{display:flex;align-items:center;gap:10px;cursor:pointer}
         .account-status-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-        .account-status-dot.connected{background:#10b981}
-        .account-status-dot.disconnected{background:#cbd5e1}
-        .account-name{flex:1;font-weight:600;font-size:.88rem}
+        .account-status-dot.connected{background:var(--ds-success-500)}
+        .account-status-dot.disconnected{background:var(--ds-border-strong)}
+        .account-name{flex:1;font-weight:600;font-size:.88rem;color:var(--ds-text-primary)}
         .account-name input{border:none;background:transparent;font:inherit;color:inherit;width:100%;padding:2px 4px;border-radius:4px}
-        .account-name input:focus{outline:none;background:#f1f5f9}
-        .account-meta{font-size:.7rem;color:#94a3b8;margin-top:2px}
+        .account-name input:focus{outline:none;background:var(--ds-bg-subtle)}
+        .account-meta{font-size:.7rem;color:var(--ds-text-tertiary);margin-top:2px}
         .account-actions{display:flex;gap:6px}
-        .account-chevron{color:#94a3b8;font-size:14px;transition:transform .2s}
+        .account-chevron{color:var(--ds-text-tertiary);font-size:14px;transition:transform .2s}
         .account-card.expanded .account-chevron{transform:rotate(180deg)}
 
-        .account-fields{display:none;margin-top:14px;padding-top:14px;border-top:1px solid #f1f5f9}
+        .account-fields{display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--ds-border-subtle)}
         .account-card.expanded .account-fields{display:block}
         .account-fields-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
         .account-fields-grid .full{grid-column:1/-1}
         .field-group{display:flex;flex-direction:column;gap:4px}
-        .field-group label{font-size:.72rem;font-weight:600;color:#64748b}
-        .field-group input,.field-group select{padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.8rem;font-family:inherit;width:100%}
-        .field-group input:focus{border-color:#3b82f6;outline:none;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+        .field-group label{font-size:.72rem;font-weight:600;color:var(--ds-text-secondary)}
+        .field-group input,.field-group select{padding:8px 12px;border-radius:8px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);color:var(--ds-text-primary);font-size:.8rem;font-family:inherit;width:100%}
+        .field-group input:focus{border-color:var(--ds-accent);outline:none;box-shadow:var(--ds-shadow-focus)}
         .pw-wrap{position:relative}
         .pw-wrap input{padding-right:36px}
-        .toggle-pw{position:absolute;right:8px;top:50%;transform:translateY(-50%);cursor:pointer;background:none;border:none;color:#94a3b8}
+        .toggle-pw{position:absolute;right:8px;top:50%;transform:translateY(-50%);cursor:pointer;background:none;border:none;color:var(--ds-text-tertiary)}
 
         .acc-btn{padding:7px 14px;border-radius:6px;border:none;font-size:.74rem;font-weight:600;cursor:pointer;transition:.2s}
-        .acc-btn.primary{background:#3b82f6;color:#fff}
-        .acc-btn.primary:hover{background:#2563eb}
-        .acc-btn.secondary{background:#f1f5f9;color:#475569}
-        .acc-btn.secondary:hover{background:#e2e8f0}
-        .acc-btn.danger{background:#fee2e2;color:#dc2626}
-        .acc-btn.danger:hover{background:#fecdd3}
+        .acc-btn.primary{background:var(--ds-accent);color:#fff}
+        .acc-btn.primary:hover{background:var(--ds-accent-hover)}
+        .acc-btn.secondary{background:var(--ds-bg-subtle);color:var(--ds-text-secondary)}
+        .acc-btn.secondary:hover{background:var(--ds-bg-hover)}
+        .acc-btn.danger{background:var(--ds-danger-bg);color:var(--ds-danger-fg)}
+        .acc-btn.danger:hover{background:var(--ds-danger-bg);filter:brightness(1.1)}
         .acc-actions-bar{display:flex;gap:6px;justify-content:flex-end;margin-top:12px}
 
-        .empty-accounts{text-align:center;padding:20px;color:#94a3b8;font-size:.78rem;background:#fff;border-radius:8px;border:1px dashed #e2e8f0}
+        .empty-accounts{text-align:center;padding:20px;color:var(--ds-text-tertiary);font-size:.78rem;background:var(--ds-bg-surface);border-radius:8px;border:1px dashed var(--ds-border)}
 
-        .guide-text{font-size:.72rem;color:#475569;line-height:1.6;margin-top:8px;padding:8px 10px;background:#eff6ff;border-radius:8px;border:1px solid #bfdbfe}
-        .guide-text a{color:#3b82f6;text-decoration:none;font-weight:600}
+        .guide-text{font-size:.72rem;color:var(--ds-text-secondary);line-height:1.6;margin-top:8px;padding:8px 10px;background:var(--ds-accent-soft-bg);border-radius:8px;border:1px solid var(--ds-border)}
+        .guide-text a{color:var(--ds-text-link);text-decoration:none;font-weight:600}
 
         .general-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
         .general-field{display:flex;flex-direction:column;gap:4px}
-        .general-field label{font-size:.75rem;font-weight:600;color:#64748b}
-        .general-field select,.general-field input{padding:9px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem}
+        .general-field label{font-size:.75rem;font-weight:600;color:var(--ds-text-secondary)}
+        .general-field select,.general-field input{padding:9px 12px;border-radius:8px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);color:var(--ds-text-primary);font-size:.82rem}
 
         .btn-connect{padding:8px 18px;border-radius:8px;border:none;font-size:.78rem;font-weight:600;cursor:pointer}
-        .btn-connect.primary{background:#3b82f6;color:#fff}
-        .btn-connect.secondary{background:#f1f5f9;color:#64748b;border:1px solid #e2e8f0}
-        .btn-connect.danger{background:#fee2e2;color:#dc2626;border:1px solid #fecaca}
+        .btn-connect.primary{background:var(--ds-accent);color:#fff}
+        .btn-connect.secondary{background:var(--ds-bg-subtle);color:var(--ds-text-secondary);border:1px solid var(--ds-border)}
+        .btn-connect.danger{background:var(--ds-danger-bg);color:var(--ds-danger-fg);border:1px solid var(--ds-danger-600)}
 
-        .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+        .toast{position:fixed;bottom:24px;right:24px;background:var(--ds-bg-inverse);color:var(--ds-bg-app);padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
         .toast.show{opacity:1;transform:translateY(0)}
 
         /* Result Modal */
-        .rm-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:10000;justify-content:center;align-items:center;padding:20px;animation:rmFade .15s ease}
+        .rm-overlay{display:none;position:fixed;inset:0;background:rgba(2,6,23,.6);z-index:10000;justify-content:center;align-items:center;padding:20px;animation:rmFade .15s ease}
         .rm-overlay.open{display:flex}
         @keyframes rmFade{from{opacity:0}to{opacity:1}}
         @keyframes rmIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:none}}
-        .rm-dialog{background:#fff;border-radius:14px;width:100%;max-width:560px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:rmIn .2s ease}
-        .rm-header{padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:10px;flex-shrink:0}
+        .rm-dialog{background:var(--ds-bg-surface);border-radius:14px;width:100%;max-width:560px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:var(--ds-shadow-lg);animation:rmIn .2s ease}
+        .rm-header{padding:16px 20px;border-bottom:1px solid var(--ds-border);display:flex;align-items:center;gap:10px;flex-shrink:0}
         .rm-header-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-        .rm-header-icon.success{background:#dcfce7;color:#16a34a}
-        .rm-header-icon.error{background:#fee2e2;color:#dc2626}
-        .rm-header-icon.warn{background:#fef3c7;color:#d97706}
-        .rm-header-icon.info{background:#dbeafe;color:#2563eb}
+        .rm-header-icon.success{background:var(--ds-success-bg);color:var(--ds-success-fg)}
+        .rm-header-icon.error{background:var(--ds-danger-bg);color:var(--ds-danger-fg)}
+        .rm-header-icon.warn{background:var(--ds-warning-bg);color:var(--ds-warning-fg)}
+        .rm-header-icon.info{background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg)}
         .rm-title{flex:1;min-width:0}
-        .rm-title h3{font-size:1rem;font-weight:700;color:#0f172a;margin:0}
-        .rm-title .sub{font-size:.72rem;color:#94a3b8;margin-top:2px}
-        .rm-close{width:30px;height:30px;border-radius:8px;border:none;background:#f1f5f9;color:#64748b;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-        .rm-close:hover{background:#e2e8f0}
+        .rm-title h3{font-size:1rem;font-weight:700;color:var(--ds-text-primary);margin:0}
+        .rm-title .sub{font-size:.72rem;color:var(--ds-text-tertiary);margin-top:2px}
+        .rm-close{width:30px;height:30px;border-radius:8px;border:none;background:var(--ds-bg-subtle);color:var(--ds-text-secondary);cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .rm-close:hover{background:var(--ds-bg-hover)}
         .rm-body{padding:18px 20px;overflow-y:auto;flex:1}
         .rm-summary{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
         .rm-pill{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:99px;font-size:.74rem;font-weight:700}
-        .rm-pill.ok{background:#dcfce7;color:#15803d}
-        .rm-pill.err{background:#fee2e2;color:#b91c1c}
-        .rm-pill.warn{background:#fef3c7;color:#a16207}
-        .rm-pill.info{background:#dbeafe;color:#1d4ed8}
+        .rm-pill.ok{background:var(--ds-success-bg);color:var(--ds-success-fg)}
+        .rm-pill.err{background:var(--ds-danger-bg);color:var(--ds-danger-fg)}
+        .rm-pill.warn{background:var(--ds-warning-bg);color:var(--ds-warning-fg)}
+        .rm-pill.info{background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg)}
         .rm-section{margin-bottom:14px}
         .rm-section:last-child{margin-bottom:0}
-        .rm-section-title{font-size:.78rem;font-weight:700;color:#475569;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+        .rm-section-title{font-size:.78rem;font-weight:700;color:var(--ds-text-secondary);margin-bottom:6px;display:flex;align-items:center;gap:6px}
         .rm-item{padding:10px 12px;border-radius:8px;font-size:.8rem;line-height:1.5;margin-bottom:6px;display:flex;align-items:flex-start;gap:8px}
         .rm-item:last-child{margin-bottom:0}
-        .rm-item.ok{background:#f0fdf4;border:1px solid #bbf7d0;color:#14532d}
-        .rm-item.err{background:#fef2f2;border:1px solid #fecaca;color:#7f1d1d}
-        .rm-item.warn{background:#fffbeb;border:1px solid #fde68a;color:#78350f}
+        .rm-item.ok{background:var(--ds-success-bg);border:1px solid var(--ds-success-600);color:var(--ds-success-fg)}
+        .rm-item.err{background:var(--ds-danger-bg);border:1px solid var(--ds-danger-600);color:var(--ds-danger-fg)}
+        .rm-item.warn{background:var(--ds-warning-bg);border:1px solid var(--ds-warning-600);color:var(--ds-warning-fg)}
         .rm-item .nm{font-weight:700;flex-shrink:0}
         .rm-item .msg{flex:1;min-width:0;word-break:break-word}
         .rm-item .ic{flex-shrink:0;font-size:1rem;line-height:1.2}
-        .rm-footer{padding:12px 20px;border-top:1px solid #e2e8f0;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;flex-shrink:0;background:#f8fafc}
+        .rm-footer{padding:12px 20px;border-top:1px solid var(--ds-border);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;flex-shrink:0;background:var(--ds-bg-subtle)}
         .rm-btn{padding:9px 18px;border-radius:8px;border:none;font-size:.82rem;font-weight:600;cursor:pointer;transition:.15s;display:inline-flex;align-items:center;gap:6px}
-        .rm-btn.primary{background:#3b82f6;color:#fff}
-        .rm-btn.primary:hover{background:#2563eb}
+        .rm-btn.primary{background:var(--ds-accent);color:#fff}
+        .rm-btn.primary:hover{background:var(--ds-accent-hover)}
         .rm-btn.reauth{background:linear-gradient(135deg,#1877f2,#0c63d4);color:#fff;box-shadow:0 2px 6px rgba(24,119,242,.3)}
         .rm-btn.reauth:hover{box-shadow:0 4px 12px rgba(24,119,242,.4)}
-        .rm-btn.ghost{background:#fff;color:#475569;border:1px solid #e2e8f0}
-        .rm-btn.ghost:hover{border-color:#3b82f6;color:#3b82f6}
-        .rm-btn.danger{background:#dc2626;color:#fff}
-        .rm-btn.danger:hover{background:#b91c1c}
+        .rm-btn.ghost{background:var(--ds-bg-surface);color:var(--ds-text-secondary);border:1px solid var(--ds-border)}
+        .rm-btn.ghost:hover{border-color:var(--ds-accent);color:var(--ds-accent)}
+        .rm-btn.danger{background:var(--ds-danger-600);color:#fff}
+        .rm-btn.danger:hover{background:var(--ds-danger-700)}
 
         /* Page Selector Modal */
-        .ps-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:10001;justify-content:center;align-items:center;padding:20px;animation:rmFade .15s ease}
+        .ps-overlay{display:none;position:fixed;inset:0;background:rgba(2,6,23,.6);z-index:10001;justify-content:center;align-items:center;padding:20px;animation:rmFade .15s ease}
         .ps-overlay.open{display:flex}
-        .ps-dialog{background:#fff;border-radius:14px;width:100%;max-width:600px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.25);animation:rmIn .2s ease}
-        .ps-header{padding:16px 20px;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:10px;flex-shrink:0}
-        .ps-header h3{flex:1;font-size:1rem;font-weight:700;color:#0f172a;margin:0}
-        .ps-header .ps-sub{font-size:.72rem;color:#94a3b8}
-        .ps-toolbar{padding:10px 20px;background:#f8fafc;border-bottom:1px solid #e2e8f0;display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex-shrink:0}
-        .ps-toolbar-info{font-size:.78rem;color:#475569;font-weight:600}
-        .ps-toolbar-info .num{color:#3b82f6}
+        .ps-dialog{background:var(--ds-bg-surface);border-radius:14px;width:100%;max-width:600px;max-height:85vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:var(--ds-shadow-lg);animation:rmIn .2s ease}
+        .ps-header{padding:16px 20px;border-bottom:1px solid var(--ds-border);display:flex;align-items:center;gap:10px;flex-shrink:0}
+        .ps-header h3{flex:1;font-size:1rem;font-weight:700;color:var(--ds-text-primary);margin:0}
+        .ps-header .ps-sub{font-size:.72rem;color:var(--ds-text-tertiary)}
+        .ps-toolbar{padding:10px 20px;background:var(--ds-bg-subtle);border-bottom:1px solid var(--ds-border);display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex-shrink:0}
+        .ps-toolbar-info{font-size:.78rem;color:var(--ds-text-secondary);font-weight:600}
+        .ps-toolbar-info .num{color:var(--ds-accent)}
         .ps-toolbar-actions{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
-        .ps-mini-btn{padding:5px 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;color:#475569;font-size:.72rem;font-weight:600;cursor:pointer}
-        .ps-mini-btn:hover{border-color:#3b82f6;color:#3b82f6}
+        .ps-mini-btn{padding:5px 12px;border-radius:6px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);color:var(--ds-text-secondary);font-size:.72rem;font-weight:600;cursor:pointer}
+        .ps-mini-btn:hover{border-color:var(--ds-accent);color:var(--ds-accent)}
         .ps-body{padding:6px 12px 12px;overflow-y:auto;flex:1}
         .ps-list{display:flex;flex-direction:column;gap:6px;margin-top:8px}
-        .ps-row{display:flex;align-items:center;gap:12px;padding:11px 14px;background:#fff;border:1px solid #e2e8f0;border-radius:10px;cursor:pointer;transition:.15s}
-        .ps-row:hover{border-color:#3b82f6;background:#f8fafc}
-        .ps-row.selected{border-color:#3b82f6;background:#eff6ff}
-        .ps-row.disabled{opacity:.55;cursor:not-allowed;background:#f8fafc}
-        .ps-row.disabled:hover{border-color:#e2e8f0;background:#f8fafc}
-        .ps-check{width:18px;height:18px;border-radius:5px;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s;background:#fff}
-        .ps-row.selected .ps-check{border-color:#3b82f6;background:#3b82f6;color:#fff}
+        .ps-row{display:flex;align-items:center;gap:12px;padding:11px 14px;background:var(--ds-bg-surface);border:1px solid var(--ds-border);border-radius:10px;cursor:pointer;transition:.15s}
+        .ps-row:hover{border-color:var(--ds-accent);background:var(--ds-bg-subtle)}
+        .ps-row.selected{border-color:var(--ds-accent);background:var(--ds-accent-soft-bg)}
+        .ps-row.disabled{opacity:.55;cursor:not-allowed;background:var(--ds-bg-subtle)}
+        .ps-row.disabled:hover{border-color:var(--ds-border);background:var(--ds-bg-subtle)}
+        .ps-check{width:18px;height:18px;border-radius:5px;border:2px solid var(--ds-border-strong);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.15s;background:var(--ds-bg-surface)}
+        .ps-row.selected .ps-check{border-color:var(--ds-accent);background:var(--ds-accent);color:#fff}
         .ps-check::before{content:'';width:9px;height:5px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translateY(-1px);opacity:0;transition:.15s}
         .ps-row.selected .ps-check::before{opacity:1}
         .ps-info{flex:1;min-width:0}
-        .ps-name{font-size:.88rem;font-weight:700;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-        .ps-meta{font-size:.7rem;color:#64748b;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .ps-name{font-size:.88rem;font-weight:700;color:var(--ds-text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .ps-meta{font-size:.7rem;color:var(--ds-text-secondary);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
         .ps-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
         .ps-tag{display:inline-flex;align-items:center;gap:3px;padding:2px 8px;border-radius:99px;font-size:.65rem;font-weight:700;line-height:1.4}
-        .ps-tag.ig{background:#fce7f3;color:#be185d}
-        .ps-tag.no-ig{background:#fef3c7;color:#92400e}
-        .ps-tag.registered{background:#dbeafe;color:#1d4ed8}
-        .ps-tag.danger{background:#fee2e2;color:#b91c1c}
-        .ps-empty{text-align:center;padding:40px 20px;color:#94a3b8;font-size:.85rem}
-        .ps-footer{padding:12px 20px;border-top:1px solid #e2e8f0;display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;flex-shrink:0;background:#f8fafc}
+        .ps-tag.ig{background:var(--ds-danger-bg);color:var(--ds-danger-fg)}
+        .ps-tag.no-ig{background:var(--ds-warning-bg);color:var(--ds-warning-fg)}
+        .ps-tag.registered{background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg)}
+        .ps-tag.danger{background:var(--ds-danger-bg);color:var(--ds-danger-fg)}
+        .ps-empty{text-align:center;padding:40px 20px;color:var(--ds-text-tertiary);font-size:.85rem}
+        .ps-footer{padding:12px 20px;border-top:1px solid var(--ds-border);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;flex-shrink:0;background:var(--ds-bg-subtle)}
 
-        .cleanup-btn{padding:5px 12px;border-radius:6px;border:1px solid #fecaca;background:#fff;color:#dc2626;font-size:.72rem;font-weight:600;cursor:pointer;margin-left:6px;transition:.15s}
-        .cleanup-btn:hover{background:#fef2f2;border-color:#dc2626}
+        .cleanup-btn{padding:5px 12px;border-radius:6px;border:1px solid var(--ds-danger-600);background:var(--ds-bg-surface);color:var(--ds-danger-fg);font-size:.72rem;font-weight:600;cursor:pointer;margin-left:6px;transition:.15s}
+        .cleanup-btn:hover{background:var(--ds-danger-bg);border-color:var(--ds-danger-600)}
 
         @media(max-width:768px){.account-fields-grid{grid-template-columns:1fr}.general-row{grid-template-columns:1fr}}
     </style>
 </head>
-<body data-require-auth="true">
+<body class="ds-root" data-shell-active="settings" data-require-auth="true">
     <script src="../js/secure-storage.js"></script>
     <script src="../js/auth-guard.js"></script>
     <script src="../js/ai-gateway.js"></script>
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
-            <div class="sidebar-profile">
-                <div class="profile-avatar">U</div>
-                <div class="profile-info"><div class="profile-email">guest@example.com</div><div class="profile-plan">체험플랜 사용 중</div></div>
-                <button onclick="if(confirm('로그아웃 하시겠습니까?'))SNSAuth.logout()" style="background:none;border:none;color:#ef4444;cursor:pointer;font-size:11px;font-weight:600;padding:4px 8px;border-radius:4px" title="로그아웃">↪</button>
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">설정</h1>
+                <p class="ds-body">계정·채널 연동·AI 기본값·데이터를 관리합니다.</p>
             </div>
-            <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>🏠</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
-                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
-                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
-                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link active"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
-            </nav>
-        </aside>
-        <div class="main-content">
-            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">⚙️ 설정</div><div class="top-bar-sub">SNS 채널 멀티 계정 관리</div></div></div></header>
-            <div class="content">
+        </div>
 
                 <!-- Account Info -->
-                <div class="settings-box" style="background:linear-gradient(135deg,#eff6ff,#f0f9ff)">
+                <div class="settings-box" style="background:var(--ds-accent-soft-bg)">
                     <h2>👤 내 계정</h2>
                     <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-                        <div id="accountAvatar" style="width:56px;height:56px;border-radius:50%;background:#3b82f6;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">U</div>
+                        <div id="accountAvatar" style="width:56px;height:56px;border-radius:50%;background:var(--ds-accent);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">U</div>
                         <div style="flex:1;min-width:200px">
-                            <div id="accountName" style="font-size:1rem;font-weight:700;color:#0f172a">사용자</div>
-                            <div id="accountEmail" style="font-size:.82rem;color:#64748b;margin-top:2px">guest@example.com</div>
-                            <div id="accountStatus" style="font-size:.72rem;color:#10b981;margin-top:4px;font-weight:600">✓ 이메일 인증 완료</div>
+                            <div id="accountName" style="font-size:1rem;font-weight:700;color:var(--ds-text-primary)">사용자</div>
+                            <div id="accountEmail" style="font-size:.82rem;color:var(--ds-text-secondary);margin-top:2px">guest@example.com</div>
+                            <div id="accountStatus" style="font-size:.72rem;color:var(--ds-success-fg);margin-top:4px;font-weight:600">✓ 이메일 인증 완료</div>
                         </div>
                         <button class="btn-connect danger" onclick="if(confirm('로그아웃 하시겠습니까?'))SNSAuth.logout()">↪ 로그아웃</button>
                     </div>
@@ -236,7 +227,7 @@
                 <!-- SNS Multi-Account Settings -->
                 <div class="settings-box">
                     <h2>📡 SNS 채널 계정 관리</h2>
-                    <p style="font-size:.8rem;color:#64748b;margin-bottom:16px">각 SNS 플랫폼마다 <strong>여러 계정</strong>을 등록하여 함께 관리할 수 있습니다. (예: Facebook 페이지 여러 개)</p>
+                    <p style="font-size:.8rem;color:var(--ds-text-secondary);margin-bottom:16px">각 SNS 플랫폼마다 <strong>여러 계정</strong>을 등록하여 함께 관리할 수 있습니다. (예: Facebook 페이지 여러 개)</p>
 
                     <div id="channelsContainer"></div>
                 </div>
@@ -244,9 +235,9 @@
                 <!-- AI Settings -->
                 <div class="settings-box">
                     <h2>🤖 AI 이미지/영상 생성 기본 설정</h2>
-                    <p style="font-size:.8rem;color:#64748b;margin-bottom:14px">
+                    <p style="font-size:.8rem;color:var(--ds-text-secondary);margin-bottom:14px">
                         AI 생성은 <strong>DIVOOST 플랫폼이 제공</strong>합니다. 별도 API 키 입력 불필요.
-                        <a href="billing.html" style="color:#3b82f6;font-weight:600">💳 크레딧 잔액 및 결제 →</a>
+                        <a href="billing.html" style="color:var(--ds-text-link);font-weight:600">💳 크레딧 잔액 및 결제 →</a>
                     </p>
 
                     <div class="general-row">
@@ -295,11 +286,9 @@
                 </div>
 
                 <div style="display:flex;gap:8px;justify-content:flex-end;padding:16px 0">
-                    <button class="btn-connect" style="background:#10b981;color:#fff;padding:10px 28px;font-size:.85rem;font-weight:700;border-radius:8px;border:none" onclick="saveAll()">💾 전체 저장</button>
+                    <button class="btn-connect" style="background:var(--ds-success-600);color:#fff;padding:10px 28px;font-size:.85rem;font-weight:700;border-radius:8px;border:none" onclick="saveAll()">💾 전체 저장</button>
                 </div>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <div class="toast" id="toast"></div>
 
@@ -346,8 +335,6 @@
     </div>
 
     <script>
-        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
-
         // ─── 결과 모달 ───
         function escH(s){var d=document.createElement('div');d.textContent=String(s==null?'':s);return d.innerHTML}
 
@@ -423,7 +410,7 @@
                 bodyHtml += '</div>';
             });
             if(opts.text){
-                bodyHtml += '<div style="font-size:.85rem;color:#334155;line-height:1.6;white-space:pre-wrap">' + escH(opts.text) + '</div>';
+                bodyHtml += '<div style="font-size:.85rem;color:var(--ds-text-secondary);line-height:1.6;white-space:pre-wrap">' + escH(opts.text) + '</div>';
             }
             document.getElementById('rmBody').innerHTML = bodyHtml;
 
@@ -770,7 +757,7 @@
                 html += '<div class="ch-section">';
                 html += '<div class="ch-section-header">';
                 html += '<div class="ch-section-icon ' + def.iconClass + '">' + def.icon + '</div>';
-                html += '<div><div class="ch-section-name">' + def.name + '</div><div style="font-size:.72rem;color:#94a3b8">' + def.desc + '</div></div>';
+                html += '<div><div class="ch-section-name">' + def.name + '</div><div style="font-size:.72rem;color:var(--ds-text-tertiary)">' + def.desc + '</div></div>';
                 html += '<div class="ch-section-count ' + (count === 0 ? 'empty' : '') + '">' + count + '개 ' + def.accountLabel + '</div>';
                 html += '</div>';
 
@@ -792,16 +779,16 @@
                     html += '<button class="btn-add-account" onclick="addAccount(\'' + chId + '\')">+ ' + def.accountLabel + ' 추가</button>';
                 }
                 if(chId === 'facebook'){
-                    html += '<button class="btn-add-account" style="border-color:#1877f2;color:#1877f2;background:#e7f0ff;margin-top:6px" onclick="connectFacebookOAuth()">🔗 Facebook 계정으로 한 번에 연동 (선택형)</button>';
-                    html += '<button class="btn-add-account" style="border-color:#94a3b8;color:#475569;margin-top:6px" onclick="openSetupWizard(\'facebook\')">📘 Facebook 설정 방법 보기</button>';
+                    html += '<button class="btn-add-account" style="border-color:var(--ds-accent);color:var(--ds-text-link);background:var(--ds-accent-soft-bg);margin-top:6px" onclick="connectFacebookOAuth()">🔗 Facebook 계정으로 한 번에 연동 (선택형)</button>';
+                    html += '<button class="btn-add-account" style="border-color:var(--ds-border-strong);color:var(--ds-text-secondary);margin-top:6px" onclick="openSetupWizard(\'facebook\')">📘 Facebook 설정 방법 보기</button>';
                 }
                 if(chId === 'instagram'){
-                    html += '<button class="btn-add-account" style="border-color:#ec4899;color:#ec4899;background:#fdf2f8;margin-top:6px" onclick="autoConnectInstagramFromFacebook()">⚡ Facebook 페이지에서 Instagram 자동 연결 (선택형)</button>';
-                    html += '<button class="btn-add-account" style="border-color:#94a3b8;color:#475569;margin-top:6px" onclick="openSetupWizard(\'instagram\')">📸 Instagram 설정 방법 보기</button>';
+                    html += '<button class="btn-add-account" style="border-color:var(--ds-danger-600);color:var(--ds-danger-fg);background:var(--ds-danger-bg);margin-top:6px" onclick="autoConnectInstagramFromFacebook()">⚡ Facebook 페이지에서 Instagram 자동 연결 (선택형)</button>';
+                    html += '<button class="btn-add-account" style="border-color:var(--ds-border-strong);color:var(--ds-text-secondary);margin-top:6px" onclick="openSetupWizard(\'instagram\')">📸 Instagram 설정 방법 보기</button>';
                 }
                 if(chId === 'tiktok'){
                     html += '<button class="btn-add-account" style="border-color:#000;color:#fff;background:linear-gradient(135deg,#000,#1a1a1a);margin-top:6px" onclick="connectTikTokOAuth()">🎵 TikTok 계정으로 한 번에 연동 (OAuth)</button>';
-                    html += '<button class="btn-add-account" style="border-color:#94a3b8;color:#475569;margin-top:6px" onclick="openSetupWizard(\'tiktok\')">🎵 TikTok 설정 방법 보기</button>';
+                    html += '<button class="btn-add-account" style="border-color:var(--ds-border-strong);color:var(--ds-text-secondary);margin-top:6px" onclick="openSetupWizard(\'tiktok\')">🎵 TikTok 설정 방법 보기</button>';
                 }
                 html += '<div class="guide-text">📌 ' + def.guide + '</div>';
                 html += '</div>';
@@ -1602,11 +1589,11 @@
             var soon = window.SNSSecureStorage.getExpiringSoon();
             if(soon.length === 0) return;
             var banner = document.createElement('div');
-            banner.style.cssText = 'background:#fef3c7;border:1px solid #fbbf24;border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:#78350f';
+            banner.style.cssText = 'background:var(--ds-warning-bg);border:1px solid var(--ds-warning-600);border-radius:10px;padding:12px 16px;margin:12px 0;font-size:.85rem;color:var(--ds-warning-fg)';
             banner.innerHTML = '⏰ <strong>토큰 만료 임박</strong>: ' +
                 soon.map(function(s){ return s.channel + '/' + s.account + ' (' + s.remainingMinutes + '분 남음)'; }).join(', ') +
                 '<br><span style="font-size:.78rem">만료되면 자동 삭제됩니다. 미리 갱신해주세요.</span>';
-            var content = document.querySelector('.content');
+            var content = document.querySelector('.d-screen');
             if(content && content.firstChild) content.insertBefore(banner, content.firstChild);
         })();
     </script>
@@ -1615,31 +1602,31 @@
     </script>
     <!-- ─── SNS 연동 설정 위저드 (단계별 모달) ─── -->
     <style>
-        .wz-overlay{display:none;position:fixed;inset:0;background:rgba(15,23,42,.6);z-index:2000;padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+        .wz-overlay{display:none;position:fixed;inset:0;background:rgba(2,6,23,.6);z-index:2000;padding:20px;overflow-y:auto;-webkit-overflow-scrolling:touch}
         .wz-overlay.open{display:flex;align-items:flex-start;justify-content:center}
-        .wz-modal{background:#fff;border-radius:16px;max-width:440px;width:100%;margin:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);overflow:hidden;animation:wzIn .2s ease}
+        .wz-modal{background:var(--ds-bg-surface);border-radius:16px;max-width:440px;width:100%;margin:auto;box-shadow:var(--ds-shadow-lg);overflow:hidden;animation:wzIn .2s ease}
         @keyframes wzIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
-        .wz-head{padding:18px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #f1f5f9}
-        .wz-head h3{font-size:1.05rem;font-weight:800;flex:1;color:#0f172a;margin:0}
-        .wz-close{width:34px;height:34px;border:none;background:#f1f5f9;border-radius:50%;font-size:1rem;cursor:pointer;color:#475569;flex-shrink:0;line-height:1}
-        .wz-close:hover{background:#e2e8f0}
+        .wz-head{padding:18px 20px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--ds-border-subtle)}
+        .wz-head h3{font-size:1.05rem;font-weight:800;flex:1;color:var(--ds-text-primary);margin:0}
+        .wz-close{width:34px;height:34px;border:none;background:var(--ds-bg-subtle);border-radius:50%;font-size:1rem;cursor:pointer;color:var(--ds-text-secondary);flex-shrink:0;line-height:1}
+        .wz-close:hover{background:var(--ds-bg-hover)}
         .wz-dots{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 0 2px}
-        .wz-dot{width:11px;height:11px;border-radius:50%;background:#e2e8f0;transition:.2s}
-        .wz-dot.done{background:#3b82f6}
-        .wz-dot.cur{background:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.2)}
-        .wz-count{text-align:center;font-size:.74rem;color:#94a3b8;font-weight:600;margin-bottom:4px}
+        .wz-dot{width:11px;height:11px;border-radius:50%;background:var(--ds-border);transition:.2s}
+        .wz-dot.done{background:var(--ds-accent)}
+        .wz-dot.cur{background:var(--ds-accent);box-shadow:0 0 0 4px var(--ds-focus-ring)}
+        .wz-count{text-align:center;font-size:.74rem;color:var(--ds-text-tertiary);font-weight:600;margin-bottom:4px}
         .wz-body{padding:6px 24px 16px;text-align:center}
         .wz-icon{font-size:2.4rem;margin:6px 0 10px}
-        .wz-step-title{font-size:1.02rem;font-weight:800;color:#0f172a;margin-bottom:12px}
-        .wz-step-body{font-size:.88rem;line-height:1.7;color:#334155;text-align:left;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px 16px}
-        .wz-step-body b{color:#0f172a}
-        .wz-tip{margin-top:10px;font-size:.8rem;line-height:1.6;color:#92400e;background:#fffbeb;border:1px solid #fde68a;border-radius:9px;padding:10px 12px;text-align:left}
+        .wz-step-title{font-size:1.02rem;font-weight:800;color:var(--ds-text-primary);margin-bottom:12px}
+        .wz-step-body{font-size:.88rem;line-height:1.7;color:var(--ds-text-secondary);text-align:left;background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:10px;padding:14px 16px}
+        .wz-step-body b{color:var(--ds-text-primary)}
+        .wz-tip{margin-top:10px;font-size:.8rem;line-height:1.6;color:var(--ds-warning-fg);background:var(--ds-warning-bg);border:1px solid var(--ds-warning-600);border-radius:9px;padding:10px 12px;text-align:left}
         .wz-foot{display:flex;gap:8px;padding:8px 20px 20px}
         .wz-btn{flex:1;padding:13px;min-height:48px;border-radius:10px;font-size:.88rem;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:.15s}
-        .wz-btn.prev{background:#f1f5f9;color:#475569}
+        .wz-btn.prev{background:var(--ds-bg-subtle);color:var(--ds-text-secondary)}
         .wz-btn.prev:disabled{opacity:.4;cursor:default}
-        .wz-btn.next{background:#3b82f6;color:#fff}
-        .wz-btn.next:hover{background:#2563eb}
+        .wz-btn.next{background:var(--ds-accent);color:#fff}
+        .wz-btn.next:hover{background:var(--ds-accent-hover)}
         .wz-btn.action{background:linear-gradient(135deg,#1877f2,#0d5fd6);color:#fff;flex:1.6}
         .wz-btn.action:hover{filter:brightness(1.06)}
         @media(max-width:480px){.wz-overlay{padding:0}.wz-modal{border-radius:0;min-height:100%}}
@@ -1737,5 +1724,7 @@
     <script src="../js/i18n-auto.js"></script>
     <script src="../js/i18n-common.js"></script>
     <script src="../js/i18n.js"></script>
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
 </body>
 </html>
