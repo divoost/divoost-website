@@ -1,44 +1,53 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#3b82f6">
+    <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
     <link rel="manifest" href="../manifest.json">
     <title>AI 작성기 | SNS 플랫폼</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
-        .writer-box{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:24px;margin-bottom:20px}
-        .writer-box h2{font-size:1.1rem;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+        html,body{margin:0;background:var(--ds-bg-app)}
+        .ds-root{min-height:100dvh}
+        .d-screen{max-width:var(--ds-container-max);margin:0 auto;padding:24px}
+        .d-page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+        .d-page-head h1{margin:5px 0 8px}
+        .d-page-head p{max-width:720px;margin:0}
+
+        .writer-box{background:var(--ds-bg-surface);border-radius:14px;border:1px solid var(--ds-border);padding:24px;margin-bottom:20px}
+        .writer-box h2{font-size:1.1rem;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--ds-text-primary)}
         .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
         .form-group{display:flex;flex-direction:column;gap:4px}
         .form-group.full{grid-column:1/-1}
-        .form-group label{font-size:.78rem;font-weight:600;color:#64748b}
-        .form-group input,.form-group select,.form-group textarea{padding:10px 14px;border-radius:8px;border:1px solid #e2e8f0;font-size:.85rem;font-family:inherit;transition:border-color .2s}
+        .form-group label{font-size:.78rem;font-weight:600;color:var(--ds-text-secondary)}
+        .form-group input,.form-group select,.form-group textarea{padding:10px 14px;border-radius:8px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);color:var(--ds-text-primary);font-size:.85rem;font-family:inherit;transition:border-color .2s}
         .form-group textarea{min-height:120px;resize:vertical}
-        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#8b5cf6;outline:none;box-shadow:0 0 0 3px rgba(139,92,246,.1)}
+        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--ds-accent);outline:none;box-shadow:var(--ds-shadow-focus)}
 
         /* Platform selector */
         .platform-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
-        .platform-chip{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:2px solid #e2e8f0;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;background:#fff;user-select:none}
-        .platform-chip:hover{border-color:#c4b5fd;background:#faf5ff}
-        .platform-chip.selected{border-color:#8b5cf6;background:rgba(139,92,246,.08);color:#7c3aed}
+        .platform-chip{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;border:2px solid var(--ds-border);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;background:var(--ds-bg-subtle);color:var(--ds-text-secondary);user-select:none}
+        .platform-chip:hover{border-color:var(--ds-border-strong);color:var(--ds-text-primary)}
+        .platform-chip.selected{border-color:var(--ds-accent);background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg)}
         .platform-chip .p-icon{font-size:18px;flex-shrink:0}
 
         /* Option selector chips */
         .chip-group{display:flex;gap:8px;flex-wrap:wrap}
-        .option-chip{padding:8px 16px;border-radius:20px;border:2px solid #e2e8f0;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;background:#fff;user-select:none}
-        .option-chip:hover{border-color:#c4b5fd;background:#faf5ff}
-        .option-chip.selected{border-color:#8b5cf6;background:rgba(139,92,246,.08);color:#7c3aed}
+        .option-chip{padding:8px 16px;border-radius:20px;border:2px solid var(--ds-border);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s;background:var(--ds-bg-subtle);color:var(--ds-text-secondary);user-select:none}
+        .option-chip:hover{border-color:var(--ds-border-strong);color:var(--ds-text-primary)}
+        .option-chip.selected{border-color:var(--ds-accent);background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg)}
 
         /* Generate button */
         .generate-section{text-align:center;padding:8px 0}
-        .btn-generate{padding:14px 40px;border-radius:12px;border:none;background:linear-gradient(135deg,#8b5cf6,#6366f1,#3b82f6);color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;gap:10px;letter-spacing:.02em}
-        .btn-generate:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(139,92,246,.35)}
+        .btn-generate{padding:14px 40px;border-radius:12px;border:none;background:var(--ds-accent);color:#fff;font-size:.95rem;font-weight:700;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;gap:10px;letter-spacing:.02em}
+        .btn-generate:hover{background:var(--ds-accent-hover);transform:translateY(-2px);box-shadow:var(--ds-shadow-lg)}
         .btn-generate:active{transform:translateY(0)}
         .btn-generate:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
         .btn-generate .spinner{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite}
@@ -50,63 +59,63 @@
         .result-area{display:none}
         .result-area.visible{display:block}
         .result-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-        .result-header h3{font-size:.95rem;display:flex;align-items:center;gap:6px}
+        .result-header h3{font-size:.95rem;display:flex;align-items:center;gap:6px;color:var(--ds-text-primary)}
         .result-actions{display:flex;gap:6px}
-        .result-btn{padding:7px 14px;border-radius:8px;border:1px solid #e2e8f0;font-size:.75rem;font-weight:600;cursor:pointer;background:#fff;transition:all .2s;display:flex;align-items:center;gap:5px}
-        .result-btn:hover{background:#f8fafc;border-color:#cbd5e1}
-        .result-btn.copied{background:#10b981;color:#fff;border-color:#10b981}
+        .result-btn{padding:7px 14px;border-radius:8px;border:1px solid var(--ds-border);font-size:.75rem;font-weight:600;cursor:pointer;background:var(--ds-bg-surface);color:var(--ds-text-primary);transition:all .2s;display:flex;align-items:center;gap:5px}
+        .result-btn:hover{background:var(--ds-bg-hover);border-color:var(--ds-border-strong)}
+        .result-btn.copied{background:var(--ds-success-500);color:#fff;border-color:var(--ds-success-500)}
 
-        .generated-content{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:20px;font-size:.88rem;line-height:1.7;white-space:pre-wrap;word-wrap:break-word;min-height:200px;max-height:500px;overflow-y:auto;position:relative}
-        .generated-content:empty::before{content:'AI가 생성한 콘텐츠가 여기에 표시됩니다';color:#94a3b8;font-style:italic}
+        .generated-content{background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:12px;padding:20px;font-size:.88rem;line-height:1.7;white-space:pre-wrap;word-wrap:break-word;min-height:200px;max-height:500px;overflow-y:auto;position:relative;color:var(--ds-text-primary)}
+        .generated-content:empty::before{content:'AI가 생성한 콘텐츠가 여기에 표시됩니다';color:var(--ds-text-tertiary);font-style:italic}
 
         /* Hashtag area */
-        .hashtag-area{background:#eff6ff;border:1px solid #bfdbfe;border-radius:10px;padding:14px 18px;margin-top:14px}
-        .hashtag-area h4{font-size:.8rem;color:#3b82f6;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+        .hashtag-area{background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:10px;padding:14px 18px;margin-top:14px}
+        .hashtag-area h4{font-size:.8rem;color:var(--ds-accent);margin-bottom:8px;display:flex;align-items:center;gap:6px}
         .hashtag-list{display:flex;flex-wrap:wrap;gap:6px}
-        .hashtag-tag{padding:5px 12px;background:#dbeafe;border-radius:16px;font-size:.78rem;font-weight:600;color:#2563eb;cursor:pointer;transition:all .2s}
-        .hashtag-tag:hover{background:#bfdbfe}
+        .hashtag-tag{padding:5px 12px;background:var(--ds-accent-soft-bg);border-radius:16px;font-size:.78rem;font-weight:600;color:var(--ds-accent-soft-fg);cursor:pointer;transition:all .2s}
+        .hashtag-tag:hover{background:var(--ds-bg-active)}
 
         /* Image prompt area */
-        .image-prompt-area{background:#fdf4ff;border:1px solid #e9d5ff;border-radius:10px;padding:14px 18px;margin-top:14px}
-        .image-prompt-area h4{font-size:.8rem;color:#9333ea;margin-bottom:8px;display:flex;align-items:center;gap:6px}
-        .image-prompt-text{font-size:.82rem;color:#6b21a8;line-height:1.5;background:#f5f3ff;border-radius:8px;padding:10px 14px;border:1px dashed #d8b4fe}
+        .image-prompt-area{background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:10px;padding:14px 18px;margin-top:14px}
+        .image-prompt-area h4{font-size:.8rem;color:var(--ds-accent);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+        .image-prompt-text{font-size:.82rem;color:var(--ds-text-secondary);line-height:1.5;background:var(--ds-bg-surface);border-radius:8px;padding:10px 14px;border:1px dashed var(--ds-border-strong)}
 
         /* Save section */
         .save-section{display:flex;gap:8px;justify-content:flex-end;margin-top:16px;flex-wrap:wrap}
         .btn-action{padding:10px 24px;border-radius:10px;border:none;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px}
         .btn-action:hover{transform:translateY(-1px)}
-        .btn-draft{background:#64748b;color:#fff}
-        .btn-draft:hover{box-shadow:0 4px 12px rgba(100,116,139,.3)}
-        .btn-regenerate{background:#f59e0b;color:#fff}
-        .btn-regenerate:hover{box-shadow:0 4px 12px rgba(245,158,11,.3)}
-        .btn-copy-all{background:#10b981;color:#fff}
-        .btn-copy-all:hover{box-shadow:0 4px 12px rgba(16,185,129,.3)}
+        .btn-draft{background:var(--ds-text-secondary);color:#fff}
+        .btn-draft:hover{box-shadow:var(--ds-shadow-sm)}
+        .btn-regenerate{background:var(--ds-warning-500);color:#fff}
+        .btn-regenerate:hover{box-shadow:var(--ds-shadow-sm)}
+        .btn-copy-all{background:var(--ds-success-500);color:#fff}
+        .btn-copy-all:hover{box-shadow:var(--ds-shadow-sm)}
 
         /* Draft list */
         .draft-list{margin-top:14px}
-        .draft-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #f1f5f9;transition:background .2s}
+        .draft-item{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--ds-border-subtle);transition:background .2s}
         .draft-item:last-child{border-bottom:none}
-        .draft-item:hover{background:#f8fafc}
-        .draft-platform{font-size:18px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:#f1f5f9;border-radius:8px;flex-shrink:0}
+        .draft-item:hover{background:var(--ds-bg-hover)}
+        .draft-platform{font-size:18px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:var(--ds-bg-subtle);border-radius:8px;flex-shrink:0}
         .draft-info{flex:1;min-width:0}
-        .draft-title{font-size:.82rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-        .draft-meta{font-size:.72rem;color:#94a3b8;margin-top:2px}
+        .draft-title{font-size:.82rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ds-text-primary)}
+        .draft-meta{font-size:.72rem;color:var(--ds-text-tertiary);margin-top:2px}
         .draft-actions{display:flex;gap:4px}
-        .draft-btn{padding:5px 10px;border-radius:6px;border:1px solid #e2e8f0;font-size:.7rem;font-weight:600;cursor:pointer;background:#fff;transition:all .2s}
-        .draft-btn:hover{background:#f8fafc}
-        .draft-btn.delete{color:#ef4444;border-color:#fecaca}
-        .draft-btn.delete:hover{background:#fef2f2}
-        .draft-btn.load{color:#3b82f6;border-color:#bfdbfe}
-        .draft-btn.load:hover{background:#eff6ff}
-        .empty-drafts{text-align:center;padding:30px;color:#94a3b8;font-size:.85rem}
+        .draft-btn{padding:5px 10px;border-radius:6px;border:1px solid var(--ds-border);font-size:.7rem;font-weight:600;cursor:pointer;background:var(--ds-bg-surface);color:var(--ds-text-primary);transition:all .2s}
+        .draft-btn:hover{background:var(--ds-bg-hover)}
+        .draft-btn.delete{color:var(--ds-danger-fg);border-color:var(--ds-danger-500)}
+        .draft-btn.delete:hover{background:var(--ds-danger-bg)}
+        .draft-btn.load{color:var(--ds-text-link);border-color:var(--ds-accent)}
+        .draft-btn.load:hover{background:var(--ds-accent-soft-bg)}
+        .empty-drafts{text-align:center;padding:30px;color:var(--ds-text-tertiary);font-size:.85rem}
 
         /* Character counter */
-        .char-counter{text-align:right;font-size:.72rem;color:#94a3b8;margin-top:4px}
-        .char-counter.warn{color:#f59e0b}
-        .char-counter.over{color:#ef4444}
+        .char-counter{text-align:right;font-size:.72rem;color:var(--ds-text-tertiary);margin-top:4px}
+        .char-counter.warn{color:var(--ds-warning-fg)}
+        .char-counter.over{color:var(--ds-danger-fg)}
 
         /* Toast notification */
-        .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;display:flex;align-items:center;gap:8px}
+        .toast{position:fixed;bottom:24px;right:24px;background:var(--ds-bg-surface);border:1px solid var(--ds-border);color:var(--ds-text-primary);padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;display:flex;align-items:center;gap:8px;box-shadow:var(--ds-shadow-lg)}
         .toast.show{opacity:1;transform:translateY(0)}
 
         @media(max-width:768px){
@@ -125,32 +134,18 @@
         }
     </style>
 </head>
-<body>
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
-            <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link active"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
-                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
-                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
-                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
-            </nav>
-        </aside>
-
-        <div class="main-content">
-            <header class="top-bar">
-                <div class="top-bar-left">
-                    <button class="menu-btn" id="menuBtn">☰</button>
-                    <div>
-                        <div class="top-bar-title">🤖 AI 콘텐츠 작성기</div>
-                        <div class="top-bar-sub">플랫폼에 최적화된 콘텐츠를 자동으로 생성합니다</div>
-                    </div>
-                </div>
-            </header>
+<body class="ds-root" data-shell-active="ai-writer">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">AI 작성기</h1>
+                <p class="ds-body">주제와 키워드로 플랫폼별 콘텐츠 초안을 생성합니다.</p>
+            </div>
+        </div>
 
             <div class="content">
-                <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+                <div class="dev-needed-badge" style="background:var(--ds-warning-bg);border:1px solid var(--ds-warning-600);color:var(--ds-warning-fg);padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
                     ⚠️ 개발 필요: 현재 텍스트 생성은 실제 LLM이 아닌 클라이언트 측 템플릿 기반입니다.<br>
                     필요 작업: Edge Function (ai-generate-text) + OpenAI/Anthropic API 키 + AIGateway.generateText() 호출 + 크레딧 차감 (이미지/영상은 이미 백엔드 연동됨)
                 </div>
@@ -246,7 +241,7 @@
                                 <div class="option-chip" data-value="1080x1920" onclick="selectChip(this,'imgSizeGroup')">📲 9:16 (1080x1920)</div>
                                 <div class="option-chip" data-value="1200x630" onclick="selectChip(this,'imgSizeGroup')">🖥️ 16:9 (1200x630)</div>
                             </div>
-                            <div style="margin-top:8px;font-size:.72rem;color:#94a3b8;line-height:1.5" id="imgSizeGuide">
+                            <div style="margin-top:8px;font-size:.72rem;color:var(--ds-text-tertiary);line-height:1.5" id="imgSizeGuide">
                                 📌 1:1 - Instagram 피드, Facebook 포스트 | 4:5 - Instagram 피드 최적 | 9:16 - TikTok, 릴스, 스토리 | 16:9 - Facebook 링크, 블로그
                             </div>
                         </div>
@@ -288,7 +283,7 @@
                                 <div class="option-chip" data-value="1:1" onclick="selectChip(this,'vidRatioGroup')">⬜ 1:1 (정사각)</div>
                                 <div class="option-chip" data-value="16:9" onclick="selectChip(this,'vidRatioGroup')">🖥️ 16:9 (가로)</div>
                             </div>
-                            <div style="margin-top:8px;font-size:.72rem;color:#94a3b8;line-height:1.5">
+                            <div style="margin-top:8px;font-size:.72rem;color:var(--ds-text-tertiary);line-height:1.5">
                                 📌 9:16 - TikTok, 릴스, 도우인, 샤오홍수 | 1:1 - Instagram, Facebook | 16:9 - YouTube, 블로그
                             </div>
                         </div>
@@ -335,41 +330,41 @@
                             <div class="hashtag-area" id="hashtagArea">
                                 <h4 style="display:flex;align-items:center;justify-content:space-between">
                                     <span>🏷️ 추천 해시태그</span>
-                                    <button onclick="toggleHashtagEdit()" id="btnHashtagEdit" style="background:#fff;border:1px solid #3b82f6;color:#3b82f6;padding:4px 10px;border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer">✏️ 편집</button>
+                                    <button onclick="toggleHashtagEdit()" id="btnHashtagEdit" style="background:var(--ds-bg-surface);border:1px solid var(--ds-accent);color:var(--ds-accent);padding:4px 10px;border-radius:6px;font-size:.72rem;font-weight:600;cursor:pointer">✏️ 편집</button>
                                 </h4>
                                 <div class="hashtag-list" id="hashtagList"></div>
                                 <div id="hashtagEditArea" style="display:none;margin-top:8px">
-                                    <textarea id="hashtagEditInput" placeholder="해시태그를 직접 입력하세요. 예: #여행 #추천 #여름" style="width:100%;min-height:60px;padding:10px;border-radius:8px;border:1px solid #3b82f6;font-size:.85rem;font-family:inherit;resize:vertical"></textarea>
+                                    <textarea id="hashtagEditInput" placeholder="해시태그를 직접 입력하세요. 예: #여행 #추천 #여름" style="width:100%;min-height:60px;padding:10px;border-radius:8px;border:1px solid var(--ds-accent);background:var(--ds-bg-surface);color:var(--ds-text-primary);font-size:.85rem;font-family:inherit;resize:vertical"></textarea>
                                     <div style="display:flex;gap:6px;margin-top:6px;justify-content:flex-end">
-                                        <button onclick="cancelHashtagEdit()" style="background:#f1f5f9;color:#475569;border:none;padding:6px 14px;border-radius:6px;font-size:.74rem;font-weight:600;cursor:pointer">취소</button>
-                                        <button onclick="saveHashtagEdit()" style="background:#3b82f6;color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:.74rem;font-weight:600;cursor:pointer">저장</button>
+                                        <button onclick="cancelHashtagEdit()" style="background:var(--ds-bg-subtle);color:var(--ds-text-secondary);border:none;padding:6px 14px;border-radius:6px;font-size:.74rem;font-weight:600;cursor:pointer">취소</button>
+                                        <button onclick="saveHashtagEdit()" style="background:var(--ds-accent);color:#fff;border:none;padding:6px 14px;border-radius:6px;font-size:.74rem;font-weight:600;cursor:pointer">저장</button>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- 미디어 업로드 -->
-                            <div class="hashtag-area" style="background:#fdf4ff;border-color:#e9d5ff;margin-top:14px">
-                                <h4 style="color:#9333ea;display:flex;align-items:center;justify-content:space-between">
+                            <div class="hashtag-area" style="background:var(--ds-bg-subtle);border-color:var(--ds-border);margin-top:14px">
+                                <h4 style="color:var(--ds-accent);display:flex;align-items:center;justify-content:space-between">
                                     <span>🖼️ 이미지/동영상 첨부</span>
-                                    <span style="font-size:.72rem;color:#94a3b8;font-weight:400" id="mediaCount">첨부 0개</span>
+                                    <span style="font-size:.72rem;color:var(--ds-text-tertiary);font-weight:400" id="mediaCount">첨부 0개</span>
                                 </h4>
                                 <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-                                    <label style="flex:1;min-width:140px;background:#fff;border:2px dashed #d8b4fe;padding:14px;text-align:center;border-radius:10px;cursor:pointer;transition:.2s">
+                                    <label style="flex:1;min-width:140px;background:var(--ds-bg-surface);border:2px dashed var(--ds-border-strong);padding:14px;text-align:center;border-radius:10px;cursor:pointer;transition:.2s">
                                         <input type="file" accept="image/*" multiple onchange="uploadMedia(this,'image')" style="display:none">
                                         <div style="font-size:1.6rem">🖼️</div>
-                                        <div style="font-size:.75rem;font-weight:600;color:#9333ea;margin-top:4px">이미지 업로드</div>
-                                        <div style="font-size:.66rem;color:#94a3b8">JPG, PNG, GIF</div>
+                                        <div style="font-size:.75rem;font-weight:600;color:var(--ds-accent);margin-top:4px">이미지 업로드</div>
+                                        <div style="font-size:.66rem;color:var(--ds-text-tertiary)">JPG, PNG, GIF</div>
                                     </label>
-                                    <label style="flex:1;min-width:140px;background:#fff;border:2px dashed #d8b4fe;padding:14px;text-align:center;border-radius:10px;cursor:pointer;transition:.2s">
+                                    <label style="flex:1;min-width:140px;background:var(--ds-bg-surface);border:2px dashed var(--ds-border-strong);padding:14px;text-align:center;border-radius:10px;cursor:pointer;transition:.2s">
                                         <input type="file" accept="video/*" multiple onchange="uploadMedia(this,'video')" style="display:none">
                                         <div style="font-size:1.6rem">🎬</div>
-                                        <div style="font-size:.75rem;font-weight:600;color:#9333ea;margin-top:4px">동영상 업로드</div>
-                                        <div style="font-size:.66rem;color:#94a3b8">MP4, MOV</div>
+                                        <div style="font-size:.75rem;font-weight:600;color:var(--ds-accent);margin-top:4px">동영상 업로드</div>
+                                        <div style="font-size:.66rem;color:var(--ds-text-tertiary)">MP4, MOV</div>
                                     </label>
-                                    <button onclick="openMediaLibrary()" style="flex:1;min-width:140px;background:#fff;border:2px dashed #d8b4fe;padding:14px;text-align:center;border-radius:10px;cursor:pointer;transition:.2s">
+                                    <button onclick="openMediaLibrary()" style="flex:1;min-width:140px;background:var(--ds-bg-surface);border:2px dashed var(--ds-border-strong);padding:14px;text-align:center;border-radius:10px;cursor:pointer;transition:.2s">
                                         <div style="font-size:1.6rem">📚</div>
-                                        <div style="font-size:.75rem;font-weight:600;color:#9333ea;margin-top:4px">미디어 라이브러리</div>
-                                        <div style="font-size:.66rem;color:#94a3b8">저장된 미디어</div>
+                                        <div style="font-size:.75rem;font-weight:600;color:var(--ds-accent);margin-top:4px">미디어 라이브러리</div>
+                                        <div style="font-size:.66rem;color:var(--ds-text-tertiary)">저장된 미디어</div>
                                     </button>
                                 </div>
                                 <div id="attachedMediaList" style="display:flex;gap:8px;flex-wrap:wrap"></div>
@@ -385,21 +380,20 @@
                             <button class="btn-action btn-regenerate" onclick="generateContent()">🔄 다시 생성</button>
                             <button class="btn-action btn-copy-all" onclick="copyAll()">📋 전체 복사</button>
                             <button class="btn-action btn-draft" onclick="saveToDraft()">💾 임시저장</button>
-                            <button class="btn-action" style="background:#10b981;color:#fff" onclick="publishNow()">🚀 바로 발행</button>
+                            <button class="btn-action" style="background:var(--ds-success-500);color:#fff" onclick="publishNow()">🚀 바로 발행</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Saved Drafts -->
                 <div class="writer-box">
-                    <h2>📂 저장된 초안 <span style="font-size:.75rem;font-weight:400;color:#94a3b8" id="draftCount"></span></h2>
+                    <h2>📂 저장된 초안 <span style="font-size:.75rem;font-weight:400;color:var(--ds-text-tertiary)" id="draftCount"></span></h2>
                     <div class="draft-list" id="draftList">
                         <div class="empty-drafts">저장된 초안이 없습니다. 콘텐츠를 생성하고 저장해보세요!</div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+    </main>
 
     <!-- Toast -->
     <div class="toast" id="toast"></div>
@@ -410,11 +404,6 @@
 
         // ─── State ───
         var selectedPlatforms = [];
-
-        // ─── Sidebar toggle ───
-        document.getElementById('menuBtn').onclick = function(){
-            document.getElementById('sidebar').classList.toggle('open');
-        };
 
         // ─── Platform selection (multi select) ───
         window.selectPlatform = function(el){
@@ -680,7 +669,7 @@
 
                 // 안내 메시지
                 var hint = document.createElement('div');
-                hint.style.cssText = 'font-size:.72rem;color:#94a3b8;margin-bottom:8px;width:100%';
+                hint.style.cssText = 'font-size:.72rem;color:var(--ds-text-tertiary);margin-bottom:8px;width:100%';
                 hint.innerHTML = '💡 클릭하면 본문에 추가/제거됩니다 · 더블클릭하면 복사됩니다';
                 hashtagListEl.appendChild(hint);
 
@@ -691,7 +680,7 @@
                     span.dataset.tag = tag;
                     // 본문에 이미 포함되어 있으면 선택 상태 표시
                     if(r.content.indexOf(tag) > -1){
-                        span.style.background = '#3b82f6';
+                        span.style.background = 'var(--ds-accent)';
                         span.style.color = '#fff';
                     }
                     span.onclick = function(){ toggleHashtagInContent(tag, this); };
@@ -708,10 +697,10 @@
             var tabsEl = document.getElementById('multiResultTabs');
             tabsEl.style.display = 'block';
 
-            var tabsHtml = '<div style="display:flex;gap:0;border-bottom:2px solid #e2e8f0;margin-bottom:16px;overflow-x:auto">';
+            var tabsHtml = '<div style="display:flex;gap:0;border-bottom:2px solid var(--ds-border);margin-bottom:16px;overflow-x:auto">';
             platforms.forEach(function(p, i){
                 var r = generatedResults[p];
-                tabsHtml += '<div class="multi-tab' + (i===0?' active':'') + '" data-p="' + p + '" onclick="switchMultiTab(\'' + p + '\')" style="padding:10px 18px;font-size:.82rem;font-weight:600;color:' + (i===0?'#8b5cf6':'#94a3b8') + ';cursor:pointer;border-bottom:3px solid ' + (i===0?'#8b5cf6':'transparent') + ';margin-bottom:-2px;white-space:nowrap">' + r.icon + ' ' + r.name + '</div>';
+                tabsHtml += '<div class="multi-tab' + (i===0?' active':'') + '" data-p="' + p + '" onclick="switchMultiTab(\'' + p + '\')" style="padding:10px 18px;font-size:.82rem;font-weight:600;color:' + (i===0?'var(--ds-accent)':'var(--ds-text-tertiary)') + ';cursor:pointer;border-bottom:3px solid ' + (i===0?'var(--ds-accent)':'transparent') + ';margin-bottom:-2px;white-space:nowrap">' + r.icon + ' ' + r.name + '</div>';
             });
             tabsHtml += '</div>';
 
@@ -720,12 +709,12 @@
                 tabsHtml += '<div class="multi-panel" id="mpanel-' + p + '" style="display:' + (i===0?'block':'none') + '">';
                 tabsHtml += '<div class="generated-content" style="margin-bottom:8px">' + escapeHtml(r.content) + '</div>';
                 tabsHtml += '<div class="char-counter">' + r.content.length.toLocaleString() + '자</div>';
-                tabsHtml += '<div class="hashtag-area" style="margin-top:14px"><h4 style="font-size:.8rem;color:#3b82f6;margin-bottom:8px">🏷️ 추천 해시태그</h4><div class="hashtag-list">';
+                tabsHtml += '<div class="hashtag-area" style="margin-top:14px"><h4 style="font-size:.8rem;color:var(--ds-accent);margin-bottom:8px">🏷️ 추천 해시태그</h4><div class="hashtag-list">';
                 r.hashtags.forEach(function(tag){
                     tabsHtml += '<span class="hashtag-tag" onclick="copyToClipboard(\'' + tag.replace(/'/g,'\\\'') + '\');showToast(\'' + tag.replace(/'/g,'\\\'') + ' 복사됨!\')">' + tag + '</span>';
                 });
                 tabsHtml += '</div></div>';
-                tabsHtml += '<div class="image-prompt-area" style="margin-top:14px"><h4 style="font-size:.8rem;color:#9333ea;margin-bottom:8px">🖼️ 이미지 프롬프트 제안</h4><div class="image-prompt-text">' + escapeHtml(r.imagePrompt) + '</div></div>';
+                tabsHtml += '<div class="image-prompt-area" style="margin-top:14px"><h4 style="font-size:.8rem;color:var(--ds-accent);margin-bottom:8px">🖼️ 이미지 프롬프트 제안</h4><div class="image-prompt-text">' + escapeHtml(r.imagePrompt) + '</div></div>';
                 tabsHtml += '</div>';
             });
 
@@ -734,13 +723,13 @@
 
         window.switchMultiTab = function(p){
             document.querySelectorAll('.multi-tab').forEach(function(t){
-                t.style.color = '#94a3b8';
+                t.style.color = 'var(--ds-text-tertiary)';
                 t.style.borderBottomColor = 'transparent';
                 t.classList.remove('active');
             });
             document.querySelectorAll('.multi-panel').forEach(function(el){ el.style.display = 'none'; });
             var tab = document.querySelector('.multi-tab[data-p="' + p + '"]');
-            if(tab){ tab.style.color = '#8b5cf6'; tab.style.borderBottomColor = '#8b5cf6'; tab.classList.add('active'); }
+            if(tab){ tab.style.color = 'var(--ds-accent)'; tab.style.borderBottomColor = 'var(--ds-accent)'; tab.classList.add('active'); }
             var panel = document.getElementById('mpanel-' + p);
             if(panel) panel.style.display = 'block';
         };
@@ -819,8 +808,8 @@
             var el = document.getElementById('generatedContent');
             if(el.contentEditable === 'true'){
                 el.contentEditable = 'false';
-                el.style.border = '1px solid #e2e8f0';
-                el.style.background = '#f8fafc';
+                el.style.border = '1px solid var(--ds-border)';
+                el.style.background = 'var(--ds-bg-subtle)';
                 updateCharCounter(el.textContent);
                 // 편집한 내용을 generatedResults에 반영
                 if(selectedPlatforms.length === 1 && generatedResults[selectedPlatforms[0]]){
@@ -829,8 +818,8 @@
                 showToast('수정 완료. 발행 시 수정된 내용이 사용됩니다.');
             } else {
                 el.contentEditable = 'true';
-                el.style.border = '2px solid #8b5cf6';
-                el.style.background = '#fff';
+                el.style.border = '2px solid var(--ds-accent)';
+                el.style.background = 'var(--ds-bg-surface)';
                 el.focus();
                 showToast('콘텐츠를 직접 수정하세요. 완료되면 ✏️ 수정 버튼을 다시 누르세요.');
             }
@@ -899,11 +888,11 @@
                 if(m.type === 'image' && m.data){
                     thumb = '<img src="' + m.data + '" style="width:100%;height:100%;object-fit:cover">';
                 } else if(m.type === 'video' && m.data){
-                    thumb = '<div style="font-size:2rem;color:#9333ea;display:flex;align-items:center;justify-content:center;height:100%">🎬</div>';
+                    thumb = '<div style="font-size:2rem;color:var(--ds-accent);display:flex;align-items:center;justify-content:center;height:100%">🎬</div>';
                 } else {
                     thumb = '<div style="font-size:2rem;display:flex;align-items:center;justify-content:center;height:100%">📎</div>';
                 }
-                return '<div style="position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;border:1px solid #d8b4fe;background:#fff" title="' + escapeAttr(m.name) + '">' +
+                return '<div style="position:relative;width:80px;height:80px;border-radius:8px;overflow:hidden;border:1px solid var(--ds-border-strong);background:var(--ds-bg-surface)" title="' + escapeAttr(m.name) + '">' +
                     thumb +
                     '<button onclick="removeAttachedMedia(' + idx + ')" style="position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;border:none;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center">×</button>' +
                 '</div>';
@@ -935,7 +924,7 @@
                 editArea.style.display = 'block';
                 listEl.style.opacity = '0.4';
                 btn.textContent = '닫기';
-                btn.style.background = '#3b82f6';
+                btn.style.background = 'var(--ds-accent)';
                 btn.style.color = '#fff';
                 document.getElementById('hashtagEditInput').focus();
             } else {
@@ -948,8 +937,8 @@
             document.getElementById('hashtagList').style.opacity = '1';
             var btn = document.getElementById('btnHashtagEdit');
             btn.textContent = '✏️ 편집';
-            btn.style.background = '#fff';
-            btn.style.color = '#3b82f6';
+            btn.style.background = 'var(--ds-bg-surface)';
+            btn.style.color = 'var(--ds-accent)';
         };
 
         window.saveHashtagEdit = function(){
@@ -985,7 +974,7 @@
             var listEl = document.getElementById('hashtagList');
             listEl.innerHTML = '';
             var hint = document.createElement('div');
-            hint.style.cssText = 'font-size:.72rem;color:#94a3b8;margin-bottom:8px;width:100%';
+            hint.style.cssText = 'font-size:.72rem;color:var(--ds-text-tertiary);margin-bottom:8px;width:100%';
             hint.innerHTML = '💡 클릭하면 본문에 추가/제거됩니다 · 더블클릭하면 복사됩니다';
             listEl.appendChild(hint);
             tags.forEach(function(tag){
@@ -993,7 +982,7 @@
                 span.className = 'hashtag-tag';
                 span.textContent = tag;
                 span.dataset.tag = tag;
-                span.style.background = '#3b82f6';
+                span.style.background = 'var(--ds-accent)';
                 span.style.color = '#fff';
                 span.onclick = function(){ toggleHashtagInContent(tag, this); };
                 span.ondblclick = function(){ copyToClipboard(tag); showToast(tag + ' 복사됨!'); };
@@ -1014,13 +1003,13 @@
                 // 제거
                 var pattern = new RegExp('\\s*' + tag.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\s*', 'g');
                 content = content.replace(pattern, ' ').replace(/\s+/g, ' ').trim();
-                el.style.background = '#dbeafe';
-                el.style.color = '#2563eb';
+                el.style.background = 'var(--ds-accent-soft-bg)';
+                el.style.color = 'var(--ds-accent-soft-fg)';
                 showToast(tag + ' 제거됨');
             } else {
                 // 추가 (끝에)
                 content = content.trim() + ' ' + tag;
-                el.style.background = '#3b82f6';
+                el.style.background = 'var(--ds-accent)';
                 el.style.color = '#fff';
                 showToast(tag + ' 추가됨');
             }
@@ -1398,5 +1387,8 @@
     <script src="../js/i18n-auto.js"></script>
     <script src="../js/i18n-common.js"></script>
     <script src="../js/i18n.js"></script>
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
 </body>
 </html>
