@@ -1,78 +1,80 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#3b82f6">
+    <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
     <link rel="manifest" href="../manifest.json">
     <title>포스팅 | SNS 플랫폼</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
-        .pub-card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
-        .pub-card h2{font-size:1rem;margin-bottom:12px}
+        .pub-card{background:var(--ds-bg-surface);border-radius:14px;border:1px solid var(--ds-border);padding:20px;margin-bottom:16px}
+        .pub-card h2{font-size:1rem;margin-bottom:12px;color:var(--ds-text-primary)}
 
         /* 플랫폼 그룹 */
-        .platform-group{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:14px;margin-bottom:12px;transition:.2s}
-        .platform-group.active{background:#eff6ff;border-color:#3b82f6}
+        .platform-group{background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:12px;padding:14px;margin-bottom:12px;transition:.2s}
+        .platform-group.active{background:var(--ds-accent-soft-bg);border-color:var(--ds-accent)}
         .platform-group-header{display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none}
-        .platform-checkbox{width:18px;height:18px;border-radius:4px;border:2px solid #cbd5e1;display:flex;align-items:center;justify-content:center;flex-shrink:0;background:#fff}
-        .platform-checkbox.checked{background:#3b82f6;border-color:#3b82f6;color:#fff}
-        .platform-checkbox.partial{background:#dbeafe;border-color:#3b82f6;color:#3b82f6}
+        .platform-checkbox{width:18px;height:18px;border-radius:4px;border:2px solid var(--ds-border-strong);display:flex;align-items:center;justify-content:center;flex-shrink:0;background:var(--ds-bg-surface)}
+        .platform-checkbox.checked{background:var(--ds-accent);border-color:var(--ds-accent);color:#fff}
+        .platform-checkbox.partial{background:var(--ds-accent-soft-bg);border-color:var(--ds-accent);color:var(--ds-accent)}
         .platform-icon{font-size:22px}
-        .platform-name{font-weight:700;font-size:.9rem;flex:1}
-        .platform-count{font-size:.72rem;padding:3px 10px;border-radius:12px;font-weight:600;background:#e2e8f0;color:#475569}
-        .platform-count.has-selected{background:#3b82f6;color:#fff}
-        .platform-chevron{color:#94a3b8;transition:transform .2s}
+        .platform-name{font-weight:700;font-size:.9rem;flex:1;color:var(--ds-text-primary)}
+        .platform-count{font-size:.72rem;padding:3px 10px;border-radius:12px;font-weight:600;background:var(--ds-bg-subtle);color:var(--ds-text-secondary)}
+        .platform-count.has-selected{background:var(--ds-accent);color:#fff}
+        .platform-chevron{color:var(--ds-text-tertiary);transition:transform .2s}
         .platform-group.expanded .platform-chevron{transform:rotate(180deg)}
 
-        .platform-accounts{display:none;margin-top:12px;padding-top:12px;border-top:1px solid #e2e8f0;padding-left:28px}
+        .platform-accounts{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--ds-border);padding-left:28px}
         .platform-group.expanded .platform-accounts{display:block}
         .account-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;transition:.15s;margin-bottom:4px}
-        .account-item:hover{background:#fff}
-        .account-item.selected{background:#fff;border:1px solid #3b82f6}
-        .acc-checkbox{width:16px;height:16px;border-radius:4px;border:2px solid #cbd5e1;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#fff;font-size:11px}
-        .acc-checkbox.checked{background:#3b82f6;border-color:#3b82f6;color:#fff}
+        .account-item:hover{background:var(--ds-bg-hover)}
+        .account-item.selected{background:var(--ds-bg-surface);border:1px solid var(--ds-accent)}
+        .acc-checkbox{width:16px;height:16px;border-radius:4px;border:2px solid var(--ds-border-strong);flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--ds-bg-surface);font-size:11px}
+        .acc-checkbox.checked{background:var(--ds-accent);border-color:var(--ds-accent);color:#fff}
         .acc-info{flex:1;min-width:0}
-        .acc-name{font-size:.82rem;font-weight:600;color:#0f172a;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-        .acc-meta{font-size:.68rem;color:#94a3b8;margin-top:1px}
+        .acc-name{font-size:.82rem;font-weight:600;color:var(--ds-text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .acc-meta{font-size:.68rem;color:var(--ds-text-tertiary);margin-top:1px}
         .acc-status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-        .acc-status-dot.connected{background:#10b981}
-        .acc-status-dot.disconnected{background:#cbd5e1}
+        .acc-status-dot.connected{background:var(--ds-success-500)}
+        .acc-status-dot.disconnected{background:var(--ds-border-strong)}
 
-        .no-accounts{padding:12px;text-align:center;color:#94a3b8;font-size:.78rem;background:#fff;border-radius:8px;border:1px dashed #e2e8f0}
-        .no-accounts a{color:#3b82f6;font-weight:600;text-decoration:none}
+        .no-accounts{padding:12px;text-align:center;color:var(--ds-text-tertiary);font-size:.78rem;background:var(--ds-bg-surface);border-radius:8px;border:1px dashed var(--ds-border)}
+        .no-accounts a{color:var(--ds-accent);font-weight:600;text-decoration:none}
 
-        .quick-pub{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
-        .quick-pub textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #e2e8f0;min-height:120px;font-family:inherit;font-size:.88rem;resize:vertical}
+        .quick-pub{background:var(--ds-bg-surface);border-radius:14px;border:1px solid var(--ds-border);padding:20px;margin-bottom:16px}
+        .quick-pub textarea{width:100%;padding:12px;border-radius:8px;border:1px solid var(--ds-border);background:var(--ds-bg-subtle);color:var(--ds-text-primary);min-height:120px;font-family:inherit;font-size:.88rem;resize:vertical}
 
-        .summary-bar{background:linear-gradient(135deg,#eff6ff,#f0f9ff);border:1px solid #bfdbfe;border-radius:10px;padding:12px 16px;margin:14px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-        .summary-count{font-size:.85rem;font-weight:700;color:#1e40af}
-        .summary-list{font-size:.74rem;color:#475569;flex:1}
+        .summary-bar{background:var(--ds-accent-soft-bg);border:1px solid var(--ds-accent);border-radius:10px;padding:12px 16px;margin:14px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+        .summary-count{font-size:.85rem;font-weight:700;color:var(--ds-accent-soft-fg)}
+        .summary-list{font-size:.74rem;color:var(--ds-text-secondary);flex:1}
 
-        .btn-publish{padding:12px 32px;border-radius:10px;border:none;background:#10b981;color:#fff;font-weight:700;cursor:pointer;font-size:.92rem;transition:.2s}
-        .btn-publish:hover{background:#059669}
-        .btn-publish:disabled{background:#cbd5e1;cursor:not-allowed}
+        .btn-publish{padding:12px 32px;border-radius:10px;border:none;background:var(--ds-success-500);color:#fff;font-weight:700;cursor:pointer;font-size:.92rem;transition:.2s}
+        .btn-publish:hover{background:var(--ds-success-600)}
+        .btn-publish:disabled{background:var(--ds-border-strong);cursor:not-allowed}
 
-        .media-upload{margin-bottom:14px;padding:12px;background:#faf5ff;border:1px solid #e9d5ff;border-radius:10px}
+        .media-upload{margin-bottom:14px;padding:12px;background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:10px}
         .media-upload-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-        .media-upload-btn{padding:8px 14px;background:#fff;border:1px dashed #d8b4fe;border-radius:8px;font-size:.78rem;font-weight:600;color:#9333ea;cursor:pointer;display:flex;align-items:center;gap:6px}
+        .media-upload-btn{padding:8px 14px;background:var(--ds-bg-surface);border:1px dashed var(--ds-accent);border-radius:8px;font-size:.78rem;font-weight:600;color:var(--ds-accent);cursor:pointer;display:flex;align-items:center;gap:6px}
         .attached-media{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-        .attached-item{position:relative;width:60px;height:60px;border-radius:6px;overflow:hidden;border:1px solid #e9d5ff;background:#fff}
+        .attached-item{position:relative;width:60px;height:60px;border-radius:6px;overflow:hidden;border:1px solid var(--ds-border);background:var(--ds-bg-surface)}
         .attached-item img{width:100%;height:100%;object-fit:cover}
         .attached-item .remove-x{position:absolute;top:2px;right:2px;width:16px;height:16px;border-radius:50%;background:rgba(0,0,0,.7);color:#fff;border:none;font-size:9px;cursor:pointer}
 
-        .post-log{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:14px;margin-bottom:16px;max-height:300px;overflow-y:auto;font-family:Menlo,Monaco,monospace;font-size:.74rem}
+        .post-log{background:var(--ds-bg-inverse);color:var(--ds-text-secondary);border:1px solid var(--ds-border);border-radius:12px;padding:14px;margin-bottom:16px;max-height:300px;overflow-y:auto;font-family:Menlo,Monaco,monospace;font-size:.74rem}
         .post-log:empty{display:none}
         .log-entry{padding:4px 0;line-height:1.6}
-        .log-entry.success{color:#10b981}
-        .log-entry.error{color:#f87171}
-        .log-entry.info{color:#94a3b8}
+        .log-entry.success{color:var(--ds-success-500)}
+        .log-entry.error{color:var(--ds-danger-500)}
+        .log-entry.info{color:var(--ds-text-tertiary)}
 
-        .toast{position:fixed;bottom:24px;right:24px;background:#0f172a;color:#fff;padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:400px}
+        .toast{position:fixed;bottom:24px;right:24px;background:var(--ds-bg-surface);color:var(--ds-text-primary);border:1px solid var(--ds-border);padding:12px 20px;border-radius:10px;font-size:.82rem;font-weight:600;z-index:9999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;max-width:400px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
         .toast.show{opacity:1;transform:translateY(0)}
 
         @media(max-width:768px){
@@ -90,21 +92,15 @@
         }
     </style>
 </head>
-<body data-require-auth="true">
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
-            <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>🏠</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
-                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link active"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
-                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
-                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
-            </nav>
-        </aside>
-        <div class="main-content">
-            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">🚀 포스팅</div><div class="top-bar-sub">플랫폼 × 계정 그룹핑으로 선택 발행</div></div></div></header>
-            <div class="content">
+<body class="ds-root" data-shell-active="publish" data-require-auth="true">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">게시·발행</h1>
+                <p class="ds-body">승인된 콘텐츠를 채널별로 발행합니다.</p>
+            </div>
+        </div>
 
                 <!-- 빠른 포스팅 -->
                 <div class="quick-pub">
@@ -122,24 +118,24 @@
                                 <input type="file" accept="video/*" multiple onchange="uploadMedia(this,'video')" style="display:none">
                                 🎬 동영상 첨부
                             </label>
-                            <span id="mediaCountLabel" style="font-size:.72rem;color:#9333ea;font-weight:600">첨부 0개</span>
+                            <span id="mediaCountLabel" style="font-size:.72rem;color:var(--ds-accent);font-weight:600">첨부 0개</span>
                         </div>
                         <div class="attached-media" id="attachedMedia"></div>
                     </div>
 
                     <!-- Instagram 발행 옵션 -->
-                    <div style="margin-top:10px;padding:10px 12px;background:#fce7f3;border:1px solid #f9a8d4;border-radius:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
-                        <span style="font-size:.78rem;font-weight:700;color:#be185d">📸 Instagram 발행 형식:</span>
-                        <label style="font-size:.76rem;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="radio" name="igPostType" value="feed" checked> 피드 (이미지/Reels)</label>
-                        <label style="font-size:.76rem;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="radio" name="igPostType" value="stories"> 스토리</label>
-                        <span style="font-size:.68rem;color:#9d174d">※ 스토리는 24시간 후 자동 소멸</span>
+                    <div style="margin-top:10px;padding:10px 12px;background:var(--ds-danger-bg);border:1px solid var(--ds-danger-500);border-radius:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                        <span style="font-size:.78rem;font-weight:700;color:var(--ds-danger-fg)">📸 Instagram 발행 형식:</span>
+                        <label style="font-size:.76rem;display:flex;align-items:center;gap:4px;cursor:pointer;color:var(--ds-text-primary)"><input type="radio" name="igPostType" value="feed" checked> 피드 (이미지/Reels)</label>
+                        <label style="font-size:.76rem;display:flex;align-items:center;gap:4px;cursor:pointer;color:var(--ds-text-primary)"><input type="radio" name="igPostType" value="stories"> 스토리</label>
+                        <span style="font-size:.68rem;color:var(--ds-text-tertiary)">※ 스토리는 24시간 후 자동 소멸</span>
                     </div>
                 </div>
 
                 <!-- 플랫폼 × 계정 그룹핑 -->
                 <div class="pub-card">
                     <h2>🎯 발행 대상 선택 (플랫폼 → 계정)</h2>
-                    <p style="font-size:.78rem;color:#64748b;margin-bottom:14px">플랫폼을 클릭하여 펼친 후, 발행할 계정을 개별 선택하세요.</p>
+                    <p style="font-size:.78rem;color:var(--ds-text-secondary);margin-bottom:14px">플랫폼을 클릭하여 펼친 후, 발행할 계정을 개별 선택하세요.</p>
                     <div id="platformGroups"></div>
                 </div>
 
@@ -154,15 +150,11 @@
 
                 <!-- 로그 -->
                 <div class="post-log" id="postLog"></div>
-            </div>
-        </div>
-    </div>
+    </main>
 
     <div class="toast" id="toast"></div>
 
     <script>
-        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
-
         // ─── 채널 정의 ───
         var CHANNEL_DEFS = {
             facebook: {name:'Facebook', icon:'📘', accountLabel:'페이지', tokenField:'pageToken'},
@@ -866,5 +858,9 @@
     <script src="../js/i18n-auto.js"></script>
     <script src="../js/i18n-common.js"></script>
     <script src="../js/i18n.js"></script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
 </body>
 </html>
