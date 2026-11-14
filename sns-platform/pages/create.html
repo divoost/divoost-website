@@ -1,254 +1,410 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#3b82f6">
+    <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
     <link rel="manifest" href="../manifest.json">
-    <title>콘텐츠 만들기 | SNS 플랫폼</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>콘텐츠 스튜디오 | DIVOOST SNS</title>
+    <!-- 디자인 시스템(DDS) + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
-        .create-box{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:24px;margin-bottom:20px}
-        .create-box h2{font-size:1.1rem;margin-bottom:16px}
-        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-        .form-group{display:flex;flex-direction:column;gap:4px}
-        .form-group.full{grid-column:1/-1}
-        .form-group label{font-size:.78rem;font-weight:600;color:#64748b}
-        .form-group input,.form-group select,.form-group textarea{padding:10px 14px;border-radius:8px;border:1px solid #e2e8f0;font-size:.85rem;font-family:inherit}
-        .form-group textarea{min-height:120px;resize:vertical}
-        .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#3b82f6;outline:none}
+        html,body{margin:0;background:var(--ds-bg-app)}
+        .ds-root{min-height:100dvh}
+        /* 상단바 */
+        .d-topbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;gap:14px;height:60px;padding:0 24px;background:var(--ds-bg-surface);border-bottom:1px solid var(--ds-border)}
+        .d-logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex:none}
+        .d-logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(145deg,var(--ds-primary-600),var(--ds-accent-500));display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px}
+        .d-logo-text{font-weight:800;font-size:15px;line-height:1.15;letter-spacing:-.01em;color:var(--ds-text-primary)}
+        .d-logo-text small{display:block;font-size:9px;font-weight:600;letter-spacing:.06em;color:var(--ds-text-tertiary)}
+        .d-switch{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 11px;border:1px solid var(--ds-border);border-radius:9px;background:var(--ds-bg-subtle);color:var(--ds-text-secondary);font-size:12px;font-weight:600;cursor:default}
+        .d-topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+        .d-sel{height:34px;border-radius:8px;border:1px solid var(--ds-border);background:var(--ds-bg-subtle);color:var(--ds-text-primary);font-size:12px;font-weight:600;padding:0 8px;cursor:pointer}
+        .d-sel:focus{outline:none;border-color:var(--ds-accent);box-shadow:var(--ds-shadow-focus)}
+        /* 상단 네비 */
+        .d-nav{position:sticky;top:60px;z-index:89;display:flex;align-items:center;gap:1px;height:46px;padding:0 24px;background:var(--ds-bg-app);border-bottom:1px solid var(--ds-border);overflow-x:auto;scrollbar-width:none}
+        .d-nav::-webkit-scrollbar{display:none}
+        .d-nav-item{padding:0 13px;height:46px;display:inline-flex;align-items:center;color:var(--ds-text-secondary);font-size:13px;font-weight:600;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap}
+        .d-nav-item:hover{color:var(--ds-text-primary)}
+        .d-nav-item.is-active{color:var(--ds-text-primary);border-bottom-color:var(--ds-accent)}
+        .d-nav-right{margin-left:auto;display:flex;align-items:center;padding-left:10px}
+        .d-nav-more{display:inline-flex;align-items:center;gap:6px;background:transparent;border:0;color:var(--ds-text-secondary);font-size:13px;font-weight:700;cursor:pointer;padding:0 6px;height:46px}
+        .d-nav-more:hover{color:var(--ds-text-primary)}
+        /* 스크린 */
+        .d-screen{max-width:var(--ds-container-max);margin:0 auto;padding:24px}
+        .d-page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+        .d-page-head h1{margin:5px 0 8px}
+        .d-page-head p{max-width:720px;margin:0}
+        /* 드로어 */
+        .d-drawer{position:fixed;top:0;right:0;bottom:0;width:min(300px,86vw);background:var(--ds-bg-surface);border-left:1px solid var(--ds-border);z-index:1000;transform:translateX(100%);visibility:hidden;transition:transform .22s var(--ds-ease),visibility .22s var(--ds-ease);overflow-y:auto;box-shadow:var(--ds-shadow-lg)}
+        .d-drawer.open{transform:translateX(0);visibility:visible}
+        .d-drawer-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px;border-bottom:1px solid var(--ds-border)}
+        .d-drawer-email{font-size:13px;font-weight:700;color:var(--ds-text-primary)}
+        .d-drawer-plan{font-size:11px;color:var(--ds-text-tertiary);margin-top:2px}
+        .d-drawer-close{background:transparent;border:0;color:var(--ds-text-secondary);cursor:pointer;display:grid;place-items:center;width:34px;height:34px;border-radius:8px}
+        .d-drawer-close:hover{background:var(--ds-bg-hover);color:var(--ds-text-primary)}
+        .d-drawer-sec{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ds-text-tertiary);padding:14px 16px 4px}
+        .d-drawer a{display:flex;align-items:center;gap:9px;padding:10px 16px;color:var(--ds-text-secondary);text-decoration:none;font-size:14px;font-weight:600}
+        .d-drawer a:hover{background:var(--ds-bg-hover);color:var(--ds-text-primary)}
+        .d-overlay{position:fixed;inset:0;background:rgba(2,6,23,.6);z-index:999;opacity:0;pointer-events:none;transition:opacity .2s}
+        .d-overlay.show{opacity:1;pointer-events:auto}
+        /* 안내 노트 */
+        .d-note{display:flex;align-items:flex-start;gap:10px;padding:13px 15px;border:1px solid var(--ds-border);border-radius:10px;background:var(--ds-bg-subtle);color:var(--ds-text-secondary);font-size:13px;line-height:1.6;margin-bottom:16px}
+        .d-note .ds-icon{color:var(--ds-accent);flex:none;margin-top:1px}
+        .d-note.warn{border-color:var(--ds-warning-600);background:var(--ds-warning-bg);color:var(--ds-warning-fg)}
+        .d-note.warn .ds-icon{color:var(--ds-warning-fg)}
+        /* 뷰 전환 */
+        .d-view{display:none}
+        .d-view.is-active{display:block}
+        /* 폼 */
+        .d-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .d-form-grid .full{grid-column:1/-1}
+        /* 채널 선택 칩 */
         .channel-select{display:flex;gap:8px;flex-wrap:wrap}
-        .ch-check{display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;border:2px solid #e2e8f0;font-size:.78rem;font-weight:600;cursor:pointer;transition:.2s;user-select:none}
-        .ch-check.selected{border-color:#3b82f6;background:rgba(59,130,246,.08)}
+        .ch-check{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:9px;border:1.5px solid var(--ds-border);background:var(--ds-bg-subtle);color:var(--ds-text-secondary);font-size:13px;font-weight:600;cursor:pointer;transition:.15s;user-select:none}
+        .ch-check:hover{border-color:var(--ds-border-strong);color:var(--ds-text-primary)}
+        .ch-check.selected{border-color:var(--ds-accent);background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg)}
         .ch-check input{display:none}
-        .ai-gen-btn{padding:10px 20px;border-radius:8px;border:none;background:linear-gradient(135deg,#8b5cf6,#3b82f6);color:#fff;font-size:.85rem;font-weight:700;cursor:pointer;transition:.2s}
-        .ai-gen-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(139,92,246,.3)}
-        .ai-gen-btn:disabled{opacity:.6;cursor:not-allowed;transform:none;box-shadow:none}
-        .preview-box{background:#f8fafc;border-radius:10px;border:1px dashed #cbd5e1;padding:20px;min-height:200px;margin-top:12px}
-        .action-bar{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
-        .btn-save{background:#10b981;color:#fff;padding:10px 24px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
-        .btn-publish{background:#3b82f6;color:#fff;padding:10px 24px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
-        .btn-schedule{background:#f59e0b;color:#fff;padding:10px 24px;border-radius:8px;border:none;font-weight:700;cursor:pointer}
-
-        /* Channel tabs */
-        .channel-tabs{display:flex;gap:0;border-bottom:2px solid #e2e8f0;margin-bottom:0;overflow-x:auto;-webkit-overflow-scrolling:touch}
-        .channel-tab{padding:10px 18px;font-size:.82rem;font-weight:600;color:#94a3b8;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:.2s;display:flex;align-items:center;gap:6px;user-select:none}
-        .channel-tab:hover{color:#3b82f6;background:rgba(59,130,246,.04)}
-        .channel-tab.active{color:#3b82f6;border-bottom-color:#3b82f6}
-        .channel-tab .tab-score{font-size:.7rem;padding:2px 7px;border-radius:10px;font-weight:700;margin-left:4px}
-        .score-high{background:#dcfce7;color:#16a34a}
-        .score-mid{background:#fef3c7;color:#d97706}
-        .score-low{background:#fee2e2;color:#dc2626}
-
-        /* Channel content panel */
-        .channel-panel{display:none;padding:20px 0 0 0}
+        .ai-gen-btn{display:inline-flex;align-items:center;gap:7px;padding:0 16px;height:38px;border-radius:var(--ds-radius-md);border:1px solid transparent;background:var(--ds-accent);color:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+        .ai-gen-btn:hover{background:var(--ds-accent-hover)}
+        .ai-gen-btn:disabled{opacity:.5;cursor:not-allowed}
+        .action-bar{display:flex;gap:8px;justify-content:flex-end;margin-top:18px;flex-wrap:wrap}
+        .btn-save,.btn-schedule,.btn-publish{display:inline-flex;align-items:center;gap:7px;padding:0 18px;height:40px;border-radius:var(--ds-radius-md);border:1px solid transparent;font-size:13px;font-weight:600;cursor:pointer;transition:.15s}
+        .btn-save{background:var(--ds-bg-surface);color:var(--ds-text-primary);border-color:var(--ds-border)}
+        .btn-save:hover{background:var(--ds-bg-hover)}
+        .btn-schedule{background:var(--ds-bg-surface);color:var(--ds-warning-fg);border-color:var(--ds-warning-600)}
+        .btn-schedule:hover{background:var(--ds-warning-bg)}
+        .btn-publish{background:var(--ds-accent);color:#fff}
+        .btn-publish:hover{background:var(--ds-accent-hover)}
+        /* 채널 미리보기 탭/패널 (JS 생성) */
+        .channel-tabs{display:flex;gap:4px;border-bottom:1px solid var(--ds-border);margin-bottom:0;overflow-x:auto}
+        .channel-tab{padding:10px 14px;font-size:13px;font-weight:600;color:var(--ds-text-tertiary);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:.15s;display:flex;align-items:center;gap:6px;user-select:none;background:none;border-top:0;border-left:0;border-right:0}
+        .channel-tab:hover{color:var(--ds-text-secondary)}
+        .channel-tab.active{color:var(--ds-text-primary);border-bottom-color:var(--ds-accent)}
+        .channel-tab .tab-score{font-size:11px;padding:2px 7px;border-radius:10px;font-weight:700;margin-left:4px}
+        .score-high{background:var(--ds-success-bg);color:var(--ds-success-fg)}
+        .score-mid{background:var(--ds-warning-bg);color:var(--ds-warning-fg)}
+        .score-low{background:var(--ds-danger-bg);color:var(--ds-danger-fg)}
+        .channel-panel{display:none;padding:18px 0 0 0}
         .channel-panel.active{display:block}
         .panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
-        .panel-channel-name{font-size:1rem;font-weight:700;display:flex;align-items:center;gap:8px}
+        .panel-channel-name{font-size:15px;font-weight:700;color:var(--ds-text-primary);display:flex;align-items:center;gap:8px}
         .panel-actions{display:flex;gap:8px;align-items:center}
-        .btn-edit-channel{padding:6px 14px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:.78rem;font-weight:600;cursor:pointer;transition:.2s;color:#3b82f6}
-        .btn-edit-channel:hover{background:#eff6ff;border-color:#3b82f6}
-        .btn-edit-channel.editing{background:#3b82f6;color:#fff;border-color:#3b82f6}
-
-        /* Score display */
+        .btn-edit-channel{padding:6px 14px;border-radius:7px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);font-size:12px;font-weight:600;cursor:pointer;transition:.15s;color:var(--ds-text-link)}
+        .btn-edit-channel:hover{background:var(--ds-bg-hover);border-color:var(--ds-accent)}
+        .btn-edit-channel.editing{background:var(--ds-accent);color:#fff;border-color:var(--ds-accent)}
         .score-circle{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;flex-shrink:0;position:relative}
         .score-circle::after{content:'';position:absolute;inset:3px;border-radius:50%;border:3px solid transparent}
-        .score-detail-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:14px 16px;background:#f8fafc;border-radius:10px;border:1px solid #e2e8f0}
+        .score-detail-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:14px 16px;background:var(--ds-bg-subtle);border-radius:10px;border:1px solid var(--ds-border)}
         .score-breakdown{flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:6px}
-        .score-item{font-size:.75rem;color:#64748b;display:flex;align-items:center;gap:4px}
+        .score-item{font-size:12px;color:var(--ds-text-secondary);display:flex;align-items:center;gap:4px}
         .score-item .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-        .score-item .dot.pass{background:#10b981}
-        .score-item .dot.warn{background:#f59e0b}
-        .score-item .dot.fail{background:#ef4444}
-
-        /* Content preview area */
-        .channel-content-preview{background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:18px;font-size:.85rem;line-height:1.7;white-space:pre-wrap;word-break:break-word;min-height:160px;max-height:500px;overflow-y:auto}
-        .channel-content-edit{width:100%;min-height:200px;padding:14px;border-radius:10px;border:1px solid #3b82f6;font-size:.85rem;font-family:inherit;line-height:1.7;resize:vertical;outline:none}
-
-        /* Char count */
-        .char-count-bar{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:.75rem;color:#94a3b8}
+        .score-item .dot.pass{background:var(--ds-success-500)}
+        .score-item .dot.warn{background:var(--ds-warning-500)}
+        .score-item .dot.fail{background:var(--ds-danger-500)}
+        .channel-content-preview{background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:10px;padding:18px;font-size:13px;line-height:1.7;white-space:pre-wrap;word-break:break-word;min-height:160px;max-height:500px;overflow-y:auto;color:var(--ds-text-primary)}
+        .channel-content-edit{width:100%;min-height:200px;padding:14px;border-radius:10px;border:1px solid var(--ds-accent);background:var(--ds-bg-surface);color:var(--ds-text-primary);font-size:13px;font-family:inherit;line-height:1.7;resize:vertical;outline:none}
+        .char-count-bar{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--ds-text-tertiary)}
         .char-count-bar .count{font-weight:700}
-        .char-count-bar .limit-warn{color:#ef4444;font-weight:600}
-        .char-count-bar .limit-ok{color:#10b981;font-weight:600}
-
-        /* Generation progress */
+        .char-count-bar .limit-warn{color:var(--ds-danger-fg);font-weight:600}
+        .char-count-bar .limit-ok{color:var(--ds-success-fg);font-weight:600}
         .gen-progress{margin-top:14px}
-        .gen-progress-item{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:.82rem;border-bottom:1px solid #f1f5f9}
+        .gen-progress-item{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:13px;border-bottom:1px solid var(--ds-border-subtle);color:var(--ds-text-secondary)}
         .gen-progress-item:last-child{border-bottom:none}
-        .gen-spinner{width:18px;height:18px;border:2px solid #e2e8f0;border-top-color:#3b82f6;border-radius:50%;animation:spin .7s linear infinite}
-        .gen-done{width:18px;height:18px;border-radius:50%;background:#10b981;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
-        .gen-waiting{width:18px;height:18px;border-radius:50%;background:#e2e8f0}
+        .gen-spinner{width:18px;height:18px;border:2px solid var(--ds-border);border-top-color:var(--ds-accent);border-radius:50%;animation:spin .7s linear infinite}
+        .gen-done{width:18px;height:18px;border-radius:50%;background:var(--ds-success-500);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+        .gen-waiting{width:18px;height:18px;border-radius:50%;background:var(--ds-bg-active)}
         @keyframes spin{to{transform:rotate(360deg)}}
-
-        /* Overview card for legacy single preview */
         .overview-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px}
-        .overview-stat{background:#f8fafc;border-radius:8px;padding:12px;text-align:center;border:1px solid #e2e8f0}
-        .overview-stat .val{font-size:1.3rem;font-weight:800}
-        .overview-stat .lbl{font-size:.7rem;color:#94a3b8;margin-top:2px}
-
-        @media(max-width:768px){
-            .form-row{grid-template-columns:1fr}
-            .channel-tabs{gap:0}
-            .channel-tab{padding:8px 12px;font-size:.75rem}
+        .overview-stat{background:var(--ds-bg-subtle);border-radius:9px;padding:12px;text-align:center;border:1px solid var(--ds-border)}
+        .overview-stat .val{font-size:1.3rem;font-weight:800;color:var(--ds-text-primary)}
+        .overview-stat .lbl{font-size:11px;color:var(--ds-text-tertiary);margin-top:2px}
+        /* 5단계 칸반 (신규 — 파이프라인 뷰) */
+        .d-kanban{display:grid;grid-template-columns:repeat(5,minmax(190px,1fr));gap:12px}
+        .d-kan-col{background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:var(--ds-radius-xl);padding:12px;min-height:280px}
+        .d-kan-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:2px 2px 12px;font-weight:700;color:var(--ds-text-primary);font-size:14px}
+        .d-kan-count{font-size:11px;font-weight:700;color:var(--ds-text-tertiary);background:var(--ds-bg-active);border-radius:999px;padding:2px 8px}
+        .d-kan-card{background:var(--ds-bg-surface);border:1px solid var(--ds-border);border-radius:10px;padding:12px;margin-bottom:10px;cursor:pointer;transition:.15s}
+        .d-kan-card:hover{border-color:var(--ds-accent);box-shadow:var(--ds-shadow-sm)}
+        .d-kan-card strong{display:block;font-size:13px;color:var(--ds-text-primary)}
+        .d-kan-card .meta{font-size:11px;color:var(--ds-text-tertiary);margin:6px 0 8px}
+        .d-kan-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}
+        .d-plat{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--ds-text-secondary);border:1px solid var(--ds-border);border-radius:6px;padding:2px 7px}
+        .d-plat i{width:6px;height:6px;border-radius:50%;display:inline-block}
+        .d-kan-card .when{font-size:11px;color:var(--ds-text-tertiary)}
+        /* 전체 목록 테이블은 ds-table 사용 */
+        @media(max-width:1024px){ .d-kanban{overflow-x:auto} }
+        @media(max-width:600px){
+            .d-topbar{padding:0 14px;gap:9px}.d-nav{padding:0 12px}.d-screen{padding:16px 14px}
+            .d-logo-text small,.d-switch{display:none}
+            .d-form-grid{grid-template-columns:1fr}
+            .d-page-head h1{font-size:22px}
+            .d-sel{max-width:90px}
             .score-detail-row{flex-direction:column;align-items:flex-start}
             .score-breakdown{grid-template-columns:1fr 1fr}
+            .d-kanban{grid-template-columns:repeat(5,200px)}
         }
     </style>
 </head>
-<body>
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
-            <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link active"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
-                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
-                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
-                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
-            </nav>
-        </aside>
-        <div class="main-content">
-            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">✍️ 콘텐츠 만들기</div><div class="top-bar-sub">AI 자동 생성 또는 수동 작성</div></div></div></header>
-            <div class="content">
-                <div class="create-box">
-                    <h2>📌 기본 정보</h2>
-                    <div class="form-row">
-                        <div class="form-group"><label>콘텐츠 주제/제목</label><input type="text" id="postTitle" placeholder="예: 여름 필수 아이템 추천"></div>
-                        <div class="form-group"><label>키워드 (쉼표 구분)</label><input type="text" id="postKeywords" placeholder="예: 여름패션, 썸머룩, 데일리코디"></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>카테고리</label>
-                            <select id="postCategory"><option>패션/뷰티</option><option>전자기기</option><option>생활/주방</option><option>반려동물</option><option>음식/맛집</option><option>여행</option><option>육아/교육</option><option>비즈니스</option><option>기타</option></select>
-                        </div>
-                        <div class="form-group"><label>톤 & 스타일</label>
-                            <select id="postTone"><option>친근한</option><option>전문적인</option><option>유머러스</option><option>감성적인</option><option>정보 전달</option><option>리뷰/후기</option></select>
-                        </div>
-                    </div>
-                </div>
+<body class="ds-root">
+    <!-- ===== 상단바 ===== -->
+    <header class="d-topbar">
+        <div class="d-logo" onclick="location.href='../index.html'">
+            <div class="d-logo-mark">D</div>
+            <div class="d-logo-text">DIVOOST SNS<small>AI MARKETING WORKSPACE</small></div>
+        </div>
+        <div class="d-switch"><i data-lucide="layout-grid" class="ds-icon ds-icon-sm"></i> HubOnTrade</div>
+        <div class="d-topbar-right">
+            <span class="ds-badge ds-badge-accent ds-badge-dot">DEMO</span>
+            <button class="ds-btn ds-btn-ghost ds-btn-icon" id="themeToggle" title="테마 전환" aria-label="테마 전환"><i data-lucide="sun" class="ds-icon"></i></button>
+            <button class="ds-btn ds-btn-primary" onclick="studioView('write')"><i data-lucide="plus" class="ds-icon"></i> 새 콘텐츠</button>
+        </div>
+    </header>
 
-                <div class="create-box">
-                    <h2>📱 발행 채널 선택</h2>
-                    <div class="channel-select" id="channelSelect">
-                        <div class="ch-check" onclick="toggleCh(this)" data-value="facebook">📘 Facebook</div>
-                        <div class="ch-check" onclick="toggleCh(this)" data-value="tiktok">🎵 TikTok</div>
-                        <div class="ch-check" onclick="toggleCh(this)" data-value="instagram">📸 Instagram</div>
-                        <div class="ch-check" onclick="toggleCh(this)" data-value="naver_blog">📗 네이버 블로그</div>
-                        <div class="ch-check" onclick="toggleCh(this)" data-value="naver_cafe">☕ 네이버 카페</div>
-                        <div class="ch-check" onclick="toggleCh(this)" data-value="xiaohongshu">📕 샤오홍수</div>
-                        <div class="ch-check" onclick="toggleCh(this)" data-value="douyin">🎬 도우인</div>
-                    </div>
-                </div>
+    <!-- ===== 상단 네비 ===== -->
+    <nav class="d-nav" aria-label="업무 메뉴">
+        <a class="d-nav-item" href="../index.html">종합 현황</a>
+        <a class="d-nav-item" href="calendar.html">캘린더</a>
+        <a class="d-nav-item is-active" href="create.html">콘텐츠 스튜디오</a>
+        <a class="d-nav-item" href="ai-writer.html">AI 작성기</a>
+        <a class="d-nav-item" href="media.html">미디어</a>
+        <a class="d-nav-item" href="publish.html">포스팅</a>
+        <a class="d-nav-item" href="schedule.html">예약 발행</a>
+        <a class="d-nav-item" href="engagement.html">댓글/반응</a>
+        <a class="d-nav-item" href="analytics.html">분석 리포트</a>
+        <div class="d-nav-right">
+            <button class="d-nav-more" id="menuBtn"><i data-lucide="menu" class="ds-icon ds-icon-sm"></i> 전체 기능</button>
+        </div>
+    </nav>
 
-                <div class="create-box">
-                    <h2>✍️ 콘텐츠 생성</h2>
-                    <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
-                        ⚠️ 개발 필요: 아래 "AI 자동 생성"은 실제 LLM이 아닌 템플릿 기반 생성입니다.<br>
-                        필요 작업: ai-writer.html처럼 ai-gateway.js 연결 (OpenAI/Claude API) + 크레딧 차감 + 프롬프트 엔지니어링
-                    </div>
-                    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-                        <button class="ai-gen-btn" id="aiGenBtn" onclick="generateAI()">🤖 템플릿 자동 생성 (개발 중)</button>
-                        <span id="aiStatus" style="font-size:.78rem;color:#94a3b8"></span>
-                    </div>
-                    <div id="genProgress" class="gen-progress" style="display:none"></div>
-                </div>
+    <!-- ===== 전체 기능 드로어 (#sidebar: 기존 menuBtn 토글 JS 호환) ===== -->
+    <aside class="d-drawer" id="sidebar">
+        <div class="d-drawer-top">
+            <div><div class="d-drawer-email">divoost@user.com</div><div class="d-drawer-plan">체험플랜 사용 중</div></div>
+            <button class="d-drawer-close" onclick="document.getElementById('sidebar').classList.remove('open')" aria-label="닫기"><i data-lucide="x" class="ds-icon"></i></button>
+        </div>
+        <div class="d-drawer-sec">대시보드</div>
+        <a href="../index.html"><i data-lucide="home" class="ds-icon ds-icon-sm"></i> 종합 현황</a>
+        <a href="calendar.html"><i data-lucide="calendar" class="ds-icon ds-icon-sm"></i> 캘린더</a>
+        <div class="d-drawer-sec">콘텐츠 생성</div>
+        <a href="create.html"><i data-lucide="pen-line" class="ds-icon ds-icon-sm"></i> 콘텐츠 스튜디오</a>
+        <a href="ai-writer.html"><i data-lucide="sparkles" class="ds-icon ds-icon-sm"></i> AI 작성기</a>
+        <a href="media.html"><i data-lucide="image" class="ds-icon ds-icon-sm"></i> 미디어</a>
+        <a href="templates.html"><i data-lucide="layout-template" class="ds-icon ds-icon-sm"></i> 템플릿</a>
+        <div class="d-drawer-sec">포스팅 관리</div>
+        <a href="publish.html"><i data-lucide="send" class="ds-icon ds-icon-sm"></i> 포스팅</a>
+        <a href="schedule.html"><i data-lucide="calendar-clock" class="ds-icon ds-icon-sm"></i> 예약 발행</a>
+        <a href="history.html"><i data-lucide="history" class="ds-icon ds-icon-sm"></i> 발행 이력</a>
+        <div class="d-drawer-sec">인터렉션</div>
+        <a href="engagement.html"><i data-lucide="message-circle" class="ds-icon ds-icon-sm"></i> 댓글/반응</a>
+        <a href="listening.html"><i data-lucide="radar" class="ds-icon ds-icon-sm"></i> 소셜 리스닝</a>
+        <a href="analytics.html"><i data-lucide="bar-chart-3" class="ds-icon ds-icon-sm"></i> 분석 리포트</a>
+        <div class="d-drawer-sec">시스템</div>
+        <a href="settings.html"><i data-lucide="settings" class="ds-icon ds-icon-sm"></i> 설정</a>
+        <a href="billing.html"><i data-lucide="credit-card" class="ds-icon ds-icon-sm"></i> 요금제/크레딧</a>
+        <a href="safety-guide.html"><i data-lucide="shield-check" class="ds-icon ds-icon-sm"></i> 운영 가이드</a>
+    </aside>
+    <div class="d-overlay" onclick="document.getElementById('sidebar').classList.remove('open')"></div>
 
-                <div class="create-box" id="previewSection" style="display:none">
-                    <h2>👁 채널별 콘텐츠 미리보기</h2>
-                    <div class="overview-stats" id="overviewStats"></div>
-                    <div class="channel-tabs" id="channelTabs" style="margin-top:16px"></div>
-                    <div id="channelPanels"></div>
-                </div>
-
-                <div class="create-box" id="manualSection">
-                    <h2>✍️ 수동 입력 (선택)</h2>
-                    <div class="form-group full" style="margin-top:4px">
-                        <label>공통 본문 (AI 생성 전 직접 작성할 경우)</label>
-                        <textarea id="postContent" placeholder="콘텐츠 내용을 직접 입력하세요. AI 생성 시 이 내용은 각 채널별 콘텐츠로 대체됩니다."></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group"><label>해시태그</label><input type="text" id="postHashtags" placeholder="#여름패션 #추천 #데일리"></div>
-                        <div class="form-group"><label>이미지 URL (선택)</label><input type="text" id="postImage" placeholder="https://... 또는 아래에서 AI 생성"></div>
-                    </div>
-                </div>
-
-                <!-- AI 미디어 생성 -->
-                <div class="create-box" style="background:linear-gradient(135deg,#faf5ff,#fdf2f8);border-color:#e9d5ff">
-                    <h2>🎨 AI 이미지/영상 생성</h2>
-                    <p style="font-size:.78rem;color:#6b21a8;margin-bottom:12px">텍스트 프롬프트로 이미지 또는 영상을 생성해서 위 본문과 함께 발행하세요.</p>
-
-                    <div class="form-group full" style="margin-bottom:10px">
-                        <label>프롬프트 (영어 권장, 자동 번역 옵션)</label>
-                        <textarea id="aiPrompt" placeholder="예: A young Korean woman holding a Cocokrew skincare bottle, soft natural lighting, minimalist white background, lifestyle photography" style="min-height:80px"></textarea>
-                    </div>
-
-                    <div class="form-row" style="margin-bottom:10px">
-                        <div class="form-group">
-                            <label>유형</label>
-                            <select id="aiType" onchange="aiUpdateModelOptions()">
-                                <option value="image">🖼 이미지</option>
-                                <option value="video">🎬 영상</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>모델</label>
-                            <select id="aiSelectedModel"></select>
-                        </div>
-                        <div class="form-group">
-                            <label>화면비</label>
-                            <select id="aiAspect">
-                                <option value="1:1">정사각 1:1</option>
-                                <option value="9:16">세로 9:16 (Reels/Stories)</option>
-                                <option value="16:9">가로 16:9</option>
-                                <option value="4:5">세로 4:5 (Feed)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-row" id="aiVideoOpts" style="margin-bottom:10px;display:none">
-                        <div class="form-group">
-                            <label>영상 길이 (초)</label>
-                            <select id="aiDuration">
-                                <option value="5">5초</option>
-                                <option value="6">6초</option>
-                                <option value="10">10초</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>예상 비용</label>
-                            <div id="aiCostEstimate" style="padding:8px 12px;border-radius:8px;background:#fff;border:1px solid #e2e8f0;font-size:.82rem">-</div>
-                        </div>
-                    </div>
-
-                    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-                        <button onclick="aiGenerateNow()" id="aiGenBtn" style="padding:10px 20px;background:#a855f7;color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer">✨ 생성하기</button>
-                        <button onclick="aiSuggestPrompt()" style="padding:10px 16px;background:#fff;color:#7c3aed;border:1px solid #c4b5fd;border-radius:8px;font-weight:600;cursor:pointer">🤖 본문에서 프롬프트 자동 생성</button>
-                        <span id="aiStatusText" style="font-size:.78rem;color:#7c3aed;font-weight:600"></span>
-                    </div>
-
-                    <div id="aiPreview" style="display:none;margin-top:14px;padding:12px;background:#fff;border:1px solid #e9d5ff;border-radius:10px">
-                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-                            <span style="font-size:.82rem;font-weight:700;color:#7c3aed">✅ 생성 완료</span>
-                            <div style="display:flex;gap:6px">
-                                <button onclick="aiUseAsPostMedia()" style="padding:6px 12px;background:#10b981;color:#fff;border:none;border-radius:6px;font-size:.74rem;font-weight:700;cursor:pointer">✅ 이 미디어 사용</button>
-                                <button onclick="aiRegenerate()" style="padding:6px 12px;background:#fff;color:#475569;border:1px solid #e2e8f0;border-radius:6px;font-size:.74rem;cursor:pointer">🔄 재생성</button>
-                            </div>
-                        </div>
-                        <div id="aiPreviewMedia"></div>
-                    </div>
-                </div>
-
-                <div class="action-bar">
-                    <button class="btn-save" onclick="savePost('draft')">💾 임시저장</button>
-                    <button class="btn-schedule" onclick="savePost('review')">👁 확인/수정</button>
-                    <button class="btn-publish" onclick="confirmPublish()">🚀 발행하기</button>
-                </div>
+    <!-- ===== 메인 스크린 ===== -->
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">콘텐츠 스튜디오</h1>
+                <p class="ds-body">EZworks에서 이관할 5단계 SNS 파이프라인입니다. 결재 단계 수와 혼동하지 않도록 구분했습니다.</p>
+            </div>
+            <div class="ds-row ds-gap-2">
+                <button class="ds-btn ds-btn-secondary" onclick="studioView('write')"><i data-lucide="file-plus" class="ds-icon ds-icon-sm"></i> 브리프 등록</button>
+                <button class="ds-btn ds-btn-primary" onclick="studioView('write')"><i data-lucide="pen-line" class="ds-icon ds-icon-sm"></i> 새 콘텐츠</button>
             </div>
         </div>
-    </div>
+
+        <!-- 뷰 전환 세그먼트 -->
+        <div class="ds-row ds-gap-3" style="margin-bottom:16px;flex-wrap:wrap">
+            <div class="ds-segment" role="tablist">
+                <button class="ds-segment-item is-active" id="segWrite" onclick="studioView('write')">✍️ 작성</button>
+                <button class="ds-segment-item" id="segPipeline" onclick="studioView('pipeline')">📋 파이프라인</button>
+                <button class="ds-segment-item" id="segList" onclick="studioView('list')">📑 전체 목록</button>
+            </div>
+        </div>
+
+        <!-- ========== 뷰: 작성 (기존 작성 폼 — 기능·JS 훅 보존) ========== -->
+        <section class="d-view is-active" id="viewWrite">
+            <div class="ds-card ds-card-pad" style="margin-bottom:16px">
+                <div class="ds-card-title" style="margin-bottom:14px">📌 기본 정보</div>
+                <div class="d-form-grid">
+                    <div class="ds-field" style="margin:0"><label class="ds-label">콘텐츠 주제/제목</label><input class="ds-input" type="text" id="postTitle" placeholder="예: 여름 필수 아이템 추천"></div>
+                    <div class="ds-field" style="margin:0"><label class="ds-label">키워드 (쉼표 구분)</label><input class="ds-input" type="text" id="postKeywords" placeholder="예: 여름패션, 썸머룩, 데일리코디"></div>
+                    <div class="ds-field" style="margin:0"><label class="ds-label">카테고리</label>
+                        <select class="ds-select" id="postCategory"><option>패션/뷰티</option><option>전자기기</option><option>생활/주방</option><option>반려동물</option><option>음식/맛집</option><option>여행</option><option>육아/교육</option><option>비즈니스</option><option>기타</option></select>
+                    </div>
+                    <div class="ds-field" style="margin:0"><label class="ds-label">톤 & 스타일</label>
+                        <select class="ds-select" id="postTone"><option>친근한</option><option>전문적인</option><option>유머러스</option><option>감성적인</option><option>정보 전달</option><option>리뷰/후기</option></select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ds-card ds-card-pad" style="margin-bottom:16px">
+                <div class="ds-card-title" style="margin-bottom:14px">📱 발행 채널 선택</div>
+                <div class="channel-select" id="channelSelect">
+                    <div class="ch-check" onclick="toggleCh(this)" data-value="facebook">📘 Facebook</div>
+                    <div class="ch-check" onclick="toggleCh(this)" data-value="tiktok">🎵 TikTok</div>
+                    <div class="ch-check" onclick="toggleCh(this)" data-value="instagram">📸 Instagram</div>
+                    <div class="ch-check" onclick="toggleCh(this)" data-value="naver_blog">📗 네이버 블로그</div>
+                    <div class="ch-check" onclick="toggleCh(this)" data-value="naver_cafe">☕ 네이버 카페</div>
+                    <div class="ch-check" onclick="toggleCh(this)" data-value="xiaohongshu">📕 샤오홍수</div>
+                    <div class="ch-check" onclick="toggleCh(this)" data-value="douyin">🎬 도우인</div>
+                </div>
+            </div>
+
+            <div class="ds-card ds-card-pad" style="margin-bottom:16px">
+                <div class="ds-card-title" style="margin-bottom:12px">✍️ 콘텐츠 생성</div>
+                <div class="d-note warn">
+                    <i data-lucide="alert-triangle" class="ds-icon ds-icon-sm"></i>
+                    <div>개발 필요: 아래 "AI 자동 생성"은 실제 LLM이 아닌 템플릿 기반 생성입니다. 필요 작업: ai-writer.html처럼 ai-gateway.js 연결(OpenAI/Claude API) + 크레딧 차감 + 프롬프트 엔지니어링.</div>
+                </div>
+                <div class="ds-row ds-gap-3" style="flex-wrap:wrap">
+                    <button class="ai-gen-btn" id="aiGenBtn" onclick="generateAI()">🤖 템플릿 자동 생성 (개발 중)</button>
+                    <span id="aiStatus" class="ds-small"></span>
+                </div>
+                <div id="genProgress" class="gen-progress" style="display:none"></div>
+            </div>
+
+            <div class="ds-card ds-card-pad" id="previewSection" style="display:none;margin-bottom:16px">
+                <div class="ds-card-title" style="margin-bottom:12px">👁 채널별 콘텐츠 미리보기</div>
+                <div class="overview-stats" id="overviewStats"></div>
+                <div class="channel-tabs" id="channelTabs" style="margin-top:16px"></div>
+                <div id="channelPanels"></div>
+            </div>
+
+            <div class="ds-card ds-card-pad" id="manualSection" style="margin-bottom:16px">
+                <div class="ds-card-title" style="margin-bottom:12px">✍️ 수동 입력 (선택)</div>
+                <div class="ds-field"><label class="ds-label">공통 본문 (AI 생성 전 직접 작성할 경우)</label>
+                    <textarea class="ds-textarea" id="postContent" placeholder="콘텐츠 내용을 직접 입력하세요. AI 생성 시 이 내용은 각 채널별 콘텐츠로 대체됩니다."></textarea>
+                </div>
+                <div class="d-form-grid">
+                    <div class="ds-field" style="margin:0"><label class="ds-label">해시태그</label><input class="ds-input" type="text" id="postHashtags" placeholder="#여름패션 #추천 #데일리"></div>
+                    <div class="ds-field" style="margin:0"><label class="ds-label">이미지 URL (선택)</label><input class="ds-input" type="text" id="postImage" placeholder="https://... 또는 아래에서 AI 생성"></div>
+                </div>
+            </div>
+
+            <!-- AI 미디어 생성 -->
+            <div class="ds-card ds-card-pad" style="margin-bottom:16px">
+                <div class="ds-card-title" style="margin-bottom:6px">🎨 AI 이미지/영상 생성</div>
+                <p class="ds-small" style="margin-bottom:12px">텍스트 프롬프트로 이미지 또는 영상을 생성해서 위 본문과 함께 발행하세요.</p>
+                <div class="ds-field"><label class="ds-label">프롬프트 (영어 권장, 자동 번역 옵션)</label>
+                    <textarea class="ds-textarea" id="aiPrompt" placeholder="예: A young Korean woman holding a skincare bottle, soft natural lighting, minimalist white background, lifestyle photography" style="min-height:80px"></textarea>
+                </div>
+                <div class="d-form-grid" style="margin-bottom:12px">
+                    <div class="ds-field" style="margin:0"><label class="ds-label">유형</label>
+                        <select class="ds-select" id="aiType" onchange="aiUpdateModelOptions()">
+                            <option value="image">🖼 이미지</option>
+                            <option value="video">🎬 영상</option>
+                        </select>
+                    </div>
+                    <div class="ds-field" style="margin:0"><label class="ds-label">모델</label>
+                        <select class="ds-select" id="aiSelectedModel"></select>
+                    </div>
+                    <div class="ds-field" style="margin:0"><label class="ds-label">화면비</label>
+                        <select class="ds-select" id="aiAspect">
+                            <option value="1:1">정사각 1:1</option>
+                            <option value="9:16">세로 9:16 (Reels/Stories)</option>
+                            <option value="16:9">가로 16:9</option>
+                            <option value="4:5">세로 4:5 (Feed)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-form-grid" id="aiVideoOpts" style="margin-bottom:12px;display:none">
+                    <div class="ds-field" style="margin:0"><label class="ds-label">영상 길이 (초)</label>
+                        <select class="ds-select" id="aiDuration">
+                            <option value="5">5초</option>
+                            <option value="6">6초</option>
+                            <option value="10">10초</option>
+                        </select>
+                    </div>
+                    <div class="ds-field" style="margin:0"><label class="ds-label">예상 비용</label>
+                        <div id="aiCostEstimate" class="ds-input" style="display:flex;align-items:center">-</div>
+                    </div>
+                </div>
+                <div class="ds-row ds-gap-2" style="flex-wrap:wrap">
+                    <button onclick="aiGenerateNow()" id="aiGenBtn" class="ds-btn ds-btn-primary"><i data-lucide="sparkles" class="ds-icon ds-icon-sm"></i> 생성하기</button>
+                    <button onclick="aiSuggestPrompt()" class="ds-btn ds-btn-secondary"><i data-lucide="wand-2" class="ds-icon ds-icon-sm"></i> 본문에서 프롬프트 자동 생성</button>
+                    <span id="aiStatusText" class="ds-small accent" style="font-weight:600"></span>
+                </div>
+                <div id="aiPreview" style="display:none;margin-top:14px;padding:12px;background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:10px">
+                    <div class="ds-row between" style="justify-content:space-between;margin-bottom:8px">
+                        <span style="font-size:13px;font-weight:700;color:var(--ds-accent-soft-fg)">✅ 생성 완료</span>
+                        <div class="ds-row ds-gap-2">
+                            <button onclick="aiUseAsPostMedia()" class="ds-btn ds-btn-primary ds-btn-sm"><i data-lucide="check" class="ds-icon ds-icon-sm"></i> 이 미디어 사용</button>
+                            <button onclick="aiRegenerate()" class="ds-btn ds-btn-secondary ds-btn-sm"><i data-lucide="refresh-cw" class="ds-icon ds-icon-sm"></i> 재생성</button>
+                        </div>
+                    </div>
+                    <div id="aiPreviewMedia"></div>
+                </div>
+            </div>
+
+            <div class="action-bar">
+                <button class="btn-save" onclick="savePost('draft')"><i data-lucide="save" class="ds-icon ds-icon-sm"></i> 임시저장</button>
+                <button class="btn-schedule" onclick="savePost('review')"><i data-lucide="eye" class="ds-icon ds-icon-sm"></i> 확인/수정</button>
+                <button class="btn-publish" onclick="confirmPublish()"><i data-lucide="send" class="ds-icon ds-icon-sm"></i> 발행하기</button>
+            </div>
+        </section>
+
+        <!-- ========== 뷰: 파이프라인 (5단계 칸반 — 신규, 데모 데이터) ========== -->
+        <section class="d-view" id="viewPipeline">
+            <div class="d-note"><i data-lucide="info" class="ds-icon ds-icon-sm"></i><div>5단계 파이프라인(<b>기획 → 제작 → 현지화 → 검수 → 게시</b>)은 EZworks 이관 규칙이며, 승인 상태기계와 별도입니다. 아래는 구조 시연용 데모 데이터입니다(실제 콘텐츠 <code>phase</code> 연동은 백엔드 설계 후 연결).</div></div>
+            <div class="d-kanban">
+                <div class="d-kan-col">
+                    <div class="d-kan-head">1. 기획 <span class="d-kan-count">1</span></div>
+                    <div class="d-kan-card"><strong>AI 콘텐츠 에이전시 소개</strong><div class="meta">DIVOOST Studio · Jay</div><div class="d-kan-tags"><span class="d-plat"><i style="background:#5f92ff"></i>Facebook</span><span class="d-plat"><i style="background:#dd66d9"></i>Instagram</span></div><div class="when">11/17 10:00</div></div>
+                </div>
+                <div class="d-kan-col">
+                    <div class="d-kan-head">2. 제작 <span class="d-kan-count">1</span></div>
+                    <div class="d-kan-card"><strong>K-CLEAN FESTA 현장 하이라이트</strong><div class="meta">K-CLEAN FESTA · Hana</div><div class="d-kan-tags"><span class="d-plat"><i style="background:#ff687b"></i>YouTube</span><span class="d-plat"><i style="background:#dd66d9"></i>Instagram</span></div><div class="when">11/16 17:00</div></div>
+                </div>
+                <div class="d-kan-col">
+                    <div class="d-kan-head">3. 현지화 <span class="d-kan-count">1</span></div>
+                    <div class="d-kan-card"><strong>중국어 신제품 리뷰 가이드</strong><div class="meta">Global Beauty · Chen</div><div class="d-kan-tags"><span class="d-plat"><i style="background:#f26a74"></i>小红书</span><span class="d-plat"><i style="background:#dedede"></i>抖音</span></div><div class="when">11/18 15:00</div></div>
+                </div>
+                <div class="d-kan-col">
+                    <div class="d-kan-head">4. 검수 <span class="d-kan-count">3</span></div>
+                    <div class="d-kan-card"><strong>피부 고민 15초 솔루션</strong><div class="meta">PharmTree Vietnam · Linh</div><div class="d-kan-tags"><span class="d-plat"><i style="background:#dd66d9"></i>Instagram</span><span class="d-plat"><i style="background:#e2e8f7"></i>TikTok</span></div><div class="when">11/15 11:30</div></div>
+                    <div class="d-kan-card"><strong>베트남 KOC 언박싱</strong><div class="meta">PharmTree Vietnam · Linh</div><div class="d-kan-tags"><span class="d-plat"><i style="background:#e2e8f7"></i>TikTok</span><span class="d-plat"><i style="background:#ff687b"></i>YouTube</span></div><div class="when">11/15 21:00</div></div>
+                    <div class="d-kan-card"><strong>네이버 블로그 마케팅 트렌드</strong><div class="meta">DIVOOST Studio · Jay</div><div class="d-kan-tags"><span class="d-plat"><i style="background:#52d78c"></i>Naver Blog</span></div><div class="when">11/16 09:00</div></div>
+                </div>
+                <div class="d-kan-col">
+                    <div class="d-kan-head">5. 게시 <span class="d-kan-count">2</span></div>
+                    <div class="d-kan-card"><strong>제품 사용 전·후 사용법 카드</strong><div class="meta">PharmTree Vietnam · Minh</div><div class="d-kan-tags"><span class="d-plat"><i style="background:#dd66d9"></i>Instagram</span><span class="d-plat"><i style="background:#5f92ff"></i>Facebook</span></div><div class="when">11/15 18:30</div></div>
+                    <div class="d-kan-card"><strong>현장 미디어 보도 요약</strong><div class="meta">K-CLEAN FESTA · Hana</div><div class="d-kan-tags"><span class="d-plat"><i style="background:#5f92ff"></i>Facebook</span></div><div class="when">11/13 14:00</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== 뷰: 전체 목록 (신규, 데모 데이터) ========== -->
+        <section class="d-view" id="viewList">
+            <div class="d-note"><i data-lucide="info" class="ds-icon ds-icon-sm"></i><div>구조 시연용 데모 목록입니다. 실제 콘텐츠 연동은 백엔드 설계 후 연결됩니다.</div></div>
+            <div class="ds-card" style="overflow-x:auto">
+                <table class="ds-table">
+                    <thead><tr><th>제목</th><th>브랜드 · 담당</th><th>단계</th><th>채널</th><th>예정</th></tr></thead>
+                    <tbody>
+                        <tr><td>AI 콘텐츠 에이전시 소개</td><td>DIVOOST Studio · Jay</td><td><span class="ds-badge ds-badge-accent">기획</span></td><td>Facebook, Instagram</td><td>11/17 10:00</td></tr>
+                        <tr><td>K-CLEAN FESTA 현장 하이라이트</td><td>K-CLEAN FESTA · Hana</td><td><span class="ds-badge">제작</span></td><td>YouTube, Instagram</td><td>11/16 17:00</td></tr>
+                        <tr><td>중국어 신제품 리뷰 가이드</td><td>Global Beauty · Chen</td><td><span class="ds-badge ds-badge-warning">현지화</span></td><td>小红书, 抖音</td><td>11/18 15:00</td></tr>
+                        <tr><td>피부 고민 15초 솔루션</td><td>PharmTree Vietnam · Linh</td><td><span class="ds-badge ds-badge-warning">검수</span></td><td>Instagram, TikTok</td><td>11/15 11:30</td></tr>
+                        <tr><td>베트남 KOC 언박싱</td><td>PharmTree Vietnam · Linh</td><td><span class="ds-badge ds-badge-warning">검수</span></td><td>TikTok, YouTube</td><td>11/15 21:00</td></tr>
+                        <tr><td>제품 사용 전·후 사용법 카드</td><td>PharmTree Vietnam · Minh</td><td><span class="ds-badge ds-badge-success">게시</span></td><td>Instagram, Facebook</td><td>11/15 18:30</td></tr>
+                        <tr><td>현장 미디어 보도 요약</td><td>K-CLEAN FESTA · Hana</td><td><span class="ds-badge ds-badge-success">게시</span></td><td>Facebook</td><td>11/13 14:00</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
     <script>
         document.getElementById('menuBtn').onclick = function () {
             document.getElementById('sidebar').classList.toggle('open');
@@ -1207,5 +1363,50 @@
     <script src="../js/i18n-auto.js"></script>
     <script src="../js/i18n-common.js"></script>
     <script src="../js/i18n.js"></script>
+
+    <!-- DDS: 뷰 전환 + 드로어 + 아이콘(Lucide) + 테마 -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script>
+        // 뷰 전환(작성/파이프라인/전체목록) — 기존 작성 폼 JS와 독립
+        function studioView(v){
+            var map={write:'viewWrite',pipeline:'viewPipeline',list:'viewList'};
+            var segs={write:'segWrite',pipeline:'segPipeline',list:'segList'};
+            Object.keys(map).forEach(function(k){
+                var view=document.getElementById(map[k]); if(view) view.classList.toggle('is-active', k===v);
+                var seg=document.getElementById(segs[k]); if(seg) seg.classList.toggle('is-active', k===v);
+            });
+            window.scrollTo({top:0,behavior:'smooth'});
+        }
+        (function(){
+            // 드로어(전체 기능) 토글
+            var mb=document.getElementById('menuBtn'), sb=document.getElementById('sidebar'), ov=document.querySelector('.d-overlay'), cb=document.querySelector('.d-drawer-close');
+            function closeDrawer(){ if(sb)sb.classList.remove('open'); if(ov)ov.classList.remove('show'); }
+            if(mb&&sb) mb.onclick=function(){ var open=sb.classList.toggle('open'); if(ov)ov.classList.toggle('show',open); };
+            if(ov) ov.onclick=closeDrawer;
+            if(cb) cb.onclick=closeDrawer;
+            // 테마 복원/토글
+            var root=document.documentElement;
+            try{ var saved=localStorage.getItem('dds-theme'); if(saved) root.setAttribute('data-theme',saved); }catch(e){ /* 저장소 접근 불가: 기본 테마 유지 */ }
+            function syncIcons(){ if(window.lucide&&typeof window.lucide.createIcons==='function') window.lucide.createIcons(); }
+            var toggle=document.getElementById('themeToggle');
+            function updateToggleIcon(){
+                if(!toggle) return;
+                var icon=toggle.querySelector('[data-lucide]');
+                if(icon){ icon.setAttribute('data-lucide', root.getAttribute('data-theme')==='dark'?'sun':'moon'); }
+                syncIcons();
+            }
+            if(toggle){
+                toggle.addEventListener('click', function(){
+                    var next=root.getAttribute('data-theme')==='dark'?'light':'dark';
+                    root.setAttribute('data-theme', next);
+                    try{ localStorage.setItem('dds-theme', next); }catch(e){ /* 저장 실패 무시 */ }
+                    updateToggleIcon();
+                });
+            }
+            syncIcons();
+            updateToggleIcon();
+            window.addEventListener('load', syncIcons);
+        })();
+    </script>
 </body>
 </html>
