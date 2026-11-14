@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -8,62 +8,60 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
     <link rel="manifest" href="../manifest.json">
-    <title>콘텐츠 캘린더 | SNS 플랫폼</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>콘텐츠 캘린더 | DIVOOST SNS</title>
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
-        .cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-        .cal-header h2{font-size:1.1rem}
+        .cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px;flex-wrap:wrap}
+        .cal-header h2{font-size:1.1rem;color:var(--ds-text-primary)}
         .cal-nav{display:flex;gap:8px;align-items:center}
-        .cal-nav button{padding:6px 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;cursor:pointer;font-size:.8rem}
-        .cal-nav span{font-size:.9rem;font-weight:700;min-width:120px;text-align:center}
-        .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden}
-        .cal-day-header{padding:8px;text-align:center;font-size:.7rem;font-weight:600;color:#94a3b8;background:#f8fafc}
-        .cal-day{min-height:80px;padding:6px;border:1px solid #f1f5f9;cursor:pointer;transition:.2s;position:relative}
-        .cal-day:hover{background:#f8fafc}
-        .cal-day.today{background:rgba(59,130,246,.05);border-color:#3b82f6}
-        .cal-day.other{color:#cbd5e1}
-        .cal-date{font-size:.72rem;font-weight:600;margin-bottom:4px}
-        .cal-post{font-size:.6rem;padding:2px 4px;border-radius:3px;background:#3b82f6;color:#fff;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
-        .cal-post.draft{background:#f59e0b}
-        .cal-post.scheduled{background:#8b5cf6}
-        .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-        .sum-card{background:#fff;border-radius:10px;padding:14px;text-align:center;border:1px solid #e2e8f0}
-        .sum-val{font-size:1.4rem;font-weight:800}
-        .sum-label{font-size:.7rem;color:#94a3b8;margin-top:2px}
-        @media(max-width:768px){.cal-day{min-height:50px}.summary{grid-template-columns:1fr 1fr}}
+        .cal-nav button{padding:7px 13px;border-radius:8px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);color:var(--ds-text-primary);cursor:pointer;font-size:.8rem;font-weight:600}
+        .cal-nav button:hover{background:var(--ds-bg-hover);border-color:var(--ds-border-strong)}
+        .cal-nav span{font-size:.9rem;font-weight:700;min-width:120px;text-align:center;color:var(--ds-text-primary)}
+        .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--ds-border);border-radius:var(--ds-radius-xl);border:1px solid var(--ds-border);overflow:hidden}
+        .cal-day-header{padding:9px;text-align:center;font-size:.7rem;font-weight:700;color:var(--ds-text-tertiary);background:var(--ds-bg-subtle)}
+        .cal-day{min-height:92px;padding:7px;background:var(--ds-bg-surface);cursor:pointer;transition:.15s;position:relative}
+        .cal-day:hover{background:var(--ds-bg-hover)}
+        .cal-day.today{background:var(--ds-accent-soft-bg)}
+        .cal-day.today .cal-date{color:#fff;background:var(--ds-accent);width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;border-radius:6px}
+        .cal-day.other{background:var(--ds-bg-app)}
+        .cal-day.other .cal-date{color:var(--ds-text-tertiary);opacity:.5}
+        .cal-date{font-size:.72rem;font-weight:700;margin-bottom:5px;color:var(--ds-text-secondary)}
+        .cal-post{font-size:.6rem;padding:3px 5px;border-radius:4px;background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg);border-left:2px solid var(--ds-accent);margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+        .cal-post.draft{background:var(--ds-warning-bg);color:var(--ds-warning-fg);border-left-color:var(--ds-warning-500)}
+        .cal-post.scheduled{background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg);border-left-color:var(--ds-accent-500)}
+        .summary{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px}
+        .sum-card{background:var(--ds-bg-surface);border-radius:var(--ds-radius-xl);padding:16px;text-align:center;border:1px solid var(--ds-border)}
+        .sum-val{font-size:1.5rem;font-weight:800;color:var(--ds-text-primary)}
+        .sum-label{font-size:.7rem;color:var(--ds-text-tertiary);margin-top:3px}
+        @media(max-width:768px){.cal-day{min-height:56px}.summary{grid-template-columns:1fr 1fr}}
     </style>
 </head>
-<body>
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
-            <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link active"><span>📅</span> 캘린더</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
-                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
-                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
-                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
-            </nav>
-        </aside>
-        <div class="main-content">
-            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">📅 콘텐츠 캘린더</div><div class="top-bar-sub">월별 콘텐츠 일정 관리</div></div></div><div class="top-bar-right"><button class="btn btn-primary" onclick="location.href='create.html'">✍️ 새 콘텐츠</button></div></header>
-            <div class="content">
-                <div class="summary" id="summary"></div>
-                <div class="cal-header">
-                    <h2 id="calTitle"></h2>
-                    <div class="cal-nav">
-                        <button onclick="changeMonth(-1)">◀ 이전</button>
-                        <span id="calMonth"></span>
-                        <button onclick="changeMonth(1)">다음 ▶</button>
-                    </div>
-                </div>
-                <div class="cal-grid" id="calGrid"></div>
+<body class="ds-root" data-shell-active="calendar">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">콘텐츠 캘린더</h1>
+                <p class="ds-body">월별 콘텐츠 일정을 한눈에 관리합니다.</p>
+            </div>
+            <button class="ds-btn ds-btn-primary" onclick="location.href='create.html'"><i data-lucide="pen-line" class="ds-icon ds-icon-sm"></i> 새 콘텐츠</button>
+        </div>
+        <div class="summary" id="summary"></div>
+        <div class="cal-header">
+            <h2 id="calTitle"></h2>
+            <div class="cal-nav">
+                <button onclick="changeMonth(-1)">◀ 이전</button>
+                <span id="calMonth"></span>
+                <button onclick="changeMonth(1)">다음 ▶</button>
             </div>
         </div>
-    </div>
+        <div class="cal-grid" id="calGrid"></div>
+    </main>
     <script>
-        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
         var currentDate=new Date();
 
         function renderCalendar(){
@@ -121,5 +119,9 @@
     <script src="../js/i18n-auto.js"></script>
     <script src="../js/i18n-common.js"></script>
     <script src="../js/i18n.js"></script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
 </body>
 </html>
