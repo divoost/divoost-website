@@ -6,15 +6,15 @@
     <meta name="theme-color" content="#3b82f6">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <meta name="apple-mobile-web-app-title" content="HubOnTrade">
     <link rel="manifest" href="manifest.json">
-    <title data-i18n="doc_title">로그인 / 회원가입 | SNS 플랫폼</title>
+    <title data-i18n="doc_title">로그인 / 회원가입 | HubOnTrade</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *{margin:0;padding:0;box-sizing:border-box}
         body{font-family:'Inter','Pretendard',-apple-system,sans-serif;background:linear-gradient(135deg,#eef2ff 0%,#e0f2fe 50%,#ecfdf5 100%);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;color:#0f172a;-webkit-font-smoothing:antialiased}
         .auth-container{width:100%;max-width:440px}
-        .auth-logo{text-align:center;margin-bottom:24px}
+        .auth-logo{text-align:center;margin-bottom:16px;background:#fff;border-radius:16px;box-shadow:0 8px 32px rgba(15,23,42,.08);border:1px solid #e2e8f0;padding:24px 28px}
         .auth-logo-icon{font-size:48px;margin-bottom:8px}
         .auth-logo-title{font-size:24px;font-weight:800;color:#0f172a;letter-spacing:-.02em}
         .auth-logo-sub{font-size:13px;color:#64748b;margin-top:4px}
@@ -95,13 +95,15 @@
             <select id="langSelect" onchange="I18N.setLang(this.value)" aria-label="Language">
                 <option value="ko">🇰🇷 한국어</option>
                 <option value="en">🇺🇸 English</option>
+                <option value="zh">🇨🇳 中文</option>
                 <option value="vi">🇻🇳 Tiếng Việt</option>
             </select>
         </div>
+        <a href="../index.html" class="auth-back" data-i18n="back_home" style="display:block;text-align:center;color:#64748b;font-size:13px;font-weight:600;text-decoration:none;margin-bottom:16px">← HubOnTrade로 돌아가기</a>
         <div class="auth-logo">
-            <div class="auth-logo-icon">📱</div>
-            <div class="auth-logo-title" data-i18n="logo_title">SNS 콘텐츠 플랫폼</div>
-            <div class="auth-logo-sub" data-i18n="logo_sub">7개 SNS 채널 통합 관리 자동화</div>
+            <div class="auth-logo-icon"><img src="../assets/hubongtrade-logo.png" alt="HubOnTrade" style="height:38px;width:auto;display:inline-block;vertical-align:middle"></div>
+            <div class="auth-logo-title" data-i18n="logo_title">HubOnTrade 통합 로그인</div>
+            <div class="auth-logo-sub" data-i18n="logo_sub">소싱 트래커 · SNS 자동화 — 하나의 계정으로</div>
         </div>
 
         <div class="auth-card">
@@ -124,7 +126,7 @@
                     <label data-i18n="label_password">비밀번호</label>
                     <div class="input-wrap">
                         <input type="password" id="loginPassword" placeholder="비밀번호" data-i18n-ph="ph_password" autocomplete="current-password">
-                        <button class="toggle-pw" onclick="togglePw('loginPassword')">👁</button>
+                        <button class="toggle-pw" onclick="togglePw('loginPassword', this)">👁</button>
                     </div>
                 </div>
                 <div class="form-row">
@@ -151,7 +153,7 @@
                     <label data-i18n="label_password">비밀번호</label>
                     <div class="input-wrap">
                         <input type="password" id="signupPassword" placeholder="6자 이상" data-i18n-ph="ph_pw_min" autocomplete="new-password" oninput="checkPwStrength()">
-                        <button class="toggle-pw" onclick="togglePw('signupPassword')">👁</button>
+                        <button class="toggle-pw" onclick="togglePw('signupPassword', this)">👁</button>
                     </div>
                     <div class="pw-strength">
                         <div class="pw-strength-bar" id="pwBar1"></div>
@@ -165,7 +167,7 @@
                     <label data-i18n="label_pw_confirm">비밀번호 확인</label>
                     <div class="input-wrap">
                         <input type="password" id="signupPasswordConfirm" placeholder="비밀번호 재입력" data-i18n-ph="ph_pw_confirm" autocomplete="new-password">
-                        <button class="toggle-pw" onclick="togglePw('signupPasswordConfirm')">👁</button>
+                        <button class="toggle-pw" onclick="togglePw('signupPasswordConfirm', this)">👁</button>
                     </div>
                 </div>
                 <div class="form-row">
@@ -229,8 +231,8 @@
             <!-- Social Login (only on login/signup) -->
             <div id="socialSection">
                 <div class="divider" data-i18n="divider_or">또는</div>
-                <button class="social-btn" onclick="showSocialAlert('Google')"><span class="ico">🔵</span> <span data-i18n="social_google">Google로 계속하기</span></button>
-                <button class="social-btn" onclick="showSocialAlert('Kakao')"><span class="ico">💬</span> <span data-i18n="social_kakao">카카오로 계속하기</span></button>
+                <button class="social-btn" onclick="signInWithProvider('google')"><span class="ico">🔵</span> <span data-i18n="social_google">Google로 계속하기</span></button>
+                <button class="social-btn" onclick="signInWithProvider('kakao')"><span class="ico">💬</span> <span data-i18n="social_kakao">카카오로 계속하기</span></button>
             </div>
 
             <div class="auth-footer" id="authFooter">
@@ -248,9 +250,9 @@
     <script>
         window.I18N_DICT = {
             ko: {
-                doc_title: '로그인 / 회원가입 | SNS 플랫폼',
-                logo_title: 'SNS 콘텐츠 플랫폼',
-                logo_sub: '7개 SNS 채널 통합 관리 자동화',
+                doc_title: '로그인 / 회원가입 | HubOnTrade',
+                logo_title: 'HubOnTrade 통합 로그인',
+                logo_sub: '소싱 트래커 · SNS 자동화 — 하나의 계정으로',
                 tab_login: '로그인', tab_signup: '회원가입',
                 label_email: '이메일', label_password: '비밀번호', ph_password: '비밀번호',
                 remember: '로그인 상태 유지', forgot: '비밀번호 찾기', btn_login: '로그인',
@@ -277,12 +279,12 @@
                 err_pw_required: '비밀번호를 입력해주세요', ok_login: '로그인 성공! 이동 중...',
                 err_login: '로그인 실패', err_invalid_cred: '이메일 또는 비밀번호가 일치하지 않습니다',
                 err_not_confirmed: '이메일 인증이 완료되지 않았습니다. 메일함을 확인해주세요.',
-                err_resend_no_email: '재발송할 이메일이 없습니다'
+                err_resend_no_email: '재발송할 이메일이 없습니다', back_home: '← HubOnTrade로 돌아가기'
             },
             en: {
-                doc_title: 'Log in / Sign up | SNS Platform',
-                logo_title: 'SNS Content Platform',
-                logo_sub: 'Automated management for 7 SNS channels',
+                doc_title: 'Log in / Sign up | HubOnTrade',
+                logo_title: 'HubOnTrade Login',
+                logo_sub: 'Sourcing Tracker · SNS Automation — one account',
                 tab_login: 'Log in', tab_signup: 'Sign up',
                 label_email: 'Email', label_password: 'Password', ph_password: 'Password',
                 remember: 'Keep me logged in', forgot: 'Forgot password?', btn_login: 'Log in',
@@ -309,12 +311,12 @@
                 err_pw_required: 'Please enter your password', ok_login: 'Login successful! Redirecting...',
                 err_login: 'Login failed', err_invalid_cred: 'Email or password is incorrect',
                 err_not_confirmed: 'Email not verified yet. Please check your inbox.',
-                err_resend_no_email: 'No email to resend to'
+                err_resend_no_email: 'No email to resend to', back_home: '← Back to HubOnTrade'
             },
             vi: {
-                doc_title: 'Đăng nhập / Đăng ký | Nền tảng SNS',
-                logo_title: 'Nền tảng nội dung SNS',
-                logo_sub: 'Tự động hóa quản lý 7 kênh SNS',
+                doc_title: 'Đăng nhập / Đăng ký | HubOnTrade',
+                logo_title: 'Đăng nhập HubOnTrade',
+                logo_sub: 'Sourcing Tracker · Tự động hóa SNS — một tài khoản',
                 tab_login: 'Đăng nhập', tab_signup: 'Đăng ký',
                 label_email: 'Email', label_password: 'Mật khẩu', ph_password: 'Mật khẩu',
                 remember: 'Duy trì đăng nhập', forgot: 'Quên mật khẩu?', btn_login: 'Đăng nhập',
@@ -341,7 +343,39 @@
                 err_pw_required: 'Vui lòng nhập mật khẩu', ok_login: 'Đăng nhập thành công! Đang chuyển hướng...',
                 err_login: 'Đăng nhập thất bại', err_invalid_cred: 'Email hoặc mật khẩu không đúng',
                 err_not_confirmed: 'Email chưa được xác minh. Vui lòng kiểm tra hộp thư.',
-                err_resend_no_email: 'Không có email để gửi lại'
+                err_resend_no_email: 'Không có email để gửi lại', back_home: '← Quay lại HubOnTrade'
+            },
+            zh: {
+                doc_title: '登录 / 注册 | HubOnTrade',
+                logo_title: 'HubOnTrade 统一登录',
+                logo_sub: '选品追踪 · SNS 自动化 —— 一个账号',
+                tab_login: '登录', tab_signup: '注册',
+                label_email: '邮箱', label_password: '密码', ph_password: '密码',
+                remember: '保持登录', forgot: '忘记密码？', btn_login: '登录',
+                label_name: '姓名（可选）', ph_name: '张三', ph_pw_min: '至少6位',
+                pw_strength: '密码强度', pw_weak: '⚠ 弱 - 请设置更复杂', pw_medium: '🟡 中等', pw_strong: '✓ 强',
+                label_pw_confirm: '确认密码', ph_pw_confirm: '再次输入密码',
+                agree_terms: '我同意服务条款和隐私政策', btn_signup: '注册',
+                verify_title: '请完成邮箱验证',
+                verify_text: '我们已向您的邮箱发送<strong>6位验证码</strong>。<br>请查收邮件并在下方输入。',
+                label_otp: '6位验证码', btn_verify: '验证并开始',
+                verify_or_link: '或点击邮件中的<strong>验证链接</strong>。',
+                resend: '📤 重新发送验证邮件', to_login: '返回登录',
+                forgot_title: '重置密码',
+                forgot_text: '输入您的邮箱，我们将发送<br>密码重置链接。',
+                btn_forgot: '发送重置邮件', back_to_login: '返回登录',
+                divider_or: '或', social_google: '使用 Google 继续', social_kakao: '使用 Kakao 继续',
+                footer_no_account: '还没有账号？', footer_have_account: '已有账号？',
+                link_signup: '注册', link_login: '登录',
+                terms_text: '继续即表示您同意我们的<a href="#">服务条款</a>和<a href="#">隐私政策</a>。',
+                err_email_required: '请输入邮箱', err_email_invalid: '邮箱格式不正确',
+                err_pw_min: '密码至少6位', err_pw_mismatch: '两次密码不一致',
+                err_agree: '请同意服务条款', ok_signup: '注册成功！正在跳转...',
+                err_signup: '注册失败', err_already: '该邮箱已注册，请登录。',
+                err_pw_required: '请输入密码', ok_login: '登录成功！正在跳转...',
+                err_login: '登录失败', err_invalid_cred: '邮箱或密码不正确',
+                err_not_confirmed: '邮箱尚未验证，请查收邮件。',
+                err_resend_no_email: '没有可重新发送的邮箱', back_home: '← 返回 HubOnTrade'
             }
         };
     </script>
@@ -351,7 +385,13 @@
         // ─── Supabase Auth Config ───
         var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
         var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
-        var REDIRECT_URL = window.location.origin + window.location.pathname.replace('auth.html', 'pages/settings.html');
+        // 로그인 후 이동: ?next= 파라미터(동일 origin만 허용 — 오픈 리다이렉트 방지), 없으면 기본 설정 페이지
+        var REDIRECT_URL = (function () {
+            var nxt = new URLSearchParams(window.location.search).get('next');
+            if (nxt && nxt.indexOf(window.location.origin) === 0) return nxt;
+            // 기본 도착지: 도구 선택 런처(app.html) — 로그인 후 소싱트래커/SNS를 먼저 선택
+            return window.location.origin + window.location.pathname.replace('sns-platform/auth.html', 'app.html');
+        })();
 
         // ─── Already logged in? Redirect ───
         var existingSession = JSON.parse(localStorage.getItem('snsAuthSession') || 'null');
@@ -407,9 +447,11 @@
         };
 
         // ─── Toggle password visibility ───
-        function togglePw(id){
+        function togglePw(id, btn){
             var el = document.getElementById(id);
-            el.type = el.type === 'password' ? 'text' : 'password';
+            var show = el.type === 'password';
+            el.type = show ? 'text' : 'password';
+            if(btn) btn.textContent = show ? '🙈' : '👁';
         }
 
         // ─── Password strength ───
@@ -666,9 +708,15 @@
             }
         }
 
-        // ─── Social (placeholder) ───
-        function showSocialAlert(provider){
-            showAlert(provider + ' 로그인은 준비 중입니다. 이메일 회원가입을 이용해주세요.', 'info');
+        // ─── Social login (Supabase OAuth) ───
+        function signInWithProvider(provider){
+            // 콜백 = 현재 auth.html (해시 토큰을 handleAuthCallback이 처리, next 파라미터 보존)
+            var redirectTo = window.location.origin + window.location.pathname + window.location.search;
+            var url = SUPABASE_URL + '/auth/v1/authorize?provider=' +
+                encodeURIComponent(provider) + '&redirect_to=' + encodeURIComponent(redirectTo);
+            // 구글: 항상 계정 선택 화면을 띄워 무프롬프트 자동 로그인 방지
+            if(provider === 'google'){ url += '&prompt=select_account'; }
+            window.location.href = url;
         }
 
         // ─── Save session ───
@@ -696,6 +744,8 @@
                 if(parts[0]) params[parts[0]] = decodeURIComponent(parts[1] || '');
             });
             if(params.access_token){
+                // 해시 즉시 정리 (재방문/새로고침 시 스테일 토큰으로 자동 로그인되는 것 방지)
+                try { history.replaceState(null, '', window.location.pathname + window.location.search); } catch(e){}
                 // Email verified - save session and redirect
                 var session = {
                     access_token: params.access_token,
@@ -712,11 +762,11 @@
                 }).then(function(r){ return r.json(); }).then(function(user){
                     session.user = user;
                     saveSession(session, user);
-                    showAlert('이메일 인증 완료! 잠시 후 이동합니다.', 'success');
+                    showAlert('로그인 완료! 잠시 후 이동합니다.', 'success');
                     setTimeout(function(){ window.location.href = REDIRECT_URL; }, 1200);
                 }).catch(function(){
                     saveSession(session, null);
-                    showAlert('인증 완료! 이동합니다.', 'success');
+                    showAlert('로그인 완료! 이동합니다.', 'success');
                     setTimeout(function(){ window.location.href = REDIRECT_URL; }, 1200);
                 });
             }

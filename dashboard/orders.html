@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <script>
+    /* 소싱트래커 로그인 게이트 — 미로그인 시 통합 로그인으로 (로그인 후 복귀) */
+    (function(){
+        try{
+            var s = JSON.parse(localStorage.getItem("snsAuthSession")||"null");
+            var ok = s && s.access_token && (!s.expires_at || s.expires_at*1000 > Date.now());
+            if(!ok){ location.replace("../sns-platform/auth.html?next=" + encodeURIComponent(location.href)); }
+        }catch(e){}
+    })();
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주문 통합관리 | 소싱 트래커</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/mobile-fix.css">
+    <style>
+        .ord-toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:16px}
+        .ord-toolbar select,.ord-toolbar input{padding:8px 12px;border:1px solid var(--border-light);border-radius:8px;font-size:.82rem;background:var(--bg-card);color:var(--text-primary);font-family:inherit;outline:none}
+        .ord-toolbar input{flex:1;min-width:180px}
+        .ord-status{display:inline-block;padding:3px 10px;border-radius:9999px;font-size:.72rem;font-weight:700;white-space:nowrap}
+        .st-NEW{background:rgba(245,158,11,.12);color:#b45309}
+        .st-PAID{background:rgba(37,99,235,.12);color:#1d4ed8}
+        .st-PREP{background:rgba(139,92,246,.12);color:#6d28d9}
+        .st-SHIPPING{background:rgba(14,165,233,.12);color:#0369a1}
+        .st-DELIVERED{background:rgba(16,185,129,.12);color:#047857}
+        .st-CANCELLED{background:rgba(100,116,139,.14);color:#475569}
+        .st-RETURNED{background:rgba(239,68,68,.12);color:#b91c1c}
+        .ord-platform{display:inline-block;padding:2px 8px;border-radius:6px;font-size:.7rem;font-weight:700;background:var(--bg-light);color:var(--text-secondary)}
+        .ord-statussel{padding:5px 8px;border:1px solid var(--border-light);border-radius:7px;font-size:.74rem;background:var(--bg-card);color:var(--text-primary);font-family:inherit;cursor:pointer}
+        .ord-empty{text-align:center;color:var(--text-secondary);padding:48px 20px;font-size:.88rem}
+        .ord-amount{font-weight:700;color:var(--text-primary)}
+        @media(max-width:640px){.data-table thead th:nth-child(4),.data-table td:nth-child(4){display:none}}
+    </style>
+</head>
+<body>
+    <div class="dashboard-layout">
+        <div class="sidebar-overlay" id="sidebarOverlay"></div>
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo"><div class="sidebar-logo-icon">ST</div><div class="sidebar-logo-text">소싱 트래커<small>MULTI-CHANNEL</small></div></div>
+            <nav class="sidebar-nav"><div class="sidebar-section"><div class="sidebar-section-title">소싱 플랫폼</div><div style="padding:0 12px 12px;display:flex;gap:6px"><span class="platform-badge p-1688 active"><span class="p-dot"></span>1688</span><span class="platform-badge p-taobao active"><span class="p-dot"></span>타오바오</span></div></div><div class="sidebar-section"><div class="sidebar-section-title">판매 플랫폼</div><div style="padding:0 12px 12px;display:flex;gap:6px;flex-wrap:wrap"><span class="platform-badge p-coupang active"><span class="p-dot"></span>쿠팡</span><span class="platform-badge p-gmarket active"><span class="p-dot"></span>지마켓</span><span class="platform-badge p-naver active"><span class="p-dot"></span>네이버</span></div></div><div class="sidebar-section"><div class="sidebar-section-title">글로벌 마켓</div><div style="padding:0 12px 12px;display:flex;gap:6px;flex-wrap:wrap"><span class="platform-badge active" style="background:#EE4D2D;color:#fff;border:none;font-size:10px;padding:3px 8px">Shopee</span><span class="platform-badge active" style="background:#0F146D;color:#fff;border:none;font-size:10px;padding:3px 8px">Lazada</span><span class="platform-badge active" style="background:#000;color:#fff;border:none;font-size:10px;padding:3px 8px">TikTok</span><span class="platform-badge active" style="background:#FF9900;color:#fff;border:none;font-size:10px;padding:3px 8px">Amazon</span><span class="platform-badge active" style="background:#F05A28;color:#fff;border:none;font-size:10px;padding:3px 8px">Temu</span></div></div><div class="sidebar-section"><div class="sidebar-section-title">대시보드</div><a href="index.html" class="sidebar-link"><span class="sidebar-link-icon">📊</span> 종합 현황</a></div><div class="sidebar-section"><div class="sidebar-section-title">상품/소싱</div><a href="products.html" class="sidebar-link"><span class="sidebar-link-icon">🏆</span> 추천 상품</a><a href="ai-sourcing.html" class="sidebar-link"><span class="sidebar-link-icon">🤖</span> AI 소싱</a><a href="keyword-analysis.html" class="sidebar-link"><span class="sidebar-link-icon">🔑</span> 키워드 분석</a><a href="trends.html" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 트렌드 분석</a><a href="search-reviews.html" class="sidebar-link"><span class="sidebar-link-icon">🔍</span> 검색 &amp; 리뷰</a><a href="image-search.html" class="sidebar-link"><span class="sidebar-link-icon">🖼</span> 이미지 검색</a><a href="margin.html" class="sidebar-link"><span class="sidebar-link-icon">💰</span> 마진 분석</a><a href="listing.html" class="sidebar-link"><span class="sidebar-link-icon">📤</span> 상품 등록</a><a href="coming-soon.html?f=B2B 상품 연동" class="sidebar-link"><span class="sidebar-link-icon">🔗</span> B2B 상품 연동</a><a href="coming-soon.html?f=AI 소싱 위험도 분석" class="sidebar-link"><span class="sidebar-link-icon">⚠️</span> 소싱 위험도</a><a href="coming-soon.html?f=AI 다국어 번역" class="sidebar-link"><span class="sidebar-link-icon">🌐</span> 다국어 번역</a></div><div class="sidebar-section"><div class="sidebar-section-title">수출입/통관</div><a href="coming-soon.html?f=수출 신고 자동화" class="sidebar-link"><span class="sidebar-link-icon">🛃</span> 수출 신고</a><a href="coming-soon.html?f=수입 통관" class="sidebar-link"><span class="sidebar-link-icon">📋</span> 수입 통관</a><a href="coming-soon.html?f=수출실적 관리 · uTrade 허브" class="sidebar-link"><span class="sidebar-link-icon">🚢</span> 수출실적(uTrade)</a></div><div class="sidebar-section"><div class="sidebar-section-title">주문</div><a href="orders.html" class="sidebar-link"><span class="sidebar-link-icon">📦</span> 주문 통합관리</a><a href="coming-soon.html?f=구매요청·발주" class="sidebar-link"><span class="sidebar-link-icon">🧾</span> 구매요청/발주</a><a href="coming-soon.html?f=송장 관리" class="sidebar-link"><span class="sidebar-link-icon">🏷</span> 송장 관리</a><a href="coming-soon.html?f=클레임·반품" class="sidebar-link"><span class="sidebar-link-icon">↩️</span> 클레임/반품</a><a href="coming-soon.html?f=주문 이력" class="sidebar-link"><span class="sidebar-link-icon">🕒</span> 주문 이력</a></div><div class="sidebar-section"><div class="sidebar-section-title">재고</div><a href="coming-soon.html?f=재고 통합관리" class="sidebar-link"><span class="sidebar-link-icon">🏬</span> 재고 통합관리</a><a href="coming-soon.html?f=입출고 관리" class="sidebar-link"><span class="sidebar-link-icon">📥</span> 입출고</a><a href="coming-soon.html?f=창고(WMS) 연동" class="sidebar-link"><span class="sidebar-link-icon">🏭</span> 창고(WMS)</a><a href="coming-soon.html?f=재고 알림·안전재고" class="sidebar-link"><span class="sidebar-link-icon">🔔</span> 재고 알림</a></div><div class="sidebar-section"><div class="sidebar-section-title">배송/물류</div><a href="coming-soon.html?f=배송 추적" class="sidebar-link"><span class="sidebar-link-icon">🚚</span> 배송 추적</a><a href="coming-soon.html?f=택배·3PL·풀필먼트" class="sidebar-link"><span class="sidebar-link-icon">🤝</span> 택배/3PL/풀필먼트</a><a href="coming-soon.html?f=반품·교환 배송" class="sidebar-link"><span class="sidebar-link-icon">📮</span> 반품/교환 배송</a></div><div class="sidebar-section"><div class="sidebar-section-title">정산</div><a href="coming-soon.html?f=주문별 정산" class="sidebar-link"><span class="sidebar-link-icon">💵</span> 주문별 정산</a><a href="coming-soon.html?f=정산 수집·업로드" class="sidebar-link"><span class="sidebar-link-icon">📑</span> 정산 수집/업로드</a><a href="coming-soon.html?f=수수료·세금 자동" class="sidebar-link"><span class="sidebar-link-icon">🧮</span> 수수료/세금</a><a href="coming-soon.html?f=정산 리포트" class="sidebar-link"><span class="sidebar-link-icon">🧾</span> 정산 리포트</a></div><div class="sidebar-section"><div class="sidebar-section-title">마케팅</div><a href="coming-soon.html?f=캠페인·광고" class="sidebar-link"><span class="sidebar-link-icon">📣</span> 캠페인/광고</a><a href="coming-soon.html?f=쿠폰·프로모션" class="sidebar-link"><span class="sidebar-link-icon">🎟</span> 쿠폰/프로모션</a><a href="coming-soon.html?f=키워드 광고" class="sidebar-link"><span class="sidebar-link-icon">🔎</span> 키워드 광고</a><a href="coming-soon.html?f=마케팅 성과 분석" class="sidebar-link"><span class="sidebar-link-icon">📊</span> 성과 분석</a></div><div class="sidebar-section"><div class="sidebar-section-title">CS</div><a href="coming-soon.html?f=CS·클레임 관리" class="sidebar-link"><span class="sidebar-link-icon">🎧</span> CS/클레임</a><a href="coming-soon.html?f=고객 CRM" class="sidebar-link"><span class="sidebar-link-icon">👤</span> 고객 CRM</a></div><div class="sidebar-section"><div class="sidebar-section-title">리포트</div><a href="coming-soon.html?f=매출·수익 리포트" class="sidebar-link"><span class="sidebar-link-icon">📈</span> 매출/수익</a><a href="coming-soon.html?f=광고 성과" class="sidebar-link"><span class="sidebar-link-icon">📺</span> 광고 성과</a><a href="coming-soon.html?f=카탈로그" class="sidebar-link"><span class="sidebar-link-icon">📚</span> 카탈로그</a></div><div class="sidebar-section"><div class="sidebar-section-title">도구</div><a href="scraper.html" class="sidebar-link"><span class="sidebar-link-icon">🕷</span> 스크래퍼</a><a href="db-view.html" class="sidebar-link"><span class="sidebar-link-icon">💾</span> DB 데이터</a><a href="live-search.html" class="sidebar-link"><span class="sidebar-link-icon">🔴</span> 실시간 검색</a><a href="coupang-partners.html" class="sidebar-link"><span class="sidebar-link-icon">🛒</span> 쿠팡 파트너스 API</a><a href="admin.html" class="sidebar-link"><span class="sidebar-link-icon">⚙️</span> 상품 관리</a><a href="platforms.html" class="sidebar-link"><span class="sidebar-link-icon">🏪</span> 플랫폼 비교</a></div><div class="sidebar-section"><div class="sidebar-section-title">설정/관리</div><a href="coming-soon.html?f=권한·조직 관리" class="sidebar-link"><span class="sidebar-link-icon">🔐</span> 권한·조직</a><a href="coming-soon.html?f=전자세금계산서" class="sidebar-link"><span class="sidebar-link-icon">📄</span> 세금계산서</a><a href="coming-soon.html?f=외부 ERP 연동" class="sidebar-link"><span class="sidebar-link-icon">🔌</span> ERP 연동</a><a href="coming-soon.html?f=보안·2단계 인증" class="sidebar-link"><span class="sidebar-link-icon">🛡</span> 보안/2FA</a></div><div class="sidebar-section"><div class="sidebar-section-title">바로가기</div><a href="../sns-platform/index.html" class="sidebar-link"><span class="sidebar-link-icon">📱</span> SNS 플랫폼</a><a href="../index.html" class="sidebar-link"><span class="sidebar-link-icon">🌐</span> 메인 홈</a></div></nav><script>(function(){var cur=decodeURIComponent((location.pathname.split('/').pop()||'index.html')+location.search);var ls=document.querySelectorAll('.sidebar-link');for(var i=0;i<ls.length;i++){var h=decodeURIComponent(ls[i].getAttribute('href')||'').split('/').pop();if(h===cur)ls[i].classList.add('active');else ls[i].classList.remove('active');}var KEY='stSidebarOpen',saved={};try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}var secs=document.querySelectorAll('.sidebar-nav .sidebar-section');for(var s=0;s<secs.length;s++){(function(sec){var title=sec.querySelector('.sidebar-section-title');if(!title)return;if(!sec.querySelector('.sidebar-link'))return;sec.classList.add('accordion');var name=title.textContent.trim();var hasActive=!!sec.querySelector('.sidebar-link.active');var isOpen=saved.hasOwnProperty(name)?saved[name]:hasActive;sec.classList.toggle('collapsed',!isOpen);title.addEventListener('click',function(){var col=sec.classList.toggle('collapsed');var o={};try{o=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}o[name]=!col;localStorage.setItem(KEY,JSON.stringify(o));});})(secs[s]);}})();</script>
+        </aside>
+        <main class="main-content">
+            <div class="top-bar">
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="메뉴">☰</button>
+                <div class="top-bar-title">📦 주문 통합관리</div>
+            </div>
+
+            <div style="padding:20px 24px">
+                <!-- KPI 요약 -->
+                <div class="kpi-grid" id="ordKpi" style="margin-bottom:20px"></div>
+
+                <!-- 필터 -->
+                <div class="ord-toolbar">
+                    <select id="fltPlatform" onchange="renderOrders()">
+                        <option value="">전체 플랫폼</option>
+                    </select>
+                    <select id="fltStatus" onchange="renderOrders()">
+                        <option value="">전체 상태</option>
+                    </select>
+                    <input id="fltSearch" type="text" placeholder="주문번호·상품명 검색" oninput="renderOrders()">
+                    <span class="ord-spacer"></span>
+                    <button class="btn-export" onclick="exportOrders()">⬇ CSV 내보내기</button>
+                </div>
+
+                <!-- 주문 테이블 -->
+                <div class="table-panel">
+                    <div class="table-panel-header">
+                        <div class="table-panel-title">주문 목록 <span id="ordCount" style="color:var(--text-secondary);font-weight:500;font-size:.82rem"></span></div>
+                    </div>
+                    <div style="overflow-x:auto">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>주문번호</th>
+                                    <th>플랫폼</th>
+                                    <th>상품</th>
+                                    <th>수량</th>
+                                    <th>금액</th>
+                                    <th>주문일</th>
+                                    <th>상태</th>
+                                    <th>상태변경</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ordBody"></tbody>
+                        </table>
+                    </div>
+                    <div id="ordEmpty" class="ord-empty" style="display:none">조건에 맞는 주문이 없습니다.</div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+    (function(){
+        'use strict';
+        /* 주문 상태 상수 (매직값 금지 — CLAUDE.md 규칙 3) */
+        var ORDER_STATUS = {
+            NEW: '신규', PAID: '결제완료', PREP: '상품준비',
+            SHIPPING: '배송중', DELIVERED: '배송완료',
+            CANCELLED: '취소', RETURNED: '반품'
+        };
+        var STATUS_FLOW = ['NEW','PAID','PREP','SHIPPING','DELIVERED','CANCELLED','RETURNED'];
+        var STORAGE_KEY = 'stOrders';
+        var PLATFORMS = ['쿠팡','네이버','지마켓','Shopee','Lazada','TikTok','Amazon'];
+
+        function escapeHtml(s){
+            return String(s == null ? '' : s)
+                .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+                .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        }
+        function formatWon(n){
+            if(typeof n !== 'number' || isNaN(n)) return '0원';
+            return n.toLocaleString('ko-KR') + '원';
+        }
+
+        /* 샘플 시드 (최초 1회) — 실제 연동 전까지 localStorage 사용 */
+        function seedSample(){
+            var names = ['무선 블루투스 이어폰','캠핑용 폴딩 테이블','강아지 자동 급식기','USB-C 고속 충전기',
+                '요가 매트 10mm','주방 실리콘 장갑','차량용 무선 청소기','LED 무드등','등산 스틱 2P','휴대용 선풍기'];
+            var statuses = ['NEW','PAID','PREP','SHIPPING','DELIVERED','DELIVERED','CANCELLED','RETURNED'];
+            var rows = [];
+            var now = Date.now();
+            for(var i = 0; i < 24; i++){
+                var d = new Date(now - i * 36e5 * 7);
+                rows.push({
+                    id: 'HOT' + (250600 + i),
+                    platform: PLATFORMS[i % PLATFORMS.length],
+                    product: names[i % names.length],
+                    qty: (i % 5) + 1,
+                    amount: ((i % 9) + 1) * 12900,
+                    date: d.toISOString().slice(0, 10),
+                    status: statuses[i % statuses.length]
+                });
+            }
+            return rows;
+        }
+        function loadOrders(){
+            var raw;
+            try { raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null'); }
+            catch(e){ console.error('주문 데이터 파싱 실패, 샘플로 대체', e); raw = null; }
+            if(!Array.isArray(raw) || raw.length === 0){
+                raw = seedSample();
+                saveOrders(raw);
+            }
+            return raw;
+        }
+        function saveOrders(rows){
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(rows)); }
+            catch(e){ console.error('주문 데이터 저장 실패', e); alert('저장에 실패했습니다. 브라우저 저장공간을 확인해주세요.'); }
+        }
+
+        var ORDERS = loadOrders();
+
+        function val(id){ var el = document.getElementById(id); return el ? el.value : ''; }
+
+        function filtered(){
+            var p = val('fltPlatform'), s = val('fltStatus'), q = val('fltSearch').trim().toLowerCase();
+            return ORDERS.filter(function(o){
+                if(p && o.platform !== p) return false;
+                if(s && o.status !== s) return false;
+                if(q){
+                    var hay = (o.id + ' ' + o.product).toLowerCase();
+                    if(hay.indexOf(q) === -1) return false;
+                }
+                return true;
+            });
+        }
+
+        function renderKpi(){
+            var total = ORDERS.length;
+            var by = function(st){ return ORDERS.filter(function(o){ return o.status === st; }).length; };
+            var active = by('NEW') + by('PAID') + by('PREP');
+            var shipping = by('SHIPPING');
+            var done = by('DELIVERED');
+            var trouble = by('CANCELLED') + by('RETURNED');
+            var sales = ORDERS.reduce(function(a, o){
+                return a + (o.status === 'CANCELLED' || o.status === 'RETURNED' ? 0 : o.amount * o.qty);
+            }, 0);
+            var cards = [
+                ['kpi-total', '전체 주문', total + '건'],
+                ['kpi-new', '처리 대기', active + '건'],
+                ['kpi-recommend', '배송중', shipping + '건'],
+                ['kpi-margin', '배송완료', done + '건'],
+                ['kpi-alert', '취소·반품', trouble + '건'],
+                ['kpi-hot', '유효 매출', formatWon(sales)]
+            ];
+            var html = '';
+            for(var i = 0; i < cards.length; i++){
+                html += '<div class="kpi-card ' + cards[i][0] + '">' +
+                    '<div class="kpi-label">' + cards[i][1] + '</div>' +
+                    '<div class="kpi-value">' + cards[i][2] + '</div></div>';
+            }
+            document.getElementById('ordKpi').innerHTML = html;
+        }
+
+        function statusOptions(current){
+            var html = '';
+            for(var i = 0; i < STATUS_FLOW.length; i++){
+                var k = STATUS_FLOW[i];
+                html += '<option value="' + k + '"' + (k === current ? ' selected' : '') + '>' +
+                    escapeHtml(ORDER_STATUS[k]) + '</option>';
+            }
+            return html;
+        }
+
+        window.renderOrders = function(){
+            var rows = filtered();
+            var body = document.getElementById('ordBody');
+            var empty = document.getElementById('ordEmpty');
+            document.getElementById('ordCount').textContent = '(' + rows.length + '건)';
+            if(rows.length === 0){
+                body.innerHTML = '';
+                empty.style.display = 'block';
+                return;
+            }
+            empty.style.display = 'none';
+            var html = '';
+            for(var i = 0; i < rows.length; i++){
+                var o = rows[i];
+                var label = ORDER_STATUS[o.status] || o.status;
+                html += '<tr>' +
+                    '<td style="font-weight:600">' + escapeHtml(o.id) + '</td>' +
+                    '<td><span class="ord-platform">' + escapeHtml(o.platform) + '</span></td>' +
+                    '<td>' + escapeHtml(o.product) + '</td>' +
+                    '<td>' + escapeHtml(o.qty) + '</td>' +
+                    '<td class="ord-amount">' + formatWon(o.amount * o.qty) + '</td>' +
+                    '<td style="color:var(--text-secondary)">' + escapeHtml(o.date) + '</td>' +
+                    '<td><span class="ord-status st-' + escapeHtml(o.status) + '">' + escapeHtml(label) + '</span></td>' +
+                    '<td><select class="ord-statussel" data-id="' + escapeHtml(o.id) + '" onchange="changeStatus(this)">' +
+                        statusOptions(o.status) + '</select></td>' +
+                    '</tr>';
+            }
+            body.innerHTML = html;
+        };
+
+        window.changeStatus = function(sel){
+            var id = sel.getAttribute('data-id');
+            var next = sel.value;
+            for(var i = 0; i < ORDERS.length; i++){
+                if(ORDERS[i].id === id){ ORDERS[i].status = next; break; }
+            }
+            saveOrders(ORDERS);
+            renderKpi();
+            renderOrders();
+        };
+
+        window.exportOrders = function(){
+            var rows = filtered();
+            var head = ['주문번호','플랫폼','상품','수량','단가','합계','주문일','상태'];
+            var lines = [head.join(',')];
+            for(var i = 0; i < rows.length; i++){
+                var o = rows[i];
+                var cell = [o.id, o.platform, '"' + String(o.product).replace(/"/g,'""') + '"',
+                    o.qty, o.amount, o.amount * o.qty, o.date, ORDER_STATUS[o.status] || o.status];
+                lines.push(cell.join(','));
+            }
+            var blob = new Blob(['﻿' + lines.join('\n')], {type:'text/csv;charset=utf-8'});
+            var a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'orders_' + new Date().toISOString().slice(0,10) + '.csv';
+            a.click();
+        };
+
+        /* 필터 셀렉트 채우기 */
+        (function initFilters(){
+            var ps = document.getElementById('fltPlatform');
+            for(var i = 0; i < PLATFORMS.length; i++){
+                var op = document.createElement('option');
+                op.value = PLATFORMS[i]; op.textContent = PLATFORMS[i];
+                ps.appendChild(op);
+            }
+            var ss = document.getElementById('fltStatus');
+            for(var j = 0; j < STATUS_FLOW.length; j++){
+                var k = STATUS_FLOW[j];
+                var o2 = document.createElement('option');
+                o2.value = k; o2.textContent = ORDER_STATUS[k];
+                ss.appendChild(o2);
+            }
+        })();
+
+        renderKpi();
+        renderOrders();
+
+        /* 모바일 사이드바 토글 */
+        var mb = document.getElementById('mobileMenuBtn'),
+            sb = document.getElementById('sidebar'),
+            ov = document.getElementById('sidebarOverlay');
+        if(mb) mb.onclick = function(){ sb.classList.toggle('open'); ov.classList.toggle('active'); };
+        if(ov) ov.onclick = function(){ sb.classList.remove('open'); ov.classList.remove('active'); };
+    })();
+    </script>
+</body></html>

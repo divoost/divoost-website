@@ -14,7 +14,7 @@
  */
 (function(){
     'use strict';
-    var LANGS = ['ko', 'en', 'vi'];
+    var LANGS = ['ko', 'en', 'zh', 'vi'];
     var STORAGE_KEY = 'snsLang';
 
     var saved = null;

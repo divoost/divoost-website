@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const { getCoupangHeaders } = require('../lib/coupang-auth');
+const { getCoupangHeaders } = require('../../lib/coupang-auth');
 
 const BASE_URL = 'https://api-gateway.coupang.com';
 

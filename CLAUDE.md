@@ -689,6 +689,7 @@ npm install <pkg> --dry-run
 | [`docs/billing-deployment.md`](docs/billing-deployment.md) | Edge Functions 배포 가이드 | AI 백엔드 변경 |
 | [`docs/supabase-admin-schema.sql`](docs/supabase-admin-schema.sql) | 관리자 DB 스키마 | 어드민 기능 |
 | [`docs/ai-gateway-setup.md`](docs/ai-gateway-setup.md) | AI 게이트웨이 사용법 | AI 모델 추가 |
+| [`docs/mystore-register.md`](docs/mystore-register.md) | 자체몰 상품 등록 연동 (Edge Function + register.php) | 쇼핑몰 연동 |
 | [`docs/instagram-setup.md`](docs/instagram-setup.md) | Instagram 연동 가이드 | SNS 연동 |
 | [`docs/storage-bucket.sql`](docs/storage-bucket.sql) | 미디어 Storage 정책 | 파일 업로드 |
 | [`docs/email-schema.sql`](docs/email-schema.sql) | 이메일 시스템 스키마 | 알림/이메일 |

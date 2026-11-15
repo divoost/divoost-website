@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "HUBONTRADE | Nền tảng Xuất nhập khẩu Xuyên biên giới Toàn cầu"
+    "title": "HubOnTrade | Nền tảng Xuất nhập khẩu Xuyên biên giới Toàn cầu"
   },
   "nav": {
     "home": "Trang chủ",
@@ -12,14 +12,15 @@
     "case": "Khách hàng",
     "resources": "Tài liệu",
     "tracker": "Sourcing",
-    "contact": "Liên hệ"
+    "contact": "Liên hệ",
+    "tools": "Công cụ"
   },
   "hero": {
     "s1": {
       "badge": "NỀN TẢNG XUẤT NHẬP KHẨU TOÀN CẦU",
       "title1": "Thương mại không biên giới,",
       "title2": "Không giới hạn hướng đi",
-      "title3": "HUBONTRADE<br>kết nối tất cả",
+      "title3": "HubOnTrade<br>kết nối tất cả",
       "subtitle": "Từ bất cứ đâu đến bất cứ đâu — toàn bộ quy trình xuất nhập khẩu toàn cầu trên một nền tảng",
       "ctaPrimary": "Bắt đầu miễn phí",
       "ctaSecondary": "Xem dịch vụ"
@@ -30,7 +31,7 @@
       "title3": "Đăng sản phẩm một lần — bán khắp nơi",
       "ctaPrimary": "Dùng thử miễn phí",
       "ctaSecondary": "Yêu cầu tư vấn 1:1",
-      "trust": "Hàng nghìn nhà bán tin chọn HUBONTRADE",
+      "trust": "Hàng nghìn nhà bán tin chọn HubOnTrade",
       "stat1": "Sàn liên kết",
       "stat2": "Tỷ lệ hoạt động",
       "stat3": "Giảm khối lượng việc"
@@ -61,11 +62,22 @@
       "subtitle": "Nhà bán Hàn Quốc hay quốc tế —<br>nền tảng xuất nhập khẩu toàn cầu duy nhất ai cũng có thể dùng",
       "ctaPrimary": "Bắt đầu ngay",
       "ctaSecondary": "Giới thiệu dịch vụ"
+    },
+    "s6": {
+      "badge": "Mua hộ trọn gói cùng HubOnTrade",
+      "title1": "Dịch vụ mua hộ,",
+      "title2": "không còn phức tạp",
+      "title3": "Đơn giản với HubOnTrade",
+      "subtitle": "Từ thu thập sản phẩm đến đăng tải lên sàn,<br>nền tảng mua hộ ứng dụng AI lấy người dùng làm trung tâm",
+      "ctaPrimary": "Đăng ký miễn phí",
+      "ctaSecondary": "Khám phá dịch vụ",
+      "labelOverseas": "Nguồn nước ngoài",
+      "labelDomestic": "Sàn trong nước"
     }
   },
   "sec": {
     "why": {
-      "badge": "TẠI SAO CHỌN HUBONTRADE",
+      "badge": "TẠI SAO CHỌN HubOnTrade",
       "title": "Điều các nền tảng khác không có",
       "desc": "Tính năng khác biệt giúp thiết lập chuẩn mới cho bán hàng toàn cầu",
       "c1": {
@@ -85,12 +97,28 @@
         "desc": "Không chỉ dành cho doanh nghiệp Hàn Quốc. Nền tảng toàn cầu duy nhất ai cũng có thể dùng từ bất kỳ đâu"
       },
       "c5": {
-        "title": "Đối tác bằng xuất khẩu của Chính phủ",
-        "desc": "Đối tác bằng xuất khẩu được Chính phủ chứng nhận. Khởi đầu không gánh nặng chi phí thông qua chương trình hỗ trợ"
+        "title": "Tự động tính biên lợi nhuận",
+        "desc": "Tính cả tỷ giá, thuế, phí vận chuyển và phí sàn để xác định lợi nhuận ròng thực tế trong và ngoài nước trước khi bán"
       },
       "c6": {
         "title": "Tự động hóa bằng AI",
         "desc": "AI gợi ý tiêu đề/từ khóa sản phẩm, ánh xạ danh mục, dịch đa ngôn ngữ, đề xuất giá"
+      },
+      "c7": {
+        "title": "Thông quan nhập khẩu UNI-PASS",
+        "desc": "Kết nối với UNI-PASS của Hải quan Hàn Quốc để tự động xử lý khai báo và thông quan nhập khẩu hàng nước ngoài — gồm cả thuế quan và VAT"
+      },
+      "c8": {
+        "title": "Marketing trên sàn toàn cầu",
+        "desc": "Tự động kết nối với công cụ quảng cáo và khuyến mãi của các sàn như Shopee, TikTok Shop — từ đăng bán đến thúc đẩy doanh số"
+      },
+      "c9": {
+        "title": "Tự động hóa marketing AI",
+        "desc": "AI tự động tạo card news, video ngắn và tin nhắn DM — rút ngắn thời gian sản xuất nội dung marketing"
+      },
+      "c10": {
+        "title": "Liên kết tài khoản MXH",
+        "desc": "Liên kết Instagram, YouTube, TikTok... để quản lý quảng bá sản phẩm và đăng nội dung tại một nơi"
       }
     },
     "platforms": {
@@ -99,9 +127,33 @@
       "desc": "Đăng sản phẩm một lần, bán đồng thời mọi sàn"
     },
     "comparison": {
-      "badge": "SO SÁNH",
-      "title": "HUBONTRADE vs đối thủ",
-      "desc": "So sánh tính năng cốt lõi"
+      "badge": "HIGHLIGHTS",
+      "title": "Tổng quan HubOnTrade",
+      "desc": "Toàn bộ quy trình xuất nhập khẩu trên một nền tảng",
+      "h1": {
+        "title": "Thương mại toàn cầu trọn gói",
+        "desc": "Từ bất cứ đâu đến bất cứ đâu — toàn bộ quy trình xuất nhập khẩu trên một nền tảng"
+      },
+      "h2": {
+        "title": "Mua hộ dễ dàng",
+        "desc": "Từ thu thập sản phẩm đến đăng tải lên sàn — nền tảng mua hộ AI lấy người dùng làm trung tâm"
+      },
+      "h3": {
+        "title": "Quản lý sàn tập trung",
+        "desc": "Từ Coupang, Naver đến Shopee, TikTok Shop — đăng và quản lý sản phẩm cùng lúc"
+      },
+      "h4": {
+        "title": "Fulfillment hợp nhất",
+        "desc": "Từ xuất hàng trong nước đến giao hàng nội địa nước ngoài — trong một hệ thống"
+      },
+      "h5": {
+        "title": "Tìm nguồn toàn cầu thông minh",
+        "desc": "Từ tìm nguồn B2B toàn cầu đến tự động tính biên lợi nhuận — kiểm tra lợi nhuận trước"
+      },
+      "h6": {
+        "title": "Nền tảng cho người bán toàn cầu",
+        "desc": "Cả người bán Hàn Quốc lẫn nước ngoài — nền tảng toàn cầu duy nhất ai cũng dùng được"
+      }
     },
     "features": {
       "badge": "TÍNH NĂNG CHÍNH",
@@ -110,6 +162,12 @@
     "foryou": {
       "badge": "DÀNH CHO BẠN",
       "title": "Đặc biệt phù hợp với bạn nếu..."
+    },
+    "pricing": {
+      "badge": "PRICING",
+      "title": "Bảng giá phù hợp với quy mô của bạn",
+      "desc": "Bắt đầu miễn phí, chọn gói khi bạn phát triển",
+      "more": "Xem tất cả gói"
     }
   },
   "footer": {
@@ -117,7 +175,22 @@
     "h": {
       "pages": "Trang",
       "tools": "Sourcing · Công cụ",
-      "support": "Hỗ trợ"
+      "support": "Hỗ trợ",
+      "product": "Sản phẩm",
+      "resources": "Tài liệu",
+      "policy": "Chính sách · Hỗ trợ"
+    },
+    "co": {
+      "addr": "Địa chỉ",
+      "biz": "Công ty",
+      "ceo": "Đại diện",
+      "email": "Email",
+      "reg": "Số ĐKKD",
+      "mail": "Số ĐK bán hàng TMĐT"
+    },
+    "l": {
+      "terms": "Điều khoản dịch vụ",
+      "privacy": "Chính sách bảo mật"
     }
   },
   "markets": {
@@ -157,28 +230,55 @@
   },
   "foryou": {
     "c1": {
-      "title": "Nhà bán Hàn Quốc",
-      "desc": "Doanh nghiệp và nhà bán cá nhân muốn bán hàng Hàn Quốc ra nước ngoài. Tự động hóa khai báo xuất khẩu và đăng sàn quốc tế."
+      "title": "Người bán Hàn Quốc",
+      "desc": "Doanh nghiệp & cá nhân Hàn Quốc bán trên sàn nội địa (Coupang, Naver, Gmarket…) và nước ngoài (Shopee, Amazon, TikTok Shop…)",
+      "t1": "Tự động khai báo xuất khẩu",
+      "t2": "Tìm nguồn",
+      "t3": "Đăng bán",
+      "t4": "Dịch thuật",
+      "t5": "Đơn hàng",
+      "t6": "CSKH",
+      "t7": "Quản lý kho",
+      "t8": "Marketing",
+      "t9": "Đăng SNS",
+      "t10": "Tìm người mua"
     },
     "c2": {
-      "title": "Nhà bán nước ngoài",
-      "desc": "Nhà bán nước ngoài bán hàng Hàn Quốc tại bản địa, hoặc tìm nguồn hàng toàn cầu. Hỗ trợ đa ngôn ngữ."
+      "title": "Người bán nước ngoài",
+      "desc": "Doanh nghiệp & cá nhân nước ngoài bán trên sàn toàn cầu (Shopee, Amazon, TikTok Shop…) và Hàn Quốc (Coupang, Naver, Gmarket…)",
+      "t1": "Tìm nguồn",
+      "t2": "Đăng bán",
+      "t3": "Dịch thuật",
+      "t4": "Đơn hàng",
+      "t5": "CSKH",
+      "t6": "Quản lý kho",
+      "t7": "Marketing",
+      "t8": "Đăng SNS",
+      "t9": "Tìm người mua"
     },
     "c3": {
-      "title": "Mua hộ · Bán hộ",
-      "desc": "Mua hộ và bán hộ tìm nguồn hàng toàn cầu không tồn kho. Hỗ trợ tự động hóa thông quan."
+      "title": "Mua hộ",
+      "desc": "Khi nhập khẩu rồi bán trên sàn Hàn Quốc và nước ngoài",
+      "t1": "Kho trung chuyển",
+      "t2": "Nhập về bán sàn Hàn Quốc",
+      "t3": "Nhập về bán sàn nước ngoài"
+    },
+    "c4": {
+      "title": "Cung cấp hàng",
+      "desc": "Khi doanh nghiệp Hàn Quốc hoặc nước ngoài cung cấp hàng theo mô hình B2B2C",
+      "t1": "Cung cấp hàng B2B2C"
     }
   },
   "cta": {
-    "title": "Bắt đầu HUBONTRADE miễn phí ngay hôm nay",
-    "subtitle": "Trải nghiệm tất cả tính năng với gói dùng thử 30 ngày",
+    "title": "Bắt đầu HubOnTrade miễn phí ngay hôm nay",
+    "subtitle": "Trải nghiệm tất cả tính năng với gói dùng thử 15 ngày",
     "primary": "Dùng thử miễn phí",
     "secondary": "Yêu cầu tư vấn 1:1"
   },
   "pages": {
     "solution": {
       "heroTitle": "Xuất khẩu, Nhập khẩu, Sourcing — Trên một nền tảng",
-      "heroDesc": "Giải quyết toàn bộ quy trình thương mại toàn cầu với giải pháp tích hợp HUBONTRADE",
+      "heroDesc": "Giải quyết toàn bộ quy trình thương mại toàn cầu với giải pháp tích hợp HubOnTrade",
       "core": {
         "title": "Ba giải pháp cốt lõi",
         "c1": {
@@ -263,12 +363,8 @@
         }
       },
       "diff": {
-        "title": "Điểm khác biệt chỉ HUBONTRADE có",
+        "title": "Điểm khác biệt chỉ HubOnTrade có",
         "badge": "Không đối thủ nào có",
-        "c1": {
-          "title": "Đơn vị thực hiện Voucher Xuất khẩu Chính phủ",
-          "desc": "Đơn vị chính thức thực hiện Voucher Xuất khẩu của Chính phủ — sử dụng ngân sách voucher để dùng HUBONTRADE. Không đối thủ nào có tư cách này."
-        },
         "c2": {
           "title": "Coupang IOR (Importer of Record)",
           "desc": "Hỗ trợ doanh nghiệp nước ngoài bán trực tiếp trên Coupang Hàn Quốc thông qua dịch vụ IOR — từ đăng ký nhập khẩu, thông quan đến bán hàng."
@@ -298,9 +394,9 @@
         }
       },
       "comp": {
-        "title": "Chỉ có ở HUBONTRADE",
+        "title": "Chỉ có ở HubOnTrade",
         "colFeature": "Hạng mục",
-        "colOurs": "HUBONTRADE (chúng tôi)"
+        "colOurs": "HubOnTrade (chúng tôi)"
       },
       "ctaBox": {
         "title": "Bạn cần giải pháp nào?",
@@ -431,21 +527,15 @@
           "desc": "Báo cáo biên lợi nhuận, phí, chi phí logistics theo từng sàn"
         }
       },
-      "comp": {
-        "title": "Khi dùng HUBONTRADE, đây là những gì thay đổi",
-        "col1": "Công việc",
-        "col2": "Tự vận hành",
-        "col3": "HUBONTRADE"
-      },
       "ctaBox": {
         "title": "Trải nghiệm mọi tính năng miễn phí",
-        "desc": "Trải nghiệm mọi tính năng HUBONTRADE với 14 ngày dùng thử miễn phí",
+        "desc": "Trải nghiệm mọi tính năng HubOnTrade với 15 ngày dùng thử miễn phí",
         "btn": "Bắt đầu dùng thử miễn phí"
       }
     },
     "service": {
       "heroTitle": "Chúng tôi <span class=\"gradient-text\">đảm nhận mọi việc</span> trong bán hàng toàn cầu",
-      "heroDesc": "Khám phá các dịch vụ chuyên nghiệp HUBONTRADE cung cấp",
+      "heroDesc": "Khám phá các dịch vụ chuyên nghiệp HubOnTrade cung cấp",
       "cats": {
         "title": "Lĩnh vực dịch vụ chuyên môn",
         "c1": {
@@ -523,7 +613,7 @@
     },
     "market": {
       "heroTitle": "Từ trong nước đến toàn cầu, <span class=\"gradient-text\">tích hợp các sàn lớn</span>",
-      "heroDesc": "Quản lý sàn trong nước & quốc tế chỉ với HUBONTRADE",
+      "heroDesc": "Quản lý sàn trong nước & quốc tế chỉ với HubOnTrade",
       "s1": {
         "title": "<span class=\"gradient-text\">Sàn</span> được hỗ trợ",
         "korea": "Sàn nội địa",
@@ -573,7 +663,7 @@
         "colLive": "Live commerce"
       },
       "excl": {
-        "title": "<span class=\"gradient-text\">Tích hợp</span> chỉ có ở HUBONTRADE",
+        "title": "<span class=\"gradient-text\">Tích hợp</span> chỉ có ở HubOnTrade",
         "c1": {
           "title": "Coupang IOR (Đại lý nhập khẩu)",
           "desc": "Doanh nghiệp nước ngoài bán trực tiếp trên Coupang mà không cần pháp nhân Hàn Quốc — dịch vụ độc quyền không đối thủ nào có."
@@ -600,7 +690,7 @@
         "apiDesc": "Hỗ trợ tích hợp API tùy chỉnh"
       },
       "ctaBox": {
-        "title": "Kết nối sàn của bạn với <span class=\"gradient-text\">HUBONTRADE</span>",
+        "title": "Kết nối sàn của bạn với <span class=\"gradient-text\">HubOnTrade</span>",
         "desc": "Trải nghiệm tích hợp sàn miễn phí",
         "btn1": "Bắt đầu tích hợp",
         "btn2": "Tư vấn 1:1"
@@ -616,10 +706,10 @@
       },
       "starter": {
         "name": "Starter",
-        "amount": "Miễn phí",
-        "unit": "  30 ngày",
+        "amount": "9,900",
+        "unit": "원/월",
         "tax": "Không cần thẻ tín dụng",
-        "desc": "Dùng thử mọi tính năng cốt lõi miễn phí 30 ngày",
+        "desc": "Gói khởi đầu hợp lý cho người bán nhỏ",
         "btn": "Bắt đầu dùng thử"
       },
       "growth": {
@@ -647,15 +737,43 @@
         "q5": "Có dùng thử miễn phí không?",
         "a5": "Cung cấp báo cáo phân tích thị trường miễn phí 2 tuần và đề xuất gói tốt nhất."
       },
+      "trialCta": {
+        "title": "Trải nghiệm mọi tính năng HubOnTrade<br><span class=\"hl\">miễn phí 15 ngày</span>",
+        "b1": "<strong>Hỗ trợ Web &amp; Mobile</strong> — Quản lý tìm nguồn, đơn hàng, tồn kho mọi lúc",
+        "b2": "<strong>Tùy chỉnh mạnh mẽ</strong> — Cấu hình linh hoạt theo nhu cầu doanh nghiệp",
+        "b3": "<strong>Tự động quyết toán</strong> — Lợi nhuận, phí và thanh toán trong một nơi",
+        "b4": "<strong>Đăng đa kênh</strong> — Đăng lên mall riêng, Coupang, Naver cùng lúc",
+        "b5": "<strong>Tích hợp đa dạng</strong> — 1688, UNI-PASS Hải quan Hàn Quốc, Cafe24 &amp; Open API",
+        "more": "+ nhiều hơn",
+        "start": "Bắt đầu",
+        "compare": "So sánh gói"
+      },
       "ctaBox": {
         "title": "Không chắc gói nào phù hợp?",
         "desc": "Nhận tư vấn miễn phí",
         "btn": "Nhận tư vấn miễn phí"
+      },
+      "table": {
+        "col": "Hạng mục",
+        "price": "Phí tháng",
+        "popular": "Phổ biến",
+        "trial": "Dùng thử 15 ngày",
+        "contact": "Liên hệ"
+      },
+      "basic": {
+        "name": "Cơ bản",
+        "desc": "Dành cho người bán bắt đầu vận hành nghiêm túc",
+        "btn": "Bắt đầu"
+      },
+      "custom": {
+        "name": "Tùy chỉnh",
+        "desc": "Tùy chỉnh cho doanh nghiệp theo quy mô",
+        "btn": "Liên hệ"
       }
     },
     "case": {
       "heroTitle": "Câu chuyện thành công",
-      "heroDesc": "Câu chuyện về các thương hiệu phát triển thị trường toàn cầu cùng HUBONTRADE",
+      "heroDesc": "Câu chuyện về các thương hiệu phát triển thị trường toàn cầu cùng HubOnTrade",
       "stats": {
         "partners": "Thương hiệu đối tác",
         "growth": "Tăng trưởng doanh số trung bình",
@@ -669,7 +787,7 @@
         "solution": "Onboard Shopee + marketing influencer bản địa",
         "r1": "Đạt 300 triệu KRW doanh số/tháng trong 6 tháng",
         "r2": "Top 10 mục Beauty trên Shopee",
-        "quote": "\"Nhờ HUBONTRADE, việc mở rộng ra nước ngoài phức tạp trở nên dễ dàng đáng kinh ngạc.\""
+        "quote": "\"Nhờ HubOnTrade, việc mở rộng ra nước ngoài phức tạp trở nên dễ dàng đáng kinh ngạc.\""
       },
       "c2": {
         "industry": "Thực phẩm chức năng",
@@ -679,7 +797,7 @@
         "solution": "Hỗ trợ chứng nhận bản địa + onboard Tokopedia + live commerce",
         "r1": "Rút ngắn 3 tháng cấp chứng nhận Halal",
         "r2": "Doanh số tăng 500% trong 1 năm",
-        "quote": "\"HUBONTRADE đã giải quyết toàn bộ quy trình chứng nhận phức tạp.\""
+        "quote": "\"HubOnTrade đã giải quyết toàn bộ quy trình chứng nhận phức tạp.\""
       },
       "c3": {
         "industry": "Thời trang nữ",
@@ -689,7 +807,7 @@
         "solution": "Xây hướng dẫn size bản địa + live TikTok Shop",
         "r1": "50 triệu KRW/buổi live TikTok",
         "r2": "Tỷ lệ hoàn hàng giảm 80%",
-        "quote": "\"Cảm nhận rõ sức mạnh của live commerce. Đội ngũ HUBONTRADE là tuyệt nhất.\""
+        "quote": "\"Cảm nhận rõ sức mạnh của live commerce. Đội ngũ HubOnTrade là tuyệt nhất.\""
       },
       "c4": {
         "industry": "Đồ gia dụng thông minh",
@@ -699,14 +817,14 @@
         "solution": "Onboard 3 nước đồng thời + kết nối đối tác hậu mãi bản địa",
         "r1": "Vào thành công 3 thị trường cùng lúc",
         "r2": "Đạt 5 tỷ KRW doanh số năm",
-        "quote": "\"Vào 3 thị trường cùng lúc sẽ là bất khả thi nếu không có HUBONTRADE.\""
+        "quote": "\"Vào 3 thị trường cùng lúc sẽ là bất khả thi nếu không có HubOnTrade.\""
       },
       "partners": {
         "title": "Đối tác của chúng tôi"
       },
       "ctaBox": {
         "title": "Trở thành câu chuyện thành công tiếp theo",
-        "desc": "Mở thị trường Đông Nam Á cùng HUBONTRADE",
+        "desc": "Mở thị trường Đông Nam Á cùng HubOnTrade",
         "btn": "Nhận tư vấn miễn phí"
       }
     },
@@ -799,10 +917,25 @@
           "thailand": "Thái Lan",
           "indonesia": "Indonesia",
           "philippines": "Philippines",
-          "malaysia": "Malaysia"
+          "malaysia": "Malaysia",
+          "korea": "Hàn Quốc",
+          "china": "Trung Quốc",
+          "japan": "Nhật Bản",
+          "singapore": "Singapore",
+          "usa": "Hoa Kỳ",
+          "canada": "Canada",
+          "uk": "Anh",
+          "germany": "Đức",
+          "france": "Pháp"
         },
         "message": "Nội dung",
-        "submit": "Gửi liên hệ"
+        "submit": "Gửi liên hệ",
+        "region": {
+          "neasia": "Đông Bắc Á",
+          "seasia": "Đông Nam Á",
+          "namerica": "Bắc Mỹ",
+          "europe": "Châu Âu"
+        }
       },
       "info": {
         "title": "Thông tin liên hệ",
@@ -948,8 +1081,8 @@
         "title": "Cẩn trọng vi phạm sở hữu trí tuệ"
       },
       "ctaBox": {
-        "title": "Từ sourcing 1688 đến bán Coupang,<br>HUBONTRADE đồng hành cùng bạn",
-        "desc": "Trải nghiệm HUBONTRADE — hỗ trợ một cửa sourcing, logistics, đăng sản phẩm và CS",
+        "title": "Từ sourcing 1688 đến bán Coupang,<br>HubOnTrade đồng hành cùng bạn",
+        "desc": "Trải nghiệm HubOnTrade — hỗ trợ một cửa sourcing, logistics, đăng sản phẩm và CS",
         "btn1": "Yêu cầu tư vấn miễn phí",
         "btn2": "Xem dịch vụ"
       }
@@ -964,9 +1097,12 @@
     "expectedProfit": "Lợi nhuận ròng dự kiến",
     "countries": "Quốc gia",
     "activeSellers": "Người bán hoạt động",
-    "langSupport": "Hỗ trợ ngôn ngữ",
-    "exportAuto": "Tự động khai báo XK",
-    "foreignSell": "DN nước ngoài tại Hàn",
-    "multiCs": "Dịch vụ CSKH đa ngôn ngữ"
+    "langSupport": "Hỗ trợ ngôn ngữ"
+  },
+  "beta": {
+    "heading": "Bản beta HubOnTrade mở<br>vào cuối tháng 8/2026",
+    "body": "Hợp nhất toàn bộ quy trình thương mại toàn cầu — chúng tôi đang ở chặng cuối.<br>Đăng ký sớm để nhận tin mở cửa đầu tiên và quyền tham gia beta ưu tiên.",
+    "apply": "Đăng ký trước",
+    "close": "Đóng"
   }
 }

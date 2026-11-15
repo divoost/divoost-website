@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="HUBONTRADE 문의하기 - 동남아 시장 진출에 대해 궁금한 점이 있으시면 언제든 연락주세요">
-    <title>HUBONTRADE | 문의</title>
+    <meta name="description" content="HubOnTrade 문의하기 - 동남아 시장 진출에 대해 궁금한 점이 있으시면 언제든 연락주세요">
+    <title>HubOnTrade | 문의</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -22,13 +22,12 @@
             <nav class="nav" id="navDesktop">
                 <a href="index.html" class="nav-link" data-i18n="nav.home">홈</a>
                 <a href="solution.html" class="nav-link" data-i18n="nav.solution">솔루션</a>
-                <a href="features.html" class="nav-link" data-i18n="nav.features">기능</a>
                 <a href="service.html" class="nav-link" data-i18n="nav.service">서비스</a>
                 <a href="market.html" class="nav-link" data-i18n="nav.market">시장</a>
                 <a href="pricing.html" class="nav-link" data-i18n="nav.pricing">요금제</a>
                 <a href="case.html" class="nav-link" data-i18n="nav.case">사례</a>
                 <a href="resources.html" class="nav-link" data-i18n="nav.resources">리소스</a>
-                <a href="dashboard/index.html" class="nav-link" data-i18n="nav.tracker">소싱트래커</a>
+                <a href="app.html" class="nav-link" data-i18n="nav.tools">도구</a>
                 <a href="contact.html" class="nav-link active" data-i18n="nav.contact">문의</a>            </nav>
 
             <div class="lang-switcher" style="display:flex;align-items:center;gap:6px;margin-left:auto;padding:0 16px;">
@@ -68,7 +67,7 @@
                 <!-- Left: Contact Form -->
                 <div class="contact-form-wrap fade-in-up">
                     <h2 class="contact-form-heading" data-i18n="pages.contact.form.title">문의 양식</h2>
-                    <form class="contact-form" onsubmit="return false;">
+                    <form class="contact-form" id="contactForm">
                         <div class="form-group">
                             <label class="form-label" for="company" data-i18n="pages.contact.form.company">회사명</label>
                             <input type="text" id="company" class="form-input" placeholder="회사명을 입력하세요">
@@ -104,32 +103,43 @@
 
                         <div class="form-group">
                             <label class="form-label" data-i18n="pages.contact.form.country">진출 희망 국가</label>
-                            <div class="checkbox-group">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="country" value="vietnam">
-                                    <span class="checkbox-custom"></span>
-                                    <span class="checkbox-text" data-i18n="pages.contact.form.cc.vietnam">베트남</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="country" value="thailand">
-                                    <span class="checkbox-custom"></span>
-                                    <span class="checkbox-text" data-i18n="pages.contact.form.cc.thailand">태국</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="country" value="indonesia">
-                                    <span class="checkbox-custom"></span>
-                                    <span class="checkbox-text" data-i18n="pages.contact.form.cc.indonesia">인도네시아</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="country" value="philippines">
-                                    <span class="checkbox-custom"></span>
-                                    <span class="checkbox-text" data-i18n="pages.contact.form.cc.philippines">필리핀</span>
-                                </label>
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="country" value="malaysia">
-                                    <span class="checkbox-custom"></span>
-                                    <span class="checkbox-text" data-i18n="pages.contact.form.cc.malaysia">말레이시아</span>
-                                </label>
+
+                            <div class="country-region">
+                                <span class="country-region-label" data-i18n="pages.contact.form.region.neasia" style="display:block;font-size:12px;font-weight:700;color:#475569;margin:10px 0 6px">동북아시아</span>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="korea"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.korea">한국</span></label>
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="china"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.china">중국</span></label>
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="japan"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.japan">일본</span></label>
+                                </div>
+                            </div>
+
+                            <div class="country-region">
+                                <span class="country-region-label" data-i18n="pages.contact.form.region.seasia" style="display:block;font-size:12px;font-weight:700;color:#475569;margin:10px 0 6px">동남아시아</span>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="vietnam"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.vietnam">베트남</span></label>
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="thailand"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.thailand">태국</span></label>
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="indonesia"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.indonesia">인도네시아</span></label>
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="philippines"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.philippines">필리핀</span></label>
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="malaysia"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.malaysia">말레이시아</span></label>
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="singapore"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.singapore">싱가포르</span></label>
+                                </div>
+                            </div>
+
+                            <div class="country-region">
+                                <span class="country-region-label" data-i18n="pages.contact.form.region.namerica" style="display:block;font-size:12px;font-weight:700;color:#475569;margin:10px 0 6px">북미</span>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="usa"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.usa">미국</span></label>
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="canada"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.canada">캐나다</span></label>
+                                </div>
+                            </div>
+
+                            <div class="country-region">
+                                <span class="country-region-label" data-i18n="pages.contact.form.region.europe" style="display:block;font-size:12px;font-weight:700;color:#475569;margin:10px 0 6px">유럽</span>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="uk"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.uk">영국</span></label>
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="germany"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.germany">독일</span></label>
+                                    <label class="checkbox-item"><input type="checkbox" name="country" value="france"><span class="checkbox-custom"></span><span class="checkbox-text" data-i18n="pages.contact.form.cc.france">프랑스</span></label>
+                                </div>
                             </div>
                         </div>
 
@@ -139,6 +149,7 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary btn-lg contact-submit-btn" data-i18n="pages.contact.form.submit">문의 보내기</button>
+                        <p class="form-msg" id="formMsg" style="display:none;margin-top:14px;font-size:14px;line-height:1.6;padding:12px 14px;border-radius:10px;"></p>
                     </form>
                 </div>
 
@@ -240,22 +251,26 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-grid">
+            <div class="footer-grid footer-grid-co">
                 <div class="footer-brand">
                     <a href="index.html" class="logo">
                         <img src="assets/hubongtrade-logo-bottom.png" alt="HubOnTrade" class="logo-img logo-img-footer">
                     </a>
-                    <p data-i18n="footer.tagline">글로벌 크로스보더 이커머스 전문 플랫폼</p>
+                    <div class="footer-company">
+                        <p><span class="fc-label" data-i18n="footer.co.addr">주소</span> 서울 영등포구 영등포로 116 대라빌딩 3층</p>
+                        <p><span class="fc-label" data-i18n="footer.co.biz">상호</span> 드라핀 &nbsp;<span class="fc-label" data-i18n="footer.co.ceo">대표자</span> 배정홍</p>
+                        <p><span class="fc-label" data-i18n="footer.co.email">이메일</span> contact@drapin.com</p>
+                        <p><span class="fc-label" data-i18n="footer.co.reg">사업자등록번호</span> 187-32-01025</p>
+                        <p><span class="fc-label" data-i18n="footer.co.mail">통신판매업신고번호</span> 제 2021-서울광진-2265호</p>
+                    </div>
                 </div>
 
                 <div class="footer-col">
-                    <h4 class="footer-heading" data-i18n="footer.h.pages">페이지</h4>
+                    <h4 class="footer-heading" data-i18n="footer.h.product">제품</h4>
                     <ul class="footer-links">
-                        <li><a href="index.html" data-i18n="nav.home">메인 홈</a></li>
                         <li><a href="solution.html" data-i18n="nav.solution">솔루션</a></li>
                         <li><a href="features.html" data-i18n="nav.features">기능</a></li>
                         <li><a href="service.html" data-i18n="nav.service">서비스</a></li>
-                        <li><a href="market.html" data-i18n="nav.market">시장</a></li>
                         <li><a href="pricing.html" data-i18n="nav.pricing">요금제</a></li>
                     </ul>
                 </div>
@@ -270,20 +285,119 @@
                 </div>
 
                 <div class="footer-col">
-                    <h4 class="footer-heading" data-i18n="footer.h.support">고객 지원</h4>
+                    <h4 class="footer-heading" data-i18n="footer.h.resources">자료실</h4>
                     <ul class="footer-links">
+                        <li><a href="market.html" data-i18n="nav.market">시장</a></li>
                         <li><a href="case.html" data-i18n="nav.case">사례</a></li>
                         <li><a href="resources.html" data-i18n="nav.resources">리소스</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading" data-i18n="footer.h.policy">정책 · 지원</h4>
+                    <ul class="footer-links">
                         <li><a href="contact.html" data-i18n="nav.contact">문의하기</a></li>
+                        <li><a href="sns-platform/terms.html" data-i18n="footer.l.terms">이용약관</a></li>
+                        <li><a href="sns-platform/privacy.html" data-i18n="footer.l.privacy">개인정보처리방침</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p>&copy; 2024 HUBONTRADE. All rights reserved.</p>
+                <p>&copy; 2026 드라핀 (HubOnTrade). All rights reserved.</p>
             </div>
         </div>
     </footer>
+
+    <script>
+        // 상담/사전신청 폼 → Supabase inquiries 테이블 저장
+        // ⚠️ 보안: 이 publishable 키는 공개값. 반드시 inquiries 테이블 RLS를
+        //         "익명 INSERT만 허용, SELECT 차단"으로 설정해야 개인정보 유출 방지.
+        (function () {
+            var SUPABASE_URL = 'https://unruyezigyybnuvgdgdt.supabase.co';
+            var SUPABASE_KEY = 'sb_publishable_CTq6ypxtybUPWUcYptiQ0A_mOa0b2hs';
+            var TABLE = 'inquiries';
+
+            var form = document.getElementById('contactForm');
+            if (!form) return;
+            var msg = document.getElementById('formMsg');
+            var btn = form.querySelector('.contact-submit-btn');
+
+            function val(id) {
+                var el = document.getElementById(id);
+                return el ? el.value.trim() : '';
+            }
+            function showMsg(text, ok) {
+                if (!msg) return;
+                msg.style.display = 'block';
+                msg.textContent = text;
+                msg.style.background = ok ? 'rgba(16,185,129,.1)' : 'rgba(239,68,68,.1)';
+                msg.style.color = ok ? '#047857' : '#b91c1c';
+            }
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                var email = val('email');
+                var name = val('name');
+                if (!email && !name) {
+                    showMsg('담당자명 또는 이메일을 입력해 주세요.', false);
+                    return;
+                }
+
+                var countries = Array.prototype.slice
+                    .call(form.querySelectorAll('input[name="country"]:checked'))
+                    .map(function (c) {
+                        var t = c.parentNode.querySelector('.checkbox-text');
+                        return t ? t.textContent.trim() : c.value;
+                    })
+                    .join(', ');
+
+                var sel = document.getElementById('service');
+                var service = (sel && sel.value) ? sel.options[sel.selectedIndex].textContent.trim() : '';
+
+                var payload = {
+                    company: val('company'),
+                    name: name,
+                    email: email,
+                    phone: val('phone'),
+                    service: service,
+                    countries: countries,
+                    message: val('message'),
+                    source: 'contact_form'
+                };
+
+                if (btn) { btn.disabled = true; }
+                showMsg('접수 중입니다...', true);
+
+                fetch(SUPABASE_URL + '/rest/v1/' + TABLE, {
+                    method: 'POST',
+                    headers: {
+                        'apikey': SUPABASE_KEY,
+                        'Authorization': 'Bearer ' + SUPABASE_KEY,
+                        'Content-Type': 'application/json',
+                        'Prefer': 'return=minimal'
+                    },
+                    body: JSON.stringify(payload)
+                }).then(function (r) {
+                    if (btn) { btn.disabled = false; }
+                    if (r.ok) {
+                        showMsg('✅ 신청이 접수되었습니다. 빠르게 연락드리겠습니다.', true);
+                        form.reset();
+                    } else {
+                        r.text().then(function (t) {
+                            console.error('inquiry insert failed', r.status, t);
+                        });
+                        showMsg('접수 중 오류가 발생했습니다. 잠시 후 다시 시도하시거나 contact@drapin.com 으로 보내주세요.', false);
+                    }
+                }).catch(function (err) {
+                    if (btn) { btn.disabled = false; }
+                    console.error('inquiry insert error', err);
+                    showMsg('네트워크 오류로 접수에 실패했습니다. contact@drapin.com 으로 보내주세요.', false);
+                });
+            });
+        })();
+    </script>
 
     <script src="js/common.js"></script>
     <script src="js/i18n.js"></script>

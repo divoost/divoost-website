@@ -75,7 +75,7 @@
 
   /* Layout */
   --container-max: 1200px;
-  --header-height: 80px;
+  --header-height: 54px; /* 헤더 슬림화: 80→54 (로고 축소에 맞춰 하단 여백 축소) */
 
   /* Borders */
   --radius-sm: 6px;
@@ -251,7 +251,7 @@ p {
   height: 58px;
   width: auto;
 }
-.logo-img-header { height: 58px; }
+.logo-img-header { height: 37px; } /* 로고 약 37% 축소 (58→37) */
 .logo-img-footer { height: 72px; }
 
 .logo span {
@@ -300,11 +300,11 @@ body.lang-en .logo {
 @media (max-width: 1024px) {
   .logo { margin-right: 24px; }
   .logo-img { height: 44px; }
-  .logo-img-header { height: 44px; }
+  .logo-img-header { height: 28px; } /* 로고 약 37% 축소 (44→28) */
 }
 @media (max-width: 640px) {
   .logo-img { height: 36px; }
-  .logo-img-header { height: 36px; }
+  .logo-img-header { height: 23px; } /* 로고 약 37% 축소 (36→23) */
 }
 
 .nav-link {
@@ -879,7 +879,7 @@ body.lang-en .logo {
    ============================================================ */
 @media (max-width: 1024px) {
   :root {
-    --header-height: 64px;
+    --header-height: 48px; /* 헤더 슬림화: 64→48 */
   }
 
   .section {
@@ -1033,4 +1033,118 @@ body.lang-en .logo {
    ============================================================ */
 body {
   padding-top: var(--header-height);
+}
+
+/* --- 풋터 (회사정보형, flow.team 톤) — 전 페이지 공용 --- */
+.footer-grid-co {
+    grid-template-columns: 1.9fr 1fr 1fr 1fr 1fr;
+}
+.footer-company {
+    margin-top: var(--space-md);
+}
+.footer-company p {
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.9;
+    max-width: 380px;
+    margin: 0;
+}
+.fc-label {
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 600;
+    margin-right: 6px;
+}
+@media (max-width: 1024px) {
+    .footer-grid-co { grid-template-columns: 1fr 1fr 1fr; }
+    .footer-grid-co .footer-brand { grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+    .footer-grid-co { grid-template-columns: 1fr 1fr; }
+    .footer-grid-co .footer-brand { grid-column: 1 / -1; }
+}
+
+/* ============================================================
+   Key Features Overview (홈에서 이동) - 6장 요약 카드
+   ============================================================ */
+.section-features-preview { background: var(--bg-light); }
+
+.features-preview-grid .card {
+  text-align: center;
+}
+
+.features-preview-grid .card-icon {
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 28px;
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-xl);
+  background: rgba(37, 99, 235, 0.08);
+}
+
+/* --- 베타 오픈 안내 팝업 --- */
+.beta-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+}
+.beta-modal.open { display: flex; }
+.beta-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+}
+.beta-modal-box {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 460px;
+    background: #ffffff;
+    border-radius: var(--radius-xl);
+    padding: var(--space-3xl) var(--space-2xl) var(--space-2xl);
+    text-align: center;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    animation: betaPop 0.3s ease-out;
+}
+@keyframes betaPop {
+    from { opacity: 0; transform: translateY(16px) scale(0.96); }
+    to { opacity: 1; transform: none; }
+}
+.beta-modal-x {
+    position: absolute;
+    top: 14px; right: 16px;
+    background: none; border: none;
+    font-size: 26px; line-height: 1;
+    color: var(--text-muted);
+    cursor: pointer;
+}
+.beta-modal-emoji { font-size: 44px; line-height: 1; margin-bottom: var(--space-md); }
+.beta-modal-heading {
+    font-family: var(--font-heading);
+    font-size: var(--text-xl);
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1.35;
+    margin-bottom: var(--space-md);
+}
+.beta-modal-body {
+    font-size: var(--text-sm);
+    line-height: 1.7;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xl);
+}
+.beta-modal-actions {
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+@media (max-width: 480px) {
+    .beta-modal-actions { flex-direction: column; }
+    .beta-modal-actions .btn { width: 100%; }
 }

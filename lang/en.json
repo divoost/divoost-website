@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "HUBONTRADE | Global Cross-Border E-Commerce Platform"
+    "title": "HubOnTrade | Global Cross-Border E-Commerce Platform"
   },
   "nav": {
     "home": "Home",
@@ -12,14 +12,15 @@
     "case": "Cases",
     "resources": "Resources",
     "tracker": "Sourcing Tracker",
-    "contact": "Contact"
+    "contact": "Contact",
+    "tools": "Tools"
   },
   "hero": {
     "s1": {
       "badge": "GLOBAL ALL-IN-ONE EXPORT/IMPORT PLATFORM",
       "title1": "Borderless Commerce,",
       "title2": "No Direction Limits",
-      "title3": "HUBONTRADE<br>Connects",
+      "title3": "HubOnTrade<br>Connects",
       "subtitle": "From anywhere to anywhere — the entire global export & import process on a single platform",
       "ctaPrimary": "Start Free",
       "ctaSecondary": "Explore Services"
@@ -30,7 +31,7 @@
       "title3": "Register Products Once, Sell Everywhere",
       "ctaPrimary": "Start Free Trial",
       "ctaSecondary": "Request 1:1 Consultation",
-      "trust": "Trusted by thousands of sellers on HUBONTRADE",
+      "trust": "Trusted by thousands of sellers on HubOnTrade",
       "stat1": "Connected Marketplaces",
       "stat2": "Uptime",
       "stat3": "Workload Reduced"
@@ -61,11 +62,22 @@
       "subtitle": "Whether you sell from Korea or anywhere else —<br>the only global export/import platform built for everyone",
       "ctaPrimary": "Get Started",
       "ctaSecondary": "Service Overview"
+    },
+    "s6": {
+      "badge": "All-in-one purchasing agent with HubOnTrade",
+      "title1": "Purchasing agency,",
+      "title2": "no longer complicated",
+      "title3": "Simple with HubOnTrade",
+      "subtitle": "From product sourcing to marketplace upload —<br>a user-centric, AI-powered purchasing platform",
+      "ctaPrimary": "Sign up free",
+      "ctaSecondary": "Explore services",
+      "labelOverseas": "Overseas Sources",
+      "labelDomestic": "Domestic Marketplaces"
     }
   },
   "sec": {
     "why": {
-      "badge": "WHY HUBONTRADE",
+      "badge": "WHY HubOnTrade",
       "title": "What Other Platforms Don't Have",
       "desc": "Differentiated features that set a new standard for global selling",
       "c1": {
@@ -85,12 +97,28 @@
         "desc": "Not limited to Korean companies. The only truly global platform anyone can use from anywhere"
       },
       "c5": {
-        "title": "Government Export Voucher Partner",
-        "desc": "Government-certified export voucher provider. Start without cost burden through government support programs"
+        "title": "Automatic Margin Calculation",
+        "desc": "Factor in FX, tariffs, shipping and platform fees to confirm real net profit — at home and abroad — before you sell"
       },
       "c6": {
         "title": "AI-Powered Automation",
         "desc": "AI product title/keyword recommendations, category mapping, multilingual translation, and pricing suggestions"
+      },
+      "c7": {
+        "title": "UNI-PASS Import Clearance",
+        "desc": "Connect with Korea Customs' UNI-PASS to auto-process import declaration and clearance for overseas goods — including duties and VAT"
+      },
+      "c8": {
+        "title": "Global Marketplace Marketing",
+        "desc": "Auto-connect with platform ad and promotion tools like Shopee and TikTok Shop — from listing to sales boost"
+      },
+      "c9": {
+        "title": "AI Marketing Automation",
+        "desc": "AI auto-generates card news, short-form videos and DM messages — cutting your marketing content production time"
+      },
+      "c10": {
+        "title": "Social Account Integration",
+        "desc": "Connect Instagram, YouTube, TikTok and more to manage product promotion and content publishing in one place"
       }
     },
     "platforms": {
@@ -99,9 +127,33 @@
       "desc": "List once, sell on all marketplaces simultaneously"
     },
     "comparison": {
-      "badge": "COMPARISON",
-      "title": "HUBONTRADE vs Competitors",
-      "desc": "Key feature comparison"
+      "badge": "HIGHLIGHTS",
+      "title": "HubOnTrade at a Glance",
+      "desc": "The entire import/export journey on one platform",
+      "h1": {
+        "title": "All-in-one global trade",
+        "desc": "Anywhere to anywhere — the entire import/export journey on one platform"
+      },
+      "h2": {
+        "title": "Effortless purchasing agency",
+        "desc": "From product sourcing to marketplace upload — a user-centric, AI-powered platform"
+      },
+      "h3": {
+        "title": "Unified marketplace management",
+        "desc": "From Coupang and Naver to Shopee and TikTok Shop — list and manage at once"
+      },
+      "h4": {
+        "title": "Integrated fulfillment",
+        "desc": "From domestic dispatch to overseas local delivery — in one system"
+      },
+      "h5": {
+        "title": "Smart global sourcing",
+        "desc": "From B2B global sourcing to automatic margin calculation — check profitability first"
+      },
+      "h6": {
+        "title": "A platform for sellers worldwide",
+        "desc": "Korean and overseas sellers alike — the only global platform anyone can use"
+      }
     },
     "features": {
       "badge": "KEY FEATURES",
@@ -110,6 +162,12 @@
     "foryou": {
       "badge": "FOR YOU",
       "title": "Recommended For You"
+    },
+    "pricing": {
+      "badge": "PRICING",
+      "title": "Pricing that fits your business",
+      "desc": "Start free, then choose a plan as you grow",
+      "more": "View all plans"
     }
   },
   "footer": {
@@ -117,7 +175,22 @@
     "h": {
       "pages": "Pages",
       "tools": "Sourcing · Tools",
-      "support": "Support"
+      "support": "Support",
+      "product": "Product",
+      "resources": "Resources",
+      "policy": "Policy · Support"
+    },
+    "co": {
+      "addr": "Address",
+      "biz": "Company",
+      "ceo": "CEO",
+      "email": "Email",
+      "reg": "Business Reg. No.",
+      "mail": "E-commerce Reg. No."
+    },
+    "l": {
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy"
     }
   },
   "markets": {
@@ -158,27 +231,54 @@
   "foryou": {
     "c1": {
       "title": "Korean Sellers",
-      "desc": "Businesses & individual sellers exporting Korean products globally. Export declarations and marketplace listings — all in one."
+      "desc": "Korean companies & individual sellers selling on domestic (Coupang, Naver, Gmarket…) and overseas (Shopee, Amazon, TikTok Shop…) markets",
+      "t1": "Export declaration automation",
+      "t2": "Sourcing",
+      "t3": "Listing",
+      "t4": "Translation",
+      "t5": "Orders",
+      "t6": "CS",
+      "t7": "Inventory",
+      "t8": "Marketing",
+      "t9": "SNS posting",
+      "t10": "Buyer discovery"
     },
     "c2": {
       "title": "Overseas Sellers",
-      "desc": "Overseas sellers selling Korean products domestically, or sourcing global products. Multilingual support."
+      "desc": "Overseas companies & individual sellers selling on global (Shopee, Amazon, TikTok Shop…) and Korean (Coupang, Naver, Gmarket…) markets",
+      "t1": "Sourcing",
+      "t2": "Listing",
+      "t3": "Translation",
+      "t4": "Orders",
+      "t5": "CS",
+      "t6": "Inventory",
+      "t7": "Marketing",
+      "t8": "SNS posting",
+      "t9": "Buyer discovery"
     },
     "c3": {
-      "title": "Drop-shipping & Resellers",
-      "desc": "Drop-shippers and resellers sourcing global products without inventory. Customs automation included."
+      "title": "Purchasing Agent",
+      "desc": "When importing and then selling on Korean and overseas markets",
+      "t1": "Forwarding hub",
+      "t2": "Import → Korean markets",
+      "t3": "Import → global markets"
+    },
+    "c4": {
+      "title": "Product Supply",
+      "desc": "When Korean or overseas companies supply products via B2B2C",
+      "t1": "B2B2C product supply"
     }
   },
   "cta": {
-    "title": "Start HUBONTRADE Free Today",
-    "subtitle": "Experience all features with 30-day free trial",
+    "title": "Start HubOnTrade Free Today",
+    "subtitle": "Experience all features with 15-day free trial",
     "primary": "Start Free Trial",
     "secondary": "Request 1:1 Consultation"
   },
   "pages": {
     "solution": {
       "heroTitle": "Export, Import, Sourcing — All on One Platform",
-      "heroDesc": "Solve every step of global commerce with HUBONTRADE’s unified solution",
+      "heroDesc": "Solve every step of global commerce with HubOnTrade’s unified solution",
       "core": {
         "title": "Three Core Solutions",
         "c1": {
@@ -263,12 +363,8 @@
         }
       },
       "diff": {
-        "title": "What Competitors Don't Have — Only on HUBONTRADE",
+        "title": "What Competitors Don't Have — Only on HubOnTrade",
         "badge": "No Competitor Offers This",
-        "c1": {
-          "title": "Government Export Voucher Partner",
-          "desc": "Officially designated government export voucher partner — use voucher budgets to access HUBONTRADE. No competitor holds this status."
-        },
         "c2": {
           "title": "Coupang IOR (Importer of Record)",
           "desc": "Enable overseas companies to sell directly on Korean Coupang via IOR services — from importer registration to customs and selling, all in one stop."
@@ -298,9 +394,9 @@
         }
       },
       "comp": {
-        "title": "Only on HUBONTRADE",
+        "title": "Only on HubOnTrade",
         "colFeature": "Feature",
-        "colOurs": "HUBONTRADE (Us)"
+        "colOurs": "HubOnTrade (Us)"
       },
       "ctaBox": {
         "title": "Which Solution Do You Need?",
@@ -431,21 +527,15 @@
           "desc": "Per-platform margin, fee, and logistics cost reports"
         }
       },
-      "comp": {
-        "title": "Here's What Changes With HUBONTRADE",
-        "col1": "Task",
-        "col2": "DIY Operation",
-        "col3": "HUBONTRADE"
-      },
       "ctaBox": {
         "title": "Try Every Feature Free",
-        "desc": "Experience every HUBONTRADE feature with a 14-day free trial",
+        "desc": "Experience every HubOnTrade feature with a 15-day free trial",
         "btn": "Start Free Trial"
       }
     },
     "service": {
       "heroTitle": "We Handle Everything in <span class=\"gradient-text\">Global Selling</span>",
-      "heroDesc": "Discover the expert services HUBONTRADE provides",
+      "heroDesc": "Discover the expert services HubOnTrade provides",
       "cats": {
         "title": "Our Service Areas",
         "c1": {
@@ -523,7 +613,7 @@
     },
     "market": {
       "heroTitle": "From Local to Global, <span class=\"gradient-text\">Major Marketplace Integrations</span>",
-      "heroDesc": "Manage local & overseas marketplaces in one HUBONTRADE",
+      "heroDesc": "Manage local & overseas marketplaces in one HubOnTrade",
       "s1": {
         "title": "Supported <span class=\"gradient-text\">Marketplaces</span>",
         "korea": "Domestic Marketplaces",
@@ -573,7 +663,7 @@
         "colLive": "Live Commerce"
       },
       "excl": {
-        "title": "<span class=\"gradient-text\">Integrations</span> Only on HUBONTRADE",
+        "title": "<span class=\"gradient-text\">Integrations</span> Only on HubOnTrade",
         "c1": {
           "title": "Coupang IOR (Importer of Record)",
           "desc": "Overseas companies can sell directly on Coupang without a Korean entity — an exclusive service no competitor offers."
@@ -600,7 +690,7 @@
         "apiDesc": "Custom API integration supported"
       },
       "ctaBox": {
-        "title": "Connect Your Marketplaces to <span class=\"gradient-text\">HUBONTRADE</span>",
+        "title": "Connect Your Marketplaces to <span class=\"gradient-text\">HubOnTrade</span>",
         "desc": "Experience marketplace integrations free",
         "btn1": "Start Integration",
         "btn2": "1:1 Consultation"
@@ -616,10 +706,10 @@
       },
       "starter": {
         "name": "Starter",
-        "amount": "Free",
-        "unit": "  30 days",
+        "amount": "9,900",
+        "unit": "원/월",
         "tax": "No credit card required",
-        "desc": "Try every core feature free for 30 days",
+        "desc": "An affordable starting plan for solo and small sellers",
         "btn": "Start Free Trial"
       },
       "growth": {
@@ -647,15 +737,43 @@
         "q5": "Is there a free trial?",
         "a5": "We provide a 2-week free market analysis report and recommend the best plan based on it."
       },
+      "trialCta": {
+        "title": "Experience every HubOnTrade feature<br><span class=\"hl\">free for 15 days</span>",
+        "b1": "<strong>Web &amp; Mobile</strong> — Manage sourcing, orders and inventory anywhere",
+        "b2": "<strong>Powerful customization</strong> — Flexible setup for your business needs",
+        "b3": "<strong>Automated settlement</strong> — Margin, fees and payouts in one place",
+        "b4": "<strong>Multi-channel listing</strong> — Register to your own mall, Coupang, Naver at once",
+        "b5": "<strong>Rich integrations</strong> — 1688, Korea Customs UNI-PASS, Cafe24 &amp; Open API",
+        "more": "+ many more",
+        "start": "Get Started",
+        "compare": "Compare Plans"
+      },
       "ctaBox": {
         "title": "Not sure which plan fits?",
         "desc": "Get a free consultation",
         "btn": "Get Free Consultation"
+      },
+      "table": {
+        "col": "Category",
+        "price": "Monthly",
+        "popular": "Popular",
+        "trial": "15-day free trial",
+        "contact": "Contact"
+      },
+      "basic": {
+        "name": "Basic",
+        "desc": "For sellers scaling up their operations",
+        "btn": "Get Started"
+      },
+      "custom": {
+        "name": "Custom",
+        "desc": "Enterprise-tailored setup for your scale",
+        "btn": "Contact Sales"
       }
     },
     "case": {
       "heroTitle": "Success Stories",
-      "heroDesc": "Stories of brands that grew global markets with HUBONTRADE",
+      "heroDesc": "Stories of brands that grew global markets with HubOnTrade",
       "stats": {
         "partners": "Partner Brands",
         "growth": "Avg. Revenue Growth",
@@ -669,7 +787,7 @@
         "solution": "Shopee onboarding + local influencer marketing",
         "r1": "Reached KRW 300M monthly revenue in 6 months",
         "r2": "Top 10 in Shopee Beauty category",
-        "quote": "\"Thanks to HUBONTRADE, complex overseas expansion became surprisingly easy.\""
+        "quote": "\"Thanks to HubOnTrade, complex overseas expansion became surprisingly easy.\""
       },
       "c2": {
         "industry": "Health Supplements",
@@ -679,7 +797,7 @@
         "solution": "Local certification support + Tokopedia onboarding + live commerce",
         "r1": "Halal certification cut by 3 months",
         "r2": "500% revenue growth in 1 year",
-        "quote": "\"HUBONTRADE handled the entire complex certification process.\""
+        "quote": "\"HubOnTrade handled the entire complex certification process.\""
       },
       "c3": {
         "industry": "Women's Apparel",
@@ -689,7 +807,7 @@
         "solution": "Local sizing guide + TikTok Shop live",
         "r1": "KRW 50M revenue per TikTok live",
         "r2": "Return rate down 80%",
-        "quote": "\"We felt the power of live commerce. The HUBONTRADE team is the best.\""
+        "quote": "\"We felt the power of live commerce. The HubOnTrade team is the best.\""
       },
       "c4": {
         "industry": "Smart Appliances",
@@ -699,14 +817,14 @@
         "solution": "Onboard 3 countries simultaneously + connect local A/S partners",
         "r1": "Successful simultaneous entry into 3 markets",
         "r2": "Reached KRW 5B annual revenue",
-        "quote": "\"Entering 3 markets at once would've been impossible without HUBONTRADE.\""
+        "quote": "\"Entering 3 markets at once would've been impossible without HubOnTrade.\""
       },
       "partners": {
         "title": "Our Partners"
       },
       "ctaBox": {
         "title": "Be the Next Success Story",
-        "desc": "Open up SE Asian markets with HUBONTRADE",
+        "desc": "Open up SE Asian markets with HubOnTrade",
         "btn": "Get Free Consultation"
       }
     },
@@ -799,10 +917,25 @@
           "thailand": "Thailand",
           "indonesia": "Indonesia",
           "philippines": "Philippines",
-          "malaysia": "Malaysia"
+          "malaysia": "Malaysia",
+          "korea": "Korea",
+          "china": "China",
+          "japan": "Japan",
+          "singapore": "Singapore",
+          "usa": "USA",
+          "canada": "Canada",
+          "uk": "UK",
+          "germany": "Germany",
+          "france": "France"
         },
         "message": "Message",
-        "submit": "Send Inquiry"
+        "submit": "Send Inquiry",
+        "region": {
+          "neasia": "Northeast Asia",
+          "seasia": "Southeast Asia",
+          "namerica": "North America",
+          "europe": "Europe"
+        }
       },
       "info": {
         "title": "Contact Information",
@@ -948,8 +1081,8 @@
         "title": "Watch Out for IP Infringement"
       },
       "ctaBox": {
-        "title": "From 1688 Sourcing to Coupang Selling,<br>HUBONTRADE Has You Covered",
-        "desc": "Experience HUBONTRADE — one-stop sourcing, logistics, listing, and CS support",
+        "title": "From 1688 Sourcing to Coupang Selling,<br>HubOnTrade Has You Covered",
+        "desc": "Experience HubOnTrade — one-stop sourcing, logistics, listing, and CS support",
         "btn1": "Request Free Consultation",
         "btn2": "View Services"
       }
@@ -964,9 +1097,12 @@
     "expectedProfit": "Est. Net Profit",
     "countries": "Countries",
     "activeSellers": "Active Sellers",
-    "langSupport": "Languages",
-    "exportAuto": "Export Declaration Auto",
-    "foreignSell": "Foreign Cos. in Korea",
-    "multiCs": "Multilingual CS Service"
+    "langSupport": "Languages"
+  },
+  "beta": {
+    "heading": "HubOnTrade beta opens<br>in late August 2026",
+    "body": "Bringing all of global trade into one — we're in the final stretch.<br>Sign up early to be first to hear when we open and get priority beta access.",
+    "apply": "Pre-register",
+    "close": "Close"
   }
 }
