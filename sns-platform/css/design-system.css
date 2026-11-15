@@ -103,16 +103,16 @@
                   -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --ds-font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
 
-  --ds-text-2xs: 11px;
-  --ds-text-xs:  12px;
-  --ds-text-sm:  13px;
-  --ds-text-base:14px;   /* 본문 기본 */
-  --ds-text-md:  15px;
-  --ds-text-lg:  16px;
-  --ds-text-xl:  18px;
-  --ds-text-2xl: 22px;
-  --ds-text-3xl: 28px;
-  --ds-text-4xl: 34px;
+  --ds-text-2xs: 12px;
+  --ds-text-xs:  13px;
+  --ds-text-sm:  14px;
+  --ds-text-base:15px;   /* 본문 기본 (가독성 상향) */
+  --ds-text-md:  16px;
+  --ds-text-lg:  17px;
+  --ds-text-xl:  19px;
+  --ds-text-2xl: 23px;
+  --ds-text-3xl: 29px;
+  --ds-text-4xl: 35px;
 
   --ds-weight-regular:  400;
   --ds-weight-medium:   500;
