@@ -50,6 +50,12 @@
     }).join('');
   }).join('');
 
+  // 외부 서비스 바로가기(HubOnTrade 메인 홈 · 소싱 트래커 대시보드) — sns-platform 상위 경로
+  var xBase = isPages ? '../../' : '../';
+  var xnavHtml = '<div class="d-drawer-sec">바로가기</div>' +
+    '<a href="' + xBase + 'index.html"><i data-lucide="globe" class="ds-icon ds-icon-sm"></i> HubOnTrade</a>' +
+    '<a href="' + xBase + 'dashboard/index.html"><i data-lucide="search" class="ds-icon ds-icon-sm"></i> 소싱 트래커</a>';
+
   var shell =
     '<header class="d-topbar">' +
       '<div class="d-logo" onclick="location.href=\'' + rel('index.html') + '\'">' +
@@ -69,7 +75,7 @@
     '<aside class="d-drawer" id="sidebar">' +
       '<div class="d-drawer-top"><div><div class="d-drawer-email">divoost@user.com</div><div class="d-drawer-plan">체험플랜 사용 중</div></div>' +
         '<button class="d-drawer-close" aria-label="닫기"><i data-lucide="x" class="ds-icon"></i></button></div>' +
-      drawerHtml +
+      drawerHtml + xnavHtml +
     '</aside>' +
     '<div class="d-overlay"></div>';
 
