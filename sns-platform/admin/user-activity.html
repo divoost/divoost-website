@@ -1,103 +1,90 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>활동 로그 | 관리자</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- 디자인 시스템(DDS) + 관리자 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
-        body{background:#f1f5f9}
-        .admin-bar{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;padding:8px 24px;font-size:.78rem;font-weight:600;text-align:center}
-        .admin-bar a{color:#fef2f2;margin-left:10px}
-        .sidebar{background:#0f172a !important}.sidebar-logo .logo-text{color:#fff !important}.sidebar-logo .logo-text small{color:#fca5a5 !important}.nav-title{color:#94a3b8 !important}.nav-link{color:#cbd5e1 !important}.nav-link:hover{background:rgba(255,255,255,.06) !important;color:#fff !important}.nav-link.active{background:rgba(220,38,38,.2) !important;color:#fca5a5 !important}
-
-        .card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
-        .card h2{font-size:1rem;margin-bottom:14px}
+        .card{background:var(--ds-bg-surface);border-radius:14px;border:1px solid var(--ds-border);padding:20px;margin-bottom:16px}
+        .card h2{font-size:1rem;margin-bottom:14px;color:var(--ds-text-primary)}
 
         .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
-        .tb-input,.tb-select{padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem;background:#fff}
+        .tb-input,.tb-select{padding:8px 12px;border-radius:8px;border:1px solid var(--ds-border);font-size:.82rem;background:var(--ds-bg-surface);color:var(--ds-text-primary)}
         .tb-input{flex:1;min-width:240px}
 
-        .activity-feed{background:#fff;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden}
-        .activity-item{display:flex;gap:14px;padding:14px 18px;border-bottom:1px solid #f1f5f9;transition:.15s}
-        .activity-item:hover{background:#f8fafc}
+        .activity-feed{background:var(--ds-bg-surface);border-radius:12px;border:1px solid var(--ds-border);overflow:hidden}
+        .activity-item{display:flex;gap:14px;padding:14px 18px;border-bottom:1px solid var(--ds-border-subtle);transition:.15s}
+        .activity-item:hover{background:var(--ds-bg-hover)}
         .activity-item:last-child{border-bottom:none}
         .activity-icon{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-        .activity-icon.login{background:#dbeafe}
-        .activity-icon.post{background:#dcfce7}
-        .activity-icon.connect{background:#ede9fe}
-        .activity-icon.delete{background:#fee2e2}
-        .activity-icon.update{background:#fef3c7}
-        .activity-icon.payment{background:#fce7f3}
+        .activity-icon.login{background:var(--ds-accent-soft-bg)}
+        .activity-icon.post{background:var(--ds-success-bg)}
+        .activity-icon.connect{background:var(--ds-accent-soft-bg)}
+        .activity-icon.delete{background:var(--ds-danger-bg)}
+        .activity-icon.update{background:var(--ds-warning-bg)}
+        .activity-icon.payment{background:var(--ds-warning-bg)}
         .activity-body{flex:1;min-width:0}
-        .activity-user{font-weight:700;font-size:.85rem;color:#0f172a}
-        .activity-action{font-size:.84rem;color:#475569;margin-top:2px}
-        .activity-meta{font-size:.7rem;color:#94a3b8;margin-top:4px;display:flex;gap:10px}
+        .activity-user{font-weight:700;font-size:.85rem;color:var(--ds-text-primary)}
+        .activity-action{font-size:.84rem;color:var(--ds-text-secondary);margin-top:2px}
+        .activity-meta{font-size:.7rem;color:var(--ds-text-tertiary);margin-top:4px;display:flex;gap:10px}
 
         .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
-        .stat-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:16px;text-align:center}
-        .stat-val{font-size:1.5rem;font-weight:800}
-        .stat-label{font-size:.72rem;color:#94a3b8;margin-top:2px}
+        .stat-card{background:var(--ds-bg-surface);border-radius:12px;border:1px solid var(--ds-border);padding:16px;text-align:center}
+        .stat-val{font-size:1.5rem;font-weight:800;color:var(--ds-text-primary)}
+        .stat-label{font-size:.72rem;color:var(--ds-text-tertiary);margin-top:2px}
     </style>
 </head>
-<body>
-    <div class="admin-bar">🛡 관리자 → <a href="../index.html">사용자 대시보드로</a></div>
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo"><div class="logo-icon">🛡</div><div class="logo-text">관리자 콘솔<small>DIVOOST SNS Admin</small></div></div>
-            <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">개요</div><a href="index.html" class="nav-link"><span>🏠</span> 관리자 대시보드</a></div>
-                <div class="nav-section"><div class="nav-title">회원 관리</div><a href="users.html" class="nav-link"><span>👥</span> 회원 목록</a><a href="subscriptions.html" class="nav-link"><span>💳</span> 구독 관리</a><a href="user-activity.html" class="nav-link active"><span>📊</span> 활동 로그</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 운영</div><a href="content-moderation.html" class="nav-link"><span>📝</span> 콘텐츠 검토</a><a href="reports.html" class="nav-link"><span>🚨</span> 신고/제재</a></div>
-                <div class="nav-section"><div class="nav-title">시스템 운영</div><a href="api-monitor.html" class="nav-link"><span>📡</span> API 사용량</a><a href="system-health.html" class="nav-link"><span>💚</span> 시스템 상태</a><a href="notifications.html" class="nav-link"><span>🔔</span> 공지 관리</a></div>
-                <div class="nav-section"><div class="nav-title">설정</div><a href="admin-settings.html" class="nav-link"><span>⚙️</span> 관리자 설정</a><a href="audit-log.html" class="nav-link"><span>📜</span> 감사 로그</a></div>
-            </nav>
-        </aside>
-        <div class="main-content">
-            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">📊 활동 로그</div><div class="top-bar-sub">사용자 활동 실시간 모니터링</div></div></div></header>
-            <div class="content">
-
-                <div class="stat-row">
-                    <div class="stat-card"><div class="stat-val" id="sToday" style="color:#3b82f6">0</div><div class="stat-label">오늘 활동</div></div>
-                    <div class="stat-card"><div class="stat-val" id="sPublish" style="color:#10b981">0</div><div class="stat-label">발행 활동</div></div>
-                    <div class="stat-card"><div class="stat-val" id="sConnect" style="color:#7c3aed">0</div><div class="stat-label">신규 연동</div></div>
-                    <div class="stat-card"><div class="stat-val" id="sPayment" style="color:#f59e0b">0</div><div class="stat-label">결제 이벤트</div></div>
-                </div>
-
-                <div class="card">
-                    <h2>🔍 필터</h2>
-                    <div class="toolbar">
-                        <input type="text" class="tb-input" placeholder="사용자 이메일 검색...">
-                        <select class="tb-select">
-                            <option>모든 활동</option>
-                            <option>로그인</option>
-                            <option>발행</option>
-                            <option>SNS 연동</option>
-                            <option>삭제</option>
-                            <option>결제</option>
-                        </select>
-                        <select class="tb-select">
-                            <option>최근 1시간</option>
-                            <option>최근 24시간</option>
-                            <option>최근 7일</option>
-                            <option>최근 30일</option>
-                        </select>
-                    </div>
-
-                    <div class="activity-feed">
-                        <p style="padding:30px;text-align:center;color:#94a3b8;font-size:.84rem">로딩 중...</p>
-                    </div>
-                </div>
+<body class="ds-root" data-shell-active="user-activity">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST SNS · ADMIN</div>
+                <h1 class="ds-h1">활동 로그</h1>
+                <p class="ds-body">사용자 활동 로그를 조회합니다.</p>
             </div>
         </div>
-    </div>
+
+        <div class="stat-row">
+            <div class="stat-card"><div class="stat-val" id="sToday" style="color:var(--ds-accent)">0</div><div class="stat-label">오늘 활동</div></div>
+            <div class="stat-card"><div class="stat-val" id="sPublish" style="color:var(--ds-success-500)">0</div><div class="stat-label">발행 활동</div></div>
+            <div class="stat-card"><div class="stat-val" id="sConnect" style="color:var(--ds-accent-500)">0</div><div class="stat-label">신규 연동</div></div>
+            <div class="stat-card"><div class="stat-val" id="sPayment" style="color:var(--ds-warning-500)">0</div><div class="stat-label">결제 이벤트</div></div>
+        </div>
+
+        <div class="card">
+            <h2>🔍 필터</h2>
+            <div class="toolbar">
+                <input type="text" class="tb-input" placeholder="사용자 이메일 검색...">
+                <select class="tb-select">
+                    <option>모든 활동</option>
+                    <option>로그인</option>
+                    <option>발행</option>
+                    <option>SNS 연동</option>
+                    <option>삭제</option>
+                    <option>결제</option>
+                </select>
+                <select class="tb-select">
+                    <option>최근 1시간</option>
+                    <option>최근 24시간</option>
+                    <option>최근 7일</option>
+                    <option>최근 30일</option>
+                </select>
+            </div>
+
+            <div class="activity-feed">
+                <p style="padding:30px;text-align:center;color:var(--ds-text-tertiary);font-size:.84rem">로딩 중...</p>
+            </div>
+        </div>
+    </main>
     <script src="../js/secure-storage.js"></script>
     <script src="../js/auth-guard.js"></script>
     <script src="../js/supabase-admin.js"></script>
     <script>
-        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
-
         function formatRelativeTime(iso){
             if(!iso) return '-';
             var d = new Date(iso);
@@ -114,7 +101,7 @@
                 var activities = await SNSAdmin.listActivities({limit: 50});
                 if(!feed) return;
                 if(!activities || activities.length === 0){
-                    feed.innerHTML = '<p style="padding:30px;text-align:center;color:#94a3b8;font-size:.84rem">활동 로그가 없습니다.</p>';
+                    feed.innerHTML = '<p style="padding:30px;text-align:center;color:var(--ds-text-tertiary);font-size:.84rem">활동 로그가 없습니다.</p>';
                     return;
                 }
                 // 통계 집계
@@ -152,7 +139,7 @@
                 }).join('');
             } catch(err){
                 console.error('활동 로드 실패:', err);
-                if(feed) feed.innerHTML = '<div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;">⚠️ 개발 필요: user_activities 테이블 없음 (필요 작업: docs/supabase-admin-schema.sql 참고)</div>';
+                if(feed) feed.innerHTML = '<div class="dev-needed-badge" style="background:var(--ds-warning-bg);border:1px solid var(--ds-warning-500);color:var(--ds-warning-fg);padding:10px 14px;border-radius:8px;font-size:13px;font-weight:600;">⚠️ 개발 필요: user_activities 테이블 없음 (필요 작업: docs/supabase-admin-schema.sql 참고)</div>';
             }
         }
 
@@ -162,5 +149,7 @@
             await loadActivities();
         })();
     </script>
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell-admin.js"></script>
 </body>
 </html>
