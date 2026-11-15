@@ -12,52 +12,10 @@
     <!-- 디자인 시스템(DDS) + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
     <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
     <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
-        html,body{margin:0;background:var(--ds-bg-app)}
-        .ds-root{min-height:100dvh}
-        /* 상단바 */
-        .d-topbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;gap:14px;height:60px;padding:0 24px;background:var(--ds-bg-surface);border-bottom:1px solid var(--ds-border)}
-        .d-logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex:none}
-        .d-logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(145deg,var(--ds-primary-600),var(--ds-accent-500));display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px}
-        .d-logo-text{font-weight:800;font-size:15px;line-height:1.15;letter-spacing:-.01em;color:var(--ds-text-primary)}
-        .d-logo-text small{display:block;font-size:9px;font-weight:600;letter-spacing:.06em;color:var(--ds-text-tertiary)}
-        .d-switch{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 11px;border:1px solid var(--ds-border);border-radius:9px;background:var(--ds-bg-subtle);color:var(--ds-text-secondary);font-size:12px;font-weight:600;cursor:default}
-        .d-topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
-        .d-sel{height:34px;border-radius:8px;border:1px solid var(--ds-border);background:var(--ds-bg-subtle);color:var(--ds-text-primary);font-size:12px;font-weight:600;padding:0 8px;cursor:pointer}
-        .d-sel:focus{outline:none;border-color:var(--ds-accent);box-shadow:var(--ds-shadow-focus)}
-        /* 상단 네비 */
-        .d-nav{position:sticky;top:60px;z-index:89;display:flex;align-items:center;gap:1px;height:46px;padding:0 24px;background:var(--ds-bg-app);border-bottom:1px solid var(--ds-border);overflow-x:auto;scrollbar-width:none}
-        .d-nav::-webkit-scrollbar{display:none}
-        .d-nav-item{padding:0 13px;height:46px;display:inline-flex;align-items:center;color:var(--ds-text-secondary);font-size:13px;font-weight:600;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap}
-        .d-nav-item:hover{color:var(--ds-text-primary)}
-        .d-nav-item.is-active{color:var(--ds-text-primary);border-bottom-color:var(--ds-accent)}
-        .d-nav-right{margin-left:auto;display:flex;align-items:center;padding-left:10px}
-        .d-nav-more{display:inline-flex;align-items:center;gap:6px;background:transparent;border:0;color:var(--ds-text-secondary);font-size:13px;font-weight:700;cursor:pointer;padding:0 6px;height:46px}
-        .d-nav-more:hover{color:var(--ds-text-primary)}
-        /* 스크린 */
-        .d-screen{max-width:var(--ds-container-max);margin:0 auto;padding:24px}
-        .d-page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px;flex-wrap:wrap}
-        .d-page-head h1{margin:5px 0 8px}
-        .d-page-head p{max-width:720px;margin:0}
-        /* 드로어 */
-        .d-drawer{position:fixed;top:0;right:0;bottom:0;width:min(300px,86vw);background:var(--ds-bg-surface);border-left:1px solid var(--ds-border);z-index:1000;transform:translateX(100%);visibility:hidden;transition:transform .22s var(--ds-ease),visibility .22s var(--ds-ease);overflow-y:auto;box-shadow:var(--ds-shadow-lg)}
-        .d-drawer.open{transform:translateX(0);visibility:visible}
-        .d-drawer-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px;border-bottom:1px solid var(--ds-border)}
-        .d-drawer-email{font-size:13px;font-weight:700;color:var(--ds-text-primary)}
-        .d-drawer-plan{font-size:11px;color:var(--ds-text-tertiary);margin-top:2px}
-        .d-drawer-close{background:transparent;border:0;color:var(--ds-text-secondary);cursor:pointer;display:grid;place-items:center;width:34px;height:34px;border-radius:8px}
-        .d-drawer-close:hover{background:var(--ds-bg-hover);color:var(--ds-text-primary)}
-        .d-drawer-sec{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ds-text-tertiary);padding:14px 16px 4px}
-        .d-drawer a{display:flex;align-items:center;gap:9px;padding:10px 16px;color:var(--ds-text-secondary);text-decoration:none;font-size:14px;font-weight:600}
-        .d-drawer a:hover{background:var(--ds-bg-hover);color:var(--ds-text-primary)}
-        .d-overlay{position:fixed;inset:0;background:rgba(2,6,23,.6);z-index:999;opacity:0;pointer-events:none;transition:opacity .2s}
-        .d-overlay.show{opacity:1;pointer-events:auto}
-        /* 안내 노트 */
-        .d-note{display:flex;align-items:flex-start;gap:10px;padding:13px 15px;border:1px solid var(--ds-border);border-radius:10px;background:var(--ds-bg-subtle);color:var(--ds-text-secondary);font-size:13px;line-height:1.6;margin-bottom:16px}
-        .d-note .ds-icon{color:var(--ds-accent);flex:none;margin-top:1px}
-        .d-note.warn{border-color:var(--ds-warning-600);background:var(--ds-warning-bg);color:var(--ds-warning-fg)}
-        .d-note.warn .ds-icon{color:var(--ds-warning-fg)}
+        /* 공통 셸(상단바/좌측 사이드바/스크린/page-head/note/overlay)은 ds-shell.css. 아래는 화면 고유 + JS훅. */
         /* 뷰 전환 */
         .d-view{display:none}
         .d-view.is-active{display:block}
@@ -140,76 +98,15 @@
         /* 전체 목록 테이블은 ds-table 사용 */
         @media(max-width:1024px){ .d-kanban{overflow-x:auto} }
         @media(max-width:600px){
-            .d-topbar{padding:0 14px;gap:9px}.d-nav{padding:0 12px}.d-screen{padding:16px 14px}
-            .d-logo-text small,.d-switch{display:none}
             .d-form-grid{grid-template-columns:1fr}
-            .d-page-head h1{font-size:22px}
-            .d-sel{max-width:90px}
             .score-detail-row{flex-direction:column;align-items:flex-start}
             .score-breakdown{grid-template-columns:1fr 1fr}
             .d-kanban{grid-template-columns:repeat(5,200px)}
         }
     </style>
 </head>
-<body class="ds-root">
-    <!-- ===== 상단바 ===== -->
-    <header class="d-topbar">
-        <div class="d-logo" onclick="location.href='../index.html'">
-            <div class="d-logo-mark">D</div>
-            <div class="d-logo-text">DIVOOST SNS<small>AI MARKETING WORKSPACE</small></div>
-        </div>
-        <div class="d-switch"><i data-lucide="layout-grid" class="ds-icon ds-icon-sm"></i> HubOnTrade</div>
-        <div class="d-topbar-right">
-            <span class="ds-badge ds-badge-accent ds-badge-dot">DEMO</span>
-            <button class="ds-btn ds-btn-ghost ds-btn-icon" id="themeToggle" title="테마 전환" aria-label="테마 전환"><i data-lucide="sun" class="ds-icon"></i></button>
-            <button class="ds-btn ds-btn-primary" onclick="studioView('write')"><i data-lucide="plus" class="ds-icon"></i> 새 콘텐츠</button>
-        </div>
-    </header>
-
-    <!-- ===== 상단 네비 ===== -->
-    <nav class="d-nav" aria-label="업무 메뉴">
-        <a class="d-nav-item" href="../index.html">종합 현황</a>
-        <a class="d-nav-item" href="calendar.html">캘린더</a>
-        <a class="d-nav-item is-active" href="create.html">콘텐츠 스튜디오</a>
-        <a class="d-nav-item" href="ai-writer.html">AI 작성기</a>
-        <a class="d-nav-item" href="media.html">미디어</a>
-        <a class="d-nav-item" href="publish.html">포스팅</a>
-        <a class="d-nav-item" href="schedule.html">예약 발행</a>
-        <a class="d-nav-item" href="engagement.html">댓글/반응</a>
-        <a class="d-nav-item" href="analytics.html">분석 리포트</a>
-        <div class="d-nav-right">
-            <button class="d-nav-more" id="menuBtn"><i data-lucide="menu" class="ds-icon ds-icon-sm"></i> 전체 기능</button>
-        </div>
-    </nav>
-
-    <!-- ===== 전체 기능 드로어 (#sidebar: 기존 menuBtn 토글 JS 호환) ===== -->
-    <aside class="d-drawer" id="sidebar">
-        <div class="d-drawer-top">
-            <div><div class="d-drawer-email">divoost@user.com</div><div class="d-drawer-plan">체험플랜 사용 중</div></div>
-            <button class="d-drawer-close" onclick="document.getElementById('sidebar').classList.remove('open')" aria-label="닫기"><i data-lucide="x" class="ds-icon"></i></button>
-        </div>
-        <div class="d-drawer-sec">대시보드</div>
-        <a href="../index.html"><i data-lucide="home" class="ds-icon ds-icon-sm"></i> 종합 현황</a>
-        <a href="calendar.html"><i data-lucide="calendar" class="ds-icon ds-icon-sm"></i> 캘린더</a>
-        <div class="d-drawer-sec">콘텐츠 생성</div>
-        <a href="create.html"><i data-lucide="pen-line" class="ds-icon ds-icon-sm"></i> 콘텐츠 스튜디오</a>
-        <a href="ai-writer.html"><i data-lucide="sparkles" class="ds-icon ds-icon-sm"></i> AI 작성기</a>
-        <a href="media.html"><i data-lucide="image" class="ds-icon ds-icon-sm"></i> 미디어</a>
-        <a href="templates.html"><i data-lucide="layout-template" class="ds-icon ds-icon-sm"></i> 템플릿</a>
-        <div class="d-drawer-sec">포스팅 관리</div>
-        <a href="publish.html"><i data-lucide="send" class="ds-icon ds-icon-sm"></i> 포스팅</a>
-        <a href="schedule.html"><i data-lucide="calendar-clock" class="ds-icon ds-icon-sm"></i> 예약 발행</a>
-        <a href="history.html"><i data-lucide="history" class="ds-icon ds-icon-sm"></i> 발행 이력</a>
-        <div class="d-drawer-sec">인터렉션</div>
-        <a href="engagement.html"><i data-lucide="message-circle" class="ds-icon ds-icon-sm"></i> 댓글/반응</a>
-        <a href="listening.html"><i data-lucide="radar" class="ds-icon ds-icon-sm"></i> 소셜 리스닝</a>
-        <a href="analytics.html"><i data-lucide="bar-chart-3" class="ds-icon ds-icon-sm"></i> 분석 리포트</a>
-        <div class="d-drawer-sec">시스템</div>
-        <a href="settings.html"><i data-lucide="settings" class="ds-icon ds-icon-sm"></i> 설정</a>
-        <a href="billing.html"><i data-lucide="credit-card" class="ds-icon ds-icon-sm"></i> 요금제/크레딧</a>
-        <a href="safety-guide.html"><i data-lucide="shield-check" class="ds-icon ds-icon-sm"></i> 운영 가이드</a>
-    </aside>
-    <div class="d-overlay" onclick="document.getElementById('sidebar').classList.remove('open')"></div>
+<body class="ds-root" data-shell-active="create">
+    <!-- 공통 셸(좌측 사이드바/상단바)은 끝의 ds-shell.js가 주입 -->
 
     <!-- ===== 메인 스크린 ===== -->
     <main class="d-screen">
@@ -406,10 +303,6 @@
         </section>
     </main>
     <script>
-        document.getElementById('menuBtn').onclick = function () {
-            document.getElementById('sidebar').classList.toggle('open');
-        };
-
         /* ── Channel config ── */
         var CHANNEL_CONFIG = {
             facebook: {
@@ -1364,8 +1257,7 @@
     <script src="../js/i18n-common.js"></script>
     <script src="../js/i18n.js"></script>
 
-    <!-- DDS: 뷰 전환 + 드로어 + 아이콘(Lucide) + 테마 -->
-    <script src="../vendor/lucide/lucide.min.js"></script>
+    <!-- DDS: 뷰 전환(화면 고유) + 공통 셸(좌측 사이드바/상단바/드로어/테마/아이콘) -->
     <script>
         // 뷰 전환(작성/파이프라인/전체목록) — 기존 작성 폼 JS와 독립
         function studioView(v){
@@ -1377,36 +1269,8 @@
             });
             window.scrollTo({top:0,behavior:'smooth'});
         }
-        (function(){
-            // 드로어(전체 기능) 토글
-            var mb=document.getElementById('menuBtn'), sb=document.getElementById('sidebar'), ov=document.querySelector('.d-overlay'), cb=document.querySelector('.d-drawer-close');
-            function closeDrawer(){ if(sb)sb.classList.remove('open'); if(ov)ov.classList.remove('show'); }
-            if(mb&&sb) mb.onclick=function(){ var open=sb.classList.toggle('open'); if(ov)ov.classList.toggle('show',open); };
-            if(ov) ov.onclick=closeDrawer;
-            if(cb) cb.onclick=closeDrawer;
-            // 테마 복원/토글
-            var root=document.documentElement;
-            try{ var saved=localStorage.getItem('dds-theme'); if(saved) root.setAttribute('data-theme',saved); }catch(e){ /* 저장소 접근 불가: 기본 테마 유지 */ }
-            function syncIcons(){ if(window.lucide&&typeof window.lucide.createIcons==='function') window.lucide.createIcons(); }
-            var toggle=document.getElementById('themeToggle');
-            function updateToggleIcon(){
-                if(!toggle) return;
-                var icon=toggle.querySelector('[data-lucide]');
-                if(icon){ icon.setAttribute('data-lucide', root.getAttribute('data-theme')==='dark'?'sun':'moon'); }
-                syncIcons();
-            }
-            if(toggle){
-                toggle.addEventListener('click', function(){
-                    var next=root.getAttribute('data-theme')==='dark'?'light':'dark';
-                    root.setAttribute('data-theme', next);
-                    try{ localStorage.setItem('dds-theme', next); }catch(e){ /* 저장 실패 무시 */ }
-                    updateToggleIcon();
-                });
-            }
-            syncIcons();
-            updateToggleIcon();
-            window.addEventListener('load', syncIcons);
-        })();
     </script>
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
 </body>
 </html>
