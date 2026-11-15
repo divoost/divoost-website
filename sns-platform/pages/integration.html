@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>EZworks 연동 | DIVOOST SNS</title>
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .intg-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--ds-space-4);margin-bottom:var(--ds-space-6)}
+        .intg-status-card{padding:var(--ds-space-5)}
+        .intg-status-head{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--ds-space-3);margin-bottom:var(--ds-space-3)}
+        .intg-status-title{font-size:var(--ds-text-base);font-weight:var(--ds-weight-bold);color:var(--ds-text-primary);margin:0}
+        .intg-dir{display:inline-flex;align-items:center;gap:6px;font-size:var(--ds-text-2xs);font-weight:var(--ds-weight-semibold);color:var(--ds-text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:var(--ds-space-2)}
+        .intg-dir .ds-icon{color:var(--ds-accent)}
+        .intg-status-desc{font-size:var(--ds-text-sm);color:var(--ds-text-secondary);line-height:var(--ds-leading-normal);margin:0}
+        .intg-section-title{font-size:var(--ds-text-lg);font-weight:var(--ds-weight-bold);color:var(--ds-text-primary);margin:0 0 var(--ds-space-4)}
+        .intg-table-card{padding:0;overflow-x:auto;margin-bottom:var(--ds-space-6)}
+        .intg-table-card .ds-table{min-width:640px}
+        .intg-ev{font-family:var(--ds-font-mono,ui-monospace,SFMono-Regular,Menlo,monospace);font-size:var(--ds-text-xs);color:var(--ds-accent-soft-fg);white-space:nowrap}
+        .intg-actions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ds-space-3);margin-bottom:var(--ds-space-3)}
+        .intg-hint{font-size:var(--ds-text-xs);color:var(--ds-text-tertiary);line-height:var(--ds-leading-normal);max-width:720px}
+        .intg-hint code{font-family:var(--ds-font-mono,ui-monospace,SFMono-Regular,Menlo,monospace);font-size:var(--ds-text-2xs);background:var(--ds-bg-subtle);color:var(--ds-text-secondary);padding:1px 5px;border-radius:5px}
+        .intg-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(12px);max-width:92vw;background:var(--ds-bg-surface);color:var(--ds-text-primary);border:1px solid var(--ds-border-strong);border-radius:var(--ds-radius-xl);box-shadow:var(--ds-shadow-md);padding:12px 16px;font-size:var(--ds-text-sm);display:flex;align-items:center;gap:9px;opacity:0;pointer-events:none;transition:opacity .2s var(--ds-ease),transform .2s var(--ds-ease);z-index:1000}
+        .intg-toast.is-show{opacity:1;transform:translateX(-50%) translateY(0)}
+        .intg-toast .ds-icon{color:var(--ds-accent);flex:none}
+        @media(max-width:768px){.intg-grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body class="ds-root" data-shell-active="integration">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">EZworks 연동</h1>
+                <p class="ds-body">SNS↔EZworks 이벤트 흐름을 연결합니다. 콘텐츠 승인·게시 완료·인터랙션을 업무로 연동합니다.</p>
+            </div>
+        </div>
+
+        <div class="d-note">
+            <i data-lucide="info" class="ds-icon ds-icon-sm"></i>
+            <span>구조 시연용 데모입니다. 인증 위임·서명된 서버 이벤트·재처리/감사는 백엔드 연동 후 연결됩니다. 양쪽 시스템 동일 필드 양방향 쓰기는 금지하며 이벤트 기반 단방향으로 처리합니다.</span>
+        </div>
+
+        <!-- (1) 연동 상태 카드 -->
+        <div class="intg-grid" id="statusGrid"></div>
+
+        <!-- (2) 이벤트 카탈로그 -->
+        <h2 class="intg-section-title">이벤트 카탈로그</h2>
+        <div class="ds-card intg-table-card">
+            <table class="ds-table">
+                <thead>
+                    <tr><th>이벤트</th><th>생성</th><th>수신</th><th>처리</th></tr>
+                </thead>
+                <tbody id="eventRows"></tbody>
+            </table>
+        </div>
+
+        <!-- (3) 이벤트 테스트 발송 -->
+        <div class="intg-actions">
+            <button type="button" class="ds-btn ds-btn-secondary" id="btnTestEmit">
+                <i data-lucide="send" class="ds-icon ds-icon-sm"></i> 이벤트 테스트 발송
+            </button>
+        </div>
+        <p class="intg-hint">각 이벤트는 <code>event_id</code>·<code>tenant_id</code>·<code>signature</code>·<code>idempotency_key</code>를 포함하여 발송됩니다. (서명·재처리 보장은 백엔드 연동 후 활성화)</p>
+    </main>
+
+    <div class="intg-toast" id="intgToast" role="status" aria-live="polite">
+        <i data-lucide="check-circle-2" class="ds-icon ds-icon-sm"></i>
+        <span id="intgToastMsg"></span>
+    </div>
+
+    <script>
+        // 사용자 입력은 없지만, 데모 데이터도 DOM 삽입 전 이스케이프(패턴 유지).
+        function escapeHtml(str){
+            return String(str == null ? '' : str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        // (1) 연동 상태 카드 데이터
+        var STATUS_CARDS = [
+            {
+                title: '콘텐츠 승인 연결',
+                direction: 'DIVOOST → EZworks',
+                badge: '설계됨',
+                badgeClass: 'ds-badge-warning',
+                desc: '콘텐츠 승인 요청 시 EZworks 결재/업무 통지'
+            },
+            {
+                title: '게시 완료 → 업무일지',
+                direction: 'SNS → EZworks',
+                badge: '연동 전',
+                badgeClass: '',
+                desc: '게시 완료 이벤트를 EZworks 업무일지로 기록'
+            }
+        ];
+
+        // (2) 이벤트 카탈로그(목업 기준)
+        var EVENT_CATALOG = [
+            ['content.approval_requested.v1', 'DIVOOST', 'EZworks(선택)', '결재·업무 통지'],
+            ['content.approved.v1', 'DIVOOST or EZworks', 'DIVOOST', '승인 버전 확정·게시 준비'],
+            ['publish.completed.v1', '게시 워커', 'DIVOOST·EZworks', 'remote_post_id·URL·결과 등록'],
+            ['publish.failed.v1', '게시 워커', 'DIVOOST·EZworks', '오류 분류·담당자 알림'],
+            ['interaction.received.v1', 'SNS 웹훅', 'DIVOOST·EZworks(선택)', 'CS 분류·업무 생성'],
+            ['ai.job.completed.v1', 'AI 워커', 'DIVOOST·EZworks(선택)', '결과·비용·승인 요청']
+        ];
+
+        function renderStatusCards(){
+            var html = '';
+            for (var i = 0; i < STATUS_CARDS.length; i++) {
+                var c = STATUS_CARDS[i];
+                var badgeCls = 'ds-badge' + (c.badgeClass ? ' ' + c.badgeClass : '');
+                html += '<div class="ds-card intg-status-card">' +
+                    '<div class="intg-status-head">' +
+                        '<h3 class="intg-status-title">' + escapeHtml(c.title) + '</h3>' +
+                        '<span class="' + badgeCls + '">' + escapeHtml(c.badge) + '</span>' +
+                    '</div>' +
+                    '<div class="intg-dir"><i data-lucide="arrow-right" class="ds-icon ds-icon-xs"></i>' + escapeHtml(c.direction) + '</div>' +
+                    '<p class="intg-status-desc">' + escapeHtml(c.desc) + '</p>' +
+                '</div>';
+            }
+            document.getElementById('statusGrid').innerHTML = html;
+        }
+
+        function renderEventRows(){
+            var html = '';
+            for (var i = 0; i < EVENT_CATALOG.length; i++) {
+                var row = EVENT_CATALOG[i];
+                html += '<tr>' +
+                    '<td><span class="intg-ev">' + escapeHtml(row[0]) + '</span></td>' +
+                    '<td>' + escapeHtml(row[1]) + '</td>' +
+                    '<td>' + escapeHtml(row[2]) + '</td>' +
+                    '<td>' + escapeHtml(row[3]) + '</td>' +
+                '</tr>';
+            }
+            document.getElementById('eventRows').innerHTML = html;
+        }
+
+        var toastTimer = null;
+        function showToast(msg){
+            var toast = document.getElementById('intgToast');
+            document.getElementById('intgToastMsg').textContent = msg;
+            toast.classList.add('is-show');
+            if (toastTimer) { clearTimeout(toastTimer); }
+            toastTimer = setTimeout(function(){ toast.classList.remove('is-show'); }, 3200);
+        }
+
+        function setupTestEmit(){
+            document.getElementById('btnTestEmit').addEventListener('click', function(){
+                // 데모: 실제 발송 없음. event_id·tenant_id·signature·idempotency_key 포함 안내만.
+                showToast('데모: content.approved.v1 테스트 이벤트를 발송 큐에 올렸습니다. (실제 발송은 백엔드 연동 후)');
+            });
+        }
+
+        renderStatusCards();
+        renderEventRows();
+        setupTestEmit();
+    </script>
+
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) { navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
+    </script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
+</body>
+</html>
