@@ -1,100 +1,88 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>콘텐츠 검토 | 관리자</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- 디자인 시스템(DDS) + 관리자 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
-        body{background:#f1f5f9}
-        .admin-bar{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;padding:8px 24px;font-size:.78rem;font-weight:600;text-align:center}
-        .admin-bar a{color:#fef2f2;margin-left:10px}
-        .sidebar{background:#0f172a !important}.sidebar-logo .logo-text{color:#fff !important}.sidebar-logo .logo-text small{color:#fca5a5 !important}.nav-title{color:#94a3b8 !important}.nav-link{color:#cbd5e1 !important}.nav-link:hover{background:rgba(255,255,255,.06) !important;color:#fff !important}.nav-link.active{background:rgba(220,38,38,.2) !important;color:#fca5a5 !important}
-
-        .card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
-        .card h2{font-size:1rem;margin-bottom:14px}
+        .card{background:var(--ds-bg-surface);border-radius:14px;border:1px solid var(--ds-border);padding:20px;margin-bottom:16px}
+        .card h2{font-size:1rem;margin-bottom:14px;color:var(--ds-text-primary)}
         .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
-        .stat-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:16px;text-align:center}
-        .stat-val{font-size:1.5rem;font-weight:800}
-        .stat-label{font-size:.72rem;color:#94a3b8;margin-top:2px}
+        .stat-card{background:var(--ds-bg-surface);border-radius:12px;border:1px solid var(--ds-border);padding:16px;text-align:center}
+        .stat-val{font-size:1.5rem;font-weight:800;color:var(--ds-text-primary)}
+        .stat-label{font-size:.72rem;color:var(--ds-text-tertiary);margin-top:2px}
 
         .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-        .f-chip{padding:7px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#fff;font-size:.78rem;cursor:pointer;font-weight:600;color:#475569}
-        .f-chip.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
-        .f-chip.danger.active{background:#dc2626;border-color:#dc2626}
+        .f-chip{padding:7px 14px;border-radius:20px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);font-size:.78rem;cursor:pointer;font-weight:600;color:var(--ds-text-secondary)}
+        .f-chip.active{background:var(--ds-accent);color:#fff;border-color:var(--ds-accent)}
+        .f-chip.danger.active{background:var(--ds-danger-600);border-color:var(--ds-danger-600)}
 
-        .content-item{display:flex;gap:14px;padding:16px;border-radius:10px;background:#f8fafc;border:1px solid #e2e8f0;margin-bottom:10px}
-        .content-item.flagged{background:#fef2f2;border-color:#fca5a5}
-        .content-thumb{width:80px;height:80px;border-radius:8px;background:#e2e8f0;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+        .content-item{display:flex;gap:14px;padding:16px;border-radius:10px;background:var(--ds-bg-subtle);border:1px solid var(--ds-border);margin-bottom:10px}
+        .content-item.flagged{background:var(--ds-danger-bg);border-color:var(--ds-danger-500)}
+        .content-thumb{width:80px;height:80px;border-radius:8px;background:var(--ds-bg-subtle);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
         .content-body{flex:1;min-width:0}
         .content-header{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
-        .content-user{font-weight:700;font-size:.85rem}
-        .content-platform{font-size:.66rem;padding:2px 8px;border-radius:6px;background:#dbeafe;color:#1e40af;font-weight:700}
-        .content-time{font-size:.7rem;color:#94a3b8;margin-left:auto}
-        .content-text{font-size:.84rem;line-height:1.55;color:#334155;margin-bottom:8px}
+        .content-user{font-weight:700;font-size:.85rem;color:var(--ds-text-primary)}
+        .content-platform{font-size:.66rem;padding:2px 8px;border-radius:6px;background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg);font-weight:700}
+        .content-time{font-size:.7rem;color:var(--ds-text-tertiary);margin-left:auto}
+        .content-text{font-size:.84rem;line-height:1.55;color:var(--ds-text-secondary);margin-bottom:8px}
         .content-flags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
-        .flag-tag{font-size:.68rem;padding:2px 8px;border-radius:10px;background:#fee2e2;color:#b91c1c;font-weight:700}
+        .flag-tag{font-size:.68rem;padding:2px 8px;border-radius:10px;background:var(--ds-danger-bg);color:var(--ds-danger-fg);font-weight:700}
         .content-actions{display:flex;gap:6px}
-        .ca-btn{padding:6px 12px;border-radius:6px;border:1px solid #e2e8f0;background:#fff;font-size:.74rem;cursor:pointer;font-weight:600}
-        .ca-btn.approve{background:#10b981;color:#fff;border-color:#10b981}
-        .ca-btn.reject{background:#dc2626;color:#fff;border-color:#dc2626}
-        .ca-btn.warn{background:#f59e0b;color:#fff;border-color:#f59e0b}
+        .ca-btn{padding:6px 12px;border-radius:6px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);font-size:.74rem;cursor:pointer;font-weight:600;color:var(--ds-text-primary)}
+        .ca-btn.approve{background:var(--ds-success-500);color:#fff;border-color:var(--ds-success-500)}
+        .ca-btn.reject{background:var(--ds-danger-600);color:#fff;border-color:var(--ds-danger-600)}
+        .ca-btn.warn{background:var(--ds-warning-500);color:#fff;border-color:var(--ds-warning-500)}
     </style>
 </head>
-<body>
-    <div class="admin-bar">🛡 관리자 → <a href="../index.html">사용자 대시보드로</a></div>
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo"><div class="logo-icon">🛡</div><div class="logo-text">관리자 콘솔<small>DIVOOST SNS Admin</small></div></div>
-            <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">개요</div><a href="index.html" class="nav-link"><span>🏠</span> 관리자 대시보드</a></div>
-                <div class="nav-section"><div class="nav-title">회원 관리</div><a href="users.html" class="nav-link"><span>👥</span> 회원 목록</a><a href="subscriptions.html" class="nav-link"><span>💳</span> 구독 관리</a><a href="user-activity.html" class="nav-link"><span>📊</span> 활동 로그</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 운영</div><a href="content-moderation.html" class="nav-link active"><span>📝</span> 콘텐츠 검토</a><a href="reports.html" class="nav-link"><span>🚨</span> 신고/제재</a></div>
-                <div class="nav-section"><div class="nav-title">시스템 운영</div><a href="api-monitor.html" class="nav-link"><span>📡</span> API 사용량</a><a href="system-health.html" class="nav-link"><span>💚</span> 시스템 상태</a><a href="notifications.html" class="nav-link"><span>🔔</span> 공지 관리</a></div>
-                <div class="nav-section"><div class="nav-title">설정</div><a href="admin-settings.html" class="nav-link"><span>⚙️</span> 관리자 설정</a><a href="audit-log.html" class="nav-link"><span>📜</span> 감사 로그</a></div>
-            </nav>
-        </aside>
-        <div class="main-content">
-            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">📝 콘텐츠 검토</div><div class="top-bar-sub">AI 자동 감지 + 수동 검토</div></div></div></header>
-            <div class="content">
-
-                <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
-                    ⚠️ 개발 필요: AI 콘텐츠 자동 검토는 백엔드 미구현 (필요한 작업: posts 테이블에 moderation_status 컬럼 + OpenAI Moderation API 연동 Edge Function + flagged_posts 테이블)
-                </div>
-
-                <div class="stat-row">
-                    <div class="stat-card"><div class="stat-val" id="sPending" style="color:#94a3b8">-</div><div class="stat-label">검토 대기</div></div>
-                    <div class="stat-card"><div class="stat-val" id="sApproved" style="color:#94a3b8">-</div><div class="stat-label">승인됨 (전체 발행)</div></div>
-                    <div class="stat-card"><div class="stat-val" id="sBlocked" style="color:#94a3b8">-</div><div class="stat-label">차단됨</div></div>
-                    <div class="stat-card"><div class="stat-val" style="color:#94a3b8">-</div><div class="stat-label">AI 정확도</div></div>
-                </div>
-
-                <div class="card">
-                    <h2>📝 검토 대상 콘텐츠</h2>
-                    <p style="color:#94a3b8;font-size:.84rem">데이터 없음 (콘텐츠 모더레이션 백엔드 미연동)</p>
-                </div>
-
-                <div class="card">
-                    <h2>🤖 자동 검토 규칙 (계획)</h2>
-                    <p style="font-size:.84rem;color:#475569;line-height:1.7">
-                        AI가 검사할 예정인 항목:
-                        <br>• <strong>스팸/피싱</strong>: 의심스러운 URL, 과도한 이모지, 대문자 남용
-                        <br>• <strong>욕설/혐오</strong>: 부적절한 언어 필터링
-                        <br>• <strong>중복 콘텐츠</strong>: 동일/유사 콘텐츠 다중 발행
-                        <br>• <strong>대량 발송</strong>: 분당 / 시간당 발행 한도 초과
-                        <br>• <strong>저작권 위반</strong>: 알려진 저작권 콘텐츠 매칭
-                        <br>• <strong>외부 링크 검증</strong>: 의심 도메인 차단
-                    </p>
-                </div>
+<body class="ds-root" data-shell-active="content-moderation">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST SNS · ADMIN</div>
+                <h1 class="ds-h1">콘텐츠 검토</h1>
+                <p class="ds-body">신고·검토 대상 콘텐츠를 확인합니다.</p>
             </div>
         </div>
-    </div>
+
+        <div class="dev-needed-badge" style="background:var(--ds-warning-bg);border:1px solid var(--ds-warning-500);color:var(--ds-warning-fg);padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+            ⚠️ 개발 필요: AI 콘텐츠 자동 검토는 백엔드 미구현 (필요한 작업: posts 테이블에 moderation_status 컬럼 + OpenAI Moderation API 연동 Edge Function + flagged_posts 테이블)
+        </div>
+
+        <div class="stat-row">
+            <div class="stat-card"><div class="stat-val" id="sPending" style="color:var(--ds-text-tertiary)">-</div><div class="stat-label">검토 대기</div></div>
+            <div class="stat-card"><div class="stat-val" id="sApproved" style="color:var(--ds-text-tertiary)">-</div><div class="stat-label">승인됨 (전체 발행)</div></div>
+            <div class="stat-card"><div class="stat-val" id="sBlocked" style="color:var(--ds-text-tertiary)">-</div><div class="stat-label">차단됨</div></div>
+            <div class="stat-card"><div class="stat-val" style="color:var(--ds-text-tertiary)">-</div><div class="stat-label">AI 정확도</div></div>
+        </div>
+
+        <div class="card">
+            <h2 class="d-sect-t">📝 검토 대상 콘텐츠</h2>
+            <p style="color:var(--ds-text-tertiary);font-size:.84rem">데이터 없음 (콘텐츠 모더레이션 백엔드 미연동)</p>
+        </div>
+
+        <div class="card">
+            <h2 class="d-sect-t">🤖 자동 검토 규칙 (계획)</h2>
+            <p style="font-size:.84rem;color:var(--ds-text-secondary);line-height:1.7">
+                AI가 검사할 예정인 항목:
+                <br>• <strong>스팸/피싱</strong>: 의심스러운 URL, 과도한 이모지, 대문자 남용
+                <br>• <strong>욕설/혐오</strong>: 부적절한 언어 필터링
+                <br>• <strong>중복 콘텐츠</strong>: 동일/유사 콘텐츠 다중 발행
+                <br>• <strong>대량 발송</strong>: 분당 / 시간당 발행 한도 초과
+                <br>• <strong>저작권 위반</strong>: 알려진 저작권 콘텐츠 매칭
+                <br>• <strong>외부 링크 검증</strong>: 의심 도메인 차단
+            </p>
+        </div>
+    </main>
     <script src="../js/secure-storage.js"></script>
     <script src="../js/auth-guard.js"></script>
     <script src="../js/supabase-admin.js"></script>
     <script>
-        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
         (async function(){
             var ok = await SNSAdmin.requireAdmin();
             if(!ok) return;
@@ -102,10 +90,14 @@
                 var stats = await SNSAdmin.getPostStats();
                 if(stats){
                     document.getElementById('sApproved').textContent = stats.published || 0;
-                    document.getElementById('sApproved').style.color = '#10b981';
+                    document.getElementById('sApproved').style.color = 'var(--ds-success-500)';
                 }
             } catch(e){ console.error(e); }
         })();
     </script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell-admin.js"></script>
 </body>
 </html>
