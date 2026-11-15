@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>승인함 | DIVOOST SNS</title>
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .ap-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--ds-space-3);margin-bottom:var(--ds-space-5)}
+        .ap-list{display:flex;flex-direction:column;gap:var(--ds-space-3)}
+        .ap-card{padding:var(--ds-space-5)}
+        .ap-card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:var(--ds-space-4)}
+        .ap-main{flex:1;min-width:0}
+        .ap-badges{display:flex;align-items:center;gap:var(--ds-space-2);flex-wrap:wrap;margin-bottom:var(--ds-space-2)}
+        .ap-title{font-size:var(--ds-text-base);font-weight:var(--ds-weight-bold);color:var(--ds-text-primary);margin:0 0 var(--ds-space-1)}
+        .ap-meta{font-size:var(--ds-text-xs);color:var(--ds-text-tertiary);margin-bottom:var(--ds-space-2)}
+        .ap-meta strong{color:var(--ds-text-secondary);font-weight:var(--ds-weight-semibold)}
+        .ap-comment{font-size:var(--ds-text-sm);color:var(--ds-text-secondary);line-height:var(--ds-leading-normal);background:var(--ds-bg-subtle);border:1px solid var(--ds-border-subtle);border-radius:var(--ds-radius-md);padding:var(--ds-space-3)}
+        .ap-date{font-size:var(--ds-text-2xs);color:var(--ds-text-tertiary)}
+        .ap-actions{display:flex;flex-direction:column;gap:var(--ds-space-2);flex-shrink:0;min-width:120px}
+        .ap-actions .ds-btn{width:100%}
+        .ap-status{display:none}
+        .ap-empty{text-align:center;padding:var(--ds-space-8) var(--ds-space-5);color:var(--ds-text-tertiary);font-size:var(--ds-text-sm)}
+        @media(max-width:768px){
+            .ap-stats{grid-template-columns:1fr}
+            .ap-card-top{flex-direction:column}
+            .ap-actions{width:100%;min-width:0}
+        }
+    </style>
+</head>
+<body class="ds-root" data-shell-active="approvals">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">승인함</h1>
+                <p class="ds-body">콘텐츠·광고·KOC 요청을 검토하고 승인·수정요청·반려합니다.</p>
+            </div>
+        </div>
+
+        <div class="d-note">
+            <i data-lucide="info" class="ds-icon ds-icon-sm"></i>
+            <span>구조 시연용 데모입니다. 승인 차수·위임·통지·EZworks 연동은 백엔드 연동 후 연결됩니다. 승인이 곧 게시가 아니며 각 상태는 별도로 관리됩니다.</span>
+        </div>
+
+        <div class="ap-stats">
+            <div class="ds-stat"><div class="ds-stat-label">승인 대기</div><div class="ds-stat-value" id="statPending">0</div></div>
+            <div class="ds-stat"><div class="ds-stat-label">오늘 처리</div><div class="ds-stat-value" id="statDone">0</div></div>
+            <div class="ds-stat"><div class="ds-stat-label">평균 대기</div><div class="ds-stat-value" id="statAvg">—</div></div>
+        </div>
+
+        <div class="ap-list" id="apList"></div>
+    </main>
+
+    <script>
+        // 승인 요청 데모 데이터 (백엔드 연동 전 구조 시연용)
+        var TYPE_META = {
+            content:      { label: '콘텐츠',     badge: 'ds-badge-accent' },
+            ad:           { label: '광고',       badge: 'ds-badge-warning' },
+            influencer:   { label: '인플루언서', badge: 'ds-badge' }
+        };
+        var STATUS_META = {
+            approved:  { label: '승인됨',   badge: 'ds-badge-success' },
+            revision:  { label: '수정요청', badge: 'ds-badge-warning' },
+            rejected:  { label: '반려됨',   badge: 'ds-badge-danger' }
+        };
+
+        var requests = [
+            { id: 'req-1', type: 'content',    title: '피부 고민 15초 솔루션',  brand: 'PharmTree Vietnam', owner: 'Linh', comment: '효능 표현 검토 후 승인', date: '오늘',  status: null },
+            { id: 'req-2', type: 'ad',         title: '11월 광고 예산 변경',    brand: 'PharmTree Vietnam', owner: 'Minh', comment: '추가 예산 ₩200,000 제안', date: '오늘',  status: null },
+            { id: 'req-3', type: 'influencer', title: '베트남 KOC 샘플 승인',   brand: 'PharmTree Vietnam', owner: 'Linh', comment: '샘플 3세트',          date: '어제',  status: null }
+        ];
+
+        function escapeHtml(s){
+            var div = document.createElement('div');
+            div.textContent = (s === null || s === undefined) ? '' : String(s);
+            return div.innerHTML;
+        }
+
+        function renderList(){
+            var pending = 0, done = 0;
+            var i;
+            for(i = 0; i < requests.length; i++){
+                if(requests[i].status){ done++; } else { pending++; }
+            }
+            document.getElementById('statPending').textContent = pending;
+            document.getElementById('statDone').textContent = done;
+
+            var list = document.getElementById('apList');
+            if(requests.length > 0 && pending === 0){
+                list.innerHTML = '<div class="ds-card ap-empty">모든 승인 요청을 처리했습니다. 새 요청이 도착하면 여기에 표시됩니다.</div>';
+                return;
+            }
+
+            var html = '';
+            for(i = 0; i < requests.length; i++){
+                html += buildCard(requests[i]);
+            }
+            list.innerHTML = html;
+        }
+
+        function buildCard(req){
+            var typeMeta = TYPE_META[req.type] || { label: req.type, badge: 'ds-badge' };
+            var statusHtml = '';
+            var actionsHtml = '';
+
+            if(req.status){
+                var sm = STATUS_META[req.status];
+                if(sm){
+                    statusHtml = '<span class="ds-badge ' + sm.badge + '">' + escapeHtml(sm.label) + '</span>';
+                }
+            } else {
+                actionsHtml =
+                    '<div class="ap-actions">' +
+                        '<button class="ds-btn ds-btn-primary ds-btn-sm" onclick="processRequest(\'' + req.id + '\',\'approved\')">승인</button>' +
+                        '<button class="ds-btn ds-btn-secondary ds-btn-sm" onclick="processRequest(\'' + req.id + '\',\'revision\')">수정 요청</button>' +
+                        '<button class="ds-btn ds-btn-danger ds-btn-sm" onclick="processRequest(\'' + req.id + '\',\'rejected\')">반려</button>' +
+                    '</div>';
+            }
+
+            return '<div class="ds-card ap-card" id="' + req.id + '">' +
+                '<div class="ap-card-top">' +
+                    '<div class="ap-main">' +
+                        '<div class="ap-badges">' +
+                            '<span class="ds-badge ' + typeMeta.badge + '">' + escapeHtml(typeMeta.label) + '</span>' +
+                            statusHtml +
+                            '<span class="ap-date">' + escapeHtml(req.date) + '</span>' +
+                        '</div>' +
+                        '<h2 class="ap-title">' + escapeHtml(req.title) + '</h2>' +
+                        '<div class="ap-meta">브랜드 <strong>' + escapeHtml(req.brand) + '</strong> · 담당 <strong>' + escapeHtml(req.owner) + '</strong></div>' +
+                        '<div class="ap-comment">' + escapeHtml(req.comment) + '</div>' +
+                    '</div>' +
+                    actionsHtml +
+                '</div>' +
+            '</div>';
+        }
+
+        window.processRequest = function(id, status){
+            var i;
+            for(i = 0; i < requests.length; i++){
+                if(requests[i].id === id){
+                    requests[i].status = status;
+                    break;
+                }
+            }
+            renderList();
+            if(window.lucide && typeof window.lucide.createIcons === 'function'){
+                window.lucide.createIcons();
+            }
+        };
+
+        renderList();
+    </script>
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script>
+        if("serviceWorker" in navigator){ navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
+    </script>
+    <script src="../js/i18n-auto.js"></script>
+    <script src="../js/i18n-common.js"></script>
+    <script src="../js/i18n.js"></script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
+</body>
+</html>

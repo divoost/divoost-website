@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>고객사·조직 | DIVOOST SNS</title>
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        /* 화면 전용 스타일 — 전부 --ds-* 토큰 사용(하드코딩 색상 금지) */
+        .org-switch-row{display:flex;align-items:center;gap:var(--ds-space-3);flex-wrap:wrap;margin-bottom:var(--ds-space-4)}
+        .org-switch-label{font-size:var(--ds-text-xs);font-weight:var(--ds-weight-semibold);color:var(--ds-text-tertiary)}
+        .org-scope-note{display:flex;align-items:center;gap:8px;font-size:var(--ds-text-sm);color:var(--ds-text-secondary);margin-bottom:var(--ds-space-6);padding:10px 13px;border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);background:var(--ds-bg-subtle)}
+        .org-scope-note .ds-icon{color:var(--ds-accent);flex:none}
+        .org-section-title{font-size:var(--ds-text-lg);font-weight:var(--ds-weight-bold);color:var(--ds-text-primary);margin:var(--ds-space-6) 0 var(--ds-space-3);display:flex;align-items:center;gap:8px}
+        .org-section-title .ds-icon{color:var(--ds-text-tertiary)}
+        .org-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--ds-space-4)}
+        .org-card-pad{padding:var(--ds-space-5)}
+        .org-top{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--ds-space-2)}
+        .org-brand-name{font-size:var(--ds-text-lg);font-weight:var(--ds-weight-bold);color:var(--ds-text-primary);line-height:var(--ds-leading-snug)}
+        .org-client{font-size:var(--ds-text-xs);font-weight:var(--ds-weight-semibold);color:var(--ds-text-tertiary);margin-top:4px;display:flex;align-items:center;gap:5px}
+        .org-counts{display:flex;flex-wrap:wrap;gap:var(--ds-space-2);margin-top:var(--ds-space-4);padding-top:var(--ds-space-4);border-top:1px solid var(--ds-border-subtle)}
+        .org-count-item{display:flex;align-items:center;gap:6px;font-size:var(--ds-text-xs);color:var(--ds-text-secondary)}
+        .org-count-item .ds-icon{color:var(--ds-text-tertiary)}
+        .org-table-card{padding:0;overflow:hidden}
+        .org-table-wrap{overflow-x:auto}
+        .org-role{font-weight:var(--ds-weight-bold);color:var(--ds-text-primary);white-space:nowrap}
+        .org-scope-cell{color:var(--ds-text-secondary);line-height:var(--ds-leading-normal)}
+        @media(max-width:768px){
+            .org-grid{grid-template-columns:1fr}
+        }
+    </style>
+</head>
+<body class="ds-root" data-shell-active="organization">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">고객사 · 조직</h1>
+                <p class="ds-body">고객사→브랜드→채널 계층과 역할별 접근 범위를 관리합니다.</p>
+            </div>
+            <button class="ds-btn ds-btn-primary"><i data-lucide="plus" class="ds-icon ds-icon-sm"></i> 브랜드 등록</button>
+        </div>
+
+        <div class="d-note">
+            <i data-lucide="info" class="ds-icon ds-icon-sm"></i>
+            <div>구조 시연용 데모입니다. 다중 테넌트 계층·SSO·RLS·SCIM은 백엔드 연동 후 연결됩니다. 권한은 tenant+workspace+brand+country/team+권한+리소스를 모두 확인합니다.</div>
+        </div>
+
+        <!-- 역할 전환 세그먼트(데모) — 클릭 시 상단 안내 문구만 변경 -->
+        <div class="org-switch-row">
+            <span class="org-switch-label">역할 전환(데모)</span>
+            <div class="ds-segment" role="tablist">
+                <button class="ds-segment-item is-active" id="segAdmin" onclick="switchRole('admin')">운영 관리자</button>
+                <button class="ds-segment-item" id="segManager" onclick="switchRole('manager')">브랜드 매니저</button>
+                <button class="ds-segment-item" id="segClient" onclick="switchRole('client')">외부 고객</button>
+            </div>
+        </div>
+        <div class="org-scope-note" id="scopeNote"></div>
+
+        <!-- 브랜드 카드 그리드 -->
+        <div class="org-section-title"><i data-lucide="building-2" class="ds-icon ds-icon-sm"></i> 브랜드</div>
+        <div class="org-grid" id="brandGrid"></div>
+
+        <!-- 역할·접근 범위 표 -->
+        <div class="org-section-title"><i data-lucide="shield-check" class="ds-icon ds-icon-sm"></i> 역할 · 접근 범위</div>
+        <div class="ds-card org-table-card">
+            <div class="org-table-wrap">
+                <table class="ds-table">
+                    <thead>
+                        <tr><th>역할</th><th>접근 범위 요약</th></tr>
+                    </thead>
+                    <tbody id="roleTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 정적 데모 데이터(외부 입력 아님). ES5 호환(var/function). 출력은 escapeHtml로 이스케이프.
+        function escapeHtml(s) {
+            if (s === null || typeof s === 'undefined') return '';
+            return String(s)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        var BRANDS = [
+            { name: 'PharmTree Vietnam', country: 'VN', client: 'PharmTree', channels: 3, campaigns: 2 },
+            { name: 'K-CLEAN FESTA', country: 'VN', client: 'K-CLEAN', channels: 2, campaigns: 1 },
+            { name: 'DIVOOST Studio', country: 'KR', client: 'DIVOOST', channels: 4, campaigns: 0 },
+            { name: 'Global Beauty', country: 'CN', client: 'Global Beauty', channels: 2, campaigns: 1 }
+        ];
+
+        var ROLES = [
+            { role: 'Owner / Admin', scope: '소속 tenant의 브랜드·사용자·과금·승인 관리(타 tenant 접근 불가)' },
+            { role: 'Brand Manager', scope: '배정 브랜드/국가 콘텐츠 작성·승인 요청·실적 확인' },
+            { role: 'Creator / Editor', scope: '할당 콘텐츠 편집(승인·과금 변경 제한)' },
+            { role: 'Approver', scope: '지정 브랜드·캠페인·버전만 승인' },
+            { role: 'Client(고객)', scope: '본인 고객사 브랜드 승인·결과만 조회(내부 인사·비용·타 고객 접근 불가)' },
+            { role: 'Finance', scope: '청구·사용량만(OAuth 토큰·비공개 DM 접근 불가)' }
+        ];
+
+        var ROLE_NOTES = {
+            admin:   { icon: 'shield', text: '운영 관리자 뷰 — 소속 tenant의 모든 브랜드·사용자·과금·승인에 접근합니다(타 tenant 제외).' },
+            manager: { icon: 'user-cog', text: '브랜드 매니저 뷰 — 배정된 브랜드/국가의 콘텐츠·실적만 보이며, 과금·타 브랜드는 숨겨집니다.' },
+            client:  { icon: 'eye', text: '외부 고객 뷰 — 본인 고객사 브랜드의 승인·결과만 조회됩니다(내부 인사·비용·타 고객 비공개).' }
+        };
+
+        function switchRole(role) {
+            var note = ROLE_NOTES[role] || ROLE_NOTES.admin;
+            document.getElementById('scopeNote').innerHTML =
+                '<i data-lucide="' + escapeHtml(note.icon) + '" class="ds-icon ds-icon-sm"></i>' +
+                '<span>' + escapeHtml(note.text) + '</span>';
+            // 세그먼트 활성 상태 갱신
+            var map = { admin: 'segAdmin', manager: 'segManager', client: 'segClient' };
+            ['segAdmin', 'segManager', 'segClient'].forEach(function (id) {
+                var el = document.getElementById(id);
+                if (el) el.classList.remove('is-active');
+            });
+            var activeEl = document.getElementById(map[role]);
+            if (activeEl) activeEl.classList.add('is-active');
+            if (window.lucide && typeof window.lucide.createIcons === 'function') window.lucide.createIcons();
+        }
+
+        function renderBrands() {
+            var html = '';
+            BRANDS.forEach(function (b) {
+                html += '<div class="ds-card ds-card-hover org-card-pad">' +
+                    '<div class="org-top">' +
+                        '<div>' +
+                            '<div class="org-brand-name">' + escapeHtml(b.name) + '</div>' +
+                            '<div class="org-client"><i data-lucide="briefcase" class="ds-icon ds-icon-sm"></i> ' + escapeHtml(b.client) + '</div>' +
+                        '</div>' +
+                        '<span class="ds-badge ds-badge-accent">' + escapeHtml(b.country) + '</span>' +
+                    '</div>' +
+                    '<div class="org-counts">' +
+                        '<div class="org-count-item"><i data-lucide="share-2" class="ds-icon ds-icon-sm"></i> 채널 ' + escapeHtml(b.channels) + '개</div>' +
+                        '<div class="org-count-item"><i data-lucide="target" class="ds-icon ds-icon-sm"></i> 캠페인 ' + escapeHtml(b.campaigns) + '개</div>' +
+                    '</div>' +
+                    '</div>';
+            });
+            document.getElementById('brandGrid').innerHTML = html;
+        }
+
+        function renderRoles() {
+            var html = '';
+            ROLES.forEach(function (r) {
+                html += '<tr>' +
+                    '<td class="org-role">' + escapeHtml(r.role) + '</td>' +
+                    '<td class="org-scope-cell">' + escapeHtml(r.scope) + '</td>' +
+                    '</tr>';
+            });
+            document.getElementById('roleTableBody').innerHTML = html;
+        }
+
+        renderBrands();
+        renderRoles();
+        switchRole('admin');
+    </script>
+
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) { navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function () {}); }
+    </script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
+</body>
+</html>

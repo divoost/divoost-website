@@ -1,0 +1,63 @@
+/* =========================================================================
+   DDS Shell — 재설계 화면 공통 레이아웃(.d-* 상단바/네비/드로어/스크린)
+   design-system.css(.ds-*) 위에서 동작. 기존 sns.css와 충돌 없음.
+   사용: <html data-theme="dark">, <body class="ds-root" data-shell-active="KEY">
+         + design-system.css, vendor 폰트, 이 파일 로드, 끝에 ds-shell.js
+   ========================================================================= */
+html,body{margin:0;background:var(--ds-bg-app)}
+.ds-root{min-height:100dvh}
+
+/* 상단바 */
+.d-topbar{position:sticky;top:0;z-index:90;display:flex;align-items:center;gap:14px;height:60px;padding:0 24px;background:var(--ds-bg-surface);border-bottom:1px solid var(--ds-border)}
+.d-logo{display:flex;align-items:center;gap:10px;cursor:pointer;flex:none}
+.d-logo-mark{width:34px;height:34px;border-radius:9px;background:linear-gradient(145deg,var(--ds-primary-600),var(--ds-accent-500));display:grid;place-items:center;color:#fff;font-weight:900;font-size:18px}
+.d-logo-text{font-weight:800;font-size:15px;line-height:1.15;letter-spacing:-.01em;color:var(--ds-text-primary)}
+.d-logo-text small{display:block;font-size:9px;font-weight:600;letter-spacing:.06em;color:var(--ds-text-tertiary)}
+.d-switch{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 11px;border:1px solid var(--ds-border);border-radius:9px;background:var(--ds-bg-subtle);color:var(--ds-text-secondary);font-size:12px;font-weight:600;cursor:default}
+.d-topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+
+/* 상단 네비 */
+.d-nav{position:sticky;top:60px;z-index:89;display:flex;align-items:center;gap:1px;height:46px;padding:0 24px;background:var(--ds-bg-app);border-bottom:1px solid var(--ds-border);overflow-x:auto;scrollbar-width:none}
+.d-nav::-webkit-scrollbar{display:none}
+.d-nav-item{padding:0 13px;height:46px;display:inline-flex;align-items:center;color:var(--ds-text-secondary);font-size:13px;font-weight:600;text-decoration:none;border-bottom:2px solid transparent;white-space:nowrap}
+.d-nav-item:hover{color:var(--ds-text-primary)}
+.d-nav-item.is-active{color:var(--ds-text-primary);border-bottom-color:var(--ds-accent)}
+.d-nav-right{margin-left:auto;display:flex;align-items:center;padding-left:10px}
+.d-nav-more{display:inline-flex;align-items:center;gap:6px;background:transparent;border:0;color:var(--ds-text-secondary);font-size:13px;font-weight:700;cursor:pointer;padding:0 6px;height:46px}
+.d-nav-more:hover{color:var(--ds-text-primary)}
+
+/* 드로어 */
+.d-drawer{position:fixed;top:0;right:0;bottom:0;width:min(300px,86vw);background:var(--ds-bg-surface);border-left:1px solid var(--ds-border);z-index:1000;transform:translateX(100%);visibility:hidden;transition:transform .22s var(--ds-ease),visibility .22s var(--ds-ease);overflow-y:auto;box-shadow:var(--ds-shadow-lg)}
+.d-drawer.open{transform:translateX(0);visibility:visible}
+.d-drawer-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px;border-bottom:1px solid var(--ds-border)}
+.d-drawer-email{font-size:13px;font-weight:700;color:var(--ds-text-primary)}
+.d-drawer-plan{font-size:11px;color:var(--ds-text-tertiary);margin-top:2px}
+.d-drawer-close{background:transparent;border:0;color:var(--ds-text-secondary);cursor:pointer;display:grid;place-items:center;width:34px;height:34px;border-radius:8px}
+.d-drawer-close:hover{background:var(--ds-bg-hover);color:var(--ds-text-primary)}
+.d-drawer-sec{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ds-text-tertiary);padding:14px 16px 4px}
+.d-drawer a{display:flex;align-items:center;gap:9px;padding:10px 16px;color:var(--ds-text-secondary);text-decoration:none;font-size:14px;font-weight:600}
+.d-drawer a:hover{background:var(--ds-bg-hover);color:var(--ds-text-primary)}
+.d-drawer a.is-active{color:var(--ds-text-primary);background:var(--ds-accent-soft-bg)}
+.d-overlay{position:fixed;inset:0;background:rgba(2,6,23,.6);z-index:999;opacity:0;pointer-events:none;transition:opacity .2s}
+.d-overlay.show{opacity:1;pointer-events:auto}
+
+/* 스크린 / 페이지 머리말 / 공통 조각 */
+.d-screen{max-width:var(--ds-container-max);margin:0 auto;padding:24px}
+.d-page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.d-page-head h1{margin:5px 0 8px}
+.d-page-head p{max-width:720px;margin:0}
+.d-sect-t{font-size:15px;font-weight:700;color:var(--ds-text-primary);margin:0 0 12px;display:flex;align-items:center;gap:8px}
+.d-link{font-size:12px;font-weight:700;color:var(--ds-text-link);text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.d-link:hover{text-decoration:underline}
+.d-note{display:flex;align-items:flex-start;gap:10px;padding:13px 15px;border:1px solid var(--ds-border);border-radius:10px;background:var(--ds-bg-subtle);color:var(--ds-text-secondary);font-size:13px;line-height:1.6;margin-bottom:16px}
+.d-note .ds-icon{color:var(--ds-accent);flex:none;margin-top:1px}
+.d-note.warn{border-color:var(--ds-warning-600);background:var(--ds-warning-bg);color:var(--ds-warning-fg)}
+.d-note.warn .ds-icon{color:var(--ds-warning-fg)}
+.d-sel{height:34px;border-radius:8px;border:1px solid var(--ds-border);background:var(--ds-bg-subtle);color:var(--ds-text-primary);font-size:12px;font-weight:600;padding:0 8px;cursor:pointer}
+.d-sel:focus{outline:none;border-color:var(--ds-accent);box-shadow:var(--ds-shadow-focus)}
+
+@media(max-width:600px){
+    .d-topbar{padding:0 14px;gap:9px}.d-nav{padding:0 12px}.d-screen{padding:16px 14px}
+    .d-logo-text small,.d-switch{display:none}
+    .d-page-head h1{font-size:22px}
+}

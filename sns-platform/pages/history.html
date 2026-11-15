@@ -1,68 +1,61 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#3b82f6">
+    <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
     <link rel="manifest" href="../manifest.json">
     <title>발행 이력 | SNS 플랫폼</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
         .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center}
-        .filter-bar select,.filter-bar input{padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;font-size:.82rem}
-        .post-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:16px;margin-bottom:12px;display:flex;gap:14px}
-        .post-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
-        .pc-img{width:80px;height:80px;border-radius:8px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;overflow:hidden}
+        .filter-bar select,.filter-bar input{padding:8px 12px;border-radius:8px;border:1px solid var(--ds-border);font-size:.82rem;background:var(--ds-bg-surface);color:var(--ds-text-primary)}
+        .post-card{background:var(--ds-bg-surface);border-radius:12px;border:1px solid var(--ds-border);padding:16px;margin-bottom:12px;display:flex;gap:14px}
+        .post-card:hover{box-shadow:var(--ds-shadow-sm)}
+        .pc-img{width:80px;height:80px;border-radius:8px;background:var(--ds-bg-subtle);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0;overflow:hidden}
         .pc-img img{width:100%;height:100%;object-fit:cover}
         .pc-info{flex:1;min-width:0}
-        .pc-title{font-size:.9rem;font-weight:700;margin-bottom:4px}
-        .pc-content{font-size:.78rem;color:#64748b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:6px}
+        .pc-title{font-size:.9rem;font-weight:700;margin-bottom:4px;color:var(--ds-text-primary)}
+        .pc-content{font-size:.78rem;color:var(--ds-text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-bottom:6px}
         .pc-meta{display:flex;gap:8px;flex-wrap:wrap;font-size:.7rem}
         .pc-tag{padding:2px 8px;border-radius:4px;font-weight:600}
-        .pc-tag.published{background:rgba(16,185,129,.1);color:#10b981}
-        .pc-tag.draft{background:rgba(249,115,22,.1);color:#f97316}
-        .pc-tag.scheduled{background:rgba(59,130,246,.1);color:#3b82f6}
-        .pc-stats{display:flex;gap:12px;margin-top:8px;font-size:.75rem;color:#64748b}
+        .pc-tag.published{background:var(--ds-success-bg);color:var(--ds-success-fg)}
+        .pc-tag.draft{background:var(--ds-warning-bg);color:var(--ds-warning-fg)}
+        .pc-tag.scheduled{background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg)}
+        .pc-stats{display:flex;gap:12px;margin-top:8px;font-size:.75rem;color:var(--ds-text-secondary)}
         .pc-actions{display:flex;flex-direction:column;gap:4px;justify-content:center}
-        .pc-actions button{padding:4px 10px;border-radius:4px;border:1px solid #e2e8f0;background:#fff;font-size:.68rem;cursor:pointer}
-        .pc-actions button:hover{background:#f1f5f9}
-        .empty{text-align:center;padding:60px;color:#94a3b8}
+        .pc-actions button{padding:4px 10px;border-radius:4px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);color:var(--ds-text-primary);font-size:.68rem;cursor:pointer}
+        .pc-actions button:hover{background:var(--ds-bg-subtle)}
+        .empty{text-align:center;padding:60px;color:var(--ds-text-tertiary)}
         @media(max-width:768px){.post-card{flex-direction:column}.pc-actions{flex-direction:row}}
     </style>
 </head>
-<body>
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
-            <nav class="sidebar-nav">
-                <div class="nav-section sns-xnav" style="border-bottom:1px solid rgba(148,163,184,.18);padding-bottom:10px;margin-bottom:6px"><a href="../../index.html" class="nav-link"><span>🌐</span> <span>HubOnTrade</span></a><a href="../../dashboard/index.html" class="nav-link"><span>🔍</span> <span>소싱 트래커</span></a></div>
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link"><span>📋</span> 템플릿</a></div>
-                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link active"><span>📜</span> 발행 이력</a></div>
-                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
-                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
-            <div class="nav-section sns-xnav" style="border-top:1px solid rgba(148,163,184,.18);padding-top:10px;margin-top:6px"><div class="nav-title">바로가기</div><a href="../../index.html" class="nav-link"><span>🌐</span> <span>HubOnTrade</span></a><a href="../../dashboard/index.html" class="nav-link"><span>🔍</span> <span>소싱 트래커</span></a></div>
-            </nav>
-        </aside>
-        <div class="main-content">
-            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">📜 발행 이력</div><div class="top-bar-sub">모든 콘텐츠 관리</div></div></div><div class="top-bar-right"><button class="btn btn-primary" onclick="location.href='create.html'">✍️ 새 콘텐츠</button></div></header>
-            <div class="content">
-                <div class="filter-bar">
-                    <select id="fStatus" onchange="render()"><option value="">전체 상태</option><option value="published">발행됨</option><option value="draft">임시저장</option><option value="scheduled">예약</option></select>
-                    <select id="fChannel" onchange="render()"><option value="">전체 채널</option><option>facebook</option><option>tiktok</option><option>instagram</option><option>naver_blog</option><option>naver_cafe</option><option>xiaohongshu</option><option>douyin</option></select>
-                    <input type="text" id="fSearch" placeholder="검색..." oninput="render()">
-                    <span style="margin-left:auto;font-size:.78rem;color:#64748b" id="countLabel">0개</span>
-                </div>
-                <div id="postList"></div>
+<body class="ds-root" data-shell-active="history">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">발행 이력</h1>
+                <p class="ds-body">과거 발행한 콘텐츠와 성과를 확인합니다.</p>
             </div>
+            <button class="ds-btn ds-btn-primary" onclick="location.href='create.html'"><i data-lucide="pen-line" class="ds-icon ds-icon-sm"></i> 새 콘텐츠</button>
         </div>
-    </div>
+        <div class="filter-bar">
+            <select id="fStatus" onchange="render()"><option value="">전체 상태</option><option value="published">발행됨</option><option value="draft">임시저장</option><option value="scheduled">예약</option></select>
+            <select id="fChannel" onchange="render()"><option value="">전체 채널</option><option>facebook</option><option>tiktok</option><option>instagram</option><option>naver_blog</option><option>naver_cafe</option><option>xiaohongshu</option><option>douyin</option></select>
+            <input type="text" id="fSearch" placeholder="검색..." oninput="render()">
+            <span style="margin-left:auto;font-size:.78rem;color:var(--ds-text-secondary)" id="countLabel">0개</span>
+        </div>
+        <div id="postList"></div>
+    </main>
     <script>
-        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
         function render(){
             var posts=JSON.parse(localStorage.getItem('snsPosts')||'[]');
             var status=document.getElementById('fStatus').value;
@@ -83,14 +76,14 @@
                         var icon = pt.channel==='instagram' ? '📸' : (pt.channel==='facebook' ? '📘' : '🔗');
                         var label = pt.accountName || pt.channel;
                         if(pt.url){
-                            publishedLinks+='<a href="'+pt.url+'" target="_blank" style="padding:2px 8px;border-radius:4px;background:#eff6ff;color:#1e40af;text-decoration:none;font-weight:600">'+icon+' '+label+' →</a>';
+                            publishedLinks+='<a href="'+pt.url+'" target="_blank" style="padding:2px 8px;border-radius:4px;background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg);text-decoration:none;font-weight:600">'+icon+' '+label+' →</a>';
                         } else {
-                            publishedLinks+='<span style="padding:2px 8px;border-radius:4px;background:#f1f5f9;color:#64748b">'+icon+' '+label+'</span>';
+                            publishedLinks+='<span style="padding:2px 8px;border-radius:4px;background:var(--ds-bg-subtle);color:var(--ds-text-secondary)">'+icon+' '+label+'</span>';
                         }
                     });
                     publishedLinks+='</div>';
                 }
-                return '<div class="post-card"><div class="pc-img">'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📝\'">':'📝')+'</div><div class="pc-info"><div class="pc-title">'+p.title+'</div><div class="pc-content">'+(p.content||'').substring(0,80)+'</div><div class="pc-meta"><span class="pc-tag '+(p.status||'draft')+'">'+({'published':'✅ 발행','draft':'📝 임시','scheduled':'⏰ 예약'}[p.status]||p.status)+'</span><span style="color:#94a3b8">'+channels+'</span><span style="color:#94a3b8">'+(p.date||'')+'</span></div>'+publishedLinks+'<div class="pc-stats"><span>❤️ '+(p.likes||0)+'</span><span>💬 '+(p.comments||0)+'</span><span>🔄 '+(p.shares||0)+'</span><span>👁 '+(p.views||0)+'</span></div></div><div class="pc-actions"><button onclick="editPost(\''+p.id+'\')">✏️ 수정</button><button onclick="deletePost(\''+p.id+'\')">🗑 삭제</button><button onclick="simulateEngagement(\''+p.id+'\')" title="실제 SNS API 연동 전 테스트용" style="background:#fef3c7;color:#92400e">📊 시뮬레이션 (개발용)</button></div></div>';
+                return '<div class="post-card"><div class="pc-img">'+(p.image?'<img src="'+p.image+'" onerror="this.outerHTML=\'📝\'">':'📝')+'</div><div class="pc-info"><div class="pc-title">'+p.title+'</div><div class="pc-content">'+(p.content||'').substring(0,80)+'</div><div class="pc-meta"><span class="pc-tag '+(p.status||'draft')+'">'+({'published':'✅ 발행','draft':'📝 임시','scheduled':'⏰ 예약'}[p.status]||p.status)+'</span><span style="color:var(--ds-text-tertiary)">'+channels+'</span><span style="color:var(--ds-text-tertiary)">'+(p.date||'')+'</span></div>'+publishedLinks+'<div class="pc-stats"><span>❤️ '+(p.likes||0)+'</span><span>💬 '+(p.comments||0)+'</span><span>🔄 '+(p.shares||0)+'</span><span>👁 '+(p.views||0)+'</span></div></div><div class="pc-actions"><button onclick="editPost(\''+p.id+'\')">✏️ 수정</button><button onclick="deletePost(\''+p.id+'\')">🗑 삭제</button><button onclick="simulateEngagement(\''+p.id+'\')" title="실제 SNS API 연동 전 테스트용" style="background:var(--ds-warning-bg);color:var(--ds-warning-fg)">📊 시뮬레이션 (개발용)</button></div></div>';
             }).join('');
         }
         function deletePost(id){
@@ -124,5 +117,9 @@
     <script src="../js/i18n-auto.js"></script>
     <script src="../js/i18n-common.js"></script>
     <script src="../js/i18n.js"></script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
 </body>
 </html>

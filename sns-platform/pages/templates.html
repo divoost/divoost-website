@@ -1,64 +1,56 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#3b82f6">
+    <meta name="theme-color" content="#0f172a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
     <link rel="manifest" href="../manifest.json">
     <title>템플릿 | SNS 플랫폼</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
         .tmpl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-        .tmpl-card{background:#fff;border-radius:12px;border:1px solid #e2e8f0;padding:18px;cursor:pointer;transition:.2s}
-        .tmpl-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-2px);border-color:#3b82f6}
+        .tmpl-card{background:var(--ds-bg-surface);border-radius:12px;border:1px solid var(--ds-border);padding:18px;cursor:pointer;transition:.2s}
+        .tmpl-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-2px);border-color:var(--ds-accent)}
         .tmpl-icon{font-size:28px;margin-bottom:8px}
-        .tmpl-name{font-size:.9rem;font-weight:700;margin-bottom:4px}
-        .tmpl-desc{font-size:.78rem;color:#64748b;margin-bottom:10px;line-height:1.5}
+        .tmpl-name{font-size:.9rem;font-weight:700;margin-bottom:4px;color:var(--ds-text-primary)}
+        .tmpl-desc{font-size:.78rem;color:var(--ds-text-secondary);margin-bottom:10px;line-height:1.5}
         .tmpl-tags{display:flex;gap:4px;flex-wrap:wrap}
-        .tmpl-tag{padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:600;background:#f1f5f9;color:#64748b}
+        .tmpl-tag{padding:2px 8px;border-radius:4px;font-size:.65rem;font-weight:600;background:var(--ds-bg-subtle);color:var(--ds-text-secondary)}
         .filter-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-        .f-chip{padding:6px 14px;border-radius:20px;border:1px solid #e2e8f0;background:#fff;font-size:.78rem;cursor:pointer}
-        .f-chip.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+        .f-chip{padding:6px 14px;border-radius:20px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);color:var(--ds-text-primary);font-size:.78rem;cursor:pointer}
+        .f-chip.active{background:var(--ds-accent);color:#fff;border-color:var(--ds-accent)}
     </style>
 </head>
-<body>
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo"><div class="logo-icon">📱</div><div class="logo-text">SNS 콘텐츠<small>자동화 플랫폼</small></div></div>
-            <nav class="sidebar-nav">
-                <div class="nav-section sns-xnav" style="border-bottom:1px solid rgba(148,163,184,.18);padding-bottom:10px;margin-bottom:6px"><a href="../../index.html" class="nav-link"><span>🌐</span> <span>HubOnTrade</span></a><a href="../../dashboard/index.html" class="nav-link"><span>🔍</span> <span>소싱 트래커</span></a></div>
-                <div class="nav-section"><div class="nav-title">대시보드</div><a href="../index.html" class="nav-link"><span>📊</span> 종합 현황</a><a href="calendar.html" class="nav-link"><span>📅</span> 캘린더</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 생성</div><a href="create.html" class="nav-link"><span>✍️</span> 콘텐츠 만들기</a><a href="ai-writer.html" class="nav-link"><span>🤖</span> AI 작성기</a><a href="media.html" class="nav-link"><span>🖼</span> 미디어</a><a href="templates.html" class="nav-link active"><span>📋</span> 템플릿</a></div>
-                <div class="nav-section"><div class="nav-title">포스팅 관리</div><a href="publish.html" class="nav-link"><span>🚀</span> 포스팅</a><a href="schedule.html" class="nav-link"><span>⏰</span> 예약 발행</a><a href="history.html" class="nav-link"><span>📜</span> 발행 이력</a></div>
-                <div class="nav-section"><div class="nav-title">인터렉션</div><a href="engagement.html" class="nav-link"><span>💬</span> 댓글/반응</a><a href="listening.html" class="nav-link"><span>👂</span> 소셜 리스닝</a><a href="analytics.html" class="nav-link"><span>📈</span> 분석 리포트</a></div>
-                <div class="nav-section"><div class="nav-title">시스템</div><a href="settings.html" class="nav-link"><span>⚙️</span> 설정</a><a href="billing.html" class="nav-link"><span>💳</span> 요금제/크레딧</a><a href="safety-guide.html" class="nav-link"><span>⚠️</span> 운영 가이드</a></div>
-            <div class="nav-section sns-xnav" style="border-top:1px solid rgba(148,163,184,.18);padding-top:10px;margin-top:6px"><div class="nav-title">바로가기</div><a href="../../index.html" class="nav-link"><span>🌐</span> <span>HubOnTrade</span></a><a href="../../dashboard/index.html" class="nav-link"><span>🔍</span> <span>소싱 트래커</span></a></div>
-            </nav>
-        </aside>
-        <div class="main-content">
-            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">📋 콘텐츠 템플릿</div><div class="top-bar-sub">카테고리별 콘텐츠 템플릿</div></div></div></header>
-            <div class="content">
-                <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
-                    ⚠️ 개발 필요: 아래는 기본 제공 템플릿(읽기 전용)입니다. 사용자 직접 작성/저장 기능 미구현 (필요 작업: user_templates 테이블 + RLS + CRUD UI)
-                </div>
-                <div class="filter-chips">
-                    <span class="f-chip active" onclick="filterTemplates('all',this)">전체</span>
-                    <span class="f-chip" onclick="filterTemplates('product',this)">🛍 상품 홍보</span>
-                    <span class="f-chip" onclick="filterTemplates('review',this)">⭐ 리뷰/후기</span>
-                    <span class="f-chip" onclick="filterTemplates('tip',this)">💡 팁/노하우</span>
-                    <span class="f-chip" onclick="filterTemplates('event',this)">🎉 이벤트</span>
-                    <span class="f-chip" onclick="filterTemplates('daily',this)">📸 일상</span>
-                </div>
-                <div class="tmpl-grid" id="tmplGrid"></div>
+<body class="ds-root" data-shell-active="templates">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">템플릿</h1>
+                <p class="ds-body">콘텐츠 템플릿을 골라 바로 작성에 활용합니다.</p>
             </div>
         </div>
-    </div>
+        <div class="dev-needed-badge" style="background:var(--ds-warning-bg);border:1px solid var(--ds-warning-500);color:var(--ds-warning-fg);padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+            ⚠️ 개발 필요: 아래는 기본 제공 템플릿(읽기 전용)입니다. 사용자 직접 작성/저장 기능 미구현 (필요 작업: user_templates 테이블 + RLS + CRUD UI)
+        </div>
+        <div class="filter-chips">
+            <span class="f-chip active" onclick="filterTemplates('all',this)">전체</span>
+            <span class="f-chip" onclick="filterTemplates('product',this)">🛍 상품 홍보</span>
+            <span class="f-chip" onclick="filterTemplates('review',this)">⭐ 리뷰/후기</span>
+            <span class="f-chip" onclick="filterTemplates('tip',this)">💡 팁/노하우</span>
+            <span class="f-chip" onclick="filterTemplates('event',this)">🎉 이벤트</span>
+            <span class="f-chip" onclick="filterTemplates('daily',this)">📸 일상</span>
+        </div>
+        <div class="tmpl-grid" id="tmplGrid"></div>
+    </main>
     <script>
-        document.getElementById('menuBtn').onclick=function(){document.getElementById('sidebar').classList.toggle('open')};
         var templates=[
             {icon:'🛍',name:'상품 소개 (기본)',desc:'상품의 특징과 장점을 간결하게 소개하는 기본 템플릿',category:'product',channels:['instagram','facebook','naver_blog'],content:'✨ [상품명] 소개\n\n안녕하세요! 오늘은 [상품명]을 소개해드릴게요 🎉\n\n📌 주요 특징\n1. [특징1]\n2. [특징2]\n3. [특징3]\n\n💰 가격: [가격]\n🔗 구매 링크: [링크]\n\n#상품추천 #쇼핑 #추천아이템'},
             {icon:'⭐',name:'솔직 리뷰',desc:'실제 사용 경험을 바탕으로 한 솔직한 리뷰 템플릿',category:'review',channels:['naver_blog','instagram'],content:'📝 [상품명] 솔직 리뷰\n\n사용 기간: [기간]\n평점: ⭐⭐⭐⭐☆\n\n✅ 장점\n- [장점1]\n- [장점2]\n\n❌ 단점\n- [단점1]\n\n💡 총평\n[총평 내용]\n\n#솔직리뷰 #리뷰 #추천'},
@@ -103,5 +95,9 @@
     <script src="../js/i18n-auto.js"></script>
     <script src="../js/i18n-common.js"></script>
     <script src="../js/i18n.js"></script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
 </body>
 </html>

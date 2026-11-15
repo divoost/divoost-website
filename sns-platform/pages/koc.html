@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>인플루언서(KOC) | DIVOOST SNS</title>
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .koc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--ds-space-3);margin-bottom:var(--ds-space-5)}
+        .koc-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+        .koc-table-wrap .ds-table{min-width:760px}
+        .koc-name{display:flex;align-items:center;gap:var(--ds-space-2)}
+        .koc-name .ds-avatar-sm{background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg)}
+        .koc-name b{font-weight:var(--ds-weight-semibold);color:var(--ds-text-primary)}
+        .koc-quote{font-variant-numeric:tabular-nums;font-weight:var(--ds-weight-semibold)}
+        .koc-muted{color:var(--ds-text-tertiary)}
+        @media(max-width:768px){.koc-stats{grid-template-columns:1fr}}
+    </style>
+</head>
+<body class="ds-root" data-shell-active="koc">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">인플루언서 · KOC</h1>
+                <p class="ds-body">KOC/KOL 후보를 등록하고 단계·견적·샘플·안전성을 관리합니다.</p>
+            </div>
+            <button class="ds-btn ds-btn-primary"><i data-lucide="plus" class="ds-icon ds-icon-sm"></i> 후보 등록</button>
+        </div>
+
+        <div class="d-note"><i data-lucide="info" class="ds-icon ds-icon-sm"></i><div>구조 시연용 데모 데이터입니다. 계약·배송·발행 URL·성과 연결은 백엔드 연동 후 연결됩니다.</div></div>
+
+        <div class="koc-stats">
+            <div class="ds-stat">
+                <div class="ds-stat-label"><i data-lucide="users" class="ds-icon ds-icon-sm"></i> 후보</div>
+                <div class="ds-stat-value">4명</div>
+            </div>
+            <div class="ds-stat">
+                <div class="ds-stat-label"><i data-lucide="handshake" class="ds-icon ds-icon-sm"></i> 협업 진행</div>
+                <div class="ds-stat-value">2건</div>
+            </div>
+            <div class="ds-stat">
+                <div class="ds-stat-label"><i data-lucide="wallet" class="ds-icon ds-icon-sm"></i> 평균 견적</div>
+                <div class="ds-stat-value">₩317,500</div>
+            </div>
+        </div>
+
+        <div class="ds-card ds-card-pad">
+            <div class="koc-table-wrap">
+                <table class="ds-table" id="kocTable">
+                    <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>플랫폼</th>
+                            <th>팔로워</th>
+                            <th>견적</th>
+                            <th>단계</th>
+                            <th>담당</th>
+                            <th>샘플</th>
+                            <th>안전성</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kocBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 데모 KOC 데이터 (구조 시연용). 백엔드 연동 후 실제 데이터로 교체.
+        var KOC_ROWS = [
+            { name:'Van Anh',    platform:'TikTok',    followers:56000, quote:280000, stage:'협의',       stageClass:'ds-badge-warning', owner:'Linh', sample:'발송 준비',   safety:'검토 완료',   safetyClass:'ds-badge-success' },
+            { name:'Ha Linh',    platform:'Instagram', followers:12000, quote:180000, stage:'콘텐츠 제작', stageClass:'ds-badge-accent',  owner:'Minh', sample:'배송 완료',   safety:'확인 필요',   safetyClass:'ds-badge-warning' },
+            { name:'Mai Beauty', platform:'TikTok',    followers:89000, quote:450000, stage:'게시 완료',   stageClass:'ds-badge-success', owner:'Hana', sample:'수령',       safety:'검토 완료',   safetyClass:'ds-badge-success' },
+            { name:'小蓝日记',    platform:'小红书',    followers:25000, quote:360000, stage:'후보',       stageClass:'ds-badge',         owner:'Chen', sample:'미정',       safety:'확인 필요',   safetyClass:'ds-badge-warning' }
+        ];
+
+        // 숫자를 천단위 콤마로 포맷 (ES5 호환, 표준 API)
+        function formatNumber(value) {
+            if (typeof value !== 'number' || isNaN(value)) { return '0'; }
+            return value.toLocaleString('ko-KR');
+        }
+
+        // XSS 방지: 데모 데이터지만 원칙적으로 이스케이프
+        function escapeHtml(text) {
+            var str = String(text == null ? '' : text);
+            return str.replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                      .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        // 이름 이니셜 (아바타용)
+        function initialOf(name) {
+            var str = String(name || '').trim();
+            return str ? str.charAt(0) : '?';
+        }
+
+        function renderKocTable() {
+            var body = document.getElementById('kocBody');
+            if (!body) { return; }
+            var html = '';
+            for (var i = 0; i < KOC_ROWS.length; i++) {
+                var r = KOC_ROWS[i];
+                var stageClass = r.stageClass ? ' ' + r.stageClass : '';
+                var safetyClass = r.safetyClass ? ' ' + r.safetyClass : '';
+                html += '<tr>'
+                    + '<td><div class="koc-name"><span class="ds-avatar ds-avatar-sm">' + escapeHtml(initialOf(r.name)) + '</span><b>' + escapeHtml(r.name) + '</b></div></td>'
+                    + '<td>' + escapeHtml(r.platform) + '</td>'
+                    + '<td class="koc-quote">' + formatNumber(r.followers) + '</td>'
+                    + '<td class="koc-quote">₩' + formatNumber(r.quote) + '</td>'
+                    + '<td><span class="ds-badge' + stageClass + '">' + escapeHtml(r.stage) + '</span></td>'
+                    + '<td>' + escapeHtml(r.owner) + '</td>'
+                    + '<td class="koc-muted">' + escapeHtml(r.sample) + '</td>'
+                    + '<td><span class="ds-badge' + safetyClass + '">' + escapeHtml(r.safety) + '</span></td>'
+                    + '</tr>';
+            }
+            body.innerHTML = html;
+        }
+
+        renderKocTable();
+    </script>
+
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) { navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
+    </script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
+</body>
+</html>

@@ -1,95 +1,83 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>구독 관리 | 관리자</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- 디자인 시스템(DDS) + 관리자 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
     <link rel="stylesheet" href="../css/sns.css">
     <style>
-        body{background:#f1f5f9}
-        .admin-bar{background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;padding:8px 24px;font-size:.78rem;font-weight:600;text-align:center}
-        .admin-bar a{color:#fef2f2;margin-left:10px}
-        .sidebar{background:#0f172a !important}.sidebar-logo .logo-text{color:#fff !important}.sidebar-logo .logo-text small{color:#fca5a5 !important}.nav-title{color:#94a3b8 !important}.nav-link{color:#cbd5e1 !important}.nav-link:hover{background:rgba(255,255,255,.06) !important;color:#fff !important}.nav-link.active{background:rgba(220,38,38,.2) !important;color:#fca5a5 !important}
-
-        .card{background:#fff;border-radius:14px;border:1px solid #e2e8f0;padding:20px;margin-bottom:16px}
+        .card{background:var(--ds-bg-surface);border-radius:14px;border:1px solid var(--ds-border);padding:20px;margin-bottom:16px}
         .card h2{font-size:1rem;margin-bottom:14px}
         .summary-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
-        .summary-card{background:#fff;border-radius:12px;padding:18px;border:1px solid #e2e8f0;text-align:center}
+        .summary-card{background:var(--ds-bg-surface);border-radius:12px;padding:18px;border:1px solid var(--ds-border);text-align:center}
         .summary-val{font-size:1.8rem;font-weight:800}
-        .summary-label{font-size:.74rem;color:#94a3b8;margin-top:4px;font-weight:600}
+        .summary-label{font-size:.74rem;color:var(--ds-text-tertiary);margin-top:4px;font-weight:600}
 
         .plan-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:16px}
-        .plan-card{padding:18px;border-radius:12px;border:2px solid #e2e8f0;background:#f8fafc}
-        .plan-card.pro{border-color:#7c3aed;background:#faf5ff}
-        .plan-card.enterprise{border-color:#be185d;background:#fce7f3}
+        .plan-card{padding:18px;border-radius:12px;border:2px solid var(--ds-border);background:var(--ds-bg-subtle)}
+        .plan-card.pro{border-color:var(--ds-accent);background:var(--ds-accent-soft-bg)}
+        .plan-card.enterprise{border-color:var(--ds-danger-500);background:var(--ds-danger-bg)}
         .plan-name{font-weight:800;font-size:1.05rem;margin-bottom:6px}
-        .plan-price{font-size:1.6rem;font-weight:800;color:#0f172a}
-        .plan-price small{font-size:.78rem;color:#64748b;font-weight:500}
-        .plan-stat{display:flex;justify-content:space-between;font-size:.82rem;padding:6px 0;border-top:1px solid #e2e8f0;margin-top:8px}
+        .plan-price{font-size:1.6rem;font-weight:800;color:var(--ds-text-primary)}
+        .plan-price small{font-size:.78rem;color:var(--ds-text-secondary);font-weight:500}
+        .plan-stat{display:flex;justify-content:space-between;font-size:.82rem;padding:6px 0;border-top:1px solid var(--ds-border);margin-top:8px}
 
         .table{width:100%;border-collapse:collapse;font-size:.84rem}
-        .table th{background:#f8fafc;padding:10px 14px;text-align:left;font-size:.7rem;font-weight:700;color:#64748b;text-transform:uppercase}
-        .table td{padding:10px 14px;border-bottom:1px solid #f1f5f9}
+        .table th{background:var(--ds-bg-subtle);padding:10px 14px;text-align:left;font-size:.7rem;font-weight:700;color:var(--ds-text-secondary);text-transform:uppercase}
+        .table td{padding:10px 14px;border-bottom:1px solid var(--ds-border-subtle)}
         .pill{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.7rem;font-weight:700}
-        .pill.success{background:#dcfce7;color:#15803d}
-        .pill.warn{background:#fef3c7;color:#92400e}
-        .pill.danger{background:#fee2e2;color:#b91c1c}
-        .pill.trial{background:#fef3c7;color:#92400e}
-        .pill.pro{background:#ede9fe;color:#6d28d9}
-        .pill.enterprise{background:#fce7f3;color:#be185d}
+        .pill.success{background:var(--ds-success-bg);color:var(--ds-success-fg)}
+        .pill.warn{background:var(--ds-warning-bg);color:var(--ds-warning-fg)}
+        .pill.danger{background:var(--ds-danger-bg);color:var(--ds-danger-fg)}
+        .pill.trial{background:var(--ds-warning-bg);color:var(--ds-warning-fg)}
+        .pill.pro{background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg)}
+        .pill.enterprise{background:var(--ds-danger-bg);color:var(--ds-danger-fg)}
     </style>
 </head>
-<body>
-    <div class="admin-bar">🛡 관리자 → <a href="../index.html">사용자 대시보드로</a></div>
-    <div class="app-layout">
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo"><div class="logo-icon">🛡</div><div class="logo-text">관리자 콘솔<small>DIVOOST SNS Admin</small></div></div>
-            <nav class="sidebar-nav">
-                <div class="nav-section"><div class="nav-title">개요</div><a href="index.html" class="nav-link"><span>🏠</span> 관리자 대시보드</a></div>
-                <div class="nav-section"><div class="nav-title">회원 관리</div><a href="users.html" class="nav-link"><span>👥</span> 회원 목록</a><a href="subscriptions.html" class="nav-link active"><span>💳</span> 구독 관리</a><a href="user-activity.html" class="nav-link"><span>📊</span> 활동 로그</a></div>
-                <div class="nav-section"><div class="nav-title">콘텐츠 운영</div><a href="content-moderation.html" class="nav-link"><span>📝</span> 콘텐츠 검토</a><a href="reports.html" class="nav-link"><span>🚨</span> 신고/제재</a></div>
-                <div class="nav-section"><div class="nav-title">시스템 운영</div><a href="api-monitor.html" class="nav-link"><span>📡</span> API 사용량</a><a href="system-health.html" class="nav-link"><span>💚</span> 시스템 상태</a><a href="notifications.html" class="nav-link"><span>🔔</span> 공지 관리</a></div>
-                <div class="nav-section"><div class="nav-title">설정</div><a href="admin-settings.html" class="nav-link"><span>⚙️</span> 관리자 설정</a><a href="audit-log.html" class="nav-link"><span>📜</span> 감사 로그</a></div>
-            </nav>
-        </aside>
-        <div class="main-content">
-            <header class="top-bar"><div class="top-bar-left"><button class="menu-btn" id="menuBtn">☰</button><div><div class="top-bar-title">💳 구독 관리</div><div class="top-bar-sub">유료 구독자 및 결제 내역 관리</div></div></div></header>
-            <div class="content">
-
-                <div class="dev-needed-badge" style="background:#fef3c7;border:1px solid #f59e0b;color:#92400e;padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
-                    ⚠️ 개발 필요: 결제/구독 관리자 화면은 아직 백엔드 미연동입니다. (필요한 작업: 토스페이먼츠/Stripe 웹훅 → payments/subscriptions 테이블 적재 + 집계 RPC 구현)
-                </div>
-
-                <div class="summary-row">
-                    <div class="summary-card"><div class="summary-val" style="color:#94a3b8">-</div><div class="summary-label">이번 달 매출 (MRR)</div></div>
-                    <div class="summary-card"><div class="summary-val" id="cPaidUsers" style="color:#94a3b8">-</div><div class="summary-label">유료 회원</div></div>
-                    <div class="summary-card"><div class="summary-val" style="color:#94a3b8">-</div><div class="summary-label">이번 달 신규</div></div>
-                    <div class="summary-card"><div class="summary-val" style="color:#94a3b8">-</div><div class="summary-label">이탈/취소</div></div>
-                </div>
-
-                <div class="card">
-                    <h2>📦 플랜별 현황</h2>
-                    <p style="color:#94a3b8;font-size:.84rem">데이터 없음 (plans/subscriptions 테이블 집계 미구현)</p>
-                </div>
-
-                <div class="card">
-                    <h2>💰 최근 결제 내역</h2>
-                    <p style="color:#94a3b8;font-size:.84rem">데이터 없음 (payments 테이블 미연동)</p>
-                </div>
-
-                <div class="card">
-                    <h2>📊 매출 추이 (최근 6개월)</h2>
-                    <p style="color:#94a3b8;font-size:.84rem">데이터 없음 (월별 매출 집계 RPC 미구현)</p>
-                </div>
+<body class="ds-root" data-shell-active="subscriptions">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST SNS · ADMIN</div>
+                <h1 class="ds-h1">구독 관리</h1>
+                <p class="ds-body">플랜·결제·매출 현황을 관리합니다.</p>
             </div>
         </div>
-    </div>
+
+        <div class="dev-needed-badge" style="background:var(--ds-warning-bg);border:1px solid var(--ds-warning-500);color:var(--ds-warning-fg);padding:10px 14px;border-radius:8px;margin-bottom:12px;font-size:13px;font-weight:600;">
+            ⚠️ 개발 필요: 결제/구독 관리자 화면은 아직 백엔드 미연동입니다. (필요한 작업: 토스페이먼츠/Stripe 웹훅 → payments/subscriptions 테이블 적재 + 집계 RPC 구현)
+        </div>
+
+        <div class="summary-row">
+            <div class="summary-card"><div class="summary-val" style="color:var(--ds-text-tertiary)">-</div><div class="summary-label">이번 달 매출 (MRR)</div></div>
+            <div class="summary-card"><div class="summary-val" id="cPaidUsers" style="color:var(--ds-text-tertiary)">-</div><div class="summary-label">유료 회원</div></div>
+            <div class="summary-card"><div class="summary-val" style="color:var(--ds-text-tertiary)">-</div><div class="summary-label">이번 달 신규</div></div>
+            <div class="summary-card"><div class="summary-val" style="color:var(--ds-text-tertiary)">-</div><div class="summary-label">이탈/취소</div></div>
+        </div>
+
+        <div class="card">
+            <h2>📦 플랜별 현황</h2>
+            <p style="color:var(--ds-text-tertiary);font-size:.84rem">데이터 없음 (plans/subscriptions 테이블 집계 미구현)</p>
+        </div>
+
+        <div class="card">
+            <h2>💰 최근 결제 내역</h2>
+            <p style="color:var(--ds-text-tertiary);font-size:.84rem">데이터 없음 (payments 테이블 미연동)</p>
+        </div>
+
+        <div class="card">
+            <h2>📊 매출 추이 (최근 6개월)</h2>
+            <p style="color:var(--ds-text-tertiary);font-size:.84rem">데이터 없음 (월별 매출 집계 RPC 미구현)</p>
+        </div>
+    </main>
     <script src="../js/secure-storage.js"></script>
     <script src="../js/auth-guard.js"></script>
     <script src="../js/supabase-admin.js"></script>
     <script>
-        document.getElementById('menuBtn').onclick = function(){ document.getElementById('sidebar').classList.toggle('open'); };
         (async function(){
             var ok = await SNSAdmin.requireAdmin();
             if(!ok) return;
@@ -102,5 +90,9 @@
             } catch(e){ console.error('stats load failed', e); }
         })();
     </script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell-admin.js"></script>
 </body>
 </html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>AI 숏폼 팩토리 | DIVOOST SNS</title>
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .sf-grid{display:grid;grid-template-columns:1.3fr 0.7fr;gap:16px;align-items:start}
+        .sf-card{padding:18px}
+        .sf-card-title{font-size:1rem;font-weight:800;color:var(--ds-text-primary);margin-bottom:4px}
+        .sf-card-sub{font-size:.75rem;color:var(--ds-text-tertiary);margin-bottom:16px}
+        .sf-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+        .sf-meta-item{font-size:.72rem;color:var(--ds-text-secondary);background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:8px;padding:6px 10px}
+        .sf-meta-item strong{color:var(--ds-text-primary);font-weight:700}
+        .sf-section-label{font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ds-text-tertiary);margin:0 0 10px}
+        .sf-board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+        .sf-cut{background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);padding:11px;min-height:96px;display:flex;flex-direction:column;gap:7px}
+        .sf-cut-no{width:22px;height:22px;border-radius:7px;background:var(--ds-accent);color:#fff;font-size:.72rem;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+        .sf-cut-desc{font-size:.74rem;line-height:1.5;color:var(--ds-text-secondary)}
+        .sf-rights{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:var(--ds-radius-lg);padding:13px 15px}
+        .sf-rights-info{display:flex;align-items:center;gap:10px}
+        .sf-rights-info .ds-icon{color:var(--ds-warning-fg)}
+        .sf-rights-text{font-size:.8rem;font-weight:700;color:var(--ds-text-primary)}
+        .sf-preview-phone{aspect-ratio:9/16;border-radius:22px;border:1px solid var(--ds-border-strong);background:linear-gradient(160deg,var(--ds-accent-soft-bg),var(--ds-bg-subtle));position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+        .sf-play{width:64px;height:64px;border-radius:50%;background:var(--ds-bg-surface);border:1px solid var(--ds-border);display:flex;align-items:center;justify-content:center;box-shadow:var(--ds-shadow-md)}
+        .sf-play .ds-icon{color:var(--ds-accent)}
+        .sf-caption{position:absolute;left:12px;right:12px;bottom:14px;font-size:.78rem;font-weight:700;color:var(--ds-text-primary);text-shadow:0 1px 3px rgba(0,0,0,.35);line-height:1.5}
+        .sf-ratio-tag{position:absolute;top:12px;left:12px;font-size:.62rem;font-weight:800;letter-spacing:.06em;color:var(--ds-text-secondary);background:var(--ds-bg-surface);border:1px solid var(--ds-border);border-radius:6px;padding:3px 7px}
+        .sf-preview-note{font-size:.68rem;color:var(--ds-text-tertiary);margin-top:12px;line-height:1.6}
+        @media(max-width:768px){
+            .sf-grid{grid-template-columns:1fr}
+            .sf-board{grid-template-columns:1fr 1fr}
+            .sf-preview-phone{max-width:280px;margin:0 auto}
+        }
+    </style>
+</head>
+<body class="ds-root" data-shell-active="shorts">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">AI 숏폼 팩토리</h1>
+                <p class="ds-body">대본·6컷 콘티·권리 검수·9:16 프리뷰로 숏폼을 준비합니다.</p>
+            </div>
+            <button class="ds-btn ds-btn-primary"><i data-lucide="plus" class="ds-icon ds-icon-sm"></i> 숏폼 프로젝트</button>
+        </div>
+
+        <div class="d-note">
+            <i data-lucide="info" class="ds-icon ds-icon-sm"></i>
+            <span>구조 시연용 데모입니다. 실제 영상 생성·렌더·자막·QC·재시도는 백엔드 작업큐/렌더 공급자 연동 후 연결됩니다. 긴 렌더는 동기 대기하지 않고 작업큐+상태 폴링을 사용합니다.</span>
+        </div>
+
+        <div class="sf-grid">
+            <!-- 좌측: 프로젝트 -->
+            <section class="ds-card sf-card">
+                <div class="sf-card-title">프로젝트: 15초 데일리 케어 숏폼</div>
+                <div class="sf-card-sub">숏폼 콘텐츠 준비 워크스페이스</div>
+
+                <div class="sf-meta">
+                    <span class="sf-meta-item">브랜드 <strong>PharmTree Vietnam</strong></span>
+                    <span class="sf-meta-item">목적 <strong>제품 소개</strong></span>
+                    <span class="sf-meta-item">언어 <strong>vi</strong></span>
+                    <span class="sf-meta-item">비율 <strong>9:16</strong></span>
+                    <span class="sf-meta-item">상태 <span class="ds-badge">초안</span></span>
+                    <span class="sf-meta-item">렌더 <span class="ds-badge ds-badge-warning">템플릿 렌더 대기</span></span>
+                </div>
+
+                <div class="sf-section-label">6컷 스토리보드</div>
+                <div class="sf-board" id="sfBoard"></div>
+
+                <div class="sf-section-label">권리 검수</div>
+                <div class="sf-rights">
+                    <div class="sf-rights-info">
+                        <i data-lucide="shield-check" class="ds-icon ds-icon-sm"></i>
+                        <span class="sf-rights-text">저작권·음원·초상권 검수</span>
+                        <span class="ds-badge ds-badge-warning">검수 필요</span>
+                    </div>
+                    <button class="ds-btn ds-btn-secondary" id="sfRightsBtn"><i data-lucide="check" class="ds-icon ds-icon-sm"></i> 검수 체크</button>
+                </div>
+            </section>
+
+            <!-- 우측: 9:16 프리뷰 -->
+            <section class="ds-card sf-card">
+                <div class="sf-card-title">9:16 프리뷰</div>
+                <div class="sf-card-sub">세로형 숏폼 미리보기</div>
+                <div class="sf-preview-phone">
+                    <span class="sf-ratio-tag">9:16</span>
+                    <div class="sf-play"><i data-lucide="play" class="ds-icon"></i></div>
+                    <div class="sf-caption">아침 스킨케어, 바쁜 날에도 간단하게 ✨</div>
+                </div>
+                <p class="sf-preview-note">미리보기는 저해상도 샘플입니다. 최종 렌더는 백엔드 렌더 공급자에서 고해상도로 출력됩니다.</p>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        (function(){
+            var CUTS = [
+                '아침 세면대 전경',
+                '제품을 손에 잡는 장면',
+                '제형 클로즈업',
+                '사용법 한 문장',
+                '가벼운 일상 장면',
+                '브랜드·CTA'
+            ];
+
+            function renderBoard(){
+                var board = document.getElementById('sfBoard');
+                if(!board){ return; }
+                var html = '';
+                for(var i=0;i<CUTS.length;i++){
+                    html += '<div class="sf-cut">' +
+                                '<span class="sf-cut-no">' + (i+1) + '</span>' +
+                                '<span class="sf-cut-desc">' + CUTS[i] + '</span>' +
+                            '</div>';
+                }
+                board.innerHTML = html;
+            }
+
+            function bindRights(){
+                var btn = document.getElementById('sfRightsBtn');
+                if(!btn){ return; }
+                btn.addEventListener('click', function(){
+                    alert('데모 화면입니다. 실제 권리 검수는 백엔드 연동 후 제공됩니다.');
+                });
+            }
+
+            renderBoard();
+            bindRights();
+        })();
+    </script>
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script>
+        if("serviceWorker" in navigator){ navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
+    </script>
+    <script src="../js/i18n-auto.js"></script>
+    <script src="../js/i18n-common.js"></script>
+    <script src="../js/i18n.js"></script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
+</body>
+</html>
