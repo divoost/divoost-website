@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>AI 직원 | DIVOOST SNS</title>
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .ag-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-bottom:22px}
+        .ag-card{background:var(--ds-bg-surface);border:1px solid var(--ds-border);border-radius:var(--ds-radius-xl);padding:16px}
+        .ag-top{display:flex;align-items:flex-start;gap:12px}
+        .ag-av{width:42px;height:42px;border-radius:11px;background:var(--ds-accent-soft-bg);color:var(--ds-accent-soft-fg);display:grid;place-items:center;flex:none;font-size:20px}
+        .ag-name{font-size:15px;font-weight:700;color:var(--ds-text-primary)}
+        .ag-desc{font-size:12px;color:var(--ds-text-tertiary);margin-top:3px;line-height:1.5}
+        .ag-task{margin-top:12px;padding:10px 12px;background:var(--ds-bg-subtle);border:1px solid var(--ds-border);border-radius:9px;font-size:12px;color:var(--ds-text-secondary)}
+        .ag-task b{color:var(--ds-text-primary);font-weight:600}
+        .ag-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px}
+        .ag-foot .ds-small{color:var(--ds-text-tertiary)}
+        /* 자동화 토글 리스트 */
+        .au-row{display:flex;align-items:center;gap:12px;padding:13px 15px;border:1px solid var(--ds-border);border-radius:11px;background:var(--ds-bg-subtle)}
+        .au-row+.au-row{margin-top:9px}
+        .au-info{flex:1;min-width:0}
+        .au-name{font-size:13px;font-weight:700;color:var(--ds-text-primary)}
+        .au-meta{font-size:11px;color:var(--ds-text-tertiary);margin-top:2px}
+        .risk{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;flex:none}
+        .risk.low{background:var(--ds-success-bg);color:var(--ds-success-fg)}
+        .risk.mid{background:var(--ds-warning-bg);color:var(--ds-warning-fg)}
+        .risk.high{background:var(--ds-danger-bg);color:var(--ds-danger-fg)}
+        /* 토글 스위치 */
+        .tgl{width:40px;height:22px;border-radius:999px;background:var(--ds-bg-active);position:relative;cursor:pointer;flex:none;border:1px solid var(--ds-border);transition:.15s}
+        .tgl.on{background:var(--ds-accent);border-color:var(--ds-accent)}
+        .tgl::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s}
+        .tgl.on::after{left:20px}
+        .halt-banner{display:none;align-items:center;gap:10px;padding:13px 16px;border-radius:11px;background:var(--ds-danger-bg);border:1px solid var(--ds-danger-600);color:var(--ds-danger-fg);font-size:13px;font-weight:600;margin-bottom:16px}
+        .halt-banner.show{display:flex}
+    </style>
+</head>
+<body class="ds-root" data-shell-active="agents">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">AI 직원</h1>
+                <p class="ds-body">5개 공통 역할의 AI가 초안을 만들되, 사람의 승인과 정책을 따라 실행합니다.</p>
+            </div>
+            <button class="ds-btn ds-btn-danger" id="haltBtn" onclick="emergencyHalt()"><i data-lucide="octagon-x" class="ds-icon ds-icon-sm"></i> 긴급 중단</button>
+        </div>
+
+        <div class="d-note warn"><i data-lucide="shield-alert" class="ds-icon ds-icon-sm"></i><div><b>승인 없는 외부 실행 금지.</b> AI는 준비·생성·검토까지만 수행하며, 실제 게시·발송은 담당자 승인 게이트를 통과해야 합니다. 아래는 구조 시연용 데모이며 실제 LLM·실행 큐·비용 측정은 백엔드 연동 후 연결됩니다.</div></div>
+
+        <div class="halt-banner" id="haltBanner"><i data-lucide="octagon-x" class="ds-icon ds-icon-sm"></i> 긴급 중단됨 — 모든 AI 직원이 대기 상태로 전환되고 자동화가 해제되었습니다.</div>
+
+        <div class="d-sect-t"><i data-lucide="bot" class="ds-icon"></i> AI 직원 5종</div>
+        <div class="ag-grid" id="agentGrid"></div>
+
+        <div class="d-sect-t"><i data-lucide="workflow" class="ds-icon"></i> 자동화 규칙</div>
+        <div class="ds-card ds-card-pad">
+            <div id="autoList"></div>
+        </div>
+    </main>
+
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) { navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function () {}); }
+
+        // 데모 데이터(목업 기준). 실제 실행/비용/승인 게이트는 백엔드 연동 후.
+        var AGENTS = [
+            { icon: '🧭', name: '기획 AI', desc: '트렌드 요약 · 캠페인 브리프 · 중복 점검', task: '다음 주 콘텐츠 캘린더' },
+            { icon: '🌐', name: '카피·현지화 AI', desc: '4개 언어 문안 · 키워드 · 금지표현 검토', task: '베트남어 카피 현지화' },
+            { icon: '🎬', name: '숏폼 제작 AI', desc: '대본 · 콘티 · 자막 · 템플릿 렌더 준비', task: '15초 제품 사용 영상' },
+            { icon: '📣', name: '게시 운영 AI', desc: '예약 · 규격 점검 · 게시 오류 추적', task: '예약 게시 규칙 점검' },
+            { icon: '💬', name: '커뮤니티·분석 AI', desc: '문의 분류 · 답변 초안 · 성과 요약', task: '미응답 메시지 정리' }
+        ];
+        // risk: low/mid/high. 민감 DM 자동 발송은 위험 높음 → 기본 off.
+        var AUTOMATIONS = [
+            { name: '게시 전 승인 확인', cond: '예약 시', act: '승인 상태 검사', risk: 'low', enabled: true },
+            { name: '댓글 구매 문의 추천', cond: '문의 수신', act: 'AI 답변 초안', risk: 'mid', enabled: true },
+            { name: '광고비 증가 알림', cond: '하루 지출 임계치', act: '담당자에게 알림', risk: 'low', enabled: true },
+            { name: '민감한 DM 자동 발송', cond: '민감 문의', act: '외부 답장 발송', risk: 'high', enabled: false }
+        ];
+
+        var halted = false;
+
+        function esc(s) { var d = document.createElement('div'); d.textContent = (s == null ? '' : s); return d.innerHTML; }
+
+        function stateBadge() {
+            return halted
+                ? '<span class="ds-badge ds-badge-danger">중단</span>'
+                : '<span class="ds-badge">대기</span>';
+        }
+
+        function renderAgents() {
+            var html = '';
+            for (var i = 0; i < AGENTS.length; i++) {
+                var a = AGENTS[i];
+                html += '<div class="ag-card">' +
+                    '<div class="ag-top"><div class="ag-av">' + esc(a.icon) + '</div>' +
+                    '<div style="flex:1;min-width:0"><div class="ag-name">' + esc(a.name) + '</div>' +
+                    '<div class="ag-desc">' + esc(a.desc) + '</div></div>' + stateBadge() + '</div>' +
+                    '<div class="ag-task">현재 작업: <b>' + esc(a.task) + '</b></div>' +
+                    '<div class="ag-foot"><span class="ds-small">승인 게이트 통과 후 실행</span>' +
+                    '<button class="ds-btn ds-btn-secondary ds-btn-sm"><i data-lucide="eye" class="ds-icon ds-icon-sm"></i> 결과 보기</button></div>' +
+                    '</div>';
+            }
+            document.getElementById('agentGrid').innerHTML = html;
+            syncIcons();
+        }
+
+        function renderAutomations() {
+            var html = '';
+            for (var i = 0; i < AUTOMATIONS.length; i++) {
+                var au = AUTOMATIONS[i];
+                var on = au.enabled && !halted;
+                html += '<div class="au-row">' +
+                    '<div class="au-info"><div class="au-name">' + esc(au.name) + '</div>' +
+                    '<div class="au-meta">조건: ' + esc(au.cond) + ' · 동작: ' + esc(au.act) + '</div></div>' +
+                    '<span class="risk ' + esc(au.risk) + '">위험 ' + (au.risk === 'low' ? '낮음' : au.risk === 'mid' ? '중간' : '높음') + '</span>' +
+                    '<div class="tgl' + (on ? ' on' : '') + '" role="switch" aria-checked="' + on + '" onclick="toggleAuto(' + i + ')"></div>' +
+                    '</div>';
+            }
+            document.getElementById('autoList').innerHTML = html;
+        }
+
+        function toggleAuto(i) {
+            if (halted) { return; }
+            // 위험 높은 자동화를 켤 때 경고(승인 게이트 안내)
+            if (!AUTOMATIONS[i].enabled && AUTOMATIONS[i].risk === 'high') {
+                var ok = window.confirm('"' + AUTOMATIONS[i].name + '"은(는) 위험도가 높은 자동화입니다.\n외부로 메시지가 발송될 수 있어 담당자 승인·정책 검토가 필요합니다. 그래도 켜시겠어요?');
+                if (!ok) { return; }
+            }
+            AUTOMATIONS[i].enabled = !AUTOMATIONS[i].enabled;
+            renderAutomations();
+        }
+
+        function emergencyHalt() {
+            if (halted) {
+                halted = false;
+                document.getElementById('haltBanner').classList.remove('show');
+            } else {
+                var ok = window.confirm('모든 AI 직원을 즉시 중단하고 자동화를 해제합니다. 진행할까요?');
+                if (!ok) { return; }
+                halted = true;
+                document.getElementById('haltBanner').classList.add('show');
+            }
+            var btn = document.getElementById('haltBtn');
+            btn.innerHTML = halted
+                ? '<i data-lucide="play" class="ds-icon ds-icon-sm"></i> 운영 재개'
+                : '<i data-lucide="octagon-x" class="ds-icon ds-icon-sm"></i> 긴급 중단';
+            renderAgents();
+            renderAutomations();
+        }
+
+        function syncIcons() { if (window.lucide && typeof window.lucide.createIcons === 'function') { window.lucide.createIcons(); } }
+
+        renderAgents();
+        renderAutomations();
+    </script>
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
+</body>
+</html>

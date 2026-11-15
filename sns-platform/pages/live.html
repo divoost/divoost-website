@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>라이브 운영 | DIVOOST SNS</title>
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .live-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
+        .live-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+        .live-card{padding:18px 20px}
+        .live-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+        .live-card-title{font-size:var(--ds-text-lg);font-weight:var(--ds-weight-bold);color:var(--ds-text-primary);line-height:1.3}
+        .live-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;margin-bottom:14px}
+        .live-meta-item{display:flex;flex-direction:column;gap:3px}
+        .live-meta-label{font-size:var(--ds-text-2xs);font-weight:var(--ds-weight-semibold);color:var(--ds-text-tertiary);display:flex;align-items:center;gap:5px}
+        .live-meta-value{font-size:var(--ds-text-sm);font-weight:var(--ds-weight-semibold);color:var(--ds-text-primary)}
+        .live-meta-value.revenue{color:var(--ds-accent-soft-fg)}
+        .live-check-wrap{border-top:1px solid var(--ds-border-subtle);padding-top:12px}
+        .live-check-head{font-size:var(--ds-text-2xs);font-weight:var(--ds-weight-semibold);color:var(--ds-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em}
+        .live-check-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+        .live-check-item{display:flex;align-items:center;gap:8px;font-size:var(--ds-text-sm);color:var(--ds-text-secondary)}
+        .live-check-item .ds-icon{flex:none}
+        .live-check-item.done{color:var(--ds-text-primary)}
+        .live-check-item.done .ds-icon{color:var(--ds-success-600)}
+        .live-check-item.todo .ds-icon{color:var(--ds-text-tertiary)}
+        @media(max-width:768px){
+            .live-stats{grid-template-columns:1fr}
+            .live-grid{grid-template-columns:1fr}
+        }
+    </style>
+</head>
+<body class="ds-root" data-shell-active="live">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">라이브 운영</h1>
+                <p class="ds-body">라이브 방송 계획·목표·호스트·체크리스트를 관리합니다.</p>
+            </div>
+            <button class="ds-btn ds-btn-primary"><i data-lucide="plus" class="ds-icon ds-icon-sm"></i> 라이브 계획</button>
+        </div>
+
+        <div class="d-note">
+            <i data-lucide="info" class="ds-icon ds-icon-sm"></i>
+            <span>구조 시연용 데모 데이터입니다. 각 라이브 플랫폼 실시간 API 연동은 백엔드 설계 후 연결됩니다.</span>
+        </div>
+
+        <div class="live-stats" id="liveStats"></div>
+        <div class="live-grid" id="liveGrid"></div>
+    </main>
+
+    <script>
+        (function(){
+            // 데모 데이터 (구조 시연용 — 실제 플랫폼 API 연동 전)
+            var liveSessions = [
+                {
+                    title: 'PharmTree 주말 라이브',
+                    platform: 'TikTok Shop',
+                    schedule: '11/18 19:00',
+                    host: 'Linh',
+                    revenueTarget: 1200000,
+                    status: '준비 중',
+                    statusClass: 'ds-badge-warning',
+                    checklist: [
+                        { label: '상품 셀링 포인트', done: true },
+                        { label: '방송 장면', done: true },
+                        { label: '쿠폰 정책', done: false }
+                    ]
+                },
+                {
+                    title: '중국 상품 소개 라이브',
+                    platform: '抖音(Douyin)',
+                    schedule: '11/23 20:00',
+                    host: 'Chen',
+                    revenueTarget: 1800000,
+                    status: '기획 중',
+                    statusClass: 'ds-badge',
+                    checklist: [
+                        { label: '대본', done: false },
+                        { label: '상품 카탈로그', done: false }
+                    ]
+                }
+            ];
+
+            function escapeHtml(str){
+                return String(str).replace(/[&<>"']/g, function(ch){
+                    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[ch];
+                });
+            }
+
+            function formatWon(amount){
+                // ₩ + 천 단위 콤마 (ES5 호환)
+                var s = String(Math.round(amount));
+                var out = '';
+                var count = 0;
+                for (var i = s.length - 1; i >= 0; i--) {
+                    out = s.charAt(i) + out;
+                    count++;
+                    if (count % 3 === 0 && i > 0) { out = ',' + out; }
+                }
+                return '₩' + out;
+            }
+
+            function renderStats(sessions){
+                var totalRevenue = 0;
+                for (var i = 0; i < sessions.length; i++) {
+                    totalRevenue += sessions[i].revenueTarget;
+                }
+                var html = '';
+                html += '<div class="ds-stat">'
+                    + '<div class="ds-stat-label"><i data-lucide="radio" class="ds-icon ds-icon-sm"></i> 예정 라이브</div>'
+                    + '<div class="ds-stat-value">' + sessions.length + '</div>'
+                    + '</div>';
+                html += '<div class="ds-stat">'
+                    + '<div class="ds-stat-label"><i data-lucide="target" class="ds-icon ds-icon-sm"></i> 목표 매출 합계</div>'
+                    + '<div class="ds-stat-value">' + formatWon(totalRevenue) + '</div>'
+                    + '</div>';
+                document.getElementById('liveStats').innerHTML = html;
+            }
+
+            function renderChecklist(items){
+                var html = '<ul class="live-check-list">';
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    var icon = item.done ? 'check-circle' : 'circle';
+                    var cls = item.done ? 'done' : 'todo';
+                    html += '<li class="live-check-item ' + cls + '">'
+                        + '<i data-lucide="' + icon + '" class="ds-icon ds-icon-sm"></i>'
+                        + '<span>' + escapeHtml(item.label) + '</span>'
+                        + '</li>';
+                }
+                html += '</ul>';
+                return html;
+            }
+
+            function renderCards(sessions){
+                var html = '';
+                for (var i = 0; i < sessions.length; i++) {
+                    var s = sessions[i];
+                    html += '<div class="ds-card live-card">'
+                        + '<div class="live-card-top">'
+                            + '<div class="live-card-title">' + escapeHtml(s.title) + '</div>'
+                            + '<span class="' + s.statusClass + '">' + escapeHtml(s.status) + '</span>'
+                        + '</div>'
+                        + '<div class="live-meta">'
+                            + '<div class="live-meta-item">'
+                                + '<div class="live-meta-label"><i data-lucide="video" class="ds-icon ds-icon-sm"></i> 플랫폼</div>'
+                                + '<div class="live-meta-value"><span class="ds-badge ds-badge-accent">' + escapeHtml(s.platform) + '</span></div>'
+                            + '</div>'
+                            + '<div class="live-meta-item">'
+                                + '<div class="live-meta-label"><i data-lucide="calendar-clock" class="ds-icon ds-icon-sm"></i> 일정</div>'
+                                + '<div class="live-meta-value">' + escapeHtml(s.schedule) + '</div>'
+                            + '</div>'
+                            + '<div class="live-meta-item">'
+                                + '<div class="live-meta-label"><i data-lucide="user" class="ds-icon ds-icon-sm"></i> 호스트</div>'
+                                + '<div class="live-meta-value">' + escapeHtml(s.host) + '</div>'
+                            + '</div>'
+                            + '<div class="live-meta-item">'
+                                + '<div class="live-meta-label"><i data-lucide="target" class="ds-icon ds-icon-sm"></i> 목표 매출</div>'
+                                + '<div class="live-meta-value revenue">' + formatWon(s.revenueTarget) + '</div>'
+                            + '</div>'
+                        + '</div>'
+                        + '<div class="live-check-wrap">'
+                            + '<div class="live-check-head">체크리스트</div>'
+                            + renderChecklist(s.checklist)
+                        + '</div>'
+                    + '</div>';
+                }
+                document.getElementById('liveGrid').innerHTML = html;
+            }
+
+            renderStats(liveSessions);
+            renderCards(liveSessions);
+        })();
+    </script>
+
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){});
+        }
+    </script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
+</body>
+</html>

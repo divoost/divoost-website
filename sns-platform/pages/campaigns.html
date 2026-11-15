@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>캠페인 | DIVOOST SNS</title>
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        /* 화면 전용 스타일 — 전부 --ds-* 토큰 사용(하드코딩 색상 금지) */
+        .cmp-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--ds-space-3);margin-bottom:var(--ds-space-6)}
+        .cmp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:var(--ds-space-4)}
+        .cmp-card-pad{padding:var(--ds-space-5)}
+        .cmp-top{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--ds-space-3);margin-bottom:var(--ds-space-2)}
+        .cmp-name{font-size:var(--ds-text-lg);font-weight:var(--ds-weight-bold);color:var(--ds-text-primary);line-height:var(--ds-leading-snug)}
+        .cmp-brand{font-size:var(--ds-text-xs);font-weight:var(--ds-weight-semibold);color:var(--ds-text-tertiary);margin-top:3px;display:flex;align-items:center;gap:5px}
+        .cmp-goal{font-size:var(--ds-text-sm);color:var(--ds-text-secondary);margin:var(--ds-space-3) 0 var(--ds-space-4);display:flex;align-items:center;gap:6px}
+        .cmp-budget-row{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
+        .cmp-budget-label{font-size:var(--ds-text-2xs);font-weight:var(--ds-weight-semibold);letter-spacing:.04em;text-transform:uppercase;color:var(--ds-text-tertiary)}
+        .cmp-budget-pct{font-size:var(--ds-text-xs);font-weight:var(--ds-weight-bold);color:var(--ds-text-primary)}
+        .cmp-track{height:8px;border-radius:var(--ds-radius-full);background:var(--ds-bg-subtle);overflow:hidden}
+        .cmp-fill{height:100%;border-radius:var(--ds-radius-full);background:var(--ds-accent);transition:width var(--ds-duration-base) var(--ds-ease)}
+        .cmp-budget-amt{font-size:var(--ds-text-xs);color:var(--ds-text-secondary);margin-top:6px}
+        .cmp-budget-amt strong{color:var(--ds-text-primary);font-weight:var(--ds-weight-bold)}
+        .cmp-meta{display:flex;flex-wrap:wrap;gap:var(--ds-space-3);margin-top:var(--ds-space-4);padding-top:var(--ds-space-4);border-top:1px solid var(--ds-border-subtle)}
+        .cmp-meta-item{display:flex;align-items:center;gap:6px;font-size:var(--ds-text-xs);color:var(--ds-text-secondary)}
+        .cmp-meta-item .ds-icon{color:var(--ds-text-tertiary)}
+        @media(max-width:768px){
+            .cmp-kpis{grid-template-columns:1fr}
+            .cmp-grid{grid-template-columns:1fr}
+        }
+    </style>
+</head>
+<body class="ds-root" data-shell-active="campaigns">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">캠페인</h1>
+                <p class="ds-body">브랜드별 캠페인의 예산·목표·기간·담당자를 관리합니다.</p>
+            </div>
+            <button class="ds-btn ds-btn-primary"><i data-lucide="plus" class="ds-icon ds-icon-sm"></i> 캠페인 추가</button>
+        </div>
+
+        <div class="d-note">
+            <i data-lucide="info" class="ds-icon ds-icon-sm"></i>
+            <div>구조 시연용 데모 데이터입니다. 실제 캠페인 CRUD·예산 승인은 백엔드 연동 후 연결됩니다.</div>
+        </div>
+
+        <!-- 요약 KPI -->
+        <div class="cmp-kpis" id="cmpKpis"></div>
+
+        <!-- 캠페인 카드 그리드 -->
+        <div class="cmp-grid" id="cmpGrid"></div>
+    </main>
+
+    <script>
+        // 정적 데모 데이터(외부 입력 아님 — XSS 위험 없음). ES5 호환.
+        var CAMPAIGNS = [
+            {
+                name: '11월 스킨케어 캠페인',
+                brand: 'PharmTree Vietnam',
+                goal: '인지도·구매 유입',
+                status: 'active',
+                budget: 2800000,
+                spent: 1170000,
+                owner: 'VN 마케팅팀',
+                period: '11/06~11/29'
+            },
+            {
+                name: 'K-CLEAN 후속 콘텐츠',
+                brand: 'K-CLEAN FESTA',
+                goal: '행사 성과·파트너 홍보',
+                status: 'active',
+                budget: 1500000,
+                spent: 420000,
+                owner: '한국 콘텐츠팀',
+                period: '11/11~12/02'
+            },
+            {
+                name: '중국 시장 런칭 테스트',
+                brand: 'Global Beauty',
+                goal: '리뷰 콘텐츠 반응',
+                status: 'planning',
+                budget: 1800000,
+                spent: 0,
+                owner: 'CN 마케팅팀',
+                period: '11/16~12/19'
+            }
+        ];
+
+        var STATUS_META = {
+            active:   { label: '운영중', badge: 'ds-badge-success', dot: true },
+            planning: { label: '기획',   badge: 'ds-badge-warning', dot: true }
+        };
+
+        // 천단위 콤마 + 원화 표기
+        function formatWon(n) {
+            if (typeof n !== 'number' || isNaN(n)) return '₩0';
+            return '₩' + String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+        }
+
+        // 집행률(%) — 예산 0 방어
+        function spentPercent(spent, budget) {
+            if (!budget || budget <= 0) return 0;
+            return Math.round((spent / budget) * 100);
+        }
+
+        function renderKpis() {
+            var activeCount = CAMPAIGNS.filter(function (c) { return c.status === 'active'; }).length;
+            var totalBudget = CAMPAIGNS.reduce(function (sum, c) { return sum + c.budget; }, 0);
+            var totalSpent = CAMPAIGNS.reduce(function (sum, c) { return sum + c.spent; }, 0);
+
+            var kpis = [
+                { label: '활성 캠페인', icon: 'target', value: String(activeCount) + '개' },
+                { label: '총 예산', icon: 'wallet', value: formatWon(totalBudget) },
+                { label: '총 집행', icon: 'trending-up', value: formatWon(totalSpent) }
+            ];
+
+            var html = '';
+            kpis.forEach(function (k) {
+                html += '<div class="ds-stat">' +
+                    '<div class="ds-stat-label"><i data-lucide="' + k.icon + '" class="ds-icon ds-icon-sm"></i> ' + k.label + '</div>' +
+                    '<div class="ds-stat-value">' + k.value + '</div>' +
+                    '</div>';
+            });
+            document.getElementById('cmpKpis').innerHTML = html;
+        }
+
+        function renderCampaigns() {
+            var html = '';
+            CAMPAIGNS.forEach(function (c) {
+                var meta = STATUS_META[c.status] || { label: c.status, badge: 'ds-badge', dot: false };
+                var pct = spentPercent(c.spent, c.budget);
+
+                html += '<div class="ds-card ds-card-hover cmp-card-pad">' +
+                    '<div class="cmp-top">' +
+                        '<div>' +
+                            '<div class="cmp-name">' + c.name + '</div>' +
+                            '<div class="cmp-brand"><i data-lucide="building-2" class="ds-icon ds-icon-sm"></i> ' + c.brand + '</div>' +
+                        '</div>' +
+                        '<span class="ds-badge ' + meta.badge + (meta.dot ? ' ds-badge-dot' : '') + '">' + meta.label + '</span>' +
+                    '</div>' +
+                    '<div class="cmp-goal"><i data-lucide="flag" class="ds-icon ds-icon-sm"></i> 목표 · ' + c.goal + '</div>' +
+                    '<div class="cmp-budget-row">' +
+                        '<span class="cmp-budget-label">예산 집행</span>' +
+                        '<span class="cmp-budget-pct">' + pct + '%</span>' +
+                    '</div>' +
+                    '<div class="cmp-track"><div class="cmp-fill" style="width:' + pct + '%"></div></div>' +
+                    '<div class="cmp-budget-amt"><strong>' + formatWon(c.spent) + '</strong> / ' + formatWon(c.budget) + '</div>' +
+                    '<div class="cmp-meta">' +
+                        '<div class="cmp-meta-item"><i data-lucide="user" class="ds-icon ds-icon-sm"></i> ' + c.owner + '</div>' +
+                        '<div class="cmp-meta-item"><i data-lucide="calendar" class="ds-icon ds-icon-sm"></i> ' + c.period + '</div>' +
+                    '</div>' +
+                    '</div>';
+            });
+            document.getElementById('cmpGrid').innerHTML = html;
+        }
+
+        renderKpis();
+        renderCampaigns();
+    </script>
+
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) { navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function () {}); }
+    </script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="DIVOOST SNS">
+    <link rel="manifest" href="../manifest.json">
+    <title>광고 관리 | DIVOOST SNS</title>
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        /* 요약 통계 4열 */
+        .ads-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--ds-space-3);margin-bottom:var(--ds-space-5)}
+        /* 테이블 카드 (가로 스크롤) */
+        .ads-table-card{padding:0;overflow:hidden}
+        .ads-table-scroll{overflow-x:auto}
+        .ads-table{min-width:760px}
+        .ads-table th,.ads-table td{white-space:nowrap}
+        .ads-table td.num,.ads-table th.num{text-align:right}
+        .ads-table .ads-media{font-weight:var(--ds-weight-semibold);color:var(--ds-text-primary)}
+        .ads-table .ads-src{font-size:var(--ds-text-xs);color:var(--ds-text-tertiary)}
+        @media(max-width:768px){
+            .ads-stats{grid-template-columns:1fr 1fr}
+        }
+    </style>
+</head>
+<body class="ds-root" data-shell-active="ads">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST / HUBONTRADE SNS</div>
+                <h1 class="ds-h1">광고 관리</h1>
+                <p class="ds-body">매체별 광고비·매출을 비교하고 ROAS를 추적합니다. 수기·CSV 입력을 지원합니다.</p>
+            </div>
+            <div class="ds-row ds-gap-2">
+                <button class="ds-btn ds-btn-secondary"><i data-lucide="upload" class="ds-icon ds-icon-sm"></i> CSV 가져오기</button>
+                <button class="ds-btn ds-btn-primary"><i data-lucide="plus" class="ds-icon ds-icon-sm"></i> 수기 등록</button>
+            </div>
+        </div>
+
+        <div class="d-note">
+            <i data-lucide="info" class="ds-icon ds-icon-sm"></i>
+            <span>구조 시연용 데모 데이터입니다. 매체 API 수집·권한·예산 승인은 백엔드 연동 후 연결됩니다. 불명확한 추정치를 사실로 표시하지 않습니다.</span>
+        </div>
+
+        <!-- 요약 통계 -->
+        <div class="ads-stats" id="adsStats"></div>
+
+        <!-- 매체별 광고 성과 -->
+        <div class="ds-card ads-table-card">
+            <div class="ds-card-header">
+                <div class="ds-card-title">매체별 광고 성과</div>
+                <span class="ds-badge ds-badge-accent">데모 데이터</span>
+            </div>
+            <div class="ads-table-scroll">
+                <table class="ds-table ads-table">
+                    <thead>
+                        <tr>
+                            <th>매체</th>
+                            <th>캠페인</th>
+                            <th class="num">광고비</th>
+                            <th class="num">노출</th>
+                            <th class="num">클릭</th>
+                            <th class="num">전환</th>
+                            <th class="num">매출</th>
+                            <th class="num">ROAS</th>
+                            <th>출처</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adsTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 구조 시연용 데모 데이터 (실제 매체 API 연동 전). 금액 단위: 원(KRW).
+        var ADS_ROWS = [
+            { media: 'Meta',   campaign: '11월 스킨케어', spend: 820000, impressions: 134000, clicks: 4300, conversions: 169, revenue: 2520000, source: 'CSV' },
+            { media: 'TikTok', campaign: '11월 스킨케어', spend: 350000, impressions: 111000, clicks: 3200, conversions: 95,  revenue: 1020000, source: '수기' },
+            { media: 'Meta',   campaign: 'K-CLEAN 후속', spend: 420000, impressions: 79000,  clicks: 1600, conversions: 0,   revenue: 0,       source: 'CSV' }
+        ];
+
+        // ROAS 임계값: 손익분기(1.0) 이상이면 양호(success), 그 미만이면 위험(danger).
+        var ROAS_BREAKEVEN = 1.0;
+
+        function formatWon(n) {
+            return '₩' + Number(n).toLocaleString('ko-KR');
+        }
+
+        function formatNum(n) {
+            return Number(n).toLocaleString('ko-KR');
+        }
+
+        // ROAS = 매출 / 광고비 (소수 2자리). 광고비 0이면 0 반환(0 나누기 방어).
+        function calcRoas(revenue, spend) {
+            if (!spend || spend <= 0) return 0;
+            return revenue / spend;
+        }
+
+        function roasBadgeClass(roas) {
+            return roas >= ROAS_BREAKEVEN ? 'ds-badge-success' : 'ds-badge-danger';
+        }
+
+        function escapeHtml(s) {
+            var d = document.createElement('div');
+            d.textContent = s == null ? '' : String(s);
+            return d.innerHTML;
+        }
+
+        function renderStats(rows) {
+            var totalSpend = 0, totalRevenue = 0, totalConversions = 0;
+            rows.forEach(function (r) {
+                totalSpend += r.spend;
+                totalRevenue += r.revenue;
+                totalConversions += r.conversions;
+            });
+            // 평균 ROAS = 총매출 / 총광고비 (비용 가중평균).
+            var avgRoas = calcRoas(totalRevenue, totalSpend);
+
+            var cards = [
+                { label: '총 광고비', value: formatWon(totalSpend) },
+                { label: '총 매출',   value: formatWon(totalRevenue) },
+                { label: '평균 ROAS', value: avgRoas.toFixed(2) },
+                { label: '총 전환',   value: formatNum(totalConversions) }
+            ];
+
+            var html = '';
+            cards.forEach(function (c) {
+                html += '<div class="ds-stat">'
+                     +    '<div class="ds-stat-label">' + escapeHtml(c.label) + '</div>'
+                     +    '<div class="ds-stat-value">' + escapeHtml(c.value) + '</div>'
+                     +  '</div>';
+            });
+            document.getElementById('adsStats').innerHTML = html;
+        }
+
+        function renderTable(rows) {
+            var html = '';
+            rows.forEach(function (r) {
+                var roas = calcRoas(r.revenue, r.spend);
+                html += '<tr>'
+                     +    '<td class="ads-media">' + escapeHtml(r.media) + '</td>'
+                     +    '<td>' + escapeHtml(r.campaign) + '</td>'
+                     +    '<td class="num">' + formatWon(r.spend) + '</td>'
+                     +    '<td class="num">' + formatNum(r.impressions) + '</td>'
+                     +    '<td class="num">' + formatNum(r.clicks) + '</td>'
+                     +    '<td class="num">' + formatNum(r.conversions) + '</td>'
+                     +    '<td class="num">' + formatWon(r.revenue) + '</td>'
+                     +    '<td class="num"><span class="ds-badge ' + roasBadgeClass(roas) + '">' + roas.toFixed(2) + '</span></td>'
+                     +    '<td class="ads-src">' + escapeHtml(r.source) + '</td>'
+                     +  '</tr>';
+            });
+            document.getElementById('adsTableBody').innerHTML = html;
+        }
+
+        function renderAds() {
+            renderStats(ADS_ROWS);
+            renderTable(ADS_ROWS);
+        }
+
+        renderAds();
+    </script>
+
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script>
+        if ("serviceWorker" in navigator) { navigator.serviceWorker.register("/divoost-website/sns-platform/sw.js").catch(function(){}); }
+    </script>
+    <script src="../js/i18n-auto.js"></script>
+    <script src="../js/i18n-common.js"></script>
+    <script src="../js/i18n.js"></script>
+
+    <!-- DDS 공통 셸(상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell.js"></script>
+</body>
+</html>

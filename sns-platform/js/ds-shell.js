@@ -20,22 +20,24 @@
   // 상단 네비 주요 항목: [key, label, 루트기준 path]
   var NAV = [
     ['index', '종합 현황', 'index.html'],
+    ['campaigns', '캠페인', 'pages/campaigns.html'],
     ['calendar', '캘린더', 'pages/calendar.html'],
     ['create', '콘텐츠 스튜디오', 'pages/create.html'],
-    ['ai-writer', 'AI 작성기', 'pages/ai-writer.html'],
+    ['shorts', 'AI 숏폼', 'pages/shorts.html'],
     ['media', '미디어', 'pages/media.html'],
     ['publish', '포스팅', 'pages/publish.html'],
-    ['schedule', '예약 발행', 'pages/schedule.html'],
     ['engagement', '댓글/반응', 'pages/engagement.html'],
     ['analytics', '분석 리포트', 'pages/analytics.html']
   ];
   // 드로어 전체 메뉴: [섹션명, [[icon, key, label, path], ...]]
   var DRAWER = [
-    ['대시보드', [['home', 'index', '종합 현황', 'index.html'], ['calendar', 'calendar', '캘린더', 'pages/calendar.html']]],
-    ['콘텐츠 생성', [['pen-line', 'create', '콘텐츠 스튜디오', 'pages/create.html'], ['sparkles', 'ai-writer', 'AI 작성기', 'pages/ai-writer.html'], ['image', 'media', '미디어', 'pages/media.html'], ['layout-template', 'templates', '템플릿', 'pages/templates.html']]],
-    ['포스팅 관리', [['send', 'publish', '포스팅', 'pages/publish.html'], ['calendar-clock', 'schedule', '예약 발행', 'pages/schedule.html'], ['history', 'history', '발행 이력', 'pages/history.html']]],
-    ['인터렉션', [['message-circle', 'engagement', '댓글/반응', 'pages/engagement.html'], ['radar', 'listening', '소셜 리스닝', 'pages/listening.html'], ['bar-chart-3', 'analytics', '분석 리포트', 'pages/analytics.html']]],
-    ['시스템', [['settings', 'settings', '설정', 'pages/settings.html'], ['credit-card', 'billing', '요금제/크레딧', 'pages/billing.html'], ['shield-check', 'safety-guide', '운영 가이드', 'pages/safety-guide.html']]]
+    ['관제', [['home', 'index', '종합 현황', 'index.html'], ['target', 'campaigns', '캠페인', 'pages/campaigns.html'], ['calendar', 'calendar', '콘텐츠 캘린더', 'pages/calendar.html']]],
+    ['콘텐츠 제작', [['pen-line', 'create', '콘텐츠 스튜디오', 'pages/create.html'], ['sparkles', 'ai-writer', 'AI 작성기', 'pages/ai-writer.html'], ['clapperboard', 'shorts', 'AI 숏폼 팩토리', 'pages/shorts.html'], ['image', 'media', '자산 라이브러리', 'pages/media.html'], ['layout-template', 'templates', '템플릿', 'pages/templates.html']]],
+    ['게시·예약', [['send', 'publish', '게시·발행', 'pages/publish.html'], ['calendar-clock', 'schedule', '예약 발행', 'pages/schedule.html'], ['history', 'history', '발행 이력', 'pages/history.html']]],
+    ['인터랙션·승인', [['message-circle', 'engagement', '댓글·DM', 'pages/engagement.html'], ['radar', 'listening', '트렌드·리스닝', 'pages/listening.html'], ['check-circle', 'approvals', '승인함', 'pages/approvals.html']]],
+    ['성과·실행', [['bar-chart-3', 'analytics', '성과 분석', 'pages/analytics.html'], ['megaphone', 'ads', '광고 관리', 'pages/ads.html'], ['users', 'koc', '인플루언서(KOC)', 'pages/koc.html'], ['radio', 'live', '라이브 운영', 'pages/live.html']]],
+    ['운영·연동', [['bot', 'agents', 'AI 직원', 'pages/agents.html'], ['plug', 'connections', '채널 연결', 'pages/connections.html'], ['building-2', 'organization', '고객사·조직', 'pages/organization.html'], ['git-merge', 'integration', 'EZworks 연동', 'pages/integration.html']]],
+    ['시스템', [['settings', 'settings', '설정', 'pages/settings.html'], ['credit-card', 'billing', '요금제·크레딧', 'pages/billing.html'], ['shield-check', 'safety-guide', '운영 가이드', 'pages/safety-guide.html']]]
   ];
 
   var navHtml = NAV.map(function (n) {
