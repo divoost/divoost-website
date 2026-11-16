@@ -7,6 +7,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { corsHeaders, handleCors } from "../_shared/cors.ts";
 import { VIDEO_MODELS, calcChargeCents, calcCostCents } from "../_shared/ai-models.ts";
 import { callReplicate, callFal } from "../_shared/providers.ts";
+import { notifyLowBalance } from "../_shared/email.ts";
 
 // @ts-ignore Deno
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
@@ -103,6 +104,16 @@ serve(async (req) => {
     } catch (_) { /* fallback to original */ }
 
     await supabase.from("ai_usage_logs").update({ status: "success", output_url: finalUrl }).eq("id", usageLogId);
+
+    // 잔액 부족 알림 (실패해도 생성 결과엔 영향 없음)
+    try {
+      await notifyLowBalance(supabase, {
+        userId,
+        email: userData.user.email || "",
+        name: (userData.user.user_metadata as any)?.full_name,
+        balanceCents: deductResult.balance_after_cents,
+      });
+    } catch (_e) { /* 알림 실패 무시 */ }
 
     return new Response(JSON.stringify({
       success: true, url: finalUrl, model: modelKey, provider: model.provider,

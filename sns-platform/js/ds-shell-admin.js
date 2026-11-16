@@ -13,7 +13,7 @@
   // 사이드바 전체 메뉴: [섹션명, [[icon, key, label, path], ...]]
   var MENU = [
     ['대시보드', [['layout-dashboard', 'index', '관리자 대시보드', 'index.html']]],
-    ['회원·결제', [['users', 'users', '회원 관리', 'users.html'], ['credit-card', 'subscriptions', '구독 관리', 'subscriptions.html']]],
+    ['회원·결제', [['users', 'users', '회원 관리', 'users.html'], ['credit-card', 'subscriptions', '구독 관리', 'subscriptions.html'], ['trending-up', 'revenue', '매출·사용량', 'revenue.html']]],
     ['콘텐츠·신고', [['file-check', 'content-moderation', '콘텐츠 검토', 'content-moderation.html'], ['flag', 'reports', '신고·제재', 'reports.html'], ['bell', 'notifications', '공지 관리', 'notifications.html']]],
     ['모니터링', [['activity', 'api-monitor', 'API 모니터', 'api-monitor.html'], ['heart-pulse', 'system-health', '시스템 상태', 'system-health.html'], ['footprints', 'user-activity', '활동 로그', 'user-activity.html'], ['scroll-text', 'audit-log', '감사 로그', 'audit-log.html']]],
     ['설정', [['settings', 'admin-settings', '관리자 설정', 'admin-settings.html'], ['mail', 'email-center', '이메일 센터', 'email-center.html']]]

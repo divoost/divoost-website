@@ -374,6 +374,59 @@
         return byPlatform;
     }
 
+    // ─── 매출/마진 집계 (관리자) ───
+    // ai_usage_logs: 원가(cost)/판매가(charged)/마진. 성공 건만.
+    // payments: 충전·구독 결제 매출(amount_krw, status succeeded).
+    // 대량 환경에서는 서버 RPC 집계가 바람직(현재는 기간 한정 클라 집계).
+    async function getRevenueStats(filters){
+        filters = filters || {};
+        var days = filters.days || 30;
+        var since = new Date(Date.now() - days*24*60*60*1000).toISOString();
+
+        var usage = {costCents:0, chargedCents:0, marginCents:0, count:0, byType:{}, byDay:{}};
+        var usageQ = 'select=type,cost_cents,charged_cents,margin_cents,status,created_at' +
+            '&created_at=gte.' + encodeURIComponent(since) + '&status=eq.success&order=created_at.desc&limit=50000';
+        var usageRes = await rest('ai_usage_logs', {query: usageQ});
+        if(usageRes.ok && Array.isArray(usageRes.data)){
+            usageRes.data.forEach(function(r){
+                var charged = r.charged_cents || 0;
+                var cost = r.cost_cents || 0;
+                var margin = (r.margin_cents != null) ? r.margin_cents : (charged - cost);
+                usage.costCents += cost; usage.chargedCents += charged; usage.marginCents += margin; usage.count++;
+                var t = r.type || '기타';
+                if(!usage.byType[t]) usage.byType[t] = {costCents:0, chargedCents:0, marginCents:0, count:0};
+                usage.byType[t].costCents += cost; usage.byType[t].chargedCents += charged;
+                usage.byType[t].marginCents += margin; usage.byType[t].count++;
+                var day = (r.created_at || '').slice(0,10);
+                if(day){
+                    if(!usage.byDay[day]) usage.byDay[day] = {chargedCents:0, marginCents:0, count:0};
+                    usage.byDay[day].chargedCents += charged; usage.byDay[day].marginCents += margin; usage.byDay[day].count++;
+                }
+            });
+        }
+
+        // 결제 매출 (payments 테이블 없거나 비어있으면 0)
+        var payments = {amountKrw:0, count:0, byProvider:{}, available:true};
+        var payQ = 'select=amount_krw,status,provider,created_at' +
+            '&created_at=gte.' + encodeURIComponent(since) + '&order=created_at.desc&limit=50000';
+        var payRes = await rest('payments', {query: payQ});
+        if(payRes.ok && Array.isArray(payRes.data)){
+            payRes.data.forEach(function(r){
+                if(r.status === 'succeeded'){
+                    var amt = Number(r.amount_krw) || 0;
+                    payments.amountKrw += amt; payments.count++;
+                    var pv = r.provider || '기타';
+                    if(!payments.byProvider[pv]) payments.byProvider[pv] = {amountKrw:0, count:0};
+                    payments.byProvider[pv].amountKrw += amt; payments.byProvider[pv].count++;
+                }
+            });
+        } else {
+            payments.available = false;
+        }
+
+        return {days: days, since: since, usage: usage, payments: payments};
+    }
+
     async function logApiCall(platform, endpoint, method, statusCode, latencyMs, errorMessage){
         var userId = getUserId();
         if(!userId) return;
@@ -411,6 +464,7 @@
         sendNotice: sendNotice,
         listNotices: listNotices,
         getApiUsage: getApiUsage,
+        getRevenueStats: getRevenueStats,
         logApiCall: logApiCall
     };
 })();
