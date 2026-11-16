@@ -16,10 +16,7 @@
     <style>
         html,body{margin:0;background:var(--ds-bg-app)}
         .ds-root{min-height:100dvh}
-        .d-screen{max-width:var(--ds-container-max);margin:0 auto;padding:24px}
-        .d-page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px;flex-wrap:wrap}
-        .d-page-head h1{margin:5px 0 8px}
-        .d-page-head p{max-width:720px;margin:0}
+        /* 레이아웃(.d-screen/.d-page-head)은 공통 셸 ds-shell.css가 담당 — 로컬 중앙정렬 override 제거(상단바 가림 버그 수정) */
 
         .writer-box{background:var(--ds-bg-surface);border-radius:14px;border:1px solid var(--ds-border);padding:24px;margin-bottom:20px}
         .writer-box h2{font-size:1.1rem;margin-bottom:16px;display:flex;align-items:center;gap:8px;color:var(--ds-text-primary)}
