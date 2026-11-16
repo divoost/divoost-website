@@ -143,6 +143,23 @@ CREATE TABLE IF NOT EXISTS public.ai_usage_logs (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- 구버전 ai_usage_logs 호환: 테이블이 이미 있으면 CREATE TABLE IF NOT EXISTS가 건너뛰므로
+-- 누락 컬럼을 방어적으로 추가(데이터 보존). 이미 있으면 무시됨.
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS type TEXT;
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS provider TEXT;
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS model TEXT;
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS prompt TEXT;
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS cost_cents BIGINT NOT NULL DEFAULT 0;
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS charged_cents BIGINT NOT NULL DEFAULT 0;
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS margin_cents BIGINT GENERATED ALWAYS AS (charged_cents - cost_cents) STORED;
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS duration_seconds NUMERIC(8,2);
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS output_url TEXT;
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'success';
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS error_message TEXT;
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS provider_request_id TEXT;
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS metadata JSONB DEFAULT '{}'::jsonb;
+ALTER TABLE public.ai_usage_logs ADD COLUMN IF NOT EXISTS created_at TIMESTAMPTZ DEFAULT NOW();
+
 CREATE INDEX IF NOT EXISTS idx_ai_usage_user ON public.ai_usage_logs(user_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_ai_usage_provider ON public.ai_usage_logs(provider, model);
 CREATE INDEX IF NOT EXISTS idx_ai_usage_created ON public.ai_usage_logs(created_at DESC);
