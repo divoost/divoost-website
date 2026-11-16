@@ -48,6 +48,7 @@
       '<button class="d-menu-btn" id="menuBtn" aria-label="메뉴"><i data-lucide="menu" class="ds-icon"></i></button>' +
       '<div class="d-switch"><i data-lucide="layout-grid" class="ds-icon ds-icon-sm"></i> HubOnTrade</div>' +
       '<div class="d-topbar-right">' +
+        '<span class="d-user" id="dUser"></span>' +
         '<span class="ds-badge ds-badge-accent ds-badge-dot">DEMO</span>' +
         '<button class="ds-btn ds-btn-ghost ds-btn-icon" id="themeToggle" title="테마 전환" aria-label="테마 전환"><i data-lucide="sun" class="ds-icon"></i></button>' +
         '<button class="ds-btn ds-btn-primary" onclick="location.href=\'' + rel('pages/create.html') + '\'"><i data-lucide="plus" class="ds-icon"></i> 새 콘텐츠</button>' +
@@ -61,6 +62,29 @@
   var frag = document.createDocumentFragment();
   while (holder.firstChild) { frag.appendChild(holder.firstChild); }
   document.body.insertBefore(frag, document.body.firstChild);
+
+  // 로그인 상태 표시 (상단바): 로그인 시 이메일+로그아웃, 비로그인 시 로그인 링크
+  (function () {
+    var el = document.getElementById('dUser');
+    if (!el) return;
+    var email = null;
+    try {
+      var s = JSON.parse(localStorage.getItem('snsAuthSession') || 'null');
+      if (s && s.access_token && s.user && s.user.email) email = s.user.email;
+    } catch (e) { email = null; }
+    if (email) {
+      var short = email.length > 22 ? email.slice(0, 20) + '…' : email;
+      el.innerHTML = '<span class="d-user-email" title="' + esc(email) + '"><i data-lucide="user" class="ds-icon ds-icon-sm"></i> ' + esc(short) + '</span>' +
+        '<button class="ds-btn ds-btn-ghost ds-btn-sm" id="dLogout">로그아웃</button>';
+      var lo = document.getElementById('dLogout');
+      if (lo) lo.onclick = function () {
+        try { localStorage.removeItem('snsAuthSession'); localStorage.removeItem('snsAuthEmail'); } catch (e) { /* 저장소 접근 불가 무시 */ }
+        location.href = rel('auth.html');
+      };
+    } else {
+      el.innerHTML = '<a class="ds-btn ds-btn-ghost ds-btn-sm" href="' + rel('auth.html') + '"><i data-lucide="log-in" class="ds-icon ds-icon-sm"></i> 로그인</a>';
+    }
+  })();
 
   // 사이드바 토글(모바일)
   var mb = document.getElementById('menuBtn'), sb = document.getElementById('sidebar'), ov = document.querySelector('.d-overlay');

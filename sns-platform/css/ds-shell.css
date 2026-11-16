@@ -33,6 +33,9 @@ html,body{margin:0;background:var(--ds-bg-app)}
 .d-menu-btn:hover{background:var(--ds-bg-hover);color:var(--ds-text-primary)}
 .d-switch{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 11px;border:1px solid var(--ds-border);border-radius:9px;background:var(--ds-bg-subtle);color:var(--ds-text-secondary);font-size:12px;font-weight:600;cursor:default}
 .d-topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px}
+.d-user{display:inline-flex;align-items:center;gap:6px}
+.d-user-email{display:inline-flex;align-items:center;gap:5px;color:var(--ds-text-secondary);font-size:12px;font-weight:600;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:860px){.d-user-email{display:none}}
 .d-sel{height:34px;border-radius:8px;border:1px solid var(--ds-border);background:var(--ds-bg-subtle);color:var(--ds-text-primary);font-size:12px;font-weight:600;padding:0 8px;cursor:pointer}
 .d-sel:focus{outline:none;border-color:var(--ds-accent);box-shadow:var(--ds-shadow-focus)}
 
