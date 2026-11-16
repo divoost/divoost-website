@@ -385,7 +385,8 @@ DROP POLICY IF EXISTS "admin_view_all_usage" ON public.ai_usage_logs;
 CREATE POLICY "admin_view_all_usage" ON public.ai_usage_logs FOR SELECT
 USING (EXISTS (SELECT 1 FROM public.profiles WHERE profiles.id = auth.uid() AND profiles.role IN ('super_admin','admin')));
 
-DROP POLICY IF EXISTS "admin_view_all_payments" ON public.payments FOR SELECT
+DROP POLICY IF EXISTS "admin_view_all_payments" ON public.payments;
+CREATE POLICY "admin_view_all_payments" ON public.payments FOR SELECT
 USING (EXISTS (SELECT 1 FROM public.profiles WHERE profiles.id = auth.uid() AND profiles.role IN ('super_admin','admin')));
 
 DROP POLICY IF EXISTS "admin_view_all_balances" ON public.credit_balances;
