@@ -3,12 +3,12 @@
 // 판매가는 고객에게 차감하는 크레딧 (cent 단위) - 원가 × 마진 배수
 
 export interface ModelConfig {
-  provider: "replicate" | "fal" | "openai";
+  provider: "replicate" | "fal" | "openai" | "openai-chat";
   modelId?: string;
-  costPerUnitCents: number;  // 원가 (이미지 = 장당, 영상 = 초당)
+  costPerUnitCents: number;  // 원가 (이미지 = 장당, 영상 = 초당, 텍스트 = 1회당)
   chargedPerUnitCents: number; // 판매가
   defaultDuration?: number;  // 영상 기본 초
-  unitType: "per_image" | "per_second" | "per_clip";
+  unitType: "per_image" | "per_second" | "per_clip" | "per_call";
   premium?: boolean;  // premium 플랜만 사용 가능
   buildInput(prompt: string, opts: any): any;
   extractOutput(data: any): string;
@@ -149,16 +149,94 @@ export const VIDEO_MODELS: Record<string, ModelConfig> = {
   },
 };
 
-export function calcChargeCents(type: "image" | "video", modelKey: string, duration?: number): number {
-  const m = (type === "image" ? IMAGE_MODELS : VIDEO_MODELS)[modelKey];
-  if (!m) return 0;
-  if (m.unitType === "per_image" || m.unitType === "per_clip") return m.chargedPerUnitCents;
-  return m.chargedPerUnitCents * (duration || m.defaultDuration || 5);
+// ── 텍스트 모델 ──
+// 플랫폼/톤/길이 옵션으로 SNS 캡션·블로그 글 생성. 1회 호출당 정액 과금(토큰 미터링 아님).
+const TEXT_LENGTH: Record<string, { maxTokens: number; guide: string }> = {
+  short:  { maxTokens: 220,  guide: "2~3문장의 짧은 캡션" },
+  medium: { maxTokens: 600,  guide: "4~6문장 분량의 본문" },
+  long:   { maxTokens: 1200, guide: "여러 문단의 상세한 글" },
+};
+// 해시태그는 앱의 별도 섹션에서 생성하므로 본문에는 넣지 않도록 지시
+const TEXT_PLATFORM_HINT: Record<string, string> = {
+  instagram:   "인스타그램 피드 톤, 줄바꿈과 이모지를 적절히 사용",
+  tiktok:      "짧고 강한 후킹 문장, 트렌디한 말투",
+  xiaohongshu: "샤오홍수(小红书) 노트 스타일, 친근한 리뷰체, 이모지 사용",
+  facebook:    "페이스북 페이지 톤, 정보 전달 + 공감",
+  blog:        "네이버 블로그 포스팅 톤, 소제목 포함, 자연스러운 정보성 글",
+};
+const TEXT_TONE_HINT: Record<string, string> = {
+  friendly:     "친근하고 다정한 말투",
+  professional: "전문적이고 신뢰감 있는 말투",
+  emotional:    "감성적이고 공감되는 말투",
+  humorous:     "유머러스하고 재치있는 말투",
+};
+
+function buildTextMessages(prompt: string, opts: any): Array<{ role: string; content: string }> {
+  const len = TEXT_LENGTH[opts?.length as string] || TEXT_LENGTH.medium;
+  const platform = TEXT_PLATFORM_HINT[opts?.platform as string] || "";
+  const tone = TEXT_TONE_HINT[opts?.tone as string] || TEXT_TONE_HINT.friendly;
+  const langMap: Record<string, string> = { en: "영어로", vi: "베트남어로", zh: "중국어로", ko: "한국어로" };
+  const lang = langMap[opts?.language as string] || "한국어로";
+  const sys =
+    "너는 SNS 마케팅 카피라이터다. 주어진 주제로 바로 게시 가능한 완성된 글만 출력한다. " +
+    "설명이나 머리말, 해시태그 없이 본문만 작성한다. " +
+    lang + " 작성하고, " + tone + "을 사용한다. " +
+    (platform ? platform + ". " : "") + len.guide + "으로 작성한다.";
+  return [
+    { role: "system", content: sys },
+    { role: "user", content: String(prompt).slice(0, 2000) },
+  ];
 }
 
-export function calcCostCents(type: "image" | "video", modelKey: string, duration?: number): number {
-  const m = (type === "image" ? IMAGE_MODELS : VIDEO_MODELS)[modelKey];
+export const TEXT_MODELS: Record<string, ModelConfig> = {
+  "gpt-4o-mini": {
+    provider: "openai-chat",
+    modelId: "gpt-4o-mini",
+    costPerUnitCents: 1,
+    chargedPerUnitCents: 2,
+    unitType: "per_call",
+    buildInput: (prompt, opts) => ({
+      model: "gpt-4o-mini",
+      messages: buildTextMessages(prompt, opts),
+      max_tokens: (TEXT_LENGTH[opts?.length as string] || TEXT_LENGTH.medium).maxTokens,
+      temperature: 0.85,
+    }),
+    extractOutput: (d) => (typeof d === "string" ? d : d?.text || ""),
+  },
+  "gpt-4o": {
+    provider: "openai-chat",
+    modelId: "gpt-4o",
+    costPerUnitCents: 3,
+    chargedPerUnitCents: applyMargin(3),
+    unitType: "per_call",
+    premium: true,
+    buildInput: (prompt, opts) => ({
+      model: "gpt-4o",
+      messages: buildTextMessages(prompt, opts),
+      max_tokens: (TEXT_LENGTH[opts?.length as string] || TEXT_LENGTH.medium).maxTokens,
+      temperature: 0.85,
+    }),
+    extractOutput: (d) => (typeof d === "string" ? d : d?.text || ""),
+  },
+};
+
+type GenType = "image" | "video" | "text";
+function modelOf(type: GenType, key: string): ModelConfig | undefined {
+  if (type === "image") return IMAGE_MODELS[key];
+  if (type === "video") return VIDEO_MODELS[key];
+  return TEXT_MODELS[key];
+}
+
+export function calcChargeCents(type: GenType, modelKey: string, duration?: number): number {
+  const m = modelOf(type, modelKey);
   if (!m) return 0;
-  if (m.unitType === "per_image" || m.unitType === "per_clip") return m.costPerUnitCents;
-  return m.costPerUnitCents * (duration || m.defaultDuration || 5);
+  if (m.unitType === "per_second") return m.chargedPerUnitCents * (duration || m.defaultDuration || 5);
+  return m.chargedPerUnitCents;
+}
+
+export function calcCostCents(type: GenType, modelKey: string, duration?: number): number {
+  const m = modelOf(type, modelKey);
+  if (!m) return 0;
+  if (m.unitType === "per_second") return m.costPerUnitCents * (duration || m.defaultDuration || 5);
+  return m.costPerUnitCents;
 }

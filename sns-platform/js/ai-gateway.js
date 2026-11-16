@@ -33,6 +33,11 @@
         'runway-gen3':     {label: 'Runway Gen-3 (최고품질)',      chargedPerSecCents: 17, defaultDuration: 5, premium: true}
     };
 
+    var TEXT_MODELS = {
+        'gpt-4o-mini':     {label: 'GPT-4o mini (빠름·저렴)',      chargedCents: 2, premium: false},
+        'gpt-4o':          {label: 'GPT-4o (고품질)',             chargedCents: 6, premium: true}
+    };
+
     // ─── 인증 토큰 ───
     function getAuthToken(){
         try {
@@ -130,6 +135,30 @@
         };
     }
 
+    // ─── 텍스트 생성 (SNS 캡션/블로그 글) ───
+    async function generateText(opts){
+        opts = opts || {};
+        if(!opts.prompt) throw new Error('prompt 필수');
+        var modelKey = opts.model || 'gpt-4o-mini';
+        if(!TEXT_MODELS[modelKey]) throw new Error('지원하지 않는 텍스트 모델: ' + modelKey);
+
+        var result = await invokeFunction('ai-generate-text', {
+            prompt: opts.prompt,
+            model: modelKey,
+            platform: opts.platform || '',
+            tone: opts.tone || 'friendly',
+            length: opts.length || 'medium',
+            language: opts.language || 'ko'
+        });
+        return {
+            text: result.text,
+            model: result.model,
+            provider: result.provider,
+            chargedCents: result.charged_cents,
+            balanceCents: result.balance_cents
+        };
+    }
+
     function listImageModels(){
         return Object.keys(IMAGE_MODELS).map(function(k){
             return Object.assign({id: k}, IMAGE_MODELS[k]);
@@ -169,16 +198,25 @@
         return text + hint + ', high quality, professional photography';
     }
 
+    function listTextModels(){
+        return Object.keys(TEXT_MODELS).map(function(k){
+            return Object.assign({id: k}, TEXT_MODELS[k]);
+        });
+    }
+
     window.SNSAI = {
         generateImage: generateImage,
         generateVideo: generateVideo,
+        generateText: generateText,
         listImageModels: listImageModels,
         listVideoModels: listVideoModels,
+        listTextModels: listTextModels,
         estimateCost: estimateCost,
         centsToKrw: centsToKrw,
         buildSnsPrompt: buildSnsPrompt,
         getBalance: getBalance,
         IMAGE_MODELS: IMAGE_MODELS,
-        VIDEO_MODELS: VIDEO_MODELS
+        VIDEO_MODELS: VIDEO_MODELS,
+        TEXT_MODELS: TEXT_MODELS
     };
 })();

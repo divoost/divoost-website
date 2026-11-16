@@ -76,3 +76,22 @@ export async function callOpenAI(input: any, apiKey: string): Promise<any> {
   if (d.error) throw new Error(d.error.message);
   return d;
 }
+
+// OpenAI Chat Completions (텍스트 생성) — input: {model, messages, max_tokens, temperature}
+// 반환: { text, usage } (usage는 토큰 집계, 없으면 null)
+export async function callOpenAIChat(
+  input: any,
+  apiKey: string
+): Promise<{ text: string; usage: any }> {
+  if (!apiKey) throw new Error("OPENAI_API_KEY 미설정");
+  const r = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify(input),
+  });
+  const d = await r.json();
+  if (d.error) throw new Error(d.error.message || "OpenAI chat 오류");
+  const text = d?.choices?.[0]?.message?.content;
+  if (!text) throw new Error("응답에서 텍스트 추출 실패");
+  return { text: String(text).trim(), usage: d.usage || null };
+}
