@@ -95,3 +95,28 @@ export async function callOpenAIChat(
   if (!text) throw new Error("응답에서 텍스트 추출 실패");
   return { text: String(text).trim(), usage: d.usage || null };
 }
+
+// Anthropic Messages API (텍스트 생성) — input: {model, system, messages, max_tokens, output_config}
+// 반환: { text, usage }
+export async function callAnthropic(
+  input: any,
+  apiKey: string
+): Promise<{ text: string; usage: any }> {
+  if (!apiKey) throw new Error("ANTHROPIC_API_KEY 미설정");
+  const r = await fetch("https://api.anthropic.com/v1/messages", {
+    method: "POST",
+    headers: {
+      "x-api-key": apiKey,
+      "anthropic-version": "2023-06-01",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(input),
+  });
+  const d = await r.json();
+  if (!r.ok || d.error) throw new Error(d?.error?.message || `Anthropic 오류 HTTP ${r.status}`);
+  if (d.stop_reason === "refusal") throw new Error("안전 정책으로 생성이 거부되었습니다");
+  const block = Array.isArray(d.content) ? d.content.find((b: any) => b.type === "text") : null;
+  const text = block?.text;
+  if (!text) throw new Error("응답에서 텍스트 추출 실패");
+  return { text: String(text).trim(), usage: d.usage || null };
+}

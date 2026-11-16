@@ -1,7 +1,7 @@
 // Supabase Edge Function: AI 텍스트 생성 프록시 (SNS 캡션/블로그 글)
 // 1) JWT 검증 → 사용자 식별
 // 2) 모델 + 크레딧 사전 검증 (premium 플랜 권한 포함)
-// 3) 회사 마스터 API 키로 OpenAI Chat 호출
+// 3) 회사 마스터 API 키로 Anthropic(Claude) Messages 호출
 // 4) 크레딧 차감 + 사용 로그 기록 (실패 시 환불)
 // 이미지/영상과 달리 결과물은 텍스트라 Storage 저장 단계 없음.
 
@@ -11,7 +11,7 @@ import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 import { corsHeaders, handleCors } from "../_shared/cors.ts";
 import { TEXT_MODELS, calcChargeCents, calcCostCents } from "../_shared/ai-models.ts";
-import { callOpenAIChat } from "../_shared/providers.ts";
+import { callAnthropic } from "../_shared/providers.ts";
 import { notifyLowBalance } from "../_shared/email.ts";
 
 // @ts-ignore Deno
@@ -19,7 +19,7 @@ const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 // @ts-ignore Deno
 const SUPABASE_SERVICE_ROLE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 // @ts-ignore Deno
-const OPENAI_KEY = Deno.env.get("OPENAI_API_KEY") || "";
+const ANTHROPIC_KEY = Deno.env.get("ANTHROPIC_API_KEY") || "";
 
 serve(async (req) => {
   const cors = handleCors(req);
@@ -101,7 +101,7 @@ serve(async (req) => {
     let outputText: string;
     try {
       const input = model.buildInput(prompt, { platform, tone, length, language });
-      const { text } = await callOpenAIChat(input, OPENAI_KEY);
+      const { text } = await callAnthropic(input, ANTHROPIC_KEY);
       outputText = model.extractOutput({ text });
       if (!outputText) throw new Error("빈 응답");
     } catch (err: any) {

@@ -3,7 +3,7 @@
 // 판매가는 고객에게 차감하는 크레딧 (cent 단위) - 원가 × 마진 배수
 
 export interface ModelConfig {
-  provider: "replicate" | "fal" | "openai" | "openai-chat";
+  provider: "replicate" | "fal" | "openai" | "openai-chat" | "anthropic";
   modelId?: string;
   costPerUnitCents: number;  // 원가 (이미지 = 장당, 영상 = 초당, 텍스트 = 1회당)
   chargedPerUnitCents: number; // 판매가
@@ -171,51 +171,50 @@ const TEXT_TONE_HINT: Record<string, string> = {
   humorous:     "유머러스하고 재치있는 말투",
 };
 
-function buildTextMessages(prompt: string, opts: any): Array<{ role: string; content: string }> {
+// Anthropic Messages 형식: system은 별도 필드, 사용자 프롬프트만 messages에.
+function buildTextSystem(opts: any): string {
   const len = TEXT_LENGTH[opts?.length as string] || TEXT_LENGTH.medium;
   const platform = TEXT_PLATFORM_HINT[opts?.platform as string] || "";
   const tone = TEXT_TONE_HINT[opts?.tone as string] || TEXT_TONE_HINT.friendly;
   const langMap: Record<string, string> = { en: "영어로", vi: "베트남어로", zh: "중국어로", ko: "한국어로" };
   const lang = langMap[opts?.language as string] || "한국어로";
-  const sys =
+  return (
     "너는 SNS 마케팅 카피라이터다. 주어진 주제로 바로 게시 가능한 완성된 글만 출력한다. " +
     "설명이나 머리말, 해시태그 없이 본문만 작성한다. " +
     lang + " 작성하고, " + tone + "을 사용한다. " +
-    (platform ? platform + ". " : "") + len.guide + "으로 작성한다.";
-  return [
-    { role: "system", content: sys },
-    { role: "user", content: String(prompt).slice(0, 2000) },
-  ];
+    (platform ? platform + ". " : "") + len.guide + "으로 작성한다."
+  );
+}
+
+function buildAnthropicInput(modelId: string, prompt: string, opts: any): any {
+  const len = TEXT_LENGTH[opts?.length as string] || TEXT_LENGTH.medium;
+  return {
+    model: modelId,
+    max_tokens: len.maxTokens,
+    system: buildTextSystem(opts),
+    messages: [{ role: "user", content: String(prompt).slice(0, 2000) }],
+    output_config: { effort: "low" }, // 캡션 생성은 가벼운 작업 → 낮은 effort로 비용·지연 절감
+  };
 }
 
 export const TEXT_MODELS: Record<string, ModelConfig> = {
-  "gpt-4o-mini": {
-    provider: "openai-chat",
-    modelId: "gpt-4o-mini",
+  "claude-haiku-5-5": {
+    provider: "anthropic",
+    modelId: "claude-haiku-5-5",
     costPerUnitCents: 1,
     chargedPerUnitCents: 2,
     unitType: "per_call",
-    buildInput: (prompt, opts) => ({
-      model: "gpt-4o-mini",
-      messages: buildTextMessages(prompt, opts),
-      max_tokens: (TEXT_LENGTH[opts?.length as string] || TEXT_LENGTH.medium).maxTokens,
-      temperature: 0.85,
-    }),
+    buildInput: (prompt, opts) => buildAnthropicInput("claude-haiku-5-5", prompt, opts),
     extractOutput: (d) => (typeof d === "string" ? d : d?.text || ""),
   },
-  "gpt-4o": {
-    provider: "openai-chat",
-    modelId: "gpt-4o",
-    costPerUnitCents: 3,
-    chargedPerUnitCents: applyMargin(3),
+  "claude-sonnet-5-5": {
+    provider: "anthropic",
+    modelId: "claude-sonnet-5-5",
+    costPerUnitCents: 2,
+    chargedPerUnitCents: applyMargin(2),
     unitType: "per_call",
     premium: true,
-    buildInput: (prompt, opts) => ({
-      model: "gpt-4o",
-      messages: buildTextMessages(prompt, opts),
-      max_tokens: (TEXT_LENGTH[opts?.length as string] || TEXT_LENGTH.medium).maxTokens,
-      temperature: 0.85,
-    }),
+    buildInput: (prompt, opts) => buildAnthropicInput("claude-sonnet-5-5", prompt, opts),
     extractOutput: (d) => (typeof d === "string" ? d : d?.text || ""),
   },
 };

@@ -34,8 +34,8 @@
     };
 
     var TEXT_MODELS = {
-        'gpt-4o-mini':     {label: 'GPT-4o mini (빠름·저렴)',      chargedCents: 2, premium: false},
-        'gpt-4o':          {label: 'GPT-4o (고품질)',             chargedCents: 6, premium: true}
+        'claude-haiku-5-5':  {label: 'Claude Haiku (빠름·저렴)',   chargedCents: 2, premium: false},
+        'claude-sonnet-5-5': {label: 'Claude Sonnet (고품질)',     chargedCents: 4, premium: true}
     };
 
     // ─── 인증 토큰 ───
@@ -139,7 +139,7 @@
     async function generateText(opts){
         opts = opts || {};
         if(!opts.prompt) throw new Error('prompt 필수');
-        var modelKey = opts.model || 'gpt-4o-mini';
+        var modelKey = opts.model || 'claude-haiku-5-5';
         if(!TEXT_MODELS[modelKey]) throw new Error('지원하지 않는 텍스트 모델: ' + modelKey);
 
         var result = await invokeFunction('ai-generate-text', {
