@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>매출·사용량 | SNS 플랫폼</title>
+    <!-- 디자인 시스템(DDS) + 공통 셸 + 자체호스팅 폰트(외부 CDN 미사용). 기존 sns.css 유지. -->
+    <link rel="stylesheet" href="../vendor/pretendard/pretendardvariable.css">
+    <link rel="stylesheet" href="../css/design-system.css">
+    <link rel="stylesheet" href="../css/ds-shell.css">
+    <link rel="stylesheet" href="../css/sns.css">
+    <style>
+        .rev-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+        .r-stat{background:var(--ds-bg-surface);border-radius:12px;border:1px solid var(--ds-border);padding:18px}
+        .r-stat-label{font-size:.74rem;color:var(--ds-text-tertiary);font-weight:600;margin-bottom:6px}
+        .r-stat-val{font-size:1.5rem;font-weight:800;color:var(--ds-text-primary)}
+        .r-stat-sub{font-size:.72rem;color:var(--ds-text-tertiary);margin-top:4px}
+        .r-stat.margin .r-stat-val{color:var(--ds-success-fg)}
+        .admin-card{background:var(--ds-bg-surface);border-radius:14px;border:1px solid var(--ds-border);padding:20px;margin-bottom:20px}
+        .admin-card h2{font-size:1rem;margin-bottom:14px;color:var(--ds-text-primary)}
+        .recent-table{width:100%;border-collapse:collapse;font-size:.82rem}
+        .recent-table th{text-align:left;padding:10px 12px;background:var(--ds-bg-subtle);font-size:.72rem;font-weight:700;color:var(--ds-text-secondary);text-transform:uppercase;letter-spacing:.05em}
+        .recent-table td{padding:10px 12px;border-bottom:1px solid var(--ds-border);color:var(--ds-text-primary)}
+        .recent-table tr:last-child td{border-bottom:none}
+        .recent-table td.num{text-align:right;font-variant-numeric:tabular-nums}
+        .period-tabs{display:flex;gap:8px;margin-bottom:18px}
+        .period-tab{padding:7px 16px;border-radius:8px;border:1px solid var(--ds-border);background:var(--ds-bg-surface);color:var(--ds-text-secondary);font-size:.8rem;font-weight:600;cursor:pointer}
+        .period-tab.active{background:var(--ds-accent);color:#fff;border-color:var(--ds-accent)}
+        @media(max-width:860px){.rev-stats{grid-template-columns:repeat(2,1fr)}}
+    </style>
+</head>
+<body class="ds-root" data-shell-active="revenue">
+    <main class="d-screen">
+        <div class="d-page-head">
+            <div>
+                <div class="ds-eyebrow">DIVOOST SNS · ADMIN</div>
+                <h1 class="ds-h1">매출·사용량</h1>
+                <p class="ds-body">AI 사용 원가·판매가·마진과 결제 매출을 집계합니다.</p>
+            </div>
+        </div>
+
+        <div class="period-tabs" id="periodTabs">
+            <button class="period-tab" data-days="7" onclick="selectPeriod(7)">최근 7일</button>
+            <button class="period-tab active" data-days="30" onclick="selectPeriod(30)">최근 30일</button>
+            <button class="period-tab" data-days="90" onclick="selectPeriod(90)">최근 90일</button>
+        </div>
+
+        <div class="rev-stats">
+            <div class="r-stat">
+                <div class="r-stat-label">AI 판매가 (고객 차감)</div>
+                <div class="r-stat-val" id="kCharged">₩0</div>
+                <div class="r-stat-sub" id="kChargedSub">0건</div>
+            </div>
+            <div class="r-stat">
+                <div class="r-stat-label">AI 원가 (프로바이더 지불)</div>
+                <div class="r-stat-val" id="kCost">₩0</div>
+                <div class="r-stat-sub">회사 비용</div>
+            </div>
+            <div class="r-stat margin">
+                <div class="r-stat-label">AI 마진 (판매가 − 원가)</div>
+                <div class="r-stat-val" id="kMargin">₩0</div>
+                <div class="r-stat-sub" id="kMarginRate">마진율 0%</div>
+            </div>
+            <div class="r-stat">
+                <div class="r-stat-label">결제 충전 매출</div>
+                <div class="r-stat-val" id="kPayment">₩0</div>
+                <div class="r-stat-sub" id="kPaymentSub">0건</div>
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <h2>📊 유형별 사용·마진</h2>
+            <table class="recent-table">
+                <thead>
+                    <tr><th>유형</th><th class="num">건수</th><th class="num">원가</th><th class="num">판매가</th><th class="num">마진</th></tr>
+                </thead>
+                <tbody id="byTypeBody">
+                    <tr><td colspan="5" style="text-align:center;padding:20px;color:var(--ds-text-tertiary)">로딩 중...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="admin-card">
+            <h2>📅 일별 추이 (최근순)</h2>
+            <table class="recent-table">
+                <thead>
+                    <tr><th>날짜</th><th class="num">건수</th><th class="num">판매가</th><th class="num">마진</th></tr>
+                </thead>
+                <tbody id="byDayBody">
+                    <tr><td colspan="4" style="text-align:center;padding:20px;color:var(--ds-text-tertiary)">로딩 중...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script src="../js/secure-storage.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/supabase-admin.js"></script>
+    <script>
+        // cent(USD) → KRW 환산 (기본 1 USD = 1400원). 표시는 원.
+        var USD_KRW = 1400;
+        function centsToKrw(cents){ return Math.round((Number(cents||0) / 100) * USD_KRW); }
+        function won(cents){ return '₩' + centsToKrw(cents).toLocaleString('ko-KR'); }
+        function wonKrw(krw){ return '₩' + Math.round(Number(krw||0)).toLocaleString('ko-KR'); }
+        var TYPE_LABEL = {image:'🖼️ 이미지', video:'🎬 영상', text:'📝 텍스트', audio:'🔊 음성', 기타:'기타'};
+
+        var currentDays = 30;
+
+        function selectPeriod(days){
+            currentDays = days;
+            var tabs = document.querySelectorAll('.period-tab');
+            for(var i=0;i<tabs.length;i++){
+                tabs[i].classList.toggle('active', Number(tabs[i].getAttribute('data-days')) === days);
+            }
+            loadRevenue();
+        }
+
+        function loadRevenue(){
+            SNSAdmin.getRevenueStats({days: currentDays}).then(function(st){
+                var u = st.usage, p = st.payments;
+
+                document.getElementById('kCharged').textContent = won(u.chargedCents);
+                document.getElementById('kChargedSub').textContent = u.count.toLocaleString() + '건';
+                document.getElementById('kCost').textContent = won(u.costCents);
+                document.getElementById('kMargin').textContent = won(u.marginCents);
+                var rate = u.chargedCents > 0 ? Math.round((u.marginCents / u.chargedCents) * 100) : 0;
+                document.getElementById('kMarginRate').textContent = '마진율 ' + rate + '%';
+
+                if(p && p.available){
+                    document.getElementById('kPayment').textContent = wonKrw(p.amountKrw);
+                    document.getElementById('kPaymentSub').textContent = p.count.toLocaleString() + '건';
+                } else {
+                    document.getElementById('kPayment').textContent = '—';
+                    document.getElementById('kPaymentSub').textContent = '결제 연동 전';
+                }
+
+                // 유형별
+                var typeKeys = Object.keys(u.byType);
+                var typeBody = document.getElementById('byTypeBody');
+                if(typeKeys.length === 0){
+                    typeBody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--ds-text-tertiary)">사용 내역이 없습니다.</td></tr>';
+                } else {
+                    typeBody.innerHTML = typeKeys.map(function(t){
+                        var r = u.byType[t];
+                        return '<tr><td>' + (TYPE_LABEL[t] || t) + '</td>' +
+                            '<td class="num">' + r.count.toLocaleString() + '</td>' +
+                            '<td class="num">' + won(r.costCents) + '</td>' +
+                            '<td class="num">' + won(r.chargedCents) + '</td>' +
+                            '<td class="num" style="color:var(--ds-success-fg);font-weight:700">' + won(r.marginCents) + '</td></tr>';
+                    }).join('');
+                }
+
+                // 일별 (최근순)
+                var days = Object.keys(u.byDay).sort().reverse();
+                var dayBody = document.getElementById('byDayBody');
+                if(days.length === 0){
+                    dayBody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:20px;color:var(--ds-text-tertiary)">사용 내역이 없습니다.</td></tr>';
+                } else {
+                    dayBody.innerHTML = days.map(function(d){
+                        var r = u.byDay[d];
+                        return '<tr><td>' + d + '</td>' +
+                            '<td class="num">' + r.count.toLocaleString() + '</td>' +
+                            '<td class="num">' + won(r.chargedCents) + '</td>' +
+                            '<td class="num" style="color:var(--ds-success-fg)">' + won(r.marginCents) + '</td></tr>';
+                    }).join('');
+                }
+            }).catch(function(err){
+                console.error('매출 집계 실패', err);
+                document.getElementById('byTypeBody').innerHTML = '<tr><td colspan="5" style="text-align:center;padding:20px;color:var(--ds-danger-fg)">집계 실패: ' + (err && err.message ? err.message : '권한 또는 네트워크 오류') + '</td></tr>';
+            });
+        }
+
+        (async function(){
+            var isAdmin = await SNSAdmin.requireAdmin();
+            if(!isAdmin) return;
+            loadRevenue();
+        })();
+    </script>
+
+    <!-- DDS 공통 셸(관리자 상단바/네비/드로어/테마/아이콘) -->
+    <script src="../vendor/lucide/lucide.min.js"></script>
+    <script src="../js/ds-shell-admin.js"></script>
+</body>
+</html>
