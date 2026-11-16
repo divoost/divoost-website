@@ -168,25 +168,32 @@ DROP POLICY IF EXISTS "users_can_update_own_profile" ON public.profiles;
 CREATE POLICY "users_can_update_own_profile" ON public.profiles
     FOR UPDATE USING (auth.uid() = id);
 
--- 관리자는 모든 프로필 읽기 가능
+-- 역할 확인 함수(SECURITY DEFINER): profiles RLS 안에서 profiles를 직접 조회하면
+-- 무한재귀(500)가 나므로, 소유자 권한으로 RLS를 우회해 역할을 확인한다.
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS boolean
+LANGUAGE sql
+SECURITY DEFINER
+STABLE
+SET search_path = public
+AS $$
+  SELECT EXISTS (
+    SELECT 1 FROM public.profiles
+    WHERE id = auth.uid() AND role IN ('admin', 'super_admin')
+  );
+$$;
+REVOKE ALL ON FUNCTION public.is_admin() FROM PUBLIC;
+GRANT EXECUTE ON FUNCTION public.is_admin() TO authenticated, anon;
+
+-- 관리자는 모든 프로필 읽기 가능 (is_admin()으로 재귀 회피)
 DROP POLICY IF EXISTS "admins_can_view_all_profiles" ON public.profiles;
 CREATE POLICY "admins_can_view_all_profiles" ON public.profiles
-    FOR SELECT USING (
-        EXISTS (
-            SELECT 1 FROM public.profiles
-            WHERE id = auth.uid() AND role IN ('admin', 'super_admin')
-        )
-    );
+    FOR SELECT USING (public.is_admin());
 
 -- 관리자는 프로필 수정 가능
 DROP POLICY IF EXISTS "admins_can_update_profiles" ON public.profiles;
 CREATE POLICY "admins_can_update_profiles" ON public.profiles
-    FOR UPDATE USING (
-        EXISTS (
-            SELECT 1 FROM public.profiles
-            WHERE id = auth.uid() AND role IN ('admin', 'super_admin')
-        )
-    );
+    FOR UPDATE USING (public.is_admin());
 
 -- activity_logs RLS
 ALTER TABLE public.activity_logs ENABLE ROW LEVEL SECURITY;
