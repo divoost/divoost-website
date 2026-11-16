@@ -163,6 +163,12 @@ const TEXT_PLATFORM_HINT: Record<string, string> = {
   xiaohongshu: "샤오홍수(小红书) 노트 스타일, 친근한 리뷰체, 이모지 사용",
   facebook:    "페이스북 페이지 톤, 정보 전달 + 공감",
   blog:        "네이버 블로그 포스팅 톤, 소제목 포함, 자연스러운 정보성 글",
+  youtube:     "유튜브 쇼츠/영상 설명 톤, 첫 줄 강한 후킹, 간결하게",
+  x:           "X(트위터) 톤, 280자 내외로 핵심만, 재치있게",
+  threads:     "스레드 톤, 대화하듯 캐주얼하게, 짧은 단락",
+  linkedin:    "링크드인 톤, 전문적·인사이트 중심, 비즈니스 신뢰감",
+  kakao:       "카카오 채널/스토리 톤, 친근하고 간결하게, 이모지 적당히",
+  band:        "네이버 밴드 톤, 모임·커뮤니티 공지처럼 친근하고 정중하게",
 };
 const TEXT_TONE_HINT: Record<string, string> = {
   friendly:     "친근하고 다정한 말투",

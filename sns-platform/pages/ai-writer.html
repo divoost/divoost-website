@@ -186,6 +186,24 @@
                         <div class="platform-chip" data-platform="douyin" onclick="selectPlatform(this)">
                             <span class="p-icon">🎬</span> 도우인
                         </div>
+                        <div class="platform-chip" data-platform="youtube" onclick="selectPlatform(this)">
+                            <span class="p-icon">▶️</span> YouTube
+                        </div>
+                        <div class="platform-chip" data-platform="x" onclick="selectPlatform(this)">
+                            <span class="p-icon">✖️</span> X (트위터)
+                        </div>
+                        <div class="platform-chip" data-platform="threads" onclick="selectPlatform(this)">
+                            <span class="p-icon">🧵</span> Threads
+                        </div>
+                        <div class="platform-chip" data-platform="linkedin" onclick="selectPlatform(this)">
+                            <span class="p-icon">💼</span> LinkedIn
+                        </div>
+                        <div class="platform-chip" data-platform="kakao" onclick="selectPlatform(this)">
+                            <span class="p-icon">💬</span> 카카오
+                        </div>
+                        <div class="platform-chip" data-platform="band" onclick="selectPlatform(this)">
+                            <span class="p-icon">🟢</span> 밴드
+                        </div>
                     </div>
                 </div>
 
@@ -297,6 +315,11 @@
                     </div>
                 </div>
 
+                <!-- Cost / Scope Preview -->
+                <div class="writer-box" id="costPreview" style="padding:14px 18px;line-height:1.5">
+                    <span style="color:var(--ds-text-tertiary)">📊 플랫폼을 선택하면 예상 비용이 표시됩니다</span>
+                </div>
+
                 <!-- Generate Button -->
                 <div class="writer-box generate-section">
                     <button class="btn-generate" id="btnGenerate" onclick="generateContent()">
@@ -402,14 +425,87 @@
 
         // ─── State ───
         var selectedPlatforms = [];
+        var _balanceCents = null;
+
+        // 플랫폼 짧은 이름(비용 미리보기용)
+        var PLATFORM_LABEL = {
+            facebook:'Facebook', tiktok:'TikTok', instagram:'Instagram',
+            naver_blog:'블로그', naver_cafe:'카페', xiaohongshu:'샤오홍수', douyin:'도우인',
+            youtube:'YouTube', x:'X', threads:'Threads', linkedin:'LinkedIn', kakao:'카카오', band:'밴드'
+        };
+        // 플랫폼별 추천 포맷(선택 시 자동 세팅; 이후 수정 가능). length/tone/이미지크기/영상비율.
+        var PLATFORM_PRESET = {
+            facebook:   {length:'medium', tone:'friendly',     imgSizeGroup:'1200x630',  vidRatioGroup:'16:9'},
+            instagram:  {length:'medium', tone:'friendly',     imgSizeGroup:'1080x1350', vidRatioGroup:'9:16'},
+            tiktok:     {length:'short',  tone:'humorous',     imgSizeGroup:'1080x1920', vidRatioGroup:'9:16'},
+            douyin:     {length:'short',  tone:'humorous',     imgSizeGroup:'1080x1920', vidRatioGroup:'9:16'},
+            xiaohongshu:{length:'medium', tone:'emotional',    imgSizeGroup:'1080x1350', vidRatioGroup:'9:16'},
+            naver_blog: {length:'long',   tone:'professional', imgSizeGroup:'1200x630',  vidRatioGroup:'16:9'},
+            naver_cafe: {length:'medium', tone:'friendly',     imgSizeGroup:'1080x1080', vidRatioGroup:'1:1'},
+            youtube:    {length:'short',  tone:'friendly',     imgSizeGroup:'1080x1920', vidRatioGroup:'9:16'},
+            x:          {length:'short',  tone:'friendly',     imgSizeGroup:'1200x630',  vidRatioGroup:'16:9'},
+            threads:    {length:'short',  tone:'friendly',     imgSizeGroup:'1080x1080', vidRatioGroup:'9:16'},
+            linkedin:   {length:'long',   tone:'professional', imgSizeGroup:'1200x630',  vidRatioGroup:'16:9'},
+            kakao:      {length:'medium', tone:'friendly',     imgSizeGroup:'1080x1080', vidRatioGroup:'1:1'},
+            band:       {length:'medium', tone:'friendly',     imgSizeGroup:'1080x1080', vidRatioGroup:'1:1'}
+        };
+
+        function setChipByValue(groupId, value){
+            var group = document.getElementById(groupId);
+            if(!group) return;
+            var chips = group.querySelectorAll('.option-chip');
+            for(var i = 0; i < chips.length; i++){
+                chips[i].classList.toggle('selected', chips[i].getAttribute('data-value') === value);
+            }
+        }
+        function applyPlatformPreset(platform){
+            var p = PLATFORM_PRESET[platform];
+            if(!p) return;
+            if(p.length) setChipByValue('lengthGroup', p.length);
+            if(p.tone) setChipByValue('toneGroup', p.tone);
+            if(p.imgSizeGroup) setChipByValue('imgSizeGroup', p.imgSizeGroup);
+            if(p.vidRatioGroup) setChipByValue('vidRatioGroup', p.vidRatioGroup);
+        }
+
+        // cent(USD) → KRW 표시 (1 USD = 1400원)
+        function fmtWon(cents){ return '₩' + Math.round((Number(cents||0)/100)*1400).toLocaleString('ko-KR'); }
+
+        // 비용·범위 미리보기 (생성 전, SaaS 투명성)
+        function updateCostPreview(){
+            var el = document.getElementById('costPreview');
+            if(!el) return;
+            var n = selectedPlatforms.length;
+            var perText = (window.SNSAI && SNSAI.TEXT_MODELS && SNSAI.TEXT_MODELS['claude-haiku-5-5'])
+                ? SNSAI.TEXT_MODELS['claude-haiku-5-5'].chargedCents : 2;
+            var textCost = n * perText;
+            var balHtml = (_balanceCents == null) ? '조회 중…' : fmtWon(_balanceCents);
+            if(n === 0){
+                el.innerHTML = '<span style="color:var(--ds-text-tertiary)">📊 플랫폼을 선택하면 예상 비용이 표시됩니다 · 내 잔액 ' + balHtml + '</span>';
+                return;
+            }
+            var names = selectedPlatforms.map(function(p){ return PLATFORM_LABEL[p] || p; }).join('·');
+            var low = (_balanceCents != null && textCost > _balanceCents);
+            el.innerHTML =
+                '<div style="display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;font-size:.82rem">' +
+                  '<span>📊 선택 <b>' + n + '개</b> (' + names + ')</span>' +
+                  '<span style="color:var(--ds-text-tertiary)">생성물: 텍스트 ' + n + '개 · 플랫폼별 포맷 자동</span>' +
+                '</div>' +
+                '<div style="display:flex;flex-wrap:wrap;gap:4px 16px;align-items:center;margin-top:6px;font-size:.9rem">' +
+                  '<span>예상 차감 <b style="color:var(--ds-accent)">' + fmtWon(textCost) + '</b></span>' +
+                  '<span style="color:var(--ds-text-tertiary)">내 잔액 ' + balHtml + '</span>' +
+                  (low ? '<span style="color:var(--ds-danger-fg);font-weight:700">⚠️ 잔액 부족 — 충전 필요</span>' : '') +
+                '</div>';
+        }
 
         // ─── Platform selection (multi select) ───
         window.selectPlatform = function(el){
-            el.classList.toggle('selected');
+            var nowOn = el.classList.toggle('selected');
             selectedPlatforms = [];
             document.querySelectorAll('.platform-chip.selected').forEach(function(c){
                 selectedPlatforms.push(c.getAttribute('data-platform'));
             });
+            if(nowOn){ applyPlatformPreset(el.getAttribute('data-platform')); }
+            updateCostPreview();
         };
 
         // ─── Chip group selection (single select within group) ───
@@ -617,11 +713,13 @@
             var platformNames = {
                 facebook:'Facebook', tiktok:'TikTok', instagram:'Instagram',
                 naver_blog:'네이버 블로그', naver_cafe:'네이버 카페',
-                xiaohongshu:'샤오홍수', douyin:'도우인'
+                xiaohongshu:'샤오홍수', douyin:'도우인',
+                youtube:'YouTube', x:'X', threads:'Threads', linkedin:'LinkedIn', kakao:'카카오', band:'밴드'
             };
             var platformIcons = {
                 facebook:'📘', tiktok:'🎵', instagram:'📸',
-                naver_blog:'📗', naver_cafe:'☕', xiaohongshu:'📕', douyin:'🎬'
+                naver_blog:'📗', naver_cafe:'☕', xiaohongshu:'📕', douyin:'🎬',
+                youtube:'▶️', x:'✖️', threads:'🧵', linkedin:'💼', kakao:'💬', band:'🟢'
             };
 
             var extra = (document.getElementById('aiExtra') || {}).value;
@@ -629,7 +727,8 @@
             // 앱 플랫폼 키 → 백엔드 플랫폼 힌트 키 매핑
             var platApiMap = {
                 facebook:'facebook', tiktok:'tiktok', instagram:'instagram',
-                naver_blog:'blog', naver_cafe:'blog', xiaohongshu:'xiaohongshu', douyin:'tiktok'
+                naver_blog:'blog', naver_cafe:'blog', xiaohongshu:'xiaohongshu', douyin:'tiktok',
+                youtube:'youtube', x:'x', threads:'threads', linkedin:'linkedin', kakao:'kakao', band:'band'
             };
 
             function resetBtn(){
@@ -1231,11 +1330,13 @@
             var platformNames = {
                 facebook:'Facebook', tiktok:'TikTok', instagram:'Instagram',
                 naver_blog:'네이버 블로그', naver_cafe:'네이버 카페',
-                xiaohongshu:'샤오홍수', douyin:'도우인'
+                xiaohongshu:'샤오홍수', douyin:'도우인',
+                youtube:'YouTube', x:'X', threads:'Threads', linkedin:'LinkedIn', kakao:'카카오', band:'밴드'
             };
             var platformIcons = {
                 facebook:'📘', tiktok:'🎵', instagram:'📸',
-                naver_blog:'📗', naver_cafe:'☕', xiaohongshu:'📕', douyin:'🎬'
+                naver_blog:'📗', naver_cafe:'☕', xiaohongshu:'📕', douyin:'🎬',
+                youtube:'▶️', x:'✖️', threads:'🧵', linkedin:'💼', kakao:'💬', band:'🟢'
             };
 
             var drafts = JSON.parse(localStorage.getItem('aiWriterDrafts') || '[]');
@@ -1412,6 +1513,18 @@
 
         // ─── Initialize ───
         renderDrafts();
+        updateCostPreview();
+        // 잔액 조회(비용 미리보기용). 실패해도 미리보기는 동작.
+        if(window.SNSAI && SNSAI.getBalance){
+            SNSAI.getBalance().then(function(b){
+                _balanceCents = b ? (b.totalCents || 0) : 0;
+                updateCostPreview();
+            }).catch(function(err){
+                _balanceCents = 0;
+                updateCostPreview();
+                console.error('잔액 조회 실패', err);
+            });
+        }
 
     })();
     </script>
