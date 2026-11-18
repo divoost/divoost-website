@@ -394,6 +394,11 @@
                             <div class="image-prompt-area" id="imagePromptArea">
                                 <h4>🖼️ AI 이미지 프롬프트 제안</h4>
                                 <div class="image-prompt-text" id="imagePromptText"></div>
+                                <div style="margin-top:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                                    <button class="ds-btn ds-btn-primary ds-btn-sm" id="btnGenImage" onclick="generateImageFromPrompt()">🎨 이 프롬프트로 이미지 생성</button>
+                                    <span id="genImageCostHint" style="font-size:.74rem;color:var(--ds-text-tertiary)"></span>
+                                </div>
+                                <div id="genImageResult" style="margin-top:12px"></div>
                             </div>
                         </div>
 
@@ -506,6 +511,50 @@
             });
             if(nowOn){ applyPlatformPreset(el.getAttribute('data-platform')); }
             updateCostPreview();
+        };
+
+        // ─── 이미지 생성 (제안 프롬프트 + 선택한 이미지 크기로 실제 생성) ───
+        var IMG_SIZE_TO_ASPECT = { '1080x1080':'1:1', '1080x1350':'4:5', '1080x1920':'9:16', '1200x630':'16:9' };
+        window.generateImageFromPrompt = async function(){
+            var promptEl = document.getElementById('imagePromptText');
+            var prompt = promptEl ? promptEl.textContent.trim() : '';
+            if(!prompt){ showToast('이미지 프롬프트가 없습니다. 먼저 콘텐츠를 생성하세요.', 'warn'); return; }
+            if(!window.SNSAI || !SNSAI.generateImage){ showToast('이미지 생성 모듈 로드 실패(새로고침)', 'error'); return; }
+
+            var size = getSelected('imgSizeGroup') || '1080x1080';
+            var aspect = IMG_SIZE_TO_ASPECT[size] || '1:1';
+            var model = 'flux-schnell'; // 기본: 가장 저렴·빠름
+            var costCents = (SNSAI.IMAGE_MODELS && SNSAI.IMAGE_MODELS[model]) ? SNSAI.IMAGE_MODELS[model].chargedCents : 2;
+            if(!confirm('이미지 1장을 생성합니다 (' + aspect + ', ' + model + ').\n예상 차감: ' + fmtWon(costCents) + '\n계속할까요?')) return;
+
+            var btn = document.getElementById('btnGenImage');
+            var resultEl = document.getElementById('genImageResult');
+            if(btn){ btn.disabled = true; btn.textContent = '🎨 생성 중...'; }
+            if(resultEl){ resultEl.innerHTML = '<div style="color:var(--ds-text-tertiary);font-size:.82rem">이미지 생성 중… (최대 30초)</div>'; }
+            try {
+                var res = await SNSAI.generateImage({ prompt: prompt, model: model, aspect: aspect });
+                if(resultEl){
+                    resultEl.innerHTML =
+                        '<img src="' + res.url + '" alt="AI 생성 이미지" style="max-width:100%;border-radius:10px;border:1px solid var(--ds-border);display:block">' +
+                        '<div style="margin-top:6px;display:flex;gap:12px;flex-wrap:wrap;font-size:.74rem;color:var(--ds-text-tertiary)">' +
+                          '<span>차감 ' + fmtWon(res.chargedCents) + ' · 남은 잔액 ' + fmtWon(res.balanceCents) + '</span>' +
+                          '<a href="' + res.url + '" target="_blank" rel="noopener" style="color:var(--ds-accent)">새 탭에서 열기 ↗</a>' +
+                        '</div>';
+                }
+                _balanceCents = res.balanceCents;
+                updateCostPreview();
+                showToast('이미지 생성 완료!', 'success');
+            } catch(err){
+                var msg = (err && err.message) ? err.message : '알 수 없는 오류';
+                if(err && err.code === 402){ msg = '크레딧이 부족합니다. 요금제·크레딧 페이지에서 충전해주세요.'; }
+                else if(err && err.code === 401){ msg = '로그인이 필요합니다.'; }
+                else if(err && err.code === 403){ msg = '이 모델은 Pro 이상 플랜에서 사용 가능합니다.'; }
+                if(resultEl){ resultEl.innerHTML = '<div style="color:var(--ds-danger-fg);font-size:.82rem">이미지 생성 실패: ' + msg + '</div>'; }
+                showToast('이미지 생성 실패: ' + msg, 'error');
+                console.error('generateImage 실패', err);
+            } finally {
+                if(btn){ btn.disabled = false; btn.textContent = '🎨 이 프롬프트로 이미지 생성'; }
+            }
         };
 
         // ─── Chip group selection (single select within group) ───
@@ -1514,17 +1563,26 @@
         // ─── Initialize ───
         renderDrafts();
         updateCostPreview();
-        // 잔액 조회(비용 미리보기용). 실패해도 미리보기는 동작.
-        if(window.SNSAI && SNSAI.getBalance){
-            SNSAI.getBalance().then(function(b){
-                _balanceCents = b ? (b.totalCents || 0) : 0;
-                updateCostPreview();
-            }).catch(function(err){
-                _balanceCents = 0;
-                updateCostPreview();
-                console.error('잔액 조회 실패', err);
-            });
-        }
+
+        // SNSAI(ai-gateway.js)는 이 스크립트 뒤에 로드되므로, load 이후에 초기화.
+        window.addEventListener('load', function(){
+            // 이미지 생성 버튼 비용 힌트
+            var hint = document.getElementById('genImageCostHint');
+            if(hint && window.SNSAI && SNSAI.IMAGE_MODELS && SNSAI.IMAGE_MODELS['flux-schnell']){
+                hint.textContent = '선택한 이미지 크기로 생성 · 예상 차감 ' + fmtWon(SNSAI.IMAGE_MODELS['flux-schnell'].chargedCents);
+            }
+            // 잔액 조회(비용 미리보기용). 실패해도 미리보기는 동작.
+            if(window.SNSAI && SNSAI.getBalance){
+                SNSAI.getBalance().then(function(b){
+                    _balanceCents = b ? (b.totalCents || 0) : 0;
+                    updateCostPreview();
+                }).catch(function(err){
+                    _balanceCents = 0;
+                    updateCostPreview();
+                    console.error('잔액 조회 실패', err);
+                });
+            }
+        });
 
     })();
     </script>
